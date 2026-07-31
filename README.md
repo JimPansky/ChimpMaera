@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="assets/brand/chimpmaera-master.svg" width="560" alt="ChimpMaera hybrid chimp and computer emblem">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/chimpmaera-negative.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/chimpmaera-master.svg">
+    <img src="assets/brand/chimpmaera-master.svg" width="560" alt="ChimpMaera hybrid chimp and computer emblem">
+  </picture>
 </p>
 
 # ChimpMaera v0.1

@@ -5,14 +5,15 @@ ff8d80dc431ca052220ae1eacd54c81456ebc9608469493a482a5b6025ec5e73  ./CONTRIBUTING
 9ed8fd6143a87d489c618aaffcea5e5000fc372ae86ca9d3e45e7b7c32be658e  ./DCO
 bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.md
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
-26d5eb4fe40d33ea203f7aa1071caea94954296b81280611d54c2bc076fbb7bb  ./MEDIA-LICENSE.md
+c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-8af1aa56696b963354a6f2eaff856f5149ba720b8316e6b70d119470cc06123f  ./README.md
+5a24dd82e4750d41ced1476e394391f06403387447a37894c66aca61ef9c0b37  ./README.md
 1a92564c31cafee7a8d96797e35c928fec450af8f51a359bbf67e2f8ba55ca07  ./SECURITY.md
 405161d717617714546697edb5c01582436c0f2a611da4a2861763ea958b93d9  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
 b4bee53218ad05edba3d866f715d8519e683802224c14a5f41cdd74a16d4fb88  ./WITHDRAWAL.md
-71bca8b700a93f2608fb430dabc12e2b3d77f0f322b604a97a92e446fdd42c67  ./assets/brand/chimpmaera-master.svg
+0f39dbb1f8c41281e5a18aa22359ec16d6e3313d36d265fe14adb41826d0b638  ./assets/brand/chimpmaera-master.svg
+b50fe4214a2f153f4db678ff12d3f3366c964c259cf3c0682f52ff791bc423bd  ./assets/brand/chimpmaera-negative.svg
 587ad5df52dde52a526c249f23674e8c92bc36a93787d567bc2ed56d6440de27  ./demo/README.md
 29eb30f7b77ffd4895fd6c45e5ee3dfccc62efc800d833eb0d877e2c7a652deb  ./demo/acceptance.sh
 e88dabb7c7ec3720f5077b9158bd55d8c5b7a63c5f76c30bc39bc40fa97028d4  ./demo/app/index.html
@@ -54,7 +55,7 @@ a4852feaa297c4e84528ddcb958eda5a599539ee447e3c1d3fa90e62085c831f  ./package-lock
 395ef3c451bc41007f77aaec522143853b23422f42815dfebb2308732eb68652  ./packages/contracts/src/poc-showcase-e2e.ts
 61c8584058f2a2a8600ef49f87febf0c4d4205ee671fc2ef295b5f17f0d307af  ./packages/contracts/src/poc-showcase.ts
 5f9fb0ed59a2539c44c430d43a3ae33707233ff2a48e8f6897620be0db61c303  ./packages/setup-coordinator/src/index.ts
-baf1dc498fe73ccd4873a1e035cef0b6562ed0f20ee3c8ea3215ba9660c812a0  ./release/public-files.manifest
+9eb3ade75aeac94b60e67a936605d68d9605e0f44e0e7b9566477d4e376fa450  ./release/public-files.manifest
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
 830d07b0db2dddaecf68efe4a149679dbfbcc454d4cbfde82703ecfb2052db57  ./scripts/build-public-release.sh
 1fefe74e7f4781c7e7a33872e3dc9506004e5cf58f6f7c6ab95e69b59d907459  ./tests/demo-admin-ai-poc.test.mjs
