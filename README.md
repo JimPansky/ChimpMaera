@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/brand/chimpmaera-master.svg" width="360" alt="ChimpMaera hybrid chimp and machine mascot">
+  <img src="assets/brand/chimpmaera-master.svg" width="560" alt="ChimpMaera hybrid chimp and computer emblem">
 </p>
 
 # ChimpMaera v0.1
@@ -47,10 +47,6 @@ is not part of this release.
 - `tests/`: focused local tests for the governed effect gate and synthetic
   fixture integrity, including the deterministic Admin-AI preview boundary.
 
-The small deterministic demo fixtures are versioned with the source because
-the installer and acceptance flow depend on their exact contents. They contain
-fictional data only and do not require Git LFS or a separate release download.
-
 ## Safety boundary
 
 All published service ports bind to loopback. Backend networks are internal,
@@ -65,26 +61,12 @@ coverage.
 
 ## Join the Zoo
 
-ChimpMaera is intended to grow through practical use and open contribution.
-Use it, inspect it, adapt it, challenge its assumptions and help improve the
-tools, integrations, evidence and documentation around it. Start with
-[CONTRIBUTING.md](CONTRIBUTING.md) and bring the part of the Zoo that you want
-to see exist.
+Use ChimpMaera, inspect how it works, adapt it to your context and contribute
+improvements through [CONTRIBUTING.md](CONTRIBUTING.md). Joining the Zoo means
+participating in an open community; it does not imply company membership,
+employment or authority.
 
-Participation does not create company membership, employment or authority over
-the project. It is an invitation to build in the open and make useful work
-easier for others to inspect and extend.
-
-## ChimpMaera Signature
-
-> Wildly adaptable. Strictly governed.  
-> Learn the Canon. Inspect the Evidence. Join the Zoo.
-
-Adaptability is bounded by the Canon, and claims are verified through evidence.
-`Join the Zoo.` invites contribution to the open community, not company
-membership or authority.
-
-## Additional tooling
+## Secondary tooling: video production reference
 
 `tools/video-production-reference/` provides an optional, inspectable,
 CPU-first reference workflow for validating versioned video jobs, rendering
@@ -96,9 +78,7 @@ The default synthetic smoke does not download a model or activate GPU/TTS.
 Full rendering remains explicit and fail-closed; see the tool's own
 [README](tools/video-production-reference/README.md) and
 [asset-use boundary](tools/video-production-reference/ASSET-USAGE.md).
-
-The reference is deliberately modest. If you can make the workflow clearer,
-faster or more capable while keeping it inspectable, contributions are welcome.
+Improvements to this secondary reference workflow are welcome.
 
 ## License
 
@@ -113,26 +93,23 @@ is governed by [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Citation
 
-If you use ChimpMaera in research, technical publications, benchmarks or a
-derived project, please cite the project using [CITATION.cff](CITATION.cff) or
-the following BibTeX entry:
+Citation metadata is provided in [CITATION.cff](CITATION.cff). A directly usable
+BibTeX entry is included below:
 
 ```bibtex
-@software{chimpmaera_2026,
-  author  = {Jim Pansky},
-  title   = {ChimpMaera},
-  year    = {2026},
-  version = {0.1.0},
-  url     = {https://github.com/JimPansky/ChimpMaera}
+@software{pansky_chimpmaera,
+  author = {Jim Pansky},
+  title = {ChimpMaera},
+  url = {https://github.com/JimPansky/ChimpMaera}
 }
 ```
 
 Citation is voluntary and does not replace license, notice, third-party, media
 or trademark terms.
 
-## Support the project
+## Support
 
-If ChimpMaera is useful to you and you want to support continued work, you can
-use [Ko-fi](https://ko-fi.com/chimpmaera) or
-[Buy Me a Coffee](https://www.buymeacoffee.com/jimpansky). Support does not
-grant project authority, governance rights or special product commitments.
+If ChimpMaera is useful to you, you can support its continued development via
+[Ko-fi](https://ko-fi.com/chimpmaera) or
+[Buy Me a Coffee](https://buymeacoffee.com/jimpansky). Support is optional and
+does not grant additional rights or project authority.
