@@ -24,6 +24,10 @@ These limits are part of the claim discipline required by
   decision after provider reconciliation.
 - Admin-AI is a deterministic local static-policy preview. It does not call a
   live LLM and does not create production authority.
+- The Paperless-ngx zoo adapter is a disabled-by-default, read-only client
+  boundary tested with synthetic HTTP fixtures. The stock demo does not install
+  or contact Paperless. Real-service compatibility, ingest, document content,
+  OCR, lifecycle, retention and backup/restore are not claimed.
 - Catalog and template entries are descriptive; not every entry is executable,
   and admission or popularity never grants runtime authority.
 - No DMS/compliance suitability or universal AI capability is claimed.

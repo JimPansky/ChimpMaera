@@ -47,3 +47,17 @@ tampered, expired, replayed or scope-mismatched authority fails closed. The
 owner signer key is created inside the runtime state volume and is not exposed
 to browser or seed code. No live LLM, production IAM, revoke service,
 distributed authority or production approval is claimed.
+
+Wave 2 places the deterministic static policy behind a versioned,
+provider-neutral `PolicyEvaluator` contract. The evaluator sees neutral intent
+and trusted server-owned policy/profile context, returns decision data only and
+cannot issue authority. A closed action-adapter ceiling and the Wave 1 gate
+remain the executable trust boundary; malformed or overbroad evaluator output
+fails closed.
+
+Wave 3 adds only a disabled-by-default Paperless-ngx read adapter seam. It can
+construct fixed GET requests for synthetic zoo metadata, sanitize responses and
+emit digest-only read receipts. It is not wired to the stock Compose stack and
+cannot upload, download document content, mutate or delete. A real Paperless
+service and its database, queue and converter supply chain remain uninstalled
+and unclaimed.

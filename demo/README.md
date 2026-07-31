@@ -49,6 +49,12 @@ Success prints `READY_VERIFIED` and loopback URLs for ChimpMaera, EspoCRM and
 Dolibarr. An unchanged rerun is idempotent. The Admin-AI PoC uses a
 deterministic local policy, not a live LLM or production delegation service.
 
+The source tree also contains a Wave 3 Paperless-ngx zoo adapter contract. It
+is intentionally disabled in this installer (`CM_DMS=off`) and is tested only
+against synthetic HTTP fixtures. It reads bounded metadata through fixed GET
+paths and has no upload, content-download, delete or arbitrary-URL operation.
+The playable stack does not install or claim compatibility with Paperless.
+
 After a SAFE_GUIDED install, the bounded endpoint smoke can be run with:
 
 ```sh
