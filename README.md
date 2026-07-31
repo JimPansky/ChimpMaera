@@ -74,6 +74,10 @@ See [docs/KNOWN-LIMITATIONS.md](docs/KNOWN-LIMITATIONS.md) and
 maps the shipped local implementation to the Canon without claiming production
 coverage.
 
+Repository-declared OCI, npm, CI and runtime/public byte closure can be checked
+offline with `npm run supply-chain:verify`; see
+[docs/SUPPLY-CHAIN.md](docs/SUPPLY-CHAIN.md) for its strict claim limits.
+
 ## Join the Zoo
 
 Use ChimpMaera, inspect how it works, adapt it to your context and contribute

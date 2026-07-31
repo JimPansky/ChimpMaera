@@ -61,3 +61,9 @@ emit digest-only read receipts. It is not wired to the stock Compose stack and
 cannot upload, download document content, mutate or delete. A real Paperless
 service and its database, queue and converter supply chain remain uninstalled
 and unclaimed.
+
+Wave 4 unifies repository-declared OCI, npm and CI inputs in an offline
+artifact lock and checks runtime-image and public-release byte closure. This is
+a declaration-consistency control. It does not establish registry signatures,
+provenance, SBOM completeness, vulnerability status, license clearance or
+reproducible builds.

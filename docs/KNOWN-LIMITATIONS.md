@@ -9,6 +9,9 @@ These limits are part of the claim discipline required by
   v2.
 - First installation can require access to the registries for the pinned
   container images. No offline image bundle is included.
+- The supply-chain verifier checks repository declarations offline. It does not
+  verify registry signatures, provenance, transitive container SBOMs,
+  vulnerabilities, licenses or reproducible builds.
 - Availability, hostile-host isolation, multi-node operation, disaster
   recovery, upgrades and production identity integration are not claimed.
 - Loopback and internal-network controls reduce accidental exposure but do not

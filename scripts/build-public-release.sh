@@ -223,6 +223,10 @@ for candidate in root.rglob("*"):
         and not relative.endswith(".pyc")
         and relative != "package-lock.before-version-reconcile.json"
         and relative not in repository_only_files
+        and not relative.startswith(".github/")
+        and not relative.startswith(".chimpmaera-acceptance/")
+        and not relative.startswith(".chimpmaera-demo/")
+        and not relative.startswith("docs/development/")
     ):
         raise SystemExit(f"UNMANIFESTED_SOURCE_FILE:{relative}")
 
