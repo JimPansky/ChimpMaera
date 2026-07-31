@@ -101,12 +101,10 @@ or trademark terms.
 
 ## Support
 
-If ChimpMaera is useful to you, you can support its continued development:
+Like ChimpMaera and want to Support the Creator? Here you go:
 
 <p>
   <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support ChimpMaera on Ko-fi" width="260" height="48"></a>
   &nbsp;
   <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support ChimpMaera on Buy Me a Coffee" width="260" height="48"></a>
 </p>
-
-Support is optional and does not grant additional rights or project authority.
