@@ -16,8 +16,11 @@ credentials and should be used only with synthetic data on a disposable or
 development host.
 
 ## Watch ChimpMaera
+
 Easy Start: [Meet Your New AI Colleague | ChimpMaera](https://youtu.be/8mB7O81Y2xA)
+
 More Infos: [How ChimpMaera Governs AI Actions | Plan, Approval, Evidence](https://youtu.be/8lj5nd-LJa4)
+
 The Real Deal: [Controllable AI: Capability Is Not Authority | ChimpMaera](https://youtu.be/mxN9biyelZ0)
 
 ## Start here
