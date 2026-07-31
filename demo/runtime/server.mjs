@@ -16,6 +16,10 @@ import {
 } from "./enforcement-gate.mjs";
 import { AdminAiPoc, validateAdminAiPocPolicy } from "./admin-ai-poc.mjs";
 import { ApprovalWorkbench } from "./approval-workbench.mjs";
+import {
+  TRUSTED_POLICY_CONTEXT_SCHEMA,
+  createInternalStaticPolicyEvaluator,
+} from "./policy-evaluator.mjs";
 
 const authorityProfile = process.env.CM_AUTHORITY_PROFILE ?? "SAFE_GUIDED";
 const authorityManifestId = process.env.CM_AUTHORITY_MANIFEST_ID
@@ -159,9 +163,23 @@ const mutationGate = new DemoMutationGate({
   provider,
   adminAiPolicyDigest: adminAiPolicySha256,
 });
+const policyEvaluator = createInternalStaticPolicyEvaluator({
+  policy: adminAiPolicy,
+  policySourceDigest: adminAiPolicySha256,
+});
 const adminAiPoc = new AdminAiPoc({
   policy: adminAiPolicy,
   policyDigest: adminAiPolicySha256,
+  policyEvaluator,
+  trustedPolicyContext: {
+    schemaVersion: TRUSTED_POLICY_CONTEXT_SCHEMA,
+    profileId: mutationGate.authorityContext.profileId,
+    profileGeneration: mutationGate.authorityContext.profileGeneration,
+    policyId: adminAiPolicy.policyId,
+    policyGeneration: mutationGate.authorityContext.policyGeneration,
+    policySourceDigest: adminAiPolicySha256,
+    policySemanticDigest: policyEvaluator.policySemanticDigest,
+  },
   signAuthority: (fields) => mutationGate.agentAuthority(fields),
 });
 const approvalWorkbench = new ApprovalWorkbench({
