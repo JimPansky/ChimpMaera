@@ -161,7 +161,7 @@ class BundledReferenceAssets(unittest.TestCase):
         files = [path for path in ROOT.rglob("*") if path.is_file()]
         repo_root = ROOT.parents[1]
         root_readme = (repo_root / "README.md").read_text(encoding="utf-8")
-        narrow_section = root_readme.split("## Video Production Reference Docker", 1)[1]
+        narrow_section = root_readme.split("## Additional tooling", 1)[1]
         for needle in needles:
             self.assertNotIn(needle, narrow_section.lower())
         for path in files:

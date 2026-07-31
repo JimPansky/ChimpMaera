@@ -1,15 +1,17 @@
 {
   "schemaVersion": "chimpmaera.demo/network-egress-policy/v1",
-  "policyId": "p0-2-local-default-deny-v1",
+  "policyId": "local-default-deny-v1",
   "scope": "local ChimpMaera v0.1 CRM_ERP_CORE demo",
   "claimBoundary": "non-production local PoC guardrail, not a hostile-host or production security claim",
+  "description": "This manifest documents the demo's local default-deny egress posture. No external destination is allowlisted.",
+  "probePurpose": "probeGroups contain negative examples used to verify denial behavior; they are not permitted destinations.",
   "egressMode": "disabled",
   "allowedExternalDestinations": [],
   "defaultDecision": "DENY",
   "probeGroups": [
     {
       "id": "unauthorized_external_target",
-      "examples": ["https://example.invalid/", "http://93.184.216.34/"],
+      "examples": ["https://example.invalid/", "http://192.0.2.1/"],
       "expectedDecision": "DENY_BY_INTERNAL_BACKEND_NETWORKS_AND_NON_MASQUERADED_LOOPBACK_INGRESS"
     },
     {

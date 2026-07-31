@@ -1,6 +1,7 @@
 # ChimpMaera v0.1 public release identity manifest
 # Format: source<TAB>destination<TAB>mode
 .gitignore	.gitignore	0644
+assets/brand/chimpmaera-master.svg	assets/brand/chimpmaera-master.svg	0644
 CITATION.cff	CITATION.cff	0644
 CODE_OF_CONDUCT.md	CODE_OF_CONDUCT.md	0644
 CONTRIBUTING.md	CONTRIBUTING.md	0644
@@ -29,7 +30,7 @@ demo/manifests/authority/admin-ai-poc-policy-v1.json	demo/manifests/authority/ad
 demo/manifests/catalog/crm-erp-playable-v1.json	demo/manifests/catalog/crm-erp-playable-v1.json	0644
 demo/manifests/fixtures/panskys-zoo-demo-v1.json	demo/manifests/fixtures/panskys-zoo-demo-v1.json	0644
 demo/manifests/identity/panskys-zoo-v1.json	demo/manifests/identity/panskys-zoo-v1.json	0644
-demo/manifests/network/p0-2-egress-policy-v1.json	demo/manifests/network/p0-2-egress-policy-v1.json	0644
+demo/manifests/network/local-egress-policy-v1.json	demo/manifests/network/local-egress-policy-v1.json	0644
 demo/provider-bootstrap.sh	demo/provider-bootstrap.sh	0755
 demo/readback.sh	demo/readback.sh	0755
 demo/runtime/admin-ai-poc.mjs	demo/runtime/admin-ai-poc.mjs	0644
@@ -60,6 +61,7 @@ schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/p
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
+tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-fixture-manifest.test.ts	tests/demo-fixture-manifest.test.ts	0644
 tests/poc-early-admin-ai-setup.test.ts	tests/poc-early-admin-ai-setup.test.ts	0644
 tests/poc-guided-demo-bootstrap.test.ts	tests/poc-guided-demo-bootstrap.test.ts	0644

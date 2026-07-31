@@ -121,9 +121,9 @@ fixture_manifest_sha256="$(
   sha256sum "$root/demo/manifests/fixtures/$fixture_manifest_id.json" |
     cut -d' ' -f1
 )"
-egress_policy_manifest_id=p0-2-local-default-deny-v1
+egress_policy_manifest_id=local-default-deny-v1
 egress_policy_manifest_sha256="$(
-  sha256sum "$root/demo/manifests/network/p0-2-egress-policy-v1.json" |
+  sha256sum "$root/demo/manifests/network/local-egress-policy-v1.json" |
     cut -d' ' -f1
 )"
 

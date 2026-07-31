@@ -197,10 +197,12 @@ if total_bytes > 100 * 1024 * 1024:
     raise SystemExit("MANIFEST_BYTE_LIMIT")
 
 expected = set(destinations)
+repository_only_files = {".github/FUNDING.yml", "SHA256SUMS"}
 for candidate in root.rglob("*"):
     relative = candidate.relative_to(root).as_posix()
     if (
-        relative.startswith("node_modules/")
+        relative.startswith(".git/")
+        or relative.startswith("node_modules/")
         or relative.startswith("dist/")
         or "/__pycache__/" in f"/{relative}"
         or relative.endswith(".pyc")
@@ -220,6 +222,7 @@ for candidate in root.rglob("*"):
         and "/__pycache__/" not in f"/{relative}"
         and not relative.endswith(".pyc")
         and relative != "package-lock.before-version-reconcile.json"
+        and relative not in repository_only_files
     ):
         raise SystemExit(f"UNMANIFESTED_SOURCE_FILE:{relative}")
 
