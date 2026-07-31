@@ -48,16 +48,16 @@
       }
     },
     {
-      "id": "logo-negative-transparent-v1",
+      "id": "logo-negative-redclaw-v1",
       "path": "assets/reference/chimpmaera-logo-negative.svg",
-      "sha256": "08f95fb0d976310a704a090b9024aab107a574833d67829531e488d5758d1fa0",
+      "sha256": "d986a832ca2052d857f00f944184f95836ddd7780e5e582fd1a9ebb46dd3f0d2",
       "media": {
         "mediaClass": "svg",
         "mimeType": "image/svg+xml",
-        "width": 1076,
-        "height": 566,
-        "viewBox": "92 261 1076 566",
-        "transparentBackground": true
+        "width": 1254,
+        "height": 1254,
+        "viewBox": "0 0 1254 1254",
+        "transparentBackground": false
       },
       "use": {
         "optional": true,
