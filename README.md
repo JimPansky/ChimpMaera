@@ -72,20 +72,6 @@ improvements through [CONTRIBUTING.md](CONTRIBUTING.md). Joining the Zoo means
 participating in an open community; it does not imply company membership,
 employment or authority.
 
-## Secondary tooling: video production reference
-
-`tools/video-production-reference/` provides an optional, inspectable,
-CPU-first reference workflow for validating versioned video jobs, rendering
-synthetic or user-supplied assets and producing local QA output. It includes a
-replaceable German voice sample and transparent logo example. No job is
-required to use either asset.
-
-The default synthetic smoke does not download a model or activate GPU/TTS.
-Full rendering remains explicit and fail-closed; see the tool's own
-[README](tools/video-production-reference/README.md) and
-[asset-use boundary](tools/video-production-reference/ASSET-USAGE.md).
-Improvements to this secondary reference workflow are welcome.
-
 ## License
 
 Code is provided under Apache-2.0 as described in [LICENSE](LICENSE),
