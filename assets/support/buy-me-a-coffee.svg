@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="96" viewBox="0 0 520 96" role="img" aria-labelledby="title desc">
+  <title id="title">Support ChimpMaera on Buy Me a Coffee</title>
+  <desc id="desc">Yellow support button with a coffee cup icon.</desc>
+  <rect x="1" y="1" width="518" height="94" rx="16" fill="#ffdd33" stroke="#b79900" stroke-width="2"/>
+  <g transform="translate(28 22)" fill="none" stroke="#1f2328" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h40v23c0 11-8 20-20 20S4 39 4 28V5Z" fill="#fff"/>
+    <path d="M44 11h5c8 0 13 5 13 12s-5 12-13 12h-7"/>
+    <path d="M12 0c0-5 5-5 5-10M25 0c0-5 5-5 5-10M38 0c0-5 5-5 5-10" stroke-width="4"/>
+  </g>
+  <text x="112" y="60" fill="#1f2328" font-family="DejaVu Sans, Arial, sans-serif" font-size="34" font-weight="700">Buy Me a Coffee</text>
+</svg>

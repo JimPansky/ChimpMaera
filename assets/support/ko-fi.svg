@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="96" viewBox="0 0 520 96" role="img" aria-labelledby="title desc">
+  <title id="title">Support ChimpMaera on Ko-fi</title>
+  <desc id="desc">Blue support button with a coffee cup and heart icon.</desc>
+  <rect x="1" y="1" width="518" height="94" rx="16" fill="#087ca7" stroke="#055b7c" stroke-width="2"/>
+  <g transform="translate(28 22)">
+    <path d="M4 5h40v23c0 11-8 20-20 20S4 39 4 28V5Z" fill="#fff"/>
+    <path d="M44 11h5c8 0 13 5 13 12s-5 12-13 12h-7" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    <path d="M24 32 13 21c-8-9 5-19 11-10 6-9 19 1 11 10L24 32Z" fill="#e8142f"/>
+  </g>
+  <text x="112" y="60" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="34" font-weight="700">Support on Ko-fi</text>
+</svg>
