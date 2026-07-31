@@ -1,0 +1,218 @@
+{
+  "apiVersion": "chimpmaera.dev/poc-showcase/v1",
+  "kind": "PocShowcase",
+  "showcaseId": "chimpmaera/poc-release-aha-20260728",
+  "revision": 1,
+  "productDefinition": {
+    "goal": "DYNAMIC_EXTENSIBLE_AGENT_OS_POC",
+    "completionHistoryStatement": "13/14 records historical plan completion for the previous local/private-alpha path; it is not total ChimpMaera product completeness.",
+    "primaryMetric": "DEMONSTRABLE_POC_POWER_EXTENSIBILITY_UNDERSTANDABILITY",
+    "localBoundedStartupCommand": "npm run poc:showcase:check",
+    "claimBoundary": "LOCAL_SYNTHETIC_POC_NO_PRODUCTION_CLAIM"
+  },
+  "demoLoop": {
+    "intent": "Install a local demo module, bind typed rights to an agent and user, run one synthetic workflow, inspect plan, policy, receipt and audit evidence, then roll it back.",
+    "typedPlan": [
+      "select_module_from_catalog",
+      "validate_manifest_template_policy",
+      "bind_agent_user_typed_rights",
+      "dry_run_admin_ai_approval",
+      "execute_demo_grade_module_action",
+      "record_receipt_audit_and_rollback"
+    ],
+    "approvalPolicy": {
+      "defaultDenyUndeclaredAction": true,
+      "approvalMode": "ADMIN_AI_DRY_RUN",
+      "typedRightsRequired": true,
+      "useTimeRevocationCheck": true
+    },
+    "actionReceipt": {
+      "receiptFields": [
+        "intentDigest",
+        "planDigest",
+        "policyRevision",
+        "moduleId",
+        "actionId",
+        "tenantId",
+        "cellId",
+        "receiptDigest",
+        "rollbackDigest"
+      ],
+      "auditEvidenceRequired": true,
+      "rollbackDemonstrated": true
+    }
+  },
+  "modules": [
+    {
+      "moduleId": "chimpmaera/demo-forge-authority",
+      "label": "Code and forge authority reference",
+      "capabilityArea": "CODE_FORGE_AUTHORITY",
+      "evidenceClass": "EXECUTABLE",
+      "evidenceRefs": [
+        "docs/x3-action-gateway-enforcement-v1.md",
+        "tests/extension-action-gateway.test.ts",
+        "artifacts/gate-g/gga1-frontdoor-registry.json",
+        "tests/poc-showcase-e2e.test.ts",
+        "examples/poc-release/e2e-coverage-v1.json",
+        "artifacts/poc-release/showcase-e2e-v1.json"
+      ],
+      "syntheticDataOnly": true,
+      "demoGradeIntegration": true,
+      "typedActions": [
+        "forge.plan_change",
+        "forge.propose_change",
+        "forge.audit_change"
+      ],
+      "typedRights": [
+        "right.forge.plan",
+        "right.forge.propose",
+        "right.forge.audit"
+      ],
+      "rollbackPath": "delete local synthetic proposal and revoke forge demo lease"
+    },
+    {
+      "moduleId": "community/demo-document-processing",
+      "label": "Document processing template module",
+      "capabilityArea": "DOCUMENT_PROCESSING",
+      "evidenceClass": "EXECUTABLE",
+      "evidenceRefs": [
+        "examples/micro-ecosystem/operations-authoring-bundle-v1.json",
+        "examples/micro-ecosystem/README.md",
+        "artifacts/micro-ecosystem/me4-community-workflow.json",
+        "tests/poc-showcase-e2e.test.ts",
+        "examples/poc-release/e2e-coverage-v1.json",
+        "artifacts/poc-release/showcase-e2e-v1.json"
+      ],
+      "syntheticDataOnly": true,
+      "demoGradeIntegration": true,
+      "typedActions": [
+        "document.extract_summary",
+        "document.classify_policy"
+      ],
+      "typedRights": [
+        "right.document.read_synthetic",
+        "right.document.write_local_result"
+      ],
+      "rollbackPath": "remove local catalog admission and generated synthetic document result"
+    },
+    {
+      "moduleId": "chimpmaera/operations-bi-reference",
+      "label": "BI and operations reference module",
+      "capabilityArea": "BI_OPERATIONS",
+      "evidenceClass": "EXECUTABLE",
+      "evidenceRefs": [
+        "examples/micro-ecosystem/operations-reference-ecosystem-v1.json",
+        "runtime/x5/synthetic-operations-fixtures-v1.json",
+        "tests/micro-ecosystem-reference.test.ts",
+        "tests/poc-showcase-e2e.test.ts",
+        "examples/poc-release/e2e-coverage-v1.json",
+        "artifacts/poc-release/showcase-e2e-v1.json"
+      ],
+      "syntheticDataOnly": true,
+      "demoGradeIntegration": true,
+      "typedActions": [
+        "operations.summarize",
+        "operations.export"
+      ],
+      "typedRights": [
+        "capability.operations-read",
+        "capability.operations-export"
+      ],
+      "rollbackPath": "run ME lifecycle cleanup and verify zero local catalog residue"
+    },
+    {
+      "moduleId": "community/demo-business-action",
+      "label": "CRM ERP style business action reference",
+      "capabilityArea": "BUSINESS_ACTION",
+      "evidenceClass": "EXECUTABLE",
+      "evidenceRefs": [
+        "docs/contracts/admin-ai-control-plane-v1.md",
+        "docs/security/admin-ai-trust-boundary-v1.md",
+        "artifacts/approval-plane/ap4-gateway-enforcement.json",
+        "tests/poc-showcase-e2e.test.ts",
+        "examples/poc-release/e2e-coverage-v1.json",
+        "artifacts/poc-release/showcase-e2e-v1.json"
+      ],
+      "syntheticDataOnly": true,
+      "demoGradeIntegration": true,
+      "typedActions": [
+        "business.prepare_draft_update",
+        "business.request_approval"
+      ],
+      "typedRights": [
+        "right.business.prepare_synthetic",
+        "right.business.approval_preview"
+      ],
+      "rollbackPath": "discard synthetic draft and revoke approval-preview lease"
+    }
+  ],
+  "contributorPath": {
+    "templateRefs": [
+      "examples/micro-ecosystem/README.md",
+      "examples/micro-ecosystem/operations-authoring-bundle-v1.json"
+    ],
+    "validationCommands": [
+      "npm run me1:contracts-sdk:check",
+      "npm run me2:catalog-lifecycle:check",
+      "npm run poc:showcase:check"
+    ],
+    "installComposeDemo": "compose the local authoring bundle into the showcase catalog with remote resolution disabled",
+    "rightsRollbackDemo": "grant typed demo rights, revoke them at use time and verify rollback evidence"
+  },
+  "safetyFloor": {
+    "noEmbeddedRealSecrets": true,
+    "tenantCellIsolation": true,
+    "deterministicCleanupRollback": true,
+    "externalSystemsForbiddenByDefault": true,
+    "publicationAuthorityRequired": true,
+    "ownerRightsAuthorityRequired": true,
+    "hostileTenancyClaimForbidden": true
+  },
+  "themeReclassification": [
+    {
+      "theme": "Secure Local Prototype V1 and Private Alpha evidence",
+      "status": "COMPLETE/CLOSED",
+      "rationale": "Historical local evidence remains accepted and should not receive more invariant layers."
+    },
+    {
+      "theme": "PoC release aha loop",
+      "status": "POC_REQUIRED",
+      "rationale": "The release must demonstrate intent, typed plan, approval, module action, receipt, audit and rollback."
+    },
+    {
+      "theme": "Module catalog and contributor template",
+      "status": "POC_REQUIRED",
+      "rationale": "Extensibility is central to the corrected product goal."
+    },
+    {
+      "theme": "Gitea typed authority real cycle",
+      "status": "POC_OPTIONAL",
+      "rationale": "It is valuable reference evidence but not a hard PoC gate when demo-grade adapters prove the extension lifecycle."
+    },
+    {
+      "theme": "Admin AI intent and policy model",
+      "status": "POC_REQUIRED",
+      "rationale": "Admin AI may be shown as dry-run planning and approval explanation with fail-closed authority boundaries."
+    },
+    {
+      "theme": "G00 G01 G14 publication rights owner authority",
+      "status": "AUTHORITY_REQUIRED",
+      "rationale": "Publication, rights and owner authority remain separate gates."
+    },
+    {
+      "theme": "Production ERP CRM mail collaboration integrations",
+      "status": "PARKED_OUT_OF_SCOPE",
+      "rationale": "Perfect production integrations are later validation, not early PoC evidence."
+    },
+    {
+      "theme": "P13 overload and broad performance claims",
+      "status": "TECHNICAL_BLOCKER",
+      "rationale": "The historical host-safety blocker remains real for performance/load claims but does not block the bounded PoC demo."
+    },
+    {
+      "theme": "Operations workbench UI and external channel launch",
+      "status": "PREPARATION_ONLY",
+      "rationale": "Current artifacts inform onboarding and explainability but do not authorize launch, accounts or live users."
+    }
+  ]
+}

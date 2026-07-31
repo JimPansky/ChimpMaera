@@ -1,0 +1,23 @@
+services:
+  cm-video-reference:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chimpmaera/video-production-reference:2026-07-30-v1
+    network_mode: "none"
+    read_only: true
+    user: "${CM_VIDEO_UID:-65532}:${CM_VIDEO_GID:-65532}"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=256m
+    volumes:
+      - ./examples/minimal/job:/job:ro
+      - ./examples/minimal/assets:/assets:ro
+      - ./.video-output:/output:rw
+    command:
+      - validate
+      - --job
+      - /job/video-job.yaml

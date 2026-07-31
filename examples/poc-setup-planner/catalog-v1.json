@@ -1,0 +1,498 @@
+{
+  "apiVersion": "chimpmaera.dev/poc-setup-compatibility-catalog/v1",
+  "kind": "PocSetupCompatibilityCatalog",
+  "catalogId": "chimpmaera-poc-curated",
+  "catalogVersion": "1.0.0",
+  "provenance": {
+    "source": "BUILTIN",
+    "label": "ChimpMaera curated local PoC catalog",
+    "trustTier": "CURATED_VERIFIED",
+    "rights": "Apache-2.0",
+    "manifestPath": "examples/poc-setup-planner/catalog-v1.json",
+    "digest": "sha256:c5de1b0e524c155f247226cfb4589e60932fd0e95261938b224d0b656660b9e1"
+  },
+  "capabilityIds": [
+    "capability.audit.digest",
+    "capability.business.action",
+    "capability.catalog.author",
+    "capability.document.process",
+    "capability.forge.authority",
+    "capability.health.local",
+    "capability.operations.inspect",
+    "capability.setup.plan",
+    "capability.synthetic.simulate"
+  ],
+  "components": [
+    {
+      "componentId": "runtime.node",
+      "kind": "SYSTEM",
+      "displayName": "Node.js local runtime",
+      "version": "24.0.0",
+      "executionMode": "SUPPORT",
+      "capabilityIds": ["capability.health.local"],
+      "requiredDependencies": [],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 0,
+      "networkAccess": [],
+      "effects": [],
+      "provenance": {
+        "label": "detected host runtime",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "runtime-distribution-terms"
+      }
+    },
+    {
+      "componentId": "core.safe-control-plane",
+      "kind": "SYSTEM",
+      "displayName": "Safe local control plane",
+      "version": "1.0.0",
+      "executionMode": "SUPPORT",
+      "capabilityIds": ["capability.setup.plan", "capability.audit.digest"],
+      "requiredDependencies": [
+        {
+          "componentId": "runtime.node",
+          "versionConstraint": ">=24.0.0 <25.0.0"
+        }
+      ],
+      "incompatibleWith": ["tool.legacy-unsafe-network"],
+      "downloadBytes": 0,
+      "diskBytes": 32768,
+      "networkAccess": [],
+      "effects": ["write_owned_playground_state"],
+      "provenance": {
+        "label": "ChimpMaera local PoC",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "data.synthetic-fixtures",
+      "kind": "MODULE",
+      "displayName": "Shared synthetic fixtures",
+      "version": "1.0.0",
+      "executionMode": "SUPPORT",
+      "capabilityIds": ["capability.synthetic.simulate"],
+      "requiredDependencies": [],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 16384,
+      "networkAccess": [],
+      "effects": [],
+      "provenance": {
+        "label": "repository-local synthetic data",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "CC0-1.0"
+      }
+    },
+    {
+      "componentId": "simulator.shared-poc",
+      "kind": "SIMULATOR",
+      "displayName": "Shared deterministic PoC simulator",
+      "version": "1.0.0",
+      "executionMode": "SYNTHETIC",
+      "capabilityIds": ["capability.synthetic.simulate"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 8192,
+      "networkAccess": [],
+      "effects": ["synthetic_dry_run"],
+      "provenance": {
+        "label": "accepted six-use-case simulator",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "provider.forge-local",
+      "kind": "PROVIDER",
+      "displayName": "Local forge provider",
+      "version": "1.1.0",
+      "executionMode": "REAL",
+      "capabilityIds": ["capability.forge.authority"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 4096,
+      "networkAccess": [],
+      "effects": ["write_synthetic_forge_proposal"],
+      "provenance": {
+        "label": "curated local forge adapter",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "provider.forge-alternative",
+      "kind": "PROVIDER",
+      "displayName": "Alternative local forge provider",
+      "version": "2.0.0",
+      "executionMode": "REAL",
+      "capabilityIds": ["capability.forge.authority"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 6144,
+      "networkAccess": [],
+      "effects": ["write_synthetic_forge_proposal"],
+      "provenance": {
+        "label": "curated provider alternative",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "provider.document-local",
+      "kind": "PROVIDER",
+      "displayName": "Local document provider",
+      "version": "1.0.0",
+      "executionMode": "REAL",
+      "capabilityIds": ["capability.document.process"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 4096,
+      "networkAccess": [],
+      "effects": ["write_synthetic_document_result"],
+      "provenance": {
+        "label": "curated local document adapter",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "provider.operations-local",
+      "kind": "PROVIDER",
+      "displayName": "Local operations provider",
+      "version": "1.0.0",
+      "executionMode": "REAL",
+      "capabilityIds": ["capability.operations.inspect"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 4096,
+      "networkAccess": [],
+      "effects": ["read_synthetic_operations"],
+      "provenance": {
+        "label": "curated local operations adapter",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "provider.business-local",
+      "kind": "PROVIDER",
+      "displayName": "Local business action provider",
+      "version": "1.0.0",
+      "executionMode": "REAL",
+      "capabilityIds": ["capability.business.action"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 4096,
+      "networkAccess": [],
+      "effects": ["prepare_synthetic_business_action"],
+      "provenance": {
+        "label": "curated local business adapter",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "provider.catalog-local",
+      "kind": "PROVIDER",
+      "displayName": "Local catalog authoring provider",
+      "version": "1.0.0",
+      "executionMode": "REAL",
+      "capabilityIds": ["capability.catalog.author"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 4096,
+      "networkAccess": [],
+      "effects": ["write_owned_catalog_candidate"],
+      "provenance": {
+        "label": "curated local catalog adapter",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "tool.receipt-viewer",
+      "kind": "TOOL",
+      "displayName": "Digest receipt viewer",
+      "version": "1.0.0",
+      "executionMode": "SUPPORT",
+      "capabilityIds": ["capability.audit.digest"],
+      "requiredDependencies": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "incompatibleWith": [],
+      "downloadBytes": 0,
+      "diskBytes": 2048,
+      "networkAccess": [],
+      "effects": [],
+      "provenance": {
+        "label": "curated local inspection tool",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    },
+    {
+      "componentId": "tool.legacy-unsafe-network",
+      "kind": "TOOL",
+      "displayName": "Negative incompatible fixture",
+      "version": "0.1.0",
+      "executionMode": "SUPPORT",
+      "capabilityIds": ["capability.health.local"],
+      "requiredDependencies": [],
+      "incompatibleWith": ["core.safe-control-plane"],
+      "downloadBytes": 1024,
+      "diskBytes": 2048,
+      "networkAccess": ["https://unsafe.invalid"],
+      "effects": ["unbounded_network_probe"],
+      "provenance": {
+        "label": "negative test fixture only",
+        "trustTier": "CURATED_VERIFIED",
+        "rights": "Apache-2.0"
+      }
+    }
+  ],
+  "useCases": [
+    {
+      "useCaseId": "POC-UC-001",
+      "displayName": "Code and forge authority",
+      "requiredCapabilities": ["capability.setup.plan", "capability.forge.authority"],
+      "requiredComponents": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "providerAlternatives": [
+        {
+          "groupId": "forge-provider",
+          "capabilityId": "capability.forge.authority",
+          "oneOfComponentIds": ["provider.forge-local", "provider.forge-alternative"]
+        }
+      ],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "optionalComponentIds": [],
+      "syntheticSimulatorComponentId": "simulator.shared-poc",
+      "incompatibleWithComponentIds": ["tool.legacy-unsafe-network"],
+      "effects": ["write_synthetic_forge_proposal"]
+    },
+    {
+      "useCaseId": "POC-UC-002",
+      "displayName": "Document processing",
+      "requiredCapabilities": ["capability.setup.plan", "capability.document.process"],
+      "requiredComponents": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "providerAlternatives": [
+        {
+          "groupId": "document-provider",
+          "capabilityId": "capability.document.process",
+          "oneOfComponentIds": ["provider.document-local"]
+        }
+      ],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "optionalComponentIds": [],
+      "syntheticSimulatorComponentId": "simulator.shared-poc",
+      "incompatibleWithComponentIds": ["tool.legacy-unsafe-network"],
+      "effects": ["write_synthetic_document_result"]
+    },
+    {
+      "useCaseId": "POC-UC-003",
+      "displayName": "BI and operations",
+      "requiredCapabilities": ["capability.setup.plan", "capability.operations.inspect"],
+      "requiredComponents": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "providerAlternatives": [
+        {
+          "groupId": "operations-provider",
+          "capabilityId": "capability.operations.inspect",
+          "oneOfComponentIds": ["provider.operations-local"]
+        }
+      ],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "optionalComponentIds": [],
+      "syntheticSimulatorComponentId": "simulator.shared-poc",
+      "incompatibleWithComponentIds": ["tool.legacy-unsafe-network"],
+      "effects": ["read_synthetic_operations"]
+    },
+    {
+      "useCaseId": "POC-UC-004",
+      "displayName": "Business action",
+      "requiredCapabilities": ["capability.setup.plan", "capability.business.action"],
+      "requiredComponents": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "providerAlternatives": [
+        {
+          "groupId": "business-provider",
+          "capabilityId": "capability.business.action",
+          "oneOfComponentIds": ["provider.business-local"]
+        }
+      ],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "optionalComponentIds": [],
+      "syntheticSimulatorComponentId": "simulator.shared-poc",
+      "incompatibleWithComponentIds": ["tool.legacy-unsafe-network"],
+      "effects": ["prepare_synthetic_business_action"]
+    },
+    {
+      "useCaseId": "POC-UC-005",
+      "displayName": "Contributor authoring",
+      "requiredCapabilities": ["capability.setup.plan", "capability.catalog.author"],
+      "requiredComponents": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "providerAlternatives": [
+        {
+          "groupId": "catalog-provider",
+          "capabilityId": "capability.catalog.author",
+          "oneOfComponentIds": ["provider.catalog-local"]
+        }
+      ],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "optionalComponentIds": [],
+      "syntheticSimulatorComponentId": "simulator.shared-poc",
+      "incompatibleWithComponentIds": ["tool.legacy-unsafe-network"],
+      "effects": ["write_owned_catalog_candidate"]
+    },
+    {
+      "useCaseId": "POC-UC-006",
+      "displayName": "Onboarding first run",
+      "requiredCapabilities": ["capability.setup.plan", "capability.health.local"],
+      "requiredComponents": [
+        {
+          "componentId": "core.safe-control-plane",
+          "versionConstraint": ">=1.0.0 <2.0.0"
+        },
+        {
+          "componentId": "data.synthetic-fixtures",
+          "versionConstraint": "1.0.0"
+        }
+      ],
+      "providerAlternatives": [],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "optionalComponentIds": [],
+      "syntheticSimulatorComponentId": "simulator.shared-poc",
+      "incompatibleWithComponentIds": ["tool.legacy-unsafe-network"],
+      "effects": ["write_owned_playground_state"]
+    }
+  ],
+  "baseTemplates": [
+    {
+      "templateId": "quick-tour",
+      "displayName": "Quick Tour",
+      "recommended": true,
+      "selectedUseCaseIds": [
+        "POC-UC-001",
+        "POC-UC-002",
+        "POC-UC-003",
+        "POC-UC-004",
+        "POC-UC-005",
+        "POC-UC-006"
+      ],
+      "defaultComponentIds": ["core.safe-control-plane", "data.synthetic-fixtures"],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "requestedAuthorityProfile": "SAFE_GUIDED"
+    },
+    {
+      "templateId": "business-playground",
+      "displayName": "Business Playground",
+      "recommended": false,
+      "selectedUseCaseIds": ["POC-UC-002", "POC-UC-003", "POC-UC-004"],
+      "defaultComponentIds": ["core.safe-control-plane", "data.synthetic-fixtures"],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "requestedAuthorityProfile": "SAFE_GUIDED"
+    },
+    {
+      "templateId": "builder-lab",
+      "displayName": "Builder Lab",
+      "recommended": false,
+      "selectedUseCaseIds": ["POC-UC-001", "POC-UC-005"],
+      "defaultComponentIds": ["core.safe-control-plane", "data.synthetic-fixtures"],
+      "recommendedComponentIds": ["tool.receipt-viewer"],
+      "requestedAuthorityProfile": "DEVELOPER_ELEVATED"
+    }
+  ]
+}

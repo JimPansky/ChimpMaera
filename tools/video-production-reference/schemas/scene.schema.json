@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.local/schemas/scene.schema.json",
+  "title": "ChimpMaera Video Scene",
+  "type": "object",
+  "required": ["sceneId", "startSeconds", "endSeconds", "shotPath", "sha256", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "sceneId": {"type": "string", "pattern": "^S[0-9]{2}$"},
+    "startSeconds": {"type": "number", "minimum": 0},
+    "endSeconds": {"type": "number", "exclusiveMinimum": 0},
+    "shotPath": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "status": {"enum": ["accepted", "rejected", "unknown"]},
+    "visualPrinciple": {"type": "string"}
+  }
+}
+

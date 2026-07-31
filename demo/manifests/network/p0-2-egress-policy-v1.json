@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "chimpmaera.demo/network-egress-policy/v1",
+  "policyId": "p0-2-local-default-deny-v1",
+  "scope": "local ChimpMaera v0.1 CRM_ERP_CORE demo",
+  "claimBoundary": "non-production local PoC guardrail, not a hostile-host or production security claim",
+  "egressMode": "disabled",
+  "allowedExternalDestinations": [],
+  "defaultDecision": "DENY",
+  "probeGroups": [
+    {
+      "id": "unauthorized_external_target",
+      "examples": ["https://example.invalid/", "http://93.184.216.34/"],
+      "expectedDecision": "DENY_BY_INTERNAL_BACKEND_NETWORKS_AND_NON_MASQUERADED_LOOPBACK_INGRESS"
+    },
+    {
+      "id": "localhost_link_local_cloud_metadata",
+      "examples": [
+        "http://127.0.0.1/",
+        "http://169.254.1.1/",
+        "http://169.254.169.254/latest/meta-data/"
+      ],
+      "expectedDecision": "DENY_BY_INTERNAL_BACKEND_NETWORKS_AND_NON_MASQUERADED_LOOPBACK_INGRESS"
+    },
+    {
+      "id": "dns_redirect_bypass",
+      "examples": [
+        "http://rebinding.fixture.invalid/",
+        "https://redirect.fixture.invalid/to/metadata",
+        "https://allowed.invalid@169.254.169.254/"
+      ],
+      "expectedDecision": "DENY_BY_INTERNAL_BACKEND_NETWORKS_AND_NON_MASQUERADED_LOOPBACK_INGRESS"
+    }
+  ],
+  "nonDelegation": {
+    "helpersMayGrantNetworkAuthority": false,
+    "runtimeMayOverridePolicy": false
+  },
+  "receipts": {
+    "staticPolicyManifestRequired": true,
+    "liveProbeReceiptsRequiredBeforeSecurityClaim": true
+  },
+  "killSwitch": {
+    "localDisableSurface": "remove external network attachments; current policy has none",
+    "claim": "prepared only"
+  }
+}

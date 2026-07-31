@@ -1,0 +1,116 @@
+# ChimpMaera Video Production Reference
+
+This directory ships a release-ready reference Docker for the current
+ChimpMaera video-production workflow. It is intentionally reference-quality:
+small, inspectable, fail-closed, and faithful to the contracts used for the
+current CM videos. It is not a universal studio and it is not a production or
+security certification.
+
+The core image validates a versioned `cm.video/v1` `VideoJob`, checks every
+asset declared by the job, refuses public side effects, renders ordered PNG
+shots plus an accepted WAV to MP4 only when explicitly authorized, and emits QA
+evidence.
+
+## Community Invitation
+
+This reference exists so contributors can run, inspect, improve, or replace the
+current ChimpMaera video-production path. Better renderers, QA probes,
+localization workflows, GPU/TTS packaging, or documentation are welcome when
+they preserve fail-closed checks for assets a job actually declares.
+
+When a published video materially uses a community production path or
+contributor work, the practical intent is to reference that path and credit the
+relevant contributors in the description or comments where appropriate and only
+with contributor consent. This is not a guaranteed promotion promise; it is a
+visibility practice for meaningful, consented contributions.
+
+## Optional Reference Assets
+
+`assets/reference/` contains a short neutral German voice example with its
+transcript and the current transparent negative logo. Their hashes and media
+facts are in `assets/reference/reference-assets.json`.
+
+These examples are optional, replaceable, modifiable, and omittable. A job does
+not have to use either one and may declare its own `spec.referenceAssets`.
+Declared reference assets retain fail-closed path, accepted-status, and SHA-256
+checks. The lightweight synthetic smoke intentionally omits the bundled media.
+
+See `ASSET-USAGE.md` for the copyright, trademark, warranty, attribution, and
+user-responsibility boundary.
+
+## Boundary
+
+- Apache-2.0 covers this reference code, documentation, synthetic examples, and
+  bundled media where the repository copyright notice applies.
+- Apache-2.0 grants no trademark rights and no permission to imply official
+  endorsement.
+- This repo does not ship model weights, private paths, secrets, personal data,
+  or a mandatory character or visual identity.
+- Users remain responsible for their configuration, outputs, rights, and
+  safety under applicable law and license terms. No warranty is provided.
+
+## Core CLI
+
+```bash
+tools/video-production-reference/bin/cm-video validate --job /job/video-job.yaml
+tools/video-production-reference/bin/cm-video render --job /job/video-job.yaml --output /output
+tools/video-production-reference/bin/cm-video qa --job /job/video-job.yaml --output /output/<immutable-version>
+tools/video-production-reference/bin/cm-video validate-and-render --job /job/video-job.yaml --output /output
+```
+
+Default mode is validate-only. Full rendering requires all of the following:
+
+- `spec.render.full: true`
+- `spec.mode: full-render`
+- `spec.render.overwrite: false`
+- `spec.render.publicActions: forbidden`
+- `spec.gates.textGate: PASS`
+- `spec.gates.shotGate: PASS`
+
+The renderer refuses to overwrite an existing immutable output directory.
+
+## Docker
+
+Build the CPU-first core image:
+
+```bash
+cd tools/video-production-reference
+docker compose build cm-video-reference
+docker compose config
+```
+
+`/output` must be writable by the non-root container user. With Compose you can
+use `CM_VIDEO_UID=$(id -u) CM_VIDEO_GID=$(id -g) docker compose run ...` for a
+local developer run, or provision `.video-output` for UID/GID `65532`.
+
+Generate synthetic examples and run the smoke:
+
+```bash
+./scripts/smoke.sh
+```
+
+The runtime profile is network-disabled, non-root, read-only root filesystem,
+drops all capabilities, sets `no-new-privileges`, mounts `/job` and `/assets`
+read-only, mounts `/output` writable, and does not mount the Docker socket.
+
+## Optional GPU/TTS Profile
+
+`Dockerfile.gpu` and `compose.gpu.yaml` document the current Qwen3-TTS,
+Whisper, CUDA, NVENC, and offline `/models` mount contract. The GPU image is
+`NOT_BUILT_BY_DEFAULT`. It must not silently fall back between CPU/GPU or
+between model commits. Build and use it only after reviewing
+`docs/CURRENT-LIMITS.md`.
+
+## Output Evidence
+
+A successful render creates `/output/<immutableOutputVersion>/` with:
+
+- `STATUS.json`
+- `OUTPUT-MANIFEST.json`
+- `QA.json`
+- `RENDER-COMMAND.txt`
+- `SHA256SUMS`
+- `candidate.mp4`
+
+Validate-only writes no MP4. Rendering and QA use `ffprobe`, full decode, and
+SHA-256 checksums.

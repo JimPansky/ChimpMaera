@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "chimpmaera.demo/catalog-bundle/v1",
+  "bundleId": "crm-erp-playable-v1",
+  "catalogVersion": "1.0.0",
+  "templates": [
+    {
+      "templateId": "quick-tour",
+      "displayName": "Quick Tour",
+      "selectedUseCaseIds": ["POC-UC-001", "POC-UC-002", "POC-UC-003", "POC-UC-004", "POC-UC-005", "POC-UC-006"],
+      "defaultAuthorityProfile": "SAFE_GUIDED"
+    },
+    {
+      "templateId": "business-playground",
+      "displayName": "Business Playground",
+      "selectedUseCaseIds": ["POC-UC-002", "POC-UC-003", "POC-UC-004"],
+      "defaultAuthorityProfile": "SAFE_GUIDED"
+    },
+    {
+      "templateId": "builder-lab",
+      "displayName": "Builder Lab",
+      "selectedUseCaseIds": ["POC-UC-001", "POC-UC-005"],
+      "defaultAuthorityProfile": "RAMPAGE"
+    }
+  ],
+  "useCases": [
+    {"useCaseId": "POC-UC-001", "displayName": "Code and forge authority", "demoEffect": "prepare_synthetic_forge_change"},
+    {"useCaseId": "POC-UC-002", "displayName": "Document processing", "demoEffect": "process_synthetic_document"},
+    {"useCaseId": "POC-UC-003", "displayName": "BI and operations", "demoEffect": "summarize_synthetic_operations"},
+    {"useCaseId": "POC-UC-004", "displayName": "CRM to ERP governed business action", "demoEffect": "governed_crm_to_erp_order"},
+    {"useCaseId": "POC-UC-005", "displayName": "Contributor authoring", "demoEffect": "validate_local_module_bundle"},
+    {"useCaseId": "POC-UC-006", "displayName": "Onboarding first run", "demoEffect": "verify_one_click_ready_receipt"}
+  ],
+  "metadata": [
+    {"metadataId": "provider-bindings-v1", "kind": "PROVIDER_BINDINGS", "providers": ["espocrm", "dolibarr"]},
+    {"metadataId": "identity-bindings-v1", "kind": "IDENTITY_BINDINGS", "manifestId": "panskys-zoo-v1"},
+    {"metadataId": "authority-bindings-v1", "kind": "AUTHORITY_BINDINGS", "manifestIds": ["SAFE_GUIDED-v1", "RAMPAGE-v1"]}
+  ],
+  "expectedCounts": {
+    "templates": 3,
+    "useCases": 6,
+    "metadataRecords": 3
+  }
+}

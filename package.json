@@ -1,0 +1,30 @@
+{
+  "name": "chimpmaera",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local synthetic ChimpMaera v0.1 proof of concept.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24.14.1 <25",
+    "npm": ">=11.11.0 <12"
+  },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test tests/demo-enforcement-gate.test.mjs tests/demo-admin-ai-poc.test.mjs dist/tests/demo-fixture-manifest.test.js dist/tests/poc-showcase.test.js dist/tests/poc-showcase-e2e.test.js dist/tests/poc-guided-demo-bootstrap.test.js dist/tests/poc-setup-compatibility-planner.test.js dist/tests/poc-early-admin-ai-setup.test.js",
+    "video:test": "python3 -m unittest discover -s tools/video-production-reference/tests",
+    "demo:install": "./demo/install.sh",
+    "demo:uninstall": "./demo/uninstall.sh --purge",
+    "video:smoke": "./tools/video-production-reference/scripts/smoke.sh"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3"
+  }
+}

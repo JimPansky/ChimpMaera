@@ -1,0 +1,29 @@
+# Known limitations
+
+These limits are part of the claim discipline required by
+[The ChimpMaera Canon](CANON.md).
+
+- This is a local synthetic proof of concept, not a production deployment or
+  security certification.
+- The supported demo host is Linux x86_64 with Docker Engine and Docker Compose
+  v2.
+- First installation can require access to the registries for the pinned
+  container images. No offline image bundle is included.
+- Availability, hostile-host isolation, multi-node operation, disaster
+  recovery, upgrades and production identity integration are not claimed.
+- Loopback and internal-network controls reduce accidental exposure but do not
+  protect against a compromised host or Docker daemon.
+- The deterministic fixtures are fictional and must not be replaced with real
+  personal or customer data without a separate privacy and security design.
+- A complete readable business-Diff/approval UI, provider Revoke and provider
+  Rollback are not implemented claims. Installer Cleanup is distinct.
+- Admin-AI is a deterministic local preview. It does not call a live LLM, does
+  not confirm owner intent and does not create production authority.
+- Catalog and template entries are descriptive; not every entry is executable,
+  and admission or popularity never grants runtime authority.
+- No DMS/compliance suitability or universal AI capability is claimed.
+- Optional video assets are replaceable examples. Users remain responsible for
+  their own output rights, configuration and safety.
+- The German voice WAV and transcript are an explicit localized reproduction
+  exception. Public repository prose remains English-first.
+- Apache-2.0 grants no trademark rights or permission to imply endorsement.

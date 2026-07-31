@@ -1,0 +1,153 @@
+name: ${COMPOSE_PROJECT_NAME}
+services:
+  chimpmaera:
+    image: ${CM_CHIMP_IMAGE}
+    environment:
+      CM_AUTHORITY_PROFILE: ${CM_AUTHORITY_PROFILE}
+      CM_AUTHORITY_MANIFEST_ID: ${CM_AUTHORITY_MANIFEST_ID}
+      CM_AUTHORITY_MANIFEST_SHA256: ${CM_AUTHORITY_MANIFEST_SHA256}
+      CM_CATALOG_MANIFEST_ID: ${CM_CATALOG_MANIFEST_ID}
+      CM_CATALOG_MANIFEST_SHA256: ${CM_CATALOG_MANIFEST_SHA256}
+      CM_ADMIN_AI_POLICY_ID: ${CM_ADMIN_AI_POLICY_ID}
+      CM_ADMIN_AI_POLICY_SHA256: ${CM_ADMIN_AI_POLICY_SHA256}
+      CM_TEMPLATE_ID: quick-tour
+      CM_PUBLIC_ORIGIN: http://${CM_CHIMP_PORT}
+    secrets:
+      - {source: chimp_api_token, target: api_token}
+      - {source: chimp_control_token, target: control_token}
+      - {source: espo_admin, target: espo_admin}
+      - {source: doli_api_key, target: doli_api_key}
+    ports: ["${CM_CHIMP_PORT}:8080"]
+    networks: [cm_ingress, cm_control, espo_app_net, doli_app_net]
+    volumes: [chimpmaera_state:/var/lib/chimpmaera]
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=16m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/api/status',{headers:{host:'127.0.0.1:7780'}}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 2s
+      retries: 20
+  espo-db:
+    image: mariadb@sha256:ae6119716edac6998ae85508431b3d2e666530ddf4e94c61a10710caec9b0f71
+    environment:
+      MARIADB_DATABASE: espocrm
+      MARIADB_USER: espocrm
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/root
+      MARIADB_PASSWORD_FILE: /run/secrets/app
+    secrets:
+      - {source: espo_db_root, target: root}
+      - {source: espo_db, target: app}
+    networks: [espo_db_net]
+    volumes: [espo_db_data:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  espocrm:
+    image: espocrm/espocrm@sha256:5172d5a4405efd829392c1e25de6c58c3e1b2bb8d5adaad69d62bacb9ea746bc
+    depends_on: {espo-db: {condition: service_healthy}}
+    ports: ["${CM_ESPO_PORT}:80"]
+    environment:
+      ESPOCRM_DATABASE_HOST: espo-db
+      ESPOCRM_DATABASE_NAME: espocrm
+      ESPOCRM_DATABASE_USER: espocrm
+      ESPOCRM_DATABASE_PASSWORD_FILE: /run/secrets/db
+      ESPOCRM_ADMIN_USERNAME: admin
+      ESPOCRM_ADMIN_PASSWORD_FILE: /run/secrets/admin
+      ESPOCRM_SITE_URL: http://127.0.0.1:7781
+      ESPOCRM_LANGUAGE: en_US
+      ESPOCRM_TIME_ZONE: Europe/Berlin
+    secrets:
+      - {source: espo_db, target: db}
+      - {source: espo_admin, target: admin}
+    networks: [espo_ingress, espo_app_net, espo_db_net]
+    volumes: [espo_data:/var/www/html/data]
+    healthcheck:
+      test: ["CMD-SHELL", "php bin/command app-info >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+      start_period: 20s
+  doli-db:
+    image: mariadb@sha256:ae6119716edac6998ae85508431b3d2e666530ddf4e94c61a10710caec9b0f71
+    environment:
+      MARIADB_DATABASE: dolidb
+      MARIADB_USER: dolidb
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/root
+      MARIADB_PASSWORD_FILE: /run/secrets/app
+    secrets:
+      - {source: doli_db_root, target: root}
+      - {source: doli_db, target: app}
+    networks: [doli_db_net]
+    volumes: [doli_db_data:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  dolibarr:
+    image: dolibarr/dolibarr@sha256:fec3802e34d1c1b5a8126025cc72eb1ba2dc4816501f73bd1406e79b54dea152
+    depends_on: {doli-db: {condition: service_healthy}}
+    ports: ["${CM_DOLI_PORT}:80"]
+    environment:
+      DOLI_DB_HOST: doli-db
+      DOLI_DB_NAME: dolidb
+      DOLI_DB_USER: dolidb
+      DOLI_DB_PASSWORD_FILE: /run/secrets/db
+      DOLI_ADMIN_LOGIN: admin
+      DOLI_ADMIN_PASSWORD_FILE: /run/secrets/admin
+      DOLI_URL_ROOT: http://127.0.0.1:7782
+      DOLI_PROD: "1"
+      DOLI_COMPANY_NAME: ChimpMaera Synthetic Demo GmbH
+      DOLI_COMPANY_COUNTRYCODE: DE
+      DOLI_ENABLE_MODULES: Api,Societe,Commande,Facture,Fournisseur
+    secrets:
+      - {source: doli_db, target: db}
+      - {source: doli_admin, target: admin}
+    networks: [doli_ingress, doli_app_net, doli_db_net]
+    volumes: [doli_documents:/var/www/documents]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1/ >/dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 80
+      start_period: 30s
+secrets:
+  chimp_api_token: {file: ../.chimpmaera-demo/secrets/chimp-api-token}
+  chimp_control_token: {file: ../.chimpmaera-demo/secrets/chimp-control-token}
+  espo_db_root: {file: ../.chimpmaera-demo/secrets/espo-db-root}
+  espo_db: {file: ../.chimpmaera-demo/secrets/espo-db}
+  espo_admin: {file: ../.chimpmaera-demo/secrets/espo-admin}
+  doli_db_root: {file: ../.chimpmaera-demo/secrets/doli-db-root}
+  doli_db: {file: ../.chimpmaera-demo/secrets/doli-db}
+  doli_admin: {file: ../.chimpmaera-demo/secrets/doli-admin}
+  doli_api_key: {file: ../.chimpmaera-demo/secrets/doli-api-key}
+volumes:
+  chimpmaera_state: {}
+  espo_db_data: {}
+  espo_data: {}
+  doli_db_data: {}
+  doli_documents: {}
+networks:
+  cm_ingress:
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "false"
+  cm_control:
+    internal: true
+  espo_ingress:
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "false"
+  espo_app_net:
+    internal: true
+  espo_db_net:
+    internal: true
+  doli_ingress:
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "false"
+  doli_app_net:
+    internal: true
+  doli_db_net:
+    internal: true

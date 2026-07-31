@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "chimpmaera.demo/identity-manifest/v1",
+  "manifestId": "panskys-zoo-v1",
+  "company": {
+    "externalId": "cm-demo-company-panskys-zoo-v1",
+    "name": "Panskys Zoo Enterprises",
+    "website": "https://panskys-zoo.example",
+    "emailLocalPart": "hello",
+    "emailDomain": "panskys-zoo.example",
+    "countryCode": "DE"
+  },
+  "roles": [
+    {
+      "roleId": "operations-owner",
+      "espocrmName": "CM Demo Operations Owner",
+      "espocrmAcl": {
+        "Account": {"create": "yes", "read": "all", "edit": "all", "delete": "no", "stream": "all"},
+        "Contact": {"create": "yes", "read": "all", "edit": "all", "delete": "no", "stream": "all"},
+        "Opportunity": {"create": "yes", "read": "all", "edit": "all", "delete": "no", "stream": "all"}
+      },
+      "dolibarrGroup": "CM Demo Operations Owner",
+      "dolibarrPermissionIds": [11, 12, 14, 81, 82, 84, 121, 122, 262, 281, 282]
+    },
+    {
+      "roleId": "sales",
+      "espocrmName": "CM Demo Sales",
+      "espocrmAcl": {
+        "Account": {"create": "yes", "read": "all", "edit": "team", "delete": "no", "stream": "all"},
+        "Contact": {"create": "yes", "read": "all", "edit": "team", "delete": "no", "stream": "all"},
+        "Opportunity": {"create": "yes", "read": "all", "edit": "team", "delete": "no", "stream": "all"}
+      },
+      "dolibarrGroup": "CM Demo Sales",
+      "dolibarrPermissionIds": [81, 82, 121, 122, 262, 281, 282]
+    },
+    {
+      "roleId": "finance",
+      "espocrmName": "CM Demo Finance",
+      "espocrmAcl": {
+        "Account": {"create": "no", "read": "all", "edit": "no", "delete": "no", "stream": "all"},
+        "Contact": {"create": "no", "read": "all", "edit": "no", "delete": "no", "stream": "all"},
+        "Opportunity": {"create": "no", "read": "all", "edit": "no", "delete": "no", "stream": "all"}
+      },
+      "dolibarrGroup": "CM Demo Finance",
+      "dolibarrPermissionIds": [11, 12, 14, 16, 81, 121, 262]
+    }
+  ],
+  "personas": [
+    {
+      "mappingId": "cm-persona-ada-owner-v1",
+      "firstName": "Ada",
+      "lastName": "Pansky",
+      "emailLocalPart": "ada.owner",
+      "emailDomain": "panskys-zoo.example",
+      "login": "panskys.owner",
+      "roleId": "operations-owner"
+    },
+    {
+      "mappingId": "cm-persona-sam-sales-v1",
+      "firstName": "Sam",
+      "lastName": "Savanna",
+      "emailLocalPart": "sam.sales",
+      "emailDomain": "panskys-zoo.example",
+      "login": "panskys.sales",
+      "roleId": "sales"
+    },
+    {
+      "mappingId": "cm-persona-finn-finance-v1",
+      "firstName": "Finn",
+      "lastName": "Ledger",
+      "emailLocalPart": "finn.finance",
+      "emailDomain": "panskys-zoo.example",
+      "login": "panskys.finance",
+      "roleId": "finance"
+    }
+  ],
+  "expectedCounts": {
+    "companies": 1,
+    "personas": 3,
+    "rolesPerProvider": 3,
+    "crossProviderMappings": 3
+  }
+}

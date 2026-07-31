@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.chimpmaera.dev/poc-admin-authority-profile-v1.schema.json",
+  "title": "ChimpMaera PoC Admin-AI Authority Profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "profileId",
+    "recommendedForRealOperation",
+    "intendedUse",
+    "actionPolicy",
+    "osProcessRightsAreCeiling",
+    "rootElevationRequiresSeparateVisibleOwnerAction",
+    "auditAndEmergencyStopAreTransparencyNotSecurityBoundary",
+    "contextBound",
+    "visible",
+    "revocable",
+    "silentlyInherited",
+    "restartPolicy"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "chimpmaera.dev/admin-authority-profile/v1"
+    },
+    "profileId": {
+      "enum": ["SAFE_GUIDED", "DEVELOPER_ELEVATED", "FULL_CONTROL_LAB"]
+    },
+    "recommendedForRealOperation": {
+      "type": "boolean"
+    },
+    "intendedUse": {
+      "enum": [
+        "REAL_OPERATION",
+        "LOCAL_DEVELOPMENT_AND_SECURITY_TESTS",
+        "TEST_LAB_ONLY"
+      ]
+    },
+    "actionPolicy": {
+      "enum": [
+        "BOUNDED_DECLARED_ACTIONS_APPROVAL_FOR_MATERIAL_CHANGE",
+        "BROAD_DECLARED_SYSTEM_RIGHTS_APPROVAL_FOR_MATERIAL_CHANGE",
+        "NO_CHIMPMAERA_CAPABILITY_ACTION_OR_APPROVAL_LIMITS"
+      ]
+    },
+    "osProcessRightsAreCeiling": {
+      "const": true
+    },
+    "rootElevationRequiresSeparateVisibleOwnerAction": {
+      "const": true
+    },
+    "auditAndEmergencyStopAreTransparencyNotSecurityBoundary": {
+      "const": true
+    },
+    "contextBound": {
+      "const": true
+    },
+    "visible": {
+      "const": true
+    },
+    "revocable": {
+      "const": true
+    },
+    "silentlyInherited": {
+      "const": false
+    },
+    "restartPolicy": {
+      "const": "RESET_TO_SAFE_GUIDED"
+    }
+  }
+}

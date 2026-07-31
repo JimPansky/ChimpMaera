@@ -1,0 +1,31 @@
+apiVersion: cm.video.qa-gates/v1
+kind: QAGates
+failClosed: true
+requiredOrder:
+  - source_and_checksum
+  - narration_and_localization
+  - asset_locks
+  - text_and_shot_preflight
+  - full_render
+  - decode_and_media
+  - checksum_archive
+rules:
+  noFullRenderBeforeTextGate: true
+  noFullRenderBeforeShotGate: true
+  noAlternativeKeeper: true
+  noDeprecatedCentipApeLogo: true
+  noPublicOrPushAction: true
+  approvedOutputsMustNotBeOverwritten: true
+  naturalIdiomaticLocalizationRequired: true
+  literalTranslationForbidden: true
+media:
+  width: 1280
+  height: 720
+  fps: 30
+  pixelFormat: yuv420p
+  audioSampleRate: 48000
+  audioChannels: 1
+  transition:
+    type: direct-dissolve
+    seconds: 0.20
+

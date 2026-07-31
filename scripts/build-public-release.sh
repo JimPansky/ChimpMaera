@@ -1,0 +1,352 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export LC_ALL=C
+umask 022
+
+usage() {
+  printf 'Usage: %s --output /absolute/path\n' "$0" >&2
+}
+
+output=""
+while (($#)); do
+  case "$1" in
+    --output)
+      (($# >= 2)) || { usage; exit 64; }
+      output="$2"
+      shift 2
+      ;;
+    *)
+      usage
+      exit 64
+      ;;
+  esac
+done
+
+[[ "$output" == /* && "$output" != "/" ]] || {
+  printf 'Output must be an absolute non-root path.\n' >&2
+  exit 64
+}
+
+for command_name in python3 realpath install find sort sha256sum touch tar gzip mkdir mv; do
+  command -v "$command_name" >/dev/null || {
+    printf 'Missing required command: %s\n' "$command_name" >&2
+    exit 69
+  }
+done
+
+script_path="$(realpath -e -- "$0")"
+source_root="$(realpath -e -- "$(dirname -- "$script_path")/..")"
+manifest="$source_root/release/public-files.manifest"
+[[ -f "$manifest" && ! -L "$manifest" ]] || {
+  printf 'Manifest missing or unsafe.\n' >&2
+  exit 66
+}
+
+output_parent="$(dirname -- "$output")"
+output_name="$(basename -- "$output")"
+[[ "$output_name" =~ ^cm-v0[.]1-public-rc-[0-9]{8}([-.][A-Za-z0-9.-]+)?$ ]] || {
+  printf 'Output basename is outside the release naming contract.\n' >&2
+  exit 64
+}
+mkdir -p -- "$output_parent"
+output_parent="$(realpath -e -- "$output_parent")"
+output="$output_parent/$output_name"
+archive="$output.tar.gz"
+marker="$output.cm-public-release-marker"
+
+for path in "$output" "$archive" "$marker"; do
+  [[ ! -e "$path" && ! -L "$path" ]] || {
+    printf 'Output path already exists: %s\n' "$path" >&2
+    exit 73
+  }
+done
+
+case "$output/" in
+  "$source_root/"*) printf 'Output must be outside the source tree.\n' >&2; exit 64 ;;
+esac
+case "$source_root/" in
+  "$output/"*) printf 'Output must not contain the source tree.\n' >&2; exit 64 ;;
+esac
+
+python3 - "$source_root" "$manifest" <<'PY'
+import os
+import pathlib
+import re
+import stat
+import sys
+import unicodedata
+
+root = pathlib.Path(sys.argv[1]).resolve(strict=True)
+manifest = pathlib.Path(sys.argv[2])
+destinations: set[str] = set()
+casefolded: set[str] = set()
+total_bytes = 0
+count = 0
+denied_parts = {
+    ".git", ".github", ".idea", ".vscode", "__pycache__", "node_modules",
+    "reports", "reviews", "evidence", "working", "backups", "logs", "dist",
+}
+denied_suffixes = {
+    ".bak", ".backup", ".env", ".log", ".orig", ".pyc", ".swp", ".tmp",
+    ".zip", ".tar", ".tgz", ".gz", ".bz2", ".xz", ".7z",
+}
+text_suffixes = {
+    "", ".css", ".dockerfile", ".html", ".ini", ".js", ".json", ".md",
+    ".mjs", ".py", ".sh", ".svg", ".ts", ".txt", ".yaml", ".yml", ".cff",
+}
+secret_patterns = {
+    "private_key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+    "github_token": re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"),
+    "gitlab_token": re.compile(r"\bglpat-[A-Za-z0-9_-]{20,}\b"),
+    "openai_key": re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
+    "huggingface_token": re.compile(r"\bhf_[A-Za-z0-9]{20,}\b"),
+    "telegram_token": re.compile(r"\b[0-9]{8,12}:[A-Za-z0-9_-]{30,}\b"),
+    "aws_access_key": re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),
+    "jwt": re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b"),
+    "credential_url": re.compile(r"https?://[^/\s:@]+:[^/\s@]+@"),
+    "literal_secret": re.compile(
+        r"(?i)\b(?:password|passwd|api[_-]?key|client[_-]?secret|access[_-]?token|session[_-]?token)"
+        r"\s*[:=]\s*['\"][^'\"\s]{16,}['\"]"
+    ),
+}
+private_path_patterns = {
+    "home_absolute_path": re.compile(r"/home/[A-Za-z0-9._-]+(?:/|\b)"),
+    "mnt_absolute_path": re.compile(r"/mnt/[A-Za-z0-9._-]+(?:/|\b)"),
+    "agent_session_identifier": re.compile(r"\bagent:[A-Za-z0-9._-]+:[A-Za-z0-9._:-]+\b"),
+}
+content_quality_patterns = {
+    "old_release_blocker_label": re.compile(r"\b" + "NO" + r"_GO\b"),
+    "transition_source_mirror": re.compile(r"(?:^|[\s`'\"])" + "release/" + r"public/"),
+    "german_canon": re.compile(r"CANON[.]de[.]md"),
+}
+unsuitable_terms = [
+    "4" + "chan",
+    "troll" + "ing",
+    "ridi" + "cule",
+    "brand " + "provocation",
+    "viral " + "misuse",
+]
+content_quality_patterns["unsuitable_public_invitation"] = re.compile(
+    r"\b(?:" + "|".join(re.escape(term) for term in unsuitable_terms) + r")\b",
+    re.I,
+)
+disallowed_exact = {
+    ".github/funding.yml",
+    "docs/canon.de.md",
+    "tools/video-production-reference/dockerfile.gpu",
+    "tools/video-production-reference/compose.gpu.yaml",
+}
+
+for line_number, raw in enumerate(manifest.read_text("utf-8").splitlines(), 1):
+    if not raw or raw.startswith("#"):
+        continue
+    fields = raw.split("\t")
+    if len(fields) != 3:
+        raise SystemExit(f"MANIFEST_FIELDS:{line_number}")
+    source, destination, mode = fields
+    count += 1
+    if source != destination:
+        raise SystemExit(f"NON_IDENTITY_MAPPING:{line_number}")
+    for label, value in (("SOURCE", source), ("DESTINATION", destination)):
+        if (
+            not value
+            or value.startswith("/")
+            or "\\" in value
+            or "\0" in value
+            or value != unicodedata.normalize("NFC", value)
+            or not re.fullmatch(r"[A-Za-z0-9._/-]+", value)
+            or any(part in {"", ".", ".."} for part in value.split("/"))
+        ):
+            raise SystemExit(f"UNSAFE_{label}:{line_number}")
+    if mode not in {"0644", "0755"}:
+        raise SystemExit(f"UNSAFE_MODE:{line_number}")
+    parts = set(destination.split("/"))
+    lower_destination = destination.lower()
+    if (
+        parts & denied_parts
+        or any(lower_destination.endswith(suffix) for suffix in denied_suffixes)
+        or lower_destination.startswith(".chimpmaera-")
+        or lower_destination.startswith("release/" + "public/")
+        or lower_destination in disallowed_exact
+    ):
+        raise SystemExit(f"DENIED_DESTINATION:{line_number}")
+    if destination in destinations or destination.casefold() in casefolded:
+        raise SystemExit(f"DUPLICATE_DESTINATION:{line_number}")
+    destinations.add(destination)
+    casefolded.add(destination.casefold())
+    candidate = root / source
+    current = root
+    for part in pathlib.PurePosixPath(source).parts:
+        current = current / part
+        if current.is_symlink():
+            raise SystemExit(f"SYMLINK_SOURCE:{line_number}")
+    resolved = candidate.resolve(strict=True)
+    if os.path.commonpath((str(root), str(resolved))) != str(root):
+        raise SystemExit(f"SOURCE_ESCAPE:{line_number}")
+    metadata = resolved.stat()
+    if not stat.S_ISREG(metadata.st_mode):
+        raise SystemExit(f"NONREGULAR_SOURCE:{line_number}")
+    if metadata.st_mode & (stat.S_ISUID | stat.S_ISGID):
+        raise SystemExit(f"PRIVILEGED_SOURCE_MODE:{line_number}")
+    total_bytes += metadata.st_size
+
+if count == 0 or count > 500:
+    raise SystemExit("MANIFEST_FILE_COUNT")
+if total_bytes > 100 * 1024 * 1024:
+    raise SystemExit("MANIFEST_BYTE_LIMIT")
+
+expected = set(destinations)
+for candidate in root.rglob("*"):
+    relative = candidate.relative_to(root).as_posix()
+    if (
+        relative.startswith("node_modules/")
+        or relative.startswith("dist/")
+        or "/__pycache__/" in f"/{relative}"
+        or relative.endswith(".pyc")
+    ):
+        continue
+    metadata = candidate.lstat()
+    if stat.S_ISDIR(metadata.st_mode):
+        continue
+    if stat.S_ISLNK(metadata.st_mode):
+        raise SystemExit(f"SOURCE_TREE_SYMLINK:{relative}")
+    if not stat.S_ISREG(metadata.st_mode):
+        raise SystemExit(f"SOURCE_TREE_SPECIAL_FILE:{relative}")
+    if (
+        relative not in expected
+        and not relative.startswith("node_modules/")
+        and not relative.startswith("dist/")
+        and "/__pycache__/" not in f"/{relative}"
+        and not relative.endswith(".pyc")
+        and relative != "package-lock.before-version-reconcile.json"
+    ):
+        raise SystemExit(f"UNMANIFESTED_SOURCE_FILE:{relative}")
+
+for relative in expected:
+    candidate = root / relative
+    suffix = candidate.suffix.lower()
+    name = candidate.name.lower()
+    if suffix not in text_suffixes and name not in {"dockerfile", "license", "notice"}:
+        continue
+    text = candidate.read_text("utf-8")
+    for label, pattern in private_path_patterns.items():
+        if pattern.search(text):
+            raise SystemExit(f"PRIVATE_PATH_OR_SESSION:{label}:{relative}")
+    for label, pattern in secret_patterns.items():
+        if pattern.search(text):
+            raise SystemExit(f"POTENTIAL_SECRET:{label}:{relative}")
+    for label, pattern in content_quality_patterns.items():
+        if pattern.search(text):
+            raise SystemExit(f"CONTENT_QUALITY:{label}:{relative}")
+PY
+
+temporary="$output.partial.$$"
+[[ ! -e "$temporary" && ! -L "$temporary" ]] || {
+  printf 'Temporary output collision.\n' >&2
+  exit 73
+}
+mkdir -m 0755 -- "$temporary"
+
+cleanup_partial() {
+  if [[ -d "$temporary" && ! -L "$temporary" ]]; then
+    find -P "$temporary" -depth -delete || true
+  fi
+}
+trap cleanup_partial EXIT
+
+while IFS=$'\t' read -r source destination mode; do
+  [[ -n "$source" && "$source" != \#* ]] || continue
+  install -D -m "$mode" -- "$source_root/$source" "$temporary/$destination"
+done < "$manifest"
+
+python3 - "$temporary" "$manifest" <<'PY'
+import pathlib
+import stat
+import sys
+
+root = pathlib.Path(sys.argv[1])
+manifest = pathlib.Path(sys.argv[2])
+expected = {}
+for raw in manifest.read_text("utf-8").splitlines():
+    if not raw or raw.startswith("#"):
+        continue
+    _, destination, mode = raw.split("\t")
+    expected[destination] = int(mode, 8)
+actual = {}
+for candidate in root.rglob("*"):
+    relative = candidate.relative_to(root).as_posix()
+    metadata = candidate.lstat()
+    if stat.S_ISDIR(metadata.st_mode):
+        continue
+    if stat.S_ISLNK(metadata.st_mode):
+        raise SystemExit(f"STAGING_SYMLINK:{relative}")
+    if not stat.S_ISREG(metadata.st_mode):
+        raise SystemExit(f"STAGING_SPECIAL_FILE:{relative}")
+    actual[relative] = candidate
+if set(actual) != set(expected):
+    raise SystemExit("STAGING_MISSING_OR_EXTRA_FILE")
+for relative, candidate in actual.items():
+    if stat.S_IMODE(candidate.stat().st_mode) != expected[relative]:
+        raise SystemExit(f"STAGING_MODE_MISMATCH:{relative}")
+PY
+
+find "$temporary" -exec touch -h -d '@0' -- {} +
+(
+  cd "$temporary"
+  find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+)
+chmod 0644 "$temporary/SHA256SUMS"
+touch -d '@0' "$temporary/SHA256SUMS"
+
+mv -- "$temporary" "$output"
+trap - EXIT
+printf 'cm-public-release-marker-v1\n' > "$marker"
+chmod 0600 "$marker"
+
+tar --sort=name \
+  --mtime='@0' \
+  --owner=0 \
+  --group=0 \
+  --numeric-owner \
+  --format=posix \
+  --pax-option=delete=atime,delete=ctime \
+  -C "$output_parent" \
+  -cf - "$output_name" \
+  | gzip -n > "$archive"
+chmod 0644 "$archive"
+
+python3 - "$archive" "$output_name" <<'PY'
+import pathlib
+import tarfile
+import sys
+import unicodedata
+
+archive = pathlib.Path(sys.argv[1])
+prefix = sys.argv[2] + "/"
+seen = set()
+casefolded = set()
+with tarfile.open(archive, "r:gz") as handle:
+    for member in handle.getmembers():
+        name = member.name
+        if (
+            not (name == sys.argv[2] or name.startswith(prefix))
+            or name.startswith("/")
+            or "\\" in name
+            or name != unicodedata.normalize("NFC", name)
+            or any(part in {"", ".", ".."} for part in name.split("/"))
+        ):
+            raise SystemExit(f"UNSAFE_ARCHIVE_PATH:{name}")
+        if not (member.isfile() or member.isdir()):
+            raise SystemExit(f"UNSAFE_ARCHIVE_TYPE:{name}")
+        if member.mode & 0o6000:
+            raise SystemExit(f"UNSAFE_ARCHIVE_MODE:{name}")
+        if name in seen or name.casefold() in casefolded:
+            raise SystemExit(f"ARCHIVE_PATH_COLLISION:{name}")
+        seen.add(name)
+        casefolded.add(name.casefold())
+PY
+
+printf 'STAGING=%s\n' "$output"
+printf 'ARCHIVE=%s\n' "$archive"
+printf 'ARCHIVE_SHA256=%s\n' "$(sha256sum "$archive" | awk '{print $1}')"

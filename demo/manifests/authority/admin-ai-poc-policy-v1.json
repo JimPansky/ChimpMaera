@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "chimpmaera.demo/admin-ai-poc-policy/v1",
+  "policyId": "admin-ai-poc-policy-v1",
+  "rules": [
+    {
+      "requestKind": "SYNTHETIC_ESPOCRM_CONTACT_CREATE",
+      "outcome": "AUTO_GRANT",
+      "reasonCode": "POLICY_SYNTHETIC_CONTACT_AUTO_GRANTED"
+    },
+    {
+      "requestKind": "SYNTHETIC_DOLIBARR_ORDER_CREATE",
+      "outcome": "OWNER_ESCALATION",
+      "reasonCode": "POLICY_ORDER_REQUIRES_OWNER"
+    },
+    {
+      "requestKind": "*",
+      "outcome": "DENY",
+      "reasonCode": "POLICY_REQUEST_NOT_ALLOWED"
+    }
+  ]
+}

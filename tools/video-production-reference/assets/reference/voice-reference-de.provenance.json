@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "cm.voice-reference-provenance/v1",
+  "assetId": "voice-reference-de-neutral-v1",
+  "reviewState": "FUNCTIONALLY_VALIDATED_BUT_PRE_PUBLISH_PROVENANCE_REVIEW_REQUIRED",
+  "responsiblePublicIdentity": "Jim Pansky",
+  "syntheticVoice": true,
+  "verifiedArtifacts": {
+    "wav": {
+      "path": "tools/video-production-reference/assets/reference/voice-reference-de.wav",
+      "sha256": "0be67548fa74204882edc637a99a4fbb9f2873fffd0ff98846077ac0d3aa8c15",
+      "codec": "pcm_s16le",
+      "sampleFormat": "s16",
+      "sampleRateHz": 48000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "frames": 372480,
+      "durationSeconds": 7.76,
+      "metadataTags": {}
+    },
+    "transcript": {
+      "path": "tools/video-production-reference/assets/reference/voice-reference-de.txt",
+      "sha256": "fe2bf3eb27c3fd7da98d115711db510c2cb83feb4bc847f4f2b2e37fa3c6c30d",
+      "encoding": "UTF-8",
+      "language": "de"
+    },
+    "assetInventory": {
+      "path": "tools/video-production-reference/assets/reference/reference-assets.json"
+    }
+  },
+  "generationRecord": {
+    "status": "not_recovered_in_public_candidate",
+    "knownMissingFields": [
+      "source_or_master_artifact_digest",
+      "generator_product_or_library_revision",
+      "model_repository_and_revision",
+      "voice_or_speaker_selection",
+      "synthesis_prompt_or_instruction",
+      "seed_and_sampling_or_decoding_parameters",
+      "runtime_versions",
+      "extraction_or_post_processing_command_and_timestamps",
+      "source_input_rights_basis"
+    ],
+    "publicationEffect": "This candidate may be functionally validated as an internal RC, but public publication requires owner/legal/provenance review before asserting exact regeneration or broader media rights."
+  }
+}

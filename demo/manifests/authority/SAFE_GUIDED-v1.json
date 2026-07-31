@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "chimpmaera.demo/authority-manifest/v1",
+  "manifestId": "SAFE_GUIDED-v1",
+  "selectedProfile": "SAFE_GUIDED",
+  "chimpMaeraProfileId": "SAFE_GUIDED",
+  "actionPolicy": "BOUNDED_DECLARED_ACTIONS_APPROVAL_FOR_MATERIAL_CHANGE",
+  "isolation": {
+    "composeProjectOnly": true,
+    "loopbackOnly": true,
+    "dockerSocketMounted": false,
+    "hostPrivilegeGranted": false,
+    "foreignResourceAccess": "DENIED"
+  }
+}

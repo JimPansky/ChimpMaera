@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "chimpmaera.demo/authority-manifest/v1",
+  "manifestId": "RAMPAGE-v1",
+  "selectedProfile": "RAMPAGE",
+  "chimpMaeraProfileId": "FULL_CONTROL_LAB",
+  "actionPolicy": "NO_CHIMPMAERA_CAPABILITY_ACTION_OR_APPROVAL_LIMITS",
+  "isolation": {
+    "composeProjectOnly": true,
+    "loopbackOnly": true,
+    "dockerSocketMounted": false,
+    "hostPrivilegeGranted": false,
+    "foreignResourceAccess": "DENIED"
+  }
+}

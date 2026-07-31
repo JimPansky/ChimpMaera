@@ -1,0 +1,7 @@
+cff-version: "1.2.0"
+message: "If you use ChimpMaera, please cite the software using these metadata."
+type: software
+title: "ChimpMaera"
+authors:
+  - name: "Jim Pansky"
+license: Apache-2.0

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.local/schemas/video-job.schema.json",
+  "title": "ChimpMaera VideoJob",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": {"const": "cm.video/v1"},
+    "kind": {"const": "VideoJob"},
+    "metadata": {
+      "type": "object",
+      "required": ["name", "immutableOutputVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "immutableOutputVersion": {"type": "string", "pattern": "^[A-Za-z0-9._-]+$"}
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["mode", "language", "narrationVisualLaw", "locks", "video", "render", "gates", "assets"],
+      "additionalProperties": true,
+      "properties": {
+        "mode": {"enum": ["validate-only", "full-render"]},
+        "language": {
+          "type": "object",
+          "required": ["locale", "strategy", "literalTranslationForbidden"],
+          "properties": {
+            "locale": {"type": "string"},
+            "strategy": {"const": "idiomatic-human-reviewed"},
+            "literalTranslationForbidden": {"const": true}
+          }
+        },
+        "narrationVisualLaw": {
+          "type": "object",
+          "required": ["narrationExplainsPrinciples", "visualsCarryDetails"],
+          "properties": {
+            "narrationExplainsPrinciples": {"const": true},
+            "visualsCarryDetails": {"const": true}
+          }
+        },
+        "render": {
+          "type": "object",
+          "required": ["full", "overwrite", "publicActions"],
+          "properties": {
+            "full": {"type": "boolean"},
+            "overwrite": {"const": false},
+            "publicActions": {"const": "forbidden"}
+          }
+        },
+        "referenceAssets": {
+          "type": "array",
+          "description": "Optional, replaceable assets declared by this job. Omission is valid.",
+          "items": {
+            "type": "object",
+            "required": ["id", "path", "sha256", "status", "mediaClass"],
+            "additionalProperties": true,
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "path": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "status": {"const": "accepted"},
+              "mediaClass": {"enum": ["png-shot", "wav-audio", "text", "csv", "svg", "model"]}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,476 @@
+{
+  "schemaVersion": "chimpmaera.demo/fixture-manifest/v1",
+  "manifestId": "panskys-zoo-demo-v1",
+  "companyManifestId": "panskys-zoo-v1",
+  "inventoryPolicy": {
+    "fullySynthetic": true,
+    "emailDomainSuffix": ".example",
+    "proofScenarioFixtureId": "CM-DEMO-ORDER-001",
+    "knownInstallerGovernanceBypass": false,
+    "proofEvidenceEligibility": "CURRENT_BYTE_GATE_ENFORCED",
+    "backgroundOrdersAreChimpMaeraGovernedEvidence": false
+  },
+  "crm": {
+    "accounts": [
+      {
+        "fixtureId": "CM-DEMO-CUST-001",
+        "name": "Canopy Cafe GmbH [CM-DEMO-CUST-001]",
+        "emailLocalPart": "office",
+        "emailDomain": "canopy-cafe.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-002",
+        "name": "Savanna Supplies GmbH [CM-DEMO-CUST-002]",
+        "emailLocalPart": "office",
+        "emailDomain": "savanna-supplies.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-003",
+        "name": "Riverstone Guest Lodge GmbH [CM-DEMO-CUST-003]",
+        "emailLocalPart": "office",
+        "emailDomain": "riverstone-lodge.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-004",
+        "name": "Lantern Leaf Catering GmbH [CM-DEMO-CUST-004]",
+        "emailLocalPart": "office",
+        "emailDomain": "lantern-leaf.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-005",
+        "name": "Meerkat Mobility Services GmbH [CM-DEMO-CUST-005]",
+        "emailLocalPart": "office",
+        "emailDomain": "meerkat-mobility.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-006",
+        "name": "Baobab Event Works GmbH [CM-DEMO-CUST-006]",
+        "emailLocalPart": "office",
+        "emailDomain": "baobab-events.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-007",
+        "name": "Zebra Stripe Retail GmbH [CM-DEMO-CUST-007]",
+        "emailLocalPart": "office",
+        "emailDomain": "zebra-stripe.example"
+      }
+    ],
+    "contacts": [
+      {
+        "fixtureId": "CM-DEMO-CON-001",
+        "firstName": "Cora",
+        "lastName": "Keeper CMDEMO001",
+        "emailLocalPart": "cora.keeper",
+        "emailDomain": "canopy-cafe.example",
+        "accountFixtureId": "CM-DEMO-CUST-001"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-002",
+        "firstName": "Sven",
+        "lastName": "Grove CMDEMO002",
+        "emailLocalPart": "sven.grove",
+        "emailDomain": "savanna-supplies.example",
+        "accountFixtureId": "CM-DEMO-CUST-002"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-003",
+        "firstName": "Milo",
+        "lastName": "Canopy CMDEMO003",
+        "emailLocalPart": "milo.canopy",
+        "emailDomain": "canopy-cafe.example",
+        "accountFixtureId": "CM-DEMO-CUST-001"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-004",
+        "firstName": "Talia",
+        "lastName": "Reed CMDEMO004",
+        "emailLocalPart": "talia.reed",
+        "emailDomain": "savanna-supplies.example",
+        "accountFixtureId": "CM-DEMO-CUST-002"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-005",
+        "firstName": "Nora",
+        "lastName": "Riverbank CMDEMO005",
+        "emailLocalPart": "nora.riverbank",
+        "emailDomain": "riverstone-lodge.example",
+        "accountFixtureId": "CM-DEMO-CUST-003"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-006",
+        "firstName": "Levi",
+        "lastName": "Lantern CMDEMO006",
+        "emailLocalPart": "levi.lantern",
+        "emailDomain": "lantern-leaf.example",
+        "accountFixtureId": "CM-DEMO-CUST-004"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-007",
+        "firstName": "Mara",
+        "lastName": "Swift CMDEMO007",
+        "emailLocalPart": "mara.swift",
+        "emailDomain": "meerkat-mobility.example",
+        "accountFixtureId": "CM-DEMO-CUST-005"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-008",
+        "firstName": "Beno",
+        "lastName": "Branch CMDEMO008",
+        "emailLocalPart": "beno.branch",
+        "emailDomain": "baobab-events.example",
+        "accountFixtureId": "CM-DEMO-CUST-006"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-009",
+        "firstName": "Zuri",
+        "lastName": "Stripe CMDEMO009",
+        "emailLocalPart": "zuri.stripe",
+        "emailDomain": "zebra-stripe.example",
+        "accountFixtureId": "CM-DEMO-CUST-007"
+      },
+      {
+        "fixtureId": "CM-DEMO-CON-010",
+        "firstName": "Oskar",
+        "lastName": "Vale CMDEMO010",
+        "emailLocalPart": "oskar.vale",
+        "emailDomain": "zebra-stripe.example",
+        "accountFixtureId": "CM-DEMO-CUST-007"
+      }
+    ],
+    "opportunities": [
+      {
+        "fixtureId": "CM-DEMO-OPP-001",
+        "name": "Canopy Cafe Habitat Renewal [CM-DEMO-OPP-001]",
+        "accountFixtureId": "CM-DEMO-CUST-001",
+        "stage": "Closed Won",
+        "amount": 12500,
+        "currency": "USD",
+        "closeDate": "2026-12-31",
+        "demoClassification": "GATE_ENFORCED_PROOF_SCENARIO"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-002",
+        "name": "Savanna Feed Logistics Expansion [CM-DEMO-OPP-002]",
+        "accountFixtureId": "CM-DEMO-CUST-002",
+        "stage": "Proposal",
+        "amount": 8400,
+        "currency": "USD",
+        "closeDate": "2026-11-30",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-003",
+        "name": "Riverstone Group Habitat Tour [CM-DEMO-OPP-003]",
+        "accountFixtureId": "CM-DEMO-CUST-003",
+        "stage": "Prospecting",
+        "amount": 6200,
+        "currency": "USD",
+        "closeDate": "2027-01-31",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-004",
+        "name": "Lantern Seasonal Catering [CM-DEMO-OPP-004]",
+        "accountFixtureId": "CM-DEMO-CUST-004",
+        "stage": "Closed Won",
+        "amount": 9800,
+        "currency": "USD",
+        "closeDate": "2026-10-31",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-005",
+        "name": "Meerkat Shuttle Service [CM-DEMO-OPP-005]",
+        "accountFixtureId": "CM-DEMO-CUST-005",
+        "stage": "Negotiation",
+        "amount": 15600,
+        "currency": "USD",
+        "closeDate": "2027-02-28",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-006",
+        "name": "Baobab Event Pavilion [CM-DEMO-OPP-006]",
+        "accountFixtureId": "CM-DEMO-CUST-006",
+        "stage": "Proposal",
+        "amount": 11800,
+        "currency": "USD",
+        "closeDate": "2027-03-31",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-007",
+        "name": "Zebra Stripe Kiosk Rollout [CM-DEMO-OPP-007]",
+        "accountFixtureId": "CM-DEMO-CUST-007",
+        "stage": "Closed Won",
+        "amount": 7300,
+        "currency": "USD",
+        "closeDate": "2026-09-30",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      },
+      {
+        "fixtureId": "CM-DEMO-OPP-008",
+        "name": "Canopy Visitor Flow Refresh [CM-DEMO-OPP-008]",
+        "accountFixtureId": "CM-DEMO-CUST-001",
+        "stage": "Qualification",
+        "amount": 5400,
+        "currency": "USD",
+        "closeDate": "2027-04-30",
+        "demoClassification": "BACKGROUND_DEMO_DATA"
+      }
+    ]
+  },
+  "erp": {
+    "thirdParties": [
+      {
+        "fixtureId": "CM-DEMO-CUST-001",
+        "name": "Canopy Cafe GmbH [CM-DEMO-CUST-001]",
+        "customerCode": "CMDEMO00001",
+        "emailLocalPart": "office",
+        "emailDomain": "canopy-cafe.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-002",
+        "name": "Savanna Supplies GmbH [CM-DEMO-CUST-002]",
+        "customerCode": "CMDEMO00002",
+        "emailLocalPart": "office",
+        "emailDomain": "savanna-supplies.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-003",
+        "name": "Riverstone Guest Lodge GmbH [CM-DEMO-CUST-003]",
+        "customerCode": "CMDEMO00003",
+        "emailLocalPart": "office",
+        "emailDomain": "riverstone-lodge.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-004",
+        "name": "Lantern Leaf Catering GmbH [CM-DEMO-CUST-004]",
+        "customerCode": "CMDEMO00004",
+        "emailLocalPart": "office",
+        "emailDomain": "lantern-leaf.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-005",
+        "name": "Meerkat Mobility Services GmbH [CM-DEMO-CUST-005]",
+        "customerCode": "CMDEMO00005",
+        "emailLocalPart": "office",
+        "emailDomain": "meerkat-mobility.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-006",
+        "name": "Baobab Event Works GmbH [CM-DEMO-CUST-006]",
+        "customerCode": "CMDEMO00006",
+        "emailLocalPart": "office",
+        "emailDomain": "baobab-events.example"
+      },
+      {
+        "fixtureId": "CM-DEMO-CUST-007",
+        "name": "Zebra Stripe Retail GmbH [CM-DEMO-CUST-007]",
+        "customerCode": "CMDEMO00007",
+        "emailLocalPart": "office",
+        "emailDomain": "zebra-stripe.example"
+      }
+    ],
+    "orders": [
+      {
+        "fixtureId": "CM-DEMO-ORDER-001",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-001",
+        "customerFixtureId": "CM-DEMO-CUST-001",
+        "customerReference": "CM-DEMO-OPP-001",
+        "orderDateEpoch": 1767225600,
+        "demoClassification": "GATE_ENFORCED_PROOF_SCENARIO",
+        "lines": [
+          {
+            "description": "Habitat renewal package [CM-DEMO-LINE-001]",
+            "quantity": 1,
+            "unitPriceExcludingTax": 12500,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-002",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-002",
+        "customerFixtureId": "CM-DEMO-CUST-002",
+        "customerReference": "CM-DEMO-OPP-002",
+        "orderDateEpoch": 1790812800,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Feed logistics crate set [CM-DEMO-LINE-002]",
+            "quantity": 10,
+            "unitPriceExcludingTax": 480,
+            "vatRate": 19
+          },
+          {
+            "description": "Route planning workshop [CM-DEMO-LINE-003]",
+            "quantity": 12,
+            "unitPriceExcludingTax": 300,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-003",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-003",
+        "customerFixtureId": "CM-DEMO-CUST-003",
+        "customerReference": "CM-DEMO-OPP-003",
+        "orderDateEpoch": 1793491200,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Group habitat tour allocation [CM-DEMO-LINE-004]",
+            "quantity": 20,
+            "unitPriceExcludingTax": 250,
+            "vatRate": 19
+          },
+          {
+            "description": "Lodge transfer coordination [CM-DEMO-LINE-005]",
+            "quantity": 4,
+            "unitPriceExcludingTax": 300,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-004",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-004",
+        "customerFixtureId": "CM-DEMO-CUST-004",
+        "customerReference": "CM-DEMO-OPP-004",
+        "orderDateEpoch": 1788134400,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Seasonal catering service block [CM-DEMO-LINE-006]",
+            "quantity": 2,
+            "unitPriceExcludingTax": 3500,
+            "vatRate": 19
+          },
+          {
+            "description": "Visitor refreshment vouchers [CM-DEMO-LINE-007]",
+            "quantity": 70,
+            "unitPriceExcludingTax": 40,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-005",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-005",
+        "customerFixtureId": "CM-DEMO-CUST-005",
+        "customerReference": "CM-DEMO-OPP-005",
+        "orderDateEpoch": 1798761600,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Electric shuttle service block [CM-DEMO-LINE-008]",
+            "quantity": 3,
+            "unitPriceExcludingTax": 4000,
+            "vatRate": 19
+          },
+          {
+            "description": "Driver briefing sessions [CM-DEMO-LINE-009]",
+            "quantity": 12,
+            "unitPriceExcludingTax": 300,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-006",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-006",
+        "customerFixtureId": "CM-DEMO-CUST-006",
+        "customerReference": "CM-DEMO-OPP-006",
+        "orderDateEpoch": 1801440000,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Event pavilion package [CM-DEMO-LINE-010]",
+            "quantity": 1,
+            "unitPriceExcludingTax": 9000,
+            "vatRate": 19
+          },
+          {
+            "description": "Event operations workshop [CM-DEMO-LINE-011]",
+            "quantity": 4,
+            "unitPriceExcludingTax": 700,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-007",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-007",
+        "customerFixtureId": "CM-DEMO-CUST-007",
+        "customerReference": "CM-DEMO-OPP-007",
+        "orderDateEpoch": 1785542400,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Retail kiosk installation [CM-DEMO-LINE-012]",
+            "quantity": 2,
+            "unitPriceExcludingTax": 2500,
+            "vatRate": 19
+          },
+          {
+            "description": "Kiosk inventory starter pack [CM-DEMO-LINE-013]",
+            "quantity": 10,
+            "unitPriceExcludingTax": 230,
+            "vatRate": 19
+          }
+        ]
+      },
+      {
+        "fixtureId": "CM-DEMO-ORDER-008",
+        "crmOpportunityFixtureId": "CM-DEMO-OPP-008",
+        "customerFixtureId": "CM-DEMO-CUST-001",
+        "customerReference": "CM-DEMO-OPP-008",
+        "orderDateEpoch": 1804032000,
+        "demoClassification": "BACKGROUND_DEMO_DATA",
+        "lines": [
+          {
+            "description": "Visitor flow analysis days [CM-DEMO-LINE-014]",
+            "quantity": 6,
+            "unitPriceExcludingTax": 600,
+            "vatRate": 19
+          },
+          {
+            "description": "Wayfinding prototype set [CM-DEMO-LINE-015]",
+            "quantity": 3,
+            "unitPriceExcludingTax": 600,
+            "vatRate": 19
+          }
+        ]
+      }
+    ]
+  },
+  "expectedCounts": {
+    "seedEnabled": {
+      "crmAccounts": 8,
+      "crmContacts": 10,
+      "crmOpportunities": 8,
+      "erpOwnCompanies": 1,
+      "erpThirdParties": 7,
+      "erpOrders": 8,
+      "erpOrderLines": 15,
+      "operationalObjects": 57,
+      "proofScenarios": 1,
+      "backgroundDemoOrders": 7,
+      "governedFlows": 1
+    },
+    "seedDisabled": {
+      "crmAccounts": 1,
+      "crmContacts": 0,
+      "crmOpportunities": 0,
+      "erpOwnCompanies": 1,
+      "erpThirdParties": 0,
+      "erpOrders": 0,
+      "erpOrderLines": 0,
+      "operationalObjects": 2,
+      "proofScenarios": 0,
+      "backgroundDemoOrders": 0,
+      "governedFlows": 0
+    }
+  }
+}
