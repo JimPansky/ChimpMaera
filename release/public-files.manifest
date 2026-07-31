@@ -2,6 +2,7 @@
 # Format: source<TAB>destination<TAB>mode
 .gitignore	.gitignore	0644
 assets/brand/chimpmaera-master.svg	assets/brand/chimpmaera-master.svg	0644
+assets/brand/chimpmaera-negative.png	assets/brand/chimpmaera-negative.png	0644
 assets/brand/chimpmaera-negative.svg	assets/brand/chimpmaera-negative.svg	0644
 CITATION.cff	CITATION.cff	0644
 CODE_OF_CONDUCT.md	CODE_OF_CONDUCT.md	0644
