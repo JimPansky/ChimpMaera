@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createHash } from "node:crypto";
-import { readFile, readdir, stat } from "node:fs/promises";
+import { lstat, readFile, readdir, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -33,16 +33,50 @@ function safeRelative(relative) {
     typeof relative === "string"
     && relative.length > 0
     && !path.isAbsolute(relative)
+    && !relative.includes("\\")
+    && !relative.includes("\0")
+    && relative === relative.normalize("NFC")
     && !relative.split("/").some((part) => ["", ".", ".."].includes(part)),
     "SUPPLY_CHAIN_PATH_INVALID_DENIED",
   );
   return relative;
 }
 
+async function safeRootEntry(root, relative, expectedKind) {
+  const checked = safeRelative(relative);
+  let candidate = root;
+  let metadata;
+  for (const part of checked.split("/")) {
+    candidate = path.join(candidate, part);
+    try {
+      metadata = await lstat(candidate);
+    } catch {
+      fail("SUPPLY_CHAIN_SOURCE_MISSING_DENIED");
+    }
+    assert(
+      !metadata.isSymbolicLink(),
+      "SUPPLY_CHAIN_SYMLINK_SOURCE_DENIED",
+    );
+  }
+  const canonical = await realpath(candidate);
+  const fromRoot = path.relative(root, canonical);
+  assert(
+    fromRoot !== ".."
+    && !fromRoot.startsWith(`..${path.sep}`)
+    && !path.isAbsolute(fromRoot),
+    "SUPPLY_CHAIN_SOURCE_ESCAPE_DENIED",
+  );
+  assert(
+    expectedKind === "directory" ? metadata.isDirectory() : metadata.isFile(),
+    "SUPPLY_CHAIN_SOURCE_TYPE_INVALID_DENIED",
+  );
+  return candidate;
+}
+
 export async function verifySupplyChain({ root = process.cwd() } = {}) {
-  const resolvedRoot = path.resolve(root);
+  const resolvedRoot = await realpath(path.resolve(root));
   const read = async (relative) => readFile(
-    path.join(resolvedRoot, safeRelative(relative)),
+    await safeRootEntry(resolvedRoot, relative, "file"),
     "utf8",
   );
   const lock = JSON.parse(await read(LOCK_PATH));
@@ -148,10 +182,21 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   );
   checks.push("CI_ACTIONS_AND_NPM_PINNED");
 
-  const runtimeDirectory = path.join(resolvedRoot, lock.runtimeClosure.directory);
+  const runtimeDirectory = await safeRootEntry(
+    resolvedRoot,
+    lock.runtimeClosure.directory,
+    "directory",
+  );
   const runtimeFiles = (await readdir(runtimeDirectory))
     .filter((name) => name.endsWith(".mjs"))
     .sort();
+  for (const runtimeFile of runtimeFiles) {
+    await safeRootEntry(
+      resolvedRoot,
+      `${lock.runtimeClosure.directory}/${runtimeFile}`,
+      "file",
+    );
+  }
   const dockerfile = await read(lock.runtimeClosure.dockerfile);
   const copiedRuntimeFiles = [...dockerfile.matchAll(
     /^COPY demo\/runtime\/([^\s]+)\s+\.\/[^\s]+$/gm,
@@ -163,13 +208,24 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   checks.push("RUNTIME_COPY_CLOSURE_VERIFIED");
 
   const manifestText = await read(lock.publicClosure.manifestPath);
-  const publicSources = new Set(manifestText.split("\n")
-    .filter((line) => line && !line.startsWith("#"))
-    .map((line) => line.split("\t")[0]));
+  const publicSources = new Set();
+  for (const line of manifestText.split("\n")) {
+    if (!line || line.startsWith("#")) continue;
+    const fields = line.split("\t");
+    assert(
+      fields.length === 3
+      && fields[0] === fields[1]
+      && ["0644", "0755"].includes(fields[2])
+      && !publicSources.has(fields[0]),
+      "SUPPLY_CHAIN_PUBLIC_MANIFEST_INVALID_DENIED",
+    );
+    const source = safeRelative(fields[0]);
+    await safeRootEntry(resolvedRoot, source, "file");
+    publicSources.add(source);
+  }
   for (const required of lock.publicClosure.requiredPaths ?? []) {
     assert(publicSources.has(required), "SUPPLY_CHAIN_PUBLIC_CLOSURE_MISSING_DENIED");
-    const metadata = await stat(path.join(resolvedRoot, safeRelative(required)));
-    assert(metadata.isFile(), "SUPPLY_CHAIN_PUBLIC_SOURCE_MISSING_DENIED");
+    await safeRootEntry(resolvedRoot, required, "file");
   }
   assert(
     ![...publicSources].some((source) => source.startsWith("docs/development/")),
@@ -216,4 +272,3 @@ if (invokedPath === fileURLToPath(import.meta.url)) {
     process.exitCode = 1;
   }
 }
-

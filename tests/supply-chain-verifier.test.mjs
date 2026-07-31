@@ -4,6 +4,8 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  symlink,
+  unlink,
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -34,6 +36,13 @@ async function fixture() {
       locations.map(({ path: locationPath }) => locationPath)
     ),
   ]);
+  const publicManifest = await readFile(
+    path.join(root, lock.publicClosure.manifestPath),
+    "utf8",
+  );
+  for (const line of publicManifest.split("\n")) {
+    if (line && !line.startsWith("#")) files.add(line.split("\t")[0]);
+  }
   for (const name of await (await import("node:fs/promises")).readdir(
     path.join(root, lock.runtimeClosure.directory),
   )) {
@@ -120,3 +129,28 @@ test("mutable OCI, npm integrity, CI ref, runtime omission and release omission 
   }
 });
 
+test("symlinked declared inputs cannot escape the verification root", async () => {
+  const target = await fixture();
+  const candidate = path.join(target, "package.json");
+  await unlink(candidate);
+  await symlink(path.join(root, "package.json"), candidate);
+  await assert.rejects(
+    verifySupplyChain({ root: target }),
+    /SUPPLY_CHAIN_SYMLINK_SOURCE_DENIED/,
+  );
+});
+
+test("unsafe or malformed public manifest entries fail closed", async () => {
+  const cases = [
+    (source) => `${source}../outside\t../outside\t0644\n`,
+    (source) => source.replace(/^README[.]md\tREADME[.]md\t0644$/m, "README.md\tREADME.md"),
+    (source) => `${source}README.md\tREADME.md\t0644\n`,
+  ];
+  for (const transform of cases) {
+    const target = await mutate("release/public-files.manifest", transform);
+    await assert.rejects(
+      verifySupplyChain({ root: target }),
+      /SUPPLY_CHAIN_(?:PATH|PUBLIC_MANIFEST)_INVALID_DENIED/,
+    );
+  }
+});

@@ -78,7 +78,7 @@ a58aa1a6f5db460c08f5d90d20234d1c6795417caae53823709380c6f1893875  ./package.json
 ee4dc367f20aaedb73514ee8186b0145000e3f554efa476358af5694eb45b874  ./release/public-files.manifest
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
 ba900fa551a6af01e93b646110be22856db4fa8d3002deeafa42a9c8907bb518  ./scripts/build-public-release.sh
-fc30cce07e14b9e45187b5bd579a27463635fe7bd6e270720d13153f38d57d77  ./scripts/verify-supply-chain.mjs
+70bf4999559e625e7b74f4a3e5e5ca20eb16dc3b6dc218ffab29a1099cbd14fa  ./scripts/verify-supply-chain.mjs
 d9157598e660243c1b98552b09c43a05127701f0fe343c1a14c0eb984eaea9cd  ./tests/demo-admin-ai-poc.test.mjs
 6c9e8449f092f9eab87321c2a47714841db60c01d61a4926d1ee90ba44d016bf  ./tests/demo-approval-workbench.test.mjs
 7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74  ./tests/demo-enforcement-gate.test.mjs
@@ -91,7 +91,7 @@ bcb7e30c3847bbef4d96e2a6345abc0ec0c48f182a52f6e1a18d127e6fdc05cc  ./tests/poc-gu
 c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-setup-compatibility-planner.test.ts
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
-7cc272359eadb6cc1259a711de96e5aee883e41c9e73deac605f4fdbee010f68  ./tests/supply-chain-verifier.test.mjs
+e06fac4f08606947594eecaacde58fefe2cf7235a6b4a86b192f1095b8eb103e  ./tests/supply-chain-verifier.test.mjs
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
 8d816f627512e3f0e4cb27e8562d3e48ddfcdcf242b6e33882a840225c1a4154  ./tools/video-production-reference/Dockerfile
 04034722546e1a4fec5026bf45f88b1fe7a25b487db6f4851a875656d0ada823  ./tools/video-production-reference/README.md
