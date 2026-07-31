@@ -15,6 +15,12 @@ service, support promise or permission to connect real systems. It contains no
 credentials and should be used only with synthetic data on a disposable or
 development host.
 
+## Watch
+
+- [Meet Your New AI Colleague | ChimpMaera](https://youtu.be/8mB7O81Y2xA)
+- [How ChimpMaera Governs AI Actions | Plan, Approval, Evidence](https://youtu.be/8lj5nd-LJa4)
+- [Controllable AI: Capability Is Not Authority | ChimpMaera](https://youtu.be/mxN9biyelZ0)
+
 ## Start here
 
 First read [The ChimpMaera Canon](docs/CANON.md), the laws that define how
