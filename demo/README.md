@@ -11,6 +11,14 @@ authenticated provider readiness, mapped fictional identities, a
 digest-bound catalog, one governed CRM-to-ERP order flow and the deterministic
 Admin-AI preview boundary.
 
+The v0.2 Wave 1 feature candidate adds a local Approval Workbench for the
+existing synthetic order escalation. It shows an exact readable business diff,
+accepts an authenticated local Approve or Reject, issues a short one-use lease
+only after approval, enforces it at the provider gate, and reads back separate
+owner-decision and effect receipts. Rejected, tampered, expired and replayed
+leases cannot execute. This remains a deterministic static-policy demo with no
+live LLM or production owner identity.
+
 ## Requirements
 
 - Linux x86_64;
@@ -40,6 +48,16 @@ grant host privileges.
 Success prints `READY_VERIFIED` and loopback URLs for ChimpMaera, EspoCRM and
 Dolibarr. An unchanged rerun is idempotent. The Admin-AI PoC uses a
 deterministic local policy, not a live LLM or production delegation service.
+
+After a SAFE_GUIDED install, the bounded endpoint smoke can be run with:
+
+```sh
+./demo/approval-workbench-smoke.sh
+```
+
+The script creates one additional fictional Dolibarr order, proves a rejected
+proposal cannot act, proves an approved lease acts once, rejects replay, and
+writes digest-only evidence under `.chimpmaera-demo/public/`.
 
 ## Local runtime state
 

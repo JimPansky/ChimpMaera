@@ -1,8 +1,9 @@
 # Architecture
 
-This architecture implements only the v0.1 subset identified in
-[The ChimpMaera Canon](CANON.md). [Known Limitations](KNOWN-LIMITATIONS.md)
-identifies boundaries that are intentionally outside the local candidate.
+This architecture preserves the v0.1 subset identified in
+[The ChimpMaera Canon](CANON.md) and adds the isolated v0.2 Wave 1 Approval
+Workbench candidate. [Known Limitations](KNOWN-LIMITATIONS.md) identifies
+boundaries that remain intentionally outside the local candidate.
 
 ChimpMaera v0.1 is a local reference stack with three user-facing loopback
 services:
@@ -30,12 +31,19 @@ effects.
 The effect path follows the Canon's separation: the seed path forms typed
 requests without provider credentials; the ChimpMaera runtime gate performs
 use-time enforcement; the provider is read back before a bound success receipt
-is recorded. A complete readable business Diff, production approval service,
-provider Revoke and provider Rollback remain outside v0.1.
+is recorded. Wave 1 adds one complete readable business Diff and local
+Approve/Reject ceremony for the existing synthetic Dolibarr escalation.
+Production owner identity, a production approval service, provider Revoke and
+provider Rollback remain outside the candidate.
 
 The Admin-AI PoC is a deterministic local preview wired through a static policy
 and the same enforcement boundary. `AUTO_GRANT` may execute only its permitted
-synthetic CRM effect with a bound receipt. `OWNER_ESCALATION`, `DENY`, missing
-authority and tampered authority or digest cases fail closed before provider
-execution. No live LLM, owner-confirmation service or production authority is
-claimed.
+synthetic CRM effect. `OWNER_ESCALATION` creates a durable proposal with an
+exact business Diff; an authenticated local Approve emits a profile-, policy-,
+scope-, action- and Diff-bound short lease, while Reject emits no authority.
+The gate consumes an owner lease before provider access, performs semantic
+readback and records owner-decision and effect receipts. Missing, rejected,
+tampered, expired, replayed or scope-mismatched authority fails closed. The
+owner signer key is created inside the runtime state volume and is not exposed
+to browser or seed code. No live LLM, production IAM, revoke service,
+distributed authority or production approval is claimed.

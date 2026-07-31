@@ -15,10 +15,15 @@ These limits are part of the claim discipline required by
   protect against a compromised host or Docker daemon.
 - The deterministic fixtures are fictional and must not be replaced with real
   personal or customer data without a separate privacy and security design.
-- A complete readable business-Diff/approval UI, provider Revoke and provider
-  Rollback are not implemented claims. Installer Cleanup is distinct.
-- Admin-AI is a deterministic local preview. It does not call a live LLM, does
-  not confirm owner intent and does not create production authority.
+- The Approval Workbench implements one readable business Diff and local
+  Approve/Reject ceremony for the synthetic Dolibarr escalation only. It is not
+  production IAM/MFA or a general approval service. The local API bearer stands
+  in for the owner identity.
+- Provider Revoke and provider Rollback are not implemented claims. Installer
+  Cleanup is distinct. A burned or ambiguous one-use lease requires a new owner
+  decision after provider reconciliation.
+- Admin-AI is a deterministic local static-policy preview. It does not call a
+  live LLM and does not create production authority.
 - Catalog and template entries are descriptive; not every entry is executable,
   and admission or popularity never grants runtime authority.
 - No DMS/compliance suitability or universal AI capability is claimed.

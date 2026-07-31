@@ -207,21 +207,22 @@ test("EARLY-ADMIN-DASHBOARD loopback status, dialog and repair E2E reject foreig
     /default-src 'self'/,
   );
   const page = await pageResponse.text();
-  assert.match(page, /Admin-AI authority proof/);
+  assert.match(page, /Admin-AI Approval Workbench/);
   assert.match(
     page,
-    /Deterministic preview — no live LLM\. Escalation is shown but is not yet owner-confirmed\./,
+    /Deterministic static-policy preview — no live LLM and no production authority\./,
   );
   assert.equal((page.match(/id="admin-ai-(?:contact|order|deny)"/g) ?? []).length, 3);
   assert.match(page, /Outcome: not run/);
   assert.match(page, /Reason code: not run/);
   assert.match(page, /Policy digest: not run/);
   assert.match(page, /\/api\/demo\/admin-ai\/request/);
+  assert.match(page, /\/api\/demo\/admin-ai\/owner-decision/);
   assert.match(page, /\/api\/demo\/effects/);
-  assert.doesNotMatch(
-    page,
-    /createHmac|owner-reject|countdown|maxUses|notBefore|revoke/,
-  );
+  assert.match(page, /businessDiff/);
+  assert.match(page, /'APPROVE'/);
+  assert.match(page, /'REJECT'/);
+  assert.doesNotMatch(page, /createHmac|chimp-control-token|live LLM call/);
   assert.equal((await fetch(`${base}/missing`)).status, 404);
 
   const post = async (path: string, body: unknown) => {

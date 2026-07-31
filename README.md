@@ -10,6 +10,13 @@ demo with ChimpMaera, EspoCRM and Dolibarr, seeds fictional data, performs one
 explicitly governed business action and verifies the result through provider
 readback.
 
+The local v0.2 Wave 1 feature candidate on this branch adds an Approval
+Workbench for the existing deterministic synthetic-order escalation: readable
+business diff, explicit local Approve/Reject, a short one-use authority lease,
+provider-gate enforcement, decision/effect receipts and semantic readback. It
+does not call a live LLM or claim production authority. The v0.1.0 tag remains
+unchanged.
+
 This candidate is not a production release, security certification, hosted
 service, support promise or permission to connect real systems. It contains no
 credentials and should be used only with synthetic data on a disposable or

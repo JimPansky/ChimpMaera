@@ -6,6 +6,10 @@ state="$root/.chimpmaera-demo"
 evidence="$root/.chimpmaera-acceptance"
 scenario="${1:-}"
 attempt="${2:-}"
+acceptance_project="${CM_ACCEPTANCE_PROJECT:-chimpmaera-v02-aw-acceptance}"
+acceptance_chimp_port="${CM_ACCEPTANCE_CHIMP_PORT:-127.0.0.1:7790}"
+acceptance_espo_port="${CM_ACCEPTANCE_ESPO_PORT:-127.0.0.1:7791}"
+acceptance_doli_port="${CM_ACCEPTANCE_DOLI_PORT:-127.0.0.1:7792}"
 
 usage() {
   printf >&2 'Usage: %s SCENARIO ATTEMPT\n' "$0"
@@ -192,12 +196,20 @@ run_install() {
     CM_DEMO_MODE="$mode" \
     CM_AUTHORITY_PROFILE="$profile" \
     CM_DEMO_SEED="$seed" \
+    CM_DEMO_PROJECT="$acceptance_project" \
+    CM_CHIMP_PORT="$acceptance_chimp_port" \
+    CM_ESPO_PORT="$acceptance_espo_port" \
+    CM_DOLI_PORT="$acceptance_doli_port" \
     CM_RAMPAGE_CONFIRM=I_UNDERSTAND_LOCAL_DEMO_ONLY \
       "$root/demo/install.sh"
   else
     CM_DEMO_MODE="$mode" \
     CM_AUTHORITY_PROFILE="$profile" \
     CM_DEMO_SEED="$seed" \
+    CM_DEMO_PROJECT="$acceptance_project" \
+    CM_CHIMP_PORT="$acceptance_chimp_port" \
+    CM_ESPO_PORT="$acceptance_espo_port" \
+    CM_DOLI_PORT="$acceptance_doli_port" \
       "$root/demo/install.sh"
   fi
 }
@@ -237,6 +249,8 @@ case "$scenario" in
     run_install complete SAFE_GUIDED yes
     archive_install
     assert_readback complete SAFE_GUIDED yes "$run_dir/readback.json"
+    "$root/demo/approval-workbench-smoke.sh" \
+      "$run_dir/approval-workbench-smoke.json"
     ;;
   RAMPAGE_LAB_COLD)
     purge_owned
