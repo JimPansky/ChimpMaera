@@ -113,7 +113,12 @@ or trademark terms.
 
 ## Support
 
-If ChimpMaera is useful to you, you can support its continued development via
-[Ko-fi](https://ko-fi.com/chimpmaera) or
-[Buy Me a Coffee](https://buymeacoffee.com/jimpansky). Support is optional and
-does not grant additional rights or project authority.
+If ChimpMaera is useful to you, you can support its continued development:
+
+<p>
+  <a href="https://ko-fi.com/chimpmaera"><img src="https://storage.ko-fi.com/cdn/kofi3.png?v=3" alt="Support ChimpMaera on Ko-fi" height="36"></a>
+  &nbsp;
+  <a href="https://buymeacoffee.com/jimpansky"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Support ChimpMaera on Buy Me a Coffee" height="36"></a>
+</p>
+
+Support is optional and does not grant additional rights or project authority.
