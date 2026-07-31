@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Build, test and verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.14.1
+          cache: npm
+
+      - name: Set up supported npm version
+        run: npm install --global npm@11.11.0
+
+      - name: Verify release-tree checksums
+        run: sha256sum --check SHA256SUMS
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run project tests
+        run: npm test
+
+      - name: Run video-tooling tests
+        run: npm run video:test
+
+      - name: Confirm tests did not modify tracked files
+        run: git diff --exit-code

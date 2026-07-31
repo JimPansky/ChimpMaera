@@ -1,0 +1,46 @@
+name: Feature request
+description: Propose a focused improvement to ChimpMaera or the Zoo.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+      description: What user need or limitation should this address?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful change and its expected behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: authority
+    attributes:
+      label: Authority, safety and evidence impact
+      description: Explain any new permissions, network access, data classes, effects or evidence requirements.
+      placeholder: No authority or safety impact identified.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What simpler options or existing Zoo components did you consider?
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Contribution checks
+      options:
+        - label: I searched existing issues and discussions for related proposals.
+          required: true
+        - label: I understand that a proposal does not grant project authority or guarantee implementation.
+          required: true

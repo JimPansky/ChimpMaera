@@ -158,12 +158,9 @@ class BundledReferenceAssets(unittest.TestCase):
             ("rhein", "land"),
         )
         needles = tuple("".join(parts) for parts in fragments)
-        files = [path for path in ROOT.rglob("*") if path.is_file()]
         repo_root = ROOT.parents[1]
-        root_readme = (repo_root / "README.md").read_text(encoding="utf-8")
-        narrow_section = root_readme.split("## Additional tooling", 1)[1]
-        for needle in needles:
-            self.assertNotIn(needle, narrow_section.lower())
+        files = [repo_root / "README.md"]
+        files.extend(path for path in ROOT.rglob("*") if path.is_file())
         for path in files:
             content = path.read_bytes().decode("utf-8", errors="ignore").lower()
             for needle in needles:

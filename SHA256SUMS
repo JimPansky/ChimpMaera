@@ -1,5 +1,10 @@
+6280695beeca55974545ba5cf5aa036c0a3e1fc47b03d02a30d287bd0a0aef8c  ./.github/ISSUE_TEMPLATE/config.yml
+0e52580f7d79ba6d1d877aad727bc970d11bc3f890f1e7b90e7435fb9dcb919a  ./.github/ISSUE_TEMPLATE/bug-report.yml
+b1d31372f1800ca9780fe990d980891db9280ebadd74d060015052019e641da1  ./.github/ISSUE_TEMPLATE/feature-request.yml
 c346b4bf197d82a657f4baf924b37210a9d0c08d988a7913003bfc868a3b69b1  ./.github/FUNDING.yml
-caa104b2be0c553c1fbef89217a98a16794aa4417178440f6de8e7fb6958296b  ./.gitignore
+135cc7f61a81ebbd917b93b09a713af538c0a0caf7a09a3db43bbbdaa37c3552  ./.github/PULL_REQUEST_TEMPLATE.md
+9d11db9229284f75de82bf234e99d567c6cc44d3a8c0f668fca412acd61af11a  ./.github/workflows/ci.yml
+570a106298e9be2871dd3882c02eaf59ad535520b606e1b63a9f30f286540828  ./.gitignore
 83507f555c05af88f79d105776a474ae56f7a6ff155cc7212a012e0f60a4084c  ./CITATION.cff
 ba943be96394ec332cab2ce2f3ce06f122d9f224f304c765a74dc58cca809310  ./CODE_OF_CONDUCT.md
 ff8d80dc431ca052220ae1eacd54c81456ebc9608469493a482a5b6025ec5e73  ./CONTRIBUTING.md
@@ -8,7 +13,7 @@ bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.m
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
 c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-c8f570f6fae23b9ffa9c8c25714a4e00056a570ad600f6ba6d436aa15e56dbdd  ./README.md
+17e9883b6e727c4a783df23710afa055990f1fe453f7fe916d80f4d10077a20d  ./README.md
 1a92564c31cafee7a8d96797e35c928fec450af8f51a359bbf67e2f8ba55ca07  ./SECURITY.md
 405161d717617714546697edb5c01582436c0f2a611da4a2861763ea958b93d9  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
@@ -97,5 +102,5 @@ d07270784e885fe5e2822f565506dda7dfbbf4e291f56de145aeaabbe891cc7b  ./tools/video-
 f7f583d83d4d7d15d629765cae4bea029f053306e98d87ab7602b8db51bb78af  ./tools/video-production-reference/src/cm_video_ref/contract.py
 2d9d34f7bb85c99b6e2de303fb85b23d5b2653454bb6a130d7f5ff3fb8bb0f9d  ./tools/video-production-reference/src/cm_video_ref/qa.py
 0664a1221fda89bf1cb8f7e996c31b925c6815086ad2ab6e3b9ee0098dd400d2  ./tools/video-production-reference/src/cm_video_ref/render.py
-64e6c09ab782640ad6ed27dfcba6550457ee17f5fb4e18731a8dc5fb7efa3081  ./tools/video-production-reference/tests/test_cm_video.py
+5b0fb1894f0b135953e2758413540a4e75da469778cce53c5c6f84e18d4f7dc1  ./tools/video-production-reference/tests/test_cm_video.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json

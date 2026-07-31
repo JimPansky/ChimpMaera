@@ -1,0 +1,63 @@
+name: Bug report
+description: Report a reproducible problem in ChimpMaera.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve ChimpMaera. Do not include credentials,
+        personal data, private prompts or non-public infrastructure details.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest safe sequence that reproduces the problem.
+      placeholder: |
+        1. Configure ...
+        2. Run ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include ChimpMaera version or commit, OS, Docker version and authority profile where relevant.
+      placeholder: |
+        ChimpMaera commit:
+        OS:
+        Docker:
+        Authority profile:
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Add relevant logs, receipts or screenshots after removing secrets and private data.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I removed credentials, personal data and private infrastructure details.
+          required: true
+        - label: I searched existing issues for the same problem.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true
