@@ -184,6 +184,8 @@ direct provider route. A managed tenant/purpose/trust/quota-bound mind store,
 durable receipts, idempotent semantic reset and ownership-scoped setup/purge are
 implemented by the isolated fixture Gateway.
 
+Runtime implementation commit: `2ddfd1e5ec70e6f6fc233aebc68339c1f709bf2d`.
+
 The real upstream OpenClaw CLI completed the exact typed tool call through the
 Gateway/Broker fixture. Five explicit HTTP denials, six egress targets, four
 filesystem/host-authority targets, replay/load, cross-tenant, oversize, restart,
@@ -211,7 +213,8 @@ writer race.
 12. idempotent labelled rollback leaves zero owned runtime residue: PASS.
 
 Evidence: focused AAS-035 tests **7/7**, complete repository tests **102/102**,
-supply-chain verifier PASS, deterministic public staging PASS, and final
+video reference **15/15**, repository checksums **154/154**, supply-chain
+verifier **6/6**, deterministic public staging PASS, and final
 frozen-byte smoke `aas035-20260801T115932Z` PASS in **25,811 ms**. The smoke
 recorded five denied Gateway requests, twelve effect attempts, exactly one
 effect, two model calls, one receipt digest, one durable mind digest and
@@ -219,6 +222,15 @@ identical excluded-Owner fingerprints before/during/after. Summary SHA-256 is
 `98c79565d04a9341f9b522ca5cb2c1ea58378d915061006534c09589fe1be538`.
 Machine-readable evidence is in
 `docs/development/evidence/admin-ai-aas-035-20260801.json`.
+
+Correcting-byte history is explicit: the first run corrected an existence-only
+`/proc/1/root` probe into an actual denied read and removed nondeterministic
+local build attestations; the second baked the finite OpenClaw bootstrap set so
+the immutable workspace stayed read-only; the third replaced concurrent CLI
+device-pairing races with concurrent Gateway replay after one real OpenClaw E2E;
+and the last correcting run renamed a managed cache path rejected by the public
+hygiene scanner. Each repeat followed a real affected-byte change; the final run
+is the only evidence used for closure.
 
 ### Act
 

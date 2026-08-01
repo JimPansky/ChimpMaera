@@ -1,11 +1,15 @@
 {
   "schemaVersion": "chimpmaera.admin-ai/aas-035-evidence/v1",
   "workItem": "AAS-035",
+  "baseline": "cf1ce64ce33ca6e3e658af69f986a2e3b72a60b7",
+  "implementationCommit": "2ddfd1e5ec70e6f6fc233aebc68339c1f709bf2d",
   "metric": { "name": "aas_035_openclaw_agent_docker_gates", "passed": 12, "total": 12 },
   "verdict": "LOCAL_AAS_035_OPENCLAW_GATEWAY_ONLY_PASS_NOT_PRODUCTION_SANDBOX_REGISTRY_OR_RELEASE_CLAIM",
   "tests": {
     "focused": { "passed": 7, "total": 7 },
     "complete": { "passed": 102, "total": 102 },
+    "videoReference": { "passed": 15, "total": 15 },
+    "repositoryChecksums": { "passed": 154, "total": 154 },
     "supplyChain": "PASS",
     "publicStaging": "PASS"
   },
@@ -29,6 +33,28 @@
     "authorityDigest": "389fa7ad905f8155af6a6f24aaddc60fecfc8ac3e1a55b99cbdc400b5cbe315c",
     "ownedRuntimeResidue": 0
   },
+  "correctingEvidence": [
+    {
+      "run": "aas035-20260801T114827Z",
+      "defect": "Existence-only procfs probe mistook the container's own PID-1 path for readable host authority; Compose rebuild attestations also recreated services on idempotent setup.",
+      "correction": "Probe an actual shadow-file read and use source-digest-labelled provenance-disabled local builds."
+    },
+    {
+      "run": "aas035-20260801T115134Z",
+      "defect": "OpenClaw attempted to seed missing workspace bootstrap files on the required read-only root.",
+      "correction": "Bake the finite upstream bootstrap set and completed workspace-state marker into the derivative image."
+    },
+    {
+      "run": "aas035-20260801T115355Z",
+      "defect": "Concurrent OpenClaw CLI clients raced the loopback device-pairing path after the real typed E2E had passed.",
+      "correction": "Retain one real OpenClaw typed E2E and move bounded concurrency to Gateway/Broker replay probes from the agent container."
+    },
+    {
+      "run": "aas035-20260801T115602Z",
+      "defect": "Public hygiene conservatively rejected a managed in-volume cache path containing the private-home substring.",
+      "correction": "Rename the managed cache directory and repeat the affected Compose/full smoke; final closure uses aas035-20260801T115932Z only."
+    }
+  ],
   "assumption": "Synthetic identity, Gateway/Broker/provider and mind fixtures prove isolated local boundary composition only.",
   "risk": "Docker shares the host kernel and external image signature, complete SBOM/CVE/licence and production identity/network evidence remain unavailable.",
   "fallback": "Keep the profile default-off and remove only resources labelled io.chimpmaera.fixture=aas035-openclaw-agent-v1.",

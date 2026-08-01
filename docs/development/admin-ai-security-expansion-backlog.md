@@ -41,25 +41,25 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 0 | 1 | 2 | 4 | 0 | 12 |
+| P0 | 5 | 0 | 0 | 2 | 5 | 0 | 12 |
 | P1 | 11 | 3 | 0 | 0 | 2 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **4** | **1** | **2** | **6** | **0** | **35** |
+| **Total** | **22** | **4** | **0** | **2** | **7** | **0** | **35** |
 
-Active item followed by the remaining ready order after AAS-012 closure:
+Remaining ready order after AAS-035 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-035 | P0 | I5 owner-priority containment frontier | XL | Active WIP=1; provenance prerequisite passed 4/4 before runtime implementation |
-| 2 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 3 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 4 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 5 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
+| 2 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 3 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 4 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
-`AAS-009`, `AAS-016` and `AAS-012`; it must select owner-priority `AAS-035`
-next. Closed items do not reopen without new evidence.
+`AAS-009`, `AAS-016`, `AAS-012` and owner-priority `AAS-035`; it must select
+`AAS-017` next by equal-I4 ready ordering and dependency value. Closed items do
+not reopen without new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
 decision/use convergence, fallback, management/effect separation, audit and
@@ -101,6 +101,15 @@ agent runtime has not been confined as a default-off, Gateway-only ChimpMaera
 Docker workload. AAS-035 captures that measurable integration and now leads the
 frontier; data/ERP/CRM/BI/DMS breadth remains behind it absent a proven security
 prerequisite.
+
+The AAS-035 frontier audit rechecked runtime containment, workload identity,
+managed memory, Policy/Authority/effect separation, audit causality, artifact
+trust and external supply-chain boundaries. The remaining internally ready
+gaps are already represented by AAS-017/AAS-023/AAS-025/AAS-030; registry
+signature/SBOM/current-CVE/complete-licence and production isolation evidence
+remain external/preparable, not new local controls. AAS-017 now leads the equal
+I4 ready frontier because its signed lifecycle is a dependency for later
+management-plane, delegation, schedule and credential controls.
 
 ## P0 — critical authority and containment
 
@@ -366,7 +375,7 @@ prerequisite.
 
 ### AAS-035 — OpenClaw Agent Docker, closed Gateway-only runtime
 
-- **Status / priority:** `in_progress` / P0. **Importance / complexity:** I5 explicit
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 explicit
   Owner-priority containment frontier / XL. **Risk reduction:** critical before
   exposing a real autonomous agent runtime. **User value:** a real agent can use
   ChimpMaera's typed surface without becoming the Decision, Policy, Authority or
@@ -401,8 +410,13 @@ prerequisite.
 - **Completion commit/evidence:** prerequisite provenance/maturity 4/4 at
   `6742ea5e16c3855160a0ca7d59e1f4d583d23671` with
   `docs/development/evidence/admin-ai-aas-035-openclaw-provenance-20260801.json`;
-  runtime implementation and 12/12 closure pending. **Last reviewed:**
-  2026-08-01.
+  runtime implementation `2ddfd1e5ec70e6f6fc233aebc68339c1f709bf2d` and
+  `docs/development/evidence/admin-ai-aas-035-20260801.json`; runtime gates
+  **12/12**, complete tests **102/102**, video **15/15**, checksums **154/154**,
+  supply chain **6/6** and final isolated smoke `aas035-20260801T115932Z` PASS
+  in 25,811 ms with zero owned residue. Verdict
+  `LOCAL_AAS_035_OPENCLAW_GATEWAY_ONLY_PASS_NOT_PRODUCTION_SANDBOX_REGISTRY_OR_RELEASE_CLAIM`.
+  **Last reviewed:** 2026-08-01.
 
 ## P1 — high-value control product and hardened boundaries
 
