@@ -13,3 +13,4 @@ export * from "./model-access-broker.js";
 export * from "./skill-admission.js";
 export * from "./protected-audit-timeline.js";
 export * from "./builder-authority.js";
+export * from "./builder-discovery.js";
