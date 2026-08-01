@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "chimpmaera.development/review-readiness-evidence/v1",
+  "scope": "LOCAL_V02_REVIEW_CANDIDATE_ONLY",
+  "phase": "v0.2-review-readiness",
+  "metric": {
+    "name": "review_readiness_milestones",
+    "passed": 3,
+    "total": 4,
+    "status": "CHECK_PENDING"
+  },
+  "source": {
+    "baselineCommit": "e698946d74342ae10ed25e93d6a45a99647dd2ba",
+    "auditedCommit": "f12dbea072178b99b50990bd16766563ac47b80d",
+    "branch": "feat/v0.2-review-readiness",
+    "repositoryOnlyReviewFiles": true
+  },
+  "evidenceIndex": [
+    {
+      "phase": "approval_workbench",
+      "implementationCommit": "6154a50",
+      "checkpointCommit": "dcc1050",
+      "plan": "docs/development/v0.2-approval-workbench-pdca.md",
+      "checkpoint": "docs/development/v0.2-approval-workbench-checkpoint.md",
+      "tests": [
+        "tests/demo-approval-workbench.test.mjs",
+        "tests/demo-admin-ai-poc.test.mjs",
+        "tests/demo-enforcement-gate.test.mjs"
+      ],
+      "smokeEvidence": "docs/development/evidence/v0.2-wave1-smoke-20260731.json"
+    },
+    {
+      "phase": "provider_neutral_policy_contract",
+      "implementationCommit": "2f89e07",
+      "plan": "docs/development/v0.2-wave2-policy-evaluator-pdca.md",
+      "checkpoint": "docs/development/v0.2-wave2-policy-evaluator-checkpoint.md",
+      "tests": [
+        "tests/demo-policy-evaluator.test.mjs"
+      ]
+    },
+    {
+      "phase": "paperless_zoo_adapter",
+      "implementationCommit": "a32623c",
+      "plan": "docs/development/v0.2-wave3-paperless-zoo-adapter-pdca.md",
+      "checkpoint": "docs/development/v0.2-wave3-paperless-zoo-adapter-checkpoint.md",
+      "tests": [
+        "tests/demo-paperless-ngx-zoo-adapter.test.mjs"
+      ]
+    },
+    {
+      "phase": "community_supply_chain_hardening",
+      "implementationCommit": "1b9e6bc",
+      "plan": "docs/development/v0.2-wave4-supply-chain-pdca.md",
+      "checkpoint": "docs/development/v0.2-wave4-supply-chain-checkpoint.md",
+      "tests": [
+        "tests/supply-chain-verifier.test.mjs"
+      ],
+      "integratedSmokeEvidence": "docs/development/evidence/v0.2-waves1-4-final-smoke-20260731.json"
+    },
+    {
+      "phase": "post_wave_path_integrity",
+      "implementationCommit": "f12dbea",
+      "checkpoint": "docs/development/v0.2-post-wave-stability-pdca.md",
+      "tests": [
+        "tests/supply-chain-verifier.test.mjs"
+      ]
+    }
+  ],
+  "reproduction": {
+    "document": "docs/development/v0.2-review-handoff.md",
+    "fullInstallSmoke": "NOT_REPEATED_NO_RELEVANT_RUNTIME_OR_INSTALL_BYTE_CHANGE",
+    "checks": [
+      {
+        "command": "npm run lint",
+        "status": "PENDING"
+      },
+      {
+        "command": "npm test",
+        "status": "PENDING"
+      },
+      {
+        "command": "npm run video:test",
+        "status": "PENDING"
+      },
+      {
+        "command": "npm run supply-chain:verify",
+        "status": "PENDING"
+      },
+      {
+        "command": "sha256sum -c SHA256SUMS",
+        "status": "PENDING"
+      },
+      {
+        "command": "./scripts/build-public-release.sh --output <absolute-temporary-parent>/cm-v0.1-public-rc-20260801-review",
+        "status": "PENDING"
+      }
+    ]
+  },
+  "rollbackAudit": {
+    "method": "Each suffix was reverted with git revert --no-commit in an isolated local clone at auditedCommit; npm test then ran against the resulting tree.",
+    "profiles": [
+      {
+        "name": "stability_only_emergency",
+        "revertOrder": ["f12dbea"],
+        "testsPassed": 68,
+        "testsFailed": 0,
+        "tree": "2433cb3886a86d034bf8c0cb4eea599bd5c6bb1e",
+        "safety": "UNSAFE_FOR_NORMAL_USE_REOPENS_KNOWN_PATH_ESCAPE"
+      },
+      {
+        "name": "supply_chain_and_stability",
+        "revertOrder": ["f12dbea", "f0c0b3a", "1b9e6bc"],
+        "testsPassed": 66,
+        "testsFailed": 0,
+        "tree": "ba7c0c2156f7773c249626500e0154287e7f77e5"
+      },
+      {
+        "name": "paperless_and_later",
+        "revertOrder": ["f12dbea", "f0c0b3a", "1b9e6bc", "a32623c"],
+        "testsPassed": 62,
+        "testsFailed": 0,
+        "tree": "fccfe24ee7495e794a2486c94729949016e20336"
+      },
+      {
+        "name": "policy_and_later",
+        "revertOrder": ["f12dbea", "f0c0b3a", "1b9e6bc", "a32623c", "2f89e07"],
+        "testsPassed": 59,
+        "testsFailed": 0,
+        "tree": "ff17679f8143b375bf9df869c432887fb13d6c7f"
+      },
+      {
+        "name": "all_v02",
+        "revertOrder": ["f12dbea", "f0c0b3a", "1b9e6bc", "a32623c", "2f89e07", "dcc1050", "6154a50"],
+        "testsPassed": 50,
+        "testsFailed": 0,
+        "tree": "3b6cb6eca38cce792050d04fae028109b049aff2",
+        "baselineTree": "3b6cb6eca38cce792050d04fae028109b049aff2",
+        "baselineEquivalent": true
+      }
+    ]
+  },
+  "claimBoundary": "Local deterministic review evidence only; no remote review, release, provenance, security certification, live provider or live Paperless compatibility claim."
+}
