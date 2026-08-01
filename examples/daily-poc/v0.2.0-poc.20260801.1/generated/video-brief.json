@@ -1,0 +1,204 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "claims": [
+    {
+      "evidenceRefs": [
+        "EVID-AAS-036-BROKER"
+      ],
+      "id": "CM-CLAIM-BIDIRECTIONAL-MODEL-BROKER",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The local model broker guards requests before provider access and guards responses before agent or tool use while credentials remain opaque to the agent."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-CANON-REVISION"
+      ],
+      "id": "CM-CLAIM-CANON-RUNTIME-CONTRACT",
+      "maturity": "DESIGNED",
+      "statement": "The local Canon revision defines a mechanism-independent untrusted runtime contract and separates it from the Docker reference adapter."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-CONTRIBUTION-GOVERNANCE"
+      ],
+      "id": "CM-CLAIM-CONTRIBUTION-EVIDENCE-LIFECYCLE",
+      "maturity": "DESIGNED",
+      "statement": "The contribution guide distinguishes planning, readiness, implementation, local validation, merge, and public-delivery states and treats issues as roadmap rather than evidence."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-DAILY-PIPELINE"
+      ],
+      "id": "CM-CLAIM-DAILY-CANDIDATE-PIPELINE",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The Daily POC compiler produces deterministic evidence-bound candidate artifacts from one manifest and a clean frozen source while keeping public effects disabled."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-EFFECT-GATE"
+      ],
+      "id": "CM-CLAIM-EFFECT-READBACK-RECEIPT",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "In the synthetic governed path, transport acceptance is not success; authoritative readback and a bound receipt are required after effect-boundary enforcement."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-AAS-035-RUNTIME"
+      ],
+      "id": "CM-CLAIM-GATEWAY-MEDIATED-OPENCLAW",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The isolated OpenClaw fixture has no ambient provider, host, or tenant credential and reaches the declared application path only through the ChimpMaera Gateway boundary."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-AAS-023-AUDIT"
+      ],
+      "id": "CM-CLAIM-PROTECTED-AUDIT-TIMELINE",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "Verified audit explanations require signed ordered digest-linked facts plus the exact head and count checkpoint; tampered, missing, reordered, or forked facts do not render verified success."
+    }
+  ],
+  "description": "A 120-second evidence-bound update on the cumulative local ChimpMaera POC candidate and its exact claim boundaries.",
+  "language": "en",
+  "publication": {
+    "youtubeUpload": false
+  },
+  "schemaVersion": "chimpmaera.daily-poc-video-brief/v1",
+  "segments": [
+    {
+      "claimRefs": [
+        "CM-CLAIM-DAILY-CANDIDATE-PIPELINE"
+      ],
+      "durationSeconds": 15,
+      "id": "VIDEO-SEGMENT-STATUS",
+      "narration": "This is ChimpMaera Daily POC candidate v0.2.0-poc.20260801.1. It combines the completed local product and security slices through AAS-023 into one reviewable snapshot. The evidence is bound to this local candidate; public delivery is a separate gate.",
+      "order": 1,
+      "purpose": "Name the exact candidate and distinguish local validation from public delivery.",
+      "title": "Snapshot status",
+      "useCaseRefs": [
+        "USE-CASE-DAILY-CANDIDATE"
+      ],
+      "visuals": [
+        "Show the candidate version and frozen public-main-to-candidate source range.",
+        "Show four status labels: proven here, locally validated, planned, and external gate."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-GATEWAY-MEDIATED-OPENCLAW"
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-OPENCLAW",
+      "narration": "A real OpenClaw agent fixture runs as untrusted workload code. It receives no ambient provider, host, or tenant credential. The declared application path goes through the ChimpMaera Gateway, while direct provider, peer, socket, host, and unmanaged effect paths remain denied in the tested fixture.",
+      "order": 2,
+      "purpose": "Explain the untrusted runtime and Gateway-only application path.",
+      "title": "OpenClaw without ambient authority",
+      "useCaseRefs": [
+        "USE-CASE-GATEWAY-OPENCLAW"
+      ],
+      "visuals": [
+        "Place OpenClaw inside the untrusted runtime boundary.",
+        "Show one outbound Gateway path and crossed-out ambient authority paths."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-EFFECT-READBACK-RECEIPT"
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-AUTHORITY",
+      "narration": "A capability is only something the system could do. Runtime authority stays inactive until scope, policy generation, exact plan, human-readable diff, and approval all bind to the same action. Trusted code rechecks those facts at use time, outside the agent, and ambiguity fails closed.",
+      "order": 3,
+      "purpose": "Show the policy and approval chain before any effect.",
+      "title": "Capability is not authority",
+      "useCaseRefs": [
+        "USE-CASE-EFFECT-AUDIT"
+      ],
+      "visuals": [
+        "Animate Capability to Policy to Plan and Diff to Approval to use-time Gate.",
+        "Keep the agent visually outside every trusted decision box."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-BIDIRECTIONAL-MODEL-BROKER"
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-MODEL-BROKER",
+      "narration": "Model access is bidirectional and mediated. Requests are guarded before provider access; opaque credentials resolve only inside the broker. Responses and streams are guarded again before they return to the agent or a tool path. Model output remains untrusted data, never effect authority.",
+      "order": 4,
+      "purpose": "Show request and response mediation around the provider.",
+      "title": "Bidirectional model broker",
+      "useCaseRefs": [
+        "USE-CASE-MODEL-BROKER"
+      ],
+      "visuals": [
+        "Animate guarded request traffic from agent to broker to provider.",
+        "Animate guarded response traffic back through the broker with a data-not-authority label."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-EFFECT-READBACK-RECEIPT"
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-EFFECT",
+      "narration": "The bounded effect gate executes the exact approved action. A successful transport response is not enough. ChimpMaera queries the authoritative provider state, compares the material result, and only then binds the decision, effect, readback digest, and outcome into a receipt. Drift, replay, rejection, or ambiguity cannot become success.",
+      "order": 5,
+      "purpose": "Explain why transport acceptance is not success.",
+      "title": "Effect, readback, and receipt",
+      "useCaseRefs": [
+        "USE-CASE-EFFECT-AUDIT"
+      ],
+      "visuals": [
+        "Show the effect gate calling the synthetic system of record.",
+        "Return readback to a receipt card with a verified outcome; route failure states to denied."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-PROTECTED-AUDIT-TIMELINE",
+        "CM-CLAIM-CANON-RUNTIME-CONTRACT",
+        "CM-CLAIM-CONTRIBUTION-EVIDENCE-LIFECYCLE"
+      ],
+      "durationSeconds": 25,
+      "id": "VIDEO-SEGMENT-AUDIT-BOUNDARY",
+      "narration": "The protected audit timeline explains outcomes only from signed, ordered, digest-linked facts and the exact checkpoint. Missing, reordered, forked, or tampered facts do not render verified success. In this snapshot, the local contracts and tests are proven here, the isolated runtime evidence remains local, Builder Agent and broader integrations remain planned, and production or hostile-host claims remain external gates.",
+      "order": 6,
+      "purpose": "Close with protected audit facts and separate proven, local, planned, and external states.",
+      "title": "Audit timeline and honest boundaries",
+      "useCaseRefs": [
+        "USE-CASE-EFFECT-AUDIT",
+        "USE-CASE-DAILY-CANDIDATE"
+      ],
+      "visuals": [
+        "Build a signed audit timeline ending at an exact head and count checkpoint.",
+        "Close on four maturity columns with Builder Agent under planned and production under external gate."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "99deab22b2b4e25222825731eb339481b3ffb960fdcf43ceb479fc1bcff3b1ef",
+  "title": "ChimpMaera Daily POC — Gateway-Mediated OpenClaw",
+  "useCases": [
+    {
+      "demoUtility": "Turns a cumulative local tree into a reviewable evidence packet without adding publication authority.",
+      "id": "USE-CASE-DAILY-CANDIDATE",
+      "title": "Prepare and verify one deterministic Daily POC candidate"
+    },
+    {
+      "demoUtility": "Connects the user-visible result to the exact evidence chain rather than to model narration.",
+      "id": "USE-CASE-EFFECT-AUDIT",
+      "title": "Verify an effect through readback, receipts, and audit facts"
+    },
+    {
+      "demoUtility": "Shows the core product boundary with a real OpenClaw agent fixture while keeping the Owner environment out of scope.",
+      "id": "USE-CASE-GATEWAY-OPENCLAW",
+      "title": "Run an OpenClaw agent without ambient authority"
+    },
+    {
+      "demoUtility": "Makes the model access boundary concrete without claiming live-provider or production coverage.",
+      "id": "USE-CASE-MODEL-BROKER",
+      "title": "Mediate model requests and responses in both directions"
+    }
+  ]
+}

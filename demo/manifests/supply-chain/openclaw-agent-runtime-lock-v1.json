@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "chimpmaera.demo/openclaw-agent-runtime-lock/v1",
+  "lockId": "openclaw-agent-runtime-2026.7.1-linux-amd64",
+  "status": "SELECTED_FOR_ISOLATED_LOCAL_FIXTURE_ONLY",
+  "selectedAt": "2026-08-01T13:10:18+02:00",
+  "upstream": {
+    "repository": "https://github.com/openclaw/openclaw",
+    "releaseUrl": "https://github.com/openclaw/openclaw/releases/tag/v2026.7.1",
+    "tag": "v2026.7.1",
+    "version": "2026.7.1",
+    "commit": "2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4",
+    "dockerDocumentation": "https://github.com/openclaw/openclaw/blob/2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4/docs/install/docker.md",
+    "dockerDocumentationSha256": "55d00b4cf48b22b296d3ab4b3b1273f16073344b04a771b1d0f6609cd466d7cd",
+    "dockerfile": "https://github.com/openclaw/openclaw/blob/2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4/Dockerfile",
+    "dockerfileSha256": "aa4b1b2d338c0c0f796df5d1b89836ce0dc796ccd15f1d98930e7524d61ca754",
+    "composeSha256": "150d47ce78bc904aea34bb10e0239b7ec0f1a4aebc7fe700bfb7b70ef6e035f7",
+    "upstreamComposeReuse": false,
+    "upstreamDockerSupport": "OFFICIAL_DOCKERFILE_COMPOSE_DOCUMENTATION_AND_RELEASE_IMAGE"
+  },
+  "image": {
+    "tagReference": "ghcr.io/openclaw/openclaw:2026.7.1",
+    "indexReference": "ghcr.io/openclaw/openclaw@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "indexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "platform": "linux/amd64",
+    "platformManifestReference": "ghcr.io/openclaw/openclaw@sha256:165b4992f1b4b74ffdd7a02c887ba006f9f5dc951eca420eef573a8b233b543f",
+    "platformManifestDigest": "sha256:165b4992f1b4b74ffdd7a02c887ba006f9f5dc951eca420eef573a8b233b543f",
+    "baseReference": "docker.io/library/node:24-bookworm-slim@sha256:242549cd46785b480c832479a730f4f2a20865d61ea2e404fdb2a5c3d3b73ecf",
+    "user": "node",
+    "entrypoint": ["tini", "-s", "--"],
+    "command": ["node", "openclaw.mjs", "gateway"],
+    "embeddedCredentialEnvironment": [],
+    "ociLabels": {
+      "org.opencontainers.image.source": "https://github.com/openclaw/openclaw",
+      "org.opencontainers.image.revision": "2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4",
+      "org.opencontainers.image.version": "2026.7.1",
+      "org.opencontainers.image.licenses": "MIT"
+    },
+    "attestation": "BUILDKIT_SLSA_PRESENT_NOT_SIGNATURE_VERIFIED"
+  },
+  "releaseEvidence": {
+    "releaseManifestUrl": "https://github.com/openclaw/openclaw/releases/download/v2026.7.1/openclaw-2026.7.1-release-manifest.json",
+    "releaseManifestSha256": "8be7423d343ce50cce75a3b16f007d42c9a87c2f25a66cd56b7a81ff79f8f715",
+    "postpublishEvidenceUrl": "https://github.com/openclaw/openclaw/releases/download/v2026.7.1/openclaw-2026.7.1-postpublish-evidence.json",
+    "postpublishEvidenceSha256": "32355b81b529a9051a101d9ba4338f7ff6a45f21704847dc406a23f7bfc16711",
+    "dependencyEvidenceUrl": "https://github.com/openclaw/openclaw/releases/download/v2026.7.1/openclaw-2026.7.1-dependency-evidence.zip",
+    "dependencyEvidenceSha256": "51bdbe7b8d90c3aaf5e7252d2cf583b63a7435330294c556852bed59a285618b",
+    "dependencyVulnerabilityGate": "UPSTREAM_ZERO_FINDINGS_AT_RELEASE_NOT_CURRENT_CVE_SCAN",
+    "npmProvenance": "UPSTREAM_ATTESTATION_MATCHED_NOT_USED_AS_RUNTIME_INSTALL_PATH"
+  },
+  "license": {
+    "projectSpdx": "MIT",
+    "projectLicenseUrl": "https://github.com/openclaw/openclaw/blob/2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4/LICENSE",
+    "projectLicenseSha256": "73571b25326281d369087f469842c02444fe39faaecebda4d82ed21ff3a1c29d",
+    "thirdPartyNoticesUrl": "https://github.com/openclaw/openclaw/blob/2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4/THIRD_PARTY_NOTICES.md",
+    "distributionMode": "EXTERNAL_DIGEST_REFERENCE_ONLY_NO_IMAGE_BYTES_BUNDLED",
+    "imageBytesBundledByChimpMaera": false,
+    "compatibilityDecision": "LOCAL_PULL_BUILD_TEST_AND_REFERENCE_PERMITTED_IMAGE_REDISTRIBUTION_NOT_CLAIMED"
+  },
+  "selectionPolicy": {
+    "defaultOff": true,
+    "mutableTagsAllowed": false,
+    "sourceBuild": false,
+    "browserVariant": false,
+    "dockerCliVariant": false,
+    "hostOrDockerSocketMountsAllowed": false,
+    "directProviderOrInternetPathAllowed": false,
+    "requiredNetwork": "CHIMPMAERA_INTERNAL_GATEWAY_ONLY",
+    "requiredRuntimeRole": "UNTRUSTED_AGENT_NOT_DECISION_POLICY_AUTHORITY_OR_EFFECT_PLANE"
+  },
+  "nonClaims": [
+    "NO_REGISTRY_SIGNATURE_VERIFICATION",
+    "NO_COMPLETE_SBOM_CVE_OR_THIRD_PARTY_LICENSE_AUDIT",
+    "NO_IMAGE_BYTE_REDISTRIBUTION_BY_CHIMPMAERA",
+    "NO_PRODUCTION_SANDBOX_OR_LIVE_PROVIDER_CLAIM"
+  ]
+}

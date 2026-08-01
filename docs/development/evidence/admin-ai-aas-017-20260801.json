@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-implementation-evidence/v1",
+  "workItem": "AAS-017",
+  "metric": {
+    "name": "aas_017_signed_policy_lifecycle_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "verdict": "LOCAL_AAS_017_PASS_NOT_PRODUCTION_SIGNER_TRUST_ROOT_OR_DISTRIBUTED_ROLLOUT_CLAIM",
+  "generatedAt": "2026-08-01T14:36:53+02:00",
+  "baseline": "3f157c768d5769487a1e5feb1d97b239b3121d0f",
+  "implementationCommit": "8b257dc5d50aece375cbf32f89dfed7d280ca984",
+  "gates": [
+    {
+      "id": 1,
+      "name": "signed_contract_and_trust",
+      "status": "PASS",
+      "evidence": "Exact Ed25519 artifacts bind issuer/key, tenant, Policy ID, generation, validity, source/semantic digests and a closed compatibility tuple; unknown, malformed, mutated, expired and trust-drift inputs deny without activation."
+    },
+    {
+      "id": 2,
+      "name": "reviewable_lifecycle",
+      "status": "PASS",
+      "evidence": "Draft, validate, deterministic semantic Diff, simulate, exact Owner approval, stage, activate, supersede, rollout-confirm, retire and revoke are ordered durable transitions; approval binds artifact, Diff, simulation, generation, validity and explicit widening consent."
+    },
+    {
+      "id": 3,
+      "name": "use_fallback_and_recovery",
+      "status": "PASS",
+      "evidence": "Only AAS-002 activates and validates use; receipts are authenticated and hash-chained; mixed generations, partial rollout, active revoke and post-activation lifecycle persistence failure freeze without implicit fallback or a duplicate activation."
+    },
+    {
+      "id": 4,
+      "name": "adversarial_regression_evidence",
+      "status": "PASS",
+      "evidence": "Lifecycle tests cover unsigned, signature mutation, unknown trust, tenant/time/compatibility errors, replay, skipped stages, approval substitution, unapproved widening, trust drift, expiry, mixed use, partial rollout, revoke, convergence failure and record/receipt tamper."
+    }
+  ],
+  "validation": {
+    "focusedAas017": "6/6",
+    "focusedWithGenerationFence": "10/10",
+    "fullSuite": "108/108",
+    "videoTests": "15/15",
+    "checksums": "156/156",
+    "supplyChainChecks": "6/6",
+    "publicArchiveSha256": "2fabe1394e69e018e070249999f4ff8dd99962105f6cb2a46b5b4a4b33173c75",
+    "publicArchiveBytes": 956531,
+    "publicStagingResidue": 0,
+    "gitDiffCheck": "PASS"
+  },
+  "fullInstallSmoke": {
+    "status": "NOT_RUN_NO_RELEVANT_INSTALL_OR_STOCK_RUNTIME_BYTES_CHANGED",
+    "reason": "The lifecycle is a separate default-off management-plane contract. The stock runtime Docker closure, Compose and installer bytes are unchanged, so repeating the completed AAS-035 install smoke would violate the evidence-gated smoke rule."
+  },
+  "artifactDigests": {
+    "lifecycleContract": "e840046ea63a45939ca46ee3d13e48ff249e4f9a089c60cceca726976725b509",
+    "tests": "6e8012075dc47f8354e4d18e98b7e14090abcdc335615849c320d6c710fdff01",
+    "architecture": "137e4f4da4450c0998fd1fdc0ad9a7d18657b9e0dcad9a53a9d36c4eacc0168c",
+    "knownLimitations": "16facfc16b188f92d23850ead3b214f5f0bc87fafb1894d3005f460bc299eacc",
+    "publicManifest": "733a227020c761575f257a833b31073d188d3cd8465131c32861707489df8194"
+  },
+  "nonClaims": [
+    "No production signer, HSM, PKI, independently managed trust root, transparency log or rollback-resistant storage was tested or enabled.",
+    "No hostile-host resistance, distributed consensus, rollout quorum, production IAM/tenant source or live provider was tested or claimed.",
+    "The stock runtime exposes no lifecycle activation API, and unsupported widened static Policy semantics remain denied even with explicit lifecycle approval.",
+    "No push, pull request, merge, tag, release, publication, production deployment, live credential or external-system action."
+  ]
+}

@@ -61,7 +61,10 @@ function harness() {
         readbacks += 1;
         return {
           id: "contact-42",
+          description: "ChimpMaera Admin AI deterministic PoC contact",
           emailAddress: "admin-ai-poc@example.invalid",
+          firstName: "Avery",
+          lastName: "Admin AI PoC",
         };
       },
     },

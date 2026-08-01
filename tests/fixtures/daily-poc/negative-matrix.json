@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "chimpmaera.daily-poc-negative-matrix/v1",
+  "cases": [
+    {"id": "invalid_non_semver_version", "mutation": "INVALID_VERSION", "expectedReason": "SCHEMA_INVALID"},
+    {"id": "duplicate_daily_sequence", "mutation": "DUPLICATE_SEQUENCE", "expectedReason": "DUPLICATE_DAILY_SEQUENCE"},
+    {"id": "mismatched_source_head", "mutation": "MISMATCHED_HEAD", "expectedReason": "SOURCE_HEAD_MISMATCH"},
+    {"id": "dirty_source_worktree", "mutation": "DIRTY_SOURCE", "expectedReason": "SOURCE_WORKTREE_DIRTY"},
+    {"id": "missing_evidence", "mutation": "MISSING_EVIDENCE", "expectedReason": "MISSING_EVIDENCE_REF"},
+    {"id": "stale_evidence", "mutation": "STALE_EVIDENCE", "expectedReason": "STALE_EVIDENCE"},
+    {"id": "local_claim_narrated_as_released", "mutation": "LOCAL_NARRATED_RELEASED", "expectedReason": "LOCAL_CLAIM_NARRATED_AS_RELEASED"},
+    {"id": "contradictory_claim_non_claim", "mutation": "CONTRADICTORY_NONCLAIM", "expectedReason": "CONTRADICTORY_CLAIM_NON_CLAIM"},
+    {"id": "missing_use_case_outcome", "mutation": "MISSING_OUTCOME", "expectedReason": "SCHEMA_INVALID"},
+    {"id": "secret_like_content", "mutation": "SECRET_CONTENT", "expectedReason": "UNSAFE_CONTENT:OPENAI_KEY"},
+    {"id": "unsafe_internal_path", "mutation": "INTERNAL_PATH", "expectedReason": "UNSAFE_CONTENT:INTERNAL_HOME_PATH"},
+    {"id": "duplicate_video_order", "mutation": "DUPLICATE_VIDEO_ORDER", "expectedReason": "NONDETERMINISTIC_VIDEO_ORDER"},
+    {"id": "wall_clock_timestamp_field", "mutation": "NONDETERMINISTIC_TIMESTAMP", "expectedReason": "SCHEMA_INVALID"},
+    {"id": "tampered_prior_snapshot", "mutation": "TAMPER_PRIOR_SNAPSHOT", "expectedReason": "TAMPERED_PRIOR_SNAPSHOT"},
+    {"id": "publication_without_stage_authorization", "mutation": "PUBLICATION_ENABLED", "expectedReason": "PUBLICATION_REQUEST_WITHOUT_SEPARATE_AUTHORIZED_STAGE"},
+    {"id": "video_renderer_unavailable", "mutation": "RENDERER_UNAVAILABLE", "expectedReason": "VIDEO_RENDERER_UNAVAILABLE"}
+  ]
+}

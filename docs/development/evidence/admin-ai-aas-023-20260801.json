@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-implementation-evidence/v1",
+  "workItem": "AAS-023",
+  "metric": {
+    "name": "aas_023_protected_audit_timeline_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "verdict": "LOCAL_AAS_023_PASS_NOT_HOST_TAMPER_PROOF_INDEPENDENT_ATTESTATION_PRODUCTION_SIGNER_TIME_RETENTION_OR_RELEASE_CLAIM",
+  "generatedAt": "2026-08-01T17:53:43+02:00",
+  "baseline": "386c7274f7c82791ca59609ac212de8e15289bd6",
+  "implementationCommit": "ae3eb35f9c091649eec28a97426962e653e7e091",
+  "contracts": {
+    "event": "chimpmaera.audit/protected-event/v1",
+    "envelope": "chimpmaera.audit/protected-envelope/v1",
+    "checkpoint": "chimpmaera.audit/protected-checkpoint/v1",
+    "explanation": "chimpmaera.audit/deterministic-explanation/v1"
+  },
+  "gates": [
+    {
+      "id": 1,
+      "name": "closed_versioned_event_and_checkpoint_contracts",
+      "status": "PASS",
+      "evidence": "Exact event/envelope/checkpoint schemas bind tenant, operation, sequence, finite fact fields, causal digests, signer generation and times; unknown/raw secret fields deny."
+    },
+    {
+      "id": 2,
+      "name": "signed_ordered_timeline_and_checkpoint",
+      "status": "PASS",
+      "evidence": "The reference writer signs canonical Ed25519 envelopes and exact count/head checkpoints, serialises causal order and returns the same envelope only for identical replay."
+    },
+    {
+      "id": 3,
+      "name": "verified_fact_only_explanation",
+      "status": "PASS",
+      "evidence": "The deterministic reader joins identity, intent, Plan, Policy, approval, budget, effect and readback by verified digests; any verification issue yields zero stages and no verified-success rendering."
+    },
+    {
+      "id": 4,
+      "name": "adversarial_and_integrated_evidence",
+      "status": "PASS",
+      "evidence": "Edit-and-rehash, delete, truncate, reorder, duplicate, fork, stale/unknown signer, signature change, clock rollback, missing link, wrong scope, raw secret field, conflicting replay and checkpoint mismatch probes fail closed; integrated validation passes."
+    }
+  ],
+  "validation": {
+    "focusedAas023": "4/4 PASS",
+    "completeRepository": "132/132 PASS_AFTER_CORRECTING_MANIFEST_BYTE_CHANGE",
+    "videoReference": "15/15 PASS",
+    "checksums": "253/253 PASS",
+    "supplyChain": {
+      "status": "6/6 PASS",
+      "lockDigest": "280d51e2c6b154065ba03c746e43e56769d2f5f57107c97aea442b302c18b070"
+    },
+    "publicStaging": {
+      "status": "PASS",
+      "archiveSha256": "2b9eba447c6f6fba5d824184166f9323ab6f077391eb300728aec2eca6b7bf13",
+      "temporaryResidue": 0
+    },
+    "fullInstallSmoke": {
+      "status": "NOT_RUN_NO_RELEVANT_INSTALL_OR_RUNTIME_BYTES_CHANGED",
+      "reason": "AAS-023 changes contracts, tests, schema, evidence and the public manifest only; installer, Compose, image and stock runtime bytes are unchanged."
+    },
+    "correctingValidation": {
+      "initialResult": "131/132 FAIL_CLOSED",
+      "defect": "Public staging rejected the new unmanifested AAS-023 test source.",
+      "correction": "Add the AAS-023 contract, schema and test to the explicit public identity manifest.",
+      "correctedResult": "132/132 PASS"
+    }
+  },
+  "artifactDigests": {
+    "contract": "7393da7d63dfdfd3caa52b1cb3b806525d06554db06075d914c17fba39ad8155",
+    "tests": "dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d",
+    "jsonSchema": "982f19ffaafd2ed726be891a5f8ca3c552c266832e8598f86a4009107b76ea83",
+    "publicManifest": "a2de47e50a6f104f2b73885ce0f10c5d5e067db850a76de33a455464a236e8a4"
+  },
+  "nonClaims": [
+    "No hostile-host tamper-proof or independently operated append-only storage/attestation was tested or claimed.",
+    "No production signer, HSM/KMS custody, trusted time, retention/compliance policy, distributed consensus or production tenant source was tested or enabled.",
+    "The closed metadata schema reduces raw-content exposure but is not a complete privacy or identifier-classification claim.",
+    "No push, pull request, merge, tag, release, publication, production deployment, live credential or external-system action."
+  ]
+}

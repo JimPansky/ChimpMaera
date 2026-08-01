@@ -1,0 +1,58 @@
+{
+  "adapter": "tools/video-production-reference/bin/cm-video",
+  "assets": [
+    {
+      "id": "VIDEO-ASSET-CHIMPMAERA-LOGO",
+      "path": null,
+      "role": "REFERENCE",
+      "segmentRef": null,
+      "sha256": null,
+      "status": "PLANNED"
+    },
+    {
+      "id": "VIDEO-ASSET-FINAL-SHOTS",
+      "path": null,
+      "role": "SHOT",
+      "segmentRef": null,
+      "sha256": null,
+      "status": "PLANNED"
+    },
+    {
+      "id": "VIDEO-ASSET-FINAL-WAV",
+      "path": null,
+      "role": "AUDIO",
+      "segmentRef": null,
+      "sha256": null,
+      "status": "PLANNED"
+    }
+  ],
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "invocationPolicy": {
+    "approvalBinding": "LOCAL_RENDER:v0.2.0-poc.20260801.1",
+    "localRenderFlag": "--render-video",
+    "overwrite": false,
+    "publicationAvailable": false
+  },
+  "prerequisites": [
+    "Use only accepted ChimpMaera assets and never CentipApe or Centipape assets.",
+    "Render final 1920x1080 shots with mobile-readable text and checked line, path, and z-order geometry.",
+    "Use final mono 48 kHz WAV narration derived from this manifest.",
+    "Verify codec, resolution, frame rate, audio, loudness, duration, black frames, visual samples, claims, and digests.",
+    "Keep upload and every other public action outside the renderer."
+  ],
+  "publicActions": "forbidden",
+  "renderDefault": false,
+  "requiredStages": [
+    "manifest_validate",
+    "scene_plan",
+    "narration_and_storyboard",
+    "evidence_claim_crosscheck",
+    "draft_render",
+    "technical_and_claim_qc",
+    "publishable_asset_staging"
+  ],
+  "schemaVersion": "chimpmaera.daily-poc-video-adapter/v1",
+  "sourceManifestSha256": "99deab22b2b4e25222825731eb339481b3ffb960fdcf43ceb479fc1bcff3b1ef",
+  "status": "DISABLED_DEFAULT",
+  "targetContract": "cm.video/v1"
+}

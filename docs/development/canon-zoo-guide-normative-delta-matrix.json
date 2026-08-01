@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "chimpmaera.canon-zoo-guide-normative-delta-matrix/v1",
+  "generatedAt": "2026-08-01T13:12:00Z",
+  "baseline": {
+    "repositoryCommit": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
+    "canonVersion": "0.1",
+    "canonFile": "docs/CANON.md",
+    "zooGuideFile": "docs/ZOO-FIELD-GUIDE.md"
+  },
+  "target": {
+    "canonVersion": "0.2-local-revision-candidate",
+    "productAbstraction": "Agent Runtime Isolation Boundary / Untrusted Runtime Contract",
+    "dockerRole": "validated Reference Adapter and OpenClaw E2E proof, not normative product mechanism"
+  },
+  "sources": [
+    {
+      "id": "PUBLIC-MAIN-20260801",
+      "kind": "repository",
+      "reference": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
+      "scope": "public Canon, Zoo Field Guide, Architecture, Known Limitations, README, SECURITY and roadmap baseline"
+    },
+    {
+      "id": "AAS-035",
+      "kind": "local-evidence",
+      "reference": "3f157c768d5769487a1e5feb1d97b239b3121d0f",
+      "scope": "OpenClaw 2026.7.1 Docker Reference Adapter; local synthetic 12/12 runtime proof"
+    },
+    {
+      "id": "AAS-036",
+      "kind": "local-evidence",
+      "reference": "da76543e12390c3f3d899e178eac17bc4f513759",
+      "scope": "agent-neutral bidirectional Model Access Broker; local synthetic 8/8 proof with real isolated OpenClaw E2E"
+    },
+    {
+      "id": "AAS-037-PLAN",
+      "kind": "local-design-only",
+      "reference": "docs/development/admin-ai-security-expansion-backlog.md#aas-037-managed-skill-lifecycle-and-quality-gate",
+      "scope": "0/6 managed skill lifecycle contract; no implementation claim"
+    },
+    {
+      "id": "OWNER-RUNTIME-DECISION-20260801",
+      "kind": "owner-decision",
+      "reference": "cron:cm-canon-zoo-guide-security-runtime-revision",
+      "scope": "complete mediation, agent/mechanism independence, Docker Reference Adapter role and claim ceiling"
+    }
+  ],
+  "deltas": [
+    {
+      "id": "DELTA-01",
+      "existingRule": "CM-CAN-01 capability is not authority",
+      "newSecurityPrinciple": "No Ambient Authority / Zero Standing Privilege",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-01", "CM-CAN-04", "CM-CAN-18"],
+      "rationale": "Capability/authority separation did not explicitly deny ambient model, network, filesystem, process, state, secret, read and effect authority.",
+      "evidence": ["AAS-035", "AAS-036", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "No proof that all future capability surfaces have already been inventoried."
+    },
+    {
+      "id": "DELTA-02",
+      "existingRule": "CM-CAN-08 enforcement at the effect boundary",
+      "newSecurityPrinciple": "Complete Mediation of Meaningful Boundary Crossings",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-08", "CM-CAN-19", "CM-CAN-21"],
+      "rationale": "Effect-only wording is too narrow for reads, model traffic, secrets, network, Mind, skills and process crossings.",
+      "evidence": ["AAS-035", "AAS-036", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "Mediation covers defined interfaces, not every internal instruction or unknown side channel."
+    },
+    {
+      "id": "DELTA-03",
+      "existingRule": "Agent is not an authority boundary in its own right",
+      "newSecurityPrinciple": "Agent-agnostic Runtime Isolation Contract",
+      "disposition": "add",
+      "targetRules": ["CM-CAN-20", "CM-CAN-28"],
+      "rationale": "A product boundary must be independent of OpenClaw, Hermes, Claude Code, Docker or another individual mechanism.",
+      "evidence": ["AAS-035", "AAS-036", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "No universal adapter equivalence or compatibility claim."
+    },
+    {
+      "id": "DELTA-04",
+      "existingRule": "Gateway-only OpenClaw Docker language in local proof and public issues",
+      "newSecurityPrinciple": "OS-enforced denial of alternate paths",
+      "disposition": "deprecate",
+      "targetRules": ["CM-CAN-19", "CM-CAN-20", "CM-CAN-28"],
+      "rationale": "Gateway-only routing without kernel, hypervisor or OS enforcement is a convention and cannot establish isolation.",
+      "evidence": ["AAS-035", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "The existing Docker proof remains valid for its exact local adapter scope."
+    },
+    {
+      "id": "DELTA-05",
+      "existingRule": "CM-CAN-02 Owner-rooted Profile and Administration section",
+      "newSecurityPrinciple": "typed default-off Profiles with owner-selectable full control",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-02", "CM-CAN-03", "CM-CAN-18"],
+      "rationale": "The Owner may select broad authority, but full control must remain explicit, typed, mediated, revocable and isolated rather than ambient.",
+      "evidence": ["PUBLIC-MAIN-20260801", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "Full control does not mean bypass authority or unconstrained host access."
+    },
+    {
+      "id": "DELTA-06",
+      "existingRule": "CM-CAN-08/09 trusted effect boundary and credential custody",
+      "newSecurityPrinciple": "Gateway/Broker plane separation",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-09", "CM-CAN-22"],
+      "rationale": "Decision, Policy, model routing, secret use, effects, Evidence and emergency controls must not collapse into the Agent.",
+      "evidence": ["AAS-035", "AAS-036"],
+      "nonClaim": "Logical separation is not automatically independent-failure isolation; co-deployment remains in the TCB."
+    },
+    {
+      "id": "DELTA-07",
+      "existingRule": "No explicit model request/response law",
+      "newSecurityPrinciple": "Model traffic bidirectional mediation",
+      "disposition": "add",
+      "targetRules": ["CM-CAN-23"],
+      "rationale": "Requests, responses, streams, attachments, structured output and tool candidates require separate deterministic guards.",
+      "evidence": ["AAS-036"],
+      "nonClaim": "No live-provider, universal protocol or injection-elimination claim."
+    },
+    {
+      "id": "DELTA-08",
+      "existingRule": "Credentials outside planning; no general durable state law",
+      "newSecurityPrinciple": "Managed durable state / Mind boundary",
+      "disposition": "add",
+      "targetRules": ["CM-CAN-24"],
+      "rationale": "Durable Agent state needs tenant, purpose, data class, provenance, retention, quota, reset and recovery semantics.",
+      "evidence": ["AAS-035", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "No production durability, backup, encryption-custody, privacy-compliance or disaster-recovery claim."
+    },
+    {
+      "id": "DELTA-09",
+      "existingRule": "CM-CAN-03 and CM-CAN-15 admission/installation do not activate authority",
+      "newSecurityPrinciple": "governed skill lifecycle, capability discovery and JIT quarantine",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-03", "CM-CAN-15", "CM-CAN-25"],
+      "rationale": "Skills need distinct discovery, admission, install, activation, update, rollback and quarantine transitions; JIT hooks may only tighten.",
+      "evidence": ["AAS-037-PLAN", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "AAS-037 is design-only at 0/6; no implemented skill lifecycle is claimed."
+    },
+    {
+      "id": "DELTA-10",
+      "existingRule": "CM-CAN-11 fail closed and CM-CAN-12 reconciliation",
+      "newSecurityPrinciple": "availability, degraded-mode and recovery duties",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-11", "CM-CAN-12", "CM-CAN-26"],
+      "rationale": "Safety depends on explicit liveness/readiness, partition, timeout, durable state, reset and recovery behavior without direct-path fallback.",
+      "evidence": ["AAS-035", "AAS-036", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "No high-availability or disaster-recovery assurance."
+    },
+    {
+      "id": "DELTA-11",
+      "existingRule": "CM-CAN-10/16 Receipts and Evidence",
+      "newSecurityPrinciple": "privacy/data-minimising transparency",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-10", "CM-CAN-16", "CM-CAN-27"],
+      "rationale": "Accountability should expose defined boundary facts and limitations while avoiding unnecessary prompts, outputs, secrets and personal data.",
+      "evidence": ["PUBLIC-MAIN-20260801", "AAS-036"],
+      "nonClaim": "No complete internal model thought or hidden-state transparency."
+    },
+    {
+      "id": "DELTA-12",
+      "existingRule": "informal development state distinct from alignment and fitness",
+      "newSecurityPrinciple": "evidence-bound reproducibility and scoped maturity",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-16", "CM-CAN-28"],
+      "rationale": "Voluntary maturity labels may aid operators only when bound to exact Agent, adapter, version, configuration, threat model and environment.",
+      "evidence": ["PUBLIC-MAIN-20260801", "AAS-035", "AAS-036"],
+      "nonClaim": "Maturity is not certification, admission or transfer to untested Agents/adapters/environments."
+    },
+    {
+      "id": "DELTA-13",
+      "existingRule": "Docker-specific current Architecture and demo guidance",
+      "newSecurityPrinciple": "Docker as Reference Adapter, not normative product principle",
+      "disposition": "amend",
+      "targetRules": ["CM-CAN-20", "CM-CAN-28"],
+      "rationale": "The local Docker E2E remains real evidence while the product permits VM/MicroVM, WASM, remote worker or equivalent OS sandbox adapters.",
+      "evidence": ["AAS-035", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "No current proof for non-Docker adapters."
+    },
+    {
+      "id": "DELTA-14",
+      "existingRule": "No explicit TCB and side-channel claim ceiling",
+      "newSecurityPrinciple": "explicit TCB, bypass and side-channel boundaries",
+      "disposition": "add",
+      "targetRules": ["CM-CAN-20", "CM-CAN-27", "CM-CAN-28"],
+      "rationale": "Isolation claims must expose dependence on identity, Policy, brokers, secret/state/evidence services, runtime control plane, OS/kernel/hypervisor and environment.",
+      "evidence": ["AAS-035", "AAS-036", "OWNER-RUNTIME-DECISION-20260801"],
+      "nonClaim": "No resistance claim against a compromised TCB or unknown covert channel."
+    }
+  ],
+  "validation": {
+    "expectedDeltaCount": 14,
+    "allowedDispositions": ["keep", "amend", "add", "deprecate"],
+    "requiredFields": [
+      "existingRule",
+      "newSecurityPrinciple",
+      "disposition",
+      "rationale",
+      "evidence",
+      "nonClaim"
+    ]
+  }
+}

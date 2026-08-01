@@ -1,0 +1,144 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "schemaVersion": "chimpmaera.daily-poc-storyboard/v1",
+  "segments": [
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-DAILY-CANDIDATE-PIPELINE",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The Daily POC compiler produces deterministic evidence-bound candidate artifacts from one manifest and a clean frozen source while keeping public effects disabled."
+        }
+      ],
+      "durationSeconds": 15,
+      "id": "VIDEO-SEGMENT-STATUS",
+      "order": 1,
+      "purpose": "Name the exact candidate and distinguish local validation from public delivery.",
+      "title": "Snapshot status",
+      "useCaseRefs": [
+        "USE-CASE-DAILY-CANDIDATE"
+      ],
+      "visuals": [
+        "Show the candidate version and frozen public-main-to-candidate source range.",
+        "Show four status labels: proven here, locally validated, planned, and external gate."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-GATEWAY-MEDIATED-OPENCLAW",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The isolated OpenClaw fixture has no ambient provider, host, or tenant credential and reaches the declared application path only through the ChimpMaera Gateway boundary."
+        }
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-OPENCLAW",
+      "order": 2,
+      "purpose": "Explain the untrusted runtime and Gateway-only application path.",
+      "title": "OpenClaw without ambient authority",
+      "useCaseRefs": [
+        "USE-CASE-GATEWAY-OPENCLAW"
+      ],
+      "visuals": [
+        "Place OpenClaw inside the untrusted runtime boundary.",
+        "Show one outbound Gateway path and crossed-out ambient authority paths."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-EFFECT-READBACK-RECEIPT",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "In the synthetic governed path, transport acceptance is not success; authoritative readback and a bound receipt are required after effect-boundary enforcement."
+        }
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-AUTHORITY",
+      "order": 3,
+      "purpose": "Show the policy and approval chain before any effect.",
+      "title": "Capability is not authority",
+      "useCaseRefs": [
+        "USE-CASE-EFFECT-AUDIT"
+      ],
+      "visuals": [
+        "Animate Capability to Policy to Plan and Diff to Approval to use-time Gate.",
+        "Keep the agent visually outside every trusted decision box."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-BIDIRECTIONAL-MODEL-BROKER",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The local model broker guards requests before provider access and guards responses before agent or tool use while credentials remain opaque to the agent."
+        }
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-MODEL-BROKER",
+      "order": 4,
+      "purpose": "Show request and response mediation around the provider.",
+      "title": "Bidirectional model broker",
+      "useCaseRefs": [
+        "USE-CASE-MODEL-BROKER"
+      ],
+      "visuals": [
+        "Animate guarded request traffic from agent to broker to provider.",
+        "Animate guarded response traffic back through the broker with a data-not-authority label."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-EFFECT-READBACK-RECEIPT",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "In the synthetic governed path, transport acceptance is not success; authoritative readback and a bound receipt are required after effect-boundary enforcement."
+        }
+      ],
+      "durationSeconds": 20,
+      "id": "VIDEO-SEGMENT-EFFECT",
+      "order": 5,
+      "purpose": "Explain why transport acceptance is not success.",
+      "title": "Effect, readback, and receipt",
+      "useCaseRefs": [
+        "USE-CASE-EFFECT-AUDIT"
+      ],
+      "visuals": [
+        "Show the effect gate calling the synthetic system of record.",
+        "Return readback to a receipt card with a verified outcome; route failure states to denied."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-PROTECTED-AUDIT-TIMELINE",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "Verified audit explanations require signed ordered digest-linked facts plus the exact head and count checkpoint; tampered, missing, reordered, or forked facts do not render verified success."
+        },
+        {
+          "id": "CM-CLAIM-CANON-RUNTIME-CONTRACT",
+          "maturity": "DESIGNED",
+          "statement": "The local Canon revision defines a mechanism-independent untrusted runtime contract and separates it from the Docker reference adapter."
+        },
+        {
+          "id": "CM-CLAIM-CONTRIBUTION-EVIDENCE-LIFECYCLE",
+          "maturity": "DESIGNED",
+          "statement": "The contribution guide distinguishes planning, readiness, implementation, local validation, merge, and public-delivery states and treats issues as roadmap rather than evidence."
+        }
+      ],
+      "durationSeconds": 25,
+      "id": "VIDEO-SEGMENT-AUDIT-BOUNDARY",
+      "order": 6,
+      "purpose": "Close with protected audit facts and separate proven, local, planned, and external states.",
+      "title": "Audit timeline and honest boundaries",
+      "useCaseRefs": [
+        "USE-CASE-EFFECT-AUDIT",
+        "USE-CASE-DAILY-CANDIDATE"
+      ],
+      "visuals": [
+        "Build a signed audit timeline ending at an exact head and count checkpoint.",
+        "Close on four maturity columns with Builder Agent under planned and production under external gate."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "99deab22b2b4e25222825731eb339481b3ffb960fdcf43ceb479fc1bcff3b1ef"
+}

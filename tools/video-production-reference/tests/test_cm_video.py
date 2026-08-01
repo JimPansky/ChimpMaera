@@ -161,6 +161,12 @@ class BundledReferenceAssets(unittest.TestCase):
         repo_root = ROOT.parents[1]
         files = [repo_root / "README.md"]
         files.extend(path for path in ROOT.rglob("*") if path.is_file())
+        root_readme = (repo_root / "README.md").read_text(encoding="utf-8")
+        video_heading = "## Watch ChimpMaera"
+        self.assertIn(video_heading, root_readme)
+        narrow_section = root_readme.split(video_heading, 1)[1].split("\n## ", 1)[0]
+        for needle in needles:
+            self.assertNotIn(needle, narrow_section.lower())
         for path in files:
             content = path.read_bytes().decode("utf-8", errors="ignore").lower()
             for needle in needles:

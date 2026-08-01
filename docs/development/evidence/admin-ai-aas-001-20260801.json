@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-evidence/v1",
+  "item": "AAS-001",
+  "phase": "ADMIN_AI_SECURITY_EXPANSION_PHASE_0",
+  "metric": {
+    "name": "aas_001_containment_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "implementationCommit": "72a489263dcd477dba394282a55d498ac2762318",
+  "publicIntegrityClosureCommit": "bdfb7373d331e17903982afd6eb145ffa1879142",
+  "frozenRelevantByteDigest": "3184ef8adea364cca2d013012a4384558d262ba3a5df35da8fa7814e36f94f9f",
+  "gates": [
+    "RECONSTRUCT_AND_BIND",
+    "DESCRIPTOR_CONTAINMENT",
+    "RACE_SAFE_WRITE",
+    "CANARIES_AND_REGRESSION"
+  ],
+  "tests": {
+    "focusedSetupAndAas001": "PASS_13_OF_13",
+    "completeProject": "PASS_75_OF_75",
+    "typescriptBuild": "PASS",
+    "gitDiffCheck": "PASS",
+    "repositoryChecksums": "PASS_120_OF_120",
+    "supplyChainVerifier": "PASS_6_OF_6"
+  },
+  "negativeEvidence": [
+    "redigested dot-dot, absolute, sibling-prefix, backslash and Unicode separator targets deny before effects even with owner confirmation",
+    "owned-root, config-target, backup-target and retry-evidence symlinks preserve outside canaries",
+    "an injected owned-directory swap after descriptor open denies before repair write",
+    "owner-authority, effect-state, audit-evidence and out-of-root canaries remain byte-identical"
+  ],
+  "smoke": {
+    "attempt1": {
+      "status": "PASS",
+      "elapsedMs": 67830,
+      "subsequentDefect": "NON_MATERIAL_RETRY_EVIDENCE_REMAINED_PATH_BASED"
+    },
+    "rerunJustification": "A real correcting byte change extended descriptor containment from material config repair to every repair receipt/status/event write; tests and relevant bytes were refrozen.",
+    "attempt2": {
+      "status": "PASS_READY_VERIFIED",
+      "elapsedMs": 70340,
+      "subsequentIntegrityFinding": "THREE_CHANGED_PUBLIC_HASHES_STALE_AND_EIGHT_DEFERRED_PUBLIC_EOF_FINDINGS_REACHED_THEIR_REVIEW_MARKER"
+    },
+    "finalRerunJustification": "The required public integrity closure refreshed all affected SHA256SUMS entries and normalized the eight previously deferred public EOF findings on a real public-byte change; tests, 120 checksums and supply-chain declarations were refrozen.",
+    "attempt3": {
+      "status": "PASS_READY_VERIFIED",
+      "elapsedMs": 69560,
+      "detailedEvidencePath": ".chimpmaera-acceptance/runs/SAFE_DEMO_COLD-03/",
+      "digests": {
+        "acceptance.json": "7e91389f8c8e14c32e72a4642901b37ad8b6e0dfe2976f13e3719680aa7f7154",
+        "approval-workbench-smoke.json": "4886b375e2387ca4110749d2fc3738426ff56369141bd02de667eb0f3a8d353a",
+        "config.json": "04b869737e677ef521052d9fa9c756b9a4f71b42aa032f5ad9d447ee6c48dd56",
+        "readback.json": "e4e74f48366a18522524cee755d233cf8c176295261f884b6ae3c5e12ea310a7",
+        "events.jsonl": "9a765bdee65bde0f85aec5139fd13e0b07a17d27d1e18382a3d35582d856adb3",
+        "latest-summary.json": "b02e6d53f038060300315eb149eaceb1bb43b8e87c53feed8f7e8f5d05206e15"
+      }
+    },
+    "cleanup": "PASS_DEDICATED_ACCEPTANCE_RESIDUE_ZERO"
+  },
+  "rollback": "Revert the AAS-001 implementation and disable setup repair; retain diagnosis plus cleanup/rerun and never restore caller-supplied target execution.",
+  "claimBoundary": "Local Node/Linux descriptor-containment evidence only; no hostile-kernel, arbitrary-host sandbox, Windows, production identity/provider, release, publication, or security-certification claim.",
+  "verdict": "LOCAL_AAS_001_PASS_NOT_HOST_SANDBOX_OR_RELEASE_CLAIM",
+  "nextFrontier": "AAS-002"
+}

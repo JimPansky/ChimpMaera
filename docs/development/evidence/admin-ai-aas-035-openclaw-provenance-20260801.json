@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-prerequisite-evidence/v1",
+  "workItem": "AAS-035",
+  "metric": {
+    "name": "aas_035_openclaw_provenance_prerequisite_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "generatedAt": "2026-08-01T13:10:18+02:00",
+  "baseline": "3a2609036233f68f5e9e9afbb6b497c9ba969fa1",
+  "planCommit": "6d681a5680cce23a204e5aa453857e864bf210ce",
+  "gates": [
+    {
+      "id": 1,
+      "name": "official_upstream_docker_support",
+      "status": "PASS",
+      "evidence": "OpenClaw v2026.7.1 commit 2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4 contains the official Dockerfile, docker-compose.yml and docs/install/docker.md; the docs name GHCR as the primary release/provenance registry."
+    },
+    {
+      "id": 2,
+      "name": "exact_version_source_and_image_digest",
+      "status": "PASS",
+      "evidence": "Stable tag v2026.7.1 resolves to commit 2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4; GHCR index sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c resolves linux/amd64 sha256:165b4992f1b4b74ffdd7a02c887ba006f9f5dc951eca420eef573a8b233b543f, whose OCI labels match source/revision/version and user node."
+    },
+    {
+      "id": 3,
+      "name": "licence_and_redistribution_boundary",
+      "status": "PASS",
+      "evidence": "Source and OCI metadata declare MIT. ChimpMaera will pull/reference the external image by immutable digest and will not bundle or redistribute image bytes; complete third-party licence/SBOM/CVE and registry-signature claims remain explicitly unproven."
+    },
+    {
+      "id": 4,
+      "name": "preimplementation_pdca_contract",
+      "status": "PASS",
+      "evidence": "The isolated AAS-035 branch committed exact 12-case acceptance, negative, rollback, conservative assumption and honest non-claim boundaries at 6d681a5680cce23a204e5aa453857e864bf210ce before selecting or implementing the service."
+    }
+  ],
+  "upstreamArtifactDigests": {
+    "licenseSha256": "73571b25326281d369087f469842c02444fe39faaecebda4d82ed21ff3a1c29d",
+    "dockerfileSha256": "aa4b1b2d338c0c0f796df5d1b89836ce0dc796ccd15f1d98930e7524d61ca754",
+    "composeSha256": "150d47ce78bc904aea34bb10e0239b7ec0f1a4aebc7fe700bfb7b70ef6e035f7",
+    "dockerDocumentationSha256": "55d00b4cf48b22b296d3ab4b3b1273f16073344b04a771b1d0f6609cd466d7cd",
+    "pnpmLockSha256": "2cbd98fa54c8afe5a985a4e42ee66474715fdc49bb436c4b3ba57246e97ccab5",
+    "releaseManifestSha256": "8be7423d343ce50cce75a3b16f007d42c9a87c2f25a66cd56b7a81ff79f8f715",
+    "postpublishEvidenceSha256": "32355b81b529a9051a101d9ba4338f7ff6a45f21704847dc406a23f7bfc16711",
+    "dependencyEvidenceSha256": "51bdbe7b8d90c3aaf5e7252d2cf583b63a7435330294c556852bed59a285618b"
+  },
+  "observedImage": {
+    "indexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "amd64ManifestDigest": "sha256:165b4992f1b4b74ffdd7a02c887ba006f9f5dc951eca420eef573a8b233b543f",
+    "arm64ManifestDigest": "sha256:38b611f494cb32e15aaf456d54c6b6be55db9098c90632aed0bfad4a70009707",
+    "baseDigest": "sha256:242549cd46785b480c832479a730f4f2a20865d61ea2e404fdb2a5c3d3b73ecf",
+    "user": "node",
+    "entrypoint": ["tini", "-s", "--"],
+    "command": ["node", "openclaw.mjs", "gateway"],
+    "attestation": "BuildKit SLSA metadata is present and binds source revision; no registry signature was verified."
+  },
+  "upstreamRiskEvidence": {
+    "releaseDependencyGraphPackages": 1221,
+    "releaseProductionGraphPackages": 986,
+    "releaseAdvisoryFindings": 0,
+    "releaseOwnershipGaps": ["@openclaw/ai"],
+    "releaseRiskSignals": 1924,
+    "interpretation": "Useful upstream release evidence only; not a current independent vulnerability, ownership, licence or supply-chain clearance."
+  },
+  "selectionDecision": {
+    "status": "PASS_FOR_LOCAL_ISOLATED_REFERENCE_ONLY",
+    "selectedReference": "ghcr.io/openclaw/openclaw@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "upstreamComposeAccepted": false,
+    "reason": "The official image provenance is sufficiently bound for isolated local testing, but upstream Compose exposes host binds, ports, host-gateway reachability and credential environment that violate the ChimpMaera boundary; only a new closed ChimpMaera fixture Compose may consume the image."
+  },
+  "nonClaims": [
+    "No registry signature was verified.",
+    "No complete SBOM, current CVE scan or third-party licence audit was performed.",
+    "ChimpMaera does not bundle or redistribute OpenClaw image bytes in this slice.",
+    "No OpenClaw service was started and the running Owner OpenClaw, Gateway, vLLM and model infrastructure were not touched."
+  ]
+}

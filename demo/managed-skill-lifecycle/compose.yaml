@@ -1,0 +1,72 @@
+name: ${CM_AAS037_PROJECT:-chimpmaera-aas037-skill}
+services:
+  skill-manager:
+    profiles: [aas037]
+    image: chimpmaera/aas037-skill-manager:local
+    build:
+      context: ../..
+      dockerfile: demo/managed-skill-lifecycle/manager.Dockerfile
+      provenance: false
+    labels: {io.chimpmaera.fixture: aas037-managed-skill-v1}
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 192m
+    cpus: 0.50
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=8m,mode=1777"]
+    volumes:
+      - aas037_manager_state:/var/lib/chimpmaera/state
+      - aas037_skill_store:/var/lib/chimpmaera/skills
+    networks: [aas037_gateway_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+  openclaw-agent:
+    profiles: [aas037]
+    image: chimpmaera/aas037-openclaw-agent:local
+    build:
+      context: ../..
+      dockerfile: demo/managed-skill-lifecycle/openclaw.Dockerfile
+      provenance: false
+    labels: {io.chimpmaera.fixture: aas037-managed-skill-v1}
+    depends_on:
+      skill-manager: {condition: service_healthy}
+    environment:
+      OPENCLAW_CONFIG_PATH: /opt/chimpmaera/openclaw.json
+      OPENCLAW_STATE_DIR: /var/lib/openclaw
+      HOME: /var/lib/openclaw/user
+      NO_PROXY: skill-manager,127.0.0.1,localhost
+    command: ["node", "openclaw.mjs", "gateway"]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1.00
+    tmpfs:
+      - "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      - "/var/lib/openclaw/user/.cache:rw,noexec,nosuid,nodev,size=16m,mode=700,uid=1000,gid=1000"
+    volumes:
+      - aas037_openclaw_state:/var/lib/openclaw
+      - aas037_skill_store:/opt/chimpmaera/workspace/skills:ro
+    networks: [aas037_gateway_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:18789/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 2s
+      retries: 30
+      start_period: 10s
+volumes:
+  aas037_manager_state: {labels: {io.chimpmaera.fixture: aas037-managed-skill-v1}}
+  aas037_skill_store: {labels: {io.chimpmaera.fixture: aas037-managed-skill-v1}}
+  aas037_openclaw_state: {labels: {io.chimpmaera.fixture: aas037-managed-skill-v1}}
+networks:
+  aas037_gateway_only:
+    internal: true
+    labels: {io.chimpmaera.fixture: aas037-managed-skill-v1}

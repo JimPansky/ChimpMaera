@@ -6,6 +6,15 @@ Version 0.1 is a local synthetic proof of concept. Production operation,
 hostile tenancy, external identity infrastructure, high availability and
 independent immutable audit are unsupported.
 
+Docker and loopback/internal-network controls are local Reference Adapter
+guardrails, not a universal Agent isolation or hostile-host claim. The
+normative product boundary is defined by
+[The ChimpMaera Canon](docs/CANON.md); current release limitations remain in
+[Known Limitations](docs/KNOWN-LIMITATIONS.md). Security claims cover only
+defined, evidenced boundary crossings and observable inputs, outputs, actions
+and receipts, not complete internal model thoughts, unknown side channels, or
+compromised kernel/hypervisor/runtime components.
+
 ## Reporting
 
 Do not place suspected vulnerabilities, credentials, personal data, private

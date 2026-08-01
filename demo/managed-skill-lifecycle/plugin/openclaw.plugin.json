@@ -1,0 +1,17 @@
+{
+  "id": "chimpmaera-skill-lifecycle",
+  "name": "ChimpMaera AAS-037 Managed Skill Lifecycle",
+  "description": "Closed request and separate activate/use path for one isolated skill fixture.",
+  "version": "1.0.0",
+  "activation": {"onStartup": true},
+  "contracts": {"tools": ["chimpmaera_skill_request", "chimpmaera_skill_activate_use"]},
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["baseUrl", "workloadIdentity"],
+    "properties": {
+      "baseUrl": {"type": "string", "const": "http://skill-manager:8080"},
+      "workloadIdentity": {"type": "string", "const": "workload:openclaw-agent"}
+    }
+  }
+}

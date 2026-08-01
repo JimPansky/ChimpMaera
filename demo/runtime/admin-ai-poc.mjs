@@ -1,8 +1,15 @@
 import { canonicalJson, sha256 } from "./enforcement-gate.mjs";
+import { validateAdminAiPocPolicy } from "./admin-ai-policy.mjs";
+import {
+  POLICY_EVALUATION_INPUT_SCHEMA,
+  TRUSTED_POLICY_CONTEXT_SCHEMA,
+  createInternalStaticPolicyEvaluator,
+  validatePolicyDecision,
+} from "./policy-evaluator.mjs";
 
 const ACTOR = "agent:admin-ai-poc";
 const REQUEST_SCHEMA = "chimpmaera.demo/admin-ai-request/v1";
-const DECISION_SCHEMA = "chimpmaera.demo/admin-ai-decision/v1";
+const DECISION_SCHEMA = "chimpmaera.demo/admin-ai-decision/v4";
 
 function assertExactKeys(value, expected, code) {
   if (
@@ -14,42 +21,7 @@ function assertExactKeys(value, expected, code) {
   ) throw new Error(code);
 }
 
-export function validateAdminAiPocPolicy(policy) {
-  assertExactKeys(policy, ["policyId", "rules", "schemaVersion"], "ADMIN_AI_POLICY_INVALID_DENIED");
-  if (
-    policy.schemaVersion !== "chimpmaera.demo/admin-ai-poc-policy/v1"
-    || policy.policyId !== "admin-ai-poc-policy-v1"
-    || !Array.isArray(policy.rules)
-    || policy.rules.length !== 3
-  ) throw new Error("ADMIN_AI_POLICY_INVALID_DENIED");
-  const expected = [
-    [
-      "SYNTHETIC_ESPOCRM_CONTACT_CREATE",
-      "AUTO_GRANT",
-      "POLICY_SYNTHETIC_CONTACT_AUTO_GRANTED",
-    ],
-    [
-      "SYNTHETIC_DOLIBARR_ORDER_CREATE",
-      "OWNER_ESCALATION",
-      "POLICY_ORDER_REQUIRES_OWNER",
-    ],
-    ["*", "DENY", "POLICY_REQUEST_NOT_ALLOWED"],
-  ];
-  for (const [index, rule] of policy.rules.entries()) {
-    assertExactKeys(
-      rule,
-      ["outcome", "reasonCode", "requestKind"],
-      "ADMIN_AI_POLICY_INVALID_DENIED",
-    );
-    if (
-      canonicalJson([rule.requestKind, rule.outcome, rule.reasonCode])
-        !== canonicalJson(expected[index])
-    ) {
-      throw new Error("ADMIN_AI_POLICY_INVALID_DENIED");
-    }
-  }
-  return policy;
-}
+export { validateAdminAiPocPolicy } from "./admin-ai-policy.mjs";
 
 function validateRequest(request) {
   assertExactKeys(
@@ -117,26 +89,104 @@ function orderAction(replayKey) {
   };
 }
 
+function intentFor(request, action) {
+  const requestDigest = sha256(canonicalJson(request));
+  if (request.requestKind === "SYNTHETIC_ESPOCRM_CONTACT_CREATE") {
+    return {
+      schemaVersion: POLICY_EVALUATION_INPUT_SCHEMA,
+      actor: request.actor,
+      capability: "customer.contact.create",
+      operation: "CREATE_IF_ABSENT",
+      resource: "CustomerContact",
+      tenant: "panskys-zoo-demo",
+      materiality: "LOW_SYNTHETIC",
+      adapter: { adapterId: "espocrm-contact", adapterVersion: "1.0.0" },
+      actionDigest: sha256(canonicalJson(action)),
+      scopeDigest: sha256(canonicalJson(action.scope)),
+      replayKey: request.replayKey,
+      requestDigest,
+    };
+  }
+  if (request.requestKind === "SYNTHETIC_DOLIBARR_ORDER_CREATE") {
+    return {
+      schemaVersion: POLICY_EVALUATION_INPUT_SCHEMA,
+      actor: request.actor,
+      capability: "sales.order.create",
+      operation: "CREATE_IF_ABSENT",
+      resource: "SalesOrder",
+      tenant: "panskys-zoo-demo",
+      materiality: "MATERIAL_SYNTHETIC",
+      adapter: { adapterId: "dolibarr-order", adapterVersion: "1.0.0" },
+      actionDigest: sha256(canonicalJson(action)),
+      scopeDigest: sha256(canonicalJson(action.scope)),
+      replayKey: request.replayKey,
+      requestDigest,
+    };
+  }
+  return {
+    schemaVersion: POLICY_EVALUATION_INPUT_SCHEMA,
+    actor: request.actor,
+    capability: "request.undeclared",
+    operation: "UNDECLARED_REQUEST",
+    resource: "UndeclaredRequest",
+    tenant: "panskys-zoo-demo",
+    materiality: "UNDECLARED",
+    adapter: { adapterId: "deny-only", adapterVersion: "1.0.0" },
+    actionDigest: null,
+    scopeDigest: null,
+    replayKey: request.replayKey,
+    requestDigest,
+  };
+}
+
 export class AdminAiPoc {
-  constructor({ policy, policyDigest, signAuthority }) {
+  constructor({
+    policy,
+    policyDigest,
+    signAuthority,
+    policyEvaluator,
+    trustedPolicyContext,
+  }) {
     this.policy = validateAdminAiPocPolicy(policy);
     if (!/^[a-f0-9]{64}$/.test(policyDigest)) {
       throw new Error("ADMIN_AI_POLICY_DIGEST_INVALID_DENIED");
     }
     this.policyDigest = policyDigest;
     this.signAuthority = signAuthority;
+    this.policyEvaluator = policyEvaluator ?? createInternalStaticPolicyEvaluator({
+      policy: this.policy,
+      policySourceDigest: policyDigest,
+    });
+    this.trustedPolicyContext = trustedPolicyContext ?? {
+      schemaVersion: TRUSTED_POLICY_CONTEXT_SCHEMA,
+      profileId: "SAFE_GUIDED",
+      profileGeneration: "standalone-test-v1",
+      policyId: this.policy.policyId,
+      policyGeneration: 1,
+      policySourceDigest: policyDigest,
+      policySemanticDigest: this.policyEvaluator.policySemanticDigest,
+    };
   }
 
   decide(request) {
     validateRequest(request);
-    const rule = this.policy.rules.find(({ requestKind }) =>
-      requestKind === request.requestKind
-    ) ?? this.policy.rules[2];
-    const action = rule.outcome === "AUTO_GRANT"
+    const plannedAction = request.requestKind === "SYNTHETIC_ESPOCRM_CONTACT_CREATE"
       ? contactAction(request.replayKey)
-      : rule.outcome === "OWNER_ESCALATION"
+      : request.requestKind === "SYNTHETIC_DOLIBARR_ORDER_CREATE"
         ? orderAction(request.replayKey)
         : null;
+    const input = intentFor(request, plannedAction);
+    const policyDecision = validatePolicyDecision(
+      this.policyEvaluator.evaluate(input, this.trustedPolicyContext),
+      input,
+      this.trustedPolicyContext,
+    );
+    if (
+      (input.capability === "request.undeclared" && policyDecision.outcome !== "DENY")
+      || (input.capability === "sales.order.create"
+        && policyDecision.outcome === "AUTO_GRANT")
+    ) throw new Error("POLICY_DECISION_EXCEEDS_ADAPTER_CEILING_DENIED");
+    const action = policyDecision.outcome === "DENY" ? null : plannedAction;
     const actionDigest = action === null ? null : sha256(canonicalJson(action));
     const requestId = sha256(canonicalJson(request));
     const core = {
@@ -144,19 +194,23 @@ export class AdminAiPoc {
       requestId,
       actor: request.actor,
       requestKind: request.requestKind,
-      outcome: rule.outcome,
-      reasonCodes: [rule.reasonCode],
+      outcome: policyDecision.outcome,
+      reasonCodes: policyDecision.reasonCodes,
       actionDigest,
+      policyId: this.trustedPolicyContext.policyId,
+      policyGeneration: this.trustedPolicyContext.policyGeneration,
       policyDigest: this.policyDigest,
       replayKey: request.replayKey,
     };
     const decisionDigest = sha256(canonicalJson(core));
-    const authority = rule.outcome === "AUTO_GRANT"
+    const authority = policyDecision.outcome === "AUTO_GRANT"
       ? this.signAuthority({
         actor: action.actor,
         scope: action.scope,
         actionDigest,
         replayKey: action.replayKey,
+        policyId: this.trustedPolicyContext.policyId,
+        policyGeneration: this.trustedPolicyContext.policyGeneration,
         policyDigest: this.policyDigest,
         decisionDigest,
       })

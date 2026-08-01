@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "chimpmaera.demo/supply-chain-artifact-lock/v1",
+  "lockId": "chimpmaera-v02-declared-inputs-v1",
+  "claimBoundary": "Offline verification of repository declarations only; not registry signature, provenance, SBOM, CVE, license or reproducible-build evidence.",
+  "ociDeclarations": [
+    {
+      "artifactId": "node-runtime-build",
+      "reference": "node:24.14.1-bookworm-slim@sha256:e484ae3f1e3c378021c967fd42254f343c302a9263e412280eac32bf5bca7008",
+      "locations": [
+        { "path": "demo/chimpmaera.Dockerfile", "kind": "FROM", "occurrences": 2 },
+        { "path": "demo/openclaw-agent/gateway.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/model-access-broker/broker.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/model-access-broker/frontdoor.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/model-access-broker/provider.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/managed-skill-lifecycle/manager.Dockerfile", "kind": "FROM", "occurrences": 1 }
+      ],
+      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
+    },
+    {
+      "artifactId": "openclaw-agent-runtime",
+      "reference": "ghcr.io/openclaw/openclaw@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+      "locations": [
+        { "path": "demo/openclaw-agent/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/model-access-broker/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/managed-skill-lifecycle/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 }
+      ],
+      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
+    },
+    {
+      "artifactId": "mariadb-demo",
+      "reference": "mariadb@sha256:ae6119716edac6998ae85508431b3d2e666530ddf4e94c61a10710caec9b0f71",
+      "locations": [
+        { "path": "demo/compose.yaml", "kind": "IMAGE", "occurrences": 2 }
+      ],
+      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
+    },
+    {
+      "artifactId": "espocrm-demo",
+      "reference": "espocrm/espocrm@sha256:5172d5a4405efd829392c1e25de6c58c3e1b2bb8d5adaad69d62bacb9ea746bc",
+      "locations": [
+        { "path": "demo/compose.yaml", "kind": "IMAGE", "occurrences": 1 }
+      ],
+      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
+    },
+    {
+      "artifactId": "dolibarr-demo",
+      "reference": "dolibarr/dolibarr@sha256:fec3802e34d1c1b5a8126025cc72eb1ba2dc4816501f73bd1406e79b54dea152",
+      "locations": [
+        { "path": "demo/compose.yaml", "kind": "IMAGE", "occurrences": 1 }
+      ],
+      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
+    },
+    {
+      "artifactId": "video-reference-debian",
+      "reference": "debian:bookworm-slim@sha256:63a496b5d3b99214b39f5ed70eb71a61e590a77979c79cbee4faf991f8c0783e",
+      "locations": [
+        { "path": "tools/video-production-reference/Dockerfile", "kind": "FROM", "occurrences": 1 }
+      ],
+      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
+    }
+  ],
+  "runtimeResolvedImages": [
+    {
+      "variable": "CM_CHIMP_IMAGE",
+      "composePath": "demo/compose.yaml",
+      "resolverPath": "demo/install.sh",
+      "requirement": "LOCAL_BUILD_INSPECTED_TO_IMMUTABLE_SHA256"
+    }
+  ],
+  "localBuildTags": [
+    {
+      "reference": "chimpmaera/aas035-capability-gateway:local",
+      "composePath": "demo/openclaw-agent/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas035-openclaw-agent:local",
+      "composePath": "demo/openclaw-agent/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas036-capability-frontdoor:local",
+      "composePath": "demo/model-access-broker/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas036-model-access-broker:local",
+      "composePath": "demo/model-access-broker/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas036-openclaw-agent:local",
+      "composePath": "demo/model-access-broker/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas036-synthetic-provider:local",
+      "composePath": "demo/model-access-broker/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas037-openclaw-agent:local",
+      "composePath": "demo/managed-skill-lifecycle/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas037-skill-manager:local",
+      "composePath": "demo/managed-skill-lifecycle/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/video-production-reference:2026-07-30-v1",
+      "composePath": "tools/video-production-reference/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    }
+  ],
+  "npm": {
+    "packageManager": "npm@11.16.0",
+    "lockfileVersion": 3,
+    "allResolvedPackagesRequireIntegrity": true
+  },
+  "ci": {
+    "workflowPath": ".github/workflows/ci.yml",
+    "actionsRequireFullCommitSha": true,
+    "dockerCompose": {
+      "version": "v2.40.3",
+      "platform": "linux-x86_64",
+      "url": "https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-x86_64",
+      "sha256": "dba9d98e1ba5bfe11d88c99b9bd32fc4a0624a30fafe68eea34d61a3e42fd372",
+      "verification": "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
+    }
+  },
+  "runtimeClosure": {
+    "directory": "demo/runtime",
+    "dockerfile": "demo/chimpmaera.Dockerfile",
+    "requireEveryMjsCopied": true
+  },
+  "publicClosure": {
+    "manifestPath": "release/public-files.manifest",
+    "requiredPaths": [
+      "demo/approval-workbench-smoke.sh",
+      "demo/managed-skill-lifecycle/compose.yaml",
+      "demo/managed-skill-lifecycle/runtime-contract-v1.json",
+      "demo/manifests/supply-chain/artifact-lock-v1.json",
+      "demo/runtime/admin-ai-policy.mjs",
+      "demo/runtime/approval-workbench.mjs",
+      "demo/runtime/paperless-ngx-zoo-adapter.mjs",
+      "demo/runtime/policy-evaluator.mjs",
+      "demo/runtime/policy-generation-fence.mjs",
+      "docs/SUPPLY-CHAIN.md",
+      "packages/contracts/src/paperless-zoo-adapter.ts",
+      "packages/contracts/src/skill-admission.ts",
+      "packages/contracts/src/policy-evaluator.ts",
+      "scripts/verify-supply-chain.mjs",
+      "tests/demo-approval-workbench.test.mjs",
+      "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
+      "tests/demo-policy-evaluator.test.mjs",
+      "tests/demo-policy-generation-fence.test.mjs",
+      "tests/managed-skill-lifecycle-runtime.test.mjs",
+      "tests/skill-admission.test.ts",
+      "tests/supply-chain-verifier.test.mjs"
+    ],
+    "developmentEvidenceExcluded": true
+  },
+  "paperless": {
+    "status": "ADAPTER_ONLY_NO_OCI_ARTIFACT",
+    "stockComposeEnabled": false,
+    "futureEnablementRequiresCompletePinnedServiceStack": true
+  }
+}

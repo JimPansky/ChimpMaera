@@ -1,0 +1,71 @@
+name: ${CM_AAS035_PROJECT:-chimpmaera-aas035-openclaw}
+services:
+  capability-gateway:
+    profiles: [aas035]
+    image: chimpmaera/aas035-capability-gateway:local
+    build:
+      context: ../..
+      dockerfile: demo/openclaw-agent/gateway.Dockerfile
+      provenance: false
+    labels:
+      io.chimpmaera.fixture: aas035-openclaw-agent-v1
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.50
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=8m,mode=1777"]
+    volumes: [aas035_mind_store:/var/lib/chimpmaera]
+    networks: [aas035_gateway_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+  openclaw-agent:
+    profiles: [aas035]
+    image: chimpmaera/aas035-openclaw-agent:local
+    build:
+      context: ../..
+      dockerfile: demo/openclaw-agent/openclaw.Dockerfile
+      provenance: false
+    labels:
+      io.chimpmaera.fixture: aas035-openclaw-agent-v1
+    depends_on:
+      capability-gateway: {condition: service_healthy}
+    environment:
+      OPENCLAW_CONFIG_PATH: /opt/chimpmaera/openclaw.json
+      OPENCLAW_STATE_DIR: /var/lib/openclaw
+      HOME: /var/lib/openclaw/user
+      NO_PROXY: capability-gateway,127.0.0.1,localhost
+    command: ["node", "openclaw.mjs", "gateway"]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1.00
+    tmpfs:
+      - "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      - "/var/lib/openclaw/user/.cache:rw,noexec,nosuid,nodev,size=16m,mode=700,uid=1000,gid=1000"
+    volumes: [aas035_openclaw_state:/var/lib/openclaw]
+    networks: [aas035_gateway_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:18789/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 2s
+      retries: 30
+      start_period: 10s
+volumes:
+  aas035_mind_store:
+    labels: {io.chimpmaera.fixture: aas035-openclaw-agent-v1}
+  aas035_openclaw_state:
+    labels: {io.chimpmaera.fixture: aas035-openclaw-agent-v1}
+networks:
+  aas035_gateway_only:
+    internal: true
+    labels: {io.chimpmaera.fixture: aas035-openclaw-agent-v1}
