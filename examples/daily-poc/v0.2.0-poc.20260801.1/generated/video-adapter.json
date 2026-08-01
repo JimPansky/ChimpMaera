@@ -52,7 +52,7 @@
     "publishable_asset_staging"
   ],
   "schemaVersion": "chimpmaera.daily-poc-video-adapter/v1",
-  "sourceManifestSha256": "d8be509d68be9ef01ee1eca8f3d3d5d15046792890713ad3d535785eaeb741c1",
+  "sourceManifestSha256": "dba97777b3ddb20301dc07f9e2180f7be9fa3cc936ad6dedef13615e4651e4d6",
   "status": "DISABLED_DEFAULT",
   "targetContract": "cm.video/v1"
 }

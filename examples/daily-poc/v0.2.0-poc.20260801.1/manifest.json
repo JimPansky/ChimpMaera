@@ -5,7 +5,7 @@
   "source": {
     "repository": "https://github.com/JimPansky/ChimpMaera.git",
     "base": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
-    "head": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+    "head": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
   },
   "targetVersion": "v0.2.0-poc.20260801.1",
   "history": [],
@@ -83,7 +83,7 @@
       "commitIds": [
         "4c0e0513c51bc348be8617d78ccdb77346703cbf",
         "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
-        "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+        "89f51a9a421c934045f8cbcdf235f591ba29acbb"
       ],
       "issueIds": [
         "REL-DAILY-001"
@@ -231,7 +231,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-AAS-036-BROKER",
@@ -242,7 +242,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-AAS-023-AUDIT",
@@ -253,7 +253,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-EFFECT-GATE",
@@ -264,7 +264,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-README-CLAIMS",
@@ -275,7 +275,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-CANON-REVISION",
@@ -286,7 +286,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-CONTRIBUTION-GOVERNANCE",
@@ -297,7 +297,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     },
     {
       "id": "EVID-DAILY-PIPELINE",
@@ -308,7 +308,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
+      "sourceCommit": "89f51a9a421c934045f8cbcdf235f591ba29acbb"
     }
   ],
   "claims": [
@@ -466,7 +466,7 @@
     }
   ],
   "reproductionCommands": [
-    "git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4",
+    "git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..89f51a9a421c934045f8cbcdf235f591ba29acbb",
     "npm ci --ignore-scripts --no-audit --no-fund",
     "npm run lint",
     "npm test",

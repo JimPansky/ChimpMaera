@@ -2,7 +2,7 @@
 
 Candidate version: `v0.2.0-poc.20260801.1`
 
-Source: `f00a4890f7fecb68f82e692f09cf1e46728fb88d` → `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`
+Source: `f00a4890f7fecb68f82e692f09cf1e46728fb88d` → `89f51a9a421c934045f8cbcdf235f591ba29acbb`
 
 This is a prepared local candidate, not a published GitHub release. PR identification is assigned only after the green local gate.
 
@@ -15,7 +15,7 @@ This is a prepared local candidate, not a published GitHub release. PR identific
 
 ## Changed
 
-- Frozen cumulative source range: `f00a4890f7fecb68f82e692f09cf1e46728fb88d` → `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`.
+- Frozen cumulative source range: `f00a4890f7fecb68f82e692f09cf1e46728fb88d` → `89f51a9a421c934045f8cbcdf235f591ba29acbb`.
 - Material files in range: 208.
 - Daily candidate semantics remain non-publishing; LOCALLY VALIDATED is not RELEASED.
 
@@ -62,14 +62,14 @@ This is a prepared local candidate, not a published GitHub release. PR identific
 
 ### Evidence index
 
-- **EVID-AAS-023-AUDIT [LOCALLY_VALIDATED]** `docs/development/evidence/admin-ai-aas-023-20260801.json` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `35f659cf4453c8c4a5670ef34df37735d090b589ca36c3459c1d90abba449d08`.
-- **EVID-AAS-035-RUNTIME [LOCALLY_VALIDATED]** `docs/development/evidence/admin-ai-aas-035-20260801.json` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `c383a0d622ef7a2885f0d7e7aeecc957bc0ffc5513b1839ef7a7bf4c480711a3`.
-- **EVID-AAS-036-BROKER [LOCALLY_VALIDATED]** `docs/development/evidence/admin-ai-aas-036-20260801.json` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `27e891001f0144a8d7c89119f7667bd306ee224ef79cdfdadefe726e2b842db3`.
-- **EVID-CANON-REVISION [DESIGNED]** `docs/CANON.md` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `7cda7bb499e04cb86bfe3d2d773828c5326b98727bfac68a797628bffeb68b65`.
-- **EVID-CONTRIBUTION-GOVERNANCE [DESIGNED]** `CONTRIBUTING.md` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `317e346e73fb73fef6110dbc410ecc186cd80991f1af4bb85097fc7a1d446273`.
-- **EVID-DAILY-PIPELINE [LOCALLY_VALIDATED]** `tests/daily-poc.test.mjs` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `26eda1600d8acad61e17c23f280aed71b9b0ece6a6d852f0157ed9dfe3d7b755`.
-- **EVID-EFFECT-GATE [LOCALLY_VALIDATED]** `tests/demo-enforcement-gate.test.mjs` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74`.
-- **EVID-README-CLAIMS [DESIGNED]** `README.md` at `8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4`, SHA-256 `2fa22d268a0af982d5c31061ba2565031f7e106655494054cec3764d8f369e81`.
+- **EVID-AAS-023-AUDIT [LOCALLY_VALIDATED]** `docs/development/evidence/admin-ai-aas-023-20260801.json` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `35f659cf4453c8c4a5670ef34df37735d090b589ca36c3459c1d90abba449d08`.
+- **EVID-AAS-035-RUNTIME [LOCALLY_VALIDATED]** `docs/development/evidence/admin-ai-aas-035-20260801.json` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `c383a0d622ef7a2885f0d7e7aeecc957bc0ffc5513b1839ef7a7bf4c480711a3`.
+- **EVID-AAS-036-BROKER [LOCALLY_VALIDATED]** `docs/development/evidence/admin-ai-aas-036-20260801.json` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `27e891001f0144a8d7c89119f7667bd306ee224ef79cdfdadefe726e2b842db3`.
+- **EVID-CANON-REVISION [DESIGNED]** `docs/CANON.md` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `7cda7bb499e04cb86bfe3d2d773828c5326b98727bfac68a797628bffeb68b65`.
+- **EVID-CONTRIBUTION-GOVERNANCE [DESIGNED]** `CONTRIBUTING.md` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `317e346e73fb73fef6110dbc410ecc186cd80991f1af4bb85097fc7a1d446273`.
+- **EVID-DAILY-PIPELINE [LOCALLY_VALIDATED]** `tests/daily-poc.test.mjs` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `26eda1600d8acad61e17c23f280aed71b9b0ece6a6d852f0157ed9dfe3d7b755`.
+- **EVID-EFFECT-GATE [LOCALLY_VALIDATED]** `tests/demo-enforcement-gate.test.mjs` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74`.
+- **EVID-README-CLAIMS [DESIGNED]** `README.md` at `89f51a9a421c934045f8cbcdf235f591ba29acbb`, SHA-256 `2fa22d268a0af982d5c31061ba2565031f7e106655494054cec3764d8f369e81`.
 
 ## Known limitations
 

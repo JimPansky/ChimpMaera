@@ -1,17 +1,17 @@
 {
   "artifact_sha256_digests": {
-    "demo-guide.md": "14898776cbaffc094fdd78e2abca7b4b606658060fcabd136306347e05ada417",
-    "evidence-index.json": "27d05eeed9ecc71f78fda1620bf6c388893649184df04d4c784213392dcf9615",
-    "evidence-summary.md": "d7ec42b0d5013031e688d67b863ae78495a4b880a52e19b1064fd7708ae51502",
+    "demo-guide.md": "07b7e414065672b65767b8c4a3f7a8def07a012ee78ba3526f2aa1634e8339f2",
+    "evidence-index.json": "ffec488a4526db54cfc82f24df54d645147cc7bc25192443f21fce603381f63c",
+    "evidence-summary.md": "c46be2af6d866eed1d86032da9f815e3e5c976597b5f6f8096ef5fcaf137978f",
     "known-limitations.md": "f22553d080fe9604a6dda4739046da8d0c53ac9555984413feb8ea79a166dd31",
-    "provenance.json": "386fa51fc0c4fd5ab92b725e74c5d9a1555d4144fb27b04a4a636ca710cae462",
+    "provenance.json": "f01e44f5c57c8a7d568193caaa63fa30586c5c157baea1a268d36ad2efdc95e1",
     "readme-pointer.md": "2eaf8eab782e972b1e7f3a2b3bad940c6bede256470615bf81f7e43e3a0592fa",
-    "release-notes.md": "c06ac7b83f6a021c8ee4a408c1a6db188902efcca5359424ae4650ef1e88bde0",
-    "sbom.spdx.json": "5c2b792a7b9fce5fc206efbcf837fb8e644e4540b9bb8ad7a0552b5c788b578d",
-    "video-adapter.json": "4f71c57e7d43e76068c974d0882e5301ea785b43a837095ecb47795ee631f76e",
-    "video-brief.json": "2fdebf15b48db72a323d0f8b422d83fc6f38479c78bb8d7e3d745b6a35a6c899",
+    "release-notes.md": "86049da56e24e3e2a65397668a1bba7f3699f543c8dbc723d1e2cdaac928262b",
+    "sbom.spdx.json": "e0d8be0bf954fb8b86ff1acb04ac3b703705ee9ade664f214471bc55119c9914",
+    "video-adapter.json": "7d20abe32f92a2716906e7498fcd74cb5e09cf15878bf43ab729805a454fa07b",
+    "video-brief.json": "f57efc4b715c7a362265199dff08f1e90ffb2d8b358887568571fde9c5a6bece",
     "video-narration.md": "fbde1500f21d2d20b46a1ebe50536ea5b04f2b4ca646be70680bf353c96c3acb",
-    "video-storyboard.json": "c24e0ea927a91d663b033167dfae85efcf38da32e2089763a1d15d7bdb44ffa0"
+    "video-storyboard.json": "e6ef3c0178b5d0d48775f85ca83d05f3c1fd5586b5b9a583ebcb66ab4e44177a"
   },
   "candidateVersion": "v0.2.0-poc.20260801.1",
   "claim_evidence_deviations": [],
@@ -26,7 +26,7 @@
     "gate_7": 1,
     "gate_8": 1
   },
-  "manifestSha256": "d8be509d68be9ef01ee1eca8f3d3d5d15046792890713ad3d535785eaeb741c1",
+  "manifestSha256": "dba97777b3ddb20301dc07f9e2180f7be9fa3cc936ad6dedef13615e4651e4d6",
   "manual_interventions": 0,
   "qc_results": {
     "claimScan": "PASS",

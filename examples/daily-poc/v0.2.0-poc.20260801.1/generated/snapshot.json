@@ -1,9 +1,9 @@
 {
-  "artifactManifestSha256": "13d59699d433e57109c280445b481f917200f996cea281cc25fc42cbcfc61de2",
+  "artifactManifestSha256": "878dd782741318b47078d9cbadb5463937ba403791c6322d45bba0fb858f07f7",
   "date": "2026-08-01",
-  "manifestSha256": "d8be509d68be9ef01ee1eca8f3d3d5d15046792890713ad3d535785eaeb741c1",
+  "manifestSha256": "dba97777b3ddb20301dc07f9e2180f7be9fa3cc936ad6dedef13615e4651e4d6",
   "sequence": 1,
-  "snapshotDigest": "087a1c4ac2dd2fae4b74734cff4053c8fe3f645ffaa6671d14696990fb25db4d",
-  "sourceHead": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4",
+  "snapshotDigest": "6aff48a3896a56735aa8f5adadde67385227ec8da4bdc8ac75580f92638b1abd",
+  "sourceHead": "89f51a9a421c934045f8cbcdf235f591ba29acbb",
   "version": "v0.2.0-poc.20260801.1"
 }
