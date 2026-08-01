@@ -83,12 +83,56 @@ credentials, production systems or external accounts.
 
 ## Do
 
-Pending.
+Implemented the canonical TypeScript Skill Admission IR, closed manifest/file
+validation, deterministic provenance/licence/dependency/access/transitive-
+rights report, explainable profile matrix, content-addressed OpenClaw
+materialiser and an in-memory reference broker/store. The store serialises a
+tenant writer, separates install from activation and capability grant, returns
+idempotent receipts and restores prior immutable generations.
+
+Added a default-off, two-service Docker fixture. The pinned OpenClaw runtime is
+non-root/read-only and sees the managed skill volume read-only; the non-root
+manager alone stages and atomically renames exact bytes. Both services have one
+internal network, no ports, host mounts, Docker socket or ambient credentials.
+The OpenClaw plugin can request admission and separately request activation/
+readback, but it cannot write the store or grant capabilities.
 
 ## Check
 
-Pending.
+- Focused canonical/runtime tests: **12/12 PASS**.
+- Complete repository tests: **128/128 PASS**.
+- Video reference tests: **15/15 PASS**.
+- Supply-chain checks: **6/6 PASS**, lock digest
+  `280d51e2c6b154065ba03c746e43e56769d2f5f57107c97aea442b302c18b070`.
+- Deterministic public staging: PASS, archive digest
+  `1515336518dd3f3f44f5080bcd3dbf3668348f2266919a3d8b5d4388f5a40482`,
+  temporary residue zero.
+- Implementation commit:
+  `94cc5f24436b274a252dae3ff9b0326fcf1b2c30`.
+- Final isolated smoke `aas037-20260801T151252Z`: PASS in 31,238 ms. The real
+  pinned OpenClaw runtime made three model calls, requested the immutable skill,
+  received the same install receipt on replay, separately activated and read
+  `Hello from the Zoo`, retained zero granted capabilities, produced three
+  lifecycle receipts, passed eight denials, rolled back, reset and left zero
+  labelled containers, networks, volumes or derivative images. The Owner
+  process/config fingerprint was identical before, during and after.
+- Two earlier smoke attempts failed closed and were fully purged. Run
+  `aas037-20260801T150933Z` exposed Docker named-volume ownership; owned marker
+  bytes corrected copy-up. Run `aas037-20260801T151118Z` exposed manager-private
+  `0700/0400` materialisation; `0755/0444` corrected read-only consumer access
+  without write authority. Each rerun followed a real correcting runtime-byte
+  change; no smoke ran after the final PASS.
 
 ## Act
 
-Pending.
+Close AAS-037 at **6/6** with verdict
+`LOCAL_AAS_037_PASS_NOT_ARBITRARY_CODE_LIVE_REGISTRY_PRODUCTION_STORE_UNIVERSAL_AGENT_OR_RELEASE_CLAIM`.
+Do not optimise or rerun it absent new regression evidence.
+
+The frontier audit rechecked capability separation, provenance, package bytes,
+runtime materialisation, tenant isolation, audit causality, recovery and claim
+boundaries. No new distinct I5 gap was found: live registry/signature/legal-
+licence/production store evidence remains external or preparable; Hermes and
+Claude Code remain honestly unproven; cross-control audit and artifact trust
+remain AAS-023/AAS-025. AAS-023 is the next internally ready I4/L item under the
+existing ordered tie-break, ahead of AAS-025 and recurring I3 AAS-030.

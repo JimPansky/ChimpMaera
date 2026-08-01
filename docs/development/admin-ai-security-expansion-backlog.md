@@ -41,23 +41,23 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 1 | 0 | 2 | 6 | 0 | 14 |
+| P0 | 5 | 0 | 0 | 2 | 7 | 0 | 14 |
 | P1 | 11 | 2 | 0 | 0 | 3 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **4** | **0** | **2** | **9** | **0** | **37** |
+| **Total** | **22** | **3** | **0** | **2** | **10** | **0** | **37** |
 
-Ready order after AAS-036 closure and Owner reprioritisation:
+Ready order after AAS-037 closure and frontier audit:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-037 | P0 | I5 | XL | Managed skill admission is the next agent-security prerequisite after model mediation |
-| 2 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 3 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 4 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 2 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 3 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
-`AAS-009`, `AAS-016`, `AAS-012`, owner-priority `AAS-035` and `AAS-017`.
+`AAS-009`, `AAS-016`, `AAS-012`, owner-priority `AAS-035`, `AAS-017`,
+`AAS-036` and `AAS-037`.
 Owner directions at 2026-08-01 14:17 and 14:26 CEST made `AAS-036` the model
 security prerequisite and `AAS-037` its dependent next frontier before lower-
 priority ERP/CRM/BI/DMS breadth. AAS-036 is complete; closed items do not reopen
@@ -128,6 +128,16 @@ proves a distinct I5 gap: agents may request skills, but no canonical managed
 admission lifecycle prevents direct store mutation or self-granted transitive
 rights. AAS-037 captures the finite 6/6 contract and now precedes application
 breadth and every lower-importance ready item.
+
+The AAS-037 frontier audit rechecked capability-grant separation, immutable
+package bytes, runtime materialisation, tenant isolation, audit causality,
+rollback and external claims. The two isolated permission defects found by the
+smoke were corrected and regression-tested within AAS-037; they do not create
+duplicate backlog cases. Live registry/signature/legal-licence and production
+store/sandbox proof remains external or preparable, while Hermes and Claude
+Code remain honestly unproven. Cross-control audit and artifact trust remain
+AAS-023/AAS-025. AAS-023 leads the equal I4/L ready frontier under the existing
+ordered tie-break; recurring I3 AAS-030 cannot displace it.
 
 ## P0 — critical authority and containment
 
@@ -503,7 +513,7 @@ breadth and every lower-importance ready item.
 
 ### AAS-037 — Managed Skill Lifecycle and Quality Gate
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 explicit
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 explicit
   Owner-priority dependent agent-security frontier / XL. **Risk reduction:**
   critical against unreviewed code, dependency and transitive-rights admission.
   **User value:** agents can easily discover and request skills while the Owner
@@ -543,8 +553,14 @@ breadth and every lower-importance ready item.
   packages are first; Hermes/Claude materializers remain unproven until exact
   formats and runtimes are pinned. No push, PR, merge, release, publication,
   live registry, production store, credential or external-account action.
-- **Completion commit/evidence:** pending; initial metric **0/6**. **Last
-  reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `94cc5f24436b274a252dae3ff9b0326fcf1b2c30`; evidence
+  `docs/development/evidence/admin-ai-aas-037-20260801.json`; focused canonical/
+  runtime **12/12**, full **128/128**, video **15/15**, supply chain **6/6**,
+  deterministic public staging PASS and final isolated real-OpenClaw smoke
+  `aas037-20260801T151252Z` PASS in 31,238 ms with zero owned residue. Verdict
+  `LOCAL_AAS_037_PASS_NOT_ARBITRARY_CODE_LIVE_REGISTRY_PRODUCTION_STORE_UNIVERSAL_AGENT_OR_RELEASE_CLAIM`.
+  **Last reviewed:** 2026-08-01.
 
 ## P1 — high-value control product and hardened boundaries
 
