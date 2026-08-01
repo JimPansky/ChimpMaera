@@ -58,7 +58,6 @@ export interface PolicyEvaluatorV1 {
     trustedContext: TrustedPolicyContextV1,
   ): PolicyDecisionV1;
 }
-
 function digest(value: unknown): string {
   return createHash("sha256").update(canonicalJson(value)).digest("hex");
 }
@@ -92,4 +91,3 @@ export function verifyPolicyDecisionV1(
     && decision.constraints.exactInputRequired === true
     && decision.constraints.maximumEffects === (decision.outcome === "DENY" ? 0 : 1);
 }
-

@@ -9,7 +9,6 @@ function assertExactKeys(value, expected, code) {
       !== canonicalJson([...expected].sort())
   ) throw new Error(code);
 }
-
 export function validateAdminAiPocPolicy(policy) {
   assertExactKeys(policy, ["policyId", "rules", "schemaVersion"], "ADMIN_AI_POLICY_INVALID_DENIED");
   if (
@@ -44,4 +43,3 @@ export function validateAdminAiPocPolicy(policy) {
   }
   return policy;
 }
-

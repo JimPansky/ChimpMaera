@@ -19,4 +19,3 @@ artifact's contents. The Paperless adapter has no OCI artifact because the
 stock demo does not install Paperless; enabling a service later requires a
 complete pinned application/database/queue/converter lock and separate live
 evidence.
-

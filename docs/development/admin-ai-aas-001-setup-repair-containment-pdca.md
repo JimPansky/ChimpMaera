@@ -1,8 +1,8 @@
 # AAS-001 setup-repair containment PDCA
 
-Date: 2026-08-01  
-Phase: Admin-AI security expansion Phase 0  
-Metric: `aas_001_containment_gates` 0/4 before implementation  
+Date: 2026-08-01
+Phase: Admin-AI security expansion Phase 0
+Metric: `aas_001_containment_gates` 0/4 before implementation
 Selection: AAS-001 is the highest-importance internally ready item (P0, I5,
 current executable defect); no external dependency blocks local closure.
 

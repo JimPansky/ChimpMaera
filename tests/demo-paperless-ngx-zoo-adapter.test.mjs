@@ -69,7 +69,6 @@ test("adapter lists only sanitized synthetic zoo metadata with a redacted receip
   assert.equal(JSON.stringify(result).includes("must never cross"), false);
   assert.equal(JSON.stringify(result).includes("private@example.invalid"), false);
 });
-
 test("adapter reads one numeric zoo record and denies a non-zoo record", async () => {
   const paths = [];
   const adapter = createPaperlessNgxZooAdapter({
@@ -156,4 +155,3 @@ test("stock demo remains DMS-off and does not claim or install Paperless", async
   assert.match(knownLimits, /Paperless/i);
   assert.match(knownLimits, /disabled/i);
 });
-

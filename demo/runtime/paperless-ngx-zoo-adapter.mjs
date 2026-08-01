@@ -14,7 +14,6 @@ function providerError(code) {
   error.paperlessAdapterError = true;
   return error;
 }
-
 function sanitizeDocument(value) {
   if (
     value === null
@@ -187,4 +186,3 @@ export function createPaperlessNgxZooAdapter({
     },
   });
 }
-

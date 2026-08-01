@@ -24,7 +24,6 @@ function assertExactKeys(value, expected, code) {
       !== canonicalJson([...expected].sort())
   ) throw new Error(code);
 }
-
 function assertDigest(value, code) {
   if (typeof value !== "string" || !/^[a-f0-9]{64}$/.test(value)) {
     throw new Error(code);
@@ -213,4 +212,3 @@ export function createInternalStaticPolicyEvaluator({
     },
   });
 }
-

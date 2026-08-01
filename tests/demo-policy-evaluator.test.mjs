@@ -91,7 +91,6 @@ test("internal provider evaluates neutral intents deterministically without auth
     evaluator.evaluate(input(), trusted),
   );
 });
-
 test("input, trusted context and decision bindings fail closed on tamper", () => {
   const evaluator = createInternalStaticPolicyEvaluator({
     policy,
@@ -179,4 +178,3 @@ test("Admin AI has no grant fallback for malformed, throwing or overbroad evalua
   );
   assert.equal(signatures, 0);
 });
-

@@ -42,4 +42,3 @@ export interface PaperlessNgxZooReadAdapterV1 {
     receipt: PaperlessZooReadReceiptV1;
   }>>;
 }
-
