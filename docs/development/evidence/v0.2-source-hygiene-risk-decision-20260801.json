@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "chimpmaera.development/source-hygiene-risk-decision/v1",
+  "baselineCommit": "e698946d74342ae10ed25e93d6a45a99647dd2ba",
+  "observedAtCommit": "b548b3d8b25448d078457e30d2b0d17edfa70162",
+  "metric": {
+    "name": "source_hygiene_risk_decisions",
+    "passed": 2,
+    "total": 2
+  },
+  "originalFindings": {
+    "total": 32,
+    "repositoryOnlyDevelopmentEvidence": {
+      "total": 24,
+      "markdownHardBreakWhitespace": 20,
+      "extraBlankLineAtEof": 4,
+      "publicManifestIncluded": false,
+      "sha256SumsIncluded": false
+    },
+    "frozenPublicCandidate": {
+      "total": 8,
+      "extraBlankLineAtEof": 8,
+      "runtimeSources": 3,
+      "contractSources": 2,
+      "tests": 2,
+      "documentation": 1,
+      "publicManifestIncluded": true,
+      "sha256SumsIncluded": true
+    }
+  },
+  "repositoryOnlyFilesCorrected": [
+    "docs/development/v0.2-approval-workbench-checkpoint.md",
+    "docs/development/v0.2-approval-workbench-pdca.md",
+    "docs/development/v0.2-post-wave-stability-pdca.md",
+    "docs/development/v0.2-roadmap-final-checkpoint.md",
+    "docs/development/v0.2-wave2-policy-evaluator-checkpoint.md",
+    "docs/development/v0.2-wave2-policy-evaluator-pdca.md",
+    "docs/development/v0.2-wave3-paperless-zoo-adapter-checkpoint.md",
+    "docs/development/v0.2-wave3-paperless-zoo-adapter-pdca.md",
+    "docs/development/v0.2-wave4-supply-chain-pdca.md"
+  ],
+  "deferredPublicFiles": [
+    "demo/runtime/admin-ai-policy.mjs",
+    "demo/runtime/paperless-ngx-zoo-adapter.mjs",
+    "demo/runtime/policy-evaluator.mjs",
+    "docs/SUPPLY-CHAIN.md",
+    "packages/contracts/src/paperless-zoo-adapter.ts",
+    "packages/contracts/src/policy-evaluator.ts",
+    "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
+    "tests/demo-policy-evaluator.test.mjs"
+  ],
+  "decisions": [
+    {
+      "id": "AD-HYG-001",
+      "decision": "CORRECT_REPOSITORY_ONLY_NOW",
+      "purpose": "Remove 24 local source-hygiene findings without changing frozen public, runtime, installer, checksum or release-candidate bytes.",
+      "risk": "Markdown metadata layout could render differently.",
+      "fallback": "Revert this repository-only commit; no public artifact or runtime rollback is required.",
+      "reviewMarker": "First owner-authorized local review of the development packet."
+    },
+    {
+      "id": "AD-HYG-002",
+      "decision": "DEFER_PUBLIC_NORMALIZATION_TO_NEXT_REAL_PUBLIC_BYTE_CHANGE",
+      "purpose": "Avoid invalidating checksum and smoke evidence solely for semantics-neutral EOF cleanup.",
+      "risk": "The complete baseline-to-candidate diff continues to report eight bounded findings.",
+      "fallback": "Normalize the eight files immediately if a required gate promotes them to blocking; then refresh SHA256SUMS and run proportionate focused checks plus the justified post-change full smoke.",
+      "reviewMarker": "Next correcting runtime, contract, public-documentation or public-test byte change."
+    }
+  ],
+  "expectedAfterCorrection": {
+    "completeBaselineDiffFindings": 8,
+    "newCommitDiffFindings": 0,
+    "publicBytesChanged": false,
+    "runtimeOrInstallerBytesChanged": false,
+    "fullSmokeRequired": false
+  },
+  "claimBoundary": "Local repository hygiene classification and repository-only correction; not release authorization or external evidence."
+}
