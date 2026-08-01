@@ -87,12 +87,53 @@ informational effective-rights result, not executable authority.
 
 ## Do
 
-Pending implementation.
+Implemented a pure closed-schema effective-rights compiler for exactly one
+profile, assignment, capability and constraint operand. It validates tenant,
+actor, profile and generation bindings, normalizes input order, intersects
+action/resource/field/purpose/effect ceilings, records every contributing
+ceiling and reason fact, and digest-binds the informational result. Any schema,
+binding, generation, scope, duplicate, explicit-deny or empty-intersection
+problem returns DENY. Capability presence alone cannot grant.
+
+Added a permission X-ray renderer with exact result-parity validation and a
+GET-only synthetic dashboard endpoint. The browser displays the returned
+machine facts without recomputing them. The compiler and view contain no
+authority, credential, lease, provider or effect callback. Public architecture,
+limitations, demo guidance, release closure and checksums were updated.
 
 ## Check
 
-Metric: `aas_003_effective_rights_gates` **0/4 — in progress**.
+The four AAS-003 tests cover the exact typed negative matrix, golden ALLOW /
+ESCALATE / DENY intersections, order-invariant and material-change digests,
+machine/view parity, omitted-ceiling and weakened-outcome tamper, capability
+alone and disjoint scope. All passed 4/4. The dashboard E2E confirmed the
+GET-only X-ray and absence of an authority field.
+
+Related focused tests passed 30/30 and the complete suite passed 84/84. Video
+reference tests passed 15/15, all 124/124 public checksums passed, and the
+six-check supply-chain verifier passed. The deterministic public archive built
+with digest 7f247d1b0f0175f37dab2e4728cc5daa856791214eee2af6cbc26554ee16ed10.
+
+Exactly one post-freeze SAFE_DEMO_COLD-01 run passed READY_VERIFIED in 69,310
+ms. Its live X-ray returned informational-only ALLOW with all four operand
+ceilings, five reason facts, no issues and result digest
+d1e5ac08d38ecd66172e55d64d0a8ad0076dd57b8401dd517493ee38ed071000.
+The approval execute/reject/replay matrix also passed. Dedicated containers,
+volumes, networks, image and runtime state were purged with zero owned residue.
+
+Metric: aas_003_effective_rights_gates **4/4 — complete**. Verdict:
+LOCAL_AAS_003_PASS_NOT_PRODUCTION_IAM_OR_AUTHORIZATION_COMPLETENESS_CLAIM.
 
 ## Act
 
-Pending post-check frontier audit and reprioritization.
+Close AAS-003 without reopening AAS-001 or AAS-002. The frontier audit
+rechecked operand authenticity/freshness, tenant binding, scope/catalog
+coherence, view parity, authority issuance and simulator dependencies. No new
+standalone gap was found: production identity and tenant sources remain
+AAS-007/AAS-010/AAS-017, catalogue coherence remains AAS-012 and effect-free
+preview remains AAS-013.
+
+Importance-first ordering now selects AAS-009, the next internally ready P0/I5
+item, to define trust labels and typed reconstruction against hostile local
+content before any live LLM or retrieval path. Push, PR, merge, tag, release,
+live-model, production IAM and external-system actions remain Owner-gated.

@@ -41,27 +41,27 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 1 | 1 | 2 | 2 | 0 | 11 |
+| P0 | 5 | 1 | 0 | 2 | 3 | 0 | 11 |
 | P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **7** | **1** | **2** | **2** | **0** | **34** |
+| **Total** | **22** | **7** | **0** | **2** | **3** | **0** | **34** |
 
-Internally ready items, in selection order with AAS-003 active:
+Internally ready items, in selection order after AAS-003 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-003 | P0 | I5 | M | Local deterministic effective-rights facts and view |
-| 2 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
-| 3 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
-| 4 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
-| 5 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 6 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 7 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 8 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
+| 2 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
+| 3 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
+| 4 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
+| 5 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 6 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 7 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
-The authorized implementation loop completed `AAS-001` and `AAS-002` and must
-select `AAS-003` next. Closed items do not reopen without new evidence.
+The authorized implementation loop completed `AAS-001`, `AAS-002` and
+`AAS-003` and must select `AAS-009` next. Closed items do not reopen without
+new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
 decision/use convergence, fallback, management/effect separation, audit and
@@ -70,6 +70,13 @@ remain represented by AAS-011/AAS-017; no new standalone item was discovered.
 The worktree-control-file release-builder defect found during closure was fixed
 and regression-tested as a local evidence-path correction, not promoted into a
 duplicate recurring backlog item.
+
+The AAS-003 frontier audit rechecked operand authenticity/freshness, tenant
+binding, scope/catalog coherence, view parity, authority issuance and simulator
+dependencies. Production identity/tenant inputs remain AAS-007/AAS-010/AAS-017,
+catalogue coherence remains AAS-012 and effect-free preview remains AAS-013;
+no new standalone item was discovered. AAS-009 is the remaining internally
+ready P0/I5 item and therefore remains ahead of every I4 item.
 
 ## P0 — critical authority and containment
 
@@ -123,7 +130,7 @@ duplicate recurring backlog item.
 
 ### AAS-003 — Effective-rights compiler and permission X-ray
 
-- **Status / priority:** `in_progress` / P0. **Importance / complexity:** I5 / M.
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 / M.
   **Risk reduction:** critical observability/prerequisite. **User value:** Owner
   can see the actual envelope and denial reasons. **Demo value:** very high.
 - **Canon:** primitive, CM-CAN-04/11/14. **Source:** SEC-CTL-002.
@@ -138,7 +145,11 @@ duplicate recurring backlog item.
 - **Rollback boundary / fallback:** keep decision enforcement and disable the
   explanatory view if fact parity fails. **External gates:** production
   identity/tenant inputs remain labelled synthetic.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation commit
+  `7c85a065da6bdd200cacc02ccfac8ddbd7484199`; evidence
+  `docs/development/evidence/admin-ai-aas-003-20260801.json` and
+  `docs/development/admin-ai-aas-003-effective-rights-pdca.md`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-004 — Independent revoke and emergency freeze
 
