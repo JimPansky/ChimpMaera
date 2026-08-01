@@ -177,7 +177,7 @@
       ]
     }
   ],
-  "sourceManifestSha256": "dba97777b3ddb20301dc07f9e2180f7be9fa3cc936ad6dedef13615e4651e4d6",
+  "sourceManifestSha256": "99deab22b2b4e25222825731eb339481b3ffb960fdcf43ceb479fc1bcff3b1ef",
   "title": "ChimpMaera Daily POC — Gateway-Mediated OpenClaw",
   "useCases": [
     {

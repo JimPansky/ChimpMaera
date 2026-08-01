@@ -1,7 +1,7 @@
 {
   "candidateVersion": "v0.2.0-poc.20260801.1",
   "compiler": "chimpmaera.daily-poc-compiler/v1",
-  "manifestSha256": "dba97777b3ddb20301dc07f9e2180f7be9fa3cc936ad6dedef13615e4651e4d6",
+  "manifestSha256": "99deab22b2b4e25222825731eb339481b3ffb960fdcf43ceb479fc1bcff3b1ef",
   "materialChange": {
     "changedFiles": [
       ".github/PULL_REQUEST_TEMPLATE.md",
@@ -457,6 +457,14 @@
       {
         "id": "89f51a9a421c934045f8cbcdf235f591ba29acbb",
         "subject": "ci: pin compose for provenance-aware validation"
+      },
+      {
+        "id": "fa2ceacab1e6fa6b7461c0565d5bdcbee36076b1",
+        "subject": "chore: refreeze daily candidate after CI compatibility fix"
+      },
+      {
+        "id": "de2913e0bc75c028d01c2a063bd6c7fae8ac5e29",
+        "subject": "ci: install digest-pinned compose binary"
       }
     ]
   },
@@ -464,7 +472,7 @@
   "schemaVersion": "chimpmaera.daily-poc-provenance/v1",
   "source": {
     "base": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
-    "head": "89f51a9a421c934045f8cbcdf235f591ba29acbb",
+    "head": "de2913e0bc75c028d01c2a063bd6c7fae8ac5e29",
     "repository": "https://github.com/JimPansky/ChimpMaera.git"
   }
 }

@@ -93,7 +93,7 @@ Evidence: EVID-AAS-036-BROKER
 
 ## Reproduction
 
-- `git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..89f51a9a421c934045f8cbcdf235f591ba29acbb`
+- `git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..de2913e0bc75c028d01c2a063bd6c7fae8ac5e29`
 - `npm ci --ignore-scripts --no-audit --no-fund`
 - `npm run lint`
 - `npm test`

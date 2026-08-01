@@ -1,7 +1,7 @@
 {
-  "artifactManifestSha256": "878dd782741318b47078d9cbadb5463937ba403791c6322d45bba0fb858f07f7",
+  "artifactManifestSha256": "1500d79185cabeac509c1bf805bd2631c84ab324da2294027352b126bc7e8408",
   "candidateVersion": "v0.2.0-poc.20260801.1",
-  "manifestSha256": "dba97777b3ddb20301dc07f9e2180f7be9fa3cc936ad6dedef13615e4651e4d6",
+  "manifestSha256": "99deab22b2b4e25222825731eb339481b3ffb960fdcf43ceb479fc1bcff3b1ef",
   "materialChange": {
     "changedFiles": [
       ".github/PULL_REQUEST_TEMPLATE.md",
@@ -213,7 +213,7 @@
       "tests/supply-chain-verifier.test.mjs",
       "tools/video-production-reference/tests/test_cm_video.py"
     ],
-    "commitCount": 61
+    "commitCount": 63
   },
   "publication": {
     "githubPrerelease": false,
