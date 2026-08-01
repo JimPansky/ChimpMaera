@@ -1,4 +1,4 @@
-ad78ececcc40656efdc5d6532a83583886006db0b596f44d17cd90e7f13fade0  ./.git
+f06f72642a3207ff66b42152a717a1812dd42f78822d322d2a4a8189eec16d59  ./.git
 c346b4bf197d82a657f4baf924b37210a9d0c08d988a7913003bfc868a3b69b1  ./.github/FUNDING.yml
 0e52580f7d79ba6d1d877aad727bc970d11bc3f890f1e7b90e7435fb9dcb919a  ./.github/ISSUE_TEMPLATE/bug-report.yml
 6280695beeca55974545ba5cf5aa036c0a3e1fc47b03d02a30d287bd0a0aef8c  ./.github/ISSUE_TEMPLATE/config.yml
@@ -130,6 +130,7 @@ c6d352961f77ee39afe4543f40a37b61bed4c89ed2d108d7b873653b6b64ea2f  ./docs/develop
 abe247deb7dc5e34d81db9cf31eb2bbf250131f27f78e8bb0f28b6cf1ab1c2a5  ./docs/development/admin-ai-aas-012-inactive-capability-catalogue-pdca.md
 8741dbd1ba8556ae17078f97e5518a10baa6c76f9518f6ee25a6284d99473438  ./docs/development/admin-ai-aas-016-authoritative-approval-diff-pdca.md
 926f9a52c867e7543951f225d483320f1058efff67133bf2cd36ce1a07a9bb2c  ./docs/development/admin-ai-aas-017-signed-policy-lifecycle-pdca.md
+3f366fd7829e2896267cfc53cc0c79c1788dd2e389c4a09780da6dad7a24e8d6  ./docs/development/admin-ai-aas-023-protected-audit-timeline-pdca.md
 8e93e7f03d2f6a5055e3e0f208712af9dc3daac2bea888b0659bf95ac0a0aef4  ./docs/development/admin-ai-aas-035-openclaw-agent-docker-pdca.md
 2607c4671641f35231537441b21a571c50dd188303618f77ffc12622f9a1042d  ./docs/development/admin-ai-aas-036-agent-compatibility.md
 ead619e8227be80d92ca1a0015bc373732af6d5aed8e46a8833a7b07064ca219  ./docs/development/admin-ai-aas-036-model-access-broker-pdca.md
@@ -138,7 +139,7 @@ a729dd284759bf3e5026288853bc9b7730a918c948a3f30664ffa6518c7fdf44  ./docs/develop
 afe0088caffa7dd089ea91f3a1254adf7cfa6e7e27e1ffde8dc8c8f06b69e6c0  ./docs/development/admin-ai-retrospective-expansion-audit.md
 94953f93b4faf551bb9c3f4e9de1d68ca2b4cdcf932b43e4d23576cfb35bf1af  ./docs/development/admin-ai-retrospective-expansion-decisions.json
 db56b2cb7bf292a5312c178b4d009acfa258fdcca20576894487b3128c9442e4  ./docs/development/admin-ai-security-control-analysis.md
-906339d6041912408c5d0a01ece8fca72a8fd397d1e21583856da3a0377124ad  ./docs/development/admin-ai-security-expansion-backlog.md
+3e9603a37ed4de3d2b0bcacb05f77f8fc599ec53f7aac0176e9351e6ee84f9e9  ./docs/development/admin-ai-security-expansion-backlog.md
 2cf067d7b07e77c162429db110c510287b1f300b67793e2f41f4ddef8c789e52  ./docs/development/admin-ai-security-scout-canon-ux.md
 4feaeeb883d3c59f1bb9ec6ef94b1307d322f8121bffd276dad86850e74aeccc  ./docs/development/admin-ai-security-scout-security.md
 76fcb853752ef044e857733de7cda4d79dc1b2e6364e631c5ae679a32627c38e  ./docs/development/evidence/admin-ai-aas-001-20260801.json
@@ -148,6 +149,7 @@ d8e19e171c208d49c11d3fb079bf5a374cc23c0a00608374bc47c8f4badaaa0c  ./docs/develop
 e948292de9b0cb779772e1054994d3311b761bbfa31d1b4110e0de32ad673809  ./docs/development/evidence/admin-ai-aas-012-20260801.json
 691a5a1b956b52790f32ca550f1c0e585b13a06f1c65c1fafd06db85f0185dd7  ./docs/development/evidence/admin-ai-aas-016-20260801.json
 9c96b5cc249c123bd34b62bc1b2e5feeed5ddc24d8bc9a583afc9c446ab34abf  ./docs/development/evidence/admin-ai-aas-017-20260801.json
+35f659cf4453c8c4a5670ef34df37735d090b589ca36c3459c1d90abba449d08  ./docs/development/evidence/admin-ai-aas-023-20260801.json
 c383a0d622ef7a2885f0d7e7aeecc957bc0ffc5513b1839ef7a7bf4c480711a3  ./docs/development/evidence/admin-ai-aas-035-20260801.json
 44701183b7032e905e98ee6a2106659852d21c6e3afa5b5ed08f6814e6ec8ee3  ./docs/development/evidence/admin-ai-aas-035-openclaw-provenance-20260801.json
 27e891001f0144a8d7c89119f7667bd306ee224ef79cdfdadefe726e2b842db3  ./docs/development/evidence/admin-ai-aas-036-20260801.json
@@ -175,11 +177,11 @@ e264ab95990b27508ae6183f452e0ee70605577646bb8aa6614dc72a77f04d15  ./docs/develop
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 a4852feaa297c4e84528ddcb958eda5a599539ee447e3c1d3fa90e62085c831f  ./package-lock.json
-09f969e5562862a587179c8e5917ed6977105f52eb3fbe67cc1c532f5fc654d4  ./package.json
+bf891c4f11302841bdf6ea3914c6b18df96caa7ddbf6e1607bf0ee624d6ab3c1  ./package.json
 666513ba9a89c0eae0daa0e0159a262eb4e0aa105971a151a19bac1a9b6c4826  ./packages/contracts/src/canonical-json.ts
 6fb94da6548aba5f7796d21ce938fd02c608929b76c199e2870c5542ad69a822  ./packages/contracts/src/capability-catalogue.ts
 b0ae29b9bda430c16ff6091d09f411f87b55334e79f2482386f471f7da42cf11  ./packages/contracts/src/effective-rights.ts
-c111728a37f2fda2150e8b061d04abb231027f9576bb05932db6756b5d22cc67  ./packages/contracts/src/index.ts
+f7542e2fe33301026169e20fbfd8f5783d4f4374448016e9d99c811c199fe74b  ./packages/contracts/src/index.ts
 1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50  ./packages/contracts/src/injection-trust-boundary.ts
 837e9b14dbab95fb4e3d9aa41eb1c71052048f9ae4f023fa8aa519bd11e0976b  ./packages/contracts/src/model-access-broker.ts
 c86b9fdf4bfffd88bb4062250dba043acff0047a45ed4d50d999f2f8d8cb262e  ./packages/contracts/src/paperless-zoo-adapter.ts
@@ -189,10 +191,12 @@ c86b9fdf4bfffd88bb4062250dba043acff0047a45ed4d50d999f2f8d8cb262e  ./packages/con
 395ef3c451bc41007f77aaec522143853b23422f42815dfebb2308732eb68652  ./packages/contracts/src/poc-showcase-e2e.ts
 61c8584058f2a2a8600ef49f87febf0c4d4205ee671fc2ef295b5f17f0d307af  ./packages/contracts/src/poc-showcase.ts
 772b95d5b92f18a247ef4e35a902b57044670f8a9f6da95d73c4ac6073a83351  ./packages/contracts/src/policy-evaluator.ts
+7393da7d63dfdfd3caa52b1cb3b806525d06554db06075d914c17fba39ad8155  ./packages/contracts/src/protected-audit-timeline.ts
 54b825da8d6a83e44b6d71daece98e1ceabed3da92fdde3751c7a8843d27156f  ./packages/contracts/src/skill-admission.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-e01b797034cf4e1e1b4c445528ff03618f3c572a518790292462962442251a82  ./release/public-files.manifest
+a2de47e50a6f104f2b73885ce0f10c5d5e067db850a76de33a455464a236e8a4  ./release/public-files.manifest
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
+982f19ffaafd2ed726be891a5f8ca3c552c266832e8598f86a4009107b76ea83  ./schemas/contracts/protected-audit-timeline-v1.schema.json
 bf3e37b0635fcb557864fed19b85612cbe56d13671ab552c63ebbc6027445b5c  ./scripts/build-public-release.sh
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
 bb92008cdef16fa608930372dada402f48dfee9e172a1fa158aa3ceb893fe477  ./scripts/verify-supply-chain.mjs
@@ -218,6 +222,7 @@ bcb7e30c3847bbef4d96e2a6345abc0ec0c48f182a52f6e1a18d127e6fdc05cc  ./tests/poc-gu
 c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-setup-compatibility-planner.test.ts
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
+dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
 250b0b4cf1edc587c93aa66a6ae627daba3306893b70b5eb09961e763b64abce  ./tests/supply-chain-verifier.test.mjs
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md

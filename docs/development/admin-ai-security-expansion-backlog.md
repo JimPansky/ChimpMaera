@@ -42,18 +42,25 @@ negative evidence that no uncovered internally actionable gap remains.
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | P0 | 5 | 0 | 0 | 2 | 7 | 0 | 14 |
-| P1 | 11 | 1 | 1 | 0 | 3 | 0 | 16 |
+| P1 | 11 | 1 | 0 | 0 | 4 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **2** | **1** | **2** | **10** | **0** | **37** |
+| **Total** | **22** | **2** | **0** | **2** | **11** | **0** | **37** |
 
-Selected work and ready order after AAS-037 closure and frontier audit:
+Selected portfolio frontier and ready order after AAS-023 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| WIP=1 | AAS-023 | P1 | I4 | L | Selected; protected local timeline implementation is in progress |
-| 1 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 2 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | BLD-001* | P1_HIGH Owner priority | Product frontier | XL | Builder Agent M1 is selected next at 0/8 from its canonical state |
+| 2 | AAS-025 | P1 | I4 | L | Next security frontier if BLD-001 is externally blocked |
+| 3 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+
+`BLD-001` is a separate product-lane case and therefore does not change the
+AAS status counts above. Its canonical resumable contract is
+`memory/chimpmaera-builder-agent-state.json` in the Owner workspace. Owner
+direction at 2026-08-01 17:33 CEST selects it immediately after AAS-023, ahead
+of AAS-025 and ERP/CRM/BI/DMS breadth unless a strictly proven security
+prerequisite blocks it.
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
 `AAS-009`, `AAS-016`, `AAS-012`, owner-priority `AAS-035`, `AAS-017`,
@@ -138,6 +145,15 @@ store/sandbox proof remains external or preparable, while Hermes and Claude
 Code remain honestly unproven. Cross-control audit and artifact trust remain
 AAS-023/AAS-025. AAS-023 leads the equal I4/L ready frontier under the existing
 ordered tie-break; recurring I3 AAS-030 cannot displace it.
+
+The AAS-023 frontier audit rechecked signer/time custody, independent
+attestation, audit retention/export, artifact trust, Builder prerequisites and
+external claims. The closed local event/checkpoint contract and deterministic
+explanation are complete; independently operated append-only storage,
+retention and attestation remain AAS-031/external evidence rather than a hidden
+local claim. Artifact trust remains AAS-025 and recurring composition assurance
+remains AAS-030. No distinct new security case was proven. Owner direction now
+selects the separately tracked BLD-001 product frontier at 0/8.
 
 ## P0 — critical authority and containment
 
@@ -774,7 +790,7 @@ ordered tie-break; recurring I3 AAS-030 cannot displace it.
 
 ### AAS-023 — Protected audit timeline and deterministic explanation
 
-- **Status / priority:** `in_progress` / P1. **Importance / complexity:** I4 / L.
+- **Status / priority:** `done` / P1. **Importance / complexity:** I4 / L.
   **Risk reduction:** high detection/accountability. **User value:** reconstruct
   what happened and why. **Demo value:** very high. **Canon:** extension,
   CM-CAN-05/10/14/16/17 and Administration.
@@ -788,7 +804,14 @@ ordered tie-break; recurring I3 AAS-030 cannot displace it.
   secrets are excluded.
 - **Rollback boundary / external gates:** preserve old records/readers and mark
   unverifiable migration; independent append-only storage/attestation is gated.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `ae3eb35f9c091649eec28a97426962e653e7e091`; evidence
+  `docs/development/evidence/admin-ai-aas-023-20260801.json`; focused **4/4**,
+  corrected complete suite **132/132**, video **15/15**, supply chain **6/6**
+  and deterministic public staging PASS. No install/Docker smoke was relevant
+  because no install, Compose, image or stock runtime byte changed. Verdict
+  `LOCAL_AAS_023_PASS_NOT_HOST_TAMPER_PROOF_INDEPENDENT_ATTESTATION_PRODUCTION_SIGNER_TIME_RETENTION_OR_RELEASE_CLAIM`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-024 — Key, credential and authority-token lifecycle
 

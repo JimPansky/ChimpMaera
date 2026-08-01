@@ -75,12 +75,49 @@ external accounts.
 
 ## Do
 
-Pending implementation after this maturity contract.
+Implemented a closed TypeScript contract and JSON Schema for protected events,
+signed envelopes and exact head/count checkpoints. The reference writer uses a
+synthetic Ed25519 signer, strict sequence/clock checks, causal digest references
+and idempotent replay. Verification returns no facts unless every event,
+signature, scope, clock, causal link, previous-envelope digest and checkpoint
+commitment agrees.
+
+Added a deterministic explanation reader that can render success only from a
+verified `READBACK/COMMITTED`, `RECONCILE/RECONCILED` or
+`ROLLBACK/ROLLED_BACK` terminal fact. The fact schema contains only finite
+outcomes, reason codes and evidence digests; arbitrary detail, prompt, response
+or secret fields are structurally unavailable.
 
 ## Check
 
-Pending focused and integrated evidence after relevant bytes freeze.
+- Focused AAS-023 contract/negative tests: **4/4 PASS**.
+- Corrected complete repository suite: **132/132 PASS**.
+- Video reference suite: **15/15 PASS**.
+- Repository checksums: **253/253 PASS**.
+- Supply-chain declaration checks: **6/6 PASS**, lock digest
+  `280d51e2c6b154065ba03c746e43e56769d2f5f57107c97aea442b302c18b070`.
+- Deterministic public staging: PASS, archive digest
+  `2b9eba447c6f6fba5d824184166f9323ab6f077391eb300728aec2eca6b7bf13`;
+  temporary staging was trap-cleaned.
+- Implementation commit:
+  `ae3eb35f9c091649eec28a97426962e653e7e091`.
+- The first complete-suite run failed closed at **131/132** because the public
+  staging closure detected `tests/protected-audit-timeline.test.ts` as an
+  unmanifested source. A real correcting release-manifest byte change added the
+  contract, JSON Schema and test to the explicit public identity manifest; the
+  justified corrected run then passed **132/132**.
+- Full install/Docker smoke: **not run**. No installer, Compose, image, Dockerfile
+  or stock runtime byte changed, so repeating a completed full install smoke
+  would not evidence AAS-023.
 
 ## Act
 
-Pending 4/4 evidence and frontier audit.
+Close AAS-023 at **4/4** with verdict
+`LOCAL_AAS_023_PASS_NOT_HOST_TAMPER_PROOF_INDEPENDENT_ATTESTATION_PRODUCTION_SIGNER_TIME_RETENTION_OR_RELEASE_CLAIM`.
+Do not optimise or repeat this metric absent new regression evidence.
+
+The frontier audit found no new distinct security item. Independent audit
+storage/export/retention/attestation remains AAS-031 and external evidence;
+artifact trust remains AAS-025; recurring composition assurance remains
+AAS-030. Owner direction selects the separately tracked BLD-001 Builder Agent
+M1 at **0/8** next, ahead of lower-priority framework/application breadth.
