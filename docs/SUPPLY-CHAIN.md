@@ -1,6 +1,8 @@
 # Supply-chain declaration verification
 
-ChimpMaera v0.2 includes an offline verifier for repository declarations:
+Current `main` includes an offline verifier for repository declarations. It is
+part of an unreleased v0.2 POC candidate; the latest tagged release remains
+`v0.1.0`:
 
 ```sh
 npm run supply-chain:verify

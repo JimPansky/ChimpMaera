@@ -2,9 +2,10 @@
 
 ## Supported scope
 
-Version 0.1 is a local synthetic proof of concept. Production operation,
-hostile tenancy, external identity infrastructure, high availability and
-independent immutable audit are unsupported.
+The latest tagged release, v0.1.0, is a local synthetic proof of concept.
+Current `main` also contains an unreleased v0.2 POC candidate. Production
+operation, hostile tenancy, external identity infrastructure, high
+availability and independent immutable audit are unsupported.
 
 Docker and loopback/internal-network controls are local Reference Adapter
 guardrails, not a universal Agent isolation or hostile-host claim. The
