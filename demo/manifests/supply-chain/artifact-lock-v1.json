@@ -11,7 +11,8 @@
         { "path": "demo/openclaw-agent/gateway.Dockerfile", "kind": "FROM", "occurrences": 1 },
         { "path": "demo/model-access-broker/broker.Dockerfile", "kind": "FROM", "occurrences": 1 },
         { "path": "demo/model-access-broker/frontdoor.Dockerfile", "kind": "FROM", "occurrences": 1 },
-        { "path": "demo/model-access-broker/provider.Dockerfile", "kind": "FROM", "occurrences": 1 }
+        { "path": "demo/model-access-broker/provider.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/managed-skill-lifecycle/manager.Dockerfile", "kind": "FROM", "occurrences": 1 }
       ],
       "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
     },
@@ -20,7 +21,8 @@
       "reference": "ghcr.io/openclaw/openclaw@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
       "locations": [
         { "path": "demo/openclaw-agent/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 },
-        { "path": "demo/model-access-broker/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 }
+        { "path": "demo/model-access-broker/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 },
+        { "path": "demo/managed-skill-lifecycle/openclaw.Dockerfile", "kind": "FROM", "occurrences": 1 }
       ],
       "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
     },
@@ -97,6 +99,16 @@
       "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
     },
     {
+      "reference": "chimpmaera/aas037-openclaw-agent:local",
+      "composePath": "demo/managed-skill-lifecycle/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
+      "reference": "chimpmaera/aas037-skill-manager:local",
+      "composePath": "demo/managed-skill-lifecycle/compose.yaml",
+      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
+    },
+    {
       "reference": "chimpmaera/video-production-reference:2026-07-30-v1",
       "composePath": "tools/video-production-reference/compose.yaml",
       "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
@@ -120,6 +132,8 @@
     "manifestPath": "release/public-files.manifest",
     "requiredPaths": [
       "demo/approval-workbench-smoke.sh",
+      "demo/managed-skill-lifecycle/compose.yaml",
+      "demo/managed-skill-lifecycle/runtime-contract-v1.json",
       "demo/manifests/supply-chain/artifact-lock-v1.json",
       "demo/runtime/admin-ai-policy.mjs",
       "demo/runtime/approval-workbench.mjs",
@@ -128,12 +142,15 @@
       "demo/runtime/policy-generation-fence.mjs",
       "docs/SUPPLY-CHAIN.md",
       "packages/contracts/src/paperless-zoo-adapter.ts",
+      "packages/contracts/src/skill-admission.ts",
       "packages/contracts/src/policy-evaluator.ts",
       "scripts/verify-supply-chain.mjs",
       "tests/demo-approval-workbench.test.mjs",
       "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
       "tests/demo-policy-evaluator.test.mjs",
       "tests/demo-policy-generation-fence.test.mjs",
+      "tests/managed-skill-lifecycle-runtime.test.mjs",
+      "tests/skill-admission.test.ts",
       "tests/supply-chain-verifier.test.mjs"
     ],
     "developmentEvidenceExcluded": true

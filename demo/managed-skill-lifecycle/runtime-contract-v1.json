@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "chimpmaera.aas037/runtime-contract/v1",
+  "fixtureId": "aas037-managed-skill-v1",
+  "runtime": {
+    "upstream": "openclaw",
+    "version": "2026.7.1",
+    "indexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "role": "UNTRUSTED_AGENT_REQUESTER_AND_SKILL_READER_ONLY",
+    "defaultOffProfile": "aas037",
+    "network": "aas037_gateway_only"
+  },
+  "workload": {
+    "identity": "workload:openclaw-agent",
+    "tenant": "tenant:panskys-zoo"
+  },
+  "skill": {
+    "id": "skill:zoo-greeter",
+    "version": "1.0.0",
+    "packageDigest": "faf26ff2d3176a0a05e427bfe1fdcead61f9017856c6a335bc13abcd6294b927",
+    "fileDigest": "4a16a8e922db2a196bb47b7806dee7e777f116e99a25c9eb76e88b79ac4867a7",
+    "format": "OPENCLAW_SKILL",
+    "requestedCapabilities": [],
+    "grantedCapabilities": []
+  },
+  "compatibility": {
+    "openclaw": { "materializer": "PROVEN", "runtime": "FINAL_SMOKE_REQUIRED" },
+    "hermes": { "materializer": "UNPROVEN", "runtime": "UNPROVEN" },
+    "claudeCode": { "materializer": "UNPROVEN", "runtime": "UNPROVEN" }
+  },
+  "nonClaims": [
+    "NO_ARBITRARY_SKILL_CODE_SAFETY",
+    "NO_LIVE_REGISTRY_SIGNATURE_OR_LEGAL_LICENCE_CLEARANCE",
+    "NO_PRODUCTION_STORE_SANDBOX_OR_HOST_CONTAINMENT",
+    "NO_HERMES_CLAUDE_CODE_OR_UNIVERSAL_RUNTIME_COMPATIBILITY"
+  ]
+}

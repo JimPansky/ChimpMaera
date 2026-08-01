@@ -121,6 +121,8 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     "demo/model-access-broker/frontdoor.Dockerfile",
     "demo/model-access-broker/openclaw.Dockerfile",
     "demo/model-access-broker/provider.Dockerfile",
+    "demo/managed-skill-lifecycle/manager.Dockerfile",
+    "demo/managed-skill-lifecycle/openclaw.Dockerfile",
     "tools/video-production-reference/Dockerfile",
   ]) {
     const source = await read(dockerfilePath);
@@ -136,6 +138,7 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     "demo/compose.yaml",
     "demo/openclaw-agent/compose.yaml",
     "demo/model-access-broker/compose.yaml",
+    "demo/managed-skill-lifecycle/compose.yaml",
     "tools/video-production-reference/compose.yaml",
   ]) {
     const source = await read(composePath);

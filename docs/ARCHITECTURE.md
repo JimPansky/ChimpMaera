@@ -116,3 +116,18 @@ artifact lock and checks runtime-image and public-release byte closure. This is
 a declaration-consistency control. It does not establish registry signatures,
 provenance, SBOM completeness, vulnerability status, license clearance or
 reproducible builds.
+
+The default-off managed skill candidate adds a closed, versioned Skill
+Admission IR and a broker-owned immutable store. An agent may request an exact
+content-addressed package but cannot mutate the store, approve itself or grant
+capabilities. Deterministic analysis covers provenance, licence declarations,
+dependency locks, install scripts, secret/network/filesystem/process/
+persistence access, path safety and transitive rights. SAFE_GUIDED, CUSTOM and
+RAMPAGE return explainable routes under the same validity ceiling; even
+RAMPAGE cannot admit malformed, tampered or cross-tenant input. Installation
+stores zero granted capabilities and remains inactive. Activation is separate,
+read back and receipt-bound; failure or rollback restores a prior immutable
+generation. The isolated OpenClaw fixture receives the managed skill volume
+read-only and has only an internal path to the manager. This is not arbitrary
+skill-code safety, a production registry/trust root/store or universal agent
+format compatibility.

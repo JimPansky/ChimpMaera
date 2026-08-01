@@ -56,6 +56,13 @@ These limits are part of the claim discipline required by
   OCR, lifecycle, retention and backup/restore are not claimed.
 - Catalog and template entries are descriptive; not every entry is executable,
   and admission or popularity never grants runtime authority.
+- Managed skill admission is a default-off local candidate with deterministic
+  declaration and bounded-text analysis. It does not prove arbitrary code is
+  safe, perform a legal licence opinion, verify a live registry/signature chain
+  or provide a production sandbox/store/trust root. Only the pinned OpenClaw
+  fixture format is locally materialised; Hermes and Claude Code formats and
+  runtimes remain unproven. Installation, capability grant and activation are
+  intentionally separate.
 - No DMS/compliance suitability or universal AI capability is claimed.
 - Optional video assets are replaceable examples. Users remain responsible for
   their own output rights, configuration and safety.
