@@ -35,6 +35,11 @@ jobs:
       - name: Set up supported npm version
         run: npm install --global npm@11.16.0
 
+      - name: Set up supported Docker Compose
+        uses: docker/setup-compose-action@2fe291b7677a45ee1269ec56a42604c143505e7e # v1
+        with:
+          version: v2.40.3
+
       - name: Verify release-tree checksums
         run: sha256sum --check SHA256SUMS
 

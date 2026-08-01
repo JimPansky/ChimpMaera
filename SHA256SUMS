@@ -3,7 +3,7 @@ c346b4bf197d82a657f4baf924b37210a9d0c08d988a7913003bfc868a3b69b1  ./.github/FUND
 6280695beeca55974545ba5cf5aa036c0a3e1fc47b03d02a30d287bd0a0aef8c  ./.github/ISSUE_TEMPLATE/config.yml
 b1d31372f1800ca9780fe990d980891db9280ebadd74d060015052019e641da1  ./.github/ISSUE_TEMPLATE/feature-request.yml
 deec68918022452012f00abeb2d6b5578a3763a02320139ce074bf124b61c608  ./.github/PULL_REQUEST_TEMPLATE.md
-299f2f08e22123744e1dd76417263bc7fb39ee516326f3053d97814bf5047bf7  ./.github/workflows/ci.yml
+4467de3bd493361ae00eba5da432a5288cbc629c6794190ce2a22e8b40f71c01  ./.github/workflows/ci.yml
 c805b776ebf69811b7fc153e238ea92aac59997f769804a3730de701ee850df0  ./.github/workflows/daily-poc-candidate.yml
 72f69d2aaa898d5bd3b29b4af378f0a32c3a39a63f6fa6828fc510e7cc2c84d9  ./.gitignore
 9d20ed6fe93fcae2a953faeb383701aa4a272c66cf67eff75703065628506177  ./CITATION.cff
