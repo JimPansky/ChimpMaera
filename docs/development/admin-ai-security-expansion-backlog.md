@@ -41,11 +41,11 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 4 | 0 | 2 | 0 | 0 | 11 |
+| P0 | 5 | 3 | 1 | 2 | 0 | 0 | 11 |
 | P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **10** | **0** | **2** | **0** | **0** | **34** |
+| **Total** | **22** | **9** | **1** | **2** | **0** | **0** | **34** |
 
 Top ten internally ready items, in selection order:
 
@@ -70,7 +70,7 @@ do not relabel `AAS-001` as lower importance.
 
 ### AAS-001 — Contain setup-repair filesystem effects
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 current
+- **Status / priority:** `in_progress` / P0. **Importance / complexity:** I5 current
   executable defect / M. **Risk reduction:** critical. **User value:** prevents
   repair from overwriting Owner authority/evidence or sibling state. **Demo
   value:** high, exploit-shaped and deterministic.
