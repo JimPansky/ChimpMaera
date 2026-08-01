@@ -41,17 +41,17 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 1 | 0 | 2 | 4 | 0 | 12 |
+| P0 | 5 | 0 | 1 | 2 | 4 | 0 | 12 |
 | P1 | 11 | 3 | 0 | 0 | 2 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **5** | **0** | **2** | **6** | **0** | **35** |
+| **Total** | **22** | **4** | **1** | **2** | **6** | **0** | **35** |
 
-Internally ready items, in selection order after AAS-012 closure:
+Active item followed by the remaining ready order after AAS-012 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-035 | P0 | I5 owner-priority containment frontier | XL | Real OpenClaw fixture can start only after local provenance/licence/upstream-Docker proof |
+| 1 | AAS-035 | P0 | I5 owner-priority containment frontier | XL | Active WIP=1; provenance prerequisite passed 4/4 before runtime implementation |
 | 2 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
 | 3 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
 | 4 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
@@ -366,7 +366,7 @@ prerequisite.
 
 ### AAS-035 — OpenClaw Agent Docker, closed Gateway-only runtime
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 explicit
+- **Status / priority:** `in_progress` / P0. **Importance / complexity:** I5 explicit
   Owner-priority containment frontier / XL. **Risk reduction:** critical before
   exposing a real autonomous agent runtime. **User value:** a real agent can use
   ChimpMaera's typed surface without becoming the Decision, Policy, Authority or
@@ -398,7 +398,11 @@ prerequisite.
   multi-tenant deployment or security-completeness proof. No current owner
   OpenClaw/Gateway/vLLM/model change; no push, PR, merge, tag, release,
   publication, live credential or external-system mutation.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** prerequisite provenance/maturity 4/4 at
+  `6742ea5e16c3855160a0ca7d59e1f4d583d23671` with
+  `docs/development/evidence/admin-ai-aas-035-openclaw-provenance-20260801.json`;
+  runtime implementation and 12/12 closure pending. **Last reviewed:**
+  2026-08-01.
 
 ## P1 — high-value control product and hardened boundaries
 

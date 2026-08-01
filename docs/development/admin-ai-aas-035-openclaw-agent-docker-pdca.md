@@ -157,4 +157,8 @@ metric remains **0/12** pending the isolated Compose/service implementation.
 
 ## Act
 
-Pending PDCA review and frontier audit.
+Close the 4/4 prerequisite metric and do not repeat it without provenance drift.
+Switch to `aas_035_openclaw_agent_docker_gates` **0/12**. The selected image may
+be consumed only by the new default-off, internal-network fixture; upstream
+Compose remains rejected. WIP stays one on AAS-035 and no lower-priority data,
+ERP/CRM, BI or DMS breadth starts while this runtime slice is active.
