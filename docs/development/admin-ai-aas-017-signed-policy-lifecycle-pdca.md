@@ -106,14 +106,45 @@ release, deployment or external publication.
 
 ## Do
 
-Pending implementation.
+Implemented a separate default-off management-plane contract around the
+AAS-002 generation fence. Exact Ed25519 artifacts bind issuer/key, tenant,
+Policy ID, generation, validity, source/semantic digests and a closed runtime
+compatibility tuple. The durable lifecycle orders draft, validation,
+deterministic semantic Diff, simulation, purpose-bound Owner approval, stage,
+activation, supersede, rollout confirmation, retirement and revocation.
+
+Every transition emits an authenticated hash-chained receipt. Widening consent
+binds the exact artifact/Diff/simulation. Current trust and time are rechecked
+at each material transition. Generation-fence activation remains the only use
+path; mixed rollout, active revoke and post-activation lifecycle persistence
+failure freeze dispatch. A last-safe generation cannot be retired until a
+complete current-generation rollout is explicitly confirmed.
 
 ## Check
 
-Pending frozen-byte validation.
+The six AAS-017 tests and four adjacent generation-fence tests passed **10/10**.
+The complete suite passed **108/108**, video tests **15/15**, all public
+checksums **156/156**, and the offline supply-chain verifier **6/6**. The
+deterministic public archive built with SHA-256
+`2fabe1394e69e018e070249999f4ff8dd99962105f6cb2a46b5b4a4b33173c75`
+and zero staging residue.
+
+No full install/demo smoke was run. Relevant installer, Compose and stock
+runtime-image bytes did not change: the lifecycle is a separate default-off
+management-plane contract. Repeating the completed AAS-035 smoke would add no
+new evidence and would violate the one-smoke rule.
+
+Metric: `aas_017_signed_policy_lifecycle_gates` **4/4 — complete**. Verdict:
+`LOCAL_AAS_017_PASS_NOT_PRODUCTION_SIGNER_TRUST_ROOT_OR_DISTRIBUTED_ROLLOUT_CLAIM`.
+Implementation commit: `8b257dc5d50aece375cbf32f89dfed7d280ca984`.
 
 ## Act
 
-Pending closure and frontier audit. Owner direction makes `AAS-036` the next
-architecture/security frontier after AAS-017 reaches 4/4; it must precede
-lower-priority ERP/CRM/BI/DMS breadth.
+Close AAS-017 without reopening AAS-002 or AAS-035. The frontier audit rechecked
+model credentials/routing, request and response trust, streaming, budgets,
+tenant separation, tool smuggling, audit/privacy and real-agent conformance.
+Owner direction identifies one distinct high-importance architecture gap:
+agents currently lack an agent-agnostic, bidirectionally guarded model path.
+Persist it as `AAS-036` and select it next at **0/8**, before lower-priority
+ERP/CRM/BI/DMS breadth. Push, PR, merge, tag, release, publication, production,
+live-provider and external-account actions remain Owner-gated.

@@ -41,24 +41,26 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 0 | 0 | 2 | 5 | 0 | 12 |
-| P1 | 11 | 2 | 1 | 0 | 2 | 0 | 16 |
+| P0 | 5 | 1 | 0 | 2 | 5 | 0 | 13 |
+| P1 | 11 | 2 | 0 | 0 | 3 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **3** | **1** | **2** | **7** | **0** | **35** |
+| **Total** | **22** | **4** | **0** | **2** | **8** | **0** | **36** |
 
-Selected WIP=1 item is AAS-017. Remaining ready order during implementation:
+Ready order after AAS-017 closure and Owner reprioritisation:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 2 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 3 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-036 | P0 | I5 | XL | Agent-agnostic model credentials, routing and bidirectional traffic guards are a security prerequisite for real agent use |
+| 2 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 3 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 4 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
-`AAS-009`, `AAS-016`, `AAS-012` and owner-priority `AAS-035`; it must select
-`AAS-017` next by equal-I4 ready ordering and dependency value. Closed items do
-not reopen without new evidence.
+`AAS-009`, `AAS-016`, `AAS-012`, owner-priority `AAS-035` and `AAS-017`.
+Owner direction at 2026-08-01 14:17 CEST makes `AAS-036` the next frontier
+before lower-priority ERP/CRM/BI/DMS breadth. Closed items do not reopen without
+new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
 decision/use convergence, fallback, management/effect separation, audit and
@@ -109,6 +111,14 @@ signature/SBOM/current-CVE/complete-licence and production isolation evidence
 remain external/preparable, not new local controls. AAS-017 now leads the equal
 I4 ready frontier because its signed lifecycle is a dependency for later
 management-plane, delegation, schedule and credential controls.
+
+The AAS-017 frontier audit rechecked model credentials/routing, request and
+response trust, streaming, tool smuggling, budgets, tenant isolation, audit
+privacy, failure recovery and real-agent conformance. Owner direction proves a
+distinct I5 security prerequisite rather than protocol/framework breadth:
+agents need a closed, agent-agnostic Model Access Broker with deterministic
+bidirectional guards. AAS-036 captures the finite 8/8 contract and precedes
+all lower-importance breadth.
 
 ## P0 — critical authority and containment
 
@@ -417,6 +427,65 @@ management-plane, delegation, schedule and credential controls.
   `LOCAL_AAS_035_OPENCLAW_GATEWAY_ONLY_PASS_NOT_PRODUCTION_SANDBOX_REGISTRY_OR_RELEASE_CLAIM`.
   **Last reviewed:** 2026-08-01.
 
+### AAS-036 — Model Access Broker and bidirectional traffic guards
+
+- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 explicit
+  Owner-priority architecture/security frontier / XL. **Risk reduction:**
+  critical before agents can use models without ambient provider authority.
+  **User value:** real agents receive guarded model results while provider
+  credentials, routing, deterministic decisions and effects remain outside the
+  agent. **Demo value:** very high and agent-agnostic.
+- **Canon:** composition plus extension, CM-CAN-01/02/03/04/05/07/08/09/10/11/
+  14/15/16/17. **Source / dependencies / phase:** Owner direction 2026-08-01
+  14:17 CEST; completed AAS-017 plus AAS-009/AAS-012/AAS-035 primitives;
+  immediate model-access security frontier before application breadth.
+- **Evidence metric — 8/8:** (1) versioned canonical request/response/stream
+  contracts; (2) request guard for workload/user/tenant/purpose/delegation,
+  allowlists, data/trust class, size/token/cost/rate/time budgets, redaction and
+  correlation/operation IDs; (3) broker-only credential handles, TLS and closed
+  routing; (4) response/stream guard for size/schema/MIME/SSE, redaction,
+  provenance and `UNTRUSTED_MODEL_OUTPUT`; (5) closed OpenAI-compatible Chat
+  Completions/Responses and Anthropic-compatible Messages/SSE conformance;
+  (6) real isolated OpenClaw E2E plus an honest agent compatibility matrix;
+  (7) complete direct-path/injection/tool-smuggling/budget/tenant/failure
+  negative matrix; (8) focused/full/supply-chain/public-staging validation,
+  PDCA, clean commit and zero owned residue.
+- **Required architecture:** Agent → Capability Frontdoor → Decision/Policy →
+  Model Access Broker → Provider; Provider → Response Guard → Agent. Decision/
+  Policy, model credentials/routing, response inspection and Effect Broker stay
+  logically separate. The broker is not an arbitrary HTTP proxy. Outcomes are
+  `ALLOW`, `DENY`, `OWNER_ESCALATION`, `THROTTLE` or `QUARANTINE`.
+  Deterministic guards are authoritative; any optional AI/JIT inspector has a
+  never-grant ceiling and can only tighten, redact, pause, quarantine or request
+  review. Tool calls remain untrusted typed candidates and cannot execute or
+  mint authority.
+- **Negative probes:** direct provider/DNS/Internet route, embedded or disclosed
+  credentials, unknown protocol/model/route/version, replay/idempotency,
+  concurrent final budget unit, provider timeout/partial stream, malformed SSE,
+  oversized/MIME/schema response, prompt/response injection, secret
+  exfiltration, incomplete/changed/hidden streaming tool calls, cross-tenant
+  cache and broker unavailable all fail closed without duplicate provider or
+  effect calls.
+- **Audit/privacy and compatibility:** mandatory audit stores metadata, digests,
+  decisions, usage and receipts rather than raw content. Content capture is a
+  bounded explicit evidence window only. OpenClaw requires a real isolated E2E;
+  Hermes and Claude Code require pinned provenance/licence/local runtime and a
+  safe adapter, otherwise only adversarial protocol fixtures count and runtime
+  compatibility remains explicitly unproven.
+- **Rollback boundary / fallback:** disable the default-off broker/frontdoor,
+  remove only its isolated synthetic provider fixtures and bounded state, revoke
+  broker credential handles, retain audit receipts and leave all agents without
+  model access. Unknown provenance, routing or protocol fails closed; never add
+  direct agent egress or credentials as a fallback.
+- **Honest non-claims / external gates:** synthetic local providers and isolated
+  containers do not prove live-provider compatibility, production TLS/DNS/
+  network isolation, universal agent compatibility, hostile-host containment or
+  security completeness. The Owner OpenClaw, Gateway, vLLM, models and live
+  credentials remain untouched. No push, PR, merge, tag, release, publication,
+  production/live-provider action or external-account mutation.
+- **Completion commit/evidence:** pending; initial metric **0/8**. **Last
+  reviewed:** 2026-08-01.
+
 ## P1 — high-value control product and hardened boundaries
 
 ### AAS-012 — Capability/action catalogue, inactive by default
@@ -519,7 +588,7 @@ management-plane, delegation, schedule and credential controls.
 
 ### AAS-017 — Complete signed Policy lifecycle
 
-- **Status / priority:** `in_progress` / P1. **Importance / complexity:** I4 / L.
+- **Status / priority:** `done` / P1. **Importance / complexity:** I4 / L.
   **Risk reduction:** high. **User value:** reviewable activation, migration and
   rollback. **Demo value:** high. **Canon:** primitive, CM-CAN-02/03/14/17.
 - **Source / dependencies / phase:** SEC-09; local signer/trust fixtures and
@@ -531,7 +600,15 @@ management-plane, delegation, schedule and credential controls.
   widened-without-approval/trust-drift and mixed-cache generations deny.
 - **Rollback boundary / external gates:** explicit last-safe fallback; partial
   rollout freezes. Production signer/trust-root operations remain gated.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `8b257dc5d50aece375cbf32f89dfed7d280ca984` and
+  `docs/development/evidence/admin-ai-aas-017-20260801.json`; signed contract,
+  lifecycle, recovery and adversarial gates **4/4**, complete tests **108/108**,
+  video **15/15**, checksums **156/156**, supply chain **6/6**, deterministic
+  public staging PASS with zero residue. Verdict
+  `LOCAL_AAS_017_PASS_NOT_PRODUCTION_SIGNER_TRUST_ROOT_OR_DISTRIBUTED_ROLLOUT_CLAIM`.
+  PDCA frontier change: select Owner-priority `AAS-036` at **0/8**. **Last
+  reviewed:** 2026-08-01.
 
 ### AAS-018 — Attenuating delegation lineage
 
