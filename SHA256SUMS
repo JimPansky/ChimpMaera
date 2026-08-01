@@ -13,7 +13,7 @@ bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.m
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
 c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-17e9883b6e727c4a783df23710afa055990f1fe453f7fe916d80f4d10077a20d  ./README.md
+39ced6ecafe2471293c5af6a1262e4845d2ced4994181b3c4b254433710092c0  ./README.md
 1a92564c31cafee7a8d96797e35c928fec450af8f51a359bbf67e2f8ba55ca07  ./SECURITY.md
 405161d717617714546697edb5c01582436c0f2a611da4a2861763ea958b93d9  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
@@ -51,6 +51,7 @@ ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfi
 1ded2f51daf04d1eeaaf2af332d046f292bcd99970aa7b3dc927ac1c161f760d  ./demo/uninstall.sh
 5eb1de343c5b9016324ba22367d9c4dc8a8f019ff57f2eff6f9c8c63921afdb9  ./docs/ARCHITECTURE.md
 f0558862d7f5308668ffde74fbbae95f21c5372d435f41473c9ebcc2d129457a  ./docs/CANON.md
+de89b40c06bfd2671b99042d7bd34c661e922b9a3dfc10a77db460f82cc4b1af  ./docs/CONNECT-YOUR-FIRST-SYSTEM.md
 8b39cb77d00339e14ad83456f3c67f828cf67b2aa5e76236ecf8491590691c86  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
 ea967ea2177dfaa57c132835401bea9508a29add130287aa4f03763278e8bca3  ./docs/ZOO-FIELD-GUIDE.md
@@ -66,7 +67,7 @@ a4852feaa297c4e84528ddcb958eda5a599539ee447e3c1d3fa90e62085c831f  ./package-lock
 395ef3c451bc41007f77aaec522143853b23422f42815dfebb2308732eb68652  ./packages/contracts/src/poc-showcase-e2e.ts
 61c8584058f2a2a8600ef49f87febf0c4d4205ee671fc2ef295b5f17f0d307af  ./packages/contracts/src/poc-showcase.ts
 5f9fb0ed59a2539c44c430d43a3ae33707233ff2a48e8f6897620be0db61c303  ./packages/setup-coordinator/src/index.ts
-3c48843a3e1eedac609d56e62410a57b3dde3ee764b746879a1bd278e6755609  ./release/public-files.manifest
+05ddd16fe25fdcf4d3362e33796bcd2de7c0d4a741e9a4f4261524debdf6b810  ./release/public-files.manifest
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
 830d07b0db2dddaecf68efe4a149679dbfbcc454d4cbfde82703ecfb2052db57  ./scripts/build-public-release.sh
 1fefe74e7f4781c7e7a33872e3dc9506004e5cf58f6f7c6ab95e69b59d907459  ./tests/demo-admin-ai-poc.test.mjs

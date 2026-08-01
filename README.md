@@ -48,6 +48,15 @@ Then read [docs/QUICKSTART.md](docs/QUICKSTART.md) and run:
 ./demo/install.sh
 ```
 
+### Connect your first system
+
+The public v0.1 snapshot connects only the bundled synthetic EspoCRM and
+Dolibarr demo. After installation, use
+[Connect Your First System](docs/CONNECT-YOUR-FIRST-SYSTEM.md) to inspect that
+working path and to prepare a governed connection design for another source
+system. The guide separates what works in this snapshot from locally validated
+but unreleased contracts and planned onboarding capabilities.
+
 Remove only installer-owned resources with:
 
 ```sh

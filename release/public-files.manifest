@@ -47,6 +47,7 @@ demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
 docs/ARCHITECTURE.md	docs/ARCHITECTURE.md	0644
 docs/CANON.md	docs/CANON.md	0644
+docs/CONNECT-YOUR-FIRST-SYSTEM.md	docs/CONNECT-YOUR-FIRST-SYSTEM.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/ZOO-FIELD-GUIDE.md	docs/ZOO-FIELD-GUIDE.md	0644
