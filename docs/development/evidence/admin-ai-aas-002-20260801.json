@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "chimpmaera.development/admin-ai-aas-002-evidence/v1",
+  "scope": "LOCAL_POLICY_GENERATION_FENCE_ONLY",
+  "date": "2026-08-01",
+  "metric": {
+    "name": "aas_002_policy_generation_fence_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "branch": "feat/admin-ai-aas-002-policy-generation-fence",
+  "startingCheckpoint": "1d526f2daab618c036b5239388c0d67a07df05a1",
+  "pdcaContractCommit": "e088c7dc2e9990aa21b6c2ca66e3fd0e06924e4b",
+  "implementationCommit": "8d58bed570038a4ba2068d6aa728a9190dffc763",
+  "gates": {
+    "authenticatedMonotonicActivation": "PASS",
+    "durableLastKnownSafeAndFreeze": "PASS",
+    "decisionAndUseTimeGenerationFence": "PASS",
+    "adversarialAndRegressionEvidence": "PASS"
+  },
+  "negativeEvidence": {
+    "activation": [
+      "UNSIGNED_OR_AGENT_AUTHORED_DENIED",
+      "MUTATED_OR_RECOMPUTED_BYTES_DENIED",
+      "UNKNOWN_OR_INCOMPATIBLE_SCHEMA_DENIED",
+      "STALE_DUPLICATE_OR_NON_SAFE_GENERATION_DENIED",
+      "WRONG_TENANT_OR_POLICY_DENIED",
+      "SUPERSEDED_BYTES_REPACKAGED_AS_NEW_GENERATION_DENIED"
+    ],
+    "durability": [
+      "ACTIVATION_RECORD_EDIT_DENIED",
+      "RECORD_DELETION_OR_TRUNCATION_DENIED",
+      "FAILED_CANDIDATE_PRESERVES_PRIOR_RECORD_BYTES"
+    ],
+    "useTime": [
+      "STALE_WORKER_DENIED_BEFORE_PROVIDER",
+      "GENERATION_OR_DIGEST_TAMPER_DENIED_BEFORE_PROVIDER",
+      "FROZEN_DISPATCH_DENIED_BEFORE_PROVIDER"
+    ],
+    "providerMutationCountAcrossUseTimeDenials": 0,
+    "providerReadbackCountAcrossUseTimeDenials": 0
+  },
+  "tests": {
+    "aas002Focused": "4/4 PASS",
+    "relatedFocused": "22/22 PASS",
+    "completeSuite": "80/80 PASS",
+    "videoReference": "15/15 PASS",
+    "checksums": "122/122 PASS",
+    "supplyChainVerifier": "6/6 PASS",
+    "gitDiffCheck": "PASS",
+    "publicTreeBuild": "PASS_FROM_ISOLATED_WORKTREE"
+  },
+  "integrity": {
+    "sha256SumsDigest": "c325633a54943e72909395c5c24313acc8ea2c5502627d6c473054e5ffd1a4d5",
+    "artifactLockFileDigest": "e5bd757c56be05de56bd314ff624b072b20f98c11806a71e43240f4d04e5cff8",
+    "artifactLockCanonicalDigest": "bbc195239669d7b0880147a628c9845b416c357e0608b06877e3ed1db9499035",
+    "publicArchiveDigest": "d5b64d7c0f2cd62ab0af57ed831a992cb99e03b50fb374729031cbd0d8d1e4f3"
+  },
+  "smoke": {
+    "scenario": "SAFE_DEMO_COLD",
+    "attempt": 1,
+    "status": "PASS_READY_VERIFIED",
+    "elapsedMs": 72840,
+    "detailedEvidencePath": ".chimpmaera-acceptance/runs/SAFE_DEMO_COLD-01/",
+    "digests": {
+      "acceptance.json": "97bc85fea6fd659a2f51e05686e386bd6f9378fc07d195ce240325aab0d047b7",
+      "approval-workbench-smoke.json": "f9e548914e5c2a40e8e04d9e84696e75fac38d20084f9615724e7149a5e5932b",
+      "config.json": "04b869737e677ef521052d9fa9c756b9a4f71b42aa032f5ad9d447ee6c48dd56",
+      "events.jsonl": "7e7a0464bc976fa93d35d1474b90f18c23bcaa68af100acccaa20393e82895b4",
+      "latest-summary.json": "665dc218981dc24784dcadb5d30f5ebc99f5c8a61c36dbd869fc1c4ea1065344",
+      "readback.json": "6b9f63b9524d3431aa2e84aad04d5c8067be61d6bc5216bbe0cfe8bfadc10571"
+    },
+    "cleanup": "PASS_DEDICATED_ACCEPTANCE_RESIDUE_ZERO",
+    "repeatStatus": "NOT_AUTHORIZED_WITHOUT_RELEVANT_CORRECTING_RUNTIME_OR_INSTALL_BYTE_CHANGE"
+  },
+  "defectClass": {
+    "name": "ISOLATED_WORKTREE_GIT_CONTROL_FILE_REJECTED_BY_PUBLIC_BUILDER",
+    "correction": "Ignore only the root .git control file during source-tree closure and execute a real public build regression from the worktree.",
+    "smokeDecision": "NO_SECOND_INSTALL_SMOKE_RELEASE_STAGING_ONLY"
+  },
+  "rollback": "Revert the AAS-002 implementation, disable activation, retain the last verified static Policy generation and freeze dispatch if workers cannot converge.",
+  "claimBoundary": "Local schema, digest, HMAC, persistence and generation-fence evidence only; no production signer, HSM, hostile-host, rollback-proof storage, distributed consensus, live tenant/IAM/provider, release, publication or security-certification claim.",
+  "verdict": "LOCAL_AAS_002_PASS_NOT_PRODUCTION_SIGNER_OR_DISTRIBUTED_ROLLOUT_CLAIM",
+  "nextFrontier": "AAS-003"
+}

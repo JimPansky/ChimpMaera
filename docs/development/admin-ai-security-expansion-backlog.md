@@ -41,28 +41,35 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 3 | 0 | 2 | 1 | 0 | 11 |
+| P0 | 5 | 2 | 0 | 2 | 2 | 0 | 11 |
 | P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **9** | **0** | **2** | **1** | **0** | **34** |
+| **Total** | **22** | **8** | **0** | **2** | **2** | **0** | **34** |
 
-Internally ready items, in selection order after AAS-001 closure:
+Internally ready items, in selection order after AAS-002 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-002 | P0 | I5 | S | Local activation/generation contracts and negative tests |
-| 2 | AAS-003 | P0 | I5 | M | Local deterministic effective-rights facts and view |
-| 3 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
-| 4 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
-| 5 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
-| 6 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 7 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 8 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 9 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-003 | P0 | I5 | M | Local deterministic effective-rights facts and view |
+| 2 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
+| 3 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
+| 4 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
+| 5 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
+| 6 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 7 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 8 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
-The authorized implementation loop completed `AAS-001` and must select
-`AAS-002` next. Closed AAS-001 does not reopen without new evidence.
+The authorized implementation loop completed `AAS-001` and `AAS-002` and must
+select `AAS-003` next. Closed items do not reopen without new evidence.
+
+The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
+decision/use convergence, fallback, management/effect separation, audit and
+claim boundaries. The live-signer and independently managed trust-root gaps
+remain represented by AAS-011/AAS-017; no new standalone item was discovered.
+The worktree-control-file release-builder defect found during closure was fixed
+and regression-tested as a local evidence-path correction, not promoted into a
+duplicate recurring backlog item.
 
 ## P0 — critical authority and containment
 
@@ -94,7 +101,7 @@ The authorized implementation loop completed `AAS-001` and must select
 
 ### AAS-002 — Policy self-protection and generation fence
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 / S.
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 / S.
   **Risk reduction:** critical. **User value:** stale or self-expanded Policy
   cannot silently authorize effects. **Demo value:** high.
 - **Canon:** primitive, CM-CAN-02/03/08/14/17. **Source:** SEC-CTL-001.
@@ -108,7 +115,11 @@ The authorized implementation loop completed `AAS-001` and must select
 - **Rollback boundary / fallback:** return to the last verified generation and
   freeze dispatch if generations cannot converge. **External gates:** real
   trust roots and production signers remain gated.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `8d58bed570038a4ba2068d6aa728a9190dffc763`;
+  `docs/development/evidence/admin-ai-aas-002-20260801.json` and
+  `docs/development/admin-ai-aas-002-policy-generation-fence-pdca.md`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-003 — Effective-rights compiler and permission X-ray
 
