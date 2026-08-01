@@ -128,6 +128,11 @@ improvements through [CONTRIBUTING.md](CONTRIBUTING.md). Joining the Zoo means
 participating in an open community; it does not imply company membership,
 employment or authority.
 
+Public delivery is tracked through one issue per clear, adoptable slice or
+epic—not by mirroring every internal microtask. Issues, pull requests, evidence
+and release notes remain linked from planning through actual publication;
+`locally validated` is not `released`, and `planned` is not `proven`.
+
 ## License
 
 Code is provided under Apache-2.0 as described in [LICENSE](LICENSE),

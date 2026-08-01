@@ -1,5 +1,12 @@
 # Connect your first system
 
+Treat each connection as a governed delivery slice: adopt or open one public
+issue with scope, non-scope, dependencies, measurable acceptance criteria,
+negative probes, evidence, recovery and non-claims. Link implementation pull
+requests and evidence to that issue; keep unpatched security-sensitive details
+in the private path defined by [SECURITY.md](../SECURITY.md). `Locally
+validated` does not mean `released`.
+
 This guide distinguishes the runnable ChimpMaera v0.1 public snapshot from
 onboarding contracts that exist only as local validation or product plans. A
 roadmap or issue is not runtime evidence.

@@ -28,9 +28,34 @@ Report suspected vulnerabilities privately through [SECURITY.md](SECURITY.md), n
 
 ## Progress and review
 
-Post issue updates at material gates: started, locally validated, merged and released—not per commit. Use labels and checklists for current status. Maintainer work does not remove `help wanted` unless concurrent work would be unsafe.
+Use one public issue for each clear, adoptable delivery slice or epic; do not
+mirror every internal microtask. A contributor may adopt an existing issue or
+open one. Each issue records scope, non-scope, dependencies, measurable
+acceptance criteria, negative probes, required evidence, rollback or recovery,
+and explicit non-claims.
 
-An implementation issue closes when reviewed work is merged, or at release only when release is the explicit target. A private or local branch does not close an issue. Security-sensitive final integration, merge and release remain maintainer-controlled.
+Track the status chain as `planned` → `ready` → `in progress` →
+`locally validated` → `merged` → `released`. Record implementation steps and
+PDCA milestones as an issue checklist or material status comment—not per
+commit. A pull request links its issue and applicable evidence; draft and
+independently useful partial pull requests remain welcome. Maintainer work does
+not remove `help wanted` unless concurrent work would be unsafe.
+
+An implementation issue stays open until reviewed work is merged. A private or
+local branch does not close it. Release notes close the public delivery loop
+only when the change is actually published. Never present `locally validated`
+as `released`, or `planned` as `proven`. Security-sensitive final integration,
+merge and release remain maintainer-controlled.
+
+Each published snapshot's release notes use `Added`, `Changed`, `Security`,
+`Evidence`, `Known limitations` and `Planned next`, with applicable issue, pull
+request and claim IDs in each section. The planned Daily Manifest contract will
+likewise require issue, pull-request and claim references when those references
+exist; until that manifest is implemented, issues and pull requests are the
+authoritative public links.
+
+Do not disclose unpatched security-sensitive details in public issues. Follow
+[SECURITY.md](SECURITY.md) and use a private advisory instead.
 
 Contributors must have the right to submit their work under the repository license. No separate CLA, DCO sign-off, signed commit, assignment, bespoke tool or additional account setup is required by this guide.
 
