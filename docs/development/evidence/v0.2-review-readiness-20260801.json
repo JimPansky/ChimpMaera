@@ -22,6 +22,11 @@
       "checkpointCommit": "dcc1050",
       "plan": "docs/development/v0.2-approval-workbench-pdca.md",
       "checkpoint": "docs/development/v0.2-approval-workbench-checkpoint.md",
+      "implementationPaths": [
+        "demo/runtime/approval-workbench.mjs",
+        "demo/runtime/enforcement-gate.mjs",
+        "tests/demo-approval-workbench.test.mjs"
+      ],
       "tests": [
         "tests/demo-approval-workbench.test.mjs",
         "tests/demo-admin-ai-poc.test.mjs",
@@ -34,6 +39,11 @@
       "implementationCommit": "2f89e07",
       "plan": "docs/development/v0.2-wave2-policy-evaluator-pdca.md",
       "checkpoint": "docs/development/v0.2-wave2-policy-evaluator-checkpoint.md",
+      "implementationPaths": [
+        "demo/runtime/policy-evaluator.mjs",
+        "packages/contracts/src/policy-evaluator.ts",
+        "tests/demo-policy-evaluator.test.mjs"
+      ],
       "tests": [
         "tests/demo-policy-evaluator.test.mjs"
       ]
@@ -43,6 +53,11 @@
       "implementationCommit": "a32623c",
       "plan": "docs/development/v0.2-wave3-paperless-zoo-adapter-pdca.md",
       "checkpoint": "docs/development/v0.2-wave3-paperless-zoo-adapter-checkpoint.md",
+      "implementationPaths": [
+        "demo/runtime/paperless-ngx-zoo-adapter.mjs",
+        "packages/contracts/src/paperless-zoo-adapter.ts",
+        "tests/demo-paperless-ngx-zoo-adapter.test.mjs"
+      ],
       "tests": [
         "tests/demo-paperless-ngx-zoo-adapter.test.mjs"
       ]
@@ -52,6 +67,11 @@
       "implementationCommit": "1b9e6bc",
       "plan": "docs/development/v0.2-wave4-supply-chain-pdca.md",
       "checkpoint": "docs/development/v0.2-wave4-supply-chain-checkpoint.md",
+      "implementationPaths": [
+        "demo/manifests/supply-chain/artifact-lock-v1.json",
+        "scripts/verify-supply-chain.mjs",
+        "tests/supply-chain-verifier.test.mjs"
+      ],
       "tests": [
         "tests/supply-chain-verifier.test.mjs"
       ],
@@ -61,11 +81,84 @@
       "phase": "post_wave_path_integrity",
       "implementationCommit": "f12dbea",
       "checkpoint": "docs/development/v0.2-post-wave-stability-pdca.md",
+      "implementationPaths": [
+        "scripts/verify-supply-chain.mjs",
+        "tests/supply-chain-verifier.test.mjs"
+      ],
       "tests": [
         "tests/supply-chain-verifier.test.mjs"
       ]
     }
   ],
+  "claimAudit": [
+    {
+      "id": "approval_workbench_bounded_authority",
+      "surface": "README.md",
+      "requiredFragments": [
+        "explicit local Approve/Reject",
+        "a short one-use authority lease",
+        "does not call a live LLM or claim production authority"
+      ],
+      "evidencePaths": [
+        "demo/runtime/approval-workbench.mjs",
+        "demo/runtime/enforcement-gate.mjs",
+        "tests/demo-approval-workbench.test.mjs"
+      ]
+    },
+    {
+      "id": "provider_neutral_policy_boundary",
+      "surface": "docs/ARCHITECTURE.md",
+      "requiredFragments": [
+        "provider-neutral `PolicyEvaluator` contract",
+        "returns decision data only and",
+        "cannot issue authority"
+      ],
+      "evidencePaths": [
+        "demo/runtime/policy-evaluator.mjs",
+        "packages/contracts/src/policy-evaluator.ts",
+        "tests/demo-policy-evaluator.test.mjs"
+      ]
+    },
+    {
+      "id": "paperless_adapter_non_claim",
+      "surface": "demo/README.md",
+      "requiredFragments": [
+        "intentionally disabled in this installer",
+        "synthetic HTTP fixtures",
+        "does not install or claim compatibility with Paperless"
+      ],
+      "evidencePaths": [
+        "demo/runtime/paperless-ngx-zoo-adapter.mjs",
+        "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
+        "demo/compose.yaml"
+      ]
+    },
+    {
+      "id": "supply_chain_declaration_only",
+      "surface": "docs/SUPPLY-CHAIN.md",
+      "requiredFragments": [
+        "repository declarations agree",
+        "does not verify registry signatures",
+        "transitive container"
+      ],
+      "evidencePaths": [
+        "demo/manifests/supply-chain/artifact-lock-v1.json",
+        "scripts/verify-supply-chain.mjs",
+        "tests/supply-chain-verifier.test.mjs"
+      ]
+    }
+  ],
+  "diffAudit": {
+    "range": "e698946d74342ae10ed25e93d6a45a99647dd2ba..f12dbea072178b99b50990bd16766563ac47b80d",
+    "files": 45,
+    "added": 26,
+    "modified": 19,
+    "deleted": 0,
+    "insertions": 4136,
+    "deletions": 139,
+    "diffCheckFindings": 32,
+    "diffCheckClassification": "NON_FUNCTIONAL_SOURCE_HYGIENE_FOLLOW_UP"
+  },
   "reproduction": {
     "document": "docs/development/v0.2-review-handoff.md",
     "fullInstallSmoke": "NOT_REPEATED_NO_RELEVANT_RUNTIME_OR_INSTALL_BYTE_CHANGE",
