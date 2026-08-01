@@ -135,11 +135,25 @@ credential, production deployment or external-system mutation is authorized.
 
 ## Do
 
-Pending prerequisite proof; no runtime image has been selected.
+Completed the read-only prerequisite proof against stable upstream v2026.7.1.
+Official source, Docker documentation, Dockerfile, release evidence, OCI index,
+platform manifest/config and MIT licence were bound into a machine-readable
+lock. ChimpMaera selects only the immutable external GHCR reference for an
+isolated local fixture and does not reuse upstream Compose or redistribute image
+bytes. No OpenClaw service has been started.
 
 ## Check
 
-Pending prerequisite and implementation evidence.
+Prerequisite metric:
+`aas_035_openclaw_provenance_prerequisite_gates` **4/4 — complete**.
+The offline verifier proves the exact source/version/index/platform/base
+bindings, MIT/reference-only distribution boundary, required non-claims and
+default-off/zero-ambient-authority selection policy. Mutation probes for a
+mutable tag, source/digest/platform drift, licence/redistribution overclaim,
+socket/egress permission and removed non-claim deny.
+
+This does not yet advance any of the 12 runtime implementation gates; their
+metric remains **0/12** pending the isolated Compose/service implementation.
 
 ## Act
 

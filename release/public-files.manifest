@@ -39,6 +39,7 @@ demo/manifests/fixtures/panskys-zoo-demo-v1.json	demo/manifests/fixtures/panskys
 demo/manifests/identity/panskys-zoo-v1.json	demo/manifests/identity/panskys-zoo-v1.json	0644
 demo/manifests/network/local-egress-policy-v1.json	demo/manifests/network/local-egress-policy-v1.json	0644
 demo/manifests/supply-chain/artifact-lock-v1.json	demo/manifests/supply-chain/artifact-lock-v1.json	0644
+demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json	demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json	0644
 demo/provider-bootstrap.sh	demo/provider-bootstrap.sh	0755
 demo/readback.sh	demo/readback.sh	0755
 demo/runtime/admin-ai-poc.mjs	demo/runtime/admin-ai-poc.mjs	0644
@@ -80,12 +81,14 @@ release/public-files.manifest	release/public-files.manifest	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 scripts/verify-supply-chain.mjs	scripts/verify-supply-chain.mjs	0755
+scripts/verify-openclaw-agent-runtime-lock.mjs	scripts/verify-openclaw-agent-runtime-lock.mjs	0755
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
+tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644
