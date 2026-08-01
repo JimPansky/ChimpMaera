@@ -162,3 +162,72 @@ Switch to `aas_035_openclaw_agent_docker_gates` **0/12**. The selected image may
 be consumed only by the new default-off, internal-network fixture; upstream
 Compose remains rejected. WIP stays one on AAS-035 and no lower-priority data,
 ERP/CRM, BI or DMS breadth starts while this runtime slice is active.
+
+## Runtime implementation PDCA — 12/12 closure
+
+### Plan
+
+Implement the already locked OpenClaw image as one explicitly profiled,
+ChimpMaera-owned fixture. Keep OpenClaw untrusted and expose exactly one typed
+AAS-012 action through a synthetic Gateway/Broker/provider path. Freeze the
+runtime bytes only after focused and complete repository tests pass, then spend
+the full-smoke budget once on the final corrected byte set.
+
+### Do
+
+Added the `demo/openclaw-agent` fixture with an internal-only Compose network,
+non-root/read-only services, dropped capabilities, bounded tmpfs/process/RAM/CPU
+limits, labelled volumes and no host bind, device, namespace, port or socket
+authority. The agent image derives from the immutable upstream OCI index, loads
+one closed plugin and one synthetic model route, and has no live credential or
+direct provider route. A managed tenant/purpose/trust/quota-bound mind store,
+durable receipts, idempotent semantic reset and ownership-scoped setup/purge are
+implemented by the isolated fixture Gateway.
+
+The real upstream OpenClaw CLI completed the exact typed tool call through the
+Gateway/Broker fixture. Five explicit HTTP denials, six egress targets, four
+filesystem/host-authority targets, replay/load, cross-tenant, oversize, restart,
+semantic-reset and idempotent-purge probes were exercised. The concurrency
+probe was corrected from competing OpenClaw CLI writers to four concurrent
+replays through the already proven OpenClaw tool boundary; this measures the
+Gateway exactly-once boundary without introducing an unrelated shared-session
+writer race.
+
+### Check
+
+`aas_035_openclaw_agent_docker_gates` is **12/12 — complete**:
+
+1. immutable upstream/source/image/base/package lock: PASS;
+2. ordinary Compose startup contains zero AAS-035 services: PASS;
+3. non-root/read-only/capability/resource posture, static and live: PASS;
+4. zero host/Docker/device/namespace authority: PASS;
+5. one internal Gateway-only network and denied external routes: PASS;
+6. synthetic bound workload identity and zero ambient credentials: PASS;
+7. bounded managed mind-store persistence, quota and tenant isolation: PASS;
+8. deterministic health/readiness/restart/setup/reset: PASS;
+9. real OpenClaw to typed Gateway/Broker synthetic effect E2E: PASS;
+10. receipt/readback/policy/authority digests and concurrent replay load: PASS;
+11. complete negative matrix fails closed with one total synthetic effect: PASS;
+12. idempotent labelled rollback leaves zero owned runtime residue: PASS.
+
+Evidence: focused AAS-035 tests **7/7**, complete repository tests **102/102**,
+supply-chain verifier PASS, deterministic public staging PASS, and final
+frozen-byte smoke `aas035-20260801T115932Z` PASS in **25,811 ms**. The smoke
+recorded five denied Gateway requests, twelve effect attempts, exactly one
+effect, two model calls, one receipt digest, one durable mind digest and
+identical excluded-Owner fingerprints before/during/after. Summary SHA-256 is
+`98c79565d04a9341f9b522ca5cb2c1ea58378d915061006534c09589fe1be538`.
+Machine-readable evidence is in
+`docs/development/evidence/admin-ai-aas-035-20260801.json`.
+
+### Act
+
+Close AAS-035 at **12/12** and do not repeat this metric or the full smoke absent
+a new correcting runtime/install-byte change. The conservative assumption held:
+synthetic identity, provider and storage prove local boundary composition only.
+Fallback remains default-off removal of labelled fixture resources. Review still
+requires registry signature/SBOM/current-CVE/complete-licence evidence plus
+production workload identity, network policy and stronger host isolation before
+deployment or redistribution claims. No Owner OpenClaw/Gateway/vLLM/model byte,
+configuration or process changed; no push, PR, merge, release or publication was
+performed.
