@@ -27,6 +27,10 @@ These limits are part of the claim discipline required by
   decision after provider reconciliation.
 - Admin-AI is a deterministic local static-policy preview. It does not call a
   live LLM and does not create production authority.
+- The injection trust boundary is a pure local contract exercised with hostile
+  synthetic provider, tool, document and memory fixtures. It does not prove a
+  live model, tokenizer, retrieval stack, gateway or credential broker resists
+  prompt injection, and it does not enable any model or retrieval path.
 - Policy activation uses an authenticated local HMAC fixture and local state,
   not an independent production signer, HSM, transparency log, rollback-proof
   store or distributed rollout protocol. A compromised host or runtime key can

@@ -55,6 +55,16 @@ cannot issue authority. A closed action-adapter ceiling and the Wave 1 gate
 remain the executable trust boundary; malformed or overbroad evaluator output
 fails closed.
 
+The provider-neutral injection trust contract is an effect-free predecessor to
+that evaluator. Provider, tool, document and memory content is carried in exact
+envelopes whose origin-specific trust, tenant, data class and instruction
+eligibility are explicit and always data-only. A model-shaped candidate can
+name only a finite catalogue action, bounded symbolic arguments and the exact
+evidence envelopes. Trusted code reconstructs method, path, scope and an opaque
+credential handle from a server-owned catalogue. The result is digest-bound
+but remains a candidate: it is neither a Policy decision, Approval, authority
+nor provider call. No live model or retrieval path is enabled.
+
 The Admin-AI Policy is activated through a local generation fence. An exact
 candidate binds tenant, Policy ID, source bytes, semantic digest and a strictly
 increasing generation to a purpose-separated local Owner authorization. The

@@ -65,6 +65,7 @@ package.json	package.json	0644
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
+packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
 packages/contracts/src/paperless-zoo-adapter.ts	packages/contracts/src/paperless-zoo-adapter.ts	0644
 packages/contracts/src/policy-evaluator.ts	packages/contracts/src/policy-evaluator.ts	0644
 packages/contracts/src/poc-early-admin-ai-setup.ts	packages/contracts/src/poc-early-admin-ai-setup.ts	0644
@@ -81,6 +82,7 @@ tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
+tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644

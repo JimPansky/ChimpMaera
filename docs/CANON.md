@@ -87,6 +87,12 @@ Code, a tool, a template, credentials, or a request that can be constructed
 does not grant permission to use it. Every effect requires its own current basis of authority;
 planning and execution interfaces remain separate.
 
+Provider responses, tool output, retrieved documents, and recalled memory are
+data, not Owner instruction. Their origin, trust, tenant, data class, and
+instruction eligibility remain explicit across the planning boundary. A model
+may emit a closed typed candidate; trusted code reconstructs the action from a
+server-owned catalogue before normal Policy, Approval, and use-time checks.
+
 ### CM-CAN-02 — Authority Is Rooted in the Owner
 
 The Owner selects a visible, versioned root of authority or Profile. Delegated
@@ -137,7 +143,7 @@ boundary has access capable of producing effects.
 
 Credentials exist only at the bounded enforcement boundary. The Agent,
 Template, and general planner receive typed references rather than reusable
-secrets.
+secrets. Untrusted content cannot select, rewrite, or disclose those references.
 
 ### CM-CAN-10 — Success Requires Readback and a Bound Receipt
 
