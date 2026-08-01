@@ -161,7 +161,7 @@ jq -e '
   .status == "PASS"
   and .replayed == false
   and .readback.ref_client == "CM-ADMIN-AI-ESCALATION-001"
-  and .receipt.schemaVersion == "chimpmaera.demo/effect-receipt/v2"
+  and .receipt.schemaVersion == "chimpmaera.demo/effect-receipt/v3"
   and .receipt.outcome == "PROVIDER_MUTATION_READBACK_VERIFIED"
   and .receipt.authority.maxUses == 1
 ' <<<"$approved_effect" >/dev/null

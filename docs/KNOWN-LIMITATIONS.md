@@ -27,6 +27,10 @@ These limits are part of the claim discipline required by
   decision after provider reconciliation.
 - Admin-AI is a deterministic local static-policy preview. It does not call a
   live LLM and does not create production authority.
+- Policy activation uses an authenticated local HMAC fixture and local state,
+  not an independent production signer, HSM, transparency log, rollback-proof
+  store or distributed rollout protocol. A compromised host or runtime key can
+  forge this local boundary.
 - The Paperless-ngx zoo adapter is a disabled-by-default, read-only client
   boundary tested with synthetic HTTP fixtures. The stock demo does not install
   or contact Paperless. Real-service compatibility, ingest, document content,

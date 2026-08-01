@@ -160,8 +160,10 @@ function validateMutationScope(action) {
 function receiptCore(action, actionDigest, providerResult, readback, authority) {
   return {
     schemaVersion: authority?.kind === "OWNER_ESCALATION_LEASE_HMAC_V1"
-      ? "chimpmaera.demo/effect-receipt/v2"
-      : "chimpmaera.demo/effect-receipt/v1",
+      ? "chimpmaera.demo/effect-receipt/v3"
+      : authority === undefined
+        ? "chimpmaera.demo/effect-receipt/v1"
+        : "chimpmaera.demo/effect-receipt/v2",
     actionDigest,
     actor: action.actor,
     scope: action.scope,
@@ -178,6 +180,8 @@ function receiptCore(action, actionDigest, providerResult, readback, authority) 
     ...(authority === undefined ? {} : {
       authority: {
         kind: authority.kind,
+        policyId: authority.policyId,
+        policyGeneration: authority.policyGeneration,
         ...(authority.leaseId === undefined ? {} : {
           leaseId: authority.leaseId,
           expiresAtMs: authority.expiresAtMs,
@@ -185,6 +189,8 @@ function receiptCore(action, actionDigest, providerResult, readback, authority) 
         }),
       },
       decisionDigest: authority.decisionDigest,
+      policyId: authority.policyId,
+      policyGeneration: authority.policyGeneration,
       policyDigest: authority.policyDigest,
       ...(authority.ownerDecisionReceiptDigest === undefined ? {} : {
         ownerDecisionReceiptDigest: authority.ownerDecisionReceiptDigest,
@@ -298,7 +304,9 @@ export class DemoMutationGate {
     expectedOrigin,
     receiptPath,
     provider,
+    adminAiPolicyId = "admin-ai-poc-policy-v1",
     adminAiPolicyDigest,
+    assertPolicyUse = () => true,
     ownerAuthorityToken = controlToken,
     now = () => Date.now(),
     authorityContext = {
@@ -328,9 +336,15 @@ export class DemoMutationGate {
       || authorityContext.profileGeneration.length < 8
       || !Number.isSafeInteger(authorityContext.policyGeneration)
       || authorityContext.policyGeneration < 1
+      || adminAiPolicyId !== "admin-ai-poc-policy-v1"
+      || (adminAiPolicyDigest !== undefined
+        && !/^[a-f0-9]{64}$/.test(adminAiPolicyDigest))
+      || typeof assertPolicyUse !== "function"
     ) throw new Error("AUTHORITY_CONTEXT_INVALID_DENIED");
     this.now = now;
     this.authorityContext = { ...authorityContext };
+    this.adminAiPolicyId = adminAiPolicyId;
+    this.assertPolicyUse = assertPolicyUse;
     this.state = {
       schemaVersion: "chimpmaera.demo/effect-store/v2",
       effects: {},
@@ -365,6 +379,8 @@ export class DemoMutationGate {
       scope: fields.scope,
       actionDigest: fields.actionDigest,
       replayKey: fields.replayKey,
+      policyId: fields.policyId,
+      policyGeneration: fields.policyGeneration,
       policyDigest: fields.policyDigest,
       decisionDigest: fields.decisionDigest,
     };
@@ -388,6 +404,8 @@ export class DemoMutationGate {
         "decisionDigest",
         "kind",
         "policyDigest",
+        "policyGeneration",
+        "policyId",
         "replayKey",
         "scope",
       ])
@@ -395,6 +413,8 @@ export class DemoMutationGate {
       || typeof authority.actor !== "string"
       || typeof authority.actionDigest !== "string"
       || typeof authority.replayKey !== "string"
+      || authority.policyId !== this.adminAiPolicyId
+      || authority.policyGeneration !== this.authorityContext.policyGeneration
       || typeof authority.policyDigest !== "string"
       || typeof authority.decisionDigest !== "string"
       || typeof authority.binding !== "string"
@@ -416,6 +436,8 @@ export class DemoMutationGate {
       scope: action.scope,
       actionDigest: computedDigest,
       replayKey: action.replayKey,
+      policyId: authority.policyId,
+      policyGeneration: authority.policyGeneration,
       policyDigest: authority.policyDigest,
       decisionDigest: authority.decisionDigest,
     });
@@ -435,6 +457,7 @@ export class DemoMutationGate {
       proposal?.outcome !== "OWNER_ESCALATION"
       || proposal.profileId !== this.authorityContext.profileId
       || proposal.profileGeneration !== this.authorityContext.profileGeneration
+      || proposal.policyId !== this.adminAiPolicyId
       || proposal.policyGeneration !== this.authorityContext.policyGeneration
       || proposal.policyDigest !== this.adminAiPolicyDigest
       || sha256(canonicalJson(proposal.action)) !== proposal.actionDigest
@@ -456,6 +479,7 @@ export class DemoMutationGate {
       actionDigest: proposal.actionDigest,
       businessDiffDigest: proposal.businessDiffDigest,
       replayKey: proposal.replayKey,
+      policyId: proposal.policyId,
       policyDigest: proposal.policyDigest,
       policyGeneration: proposal.policyGeneration,
       decisionDigest: proposal.decisionDigest,
@@ -492,7 +516,7 @@ export class DemoMutationGate {
       "actionDigest", "actor", "approver", "binding", "businessDiffDigest",
       "decisionDigest", "expiresAtMs", "issuedAtMs", "kind", "leaseId",
       "maxUses", "notBeforeMs", "ownerDecisionReceiptDigest", "policyDigest",
-      "policyGeneration", "profileGeneration", "profileId", "proposalDigest",
+      "policyGeneration", "policyId", "profileGeneration", "profileId", "proposalDigest",
       "replayKey", "scope",
     ];
     if (
@@ -506,6 +530,7 @@ export class DemoMutationGate {
       || authority.maxUses !== 1
       || authority.profileId !== this.authorityContext.profileId
       || authority.profileGeneration !== this.authorityContext.profileGeneration
+      || authority.policyId !== this.adminAiPolicyId
       || authority.policyGeneration !== this.authorityContext.policyGeneration
       || !equalSecret(authority.policyDigest, this.adminAiPolicyDigest ?? "")
       || !equalSecret(authority.actor, action.actor)
@@ -601,6 +626,15 @@ export class DemoMutationGate {
       )
     ) throw new Error("APPROVAL_BINDING_INVALID_DENIED");
 
+    if (action.actor === "agent:admin-ai-poc") {
+      this.assertPolicyUse({
+        tenant: action.scope.tenant,
+        policyId: authority.policyId,
+        policyGeneration: authority.policyGeneration,
+        policySourceDigest: authority.policyDigest,
+      });
+    }
+
     const ownerLease = authority?.kind === "OWNER_ESCALATION_LEASE_HMAC_V1";
     if (ownerLease) {
       if (this.state.consumedAuthorityLeases[authority.leaseId] !== undefined) {
@@ -635,6 +669,8 @@ export class DemoMutationGate {
         action.actor === "agent:admin-ai-poc"
         && (
           !equalSecret(prior.receipt.decisionDigest, authority.decisionDigest)
+          || prior.receipt.policyId !== authority.policyId
+          || prior.receipt.policyGeneration !== authority.policyGeneration
           || !equalSecret(prior.receipt.policyDigest, authority.policyDigest)
         )
       ) throw new Error("REPLAY_AUTHORITY_CONFLICT_DENIED");

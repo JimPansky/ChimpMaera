@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
+import { execFile as execFileCallback } from "node:child_process";
 import {
   copyFile,
   mkdir,
   mkdtemp,
   readFile,
+  rm,
   symlink,
   unlink,
   writeFile,
@@ -12,7 +14,10 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 import { verifySupplyChain } from "../scripts/verify-supply-chain.mjs";
+
+const execFile = promisify(execFileCallback);
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const lockPath = "demo/manifests/supply-chain/artifact-lock-v1.json";
@@ -79,6 +84,23 @@ test("real repository declarations produce a bounded PASS report", async () => {
     "RUNTIME_POSTURE_AND_PAPERLESS_NON_CLAIM_VERIFIED",
   ]);
   assert.match(report.claimBoundary, /not registry signature/i);
+});
+
+test("public release staging accepts an isolated Git worktree control file", async () => {
+  const target = await mkdtemp(path.join(tmpdir(), "cm-public-build-test-"));
+  try {
+    const output = path.join(target, "cm-v0.1-public-rc-20260801-test");
+    await execFile(path.join(root, "scripts/build-public-release.sh"), [
+      "--output",
+      output,
+    ]);
+    const metadata = await (await import("node:fs/promises")).stat(
+      `${output}.tar.gz`,
+    );
+    assert.ok(metadata.size > 0);
+  } finally {
+    await rm(target, { recursive: true, force: true });
+  }
 });
 
 test("mutable OCI, npm integrity, CI ref, runtime omission and release omission deny", async () => {

@@ -201,7 +201,8 @@ repository_only_files = {".github/FUNDING.yml", "SHA256SUMS"}
 for candidate in root.rglob("*"):
     relative = candidate.relative_to(root).as_posix()
     if (
-        relative.startswith(".git/")
+        relative == ".git"
+        or relative.startswith(".git/")
         or relative.startswith("node_modules/")
         or relative.startswith("dist/")
         or "/__pycache__/" in f"/{relative}"

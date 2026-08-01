@@ -55,6 +55,16 @@ cannot issue authority. A closed action-adapter ceiling and the Wave 1 gate
 remain the executable trust boundary; malformed or overbroad evaluator output
 fails closed.
 
+The Admin-AI Policy is activated through a local generation fence. An exact
+candidate binds tenant, Policy ID, source bytes, semantic digest and a strictly
+increasing generation to a purpose-separated local Owner authorization. The
+authenticated activation record retains the preceding generation as an
+explicit last-known-safe snapshot. Decisions and effect authorities carry the
+active Policy ID, generation and source digest, and the gate reloads and checks
+that record immediately before provider access. Generation divergence or an
+explicit fallback freezes dispatch; fallback bytes are never silently treated
+as a new generation.
+
 Wave 3 adds only a disabled-by-default Paperless-ngx read adapter seam. It can
 construct fixed GET requests for synthetic zoo metadata, sanitize responses and
 emit digest-only read receipts. It is not wired to the stock Compose stack and

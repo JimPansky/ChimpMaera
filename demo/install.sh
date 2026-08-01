@@ -112,6 +112,7 @@ catalog_manifest_sha256="$(
     cut -d' ' -f1
 )"
 admin_ai_policy_id=admin-ai-poc-policy-v1
+admin_ai_policy_generation=1
 admin_ai_policy_sha256="$(
   sha256sum "$root/demo/manifests/authority/$admin_ai_policy_id.json" |
     cut -d' ' -f1
@@ -224,6 +225,7 @@ CM_AUTHORITY_MANIFEST_SHA256=$authority_manifest_sha256
 CM_CATALOG_MANIFEST_ID=$catalog_manifest_id
 CM_CATALOG_MANIFEST_SHA256=$catalog_manifest_sha256
 CM_ADMIN_AI_POLICY_ID=$admin_ai_policy_id
+CM_ADMIN_AI_POLICY_GENERATION=$admin_ai_policy_generation
 CM_ADMIN_AI_POLICY_SHA256=$admin_ai_policy_sha256
 CM_FIXTURE_MANIFEST_ID=$fixture_manifest_id
 CM_FIXTURE_MANIFEST_SHA256=$fixture_manifest_sha256

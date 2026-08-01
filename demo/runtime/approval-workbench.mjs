@@ -50,6 +50,8 @@ function validateEscalationDecision(decision) {
     "decisionDigest",
     "outcome",
     "policyDigest",
+    "policyGeneration",
+    "policyId",
     "reasonCodes",
     "replayKey",
     "requestId",
@@ -57,7 +59,7 @@ function validateEscalationDecision(decision) {
     "schemaVersion",
   ], "OWNER_ESCALATION_DECISION_INVALID_DENIED");
   if (
-    decision.schemaVersion !== "chimpmaera.demo/admin-ai-decision/v2"
+    decision.schemaVersion !== "chimpmaera.demo/admin-ai-decision/v3"
     || decision.actor !== "agent:admin-ai-poc"
     || decision.requestKind !== "SYNTHETIC_DOLIBARR_ORDER_CREATE"
     || decision.outcome !== "OWNER_ESCALATION"
@@ -66,6 +68,9 @@ function validateEscalationDecision(decision) {
     || decision.authority !== null
     || decision.action?.scope?.provider !== "dolibarr"
     || decision.action?.scope?.entity !== "Order"
+    || decision.policyId !== "admin-ai-poc-policy-v1"
+    || !Number.isSafeInteger(decision.policyGeneration)
+    || decision.policyGeneration < 1
   ) throw new Error("OWNER_ESCALATION_DECISION_INVALID_DENIED");
   for (const value of [
     decision.requestId,
@@ -96,7 +101,8 @@ function proposalCore(decision, context) {
     businessDiffDigest: decision.businessDiffDigest,
     replayKey: decision.replayKey,
     policyDigest: decision.policyDigest,
-    policyGeneration: context.policyGeneration,
+    policyGeneration: decision.policyGeneration,
+    policyId: decision.policyId,
     profileId: context.profileId,
     profileGeneration: context.profileGeneration,
   };
@@ -113,6 +119,7 @@ function validateProposal(proposal) {
     "outcome",
     "policyDigest",
     "policyGeneration",
+    "policyId",
     "profileGeneration",
     "profileId",
     "proposalDigest",
@@ -126,6 +133,7 @@ function validateProposal(proposal) {
     proposal.schemaVersion !== PROPOSAL_SCHEMA
     || proposal.outcome !== "OWNER_ESCALATION"
     || proposal.profileId !== "SAFE_GUIDED"
+    || proposal.policyId !== "admin-ai-poc-policy-v1"
     || !Number.isSafeInteger(proposal.policyGeneration)
     || proposal.policyGeneration < 1
     || typeof proposal.profileGeneration !== "string"
@@ -157,6 +165,8 @@ function validateDecisionReceipt(receipt, proposal) {
     "ownerActor",
     "ownerDecision",
     "policyDigest",
+    "policyGeneration",
+    "policyId",
     "profileGeneration",
     "profileId",
     "proposalDigest",
@@ -180,6 +190,8 @@ function validateDecisionReceipt(receipt, proposal) {
     || receipt.actionDigest !== proposal.actionDigest
     || receipt.businessDiffDigest !== proposal.businessDiffDigest
     || receipt.policyDigest !== proposal.policyDigest
+    || receipt.policyGeneration !== proposal.policyGeneration
+    || receipt.policyId !== proposal.policyId
     || receipt.profileId !== proposal.profileId
     || receipt.profileGeneration !== proposal.profileGeneration
     || sha256(canonicalJson(core)) !== receiptDigest
@@ -233,6 +245,7 @@ export class ApprovalWorkbench {
     leaseTtlMs = 60_000,
     policyDigest,
     policyGeneration = 1,
+    policyId = "admin-ai-poc-policy-v1",
     profileId = "SAFE_GUIDED",
     profileGeneration,
   }) {
@@ -245,6 +258,7 @@ export class ApprovalWorkbench {
       || leaseTtlMs > 300_000
       || !Number.isSafeInteger(policyGeneration)
       || policyGeneration < 1
+      || policyId !== "admin-ai-poc-policy-v1"
       || profileId !== "SAFE_GUIDED"
       || typeof profileGeneration !== "string"
       || profileGeneration.length < 8
@@ -257,6 +271,7 @@ export class ApprovalWorkbench {
     this.context = {
       policyDigest,
       policyGeneration,
+      policyId,
       profileId,
       profileGeneration,
     };
@@ -283,7 +298,11 @@ export class ApprovalWorkbench {
 
   register(decision) {
     validateEscalationDecision(decision);
-    if (decision.policyDigest !== this.context.policyDigest) {
+    if (
+      decision.policyDigest !== this.context.policyDigest
+      || decision.policyGeneration !== this.context.policyGeneration
+      || decision.policyId !== this.context.policyId
+    ) {
       throw new Error("APPROVAL_POLICY_CONTEXT_MISMATCH_DENIED");
     }
     const core = proposalCore(decision, this.context);
@@ -332,6 +351,8 @@ export class ApprovalWorkbench {
       actionDigest: proposal.actionDigest,
       businessDiffDigest: proposal.businessDiffDigest,
       policyDigest: proposal.policyDigest,
+      policyGeneration: proposal.policyGeneration,
+      policyId: proposal.policyId,
       profileId: proposal.profileId,
       profileGeneration: proposal.profileGeneration,
     };

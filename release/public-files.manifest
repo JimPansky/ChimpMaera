@@ -47,6 +47,7 @@ demo/runtime/approval-workbench.mjs	demo/runtime/approval-workbench.mjs	0644
 demo/runtime/enforcement-gate.mjs	demo/runtime/enforcement-gate.mjs	0644
 demo/runtime/paperless-ngx-zoo-adapter.mjs	demo/runtime/paperless-ngx-zoo-adapter.mjs	0644
 demo/runtime/policy-evaluator.mjs	demo/runtime/policy-evaluator.mjs	0644
+demo/runtime/policy-generation-fence.mjs	demo/runtime/policy-generation-fence.mjs	0644
 demo/runtime/server.mjs	demo/runtime/server.mjs	0644
 demo/seed-and-flow.sh	demo/seed-and-flow.sh	0755
 demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
@@ -81,6 +82,7 @@ tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644
+tests/demo-policy-generation-fence.test.mjs	tests/demo-policy-generation-fence.test.mjs	0644
 tests/demo-fixture-manifest.test.ts	tests/demo-fixture-manifest.test.ts	0644
 tests/poc-early-admin-ai-setup.test.ts	tests/poc-early-admin-ai-setup.test.ts	0644
 tests/poc-guided-demo-bootstrap.test.ts	tests/poc-guided-demo-bootstrap.test.ts	0644

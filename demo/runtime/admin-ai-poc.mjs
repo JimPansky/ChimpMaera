@@ -9,7 +9,7 @@ import {
 
 const ACTOR = "agent:admin-ai-poc";
 const REQUEST_SCHEMA = "chimpmaera.demo/admin-ai-request/v1";
-const DECISION_SCHEMA = "chimpmaera.demo/admin-ai-decision/v2";
+const DECISION_SCHEMA = "chimpmaera.demo/admin-ai-decision/v3";
 
 function assertExactKeys(value, expected, code) {
   if (
@@ -240,6 +240,8 @@ export class AdminAiPoc {
       reasonCodes: policyDecision.reasonCodes,
       actionDigest,
       businessDiffDigest,
+      policyId: this.trustedPolicyContext.policyId,
+      policyGeneration: this.trustedPolicyContext.policyGeneration,
       policyDigest: this.policyDigest,
       replayKey: request.replayKey,
     };
@@ -250,6 +252,8 @@ export class AdminAiPoc {
         scope: action.scope,
         actionDigest,
         replayKey: action.replayKey,
+        policyId: this.trustedPolicyContext.policyId,
+        policyGeneration: this.trustedPolicyContext.policyGeneration,
         policyDigest: this.policyDigest,
         decisionDigest,
       })

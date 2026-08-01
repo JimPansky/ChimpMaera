@@ -82,6 +82,7 @@
       "demo/runtime/approval-workbench.mjs",
       "demo/runtime/paperless-ngx-zoo-adapter.mjs",
       "demo/runtime/policy-evaluator.mjs",
+      "demo/runtime/policy-generation-fence.mjs",
       "docs/SUPPLY-CHAIN.md",
       "packages/contracts/src/paperless-zoo-adapter.ts",
       "packages/contracts/src/policy-evaluator.ts",
@@ -89,6 +90,7 @@
       "tests/demo-approval-workbench.test.mjs",
       "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
       "tests/demo-policy-evaluator.test.mjs",
+      "tests/demo-policy-generation-fence.test.mjs",
       "tests/supply-chain-verifier.test.mjs"
     ],
     "developmentEvidenceExcluded": true
