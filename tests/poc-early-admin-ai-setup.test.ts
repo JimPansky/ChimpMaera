@@ -390,6 +390,9 @@ test("EARLY-ADMIN-DASHBOARD loopback status, dialog and repair E2E reject foreig
   );
   const page = await pageResponse.text();
   assert.match(page, /Admin-AI Approval Workbench/);
+  assert.match(page, /Permission X-ray/);
+  assert.match(page, /ALLOW is not executable authority/);
+  assert.match(page, /\/api\/effective-rights/);
   assert.match(
     page,
     /Deterministic static-policy preview — no live LLM and no production authority\./,
@@ -405,6 +408,19 @@ test("EARLY-ADMIN-DASHBOARD loopback status, dialog and repair E2E reject foreig
   assert.match(page, /'APPROVE'/);
   assert.match(page, /'REJECT'/);
   assert.doesNotMatch(page, /createHmac|chimp-control-token|live LLM call/);
+  const xrayResponse = await fetch(base + "/api/effective-rights");
+  assert.equal(xrayResponse.status, 200);
+  const xray = await xrayResponse.json() as {
+    claim: string;
+    outcome: string;
+    ceilings: readonly unknown[];
+    informationalOnly: boolean;
+  };
+  assert.equal(xray.claim, "INFORMATIONAL_ONLY_NO_EXECUTABLE_AUTHORITY");
+  assert.equal(xray.outcome, "ALLOW");
+  assert.equal(xray.ceilings.length, 4);
+  assert.equal(xray.informationalOnly, true);
+  assert.equal(Object.hasOwn(xray, "authority"), false);
   assert.equal((await fetch(`${base}/missing`)).status, 404);
 
   const post = async (path: string, body: unknown) => {

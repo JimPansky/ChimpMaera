@@ -65,6 +65,16 @@ that record immediately before provider access. Generation divergence or an
 explicit fallback freezes dispatch; fallback bytes are never silently treated
 as a new generation.
 
+The local permission X-ray is a separate informational path. A closed-schema
+effective-rights compiler intersects synthetic profile, assignment, capability
+and constraint ceilings across action, resource, field, purpose and effect
+scope. Missing, unknown, stale, conflicting, explicitly denied or empty
+intersections return DENY; capability presence alone cannot grant. The
+read-only dashboard renders the compiler result directly, including every
+contributing ceiling, reason fact and result digest. Its ALLOW outcome issues
+no authority and does not replace Policy evaluation, approval or use-time
+enforcement.
+
 Wave 3 adds only a disabled-by-default Paperless-ngx read adapter seam. It can
 construct fixed GET requests for synthetic zoo metadata, sanitize responses and
 emit digest-only read receipts. It is not wired to the stock Compose stack and

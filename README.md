@@ -13,9 +13,11 @@ readback.
 The local v0.2 Wave 1 feature candidate on this branch adds an Approval
 Workbench for the existing deterministic synthetic-order escalation: readable
 business diff, explicit local Approve/Reject, a short one-use authority lease,
-provider-gate enforcement, decision/effect receipts and semantic readback. It
-does not call a live LLM or claim production authority. The v0.1.0 tag remains
-unchanged.
+provider-gate enforcement, decision/effect receipts and semantic readback.
+Later local security slices add generation-fenced Policy activation and a
+read-only permission X-ray that shows the exact synthetic effective-rights
+intersection and denial facts. It does not call a live LLM or claim production
+authority. The v0.1.0 tag remains unchanged.
 
 This candidate is not a production release, security certification, hosted
 service, support promise or permission to connect real systems. It contains no

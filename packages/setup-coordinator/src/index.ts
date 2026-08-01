@@ -29,10 +29,13 @@ import {
   buildPocEarlyAdminStatusV1,
   buildPocGuidedDemoCleanupReceiptV1,
   buildPocGuidedDemoSetupReceiptV1,
+  compileEffectiveRightsV1,
   promotePocEarlyAdminToStageBV1,
   resetPocAdminAuthorityToSafeV1,
+  renderPermissionXrayV1,
   resumePocEarlyAdminSetupV1,
   runPocEarlyAdminSyntheticSetupV1,
+  syntheticEffectiveRightsInputV1,
   verifyPocEarlyAdminRepairReceiptV1,
   verifyPocEarlyAdminStatusV1,
   verifyPocGuidedDemoSetupPlanV1,
@@ -44,6 +47,7 @@ import {
   type PocEarlyAdminStatusV1,
   type PocGuidedDemoSetupPlanV1,
   type PocGuidedDemoCleanupReceiptV1,
+  type PermissionXrayV1,
 } from "../../contracts/src/index.js";
 
 export class PocEarlyAdminCoordinatorV1 {
@@ -112,6 +116,12 @@ export class PocEarlyAdminCoordinatorV1 {
 
   status(): PocEarlyAdminStatusV1 {
     return verifyPocEarlyAdminStatusV1(this.statusValue);
+  }
+
+  permissionXray(): PermissionXrayV1 {
+    return renderPermissionXrayV1(
+      compileEffectiveRightsV1(syntheticEffectiveRightsInputV1()),
+    );
   }
 
   activateAuthority(
@@ -516,6 +526,7 @@ const DASHBOARD_HTML = `<!doctype html>
     <section class="card"><h2>Health & authority</h2><pre id="health"></pre></section>
     <section class="card"><h2>Warnings & decisions</h2><pre id="decisions"></pre></section>
     <section class="card"><h2>Receipts, resume & cleanup</h2><pre id="receipts"></pre></section>
+    <section class="card"><h2>Permission X-ray</h2><p>Read-only local synthetic facts; ALLOW is not executable authority.</p><pre id="permission-xray"></pre></section>
   </main>
   <section class="card" id="admin-ai-proof"><h2>Admin-AI Approval Workbench</h2>
     <p>Deterministic static-policy preview — no live LLM and no production authority. OWNER_ESCALATION requires an explicit local owner Approve or Reject decision.</p>
@@ -530,7 +541,7 @@ const DASHBOARD_HTML = `<!doctype html>
     const byId=(id)=>document.getElementById(id);
     function controlToken(){let token=sessionStorage.getItem('cmControlToken');if(!token){token=prompt('Paste the local ChimpMaera control token from .chimpmaera-demo/secrets/chimp-api-token')||'';if(token)sessionStorage.setItem('cmControlToken',token)}return token}
     async function api(path,body){const headers={'content-type':'application/json'};if(body){headers.authorization='Bearer '+controlToken();headers['x-cm-csrf']='chimpmaera-local-v1'}const response=await fetch(path,{method:body?'POST':'GET',headers,body:body?JSON.stringify(body):undefined});const value=await response.json();if(!response.ok)throw new Error(value.error);return value}
-    async function refresh(){const s=await api('/api/status');byId('summary').textContent=s.currentAction;byId('progress').value=s.progress.percent;byId('plan').textContent=JSON.stringify({template:s.template,plan:s.plan,provider:s.provider},null,2);byId('stages').textContent=s.stages.map(x=>x.status+' '+x.label).join('\\n');byId('resources').textContent=JSON.stringify(s.resources,null,2);byId('health').textContent=JSON.stringify({health:s.health,authority:s.authority},null,2);byId('decisions').textContent=JSON.stringify({warnings:s.warnings,decisions:s.decisions},null,2);byId('receipts').textContent=JSON.stringify({receipts:s.receipts,resume:s.resume,cleanup:s.cleanup},null,2)}
+    async function refresh(){const [s,x]=await Promise.all([api('/api/status'),api('/api/effective-rights')]);byId('summary').textContent=s.currentAction;byId('progress').value=s.progress.percent;byId('plan').textContent=JSON.stringify({template:s.template,plan:s.plan,provider:s.provider},null,2);byId('stages').textContent=s.stages.map(x=>x.status+' '+x.label).join('\\n');byId('resources').textContent=JSON.stringify(s.resources,null,2);byId('health').textContent=JSON.stringify({health:s.health,authority:s.authority},null,2);byId('decisions').textContent=JSON.stringify({warnings:s.warnings,decisions:s.decisions},null,2);byId('receipts').textContent=JSON.stringify({receipts:s.receipts,resume:s.resume,cleanup:s.cleanup},null,2);byId('permission-xray').textContent=JSON.stringify(x,null,2)}
     async function act(path,body){try{const value=await api(path,body??{});byId('action').textContent=JSON.stringify(value,null,2);await refresh()}catch(error){byId('action').textContent=String(error)}}
     let adminAiEffect=null;
     async function adminAiRequest(requestKind,replayKey,resultId){const control=byId('admin-ai-effect-control');control.replaceChildren();adminAiEffect=null;try{const value=await api('/api/demo/admin-ai/request',{schemaVersion:'chimpmaera.demo/admin-ai-request/v1',actor:'agent:admin-ai-poc',requestKind,replayKey});const d=value.decision;byId(resultId).textContent=JSON.stringify({outcome:d.outcome,reasonCode:d.reasonCodes[0],policyDigest:d.policyDigest,businessDiff:d.businessDiff,businessDiffDigest:d.businessDiffDigest},null,2);if(d.outcome==='AUTO_GRANT'){adminAiEffect={decision:d,authority:d.authority};addAdminAiButton(control,'Run approved effect',adminAiRunEffect)}else if(d.outcome==='OWNER_ESCALATION'){adminAiEffect={decision:d,authority:null};addAdminAiButton(control,'Approve',()=>adminAiOwnerDecision('APPROVE'));addAdminAiButton(control,'Reject',()=>adminAiOwnerDecision('REJECT'))}}catch(error){byId(resultId).textContent=String(error)}}
@@ -573,6 +584,10 @@ export function createPocEarlyAdminDashboardServerV1(
       }
       if (request.method === "GET" && url.pathname === "/api/status") {
         sendJson(response, 200, coordinator.status());
+        return;
+      }
+      if (request.method === "GET" && url.pathname === "/api/effective-rights") {
+        sendJson(response, 200, coordinator.permissionXray());
         return;
       }
       const body = request.method === "POST" ? await readJson(request) : {};

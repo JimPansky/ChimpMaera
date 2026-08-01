@@ -190,6 +190,25 @@ assert_readback() {
           end)' "$file" >/dev/null
 }
 
+assert_permission_xray() {
+  local output="$1"
+  curl --fail --silent --show-error \
+    "http://$acceptance_chimp_port/api/effective-rights" >"$output"
+  jq -e \
+    '.schemaVersion == "chimpmaera.security/permission-xray/v1"
+     and .claim == "INFORMATIONAL_ONLY_NO_EXECUTABLE_AUTHORITY"
+     and .outcome == "ALLOW"
+     and .informationalOnly == true
+     and (.sourceResultDigest | test("^[a-f0-9]{64}$"))
+     and (.ceilings | length) == 4
+     and ([.ceilings[].kind] | sort)
+       == ["ASSIGNMENT","CAPABILITY","CONSTRAINT","PROFILE"]
+     and (.reasonFacts | length) >= 5
+     and (has("authority") | not)
+     and (has("credential") | not)
+     and (has("lease") | not)' "$output" >/dev/null
+}
+
 run_install() {
   local mode="$1" profile="$2" seed="$3"
   if [ "$profile" = RAMPAGE ]; then
@@ -249,6 +268,7 @@ case "$scenario" in
     run_install complete SAFE_GUIDED yes
     archive_install
     assert_readback complete SAFE_GUIDED yes "$run_dir/readback.json"
+    assert_permission_xray "$run_dir/permission-xray.json"
     "$root/demo/approval-workbench-smoke.sh" \
       "$run_dir/approval-workbench-smoke.json"
     ;;

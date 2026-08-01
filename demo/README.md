@@ -48,6 +48,9 @@ grant host privileges.
 Success prints `READY_VERIFIED` and loopback URLs for ChimpMaera, EspoCRM and
 Dolibarr. An unchanged rerun is idempotent. The Admin-AI PoC uses a
 deterministic local policy, not a live LLM or production delegation service.
+The dashboard permission X-ray is GET-only and informational: it displays the
+exact synthetic profile/assignment/capability/constraint intersection and
+issues no executable authority.
 
 The source tree also contains a Wave 3 Paperless-ngx zoo adapter contract. It
 is intentionally disabled in this installer (`CM_DMS=off`) and is tested only

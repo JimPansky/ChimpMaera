@@ -31,6 +31,10 @@ These limits are part of the claim discipline required by
   not an independent production signer, HSM, transparency log, rollback-proof
   store or distributed rollout protocol. A compromised host or runtime key can
   forge this local boundary.
+- The permission X-ray intersects exact synthetic local operands and is
+  informational only. It does not prove production IAM/role-source freshness,
+  tenant isolation or authorization completeness, and its ALLOW result is not
+  executable authority.
 - The Paperless-ngx zoo adapter is a disabled-by-default, read-only client
   boundary tested with synthetic HTTP fixtures. The stock demo does not install
   or contact Paperless. Real-service compatibility, ingest, document content,
