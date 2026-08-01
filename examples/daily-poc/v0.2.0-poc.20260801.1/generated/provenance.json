@@ -1,24 +1,454 @@
 {
   "candidateVersion": "v0.2.0-poc.20260801.1",
   "compiler": "chimpmaera.daily-poc-compiler/v1",
-  "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "manifestSha256": "58fd709a8df5bda0dabe29ed792fd52ffcb3703aa3582ec63163ada5b3b93629",
   "materialChange": {
     "changedFiles": [
+      ".github/PULL_REQUEST_TEMPLATE.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/daily-poc-candidate.yml",
+      ".gitignore",
+      "CONTRIBUTING.md",
       "README.md",
-      "SHA256SUMS"
+      "SECURITY.md",
+      "SHA256SUMS",
+      "demo/README.md",
+      "demo/acceptance.sh",
+      "demo/approval-workbench-smoke.sh",
+      "demo/chimpmaera.Dockerfile",
+      "demo/compose.yaml",
+      "demo/install.sh",
+      "demo/managed-skill-lifecycle/compose.yaml",
+      "demo/managed-skill-lifecycle/fixture-probe.mjs",
+      "demo/managed-skill-lifecycle/fixtures/zoo-greeter/SKILL.md",
+      "demo/managed-skill-lifecycle/lib.sh",
+      "demo/managed-skill-lifecycle/manager.Dockerfile",
+      "demo/managed-skill-lifecycle/manager.mjs",
+      "demo/managed-skill-lifecycle/openclaw.Dockerfile",
+      "demo/managed-skill-lifecycle/openclaw.json",
+      "demo/managed-skill-lifecycle/plugin/index.mjs",
+      "demo/managed-skill-lifecycle/plugin/openclaw.plugin.json",
+      "demo/managed-skill-lifecycle/plugin/package.json",
+      "demo/managed-skill-lifecycle/reset.sh",
+      "demo/managed-skill-lifecycle/runtime-contract-v1.json",
+      "demo/managed-skill-lifecycle/setup.sh",
+      "demo/managed-skill-lifecycle/smoke.sh",
+      "demo/managed-skill-lifecycle/workspace/AGENTS.md",
+      "demo/managed-skill-lifecycle/workspace/HEARTBEAT.md",
+      "demo/managed-skill-lifecycle/workspace/IDENTITY.md",
+      "demo/managed-skill-lifecycle/workspace/SOUL.md",
+      "demo/managed-skill-lifecycle/workspace/TOOLS.md",
+      "demo/managed-skill-lifecycle/workspace/USER.md",
+      "demo/managed-skill-lifecycle/workspace/openclaw-workspace-state.json",
+      "demo/management/policy-lifecycle.mjs",
+      "demo/manifests/supply-chain/artifact-lock-v1.json",
+      "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json",
+      "demo/model-access-broker/broker.Dockerfile",
+      "demo/model-access-broker/broker.mjs",
+      "demo/model-access-broker/compose.yaml",
+      "demo/model-access-broker/fixture-probe.mjs",
+      "demo/model-access-broker/frontdoor.Dockerfile",
+      "demo/model-access-broker/frontdoor.mjs",
+      "demo/model-access-broker/lib.sh",
+      "demo/model-access-broker/openclaw.Dockerfile",
+      "demo/model-access-broker/provider.Dockerfile",
+      "demo/model-access-broker/provider.mjs",
+      "demo/model-access-broker/reset.sh",
+      "demo/model-access-broker/runtime-contract-v1.json",
+      "demo/model-access-broker/setup.sh",
+      "demo/model-access-broker/smoke.sh",
+      "demo/openclaw-agent/compose.yaml",
+      "demo/openclaw-agent/fixture-probe.mjs",
+      "demo/openclaw-agent/gateway.Dockerfile",
+      "demo/openclaw-agent/gateway.mjs",
+      "demo/openclaw-agent/lib.sh",
+      "demo/openclaw-agent/openclaw.Dockerfile",
+      "demo/openclaw-agent/openclaw.json",
+      "demo/openclaw-agent/plugin/index.mjs",
+      "demo/openclaw-agent/plugin/openclaw.plugin.json",
+      "demo/openclaw-agent/plugin/package.json",
+      "demo/openclaw-agent/reset.sh",
+      "demo/openclaw-agent/runtime-contract-v1.json",
+      "demo/openclaw-agent/setup.sh",
+      "demo/openclaw-agent/smoke.sh",
+      "demo/openclaw-agent/workspace/AGENTS.md",
+      "demo/openclaw-agent/workspace/HEARTBEAT.md",
+      "demo/openclaw-agent/workspace/IDENTITY.md",
+      "demo/openclaw-agent/workspace/SOUL.md",
+      "demo/openclaw-agent/workspace/TOOLS.md",
+      "demo/openclaw-agent/workspace/USER.md",
+      "demo/openclaw-agent/workspace/openclaw-workspace-state.json",
+      "demo/runtime/admin-ai-poc.mjs",
+      "demo/runtime/admin-ai-policy.mjs",
+      "demo/runtime/approval-workbench.mjs",
+      "demo/runtime/authoritative-approval-snapshot.mjs",
+      "demo/runtime/enforcement-gate.mjs",
+      "demo/runtime/paperless-ngx-zoo-adapter.mjs",
+      "demo/runtime/policy-evaluator.mjs",
+      "demo/runtime/policy-generation-fence.mjs",
+      "demo/runtime/server.mjs",
+      "docs/ARCHITECTURE.md",
+      "docs/CANON.md",
+      "docs/CONNECT-YOUR-FIRST-SYSTEM.md",
+      "docs/DAILY-POC-CANDIDATES.md",
+      "docs/DAILY-POC-ITERATION.md",
+      "docs/KNOWN-LIMITATIONS.md",
+      "docs/SUPPLY-CHAIN.md",
+      "docs/ZOO-FIELD-GUIDE.md",
+      "docs/development/admin-ai-aas-001-setup-repair-containment-pdca.md",
+      "docs/development/admin-ai-aas-002-policy-generation-fence-pdca.md",
+      "docs/development/admin-ai-aas-003-effective-rights-pdca.md",
+      "docs/development/admin-ai-aas-009-injection-trust-boundary-pdca.md",
+      "docs/development/admin-ai-aas-012-inactive-capability-catalogue-pdca.md",
+      "docs/development/admin-ai-aas-016-authoritative-approval-diff-pdca.md",
+      "docs/development/admin-ai-aas-017-signed-policy-lifecycle-pdca.md",
+      "docs/development/admin-ai-aas-023-protected-audit-timeline-pdca.md",
+      "docs/development/admin-ai-aas-035-openclaw-agent-docker-pdca.md",
+      "docs/development/admin-ai-aas-036-agent-compatibility.md",
+      "docs/development/admin-ai-aas-036-model-access-broker-pdca.md",
+      "docs/development/admin-ai-aas-037-agent-compatibility.md",
+      "docs/development/admin-ai-aas-037-managed-skill-lifecycle-pdca.md",
+      "docs/development/admin-ai-retrospective-expansion-audit.md",
+      "docs/development/admin-ai-retrospective-expansion-decisions.json",
+      "docs/development/admin-ai-security-control-analysis.md",
+      "docs/development/admin-ai-security-expansion-backlog.md",
+      "docs/development/admin-ai-security-scout-canon-ux.md",
+      "docs/development/admin-ai-security-scout-security.md",
+      "docs/development/agent-runtime-isolation-contract.md",
+      "docs/development/canon-zoo-guide-normative-delta-matrix.json",
+      "docs/development/canon-zoo-guide-security-architecture-impact-analysis.md",
+      "docs/development/daily-poc-change-log.md",
+      "docs/development/daily-poc-decision-log.md",
+      "docs/development/evidence/admin-ai-aas-001-20260801.json",
+      "docs/development/evidence/admin-ai-aas-002-20260801.json",
+      "docs/development/evidence/admin-ai-aas-003-20260801.json",
+      "docs/development/evidence/admin-ai-aas-009-20260801.json",
+      "docs/development/evidence/admin-ai-aas-012-20260801.json",
+      "docs/development/evidence/admin-ai-aas-016-20260801.json",
+      "docs/development/evidence/admin-ai-aas-017-20260801.json",
+      "docs/development/evidence/admin-ai-aas-023-20260801.json",
+      "docs/development/evidence/admin-ai-aas-035-20260801.json",
+      "docs/development/evidence/admin-ai-aas-035-openclaw-provenance-20260801.json",
+      "docs/development/evidence/admin-ai-aas-036-20260801.json",
+      "docs/development/evidence/admin-ai-aas-037-20260801.json",
+      "docs/development/evidence/v0.2-review-readiness-20260801.json",
+      "docs/development/evidence/v0.2-source-hygiene-risk-decision-20260801.json",
+      "docs/development/evidence/v0.2-wave1-smoke-20260731.json",
+      "docs/development/evidence/v0.2-waves1-4-final-smoke-20260731.json",
+      "docs/development/github-agent-runtime-issue-audit.md",
+      "docs/development/rel-daily-001-pdca.md",
+      "docs/development/tools/verify-v0.2-review-evidence.mjs",
+      "docs/development/tools/verify-v0.2-review-evidence.test.mjs",
+      "docs/development/v0.2-adversarial-rc-review-pdca.md",
+      "docs/development/v0.2-approval-workbench-checkpoint.md",
+      "docs/development/v0.2-approval-workbench-pdca.md",
+      "docs/development/v0.2-post-wave-stability-pdca.md",
+      "docs/development/v0.2-review-handoff.md",
+      "docs/development/v0.2-review-readiness-pdca.md",
+      "docs/development/v0.2-roadmap-final-checkpoint.md",
+      "docs/development/v0.2-source-hygiene-risk-decision-pdca.md",
+      "docs/development/v0.2-wave2-policy-evaluator-checkpoint.md",
+      "docs/development/v0.2-wave2-policy-evaluator-pdca.md",
+      "docs/development/v0.2-wave3-paperless-zoo-adapter-checkpoint.md",
+      "docs/development/v0.2-wave3-paperless-zoo-adapter-pdca.md",
+      "docs/development/v0.2-wave4-supply-chain-checkpoint.md",
+      "docs/development/v0.2-wave4-supply-chain-pdca.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/artifact-manifest.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/candidate-report.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/demo-guide.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/evidence-index.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/evidence-summary.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/known-limitations.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/provenance.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/readme-pointer.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/release-notes.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/run-report.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/sbom.spdx.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/snapshot.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-adapter.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-brief.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-narration.md",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-storyboard.json",
+      "examples/daily-poc/v0.2.0-poc.20260801.1/manifest.json",
+      "package.json",
+      "packages/contracts/src/capability-catalogue.ts",
+      "packages/contracts/src/effective-rights.ts",
+      "packages/contracts/src/index.ts",
+      "packages/contracts/src/injection-trust-boundary.ts",
+      "packages/contracts/src/model-access-broker.ts",
+      "packages/contracts/src/paperless-zoo-adapter.ts",
+      "packages/contracts/src/poc-early-admin-ai-setup.ts",
+      "packages/contracts/src/policy-evaluator.ts",
+      "packages/contracts/src/protected-audit-timeline.ts",
+      "packages/contracts/src/skill-admission.ts",
+      "packages/setup-coordinator/src/index.ts",
+      "release/public-files.manifest",
+      "schemas/contracts/protected-audit-timeline-v1.schema.json",
+      "schemas/daily-poc-manifest-v1.schema.json",
+      "scripts/build-public-release.sh",
+      "scripts/daily-poc.mjs",
+      "scripts/verify-openclaw-agent-runtime-lock.mjs",
+      "scripts/verify-supply-chain.mjs",
+      "tests/capability-catalogue.test.ts",
+      "tests/daily-poc.test.mjs",
+      "tests/demo-admin-ai-poc.test.mjs",
+      "tests/demo-approval-workbench.test.mjs",
+      "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
+      "tests/demo-policy-evaluator.test.mjs",
+      "tests/demo-policy-generation-fence.test.mjs",
+      "tests/demo-policy-lifecycle.test.mjs",
+      "tests/effective-rights.test.ts",
+      "tests/fixtures/daily-poc/negative-matrix.json",
+      "tests/injection-trust-boundary.test.ts",
+      "tests/managed-skill-lifecycle-runtime.test.mjs",
+      "tests/model-access-broker-runtime.test.mjs",
+      "tests/model-access-broker.test.ts",
+      "tests/openclaw-agent-runtime-lock.test.mjs",
+      "tests/openclaw-agent-runtime.test.mjs",
+      "tests/poc-early-admin-ai-setup.test.ts",
+      "tests/protected-audit-timeline.test.ts",
+      "tests/skill-admission.test.ts",
+      "tests/supply-chain-verifier.test.mjs",
+      "tools/video-production-reference/tests/test_cm_video.py"
     ],
     "commits": [
       {
-        "id": "c0fa407d8224e98bdba9466850b8247f458ce914",
-        "subject": "docs: highlight ChimpMaera videos"
+        "id": "6154a50d7f41ee59f1d7b69b4086e620285b30f9",
+        "subject": "feat: add v0.2 approval workbench wave 1"
+      },
+      {
+        "id": "dcc1050f7d3649f062db97c54d9c4a5915862391",
+        "subject": "docs: finalize v0.2 wave 1 checkpoint"
+      },
+      {
+        "id": "2f89e07bd5195522868eea665352192be62e7125",
+        "subject": "feat: add provider-neutral policy evaluator"
+      },
+      {
+        "id": "a32623cea713202241c9fc1ad4b2c3c743e5a354",
+        "subject": "feat: add read-only Paperless zoo adapter"
+      },
+      {
+        "id": "1b9e6bcb137e76b4f688fa2382f0520c339bbc43",
+        "subject": "build: verify declared supply-chain inputs"
+      },
+      {
+        "id": "f0c0b3aea09de48a9ed3416bcd3a002f32b4efa2",
+        "subject": "docs: finalize v0.2 waves 1 through 4 evidence"
+      },
+      {
+        "id": "f12dbea072178b99b50990bd16766563ac47b80d",
+        "subject": "fix: deny supply-chain verifier path escapes"
+      },
+      {
+        "id": "5fa6aed3cc64c5f61e7e57094d1fd82e328c6710",
+        "subject": "docs: prepare v0.2 local review packet"
+      },
+      {
+        "id": "232b056e6bb07ecea58248a2e7655b07a631a72d",
+        "subject": "docs: close v0.2 review-readiness gate"
+      },
+      {
+        "id": "b548b3d8b25448d078457e30d2b0d17edfa70162",
+        "subject": "docs: adversarially verify v0.2 review candidate"
+      },
+      {
+        "id": "47da5ac4f70221b485b4a2a1989dd1ffe9666d06",
+        "subject": "docs: decide v0.2 source hygiene risk"
+      },
+      {
+        "id": "0d278cbd573b893f3f90936cb3ebfbdc042a8916",
+        "subject": "docs: integrate Admin-AI security analysis backlog"
+      },
+      {
+        "id": "282ad5f74e935849969b9233f70fa5b2134a67c9",
+        "subject": "docs: plan AAS-001 repair containment"
+      },
+      {
+        "id": "72a489263dcd477dba394282a55d498ac2762318",
+        "subject": "fix: contain setup repair filesystem effects"
+      },
+      {
+        "id": "468902be6963fc8d8b1d05aaf05776d999dc9a05",
+        "subject": "docs: close AAS-001 and advance frontier"
+      },
+      {
+        "id": "bdfb7373d331e17903982afd6eb145ffa1879142",
+        "subject": "chore: refresh public integrity closure"
+      },
+      {
+        "id": "1d526f2daab618c036b5239388c0d67a07df05a1",
+        "subject": "docs: finalize AAS-001 evidence closure"
+      },
+      {
+        "id": "e088c7dc2e9990aa21b6c2ca66e3fd0e06924e4b",
+        "subject": "docs: freeze AAS-002 policy fence PDCA contract"
+      },
+      {
+        "id": "8d58bed570038a4ba2068d6aa728a9190dffc763",
+        "subject": "feat: fence Admin AI policy generations"
+      },
+      {
+        "id": "a0b7a08999a8d7bfe7e654c05b41c04fa06dd78f",
+        "subject": "docs: close AAS-002 and advance security frontier"
+      },
+      {
+        "id": "fca22d835400cc350795eb1622e38eaf983466b6",
+        "subject": "docs: start AAS-003 effective-rights PDCA"
+      },
+      {
+        "id": "7c85a065da6bdd200cacc02ccfac8ddbd7484199",
+        "subject": "feat: add effective-rights permission x-ray"
+      },
+      {
+        "id": "3f02727f9a9ba035f9ce7b3ab3017e7ba1925f2b",
+        "subject": "docs: close AAS-003 and advance security frontier"
+      },
+      {
+        "id": "676c8160db69423a3dc1b3995e9279ee6f7e47bc",
+        "subject": "docs: audit retrospective Admin-AI expansion topics"
+      },
+      {
+        "id": "da5fff1fd5d1b03c98e7ad6c2026e99a9cd907b0",
+        "subject": "docs: integrate retrospective Admin-AI scope"
+      },
+      {
+        "id": "ea4bba05942e87546bedb8d7825d688bbb8548ce",
+        "subject": "docs: plan AAS-009 trust boundary"
+      },
+      {
+        "id": "f7641d2dc81ca2008da4c30b4d697d60569427fb",
+        "subject": "feat: add AAS-009 injection trust boundary"
+      },
+      {
+        "id": "7f4a947d6c79a6b8712320e2378589fa810d6929",
+        "subject": "docs: close AAS-009 and advance frontier"
+      },
+      {
+        "id": "27221ad638addf150017542e81187f3fd3c54f09",
+        "subject": "feat: bind approval diff to fresh provider state"
+      },
+      {
+        "id": "501122f855e4d0987896b649d0f93f3e2a6bd64c",
+        "subject": "docs: close AAS-016 and advance frontier"
+      },
+      {
+        "id": "89841b60c3beb3a9dd0a32449d23d21eef25a037",
+        "subject": "docs: plan AAS-012 inactive catalogue"
+      },
+      {
+        "id": "4e3a5952fc6c748b3fe4ac648c82968a18d3f39f",
+        "subject": "feat: add inactive capability catalogue"
+      },
+      {
+        "id": "3a2609036233f68f5e9e9afbb6b497c9ba969fa1",
+        "subject": "docs: close AAS-012 and select OpenClaw runtime"
+      },
+      {
+        "id": "6d681a5680cce23a204e5aa453857e864bf210ce",
+        "subject": "docs: plan AAS-035 OpenClaw runtime"
+      },
+      {
+        "id": "6742ea5e16c3855160a0ca7d59e1f4d583d23671",
+        "subject": "chore: lock OpenClaw runtime provenance"
+      },
+      {
+        "id": "cf1ce64ce33ca6e3e658af69f986a2e3b72a60b7",
+        "subject": "docs: advance AAS-035 to runtime gates"
+      },
+      {
+        "id": "2da70892128971399f7436287ed3038ba540273f",
+        "subject": "docs: streamline secure contribution path"
+      },
+      {
+        "id": "2ddfd1e112e57b1b9ca9c1ec1c37f6640dd9fd7d",
+        "subject": "feat: add isolated OpenClaw agent runtime"
+      },
+      {
+        "id": "7502ef9dd472c7aef7f5763c62d154634f8a4d70",
+        "subject": "docs: close AAS-035 runtime gates"
+      },
+      {
+        "id": "3f157c768d5769487a1e5feb1d97b239b3121d0f",
+        "subject": "docs: checkpoint AAS-035 and select AAS-017"
+      },
+      {
+        "id": "8b257dc5d50aece375cbf32f89dfed7d280ca984",
+        "subject": "feat: add signed policy lifecycle"
+      },
+      {
+        "id": "29d61bfaaf3d640ed952367fc4c68da80d21cc7b",
+        "subject": "docs: checkpoint AAS-017 and select AAS-036"
+      },
+      {
+        "id": "9a95eb869eff00f30afb8c66f3fc2d9f12d74023",
+        "subject": "feat: add guarded model access broker"
+      },
+      {
+        "id": "da76543e12390c3f3d899e178eac17bc4f513759",
+        "subject": "docs: checkpoint AAS-036 and select AAS-037"
+      },
+      {
+        "id": "94cc5f24436b274a252dae3ff9b0326fcf1b2c30",
+        "subject": "feat: add managed skill lifecycle boundary"
+      },
+      {
+        "id": "386c7274f7c82791ca59609ac212de8e15289bd6",
+        "subject": "docs: checkpoint AAS-037 and select AAS-023"
+      },
+      {
+        "id": "ae3eb35f9c091649eec28a97426962e653e7e091",
+        "subject": "feat: add protected audit timeline"
+      },
+      {
+        "id": "253c26cc2f75a48f179c3d38c3e5b6ed33fa82d4",
+        "subject": "docs: checkpoint AAS-023 and select BLD-001"
+      },
+      {
+        "id": "108b23dfcbcc5637d77adc6f6b363586584a193a",
+        "subject": "docs: add governed knowledge-sharing pillar"
+      },
+      {
+        "id": "8530dcb329cf2d921b9e48dfd4515849244d378a",
+        "subject": "docs: bind README security claims to evidence"
+      },
+      {
+        "id": "b42e38a369b282eb8928a3d90411fc68b66a67b5",
+        "subject": "docs: guide first governed system connection"
+      },
+      {
+        "id": "b245790ea6dd6bd353ce1f70ddf4f0f65fcfb5bb",
+        "subject": "docs: define issue and release evidence lifecycle"
+      },
+      {
+        "id": "d22ad0ccd702d0200b9b206f544500987156a419",
+        "subject": "feat: integrate cumulative security POC through AAS-023"
+      },
+      {
+        "id": "39c401240309196a2eef8a50b2466759a4d76c7b",
+        "subject": "docs: integrate low-friction contribution and evidence governance"
+      },
+      {
+        "id": "2c8357e0dc3abadb5133686979e1c27703bc6c18",
+        "subject": "docs: generalize Canon and Zoo runtime security contract"
+      },
+      {
+        "id": "4c0e0513c51bc348be8617d78ccdb77346703cbf",
+        "subject": "feat: integrate deterministic daily POC candidate pipeline"
+      },
+      {
+        "id": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+        "subject": "feat: bind daily release notes to evidence status classes"
       }
     ]
   },
   "publicationEffects": [],
   "schemaVersion": "chimpmaera.daily-poc-provenance/v1",
   "source": {
-    "base": "f06ed8968fd3091e62af08c5caa7ace07e4e16a0",
-    "head": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "base": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
+    "head": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
     "repository": "https://github.com/JimPansky/ChimpMaera.git"
   }
 }

@@ -4,108 +4,194 @@
     {
       "category": "SECURITY",
       "evidenceRefs": [
-        "EVID-VIDEO-README-MERGED",
-        "EVID-VIDEO-SCHEMA-MERGED",
-        "EVID-VIDEO-TEST-MERGED"
+        "EVID-AAS-036-BROKER"
       ],
-      "id": "CM-CLAIM-VIDEO-BOUNDARY",
-      "maturity": "MERGED"
+      "id": "CM-CLAIM-BIDIRECTIONAL-MODEL-BROKER",
+      "maturity": "LOCALLY_VALIDATED"
     },
     {
-      "category": "FEATURE",
+      "category": "OPERATIONS",
       "evidenceRefs": [
-        "EVID-README-MERGED"
+        "EVID-CANON-REVISION"
       ],
-      "id": "CM-CLAIM-VIDEO-DISCOVERY",
-      "maturity": "MERGED"
+      "id": "CM-CLAIM-CANON-RUNTIME-CONTRACT",
+      "maturity": "DESIGNED"
+    },
+    {
+      "category": "OPERATIONS",
+      "evidenceRefs": [
+        "EVID-CONTRIBUTION-GOVERNANCE"
+      ],
+      "id": "CM-CLAIM-CONTRIBUTION-EVIDENCE-LIFECYCLE",
+      "maturity": "DESIGNED"
+    },
+    {
+      "category": "OPERATIONS",
+      "evidenceRefs": [
+        "EVID-DAILY-PIPELINE"
+      ],
+      "id": "CM-CLAIM-DAILY-CANDIDATE-PIPELINE",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "SECURITY",
+      "evidenceRefs": [
+        "EVID-EFFECT-GATE"
+      ],
+      "id": "CM-CLAIM-EFFECT-READBACK-RECEIPT",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "SECURITY",
+      "evidenceRefs": [
+        "EVID-AAS-035-RUNTIME"
+      ],
+      "id": "CM-CLAIM-GATEWAY-MEDIATED-OPENCLAW",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "SECURITY",
+      "evidenceRefs": [
+        "EVID-AAS-023-AUDIT"
+      ],
+      "id": "CM-CLAIM-PROTECTED-AUDIT-TIMELINE",
+      "maturity": "LOCALLY_VALIDATED"
     }
   ],
   "evidence": [
     {
-      "id": "EVID-README-MERGED",
+      "id": "EVID-AAS-023-AUDIT",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-01",
+      "path": "docs/development/evidence/admin-ai-aas-023-20260801.json",
+      "sha256": "35f659cf4453c8c4a5670ef34df37735d090b589ca36c3459c1d90abba449d08",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-AAS-035-RUNTIME",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-01",
+      "path": "docs/development/evidence/admin-ai-aas-035-20260801.json",
+      "sha256": "c383a0d622ef7a2885f0d7e7aeecc957bc0ffc5513b1839ef7a7bf4c480711a3",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-AAS-036-BROKER",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-01",
+      "path": "docs/development/evidence/admin-ai-aas-036-20260801.json",
+      "sha256": "27e891001f0144a8d7c89119f7667bd306ee224ef79cdfdadefe726e2b842db3",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-CANON-REVISION",
       "kind": "SOURCE",
-      "maturity": "MERGED",
+      "maturity": "DESIGNED",
+      "observedOn": "2026-08-01",
+      "path": "docs/CANON.md",
+      "sha256": "7cda7bb499e04cb86bfe3d2d773828c5326b98727bfac68a797628bffeb68b65",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-CONTRIBUTION-GOVERNANCE",
+      "kind": "SOURCE",
+      "maturity": "DESIGNED",
+      "observedOn": "2026-08-01",
+      "path": "CONTRIBUTING.md",
+      "sha256": "317e346e73fb73fef6110dbc410ecc186cd80991f1af4bb85097fc7a1d446273",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-DAILY-PIPELINE",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-01",
+      "path": "tests/daily-poc.test.mjs",
+      "sha256": "7a2d0cd3ff6f3383d3ab38344db365fc94a329776fdeb96f51d638cfd6758991",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-EFFECT-GATE",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-01",
+      "path": "tests/demo-enforcement-gate.test.mjs",
+      "sha256": "7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+      "status": "PASS",
+      "validUntil": "2026-08-31"
+    },
+    {
+      "id": "EVID-README-CLAIMS",
+      "kind": "SOURCE",
+      "maturity": "DESIGNED",
       "observedOn": "2026-08-01",
       "path": "README.md",
-      "sha256": "c8f570f6fae23b9ffa9c8c25714a4e00056a570ad600f6ba6d436aa15e56dbdd",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914",
-      "status": "PASS",
-      "validUntil": "2026-08-31"
-    },
-    {
-      "id": "EVID-VIDEO-README-MERGED",
-      "kind": "SOURCE",
-      "maturity": "MERGED",
-      "observedOn": "2026-08-01",
-      "path": "tools/video-production-reference/README.md",
-      "sha256": "04034722546e1a4fec5026bf45f88b1fe7a25b487db6f4851a875656d0ada823",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914",
-      "status": "PASS",
-      "validUntil": "2026-08-31"
-    },
-    {
-      "id": "EVID-VIDEO-SCHEMA-MERGED",
-      "kind": "SOURCE",
-      "maturity": "MERGED",
-      "observedOn": "2026-08-01",
-      "path": "tools/video-production-reference/schemas/video-job.schema.json",
-      "sha256": "90ea85f85536c13433ae5a01c0ec6e02b979981145f1f52a98c9a7270c4b9ba4",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914",
-      "status": "PASS",
-      "validUntil": "2026-08-31"
-    },
-    {
-      "id": "EVID-VIDEO-TEST-MERGED",
-      "kind": "TEST",
-      "maturity": "MERGED",
-      "observedOn": "2026-08-01",
-      "path": "tools/video-production-reference/tests/test_cm_video.py",
-      "sha256": "64e6c09ab782640ad6ed27dfcba6550457ee17f5fb4e18731a8dc5fb7efa3081",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914",
+      "sha256": "2fa22d268a0af982d5c31061ba2565031f7e106655494054cec3764d8f369e81",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
       "status": "PASS",
       "validUntil": "2026-08-31"
     }
   ],
   "negativeProbes": [
     {
-      "command": "npm run video:test -- --filter public-actions",
+      "command": "node --test tests/openclaw-agent-runtime.test.mjs tests/model-access-broker-runtime.test.mjs",
       "evidenceRefs": [
-        "EVID-VIDEO-TEST-MERGED"
+        "EVID-AAS-035-RUNTIME",
+        "EVID-AAS-036-BROKER"
       ],
-      "id": "PROBE-PUBLIC-ACTIONS-FORBIDDEN",
+      "id": "PROBE-DIRECT-PATHS-DENIED",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run build && node --test dist/tests/protected-audit-timeline.test.js",
+      "evidenceRefs": [
+        "EVID-AAS-023-AUDIT"
+      ],
+      "id": "PROBE-TIMELINE-TAMPER-DENIED",
       "result": "PASS"
     }
   ],
-  "previousVerifiedSnapshot": {
-    "artifactManifestSha256": "1111111111111111111111111111111111111111111111111111111111111111",
-    "date": "2026-07-31",
-    "manifestSha256": "0000000000000000000000000000000000000000000000000000000000000000",
-    "sequence": 1,
-    "snapshotDigest": "cbcb489dc013a22dc32a8add1bfe1967617ae1fb317668b63d465d1325bbbd58",
-    "sourceHead": "f06ed8968fd3091e62af08c5caa7ace07e4e16a0",
-    "version": "v0.1.0-poc.20260731.1"
-  },
+  "previousVerifiedSnapshot": null,
   "schemaVersion": "chimpmaera.daily-poc-evidence-index/v1",
   "source": {
-    "base": "f06ed8968fd3091e62af08c5caa7ace07e4e16a0",
-    "head": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "base": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
+    "head": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
     "repository": "https://github.com/JimPansky/ChimpMaera.git"
   },
   "tests": [
     {
-      "command": "git rev-parse HEAD",
+      "command": "npm run daily-poc:test",
       "evidenceRefs": [
-        "EVID-README-MERGED"
+        "EVID-DAILY-PIPELINE"
       ],
-      "id": "TEST-SOURCE-COMMIT",
+      "id": "TEST-DAILY-PIPELINE",
       "result": "PASS"
     },
     {
-      "command": "npm run video:test",
+      "command": "npm test",
       "evidenceRefs": [
-        "EVID-VIDEO-TEST-MERGED"
+        "EVID-AAS-035-RUNTIME",
+        "EVID-AAS-036-BROKER",
+        "EVID-AAS-023-AUDIT",
+        "EVID-EFFECT-GATE"
       ],
-      "id": "TEST-VIDEO-CONTRACT",
+      "id": "TEST-RUNTIME-CONTRACT",
       "result": "PASS"
     }
   ]

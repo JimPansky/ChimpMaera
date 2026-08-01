@@ -1,17 +1,17 @@
 {
   "artifact_sha256_digests": {
-    "demo-guide.md": "55c4066ea55cb405e6b93d4e50d3f36b4166def8f3e3ae5b3cfa4db64ea6c8dc",
-    "evidence-index.json": "be5a522bbb3627965455c177828c226033d3fe3b836d9b4575a3dfb6dbdfaf9d",
-    "evidence-summary.md": "ca41847ffe55d1af3c67069b22a7d53e8706476052807b6c76055b71e743dc22",
-    "known-limitations.md": "d32f6caa9cff00c83038c8ae3e399ad58d01f328d33d18b8adde6a9acd37c744",
-    "provenance.json": "a2170f435f61c58f0d6cb94514de694cab3c14e31f403a8741718c58e7cb2edd",
+    "demo-guide.md": "7eaf7e5bc43dcf6cf95af4dc6d245f4d6647c02aae5f5bc1568b329acf78ffc2",
+    "evidence-index.json": "8bac66262482f2ddc064471f8ce8854678746b31a89cd42e93003bea73ac1f1e",
+    "evidence-summary.md": "40eab0aa049ef9198151985cc3408fb924a487225c7b2ba7fadb9583857bbd88",
+    "known-limitations.md": "f22553d080fe9604a6dda4739046da8d0c53ac9555984413feb8ea79a166dd31",
+    "provenance.json": "495833f44abe4ae31ad212e1d9b41d285dc4e7d352d9d6f378b7846afe9cd982",
     "readme-pointer.md": "2eaf8eab782e972b1e7f3a2b3bad940c6bede256470615bf81f7e43e3a0592fa",
-    "release-notes.md": "ac7ed1fb6f4c2e17701f1f869b6bf7e4cc5a73dce0741cbd148a9507376a1a3a",
-    "sbom.spdx.json": "30181cca9032e454718915f9d3fd132a9358af459a3d2202341e6b10675022b6",
-    "video-adapter.json": "9cff30b88cc688c9d14c28fff8523b305078e25a47053ad3b1f99172e4f771a1",
-    "video-brief.json": "9081b92088678028f0db59474a4cc8609afe7789cd0a04842fd5db2edcb00461",
-    "video-narration.md": "f33e4e077e0947a2930c6adca83368b91a88fd72d3ae2fa62940780ac27eb4e2",
-    "video-storyboard.json": "25c80c59801ebc558596516aaa26d0e295089490cdd538a1996a10eb541b5c95"
+    "release-notes.md": "6b1c2a0a1fc05ff1d6c6381671fc2d023e5cacdb7ece80771b71fbed9f803eec",
+    "sbom.spdx.json": "3f1802a7671f57399ed09091306239ba616d2c6d33897df3467bdf2fe0589f82",
+    "video-adapter.json": "93d9d3daedc70f7c27ae42a8f1bd7d24f803b7b344f27a7da94fb496bc7a8f5d",
+    "video-brief.json": "6ac92add7c2b5247559abbc8909e245ccb7fcf4ab1b2cae7ea70c24985f5a15b",
+    "video-narration.md": "fbde1500f21d2d20b46a1ebe50536ea5b04f2b4ca646be70680bf353c96c3acb",
+    "video-storyboard.json": "0145883c0145761529234d4be915f4535fae92e1d036bd1d0af49f260f1b7f99"
   },
   "candidateVersion": "v0.2.0-poc.20260801.1",
   "claim_evidence_deviations": [],
@@ -26,7 +26,7 @@
     "gate_7": 1,
     "gate_8": 1
   },
-  "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "manifestSha256": "58fd709a8df5bda0dabe29ed792fd52ffcb3703aa3582ec63163ada5b3b93629",
   "manual_interventions": 0,
   "qc_results": {
     "claimScan": "PASS",

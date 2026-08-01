@@ -2,49 +2,102 @@
 
 Version: `v0.2.0-poc.20260801.1`
 
-## USE-CASE-VIDEO-DISCOVERY — Find the current ChimpMaera video overview
+## USE-CASE-DAILY-CANDIDATE — Prepare and verify one deterministic Daily POC candidate
 
 Inputs:
 
-- A local checkout of source commit c0fa407d8224e98bdba9466850b8247f458ce914
+- This canonical manifest
+- The clean detached frozen source commit
 
 Steps:
 
-1. Open README.md.
-2. Locate the Videos section.
-3. Review the linked overview and security-boundary video descriptions.
+1. Compile the candidate into a new owned output directory.
+2. Verify the generated artifact manifest and checksums.
+3. Build the public archive twice and compare digests.
 
 Expected outcomes:
 
-- The video overview is discoverable from the repository landing page.
-- The text does not claim a stable release or production validation.
+- The candidate is byte-reproducible from the frozen source and manifest.
+- No merge, tag, upload, release, or deployment action occurs.
 
-Demo utility: Provides a short, user-visible entry point for explaining the POC before deeper local demonstration.
+Demo utility: Turns a cumulative local tree into a reviewable evidence packet without adding publication authority.
 
-Evidence: EVID-README-MERGED
+Evidence: EVID-DAILY-PIPELINE
 
-## USE-CASE-VIDEO-PREFLIGHT — Inspect the fail-closed video preparation contract
+## USE-CASE-EFFECT-AUDIT — Verify an effect through readback, receipts, and audit facts
 
 Inputs:
 
-- The repository-native cm.video/v1 documentation and schema
+- An exact approved synthetic action
+- The authoritative provider readback
 
 Steps:
 
-1. Review tools/video-production-reference/README.md.
-2. Inspect the cm.video/v1 schema.
-3. Keep rendering and every public action disabled until local assets and approvals are complete.
+1. Bind capability, policy, scope, approval, and use-time checks.
+2. Execute only at the effect boundary.
+3. Require authoritative readback and a bound receipt.
+4. Render the explanation only from signed ordered audit facts and the exact checkpoint.
 
 Expected outcomes:
 
-- The preparation path identifies exact render prerequisites.
-- No upload, push or public action is available from the renderer contract.
+- Transport acceptance alone never becomes success.
+- Tampering, drift, ambiguity, replay, or missing facts fail closed.
 
-Demo utility: Makes the video-production boundary inspectable without requiring a render or bespoke release script.
+Demo utility: Connects the user-visible result to the exact evidence chain rather than to model narration.
 
-Evidence: EVID-VIDEO-README-MERGED, EVID-VIDEO-SCHEMA-MERGED
+Evidence: EVID-EFFECT-GATE, EVID-AAS-023-AUDIT
+
+## USE-CASE-GATEWAY-OPENCLAW — Run an OpenClaw agent without ambient authority
+
+Inputs:
+
+- The isolated local OpenClaw reference fixture
+- A closed typed action request
+
+Steps:
+
+1. Start only the isolated ChimpMaera-owned fixture.
+2. Submit the action through the Gateway-mediated path.
+3. Verify that direct provider, host, peer, socket, and unmanaged-effect paths remain denied.
+
+Expected outcomes:
+
+- The agent receives no ambient provider, host, or tenant credential.
+- The governed effect path remains outside the agent runtime.
+
+Demo utility: Shows the core product boundary with a real OpenClaw agent fixture while keeping the Owner environment out of scope.
+
+Evidence: EVID-AAS-035-RUNTIME
+
+## USE-CASE-MODEL-BROKER — Mediate model requests and responses in both directions
+
+Inputs:
+
+- An opaque model route
+- A typed request and untrusted model response
+
+Steps:
+
+1. Guard the outbound request before provider access.
+2. Resolve credentials only inside the broker boundary.
+3. Guard the inbound response before it returns to the agent or tool path.
+
+Expected outcomes:
+
+- Model traffic is mediated in both directions.
+- Model output remains data and cannot become effect authority.
+
+Demo utility: Makes the model access boundary concrete without claiming live-provider or production coverage.
+
+Evidence: EVID-AAS-036-BROKER
 
 ## Reproduction
 
-- `git diff --name-status f06ed8968fd3091e62af08c5caa7ace07e4e16a0..c0fa407d8224e98bdba9466850b8247f458ce914`
+- `git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- `npm ci --ignore-scripts --no-audit --no-fund`
+- `npm run lint`
+- `npm test`
+- `npm run daily-poc:test`
 - `npm run video:test`
+- `npm run supply-chain:verify`
+- `sha256sum --check SHA256SUMS`

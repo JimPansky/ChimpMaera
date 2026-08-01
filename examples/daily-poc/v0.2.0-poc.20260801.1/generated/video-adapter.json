@@ -2,26 +2,26 @@
   "adapter": "tools/video-production-reference/bin/cm-video",
   "assets": [
     {
-      "id": "VIDEO-ASSET-INTRO-SHOT",
+      "id": "VIDEO-ASSET-CHIMPMAERA-LOGO",
       "path": null,
-      "role": "SHOT",
-      "segmentRef": "VIDEO-SEGMENT-INTRO",
-      "sha256": null,
-      "status": "PLANNED"
-    },
-    {
-      "id": "VIDEO-ASSET-NARRATION",
-      "path": null,
-      "role": "AUDIO",
+      "role": "REFERENCE",
       "segmentRef": null,
       "sha256": null,
       "status": "PLANNED"
     },
     {
-      "id": "VIDEO-ASSET-SAFETY-SHOT",
+      "id": "VIDEO-ASSET-FINAL-SHOTS",
       "path": null,
       "role": "SHOT",
-      "segmentRef": "VIDEO-SEGMENT-SAFETY",
+      "segmentRef": null,
+      "sha256": null,
+      "status": "PLANNED"
+    },
+    {
+      "id": "VIDEO-ASSET-FINAL-WAV",
+      "path": null,
+      "role": "AUDIO",
+      "segmentRef": null,
       "sha256": null,
       "status": "PLANNED"
     }
@@ -34,11 +34,11 @@
     "publicationAvailable": false
   },
   "prerequisites": [
-    "Every shot is an accepted 1280x720 PNG with a locked SHA-256.",
-    "Narration is accepted mono 48 kHz WAV with a locked SHA-256.",
-    "Text and shot gates pass under cm.video/v1.",
-    "The exact local render approval binding is present.",
-    "Docker or the local reference CLI prerequisites pass without fallback."
+    "Use only accepted ChimpMaera assets and never CentipApe or Centipape assets.",
+    "Render final 1920x1080 shots with mobile-readable text and checked line, path, and z-order geometry.",
+    "Use final mono 48 kHz WAV narration derived from this manifest.",
+    "Verify codec, resolution, frame rate, audio, loudness, duration, black frames, visual samples, claims, and digests.",
+    "Keep upload and every other public action outside the renderer."
   ],
   "publicActions": "forbidden",
   "renderDefault": false,
@@ -52,7 +52,7 @@
     "publishable_asset_staging"
   ],
   "schemaVersion": "chimpmaera.daily-poc-video-adapter/v1",
-  "sourceManifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "sourceManifestSha256": "58fd709a8df5bda0dabe29ed792fd52ffcb3703aa3582ec63163ada5b3b93629",
   "status": "DISABLED_DEFAULT",
   "targetContract": "cm.video/v1"
 }

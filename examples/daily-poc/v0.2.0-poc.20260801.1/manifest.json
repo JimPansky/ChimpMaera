@@ -4,34 +4,93 @@
   "sequence": 1,
   "source": {
     "repository": "https://github.com/JimPansky/ChimpMaera.git",
-    "base": "f06ed8968fd3091e62af08c5caa7ace07e4e16a0",
-    "head": "c0fa407d8224e98bdba9466850b8247f458ce914"
+    "base": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
+    "head": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
   },
   "targetVersion": "v0.2.0-poc.20260801.1",
-  "history": [
-    {
-      "date": "2026-07-31",
-      "sequence": 1,
-      "version": "v0.1.0-poc.20260731.1",
-      "sourceHead": "f06ed8968fd3091e62af08c5caa7ace07e4e16a0",
-      "manifestSha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "artifactManifestSha256": "1111111111111111111111111111111111111111111111111111111111111111",
-      "snapshotDigest": "cbcb489dc013a22dc32a8add1bfe1967617ae1fb317668b63d465d1325bbbd58"
-    }
-  ],
+  "history": [],
   "highlights": [
     {
-      "id": "REL-DAILY-HIGHLIGHT-VIDEO",
-      "title": "Video overview is easier to discover",
-      "description": "The repository landing page now points readers to the current ChimpMaera videos without changing runtime behavior.",
+      "id": "AAS-023-CUMULATIVE-SNAPSHOT",
+      "title": "Gateway-mediated OpenClaw security path through protected audit timeline",
+      "description": "The cumulative local snapshot adds the isolated OpenClaw agent path, capability and policy boundaries, approval, bidirectional model mediation, authoritative effect readback, receipts, and the protected audit timeline.",
       "commitIds": [
-        "c0fa407d8224e98bdba9466850b8247f458ce914"
+        "d22ad0ccd702d0200b9b206f544500987156a419"
+      ],
+      "issueIds": [
+        "#2",
+        "#3",
+        "#4",
+        "#5",
+        "#6",
+        "#7",
+        "#8"
+      ],
+      "fileRefs": [
+        "demo/openclaw-agent/gateway.mjs",
+        "demo/model-access-broker/broker.mjs",
+        "packages/contracts/src/protected-audit-timeline.ts"
+      ],
+      "caseIds": [
+        "AAS-035",
+        "AAS-036",
+        "AAS-023"
+      ]
+    },
+    {
+      "id": "CANON-ZOO-RUNTIME-SECURITY",
+      "title": "Mechanism-independent Agent Runtime Isolation contract",
+      "description": "Canon and Zoo guidance now distinguish the untrusted runtime contract from any single Docker reference adapter and state the exact local claim boundary.",
+      "commitIds": [
+        "2c8357e0dc3abadb5133686979e1c27703bc6c18"
+      ],
+      "issueIds": [
+        "#2"
+      ],
+      "fileRefs": [
+        "docs/CANON.md",
+        "docs/ZOO-FIELD-GUIDE.md",
+        "docs/development/agent-runtime-isolation-contract.md"
+      ],
+      "caseIds": [
+        "CANON-RUNTIME-SECURITY-20260801"
+      ]
+    },
+    {
+      "id": "GOVERNANCE-TRACEABILITY",
+      "title": "Evidence-first README and low-friction contribution path",
+      "description": "The README uses strict maturity classes, knowledge positioning, system connection guidance, and issue-to-release traceability without turning roadmap issues into evidence.",
+      "commitIds": [
+        "39c401240309196a2eef8a50b2466759a4d76c7b"
+      ],
+      "issueIds": [
+        "#2",
+        "#3"
+      ],
+      "fileRefs": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "docs/CONNECT-YOUR-FIRST-SYSTEM.md"
+      ],
+      "caseIds": [
+        "GOVERNANCE-EVIDENCE-LIFECYCLE"
+      ]
+    },
+    {
+      "id": "REL-DAILY-001",
+      "title": "Deterministic non-publishing Daily POC candidate",
+      "description": "One manifest now drives release notes, evidence indexes, reproducible candidate bytes, and the update-video facts while publication remains outside the pipeline.",
+      "commitIds": [
+        "4c0e0513c51bc348be8617d78ccdb77346703cbf",
+        "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
       ],
       "issueIds": [
         "REL-DAILY-001"
       ],
       "fileRefs": [
-        "README.md"
+        "scripts/daily-poc.mjs",
+        "schemas/daily-poc-manifest-v1.schema.json",
+        "tests/daily-poc.test.mjs"
       ],
       "caseIds": [
         "REL-DAILY-001"
@@ -40,64 +99,120 @@
   ],
   "useCases": [
     {
-      "id": "USE-CASE-VIDEO-DISCOVERY",
-      "title": "Find the current ChimpMaera video overview",
+      "id": "USE-CASE-GATEWAY-OPENCLAW",
+      "title": "Run an OpenClaw agent without ambient authority",
       "inputs": [
-        "A local checkout of source commit c0fa407d8224e98bdba9466850b8247f458ce914"
+        "The isolated local OpenClaw reference fixture",
+        "A closed typed action request"
       ],
       "steps": [
-        "Open README.md.",
-        "Locate the Videos section.",
-        "Review the linked overview and security-boundary video descriptions."
+        "Start only the isolated ChimpMaera-owned fixture.",
+        "Submit the action through the Gateway-mediated path.",
+        "Verify that direct provider, host, peer, socket, and unmanaged-effect paths remain denied."
       ],
       "expectedOutcomes": [
-        "The video overview is discoverable from the repository landing page.",
-        "The text does not claim a stable release or production validation."
+        "The agent receives no ambient provider, host, or tenant credential.",
+        "The governed effect path remains outside the agent runtime."
       ],
-      "demoUtility": "Provides a short, user-visible entry point for explaining the POC before deeper local demonstration.",
+      "demoUtility": "Shows the core product boundary with a real OpenClaw agent fixture while keeping the Owner environment out of scope.",
       "evidenceRefs": [
-        "EVID-README-MERGED"
+        "EVID-AAS-035-RUNTIME"
       ]
     },
     {
-      "id": "USE-CASE-VIDEO-PREFLIGHT",
-      "title": "Inspect the fail-closed video preparation contract",
+      "id": "USE-CASE-MODEL-BROKER",
+      "title": "Mediate model requests and responses in both directions",
       "inputs": [
-        "The repository-native cm.video/v1 documentation and schema"
+        "An opaque model route",
+        "A typed request and untrusted model response"
       ],
       "steps": [
-        "Review tools/video-production-reference/README.md.",
-        "Inspect the cm.video/v1 schema.",
-        "Keep rendering and every public action disabled until local assets and approvals are complete."
+        "Guard the outbound request before provider access.",
+        "Resolve credentials only inside the broker boundary.",
+        "Guard the inbound response before it returns to the agent or tool path."
       ],
       "expectedOutcomes": [
-        "The preparation path identifies exact render prerequisites.",
-        "No upload, push or public action is available from the renderer contract."
+        "Model traffic is mediated in both directions.",
+        "Model output remains data and cannot become effect authority."
       ],
-      "demoUtility": "Makes the video-production boundary inspectable without requiring a render or bespoke release script.",
+      "demoUtility": "Makes the model access boundary concrete without claiming live-provider or production coverage.",
       "evidenceRefs": [
-        "EVID-VIDEO-README-MERGED",
-        "EVID-VIDEO-SCHEMA-MERGED"
+        "EVID-AAS-036-BROKER"
+      ]
+    },
+    {
+      "id": "USE-CASE-EFFECT-AUDIT",
+      "title": "Verify an effect through readback, receipts, and audit facts",
+      "inputs": [
+        "An exact approved synthetic action",
+        "The authoritative provider readback"
+      ],
+      "steps": [
+        "Bind capability, policy, scope, approval, and use-time checks.",
+        "Execute only at the effect boundary.",
+        "Require authoritative readback and a bound receipt.",
+        "Render the explanation only from signed ordered audit facts and the exact checkpoint."
+      ],
+      "expectedOutcomes": [
+        "Transport acceptance alone never becomes success.",
+        "Tampering, drift, ambiguity, replay, or missing facts fail closed."
+      ],
+      "demoUtility": "Connects the user-visible result to the exact evidence chain rather than to model narration.",
+      "evidenceRefs": [
+        "EVID-EFFECT-GATE",
+        "EVID-AAS-023-AUDIT"
+      ]
+    },
+    {
+      "id": "USE-CASE-DAILY-CANDIDATE",
+      "title": "Prepare and verify one deterministic Daily POC candidate",
+      "inputs": [
+        "This canonical manifest",
+        "The clean detached frozen source commit"
+      ],
+      "steps": [
+        "Compile the candidate into a new owned output directory.",
+        "Verify the generated artifact manifest and checksums.",
+        "Build the public archive twice and compare digests."
+      ],
+      "expectedOutcomes": [
+        "The candidate is byte-reproducible from the frozen source and manifest.",
+        "No merge, tag, upload, release, or deployment action occurs."
+      ],
+      "demoUtility": "Turns a cumulative local tree into a reviewable evidence packet without adding publication authority.",
+      "evidenceRefs": [
+        "EVID-DAILY-PIPELINE"
       ]
     }
   ],
   "controls": [
     {
+      "id": "CONTROL-SOURCE-FREEZE",
+      "description": "Candidate preparation accepts only the exact clean source head with the declared public-main base as an ancestor.",
+      "default": true,
+      "allowedOverrides": [],
+      "dependencies": [
+        "Clean detached source checkout",
+        "Exact base and head commit binding"
+      ]
+    },
+    {
       "id": "CONTROL-VIDEO-RENDER",
-      "description": "Local video rendering remains disabled unless every declared asset and the exact local approval binding is present.",
+      "description": "Video rendering remains a local-only action and consumes facts derived from this manifest.",
       "default": false,
       "allowedOverrides": [
         true
       ],
       "dependencies": [
-        "Accepted locked shots and mono 48 kHz audio",
-        "Repository-native cm.video/v1 renderer",
-        "Exact LOCAL_RENDER candidate approval binding"
+        "Accepted ChimpMaera-only assets",
+        "Final mono 48 kHz WAV",
+        "Readable final scene renders",
+        "Technical and claim QA"
       ]
     },
     {
       "id": "CONTROL-PUBLICATION",
-      "description": "GitHub, YouTube and README publication effects are outside candidate preparation.",
+      "description": "Merge, tag, release, upload, and deployment effects remain unavailable from the candidate pipeline.",
       "default": false,
       "allowedOverrides": [],
       "dependencies": [
@@ -107,81 +222,203 @@
   ],
   "evidence": [
     {
-      "id": "EVID-README-MERGED",
+      "id": "EVID-AAS-035-RUNTIME",
+      "kind": "TEST",
+      "path": "docs/development/evidence/admin-ai-aas-035-20260801.json",
+      "sha256": "c383a0d622ef7a2885f0d7e7aeecc957bc0ffc5513b1839ef7a7bf4c480711a3",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-01",
+      "validUntil": "2026-08-31",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+    },
+    {
+      "id": "EVID-AAS-036-BROKER",
+      "kind": "TEST",
+      "path": "docs/development/evidence/admin-ai-aas-036-20260801.json",
+      "sha256": "27e891001f0144a8d7c89119f7667bd306ee224ef79cdfdadefe726e2b842db3",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-01",
+      "validUntil": "2026-08-31",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+    },
+    {
+      "id": "EVID-AAS-023-AUDIT",
+      "kind": "TEST",
+      "path": "docs/development/evidence/admin-ai-aas-023-20260801.json",
+      "sha256": "35f659cf4453c8c4a5670ef34df37735d090b589ca36c3459c1d90abba449d08",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-01",
+      "validUntil": "2026-08-31",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+    },
+    {
+      "id": "EVID-EFFECT-GATE",
+      "kind": "TEST",
+      "path": "tests/demo-enforcement-gate.test.mjs",
+      "sha256": "7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-01",
+      "validUntil": "2026-08-31",
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+    },
+    {
+      "id": "EVID-README-CLAIMS",
       "kind": "SOURCE",
       "path": "README.md",
-      "sha256": "c8f570f6fae23b9ffa9c8c25714a4e00056a570ad600f6ba6d436aa15e56dbdd",
-      "maturity": "MERGED",
+      "sha256": "2fa22d268a0af982d5c31061ba2565031f7e106655494054cec3764d8f369e81",
+      "maturity": "DESIGNED",
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914"
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
     },
     {
-      "id": "EVID-VIDEO-README-MERGED",
+      "id": "EVID-CANON-REVISION",
       "kind": "SOURCE",
-      "path": "tools/video-production-reference/README.md",
-      "sha256": "04034722546e1a4fec5026bf45f88b1fe7a25b487db6f4851a875656d0ada823",
-      "maturity": "MERGED",
+      "path": "docs/CANON.md",
+      "sha256": "7cda7bb499e04cb86bfe3d2d773828c5326b98727bfac68a797628bffeb68b65",
+      "maturity": "DESIGNED",
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914"
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
     },
     {
-      "id": "EVID-VIDEO-SCHEMA-MERGED",
+      "id": "EVID-CONTRIBUTION-GOVERNANCE",
       "kind": "SOURCE",
-      "path": "tools/video-production-reference/schemas/video-job.schema.json",
-      "sha256": "90ea85f85536c13433ae5a01c0ec6e02b979981145f1f52a98c9a7270c4b9ba4",
-      "maturity": "MERGED",
+      "path": "CONTRIBUTING.md",
+      "sha256": "317e346e73fb73fef6110dbc410ecc186cd80991f1af4bb85097fc7a1d446273",
+      "maturity": "DESIGNED",
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914"
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
     },
     {
-      "id": "EVID-VIDEO-TEST-MERGED",
+      "id": "EVID-DAILY-PIPELINE",
       "kind": "TEST",
-      "path": "tools/video-production-reference/tests/test_cm_video.py",
-      "sha256": "64e6c09ab782640ad6ed27dfcba6550457ee17f5fb4e18731a8dc5fb7efa3081",
-      "maturity": "MERGED",
+      "path": "tests/daily-poc.test.mjs",
+      "sha256": "7a2d0cd3ff6f3383d3ab38344db365fc94a329776fdeb96f51d638cfd6758991",
+      "maturity": "LOCALLY_VALIDATED",
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "c0fa407d8224e98bdba9466850b8247f458ce914"
+      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
     }
   ],
   "claims": [
     {
-      "id": "CM-CLAIM-VIDEO-DISCOVERY",
-      "category": "FEATURE",
-      "statement": "The merged repository README links readers to the current ChimpMaera video overview.",
-      "maturity": "MERGED",
+      "id": "CM-CLAIM-GATEWAY-MEDIATED-OPENCLAW",
+      "category": "SECURITY",
+      "statement": "The isolated OpenClaw fixture has no ambient provider, host, or tenant credential and reaches the declared application path only through the ChimpMaera Gateway boundary.",
+      "maturity": "LOCALLY_VALIDATED",
       "evidenceRefs": [
-        "EVID-README-MERGED"
+        "EVID-AAS-035-RUNTIME"
       ],
       "nonClaims": [
         {
-          "id": "NONCLAIM-VIDEO-PUBLICATION",
-          "statement": "This candidate does not prove that a new video was uploaded or publicly released.",
+          "id": "NONCLAIM-HOSTILE-HOST",
+          "statement": "This local Docker fixture is not a hostile-host, kernel, hypervisor, or production sandbox claim.",
           "contradictsClaimIds": []
         }
       ]
     },
     {
-      "id": "CM-CLAIM-VIDEO-BOUNDARY",
+      "id": "CM-CLAIM-BIDIRECTIONAL-MODEL-BROKER",
       "category": "SECURITY",
-      "statement": "The merged reference video contract requires public actions to remain forbidden during local validation and rendering.",
-      "maturity": "MERGED",
+      "statement": "The local model broker guards requests before provider access and guards responses before agent or tool use while credentials remain opaque to the agent.",
+      "maturity": "LOCALLY_VALIDATED",
       "evidenceRefs": [
-        "EVID-VIDEO-README-MERGED",
-        "EVID-VIDEO-SCHEMA-MERGED",
-        "EVID-VIDEO-TEST-MERGED"
+        "EVID-AAS-036-BROKER"
       ],
       "nonClaims": [
         {
-          "id": "NONCLAIM-VIDEO-CERTIFICATION",
-          "statement": "The reference renderer is not a production or security certification.",
+          "id": "NONCLAIM-LIVE-PROVIDER",
+          "statement": "No live-provider, universal-agent, production TLS, DNS, or vault behavior is claimed.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-EFFECT-READBACK-RECEIPT",
+      "category": "SECURITY",
+      "statement": "In the synthetic governed path, transport acceptance is not success; authoritative readback and a bound receipt are required after effect-boundary enforcement.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-EFFECT-GATE"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-PROVIDER-TRANSACTION",
+          "statement": "No production provider transaction, ETag, IAM, MFA, quorum, revoke, or rollback service is claimed.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-PROTECTED-AUDIT-TIMELINE",
+      "category": "SECURITY",
+      "statement": "Verified audit explanations require signed ordered digest-linked facts plus the exact head and count checkpoint; tampered, missing, reordered, or forked facts do not render verified success.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-AAS-023-AUDIT"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-INDEPENDENT-WITNESS",
+          "statement": "No hostile-host tamper-proof store, independent witness, trusted time, production key custody, or retention compliance is claimed.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-CANON-RUNTIME-CONTRACT",
+      "category": "OPERATIONS",
+      "statement": "The local Canon revision defines a mechanism-independent untrusted runtime contract and separates it from the Docker reference adapter.",
+      "maturity": "DESIGNED",
+      "evidenceRefs": [
+        "EVID-CANON-REVISION"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-UNIVERSAL-RUNTIME",
+          "statement": "VM, MicroVM, WASM, remote-worker, Hermes, and Claude Code runtime compatibility remain unproven here.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-CONTRIBUTION-EVIDENCE-LIFECYCLE",
+      "category": "OPERATIONS",
+      "statement": "The contribution guide distinguishes planning, readiness, implementation, local validation, merge, and public-delivery states and treats issues as roadmap rather than evidence.",
+      "maturity": "DESIGNED",
+      "evidenceRefs": [
+        "EVID-CONTRIBUTION-GOVERNANCE"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-ISSUE-CLOSURE",
+          "statement": "This candidate does not close or silently advance any public issue.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-DAILY-CANDIDATE-PIPELINE",
+      "category": "OPERATIONS",
+      "statement": "The Daily POC compiler produces deterministic evidence-bound candidate artifacts from one manifest and a clean frozen source while keeping public effects disabled.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-DAILY-PIPELINE"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-DAILY-PUBLICATION",
+          "statement": "Candidate preparation grants no merge, tag, release, upload, or deployment authority.",
           "contradictsClaimIds": []
         }
       ]
@@ -189,110 +426,207 @@
   ],
   "tests": [
     {
-      "id": "TEST-SOURCE-COMMIT",
-      "command": "git rev-parse HEAD",
+      "id": "TEST-DAILY-PIPELINE",
+      "command": "npm run daily-poc:test",
       "result": "PASS",
       "evidenceRefs": [
-        "EVID-README-MERGED"
+        "EVID-DAILY-PIPELINE"
       ]
     },
     {
-      "id": "TEST-VIDEO-CONTRACT",
-      "command": "npm run video:test",
+      "id": "TEST-RUNTIME-CONTRACT",
+      "command": "npm test",
       "result": "PASS",
       "evidenceRefs": [
-        "EVID-VIDEO-TEST-MERGED"
+        "EVID-AAS-035-RUNTIME",
+        "EVID-AAS-036-BROKER",
+        "EVID-AAS-023-AUDIT",
+        "EVID-EFFECT-GATE"
       ]
     }
   ],
   "negativeProbes": [
     {
-      "id": "PROBE-PUBLIC-ACTIONS-FORBIDDEN",
-      "command": "npm run video:test -- --filter public-actions",
+      "id": "PROBE-DIRECT-PATHS-DENIED",
+      "command": "node --test tests/openclaw-agent-runtime.test.mjs tests/model-access-broker-runtime.test.mjs",
       "result": "PASS",
       "evidenceRefs": [
-        "EVID-VIDEO-TEST-MERGED"
+        "EVID-AAS-035-RUNTIME",
+        "EVID-AAS-036-BROKER"
+      ]
+    },
+    {
+      "id": "PROBE-TIMELINE-TAMPER-DENIED",
+      "command": "npm run build && node --test dist/tests/protected-audit-timeline.test.js",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-AAS-023-AUDIT"
       ]
     }
   ],
   "reproductionCommands": [
-    "git diff --name-status f06ed8968fd3091e62af08c5caa7ace07e4e16a0..c0fa407d8224e98bdba9466850b8247f458ce914",
-    "npm run video:test"
+    "git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+    "npm ci --ignore-scripts --no-audit --no-fund",
+    "npm run lint",
+    "npm test",
+    "npm run daily-poc:test",
+    "npm run video:test",
+    "npm run supply-chain:verify",
+    "sha256sum --check SHA256SUMS"
   ],
   "knownLimitations": [
-    "This candidate represents repository facts at one frozen source commit; it does not include later branch work.",
-    "Video rendering is disabled because accepted scene and audio assets are not yet bound.",
-    "No live provider, customer, deployment or production evidence is included."
+    "This is a local synthetic POC candidate, not a production deployment or security certification.",
+    "LOCALLY VALIDATED is not RELEASED; PLANNED is not PROVEN.",
+    "The OpenClaw, model-broker, effect, readback, receipt, and audit evidence is bounded to the exact local fixtures and threat model.",
+    "BLD-001, AAS-038, AAS-039, BI and DMS expansion, and unfinished evergreen video work are outside this snapshot.",
+    "Issues #2 through #8 remain roadmap and traceability links; no issue closes before merge.",
+    "The update video is rendered and checked locally under a separate non-publishing production step."
   ],
   "externalGates": [
-    "A public GitHub prerelease requires a separate Owner-approved stage.",
-    "A YouTube upload requires a separate Owner-approved stage.",
-    "Any README publication pointer requires a separate Owner-approved stage."
+    "The review pull request must receive its GitHub PR number and CI result after the green local gate.",
+    "Merge, tag, prerelease, stable release, deployment, and README publication require separate Owner action.",
+    "YouTube upload requires a separate Owner-authorized publication step.",
+    "Production, customer, live-provider, and independent hostile-host evidence require external validation."
   ],
   "video": {
-    "title": "ChimpMaera POC Daily — 2026-08-01",
+    "title": "ChimpMaera Daily POC — Gateway-Mediated OpenClaw",
     "language": "en",
-    "description": "A short evidence-bound overview of the latest merged user-visible change and the local video safety boundary.",
+    "description": "A 120-second evidence-bound update on the cumulative local ChimpMaera POC candidate and its exact claim boundaries.",
     "renderDefault": false,
     "rendererContract": "cm.video/v1",
     "segments": [
       {
-        "id": "VIDEO-SEGMENT-INTRO",
+        "id": "VIDEO-SEGMENT-STATUS",
         "order": 1,
-        "durationSeconds": 8,
-        "title": "What changed",
-        "purpose": "State the frozen source delta and candidate boundary.",
-        "narration": "The repository landing page now makes the current ChimpMaera videos easier to find. This package is a local daily candidate.",
+        "durationSeconds": 15,
+        "title": "Snapshot status",
+        "purpose": "Name the exact candidate and distinguish local validation from public delivery.",
+        "narration": "This is ChimpMaera Daily POC candidate v0.2.0-poc.20260801.1. It combines the completed local product and security slices through AAS-023 into one reviewable snapshot. The evidence is bound to this local candidate; public delivery is a separate gate.",
         "visuals": [
-          "Show the source base and head identifiers.",
-          "Highlight the README video section."
+          "Show the candidate version and frozen public-main-to-candidate source range.",
+          "Show four status labels: proven here, locally validated, planned, and external gate."
         ],
         "claimRefs": [
-          "CM-CLAIM-VIDEO-DISCOVERY"
+          "CM-CLAIM-DAILY-CANDIDATE-PIPELINE"
         ],
         "useCaseRefs": [
-          "USE-CASE-VIDEO-DISCOVERY"
+          "USE-CASE-DAILY-CANDIDATE"
         ]
       },
       {
-        "id": "VIDEO-SEGMENT-SAFETY",
+        "id": "VIDEO-SEGMENT-OPENCLAW",
         "order": 2,
-        "durationSeconds": 12,
-        "title": "Why preparation stays local",
-        "purpose": "Explain the closed video adapter and publication boundary.",
-        "narration": "The repository-native video contract validates locked inputs and keeps public actions forbidden. Rendering and publication remain separate decisions.",
+        "durationSeconds": 20,
+        "title": "OpenClaw without ambient authority",
+        "purpose": "Explain the untrusted runtime and Gateway-only application path.",
+        "narration": "A real OpenClaw agent fixture runs as untrusted workload code. It receives no ambient provider, host, or tenant credential. The declared application path goes through the ChimpMaera Gateway, while direct provider, peer, socket, host, and unmanaged effect paths remain denied in the tested fixture.",
         "visuals": [
-          "Show cm.video/v1 and publicActions forbidden.",
-          "Show render disabled and the missing accepted asset gates."
+          "Place OpenClaw inside the untrusted runtime boundary.",
+          "Show one outbound Gateway path and crossed-out ambient authority paths."
         ],
         "claimRefs": [
-          "CM-CLAIM-VIDEO-BOUNDARY"
+          "CM-CLAIM-GATEWAY-MEDIATED-OPENCLAW"
         ],
         "useCaseRefs": [
-          "USE-CASE-VIDEO-PREFLIGHT"
+          "USE-CASE-GATEWAY-OPENCLAW"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-AUTHORITY",
+        "order": 3,
+        "durationSeconds": 20,
+        "title": "Capability is not authority",
+        "purpose": "Show the policy and approval chain before any effect.",
+        "narration": "A capability is only something the system could do. Runtime authority stays inactive until scope, policy generation, exact plan, human-readable diff, and approval all bind to the same action. Trusted code rechecks those facts at use time, outside the agent, and ambiguity fails closed.",
+        "visuals": [
+          "Animate Capability to Policy to Plan and Diff to Approval to use-time Gate.",
+          "Keep the agent visually outside every trusted decision box."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-EFFECT-READBACK-RECEIPT"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-EFFECT-AUDIT"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-MODEL-BROKER",
+        "order": 4,
+        "durationSeconds": 20,
+        "title": "Bidirectional model broker",
+        "purpose": "Show request and response mediation around the provider.",
+        "narration": "Model access is bidirectional and mediated. Requests are guarded before provider access; opaque credentials resolve only inside the broker. Responses and streams are guarded again before they return to the agent or a tool path. Model output remains untrusted data, never effect authority.",
+        "visuals": [
+          "Animate guarded request traffic from agent to broker to provider.",
+          "Animate guarded response traffic back through the broker with a data-not-authority label."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-BIDIRECTIONAL-MODEL-BROKER"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-MODEL-BROKER"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-EFFECT",
+        "order": 5,
+        "durationSeconds": 20,
+        "title": "Effect, readback, and receipt",
+        "purpose": "Explain why transport acceptance is not success.",
+        "narration": "The bounded effect gate executes the exact approved action. A successful transport response is not enough. ChimpMaera queries the authoritative provider state, compares the material result, and only then binds the decision, effect, readback digest, and outcome into a receipt. Drift, replay, rejection, or ambiguity cannot become success.",
+        "visuals": [
+          "Show the effect gate calling the synthetic system of record.",
+          "Return readback to a receipt card with a verified outcome; route failure states to denied."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-EFFECT-READBACK-RECEIPT"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-EFFECT-AUDIT"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-AUDIT-BOUNDARY",
+        "order": 6,
+        "durationSeconds": 25,
+        "title": "Audit timeline and honest boundaries",
+        "purpose": "Close with protected audit facts and separate proven, local, planned, and external states.",
+        "narration": "The protected audit timeline explains outcomes only from signed, ordered, digest-linked facts and the exact checkpoint. Missing, reordered, forked, or tampered facts do not render verified success. In this snapshot, the local contracts and tests are proven here, the isolated runtime evidence remains local, Builder Agent and broader integrations remain planned, and production or hostile-host claims remain external gates.",
+        "visuals": [
+          "Build a signed audit timeline ending at an exact head and count checkpoint.",
+          "Close on four maturity columns with Builder Agent under planned and production under external gate."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-PROTECTED-AUDIT-TIMELINE",
+          "CM-CLAIM-CANON-RUNTIME-CONTRACT",
+          "CM-CLAIM-CONTRIBUTION-EVIDENCE-LIFECYCLE"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-EFFECT-AUDIT",
+          "USE-CASE-DAILY-CANDIDATE"
         ]
       }
     ],
     "assets": [
       {
-        "id": "VIDEO-ASSET-INTRO-SHOT",
-        "role": "SHOT",
+        "id": "VIDEO-ASSET-CHIMPMAERA-LOGO",
+        "role": "REFERENCE",
         "status": "PLANNED",
-        "segmentRef": "VIDEO-SEGMENT-INTRO",
+        "segmentRef": null,
         "path": null,
         "sha256": null
       },
       {
-        "id": "VIDEO-ASSET-SAFETY-SHOT",
-        "role": "SHOT",
-        "status": "PLANNED",
-        "segmentRef": "VIDEO-SEGMENT-SAFETY",
-        "path": null,
-        "sha256": null
-      },
-      {
-        "id": "VIDEO-ASSET-NARRATION",
+        "id": "VIDEO-ASSET-FINAL-WAV",
         "role": "AUDIO",
+        "status": "PLANNED",
+        "segmentRef": null,
+        "path": null,
+        "sha256": null
+      },
+      {
+        "id": "VIDEO-ASSET-FINAL-SHOTS",
+        "role": "SHOT",
         "status": "PLANNED",
         "segmentRef": null,
         "path": null,
@@ -300,11 +634,11 @@
       }
     ],
     "prerequisites": [
-      "Every shot is an accepted 1280x720 PNG with a locked SHA-256.",
-      "Narration is accepted mono 48 kHz WAV with a locked SHA-256.",
-      "Text and shot gates pass under cm.video/v1.",
-      "The exact local render approval binding is present.",
-      "Docker or the local reference CLI prerequisites pass without fallback."
+      "Use only accepted ChimpMaera assets and never CentipApe or Centipape assets.",
+      "Render final 1920x1080 shots with mobile-readable text and checked line, path, and z-order geometry.",
+      "Use final mono 48 kHz WAV narration derived from this manifest.",
+      "Verify codec, resolution, frame rate, audio, loudness, duration, black frames, visual samples, claims, and digests.",
+      "Keep upload and every other public action outside the renderer."
     ]
   },
   "publication": {

@@ -2,42 +2,82 @@
 
 Candidate: `v0.2.0-poc.20260801.1`
 
-## EVID-README-MERGED
-
-- Kind: SOURCE
-- Maturity: MERGED
-- Status: PASS
-- Source commit: `c0fa407d8224e98bdba9466850b8247f458ce914`
-- Repository path: `README.md`
-- SHA-256: `c8f570f6fae23b9ffa9c8c25714a4e00056a570ad600f6ba6d436aa15e56dbdd`
-- Validity: 2026-08-01 through 2026-08-31
-
-## EVID-VIDEO-README-MERGED
-
-- Kind: SOURCE
-- Maturity: MERGED
-- Status: PASS
-- Source commit: `c0fa407d8224e98bdba9466850b8247f458ce914`
-- Repository path: `tools/video-production-reference/README.md`
-- SHA-256: `04034722546e1a4fec5026bf45f88b1fe7a25b487db6f4851a875656d0ada823`
-- Validity: 2026-08-01 through 2026-08-31
-
-## EVID-VIDEO-SCHEMA-MERGED
-
-- Kind: SOURCE
-- Maturity: MERGED
-- Status: PASS
-- Source commit: `c0fa407d8224e98bdba9466850b8247f458ce914`
-- Repository path: `tools/video-production-reference/schemas/video-job.schema.json`
-- SHA-256: `90ea85f85536c13433ae5a01c0ec6e02b979981145f1f52a98c9a7270c4b9ba4`
-- Validity: 2026-08-01 through 2026-08-31
-
-## EVID-VIDEO-TEST-MERGED
+## EVID-AAS-023-AUDIT
 
 - Kind: TEST
-- Maturity: MERGED
+- Maturity: LOCALLY_VALIDATED
 - Status: PASS
-- Source commit: `c0fa407d8224e98bdba9466850b8247f458ce914`
-- Repository path: `tools/video-production-reference/tests/test_cm_video.py`
-- SHA-256: `64e6c09ab782640ad6ed27dfcba6550457ee17f5fb4e18731a8dc5fb7efa3081`
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `docs/development/evidence/admin-ai-aas-023-20260801.json`
+- SHA-256: `35f659cf4453c8c4a5670ef34df37735d090b589ca36c3459c1d90abba449d08`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-AAS-035-RUNTIME
+
+- Kind: TEST
+- Maturity: LOCALLY_VALIDATED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `docs/development/evidence/admin-ai-aas-035-20260801.json`
+- SHA-256: `c383a0d622ef7a2885f0d7e7aeecc957bc0ffc5513b1839ef7a7bf4c480711a3`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-AAS-036-BROKER
+
+- Kind: TEST
+- Maturity: LOCALLY_VALIDATED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `docs/development/evidence/admin-ai-aas-036-20260801.json`
+- SHA-256: `27e891001f0144a8d7c89119f7667bd306ee224ef79cdfdadefe726e2b842db3`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-CANON-REVISION
+
+- Kind: SOURCE
+- Maturity: DESIGNED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `docs/CANON.md`
+- SHA-256: `7cda7bb499e04cb86bfe3d2d773828c5326b98727bfac68a797628bffeb68b65`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-CONTRIBUTION-GOVERNANCE
+
+- Kind: SOURCE
+- Maturity: DESIGNED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `CONTRIBUTING.md`
+- SHA-256: `317e346e73fb73fef6110dbc410ecc186cd80991f1af4bb85097fc7a1d446273`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-DAILY-PIPELINE
+
+- Kind: TEST
+- Maturity: LOCALLY_VALIDATED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `tests/daily-poc.test.mjs`
+- SHA-256: `7a2d0cd3ff6f3383d3ab38344db365fc94a329776fdeb96f51d638cfd6758991`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-EFFECT-GATE
+
+- Kind: TEST
+- Maturity: LOCALLY_VALIDATED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `tests/demo-enforcement-gate.test.mjs`
+- SHA-256: `7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74`
+- Validity: 2026-08-01 through 2026-08-31
+
+## EVID-README-CLAIMS
+
+- Kind: SOURCE
+- Maturity: DESIGNED
+- Status: PASS
+- Source commit: `fe0d9f6d3cfe4fea54dae2f58866d7300374f79c`
+- Repository path: `README.md`
+- SHA-256: `2fa22d268a0af982d5c31061ba2565031f7e106655494054cec3764d8f369e81`
 - Validity: 2026-08-01 through 2026-08-31
