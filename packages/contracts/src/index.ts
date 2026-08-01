@@ -8,3 +8,4 @@ export * from "./policy-evaluator.js";
 export * from "./paperless-zoo-adapter.js";
 export * from "./effective-rights.js";
 export * from "./injection-trust-boundary.js";
+export * from "./capability-catalogue.js";
