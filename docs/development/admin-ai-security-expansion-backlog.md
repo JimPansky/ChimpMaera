@@ -41,27 +41,26 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 1 | 0 | 2 | 3 | 0 | 11 |
+| P0 | 5 | 0 | 0 | 2 | 4 | 0 | 11 |
 | P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **7** | **0** | **2** | **3** | **0** | **34** |
+| **Total** | **22** | **6** | **0** | **2** | **4** | **0** | **34** |
 
-Internally ready items, in selection order after AAS-003 closure:
+Internally ready items, in selection order after AAS-009 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
-| 2 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
-| 3 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
-| 4 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 5 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 6 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 7 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
+| 2 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
+| 3 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
+| 4 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 5 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 6 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002` and
-`AAS-003` and must select `AAS-009` next. Closed items do not reopen without
-new evidence.
+`AAS-003`, then completed `AAS-009`; it must select `AAS-016` next. Closed
+items do not reopen without new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
 decision/use convergence, fallback, management/effect separation, audit and
@@ -77,6 +76,14 @@ dependencies. Production identity/tenant inputs remain AAS-007/AAS-010/AAS-017,
 catalogue coherence remains AAS-012 and effect-free preview remains AAS-013;
 no new standalone item was discovered. AAS-009 is the remaining internally
 ready P0/I5 item and therefore remains ahead of every I4 item.
+
+The AAS-009 frontier audit rechecked live effect mediation, tenant/data-purpose
+isolation, catalogue activation, untrusted memory/privacy, model gateway
+evidence, audit causality, artifact intake and hard end-to-end assurance. Those
+boundaries remain represented by AAS-008/AAS-010/AAS-012/AAS-020/AAS-023/
+AAS-025/AAS-030; no distinct new control was discovered. AAS-016 now leads the
+ready frontier because its current material-Diff correctness defect outranks
+other I4 catalogue and lifecycle breadth.
 
 ## P0 — critical authority and containment
 
@@ -276,7 +283,7 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 
 ### AAS-009 — Prompt/tool-injection trust boundary
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 before
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 before
   any live LLM / L. **Risk reduction:** critical future-boundary prerequisite.
   **User value:** untrusted content cannot impersonate Owner instruction.
   **Demo value:** very high.
@@ -295,7 +302,11 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Rollback boundary / fallback:** no live model, retrieval or credentials;
   disable model path on label/schema uncertainty. **External gates:** reviewed
   model gateway and live-model evidence.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `f7641d2dc81ca2008da4c30b4d697d60569427fb`;
+  `docs/development/evidence/admin-ai-aas-009-20260801.json` and
+  `docs/development/admin-ai-aas-009-injection-trust-boundary-pdca.md`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-010 — Tenant, row, field and data-purpose isolation
 

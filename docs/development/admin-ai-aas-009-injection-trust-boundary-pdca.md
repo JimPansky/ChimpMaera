@@ -95,12 +95,59 @@ Policy decision, approval, executable authority or provider call.
 
 ## Do
 
-Pending implementation.
+Implemented a pure provider-neutral boundary with closed schemas for labelled
+content envelopes, model-shaped typed candidates and trusted reconstruction.
+Provider, tool, document and memory inputs each require their exact untrusted
+origin label, tenant, data class and `DATA_ONLY` instruction eligibility.
+Content remains outside the reconstructed action and is represented only by a
+digest in returned evidence.
+
+The candidate can supply only a finite action ID, bounded symbolic arguments
+and the complete envelope-reference set. Trusted code supplies the fixed
+catalogue and reconstructs method, path, provider, entity, operation, actor,
+tenant, replay binding and one fixed opaque credential handle. The result is
+canonical and digest-bound, explicitly candidate-only, and exposes no Policy
+decision, Approval, authority, provider callback or raw credential. Canon,
+architecture, limitations, public closure and checksums were updated.
 
 ## Check
 
-Pending frozen-byte validation.
+All four dedicated AAS-009 gates passed. Exact-schema probes denied uncertain,
+mismatched, cross-tenant, duplicate, unknown-action, unknown-catalogue,
+prototype-bearing, overbroad-argument and candidate-supplied control fields
+without returning a partial action. Golden contact/order cases reconstructed
+the exact server-owned targets, remained canonical under evidence reordering,
+and changed digests only for material typed changes.
+
+The hostile matrix exercised override, exfiltration, self-approval, URL, path,
+base64, percent-encoded, Unicode-confusable, bidi, zero-width and multi-turn
+payloads across provider, tool, document and memory content. In every case the
+exact action, action digest and candidate digest stayed unchanged; only the
+content evidence digest changed, and hostile content was not returned.
+
+Focused tests passed **4/4** and the complete suite passed **88/88**. Video
+reference tests passed **15/15**, all **126/126** checksums passed, and all six
+supply-chain checks passed. The deterministic public archive built with digest
+`a4dce72522456fea3b91b282b62ac2ae0fafe9c9eafc805b43f625aa9d96522d`.
+No full install smoke was run: no demo runtime, installer, Compose, provider
+adapter or install-path byte changed, so repeating the frozen AAS-003 smoke
+would not produce relevant evidence.
+
+Metric: `aas_009_prompt_injection_trust_gates` **4/4 — complete**. Verdict:
+`LOCAL_AAS_009_PASS_NOT_LIVE_MODEL_GATEWAY_OR_INJECTION_ELIMINATION_CLAIM`.
 
 ## Act
 
-Pending frontier review after the metric reaches 4/4.
+Close AAS-009 without reopening AAS-001, AAS-002 or AAS-003. The frontier audit
+rechecked live effect mediation, tenant/data-purpose isolation, catalogue
+activation, untrusted memory/privacy, model gateway evidence, audit causality,
+artifact intake and hard end-to-end assurance. No distinct uncovered control
+was found: these remain represented by AAS-008, AAS-010, AAS-012, AAS-020,
+AAS-023, AAS-025 and AAS-030 respectively.
+
+Importance-first ordering now selects AAS-016. It is the highest-value
+internally ready I4 item because it repairs the current constant/stale material
+Diff before broader catalogue or lifecycle work. Local provider snapshot/ETag
+fixtures can close the correctness slice without real MFA, quorum or external
+provider access. Push, PR, merge, tag, release, publication, live-model,
+production and external-system actions remain Owner-gated.
