@@ -25,7 +25,7 @@ Start with a data-flow and authority inventory, not a container choice. Name:
 - the TCB and the threat model the deployment is expected to withstand.
 
 The engineering contract is
-[Agent Runtime Isolation Contract](development/agent-runtime-isolation-contract.md).
+[Agent Runtime Isolation Contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md).
 Use it for adapter selection and conformance evidence.
 
 ## 2. Select an isolation adapter, not an Agent-specific Docker project

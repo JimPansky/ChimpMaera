@@ -3,12 +3,13 @@ import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   cpSync,
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
   writeFileSync,
 } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
 
@@ -42,12 +43,19 @@ function git(repo, ...args) {
 function fixture() {
   const root = mkdtempSync(join(tmpdir(), "cm-daily-poc-test-"));
   const source = join(root, "source");
+  const manifest = JSON.parse(readFileSync(EXAMPLE, "utf8"));
   mkdirSync(join(source, "tools", "video-production-reference", "schemas"), { recursive: true });
   mkdirSync(join(source, "tools", "video-production-reference", "tests"), { recursive: true });
   writeFileSync(join(source, "README.md"), "# ChimpMaera\n\nBase.\n", "utf8");
   writeFileSync(join(source, "tools", "video-production-reference", "README.md"), "# Video\n\nPublic actions forbidden.\n", "utf8");
   writeFileSync(join(source, "tools", "video-production-reference", "schemas", "video-job.schema.json"), "{\"publicActions\":\"forbidden\"}\n", "utf8");
   writeFileSync(join(source, "tools", "video-production-reference", "tests", "test_cm_video.py"), "def test_public_actions(): pass\n", "utf8");
+  for (const evidence of manifest.evidence) {
+    const target = join(source, evidence.path);
+    if (existsSync(target)) continue;
+    mkdirSync(dirname(target), { recursive: true });
+    cpSync(join(ROOT, evidence.path), target);
+  }
   git(source, "init", "-q");
   git(source, "config", "user.name", "Daily POC Test");
   git(source, "config", "user.email", "daily-poc@example.invalid");
@@ -62,9 +70,22 @@ function fixture() {
   git(source, "remote", "add", "origin", source);
   git(source, "fetch", "-q", "origin", "main:refs/remotes/origin/main");
 
-  const manifest = JSON.parse(readFileSync(EXAMPLE, "utf8"));
   manifest.source = { repository: "local-test", base, head };
-  manifest.highlights[0].commitIds = [head];
+  for (const highlight of manifest.highlights) {
+    highlight.commitIds = [head];
+    highlight.fileRefs = ["README.md"];
+  }
+  if (manifest.history.length === 0) {
+    manifest.history.push({
+      date: "2026-07-31",
+      sequence: 1,
+      version: "v0.1.0-poc.20260731.1",
+      sourceHead: base,
+      manifestSha256: "0".repeat(64),
+      artifactManifestSha256: "1".repeat(64),
+      snapshotDigest: "0".repeat(64),
+    });
+  }
   manifest.history[0].sourceHead = base;
   const historyPayload = { ...manifest.history[0] };
   delete historyPayload.snapshotDigest;

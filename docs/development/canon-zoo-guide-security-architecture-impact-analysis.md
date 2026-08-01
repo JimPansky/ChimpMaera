@@ -98,7 +98,7 @@ Summary:
 ## Evidence Gate 3 — target norms
 
 The target norms are now defined in Canon CM-CAN-18 through CM-CAN-28 and the
-[Agent Runtime Isolation Contract](agent-runtime-isolation-contract.md):
+[Agent Runtime Isolation Contract](../AGENT-RUNTIME-ISOLATION-CONTRACT.md):
 
 1. No Ambient Authority / Zero Standing Privilege.
 2. Complete Mediation of Meaningful Boundary Crossings.

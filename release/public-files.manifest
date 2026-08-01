@@ -113,6 +113,7 @@ demo/seed-and-flow.sh	demo/seed-and-flow.sh	0755
 demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
 docs/ARCHITECTURE.md	docs/ARCHITECTURE.md	0644
+docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	0644
 docs/CANON.md	docs/CANON.md	0644
 docs/CONNECT-YOUR-FIRST-SYSTEM.md	docs/CONNECT-YOUR-FIRST-SYSTEM.md	0644
 docs/DAILY-POC-CANDIDATES.md	docs/DAILY-POC-CANDIDATES.md	0644
@@ -121,13 +122,6 @@ docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/ZOO-FIELD-GUIDE.md	docs/ZOO-FIELD-GUIDE.md	0644
-docs/development/agent-runtime-isolation-contract.md	docs/development/agent-runtime-isolation-contract.md	0644
-docs/development/canon-zoo-guide-normative-delta-matrix.json	docs/development/canon-zoo-guide-normative-delta-matrix.json	0644
-docs/development/canon-zoo-guide-security-architecture-impact-analysis.md	docs/development/canon-zoo-guide-security-architecture-impact-analysis.md	0644
-docs/development/github-agent-runtime-issue-audit.md	docs/development/github-agent-runtime-issue-audit.md	0644
-docs/development/daily-poc-change-log.md	docs/development/daily-poc-change-log.md	0644
-docs/development/daily-poc-decision-log.md	docs/development/daily-poc-decision-log.md	0644
-docs/development/rel-daily-001-pdca.md	docs/development/rel-daily-001-pdca.md	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json	examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS	examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/artifact-manifest.json	examples/daily-poc/v0.2.0-poc.20260801.1/generated/artifact-manifest.json	0644

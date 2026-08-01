@@ -5,7 +5,7 @@ This architecture preserves the v0.1 subset identified in
 Workbench and later completed security candidates through AAS-023. The Canon's
 mechanism-independent product abstraction is the Agent Runtime Isolation
 Boundary / Untrusted Runtime Contract, detailed for engineering use in the
-[Agent Runtime Isolation Contract](development/agent-runtime-isolation-contract.md).
+[Agent Runtime Isolation Contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md).
 [Known Limitations](KNOWN-LIMITATIONS.md) identifies boundaries that remain
 outside this local snapshot.
 

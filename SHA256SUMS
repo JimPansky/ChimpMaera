@@ -117,7 +117,8 @@ a509d9db5668cfe5e3bcd32b6a0f8140f248ccbc403dc465cc12751b70329d51  ./demo/runtime
 bd658b60138d44cbe499bdeb82d7f49f052fb5284c85866cc59b2e728f473600  ./demo/seed-and-flow.sh
 ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfig.runtime.json
 1ded2f51daf04d1eeaaf2af332d046f292bcd99970aa7b3dc927ac1c161f760d  ./demo/uninstall.sh
-c16b4c65dc2a5fcc3c52b437ed4f53c3f440c657f3dd6d5b7f001786d393d062  ./docs/ARCHITECTURE.md
+2174f4ee679b791e2a39b047687631c0c11832ecb476674a4283758513ff5a61  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
+d069b8c14efe18432f43facd8543393be380d09aca4139f010c0c22c9ca7b111  ./docs/ARCHITECTURE.md
 7cda7bb499e04cb86bfe3d2d773828c5326b98727bfac68a797628bffeb68b65  ./docs/CANON.md
 15e500bdc967a41ebb383821300168dc31d8336f4bf4627c426224850b46f4e8  ./docs/CONNECT-YOUR-FIRST-SYSTEM.md
 443b77bd45e3e2a9c7c3e2150d96b905320439589c25945ca5c1895a00f7764f  ./docs/DAILY-POC-CANDIDATES.md
@@ -125,14 +126,7 @@ f2f99cb43912ab81ec5d5b115e73647c26a512e00801a2c13959b395ce6cab92  ./docs/DAILY-P
 f22247cee7ccfaad97411b987e8f39cb16a87d4e36506e4d9e2be5ff23e670d4  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
 84f990a52698064e1538175d2ac9f2454351c92622b98e0b57d28e3263bbdd11  ./docs/SUPPLY-CHAIN.md
-1870b4eedc8d79b9a345a4163d7d813efb014af49cb22000b11681a8836ca04d  ./docs/ZOO-FIELD-GUIDE.md
-2174f4ee679b791e2a39b047687631c0c11832ecb476674a4283758513ff5a61  ./docs/development/agent-runtime-isolation-contract.md
-12a574ea505a9e14630b9dcf095e6a65cae0410dc04e25ed7e7ad91d330d511e  ./docs/development/canon-zoo-guide-normative-delta-matrix.json
-e8963186038ec0c33895b41e2c615e73d6c2b8f8b07e88b89d38c60a2f50c3cc  ./docs/development/canon-zoo-guide-security-architecture-impact-analysis.md
-dc71597cf4a3cfcb86c93f34cba6c92f4d6f5436814998667328333f2b4c1557  ./docs/development/daily-poc-change-log.md
-f4aee8772dd979ce9be1555599d20daeed8ee5216d2a47d803fa114bb14012ea  ./docs/development/daily-poc-decision-log.md
-cc6e9d1414327d5680261090da24d9be98db6b5dd7e1fe6c0dd9e6995b91eb7c  ./docs/development/github-agent-runtime-issue-audit.md
-a6abfc32cd47c49c3b89c5fe6a3e555e9919382a2a30bdf4009f1356fc6d40b9  ./docs/development/rel-daily-001-pdca.md
+4eabfdd9292dc68df07998a83a91af3a189a5deb74fe05bc2eb9b28567b756de  ./docs/ZOO-FIELD-GUIDE.md
 fba7b021ca8dbe028dd18dc296469d9bd37e6f97694b033afbf3fbcebb256444  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json
 a8529b477a74e83922984d08bf4238eb377019567c57d9242eafb086a9a491fc  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS
 7cbec16db9058156d1368b52a25ac7ac63e29a0ac755f4b7cdd05dccdb90e68d  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/artifact-manifest.json
@@ -172,7 +166,7 @@ c86b9fdf4bfffd88bb4062250dba043acff0047a45ed4d50d999f2f8d8cb262e  ./packages/con
 7393da7d63dfdfd3caa52b1cb3b806525d06554db06075d914c17fba39ad8155  ./packages/contracts/src/protected-audit-timeline.ts
 54b825da8d6a83e44b6d71daece98e1ceabed3da92fdde3751c7a8843d27156f  ./packages/contracts/src/skill-admission.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-4166d926118524f46acdceae3fbcdf555672aa5804a8b86fb35d8c3b73cffa61  ./release/public-files.manifest
+8b8d00758c2682cd9f666b38d6ad16da3593b4af226f75b05f295bbecafe2e6f  ./release/public-files.manifest
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
 982f19ffaafd2ed726be891a5f8ca3c552c266832e8598f86a4009107b76ea83  ./schemas/contracts/protected-audit-timeline-v1.schema.json
 96717353050a8284599db2842e1db52e0b2090be712a3876ee61ed53f24eaa11  ./schemas/daily-poc-manifest-v1.schema.json
@@ -181,7 +175,7 @@ be91df81b1ca05853e6e1dea225aaacdfd879efba331e4035dc97ad92f98cd50  ./scripts/dail
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
 bb92008cdef16fa608930372dada402f48dfee9e172a1fa158aa3ceb893fe477  ./scripts/verify-supply-chain.mjs
 7459c5ecab8c958ffad6bb5daf559aa9aacec4f0714b004f1c36459a0314ef31  ./tests/capability-catalogue.test.ts
-7a2d0cd3ff6f3383d3ab38344db365fc94a329776fdeb96f51d638cfd6758991  ./tests/daily-poc.test.mjs
+26eda1600d8acad61e17c23f280aed71b9b0ece6a6d852f0157ed9dfe3d7b755  ./tests/daily-poc.test.mjs
 d9157598e660243c1b98552b09c43a05127701f0fe343c1a14c0eb984eaea9cd  ./tests/demo-admin-ai-poc.test.mjs
 2cb4aaad1ca1435c2c0abca543796f21de783ae678eabed1adac308ce1969e2b  ./tests/demo-approval-workbench.test.mjs
 7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74  ./tests/demo-enforcement-gate.test.mjs
