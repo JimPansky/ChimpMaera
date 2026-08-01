@@ -83,12 +83,47 @@ models, credentials or external accounts.
 
 ## Do
 
-Pending.
+Implemented an agent-neutral TypeScript contract and deterministic broker with
+closed OpenAI Chat Completions/Responses and Anthropic Messages adapters,
+request/response/stream guards, atomic budget reservation, idempotent replay,
+metadata-only audits and untrusted non-executable tool candidates. Added a
+default-off isolated four-service fixture with three internal networks:
+OpenClaw can reach only the Capability Frontdoor; the frontdoor can reach only
+the broker; only the broker can reach the synthetic provider. Images are pinned
+or locally built from pinned bases, non-root, read-only, capability-dropped and
+socket/host-mount free.
 
 ## Check
 
-Pending.
+- Focused AAS-036 contract/runtime tests: **8/8 PASS**.
+- Complete repository tests: **116/116 PASS**.
+- Video reference tests: **15/15 PASS**.
+- Supply-chain checks: **6/6 PASS**, lock digest
+  `a9d02e5bd6aced8e831b9c91fdc7afae35cc835b79b79c9af08e186fcb02cfc1`.
+- Deterministic public staging: PASS, archive digest
+  `59c320f7a78edfb4ba2d798bf1fa8693bae26d6dcfb2752472b8a0734e11070f`;
+  temporary staging residue zero.
+- Exactly one isolated full smoke ran after runtime bytes froze:
+  `aas036-20260801T131032Z` PASS in 63,525 ms. The real pinned OpenClaw agent
+  completed model E2E; 11 provider calls, 7 denials, 7 metadata-only audits and
+  7 receipts were observed. Direct broker/provider/Internet paths, cross-tenant,
+  unknown-route, injection, secret disclosure, tool smuggling, malformed/
+  oversized response, replay conflict and timeout probes passed. Owner process/
+  config fingerprints were identical before/during/after; owned residue was
+  zero. No repeat smoke was run.
+- Implementation commit:
+  `9a95eb869eff00f30afb8c66f3fc2d9f12d74023`.
 
 ## Act
 
-Pending.
+Close AAS-036 at **8/8** with verdict
+`LOCAL_AAS_036_PASS_NOT_LIVE_PROVIDER_PRODUCTION_TLS_VAULT_UNIVERSAL_AGENT_OR_RELEASE_CLAIM`.
+Do not optimize or rerun it absent a real regression or correcting byte change.
+
+Frontier review rechecked agent functionality, extension provenance, capability
+grant separation, mutable dependencies, staged activation and rollback. Owner
+direction proves one distinct dependent I5 frontier: managed skill lifecycle is
+not covered by model mediation. Persist AAS-037 at **0/6** and select it ahead
+of ERP/CRM/BI/DMS breadth and lower-importance controls. Its implementation
+must remain serial and use the same canonical Skill Admission IR across proven
+runtime formats.

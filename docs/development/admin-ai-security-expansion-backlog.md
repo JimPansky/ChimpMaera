@@ -41,26 +41,27 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 1 | 0 | 2 | 5 | 0 | 13 |
+| P0 | 5 | 1 | 0 | 2 | 6 | 0 | 14 |
 | P1 | 11 | 2 | 0 | 0 | 3 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **4** | **0** | **2** | **8** | **0** | **36** |
+| **Total** | **22** | **4** | **0** | **2** | **9** | **0** | **37** |
 
-Ready order after AAS-017 closure and Owner reprioritisation:
+Ready order after AAS-036 closure and Owner reprioritisation:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-036 | P0 | I5 | XL | Agent-agnostic model credentials, routing and bidirectional traffic guards are a security prerequisite for real agent use |
+| 1 | AAS-037 | P0 | I5 | XL | Managed skill admission is the next agent-security prerequisite after model mediation |
 | 2 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
 | 3 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
 | 4 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
 `AAS-009`, `AAS-016`, `AAS-012`, owner-priority `AAS-035` and `AAS-017`.
-Owner direction at 2026-08-01 14:17 CEST makes `AAS-036` the next frontier
-before lower-priority ERP/CRM/BI/DMS breadth. Closed items do not reopen without
-new evidence.
+Owner directions at 2026-08-01 14:17 and 14:26 CEST made `AAS-036` the model
+security prerequisite and `AAS-037` its dependent next frontier before lower-
+priority ERP/CRM/BI/DMS breadth. AAS-036 is complete; closed items do not reopen
+without new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
 decision/use convergence, fallback, management/effect separation, audit and
@@ -119,6 +120,14 @@ distinct I5 security prerequisite rather than protocol/framework breadth:
 agents need a closed, agent-agnostic Model Access Broker with deterministic
 bidirectional guards. AAS-036 captures the finite 8/8 contract and precedes
 all lower-importance breadth.
+
+The AAS-036 frontier audit rechecked feature preservation, extension
+provenance, separate installation/capability decisions, mutable dependencies,
+staged activation, rollback and agent-format compatibility. Owner direction
+proves a distinct I5 gap: agents may request skills, but no canonical managed
+admission lifecycle prevents direct store mutation or self-granted transitive
+rights. AAS-037 captures the finite 6/6 contract and now precedes application
+breadth and every lower-importance ready item.
 
 ## P0 — critical authority and containment
 
@@ -429,7 +438,7 @@ all lower-importance breadth.
 
 ### AAS-036 — Model Access Broker and bidirectional traffic guards
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 explicit
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 explicit
   Owner-priority architecture/security frontier / XL. **Risk reduction:**
   critical before agents can use models without ambient provider authority.
   **User value:** real agents receive guarded model results while provider
@@ -483,7 +492,58 @@ all lower-importance breadth.
   security completeness. The Owner OpenClaw, Gateway, vLLM, models and live
   credentials remain untouched. No push, PR, merge, tag, release, publication,
   production/live-provider action or external-account mutation.
-- **Completion commit/evidence:** pending; initial metric **0/8**. **Last
+- **Completion commit/evidence:** implementation
+  `9a95eb869eff00f30afb8c66f3fc2d9f12d74023` and
+  `docs/development/evidence/admin-ai-aas-036-20260801.json`; gates **8/8**,
+  complete tests **116/116**, video **15/15**, supply chain **6/6**, public
+  staging PASS, and isolated real-OpenClaw smoke `aas036-20260801T131032Z`
+  PASS in 63,525 ms with zero owned residue. Verdict
+  `LOCAL_AAS_036_PASS_NOT_LIVE_PROVIDER_PRODUCTION_TLS_VAULT_UNIVERSAL_AGENT_OR_RELEASE_CLAIM`.
+  **Last reviewed:** 2026-08-01.
+
+### AAS-037 — Managed Skill Lifecycle and Quality Gate
+
+- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 explicit
+  Owner-priority dependent agent-security frontier / XL. **Risk reduction:**
+  critical against unreviewed code, dependency and transitive-rights admission.
+  **User value:** agents can easily discover and request skills while the Owner
+  retains explainable control over installation, activation and capabilities.
+- **Canon:** composition plus extension, CM-CAN-01/02/03/04/05/07/08/09/10/
+  11/14/15/16/17. **Source / dependencies:** Owner direction 2026-08-01 14:26
+  CEST; completed AAS-036 plus AAS-012/AAS-017/AAS-025 primitives; immediately
+  follows AAS-036 before application breadth.
+- **Evidence metric — 6/6:** (1) canonical Skill Admission IR and closed
+  manifest contract; (2) deterministic provenance/licence/dependency/secret/
+  network/filesystem/process/persistence and quality/risk report; (3)
+  explainable SAFE_GUIDED/CUSTOM/RAMPAGE decision matrix with recommendation,
+  rationale, impacts and routing; (4) brokered atomic immutable versioned
+  install, separate activation and rollback store; (5) real isolated OpenClaw
+  request/install/use E2E plus honest Hermes/Claude compatibility matrix; (6)
+  adversarial negative matrix, focused/full/supply-chain/public validation,
+  PDCA, clean commit and zero owned residue.
+- **Required flow:** request -> resolve immutable source/version/digest ->
+  stage/quarantine -> parse manifest/SKILL.md/tool declarations -> provenance,
+  licence, dependency and authority analysis -> transitive-rights simulation ->
+  sandbox tests -> profile decision -> brokered atomic install -> separate
+  activation -> readback/receipt -> rollback. Installation never grants the
+  requested capabilities. Updates require a new digest, Diff and evaluation;
+  mutable references and silent dependency drift deny.
+- **Negative probes:** mutable source, digest swap, malicious install script,
+  hidden network/credential access, path escape/symlink, dependency confusion,
+  transitive escalation, post-approval byte change, cross-tenant reuse, replay/
+  concurrent install, failed activation and rollback all fail before authority
+  or effect.
+- **Profiles and friction:** SAFE_GUIDED is restrictive/default; CUSTOM is
+  individually configurable; RAMPAGE may admit every registered capability and
+  explicitly admitted extension when Owner policy allows, but malformed,
+  tampered, cross-tenant or self-approved input remains invalid. Low-risk trusted
+  read-only skills may auto-approve only when the Owner matrix enables it.
+- **Rollback / non-claims / external gates:** deactivate and atomically restore
+  the prior immutable skill-store generation while retaining receipts. OpenClaw
+  packages are first; Hermes/Claude materializers remain unproven until exact
+  formats and runtimes are pinned. No push, PR, merge, release, publication,
+  live registry, production store, credential or external-account action.
+- **Completion commit/evidence:** pending; initial metric **0/6**. **Last
   reviewed:** 2026-08-01.
 
 ## P1 — high-value control product and hardened boundaries
