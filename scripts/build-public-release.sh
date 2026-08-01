@@ -227,6 +227,7 @@ for candidate in root.rglob("*"):
         and not relative.startswith(".github/")
         and not relative.startswith(".chimpmaera-acceptance/")
         and not relative.startswith(".chimpmaera-demo/")
+        and not relative.startswith(".chimpmaera-aas035/")
         and not relative.startswith("docs/development/")
     ):
         raise SystemExit(f"UNMANIFESTED_SOURCE_FILE:{relative}")

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "chimpmaera.aas035/runtime-contract/v1",
+  "fixtureId": "aas035-openclaw-agent-v1",
+  "ownershipLabel": "io.chimpmaera.fixture=aas035-openclaw-agent-v1",
+  "runtime": {
+    "upstreamVersion": "2026.7.1",
+    "upstreamIndexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "role": "UNTRUSTED_AGENT_NOT_DECISION_POLICY_AUTHORITY_OR_EFFECT_PLANE",
+    "defaultOffProfile": "aas035",
+    "network": "aas035_gateway_only"
+  },
+  "workload": {
+    "identity": "workload:aas035-openclaw-agent-v1",
+    "tenant": "tenant:synthetic-zoo",
+    "purpose": "purpose:synthetic-contact-fixture",
+    "catalogueDigest": "1454c6bc785bc5185d7e1dc657cd62b620c2e2f9b79a80ac38e87573adf5c387",
+    "catalogueVersion": "1.0.0",
+    "adapterId": "espocrm-local-fixture",
+    "adapterVersion": "1.0.0",
+    "actionId": "crm.contact.create"
+  },
+  "mindStore": {
+    "trust": "SYNTHETIC_UNTRUSTED_AGENT_MEMORY",
+    "retentionSeconds": 86400,
+    "maxEntries": 16,
+    "maxValueBytes": 2048,
+    "maxTotalBytes": 16384,
+    "reset": "PURGE_TENANT_PURPOSE_ONLY"
+  },
+  "nonClaims": [
+    "NO_PRODUCTION_SANDBOX_OR_HOST_KERNEL_BOUNDARY",
+    "NO_LIVE_PROVIDER_OR_PRODUCTION_IAM_NETWORK_POLICY",
+    "NO_REGISTRY_SIGNATURE_COMPLETE_SBOM_CVE_OR_LICENCE_AUDIT",
+    "NO_MULTI_TENANT_DEPLOYMENT_OR_SECURITY_COMPLETENESS"
+  ]
+}

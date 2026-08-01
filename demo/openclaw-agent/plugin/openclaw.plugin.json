@@ -1,0 +1,17 @@
+{
+  "id": "chimpmaera-capability",
+  "name": "ChimpMaera AAS-035 Capability Gateway",
+  "description": "Exposes one closed synthetic ChimpMaera action to the isolated OpenClaw fixture.",
+  "version": "1.0.0",
+  "activation": { "onStartup": true },
+  "contracts": { "tools": ["chimpmaera_capability_request"] },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["baseUrl", "workloadIdentity"],
+    "properties": {
+      "baseUrl": { "type": "string", "const": "http://capability-gateway:8080" },
+      "workloadIdentity": { "type": "string", "const": "workload:aas035-openclaw-agent-v1" }
+    }
+  }
+}

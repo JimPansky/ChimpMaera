@@ -7,7 +7,8 @@
       "artifactId": "node-runtime-build",
       "reference": "node:24.14.1-bookworm-slim@sha256:e484ae3f1e3c378021c967fd42254f343c302a9263e412280eac32bf5bca7008",
       "locations": [
-        { "path": "demo/chimpmaera.Dockerfile", "kind": "FROM", "occurrences": 2 }
+        { "path": "demo/chimpmaera.Dockerfile", "kind": "FROM", "occurrences": 2 },
+        { "path": "demo/openclaw-agent/gateway.Dockerfile", "kind": "FROM", "occurrences": 1 }
       ],
       "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
     },
