@@ -191,7 +191,20 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     workflow.includes(`npm install --global npm@${npmVersion}`),
     "SUPPLY_CHAIN_CI_NPM_VERSION_DRIFT_DENIED",
   );
-  checks.push("CI_ACTIONS_AND_NPM_PINNED");
+  const composeTool = lock.ci.dockerCompose;
+  assert(
+    /^v\d+\.\d+\.\d+$/.test(composeTool?.version)
+    && composeTool.platform === "linux-x86_64"
+    && composeTool.url === `https://github.com/docker/compose/releases/download/${composeTool.version}/docker-compose-${composeTool.platform}`
+    && /^[a-f0-9]{64}$/.test(composeTool.sha256)
+    && composeTool.verification === "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
+    && workflow.split(composeTool.url).length - 1 === 1
+    && workflow.split(composeTool.sha256).length - 1 === 1
+    && workflow.includes("sha256sum --check -")
+    && workflow.includes("DOCKER_CONFIG="),
+    "SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED",
+  );
+  checks.push("CI_ACTIONS_NPM_AND_COMPOSE_PINNED");
 
   const runtimeDirectory = await safeRootEntry(
     resolvedRoot,

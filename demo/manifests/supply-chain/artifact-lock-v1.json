@@ -121,7 +121,14 @@
   },
   "ci": {
     "workflowPath": ".github/workflows/ci.yml",
-    "actionsRequireFullCommitSha": true
+    "actionsRequireFullCommitSha": true,
+    "dockerCompose": {
+      "version": "v2.40.3",
+      "platform": "linux-x86_64",
+      "url": "https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-x86_64",
+      "sha256": "dba9d98e1ba5bfe11d88c99b9bd32fc4a0624a30fafe68eea34d61a3e42fd372",
+      "verification": "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
+    }
   },
   "runtimeClosure": {
     "directory": "demo/runtime",

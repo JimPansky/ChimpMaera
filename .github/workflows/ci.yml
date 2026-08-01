@@ -36,9 +36,21 @@ jobs:
         run: npm install --global npm@11.16.0
 
       - name: Set up supported Docker Compose
-        uses: docker/setup-compose-action@2fe291b7677a45ee1269ec56a42604c143505e7e # v1
-        with:
-          version: v2.40.3
+        env:
+          CM_COMPOSE_URL: https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-x86_64
+          CM_COMPOSE_SHA256: dba9d98e1ba5bfe11d88c99b9bd32fc4a0624a30fafe68eea34d61a3e42fd372
+        run: |
+          compose_root="$RUNNER_TEMP/chimpmaera-docker-config"
+          plugin_dir="$compose_root/cli-plugins"
+          compose_binary="$plugin_dir/docker-compose"
+          mkdir -p "$plugin_dir"
+          curl --fail --location --silent --show-error \
+            --output "$compose_binary" "$CM_COMPOSE_URL"
+          printf '%s  %s\n' "$CM_COMPOSE_SHA256" "$compose_binary" \
+            | sha256sum --check -
+          chmod 0755 "$compose_binary"
+          printf 'DOCKER_CONFIG=%s\n' "$compose_root" >> "$GITHUB_ENV"
+          DOCKER_CONFIG="$compose_root" docker compose version
 
       - name: Verify release-tree checksums
         run: sha256sum --check SHA256SUMS

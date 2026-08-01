@@ -78,7 +78,7 @@ test("real repository declarations produce a bounded PASS report", async () => {
   assert.deepEqual(report.checks, [
     "OCI_DECLARATIONS_PINNED",
     "NPM_LOCK_INTEGRITY_DECLARED",
-    "CI_ACTIONS_AND_NPM_PINNED",
+    "CI_ACTIONS_NPM_AND_COMPOSE_PINNED",
     "RUNTIME_COPY_CLOSURE_VERIFIED",
     "PUBLIC_RELEASE_CRITICAL_CLOSURE_VERIFIED",
     "RUNTIME_POSTURE_AND_PAPERLESS_NON_CLAIM_VERIFIED",
@@ -127,6 +127,14 @@ test("mutable OCI, npm integrity, CI ref, runtime omission and release omission 
       ".github/workflows/ci.yml",
       (source) => source.replace(/@[a-f0-9]{40}/, "@v4"),
       /SUPPLY_CHAIN_CI_ACTION_NOT_COMMIT_PINNED_DENIED/,
+    ],
+    [
+      ".github/workflows/ci.yml",
+      (source) => source.replace(
+        /CM_COMPOSE_SHA256: [a-f0-9]{64}/,
+        `CM_COMPOSE_SHA256: ${"0".repeat(64)}`,
+      ),
+      /SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED/,
     ],
     [
       "demo/chimpmaera.Dockerfile",
