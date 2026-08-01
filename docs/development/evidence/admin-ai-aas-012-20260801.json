@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-implementation-evidence/v1",
+  "workItem": "AAS-012",
+  "metric": {
+    "name": "aas_012_inactive_catalogue_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "verdict": "LOCAL_AAS_012_PASS_INACTIVE_DESCRIPTION_NOT_PROVENANCE_ACTIVATION_OR_AUTHORITY_CLAIM",
+  "generatedAt": "2026-08-01T13:00:15+02:00",
+  "baseline": "501122f855e4d0987896b649d0f93f3e2a6bd64c",
+  "planCommit": "89841b60c3beb3a9dd0a32449d23d21eef25a037",
+  "implementationCommit": "4e3a5952fc6c748b3fe4ac648c82968a18d3f39f",
+  "gates": [
+    {
+      "id": 1,
+      "name": "finite_digest_bound_catalogue",
+      "status": "PASS",
+      "evidence": "Closed catalogue, adapter and action schemas normalize the exact two synthetic adapters/actions; adapter/action/resource/field/effect/method/path/version sets are finite and the normalized catalogue digest is stable under safe reordering."
+    },
+    {
+      "id": 2,
+      "name": "per_action_evidence_and_non_claims",
+      "status": "PASS",
+      "evidence": "Each inactive descriptor exposes exact catalogue/adapter versions and digests, action digest, closed surface, local evidence reference, compatibility set and all three required provenance/activation non-claims."
+    },
+    {
+      "id": 3,
+      "name": "inactive_by_default_semantics",
+      "status": "PASS",
+      "evidence": "Admission and exact inspection both retain decision DENY; inspection is descriptive and non-executable, and no Policy decision, approval, authority, credential, provider call, callback, URL, header or activation token is emitted."
+    },
+    {
+      "id": 4,
+      "name": "adversarial_and_regression_evidence",
+      "status": "PASS",
+      "evidence": "Unknown/duplicate adapter/action, incompatible version, malformed digest/evidence, altered non-claims, active-state injection, open field/resource/path and tampered admission/inspection bindings deny closed."
+    }
+  ],
+  "validation": {
+    "focusedAas012": "4/4",
+    "fullSuite": "95/95",
+    "videoTests": "15/15",
+    "checksums": "129/129",
+    "supplyChainChecks": "6/6",
+    "publicArchiveSha256": "8a8f093804aa5d4e663a7648cbedb2125ec8072adbc5b69a1467d193a25435d8",
+    "publicArchiveReproducible": true,
+    "gitDiffCheck": "PASS"
+  },
+  "fullDemoInstallSmoke": {
+    "status": "NOT_REPEATED_NO_RELEVANT_BYTES",
+    "reason": "AAS-012 changes a pure TypeScript contract, tests and public closure only; no runtime, installer, Compose, provider-adapter or install-path byte changed. The completed AAS-016 SAFE_DEMO_COLD-02 remains the one relevant frozen-byte smoke and the durable smoke budget forbids an unrelated repeat."
+  },
+  "contractDigests": {
+    "catalogue": "1454c6bc785bc5185d7e1dc657cd62b620c2e2f9b79a80ac38e87573adf5c387",
+    "admissionResult": "29c10a069935ed314cc9088424ddd1e0b045edd60a7317cf69fc68b5ff86ac28",
+    "crmAction": "9105aa36049abb0c528bd515fb591f343f5ffaebc33d84df086ea7cb6057d502",
+    "erpAction": "a0778c059c1d6cb5cc6820ecba07cbd678ba795f741c1fedb6b6e975ffe0a63e"
+  },
+  "artifactDigests": {
+    "contract": "6fb94da6548aba5f7796d21ce938fd02c608929b76c199e2870c5542ad69a822",
+    "tests": "7459c5ecab8c958ffad6bb5daf559aa9aacec4f0714b004f1c36459a0314ef31",
+    "exports": "f37dd75b18ef424f1082c8784d9cbcd3bba3a629afe4d2b05ab8937806651d79",
+    "package": "b0eccf6acf8edecf8eea2809f4e283d3f6978da755bcfa9fd0bc039a7cd157ad",
+    "publicManifest": "a0cec8930aa98e47f94c52a8493feb21add49cf9d83be1675fc216587c851cf5",
+    "repositoryChecksums": "0cbe66d4ba586803359b75265734bf80ff621d94837b18c59e2deccfb7e5eae9"
+  },
+  "correctingEvidence": {
+    "defect": "The first mechanical checksum rewrite included the isolated worktree .git pointer, then a retry observed generated Python cache files after video tests.",
+    "correction": "The checksum closure now excludes the .git control file, node_modules, dist, development evidence and generated __pycache__/pyc files; the exact 129-file closure passes.",
+    "scope": "Evidence-path bytes only; no contract, runtime, install or test behavior changed, so only affected checksum and supply-chain checks were repeated."
+  },
+  "nonClaims": [
+    "No live adapter/image provenance, licence, redistribution compatibility, registry integrity or production version support was tested or claimed.",
+    "Admission and inspection do not activate an action and do not issue Policy, approval, authority, credentials or effects.",
+    "No Gateway enforcement, provider behavior, deployment isolation or production multi-tenant behavior was tested or claimed.",
+    "No push, pull request, merge, tag, release, publication, production deployment, external-system mutation or owner infrastructure change."
+  ]
+}

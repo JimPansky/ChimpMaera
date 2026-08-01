@@ -2,8 +2,8 @@
 
 ## Principles for Agency, Authority, and Evolution
 
-**Version:** 0.1  
-**Status:** English canonical candidate  
+**Version:** 0.1
+**Status:** English canonical candidate
 **Language governance:** English is the canonical language for maintained
 repository product and technical documentation. Localized material belongs to
 separate localization workflows and does not control this document.
@@ -87,6 +87,12 @@ Code, a tool, a template, credentials, or a request that can be constructed
 does not grant permission to use it. Every effect requires its own current basis of authority;
 planning and execution interfaces remain separate.
 
+Provider responses, tool output, retrieved documents, and recalled memory are
+data, not Owner instruction. Their origin, trust, tenant, data class, and
+instruction eligibility remain explicit across the planning boundary. A model
+may emit a closed typed candidate; trusted code reconstructs the action from a
+server-owned catalogue before normal Policy, Approval, and use-time checks.
+
 ### CM-CAN-02 — Authority Is Rooted in the Owner
 
 The Owner selects a visible, versioned root of authority or Profile. Delegated
@@ -118,14 +124,17 @@ after drift.
 
 Before a material effect, the system presents the purpose, authoritative prior
 state, intended subsequent state, and relevant risks. The diff is produced from
-the same immutable, effect-free Plan that is later enforced.
+the same immutable, effect-free Plan that is later enforced. The prior-state
+read is bounded, complete for the declared material fields, versioned and
+digest-bound; hidden, truncated, stale or unverifiable state fails closed.
 
 ### CM-CAN-07 — Approval Is Exact and Bound to Use
 
 An Approval binds the canonical digest, Actor, scope, target, Policy
 generation, expiry, and permitted number of uses. All bindings are revalidated
 when it is used; missing, changed, expired, revoked, or consumed authority is
-rejected.
+rejected. For state-dependent material effects, the authoritative snapshot and
+its version are revalidated at approval and immediately before the effect.
 
 ### CM-CAN-08 — Enforcement Occurs at the Effect Boundary
 
@@ -137,7 +146,7 @@ boundary has access capable of producing effects.
 
 Credentials exist only at the bounded enforcement boundary. The Agent,
 Template, and general planner receive typed references rather than reusable
-secrets.
+secrets. Untrusted content cannot select, rewrite, or disclose those references.
 
 ### CM-CAN-10 — Success Requires Readback and a Bound Receipt
 

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-implementation-evidence/v1",
+  "workItem": "AAS-003",
+  "metric": {
+    "name": "aas_003_effective_rights_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "verdict": "LOCAL_AAS_003_PASS_NOT_PRODUCTION_IAM_OR_AUTHORIZATION_COMPLETENESS_CLAIM",
+  "generatedAt": "2026-08-01T07:53:00+02:00",
+  "baseline": "a0b7a08999a8d7bfe7e654c05b41c04fa06dd78f",
+  "planCommit": "fca22d835400cc350795eb1622e38eaf983466b6",
+  "implementationCommit": "7c85a065da6bdd200cacc02ccfac8ddbd7484199",
+  "gates": [
+    {
+      "id": 1,
+      "name": "exact_typed_operands",
+      "status": "PASS",
+      "evidence": "Closed schemas and tenant/profile/generation bindings deny missing, unknown, stale, duplicate, conflicting and out-of-scope inputs."
+    },
+    {
+      "id": 2,
+      "name": "canonical_intersection",
+      "status": "PASS",
+      "evidence": "The least-permissive action/resource/field/purpose/effect intersection returns ALLOW, ESCALATE or DENY with four contributing ceilings, ordered reason facts and a stable digest."
+    },
+    {
+      "id": 3,
+      "name": "permission_xray_parity",
+      "status": "PASS",
+      "evidence": "The GET-only view renders the exact machine outcome, scope, ceilings, reasons, issues and source result digest; omission or weakening fails parity."
+    },
+    {
+      "id": 4,
+      "name": "adversarial_regression_evidence",
+      "status": "PASS",
+      "evidence": "Capability-only, empty intersection, schema-extra, binding, generation, unknown-scope and view-tamper probes deny without authority; focused, full and live-smoke evidence passed."
+    }
+  ],
+  "validation": {
+    "focusedAas003": "4/4",
+    "relatedFocused": "30/30",
+    "fullSuite": "84/84",
+    "videoTests": "15/15",
+    "checksums": "124/124",
+    "supplyChainChecks": "6/6",
+    "publicArchiveSha256": "7f247d1b0f0175f37dab2e4728cc5daa856791214eee2af6cbc26554ee16ed10"
+  },
+  "singleFullSmoke": {
+    "scenario": "SAFE_DEMO_COLD-01",
+    "status": "PASS",
+    "readyVerdict": "READY_VERIFIED",
+    "installerElapsedMs": 69310,
+    "acceptanceElapsedMs": 69390,
+    "runtimeImage": "chimpmaera/v01-runtime@sha256:9c84eb10c40d1a8fcad88b3ee95bceb5ef921b431656470906a4486a805ec9e0",
+    "permissionXray": {
+      "claim": "INFORMATIONAL_ONLY_NO_EXECUTABLE_AUTHORITY",
+      "outcome": "ALLOW",
+      "sourceResultDigest": "d1e5ac08d38ecd66172e55d64d0a8ad0076dd57b8401dd517493ee38ed071000",
+      "ceilingKinds": [
+        "ASSIGNMENT",
+        "CAPABILITY",
+        "CONSTRAINT",
+        "PROFILE"
+      ],
+      "reasonCount": 5,
+      "issues": []
+    },
+    "approvalWorkbench": {
+      "status": "PASS",
+      "approvedReadback": "VERIFIED",
+      "rejectedEffect": "DENIED",
+      "replayEffect": "DENIED"
+    }
+  },
+  "artifactDigests": {
+    "acceptance": "b7482443eb2441235bf7aa130681d760166c3ff86f1049aa716758d87fa021ab",
+    "permissionXray": "8f0c2c5abaa26b41524969af5a46a554763bf6d94b9627d2a04b370009f1bd49",
+    "approvalWorkbenchSmoke": "ff4b2e09058052a8b5cb0125d7b79cb144641136fa11954d17c7fe573d4cecc0",
+    "readback": "aa0092539b096bd070aa03efa9c18302e277c9d7f8352f88bc443ba7d049002f"
+  },
+  "cleanup": {
+    "ownedRuntimeStateRemoved": true,
+    "ownedContainers": 0,
+    "ownedVolumes": 0,
+    "ownedNetworks": 0,
+    "ownedImages": 0
+  },
+  "nonClaims": [
+    "No production IAM, role-source freshness, tenant isolation or authorization completeness.",
+    "No executable authority, credential, lease or provider effect is issued by the compiler or X-ray.",
+    "No push, pull request, merge, tag, release, publication or production deployment."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "chimpmaera.development/integrated-smoke-evidence/v1",
+  "scope": "LOCAL_WAVES_1_THROUGH_4_CANDIDATE_ONLY",
+  "scenario": "SAFE_DEMO_COLD",
+  "attempt": 3,
+  "result": "PASS",
+  "elapsedMs": 69460,
+  "branch": "feat/v0.2-approval-workbench",
+  "testedCommit": "1b9e6bcb137e76b4f688fa2382f0520c339bbc43",
+  "remoteMainBaseline": "e698946d74342ae10ed25e93d6a45a99647dd2ba",
+  "v010Commit": "e698946d74342ae10ed25e93d6a45a99647dd2ba",
+  "frozenChecksumManifestDigest": "c551574d904d510ff43d58d0923ce84dfa83a8712b2c02aa4a64136b5ced2ecd",
+  "supplyChainArtifactLockDigest": "5fb2a2817a39d57c473e306a093758c66acde2d3f705fead4f75fbd775a51656",
+  "semanticEvidence": {
+    "installer": "READY_VERIFIED",
+    "approvalWorkbench": "PASS",
+    "approvedEffect": "PROVIDER_MUTATION_READBACK_VERIFIED",
+    "rejectedEffect": "DENIED",
+    "authorityReplay": "AUTHORITY_LEASE_REPLAY_DENIED",
+    "claim": "DETERMINISTIC_LOCAL_STATIC_POLICY_NO_LIVE_LLM",
+    "paperlessStockMode": "OFF_NO_SERVICE_CONTACT"
+  },
+  "approvalEvidence": {
+    "approvedDecisionDigest": "f22f3ed6d8d105a264408bb85b3c4efd8f0e3c1bc45b2508c275337d948f244c",
+    "approvedDecisionReceiptDigest": "b1dd9f590effdb8cc46842f9971ce69378d11c2a836f25c61468b95cc447bac0",
+    "approvedEffectReceiptDigest": "bcfd3d6c5d1dee14008305ec8fff64af97d38daee229fc1f96a52bce62e0ef76",
+    "rejectedDecisionReceiptDigest": "0b50279c4a8ba7235246d09a150db77a7af38e6796018a0d9c089f42469d1246"
+  },
+  "detailedEvidenceDigests": {
+    "acceptance.json": "be2a59413988a4a4030bc93e554a8d01f5ffb152f21c15ebc49bb19f6f15e224",
+    "approval-workbench-smoke.json": "dd5bd35e3b55ca6505e1036a936b2d942d11f6d1266bb8f41317de6d37408d80",
+    "config.json": "04b869737e677ef521052d9fa9c756b9a4f71b42aa032f5ad9d447ee6c48dd56",
+    "events.jsonl": "a6d25c4b1cc782391562aaec805de8c5d26481f64a47b66d5e5291875c7b375c",
+    "latest-summary.json": "9542df90ec75ad3b962f912cc64f6228853ad5f00f3f864e9a0bc34b8b431de8",
+    "readback.json": "b75bdbb4cb04cca773efaf052e577048dd9c871eee323bc220f96d1ee05d6e2f"
+  },
+  "detailedEvidencePath": ".chimpmaera-acceptance/runs/SAFE_DEMO_COLD-03/",
+  "cleanup": "PASS_DEDICATED_ACCEPTANCE_RESIDUE_ZERO",
+  "claimBoundary": "Digest-only local development evidence; no release, production, live-LLM, Paperless-service, provenance or security-certification claim."
+}

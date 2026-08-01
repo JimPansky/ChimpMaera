@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "chimpmaera.evidence/admin-ai-aas-036/v1",
+  "date": "2026-08-01",
+  "metric": {"name": "aas_036_model_access_broker_gates", "passed": 8, "total": 8},
+  "implementationCommit": "9a95eb869eff00f30afb8c66f3fc2d9f12d74023",
+  "branch": "feat/admin-ai-aas-036-model-access-broker",
+  "gates": [
+    {"id": 1, "status": "PASS", "evidence": "versioned canonical request/response/stream contracts plus feature-parity tests"},
+    {"id": 2, "status": "PASS", "evidence": "deterministic identity, tenant, purpose, delegation, trust, classification, allowlist, budget and pre-provider redaction guard"},
+    {"id": 3, "status": "PASS", "evidence": "opaque broker-only handle, fixed route and three-network agent/frontdoor/broker/provider topology"},
+    {"id": 4, "status": "PASS", "evidence": "response MIME/size/schema/redaction/provenance and incremental SSE/tool-candidate quarantine guards"},
+    {"id": 5, "status": "PASS", "evidence": "OpenAI Chat Completions/Responses and Anthropic Messages/SSE closed adapter conformance"},
+    {"id": 6, "status": "PASS", "evidence": "real pinned OpenClaw 2026.7.1 isolated E2E run aas036-20260801T131032Z plus compatibility matrix"},
+    {"id": 7, "status": "PASS", "evidence": "direct egress, injection, tool-smuggling, budget, replay, concurrent-final-unit, tenant, timeout, partial/malformed stream, oversize, credential disclosure and broker failure negative matrix"},
+    {"id": 8, "status": "PASS", "evidence": "focused 8/8, complete 116/116, video 15/15, supply chain 6/6, deterministic public staging PASS, one full smoke and zero owned residue"}
+  ],
+  "isolatedSmoke": {
+    "runId": "aas036-20260801T131032Z",
+    "status": "PASS",
+    "elapsedMs": 63525,
+    "providerCalls": 11,
+    "denials": 7,
+    "auditCount": 7,
+    "receiptCount": 7,
+    "rawContentStored": false,
+    "ownerFingerprintUnchanged": true,
+    "ownedRuntimeResidue": 0,
+    "repeat": "NOT_RUN; no correcting runtime byte change followed the passing smoke"
+  },
+  "validation": {
+    "focused": {"passed": 8, "total": 8},
+    "complete": {"passed": 116, "total": 116},
+    "video": {"passed": 15, "total": 15},
+    "supplyChain": {"passed": 6, "total": 6, "lockDigest": "a9d02e5bd6aced8e831b9c91fdc7afae35cc835b79b79c9af08e186fcb02cfc1"},
+    "publicStaging": {"status": "PASS", "archiveSha256": "59c320f7a78edfb4ba2d798bf1fa8693bae26d6dcfb2752472b8a0734e11070f", "temporaryResidue": 0}
+  },
+  "compatibility": {
+    "openclawRuntime": "PROVEN_ISOLATED_PINNED_2026_7_1",
+    "openaiChatCompletions": "PROTOCOL_CONFORMANCE_PROVEN",
+    "openaiResponses": "PROTOCOL_CONFORMANCE_PROVEN",
+    "anthropicMessagesSse": "PROTOCOL_CONFORMANCE_PROVEN",
+    "hermesRuntime": "UNPROVEN_NO_PINNED_LOCAL_RUNTIME",
+    "claudeCodeRuntime": "UNPROVEN_NO_PINNED_LOCAL_RUNTIME"
+  },
+  "verdict": "LOCAL_AAS_036_PASS_NOT_LIVE_PROVIDER_PRODUCTION_TLS_VAULT_UNIVERSAL_AGENT_OR_RELEASE_CLAIM"
+}

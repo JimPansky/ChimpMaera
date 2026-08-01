@@ -1,0 +1,130 @@
+name: ${CM_AAS036_PROJECT:-chimpmaera-aas036-model-broker}
+services:
+  synthetic-provider:
+    profiles: [aas036]
+    image: chimpmaera/aas036-synthetic-provider:local
+    build:
+      context: ../..
+      dockerfile: demo/model-access-broker/provider.Dockerfile
+      provenance: false
+      args: {CM_AAS036_SOURCE_SHA256: "${CM_AAS036_SOURCE_SHA256:-unbuilt}"}
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+    user: "10003:10003"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=4m,mode=1777"]
+    networks: [provider_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8082/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+
+  model-access-broker:
+    profiles: [aas036]
+    image: chimpmaera/aas036-model-access-broker:local
+    build:
+      context: ../..
+      dockerfile: demo/model-access-broker/broker.Dockerfile
+      provenance: false
+      args: {CM_AAS036_SOURCE_SHA256: "${CM_AAS036_SOURCE_SHA256:-unbuilt}"}
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+    depends_on:
+      synthetic-provider: {condition: service_healthy}
+    user: "10002:10002"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 48
+    mem_limit: 96m
+    cpus: 0.35
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=4m,mode=1777"]
+    networks: [broker_only, provider_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8081/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+
+  capability-gateway:
+    profiles: [aas036]
+    image: chimpmaera/aas036-capability-frontdoor:local
+    build:
+      context: ../..
+      dockerfile: demo/model-access-broker/frontdoor.Dockerfile
+      provenance: false
+      args: {CM_AAS036_SOURCE_SHA256: "${CM_AAS036_SOURCE_SHA256:-unbuilt}"}
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+    depends_on:
+      model-access-broker: {condition: service_healthy}
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 48
+    mem_limit: 96m
+    cpus: 0.35
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=4m,mode=1777"]
+    networks: [agent_frontdoor, broker_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+
+  openclaw-agent:
+    profiles: [aas036]
+    image: chimpmaera/aas036-openclaw-agent:local
+    build:
+      context: ../..
+      dockerfile: demo/model-access-broker/openclaw.Dockerfile
+      provenance: false
+      args: {CM_AAS036_SOURCE_SHA256: "${CM_AAS036_SOURCE_SHA256:-unbuilt}"}
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+    depends_on:
+      capability-gateway: {condition: service_healthy}
+    environment:
+      OPENCLAW_CONFIG_PATH: /opt/chimpmaera/openclaw.json
+      OPENCLAW_STATE_DIR: /var/lib/openclaw
+      HOME: /var/lib/openclaw/user
+      NO_PROXY: capability-gateway,127.0.0.1,localhost
+    command: ["node", "openclaw.mjs", "gateway"]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1.00
+    tmpfs:
+      - "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      - "/var/lib/openclaw/user/.cache:rw,noexec,nosuid,nodev,size=16m,mode=700,uid=1000,gid=1000"
+    volumes: [openclaw_state:/var/lib/openclaw]
+    networks: [agent_frontdoor]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:18789/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 2s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  openclaw_state:
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+networks:
+  agent_frontdoor:
+    internal: true
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+  broker_only:
+    internal: true
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}
+  provider_only:
+    internal: true
+    labels: {io.chimpmaera.aas036.fixture: model-broker-v1}

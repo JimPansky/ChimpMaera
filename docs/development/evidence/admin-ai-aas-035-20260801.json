@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai/aas-035-evidence/v1",
+  "workItem": "AAS-035",
+  "baseline": "cf1ce64ce33ca6e3e658af69f986a2e3b72a60b7",
+  "implementationCommit": "2ddfd1e5ec70e6f6fc233aebc68339c1f709bf2d",
+  "metric": { "name": "aas_035_openclaw_agent_docker_gates", "passed": 12, "total": 12 },
+  "verdict": "LOCAL_AAS_035_OPENCLAW_GATEWAY_ONLY_PASS_NOT_PRODUCTION_SANDBOX_REGISTRY_OR_RELEASE_CLAIM",
+  "tests": {
+    "focused": { "passed": 7, "total": 7 },
+    "complete": { "passed": 102, "total": 102 },
+    "videoReference": { "passed": 15, "total": 15 },
+    "repositoryChecksums": { "passed": 154, "total": 154 },
+    "supplyChain": "PASS",
+    "publicStaging": "PASS"
+  },
+  "finalFrozenByteSmoke": {
+    "runId": "aas035-20260801T115932Z",
+    "status": "PASS",
+    "elapsedMs": 25811,
+    "summarySha256": "98c79565d04a9341f9b522ca5cb2c1ea58378d915061006534c09589fe1be538",
+    "agentInspectSha256": "ea75425d5a779961ff60b03bb8d3a8ccdd20f18236e5395360ce4fb6ce0fc9c8",
+    "gatewayInspectSha256": "075b9ef8c956925cfa5c56ce9467ec56c5f444355091102802d3e9c61a65e2a7",
+    "agentE2eSha256": "e50d6772c7b36fa3f8fdcc0d849b8263791dd0247af1ae766f90db8f15263370",
+    "gatewayEvidenceSha256": "46973b6cca9b27fb4d4f70c6e192eeeac870a244983fe54bc2585328ea8292aa",
+    "egressProbeSha256": "9194ac571bfa2062d5eaf0bd3bd63fcb854c8c510fd997e55d8e64913b68efa1",
+    "filesystemProbeSha256": "680b1a9c1fac1e9e169c77d558b7e9df399304433d41abbbe232c4ca9e371c42",
+    "ownerFingerprint": "adfde9f354cb0bedb4ac697d48a4a78528d9631d52a6309cdf0272e4cdd8909b",
+    "ownerFingerprintStable": true,
+    "gatewayCounters": { "denials": 5, "effectAttempts": 12, "effects": 1, "modelCalls": 2 },
+    "effectReceiptDigest": "6e8dc56810493c2300d59c4ee7ef6a2f91c4afe6d2e63de044699cbc9d3852f0",
+    "mindEntryDigest": "ec9404954c9551ca4a9027d685bb29bf293a8375ff03efe2a2b3dcbbec3cce7a",
+    "policyDigest": "77b09e5b31d44cc0058e210d7e40325ca6b7fcee9ac46681f9c4d7ae1a6000d6",
+    "authorityDigest": "389fa7ad905f8155af6a6f24aaddc60fecfc8ac3e1a55b99cbdc400b5cbe315c",
+    "ownedRuntimeResidue": 0
+  },
+  "correctingEvidence": [
+    {
+      "run": "aas035-20260801T114827Z",
+      "defect": "Existence-only procfs probe mistook the container's own PID-1 path for readable host authority; Compose rebuild attestations also recreated services on idempotent setup.",
+      "correction": "Probe an actual shadow-file read and use source-digest-labelled provenance-disabled local builds."
+    },
+    {
+      "run": "aas035-20260801T115134Z",
+      "defect": "OpenClaw attempted to seed missing workspace bootstrap files on the required read-only root.",
+      "correction": "Bake the finite upstream bootstrap set and completed workspace-state marker into the derivative image."
+    },
+    {
+      "run": "aas035-20260801T115355Z",
+      "defect": "Concurrent OpenClaw CLI clients raced the loopback device-pairing path after the real typed E2E had passed.",
+      "correction": "Retain one real OpenClaw typed E2E and move bounded concurrency to Gateway/Broker replay probes from the agent container."
+    },
+    {
+      "run": "aas035-20260801T115602Z",
+      "defect": "Public hygiene conservatively rejected a managed in-volume cache path containing the private-home substring.",
+      "correction": "Rename the managed cache directory and repeat the affected Compose/full smoke; final closure uses aas035-20260801T115932Z only."
+    }
+  ],
+  "assumption": "Synthetic identity, Gateway/Broker/provider and mind fixtures prove isolated local boundary composition only.",
+  "risk": "Docker shares the host kernel and external image signature, complete SBOM/CVE/licence and production identity/network evidence remain unavailable.",
+  "fallback": "Keep the profile default-off and remove only resources labelled io.chimpmaera.fixture=aas035-openclaw-agent-v1.",
+  "reviewMarker": "Require independent external supply-chain and production isolation evidence before deployment or redistribution claims.",
+  "nonClaims": [
+    "NO_PRODUCTION_SANDBOX_OR_HOST_KERNEL_BOUNDARY",
+    "NO_LIVE_PROVIDER_OR_PRODUCTION_IAM_NETWORK_POLICY",
+    "NO_REGISTRY_SIGNATURE_COMPLETE_SBOM_CVE_OR_LICENCE_AUDIT",
+    "NO_MULTI_TENANT_DEPLOYMENT_OR_SECURITY_COMPLETENESS",
+    "NO_PUSH_PR_MERGE_RELEASE_PUBLICATION_OR_PRODUCTION_MUTATION"
+  ]
+}

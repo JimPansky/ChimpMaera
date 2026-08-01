@@ -1,5 +1,5 @@
-import { createHash, timingSafeEqual } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
 import { createServer, request as httpRequest } from "node:http";
 import {
   buildPocGuidedDemoSetupPlanV1,
@@ -15,6 +15,16 @@ import {
   createHttpProvider,
 } from "./enforcement-gate.mjs";
 import { AdminAiPoc, validateAdminAiPocPolicy } from "./admin-ai-poc.mjs";
+import { ApprovalWorkbench } from "./approval-workbench.mjs";
+import {
+  TRUSTED_POLICY_CONTEXT_SCHEMA,
+  createInternalStaticPolicyEvaluator,
+} from "./policy-evaluator.mjs";
+import {
+  PolicyGenerationFence,
+  createLocalOwnerPolicyAuthorization,
+  createPolicyActivationCandidate,
+} from "./policy-generation-fence.mjs";
 
 const authorityProfile = process.env.CM_AUTHORITY_PROFILE ?? "SAFE_GUIDED";
 const authorityManifestId = process.env.CM_AUTHORITY_MANIFEST_ID
@@ -67,16 +77,25 @@ if (adminAiPolicyId !== "admin-ai-poc-policy-v1") {
 const adminAiPolicyBytes = readFileSync(
   `./manifests/authority/${adminAiPolicyId}.json`,
 );
-const adminAiPolicySha256 = createHash("sha256")
+const packagedAdminAiPolicySha256 = createHash("sha256")
   .update(adminAiPolicyBytes)
   .digest("hex");
 if (
   !/^[a-f0-9]{64}$/.test(process.env.CM_ADMIN_AI_POLICY_SHA256 ?? "")
-  || process.env.CM_ADMIN_AI_POLICY_SHA256 !== adminAiPolicySha256
+  || process.env.CM_ADMIN_AI_POLICY_SHA256 !== packagedAdminAiPolicySha256
 ) throw new Error("ADMIN_AI_POLICY_DIGEST_MISMATCH_DENIED");
-const adminAiPolicy = validateAdminAiPocPolicy(
+const packagedAdminAiPolicy = validateAdminAiPocPolicy(
   JSON.parse(adminAiPolicyBytes.toString("utf8")),
 );
+const adminAiPolicyGenerationText =
+  process.env.CM_ADMIN_AI_POLICY_GENERATION ?? "1";
+if (!/^[1-9][0-9]{0,14}$/.test(adminAiPolicyGenerationText)) {
+  throw new Error("ADMIN_AI_POLICY_GENERATION_INVALID_DENIED");
+}
+const requestedAdminAiPolicyGeneration = Number(adminAiPolicyGenerationText);
+if (!Number.isSafeInteger(requestedAdminAiPolicyGeneration)) {
+  throw new Error("ADMIN_AI_POLICY_GENERATION_INVALID_DENIED");
+}
 
 const catalogManifestId = process.env.CM_CATALOG_MANIFEST_ID
   ?? "crm-erp-playable-v1";
@@ -121,6 +140,84 @@ if (apiToken.length < 32) {
   throw new Error("CHIMPMAERA_API_TOKEN_INVALID_DENIED");
 }
 const controlToken = readFileSync("/run/secrets/control_token", "utf8").trim();
+const ownerAuthorityKeyPath = "/var/lib/chimpmaera/owner-authority.key";
+let ownerAuthorityToken;
+try {
+  ownerAuthorityToken = readFileSync(ownerAuthorityKeyPath, "utf8").trim();
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+  ownerAuthorityToken = randomBytes(48).toString("hex");
+  try {
+    writeFileSync(ownerAuthorityKeyPath, ownerAuthorityToken + "\n", {
+      encoding: "utf8",
+      flag: "wx",
+      mode: 0o600,
+    });
+  } catch (writeError) {
+    if (writeError?.code !== "EEXIST") throw writeError;
+    ownerAuthorityToken = readFileSync(ownerAuthorityKeyPath, "utf8").trim();
+  }
+}
+if (ownerAuthorityToken.length < 64) {
+  throw new Error("OWNER_AUTHORITY_KEY_INVALID_DENIED");
+}
+const ownerPolicyActivationToken = createHmac("sha256", ownerAuthorityToken)
+  .update("chimpmaera-owner-policy-activation-key-v1")
+  .digest("hex");
+const policyFence = new PolicyGenerationFence({
+  activationPath: "/var/lib/chimpmaera/policy-activation-record.json",
+  ownerActivationToken: ownerPolicyActivationToken,
+  tenant: "panskys-zoo-demo",
+  policyId: adminAiPolicyId,
+});
+const packagedPolicyCandidate = createPolicyActivationCandidate({
+  policyBytes: adminAiPolicyBytes,
+  generation: requestedAdminAiPolicyGeneration,
+  tenant: "panskys-zoo-demo",
+  policyId: packagedAdminAiPolicy.policyId,
+});
+try {
+  const active = policyFence.record?.active;
+  if (active === undefined) {
+    policyFence.activate(
+      packagedPolicyCandidate,
+      createLocalOwnerPolicyAuthorization({
+        candidate: packagedPolicyCandidate,
+        ownerActivationToken: ownerPolicyActivationToken,
+        issuedAtMs: Date.now(),
+      }),
+    );
+  } else if (
+    requestedAdminAiPolicyGeneration > active.generation
+  ) {
+    policyFence.activate(
+      packagedPolicyCandidate,
+      createLocalOwnerPolicyAuthorization({
+        candidate: packagedPolicyCandidate,
+        ownerActivationToken: ownerPolicyActivationToken,
+        issuedAtMs: Date.now(),
+      }),
+    );
+  } else if (
+    requestedAdminAiPolicyGeneration !== active.generation
+    || packagedAdminAiPolicySha256 !== active.policySourceDigest
+  ) {
+    policyFence.freezeDispatch("ACTIVATION_CONVERGENCE_FAILED");
+    throw new Error("POLICY_ACTIVATION_CONVERGENCE_DENIED");
+  }
+} catch (error) {
+  if (
+    policyFence.record !== null
+    && policyFence.record.dispatch.status !== "FROZEN"
+  ) policyFence.freezeDispatch("ACTIVATION_CONVERGENCE_FAILED");
+  throw error;
+}
+const activePolicyState = policyFence.activePolicy();
+if (activePolicyState.dispatchStatus !== "ACTIVE") {
+  throw new Error("POLICY_DISPATCH_FROZEN_DENIED");
+}
+const adminAiPolicy = activePolicyState.policy;
+const adminAiPolicySha256 = activePolicyState.policySourceDigest;
 const espoPassword = readFileSync("/run/secrets/espo_admin", "utf8").trim();
 const doliApiKey = readFileSync("/run/secrets/doli_api_key", "utf8").trim();
 const expectedOrigin = process.env.CM_PUBLIC_ORIGIN ?? "";
@@ -131,15 +228,47 @@ const provider = createHttpProvider({ espoPassword, doliApiKey });
 const mutationGate = new DemoMutationGate({
   apiToken,
   controlToken,
+  ownerAuthorityToken,
   expectedOrigin,
   receiptPath: "/var/lib/chimpmaera/effect-store.json",
   provider,
+  adminAiPolicyId: activePolicyState.policyId,
   adminAiPolicyDigest: adminAiPolicySha256,
+  assertPolicyUse: (binding) => policyFence.assertUseBinding(binding),
+  authorityContext: {
+    profileId: "SAFE_GUIDED",
+    profileGeneration: randomBytes(16).toString("hex"),
+    policyGeneration: activePolicyState.generation,
+  },
+});
+const policyEvaluator = createInternalStaticPolicyEvaluator({
+  policy: adminAiPolicy,
+  policySourceDigest: adminAiPolicySha256,
 });
 const adminAiPoc = new AdminAiPoc({
   policy: adminAiPolicy,
   policyDigest: adminAiPolicySha256,
+  policyEvaluator,
+  trustedPolicyContext: {
+    schemaVersion: TRUSTED_POLICY_CONTEXT_SCHEMA,
+    profileId: mutationGate.authorityContext.profileId,
+    profileGeneration: mutationGate.authorityContext.profileGeneration,
+    policyId: adminAiPolicy.policyId,
+    policyGeneration: activePolicyState.generation,
+    policySourceDigest: adminAiPolicySha256,
+    policySemanticDigest: policyEvaluator.policySemanticDigest,
+  },
   signAuthority: (fields) => mutationGate.agentAuthority(fields),
+});
+const approvalWorkbench = new ApprovalWorkbench({
+  receiptPath: "/var/lib/chimpmaera/approval-workbench-store.json",
+  issueAuthority: (fields) => mutationGate.ownerAuthority(fields),
+  readAuthoritativeSnapshot: (action) => provider.readAuthoritativeSnapshot(action),
+  policyDigest: adminAiPolicySha256,
+  policyGeneration: activePolicyState.generation,
+  policyId: activePolicyState.policyId,
+  profileId: mutationGate.authorityContext.profileId,
+  profileGeneration: mutationGate.authorityContext.profileGeneration,
 });
 
 async function readJson(request) {
@@ -248,7 +377,35 @@ const proxy = createServer((incoming, outgoing) => {
     if (authorityProfile !== "SAFE_GUIDED") {
       throw new Error("ADMIN_AI_POC_SAFE_GUIDED_REQUIRED");
     }
-    sendJson(outgoing, 200, adminAiPoc.decide(await readJson(incoming)));
+    const result = adminAiPoc.decide(await readJson(incoming));
+    sendJson(outgoing, 200, {
+      ...result,
+      ...(result.decision.outcome === "OWNER_ESCALATION"
+        ? { proposal: await approvalWorkbench.register(result.decision) }
+        : {}),
+    });
+    return;
+  }
+  if (
+    incoming.method === "POST"
+    && incoming.url === "/api/demo/admin-ai/owner-decision"
+  ) {
+    authorizeLocalRequest(incoming, {
+      apiToken,
+      expectedOrigin,
+    });
+    if (authorityProfile !== "SAFE_GUIDED") {
+      throw new Error("ADMIN_AI_POC_SAFE_GUIDED_REQUIRED");
+    }
+    const body = await readJson(incoming);
+    if (
+      JSON.stringify(Object.keys(body).sort())
+        !== JSON.stringify(["decisionDigest", "ownerDecision"])
+    ) throw new Error("OWNER_DECISION_INVALID_DENIED");
+    sendJson(outgoing, 200, await approvalWorkbench.decide({
+      ...body,
+      ownerActor: "owner:local-demo",
+    }));
     return;
   }
   if (
@@ -290,6 +447,22 @@ const proxy = createServer((incoming, outgoing) => {
         body.query ?? {},
       ) },
     );
+    return;
+  }
+  if (
+    incoming.method === "GET"
+    && incoming.url?.startsWith(
+      "/api/demo/admin-ai/owner-decision-receipt?",
+    )
+  ) {
+    authorizeLocalRequest(incoming, {
+      apiToken,
+      expectedOrigin,
+      requireCsrf: false,
+    });
+    const digest = new URL(incoming.url, expectedOrigin)
+      .searchParams.get("decisionDigest");
+    sendJson(outgoing, 200, approvalWorkbench.readDecision(digest ?? ""));
     return;
   }
   if (

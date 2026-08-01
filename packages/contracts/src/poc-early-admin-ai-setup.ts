@@ -711,9 +711,14 @@ export function verifyPocEarlyAdminRepairPlanV1(
   statusInput: PocEarlyAdminStatusV1,
 ): PocEarlyAdminRepairPlanV1 {
   const status = verifyPocEarlyAdminStatusV1(statusInput);
+  const expected = buildPocEarlyAdminRepairPlanV1(
+    status,
+    repairPlan.issueCode,
+  );
   const { repairPlanDigest, ...core } = repairPlan;
   if (
     repairPlanDigest !== digest(core)
+    || repairPlanDigest !== expected.repairPlanDigest
     || repairPlan.baseSetupPlanDigest !== status.plan.planDigest
     || repairPlan.baseStatusDigest !== status.statusDigest
     || repairPlan.requiredAuthority !== "STAGE_A_BOOTSTRAP_SUPERVISOR"
@@ -721,7 +726,6 @@ export function verifyPocEarlyAdminRepairPlanV1(
     || !status.authority.stageAAllowedActions.includes(repairPlan.action.actionId)
     || !repairPlan.action.idempotent
     || !repairPlan.action.boundedToOwnedState
-    || !repairPlan.action.target.startsWith(status.cleanup.ownedStateRoot)
   ) {
     fail("TAMPERED_OR_ESCALATED_REPAIR_PLAN_DENIED");
   }

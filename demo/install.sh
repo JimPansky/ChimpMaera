@@ -112,6 +112,7 @@ catalog_manifest_sha256="$(
     cut -d' ' -f1
 )"
 admin_ai_policy_id=admin-ai-poc-policy-v1
+admin_ai_policy_generation=1
 admin_ai_policy_sha256="$(
   sha256sum "$root/demo/manifests/authority/$admin_ai_policy_id.json" |
     cut -d' ' -f1
@@ -186,7 +187,12 @@ journal_phase_start runtime_image_materialization "$(journal_sha_text "$(
       "$root/demo/tsconfig.runtime.json" \
       "$root/demo/runtime/server.mjs" \
       "$root/demo/runtime/enforcement-gate.mjs" \
-      "$root/demo/runtime/admin-ai-poc.mjs"
+      "$root/demo/runtime/admin-ai-poc.mjs" \
+      "$root/demo/runtime/admin-ai-policy.mjs" \
+      "$root/demo/runtime/authoritative-approval-snapshot.mjs" \
+      "$root/demo/runtime/policy-evaluator.mjs" \
+      "$root/demo/runtime/paperless-ngx-zoo-adapter.mjs" \
+      "$root/demo/runtime/approval-workbench.mjs"
     find "$root/demo/manifests" -type f -name '*.json' -print0 |
       sort -z | xargs -0 sha256sum
   } | sha256sum | cut -d' ' -f1
@@ -220,6 +226,7 @@ CM_AUTHORITY_MANIFEST_SHA256=$authority_manifest_sha256
 CM_CATALOG_MANIFEST_ID=$catalog_manifest_id
 CM_CATALOG_MANIFEST_SHA256=$catalog_manifest_sha256
 CM_ADMIN_AI_POLICY_ID=$admin_ai_policy_id
+CM_ADMIN_AI_POLICY_GENERATION=$admin_ai_policy_generation
 CM_ADMIN_AI_POLICY_SHA256=$admin_ai_policy_sha256
 CM_FIXTURE_MANIFEST_ID=$fixture_manifest_id
 CM_FIXTURE_MANIFEST_SHA256=$fixture_manifest_sha256

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-implementation-evidence/v1",
+  "workItem": "AAS-009",
+  "metric": {
+    "name": "aas_009_prompt_injection_trust_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "verdict": "LOCAL_AAS_009_PASS_NOT_LIVE_MODEL_GATEWAY_OR_INJECTION_ELIMINATION_CLAIM",
+  "generatedAt": "2026-08-01T09:45:18+02:00",
+  "baseline": "da5fff1fd5d1b03c98e7ad6c2026e99a9cd907b0",
+  "planCommit": "ea4bba05942e87546bedb8d7825d688bbb8548ce",
+  "implementationCommit": "f7641d2dc81ca2008da4c30b4d697d60569427fb",
+  "gates": [
+    {
+      "id": 1,
+      "name": "closed_content_envelopes",
+      "status": "PASS",
+      "evidence": "Provider, tool, document and memory envelopes require exact origin-specific trust, tenant, data-class and DATA_ONLY instruction-eligibility labels; missing, unknown, mismatched, duplicate and cross-tenant inputs deny."
+    },
+    {
+      "id": 2,
+      "name": "typed_candidate_reconstruction",
+      "status": "PASS",
+      "evidence": "A closed model-shaped candidate can name only one finite catalogue action, bounded symbolic arguments and the complete evidence set; trusted code alone reconstructs exact method, path, scope, replay binding and stable digests."
+    },
+    {
+      "id": 3,
+      "name": "opaque_secret_and_authority_boundary",
+      "status": "PASS",
+      "evidence": "Only fixed server-owned opaque credential handles appear; candidate-supplied method, path, URL, headers, secret, handle, authority, approval, outcome, replay, tenant, provider or scope fields deny without a partial action."
+    },
+    {
+      "id": 4,
+      "name": "hostile_channel_regression_evidence",
+      "status": "PASS",
+      "evidence": "Override, exfiltration, self-approval, URL, path, base64, percent-encoded, Unicode-confusable, bidi, zero-width and multi-turn payloads across all four origins changed evidence digests only; action/candidate digests and exact reconstructed calls stayed unchanged."
+    }
+  ],
+  "validation": {
+    "focusedAas009": "4/4",
+    "fullSuite": "88/88",
+    "videoTests": "15/15",
+    "checksums": "126/126",
+    "supplyChainChecks": "6/6",
+    "publicArchiveSha256": "a4dce72522456fea3b91b282b62ac2ae0fafe9c9eafc805b43f625aa9d96522d",
+    "gitDiffCheck": "PASS"
+  },
+  "fullInstallSmoke": {
+    "status": "NOT_RUN_NOT_RELEVANT",
+    "reason": "AAS-009 adds a pure TypeScript contract, tests and documentation only; no demo runtime, installer, Compose, provider adapter or install-path byte changed. The prior AAS-003 smoke budget therefore remains frozen and a repeat would not add relevant evidence."
+  },
+  "artifactDigests": {
+    "contract": "1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50",
+    "tests": "30ef44533c4ca5ff44dbd76c964ef409b4763a07fcc4cd54417d1a8c4f42289a",
+    "canon": "bca14ce512fdb7fe38091dbded2dafc6730bd7863a50b8b97abeb0d95e97b3d3",
+    "architecture": "07f433fc47955c9326e2c030df9a5f4a0eda7e652124cadc329ca6cd36b7e402",
+    "knownLimitations": "13a395c689fe3044ba140c76ef2ea00ba01ac492850833a429f94b54c0e674be",
+    "publicManifest": "8dd03c464589ed43ddf0b69a5419863f416ade28fca1079727178ba034bb95de"
+  },
+  "nonClaims": [
+    "No live model, tokenizer, retrieval stack, reviewed model gateway, production credential broker or production tenant boundary was tested or enabled.",
+    "No claim that prompt injection is eliminated; the evidence proves only local closed-schema non-interference for the tested provider-neutral contract and fixtures.",
+    "A reconstructed candidate is not a Policy decision, Approval, executable authority or provider call.",
+    "No push, pull request, merge, tag, release, publication, production deployment or external-system action."
+  ]
+}

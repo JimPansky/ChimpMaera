@@ -1,0 +1,41 @@
+{
+  "gateway": {"mode": "local", "bind": "loopback", "auth": {"mode": "none"}},
+  "agents": {
+    "defaults": {
+      "workspace": "/opt/chimpmaera/workspace",
+      "model": {"primary": "cm-skill-fixture/cm-agent-v1"},
+      "models": {"cm-skill-fixture/cm-agent-v1": {}},
+      "thinkingDefault": "off"
+    }
+  },
+  "models": {
+    "mode": "replace",
+    "pricing": {"enabled": false},
+    "providers": {
+      "cm-skill-fixture": {
+        "baseUrl": "http://skill-manager:8080/v1",
+        "apiKey": "synthetic-workload-routing-marker-not-a-secret",
+        "api": "openai-completions",
+        "timeoutSeconds": 20,
+        "models": [{
+          "id": "cm-agent-v1", "name": "ChimpMaera deterministic AAS-037 fixture",
+          "reasoning": false, "input": ["text"],
+          "cost": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0},
+          "contextWindow": 16384, "maxTokens": 1024,
+          "compat": {"requiresStringContent": false, "strictMessageKeys": false}
+        }]
+      }
+    }
+  },
+  "plugins": {
+    "allow": ["chimpmaera-skill-lifecycle"],
+    "load": {"paths": ["/opt/chimpmaera/plugins/chimpmaera-skill-lifecycle"]},
+    "entries": {
+      "chimpmaera-skill-lifecycle": {
+        "enabled": true,
+        "config": {"baseUrl": "http://skill-manager:8080", "workloadIdentity": "workload:openclaw-agent"}
+      }
+    }
+  },
+  "tools": {"allow": ["chimpmaera_skill_request", "chimpmaera_skill_activate_use"]}
+}

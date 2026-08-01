@@ -1,11 +1,19 @@
 import {
+  closeSync,
+  constants,
   existsSync,
+  fstatSync,
+  fsyncSync,
+  lstatSync,
   mkdirSync,
+  openSync,
   readFileSync,
   renameSync,
   rmSync,
+  unlinkSync,
   writeFileSync,
 } from "node:fs";
+import { randomUUID } from "node:crypto";
 import {
   createServer,
   type IncomingMessage,
@@ -21,12 +29,16 @@ import {
   buildPocEarlyAdminStatusV1,
   buildPocGuidedDemoCleanupReceiptV1,
   buildPocGuidedDemoSetupReceiptV1,
+  compileEffectiveRightsV1,
   promotePocEarlyAdminToStageBV1,
   resetPocAdminAuthorityToSafeV1,
+  renderPermissionXrayV1,
   resumePocEarlyAdminSetupV1,
   runPocEarlyAdminSyntheticSetupV1,
+  syntheticEffectiveRightsInputV1,
   verifyPocEarlyAdminRepairReceiptV1,
   verifyPocEarlyAdminStatusV1,
+  verifyPocGuidedDemoSetupPlanV1,
   type PocEarlyAdminAnswerV1,
   type PocAdminAuthoritySelectionV1,
   type PocEarlyAdminIssueCodeV1,
@@ -35,25 +47,42 @@ import {
   type PocEarlyAdminStatusV1,
   type PocGuidedDemoSetupPlanV1,
   type PocGuidedDemoCleanupReceiptV1,
+  type PermissionXrayV1,
 } from "../../contracts/src/index.js";
 
 export class PocEarlyAdminCoordinatorV1 {
+  private readonly plan: PocGuidedDemoSetupPlanV1;
+  private readonly workspaceRoot: string;
   private statusValue: PocEarlyAdminStatusV1;
   private pendingRepairValue: PocEarlyAdminRepairPlanV1 | undefined;
   private readonly ownedRoot: string;
+  private readonly ownedComponents: readonly string[];
   private readonly statusPath: string;
   private readonly eventsPath: string;
+  private readonly repairBoundaryObserver: (() => void) | undefined;
 
   constructor(
-    private readonly plan: PocGuidedDemoSetupPlanV1,
-    private readonly workspaceRoot: string,
+    planInput: PocGuidedDemoSetupPlanV1,
+    workspaceRootInput: string,
     options: Readonly<{
       policyAvailable?: boolean;
       resume?: boolean;
+      repairBoundaryObserver?: () => void;
     }> = {},
   ) {
-    this.ownedRoot = resolve(workspaceRoot, plan.storage.ownedStateRoot);
-    const safePrefix = `${resolve(workspaceRoot, "artifacts/poc-guided-demo/playgrounds")}/`;
+    this.workspaceRoot = resolve(workspaceRootInput);
+    const candidateOwnedRoot = resolve(
+      this.workspaceRoot,
+      planInput.storage.ownedStateRoot,
+    );
+    const safePrefix = `${resolve(this.workspaceRoot, "artifacts/poc-guided-demo/playgrounds")}/`;
+    if (!candidateOwnedRoot.startsWith(safePrefix)) {
+      throw new Error("UNSAFE_COORDINATOR_STATE_ROOT_DENIED");
+    }
+    this.plan = structuredClone(verifyPocGuidedDemoSetupPlanV1(planInput));
+    this.repairBoundaryObserver = options.repairBoundaryObserver;
+    this.ownedComponents = this.plan.storage.ownedStateRoot.split("/");
+    this.ownedRoot = resolve(this.workspaceRoot, this.plan.storage.ownedStateRoot);
     if (!this.ownedRoot.startsWith(safePrefix)) {
       throw new Error("UNSAFE_COORDINATOR_STATE_ROOT_DENIED");
     }
@@ -76,7 +105,7 @@ export class PocEarlyAdminCoordinatorV1 {
         this.appendEvent("RESUMED", this.statusValue.currentAction);
       }
     } else {
-      this.statusValue = buildPocEarlyAdminStatusV1(plan, {
+      this.statusValue = buildPocEarlyAdminStatusV1(this.plan, {
         ...(options.policyAvailable === undefined
           ? {}
           : { policyAvailable: options.policyAvailable }),
@@ -87,6 +116,12 @@ export class PocEarlyAdminCoordinatorV1 {
 
   status(): PocEarlyAdminStatusV1 {
     return verifyPocEarlyAdminStatusV1(this.statusValue);
+  }
+
+  permissionXray(): PermissionXrayV1 {
+    return renderPermissionXrayV1(
+      compileEffectiveRightsV1(syntheticEffectiveRightsInputV1()),
+    );
   }
 
   activateAuthority(
@@ -148,30 +183,26 @@ export class PocEarlyAdminCoordinatorV1 {
     repairPlan: PocEarlyAdminRepairPlanV1,
     ownerConfirmed: boolean,
   ): PocEarlyAdminRepairReceiptV1 {
+    if (
+      this.pendingRepairValue === undefined
+      || repairPlan.repairPlanDigest
+        !== this.pendingRepairValue.repairPlanDigest
+    ) {
+      throw new Error("REPAIR_NOT_SERVER_ISSUED_DENIED");
+    }
     const result = applyPocEarlyAdminRepairV1(
       this.statusValue,
       repairPlan,
       ownerConfirmed,
     );
-    if (repairPlan.action.actionId
-      === "REWRITE_OWNED_CONFIG_FROM_VERIFIED_PLAN") {
-      const configPath = resolve(this.workspaceRoot, repairPlan.action.target);
-      const backupPath = resolve(this.ownedRoot, "rollback-config.json");
-      if (existsSync(configPath)) {
-        this.atomicWrite(backupPath, readFileSync(configPath, "utf8"));
-      }
-      this.atomicWrite(configPath, `${JSON.stringify(this.plan.config, null, 2)}\n`);
-    } else if (repairPlan.action.actionId !== "RETRY_DECLARED_HEALTH_CHECKS") {
+    const rewritesConfig = repairPlan.action.actionId
+      === "REWRITE_OWNED_CONFIG_FROM_VERIFIED_PLAN";
+    if (!rewritesConfig
+      && repairPlan.action.actionId !== "RETRY_DECLARED_HEALTH_CHECKS") {
       throw new Error("UNDECLARED_ACTION_DENIED");
     }
-    verifyPocEarlyAdminRepairReceiptV1(result.receipt, repairPlan);
-    this.statusValue = result.status;
-    this.atomicWrite(
-      resolve(this.ownedRoot, "repair-receipt.json"),
-      `${JSON.stringify(result.receipt, null, 2)}\n`,
-    );
+    this.applyOwnedRepairResult(result.status, result.receipt, rewritesConfig);
     this.pendingRepairValue = undefined;
-    this.persist("REPAIR_APPLIED", repairPlan.action.actionId);
     return result.receipt;
   }
 
@@ -252,6 +283,174 @@ export class PocEarlyAdminCoordinatorV1 {
     renameSync(temporary, path);
   }
 
+  private applyOwnedRepairResult(
+    nextStatus: PocEarlyAdminStatusV1,
+    receipt: PocEarlyAdminRepairReceiptV1,
+    rewritesConfig: boolean,
+  ): void {
+    verifyPocGuidedDemoSetupPlanV1(this.plan);
+    verifyPocEarlyAdminRepairReceiptV1(receipt, this.pendingRepairValue!);
+    this.withOwnedDirectory((directory) => {
+      this.repairBoundaryObserver?.();
+      this.assertOwnedRootStillBound(directory);
+      const evidenceNames = [
+        "repair-receipt.json",
+        "dashboard-status.json",
+        "dashboard-events.jsonl",
+      ] as const;
+      for (const name of evidenceNames) {
+        this.assertRegularOrAbsent(directory, name);
+      }
+      if (rewritesConfig) {
+        this.assertRegularOrAbsent(directory, "config.json");
+        this.assertRegularOrAbsent(directory, "rollback-config.json");
+      }
+      const previousConfig = rewritesConfig
+        ? this.readRegularIfPresent(directory, "config.json")
+        : undefined;
+      const previousEvents = this.readRegularIfPresent(
+        directory,
+        "dashboard-events.jsonl",
+      ) ?? "";
+      const event = JSON.stringify({
+        event: "REPAIR_APPLIED",
+        detail: receipt.actionId,
+        statusDigest: nextStatus.statusDigest,
+      });
+      if (rewritesConfig) {
+        if (previousConfig !== undefined) {
+          this.atomicWriteOwned(
+            directory,
+            "rollback-config.json",
+            previousConfig,
+          );
+        }
+        this.atomicWriteOwned(
+          directory,
+          "config.json",
+          `${JSON.stringify(this.plan.config, null, 2)}\n`,
+        );
+      }
+      this.atomicWriteOwned(
+        directory,
+        "repair-receipt.json",
+        `${JSON.stringify(receipt, null, 2)}\n`,
+      );
+      this.atomicWriteOwned(
+        directory,
+        "dashboard-status.json",
+        `${JSON.stringify(nextStatus, null, 2)}\n`,
+      );
+      this.atomicWriteOwned(
+        directory,
+        "dashboard-events.jsonl",
+        `${previousEvents}${event}\n`,
+      );
+    });
+    this.statusValue = nextStatus;
+  }
+
+  private withOwnedDirectory<T>(operation: (directory: number) => T): T {
+    let directory = openSync(
+      this.workspaceRoot,
+      constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW,
+    );
+    try {
+      for (const component of this.ownedComponents) {
+        const child = openSync(
+          `/proc/self/fd/${directory}/${component}`,
+          constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW,
+        );
+        closeSync(directory);
+        directory = child;
+      }
+      return operation(directory);
+    } finally {
+      closeSync(directory);
+    }
+  }
+
+  private assertOwnedRootStillBound(directory: number): void {
+    const opened = fstatSync(directory);
+    const current = lstatSync(this.ownedRoot);
+    if (
+      !current.isDirectory()
+      || current.isSymbolicLink()
+      || opened.dev !== current.dev
+      || opened.ino !== current.ino
+    ) {
+      throw new Error("OWNED_STATE_COMPONENT_SWAP_DENIED");
+    }
+  }
+
+  private assertRegularOrAbsent(directory: number, name: string): void {
+    const value = lstatSync(`/proc/self/fd/${directory}/${name}`, {
+      throwIfNoEntry: false,
+    });
+    if (value !== undefined && !value.isFile()) {
+      throw new Error("OWNED_STATE_NON_REGULAR_ENTRY_DENIED");
+    }
+  }
+
+  private readRegularIfPresent(
+    directory: number,
+    name: string,
+  ): string | undefined {
+    const path = `/proc/self/fd/${directory}/${name}`;
+    const value = lstatSync(path, { throwIfNoEntry: false });
+    if (value === undefined) return undefined;
+    if (!value.isFile()) throw new Error("OWNED_STATE_NON_REGULAR_ENTRY_DENIED");
+    const descriptor = openSync(
+      path,
+      constants.O_RDONLY | constants.O_NOFOLLOW,
+    );
+    try {
+      if (!fstatSync(descriptor).isFile()) {
+        throw new Error("OWNED_STATE_NON_REGULAR_ENTRY_DENIED");
+      }
+      return readFileSync(descriptor, "utf8");
+    } finally {
+      closeSync(descriptor);
+    }
+  }
+
+  private atomicWriteOwned(
+    directory: number,
+    name: string,
+    content: string,
+  ): void {
+    this.assertRegularOrAbsent(directory, name);
+    const root = `/proc/self/fd/${directory}`;
+    const temporaryName = `.${name}.${randomUUID()}.tmp`;
+    const temporaryPath = `${root}/${temporaryName}`;
+    const targetPath = `${root}/${name}`;
+    let descriptor: number | undefined;
+    try {
+      descriptor = openSync(
+        temporaryPath,
+        constants.O_WRONLY
+          | constants.O_CREAT
+          | constants.O_EXCL
+          | constants.O_NOFOLLOW,
+        0o600,
+      );
+      writeFileSync(descriptor, content, "utf8");
+      fsyncSync(descriptor);
+      closeSync(descriptor);
+      descriptor = undefined;
+      this.assertRegularOrAbsent(directory, name);
+      renameSync(temporaryPath, targetPath);
+      fsyncSync(directory);
+    } finally {
+      if (descriptor !== undefined) closeSync(descriptor);
+      try {
+        unlinkSync(temporaryPath);
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      }
+    }
+  }
+
 }
 
 export function assertPocEarlyAdminLoopbackBindV1(host: string): void {
@@ -327,9 +526,10 @@ const DASHBOARD_HTML = `<!doctype html>
     <section class="card"><h2>Health & authority</h2><pre id="health"></pre></section>
     <section class="card"><h2>Warnings & decisions</h2><pre id="decisions"></pre></section>
     <section class="card"><h2>Receipts, resume & cleanup</h2><pre id="receipts"></pre></section>
+    <section class="card"><h2>Permission X-ray</h2><p>Read-only local synthetic facts; ALLOW is not executable authority.</p><pre id="permission-xray"></pre></section>
   </main>
-  <section class="card" id="admin-ai-proof"><h2>Admin-AI authority proof</h2>
-    <p>Deterministic preview — no live LLM. Escalation is shown but is not yet owner-confirmed.</p>
+  <section class="card" id="admin-ai-proof"><h2>Admin-AI Approval Workbench</h2>
+    <p>Deterministic static-policy preview — no live LLM and no production authority. OWNER_ESCALATION requires an explicit local owner Approve or Reject decision.</p>
     <div><button id="admin-ai-contact">Auto-grant synthetic contact</button><pre id="admin-ai-contact-result">Outcome: not run\nReason code: not run\nPolicy digest: not run</pre></div>
     <div><button id="admin-ai-order">Owner escalation for synthetic order</button><pre id="admin-ai-order-result">Outcome: not run\nReason code: not run\nPolicy digest: not run</pre></div>
     <div><button id="admin-ai-deny">Deny unknown action</button><pre id="admin-ai-deny-result">Outcome: not run\nReason code: not run\nPolicy digest: not run</pre></div>
@@ -341,13 +541,15 @@ const DASHBOARD_HTML = `<!doctype html>
     const byId=(id)=>document.getElementById(id);
     function controlToken(){let token=sessionStorage.getItem('cmControlToken');if(!token){token=prompt('Paste the local ChimpMaera control token from .chimpmaera-demo/secrets/chimp-api-token')||'';if(token)sessionStorage.setItem('cmControlToken',token)}return token}
     async function api(path,body){const headers={'content-type':'application/json'};if(body){headers.authorization='Bearer '+controlToken();headers['x-cm-csrf']='chimpmaera-local-v1'}const response=await fetch(path,{method:body?'POST':'GET',headers,body:body?JSON.stringify(body):undefined});const value=await response.json();if(!response.ok)throw new Error(value.error);return value}
-    async function refresh(){const s=await api('/api/status');byId('summary').textContent=s.currentAction;byId('progress').value=s.progress.percent;byId('plan').textContent=JSON.stringify({template:s.template,plan:s.plan,provider:s.provider},null,2);byId('stages').textContent=s.stages.map(x=>x.status+' '+x.label).join('\\n');byId('resources').textContent=JSON.stringify(s.resources,null,2);byId('health').textContent=JSON.stringify({health:s.health,authority:s.authority},null,2);byId('decisions').textContent=JSON.stringify({warnings:s.warnings,decisions:s.decisions},null,2);byId('receipts').textContent=JSON.stringify({receipts:s.receipts,resume:s.resume,cleanup:s.cleanup},null,2)}
+    async function refresh(){const [s,x]=await Promise.all([api('/api/status'),api('/api/effective-rights')]);byId('summary').textContent=s.currentAction;byId('progress').value=s.progress.percent;byId('plan').textContent=JSON.stringify({template:s.template,plan:s.plan,provider:s.provider},null,2);byId('stages').textContent=s.stages.map(x=>x.status+' '+x.label).join('\\n');byId('resources').textContent=JSON.stringify(s.resources,null,2);byId('health').textContent=JSON.stringify({health:s.health,authority:s.authority},null,2);byId('decisions').textContent=JSON.stringify({warnings:s.warnings,decisions:s.decisions},null,2);byId('receipts').textContent=JSON.stringify({receipts:s.receipts,resume:s.resume,cleanup:s.cleanup},null,2);byId('permission-xray').textContent=JSON.stringify(x,null,2)}
     async function act(path,body){try{const value=await api(path,body??{});byId('action').textContent=JSON.stringify(value,null,2);await refresh()}catch(error){byId('action').textContent=String(error)}}
-    let adminAiAutoDecision=null;
-    async function adminAiRequest(requestKind,replayKey,resultId){const control=byId('admin-ai-effect-control');control.replaceChildren();adminAiAutoDecision=null;try{const value=await api('/api/demo/admin-ai/request',{schemaVersion:'chimpmaera.demo/admin-ai-request/v1',actor:'agent:admin-ai-poc',requestKind,replayKey});const d=value.decision;byId(resultId).textContent='Outcome: '+d.outcome+'\\nReason code: '+d.reasonCodes[0]+'\\nPolicy digest: '+d.policyDigest;if(d.outcome==='AUTO_GRANT'){adminAiAutoDecision=d;const runEffect=document.createElement('button');runEffect.textContent='Run effect';runEffect.onclick=adminAiRunEffect;control.append(runEffect)}}catch(error){byId(resultId).textContent=String(error)}}
-    async function adminAiRunEffect(){try{const d=adminAiAutoDecision;if(!d)throw new Error('AUTO_GRANT_REQUIRED');const value=await api('/api/demo/effects',{action:d.action,actionDigest:d.actionDigest,authority:d.authority});byId('admin-ai-effect-result').textContent=JSON.stringify({replayed:value.replayed,replayState:value.replayState,readback:value.readback,receipt:value.receipt},null,2)}catch(error){byId('admin-ai-effect-result').textContent=String(error)}}
+    let adminAiEffect=null;
+    async function adminAiRequest(requestKind,replayKey,resultId){const control=byId('admin-ai-effect-control');control.replaceChildren();adminAiEffect=null;try{const value=await api('/api/demo/admin-ai/request',{schemaVersion:'chimpmaera.demo/admin-ai-request/v1',actor:'agent:admin-ai-poc',requestKind,replayKey});const d=value.decision;byId(resultId).textContent=JSON.stringify({outcome:d.outcome,reasonCode:d.reasonCodes[0],policyDigest:d.policyDigest,businessDiff:d.businessDiff,businessDiffDigest:d.businessDiffDigest},null,2);if(d.outcome==='AUTO_GRANT'){adminAiEffect={decision:d,authority:d.authority};addAdminAiButton(control,'Run approved effect',adminAiRunEffect)}else if(d.outcome==='OWNER_ESCALATION'){adminAiEffect={decision:d,authority:null};addAdminAiButton(control,'Approve',()=>adminAiOwnerDecision('APPROVE'));addAdminAiButton(control,'Reject',()=>adminAiOwnerDecision('REJECT'))}}catch(error){byId(resultId).textContent=String(error)}}
+    function addAdminAiButton(control,label,handler){const button=document.createElement('button');button.textContent=label;button.onclick=handler;control.append(button)}
+    async function adminAiOwnerDecision(ownerDecision){try{const d=adminAiEffect?.decision;if(!d||d.outcome!=='OWNER_ESCALATION')throw new Error('OWNER_ESCALATION_REQUIRED');const value=await api('/api/demo/admin-ai/owner-decision',{decisionDigest:d.decisionDigest,ownerDecision});adminAiEffect.authority=value.authority;byId('admin-ai-effect-result').textContent=JSON.stringify({decisionReceipt:value.decisionReceipt,authority:value.authority},null,2);const control=byId('admin-ai-effect-control');control.replaceChildren();if(ownerDecision==='APPROVE')addAdminAiButton(control,'Run approved effect',adminAiRunEffect)}catch(error){byId('admin-ai-effect-result').textContent=String(error)}}
+    async function adminAiRunEffect(){try{const d=adminAiEffect?.decision;const authority=adminAiEffect?.authority;if(!d||!authority)throw new Error('EXECUTABLE_AUTHORITY_REQUIRED');const value=await api('/api/demo/effects',{action:d.action,actionDigest:d.actionDigest,businessDiff:d.businessDiff,businessDiffDigest:d.businessDiffDigest,authority});byId('admin-ai-effect-result').textContent=JSON.stringify({replayed:value.replayed,replayState:value.replayState,readback:value.readback,receipt:value.receipt},null,2)}catch(error){byId('admin-ai-effect-result').textContent=String(error)}}
     byId('admin-ai-contact').onclick=()=>adminAiRequest('SYNTHETIC_ESPOCRM_CONTACT_CREATE','admin-ai:poc:ui-contact-001','admin-ai-contact-result');
-    byId('admin-ai-order').onclick=()=>adminAiRequest('SYNTHETIC_DOLIBARR_ORDER_CREATE','admin-ai:poc:ui-order-001','admin-ai-order-result');
+    byId('admin-ai-order').onclick=()=>adminAiRequest('SYNTHETIC_DOLIBARR_ORDER_CREATE','admin-ai:poc:ui-order-'+Date.now(),'admin-ai-order-result');
     byId('admin-ai-deny').onclick=()=>adminAiRequest('UNDECLARED_PROVIDER_DELETE','admin-ai:poc:ui-deny-001','admin-ai-deny-result');
     byId('run').onclick=()=>act('/api/run');byId('resume').onclick=()=>act('/api/resume');byId('promote').onclick=()=>act('/api/promote');byId('cleanup').onclick=()=>act('/api/cleanup');
     byId('ask').onclick=async()=>{try{byId('answer').textContent=JSON.stringify(await api('/api/ask',{question:byId('question').value}),null,2)}catch(error){byId('answer').textContent=String(error)}};
@@ -382,6 +584,10 @@ export function createPocEarlyAdminDashboardServerV1(
       }
       if (request.method === "GET" && url.pathname === "/api/status") {
         sendJson(response, 200, coordinator.status());
+        return;
+      }
+      if (request.method === "GET" && url.pathname === "/api/effective-rights") {
+        sendJson(response, 200, coordinator.permissionXray());
         return;
       }
       const body = request.method === "POST" ? await readJson(request) : {};

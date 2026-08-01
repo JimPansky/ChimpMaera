@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "chimpmaera.development/wave-evidence/v1",
+  "wave": "v0.2-wave1-approval-workbench",
+  "claim": "DETERMINISTIC_LOCAL_STATIC_POLICY_NO_LIVE_LLM",
+  "source": {
+    "remoteMain": "e698946d74342ae10ed25e93d6a45a99647dd2ba",
+    "preservedReleaseTag": "b017d1d7c2af4954c70c2e16726bb651ffd12838",
+    "branch": "feat/v0.2-approval-workbench",
+    "frozenRelevantBytesSha256": "58745aa0942a98c64f04998492ae5f5f0134d03f171d6674413118516a26c8a8"
+  },
+  "fastTests": {
+    "command": "npm test",
+    "status": "PASS",
+    "passed": 59,
+    "failed": 0
+  },
+  "fullSmoke": {
+    "scenario": "SAFE_DEMO_COLD",
+    "attempt": 2,
+    "status": "PASS",
+    "elapsedMs": 65300,
+    "composeProject": "chimpmaera-v02-aw-acceptance",
+    "runtimeImage": "chimpmaera/v01-runtime@sha256:a6a1a636d2c41257a32cb9c18d9916f844789dc78502134f835f00cdb37b8e10",
+    "isolationVerified": true,
+    "approved": {
+      "decisionDigest": "f22f3ed6d8d105a264408bb85b3c4efd8f0e3c1bc45b2508c275337d948f244c",
+      "decisionReceiptDigest": "46538f8d2098eb20c81a8bbfe8d7e4e56673f12e7a283e0f3157d422ae636eb9",
+      "effectReceiptDigest": "cdf4315ff95b3494ec73edf53fd494ec1f77dbfe411a4a0d367405fa05cbe51c",
+      "providerReference": "9",
+      "semanticReadback": "VERIFIED"
+    },
+    "rejected": {
+      "decisionReceiptDigest": "6b3738b9aa5a46db3101f2ce985dd35b3e7584f24e9d2d2a57b4eeed613ff54c",
+      "providerEffect": "DENIED",
+      "error": "AGENT_ACTION_SCOPE_DENIED"
+    },
+    "replay": {
+      "providerEffect": "DENIED",
+      "error": "AUTHORITY_LEASE_REPLAY_DENIED"
+    }
+  },
+  "priorAttempt": {
+    "scenario": "SAFE_DEMO_COLD",
+    "attempt": 1,
+    "status": "FAIL",
+    "failurePoint": "provider_bootstrap_auth",
+    "error": "HTTP_401_FROM_UNRELATED_REUSED_FIXED_PROJECT",
+    "fixingByte": "demo/acceptance.sh dedicated project and loopback ports",
+    "rerunJustification": "REAL_ISOLATION_FIX_AND_REFREEZE"
+  }
+}

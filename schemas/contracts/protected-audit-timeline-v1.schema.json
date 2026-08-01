@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/contracts/protected-audit-timeline-v1.schema.json",
+  "title": "ChimpMaera protected audit timeline v1",
+  "oneOf": [
+    { "$ref": "#/$defs/event" },
+    { "$ref": "#/$defs/envelope" },
+    { "$ref": "#/$defs/checkpoint" }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "signer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "keyId", "generation"],
+      "properties": {
+        "algorithm": { "const": "Ed25519" },
+        "keyId": { "$ref": "#/$defs/identifier" },
+        "generation": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "references": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity", "intent", "plan", "policy", "approval", "budget",
+        "effect", "readback", "reconcile", "stop"
+      ],
+      "properties": {
+        "identity": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "intent": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "plan": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "policy": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "approval": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "budget": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "effect": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "readback": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "reconcile": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "stop": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] }
+      }
+    },
+    "facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "reasonCodes", "evidenceDigests"],
+      "properties": {
+        "outcome": {
+          "enum": [
+            "OBSERVED", "ALLOW", "DENY", "OWNER_ESCALATION", "THROTTLE",
+            "QUARANTINE", "COMMITTED", "FAILED", "UNCERTAIN", "RECONCILED",
+            "STOPPED", "ROLLED_BACK"
+          ]
+        },
+        "reasonCodes": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,95}$" }
+        },
+        "evidenceDigests": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/digest" }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "timelineId", "tenant", "sequence", "eventId",
+        "eventKind", "actorId", "operationId", "correlationId", "occurredAtMs",
+        "observedAtMs", "references", "facts"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.audit/protected-event/v1" },
+        "timelineId": { "$ref": "#/$defs/identifier" },
+        "tenant": { "$ref": "#/$defs/identifier" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "eventId": { "$ref": "#/$defs/identifier" },
+        "eventKind": {
+          "enum": [
+            "IDENTITY", "INTENT", "PLAN", "POLICY", "APPROVAL", "BUDGET",
+            "EFFECT", "READBACK", "RECONCILE", "STOP", "ROLLBACK"
+          ]
+        },
+        "actorId": { "$ref": "#/$defs/identifier" },
+        "operationId": { "$ref": "#/$defs/identifier" },
+        "correlationId": { "$ref": "#/$defs/identifier" },
+        "occurredAtMs": { "type": "integer", "minimum": 0 },
+        "observedAtMs": { "type": "integer", "minimum": 0 },
+        "references": { "$ref": "#/$defs/references" },
+        "facts": { "$ref": "#/$defs/facts" }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "event", "eventDigest", "previousEnvelopeDigest",
+        "signedAtMs", "signer", "signatureBase64"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.audit/protected-envelope/v1" },
+        "event": { "$ref": "#/$defs/event" },
+        "eventDigest": { "$ref": "#/$defs/digest" },
+        "previousEnvelopeDigest": {
+          "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+        },
+        "signedAtMs": { "type": "integer", "minimum": 0 },
+        "signer": { "$ref": "#/$defs/signer" },
+        "signatureBase64": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$" }
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "timelineId", "tenant", "eventCount",
+        "headEnvelopeDigest", "issuedAtMs", "signer", "signatureBase64"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.audit/protected-checkpoint/v1" },
+        "timelineId": { "$ref": "#/$defs/identifier" },
+        "tenant": { "$ref": "#/$defs/identifier" },
+        "eventCount": { "type": "integer", "minimum": 1 },
+        "headEnvelopeDigest": { "$ref": "#/$defs/digest" },
+        "issuedAtMs": { "type": "integer", "minimum": 0 },
+        "signer": { "$ref": "#/$defs/signer" },
+        "signatureBase64": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$" }
+      }
+    }
+  }
+}

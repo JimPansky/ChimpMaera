@@ -33,7 +33,7 @@ jobs:
           cache: npm
 
       - name: Set up supported npm version
-        run: npm install --global npm@11.11.0
+        run: npm install --global npm@11.16.0
 
       - name: Verify release-tree checksums
         run: sha256sum --check SHA256SUMS
@@ -43,6 +43,9 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Verify supply-chain declarations
+        run: npm run supply-chain:verify
 
       - name: Run project tests
         run: npm test

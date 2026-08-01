@@ -6,6 +6,10 @@ state="$root/.chimpmaera-demo"
 evidence="$root/.chimpmaera-acceptance"
 scenario="${1:-}"
 attempt="${2:-}"
+acceptance_project="${CM_ACCEPTANCE_PROJECT:-chimpmaera-v02-aw-acceptance}"
+acceptance_chimp_port="${CM_ACCEPTANCE_CHIMP_PORT:-127.0.0.1:7790}"
+acceptance_espo_port="${CM_ACCEPTANCE_ESPO_PORT:-127.0.0.1:7791}"
+acceptance_doli_port="${CM_ACCEPTANCE_DOLI_PORT:-127.0.0.1:7792}"
 
 usage() {
   printf >&2 'Usage: %s SCENARIO ATTEMPT\n' "$0"
@@ -186,18 +190,45 @@ assert_readback() {
           end)' "$file" >/dev/null
 }
 
+assert_permission_xray() {
+  local output="$1"
+  curl --fail --silent --show-error \
+    "http://$acceptance_chimp_port/api/effective-rights" >"$output"
+  jq -e \
+    '.schemaVersion == "chimpmaera.security/permission-xray/v1"
+     and .claim == "INFORMATIONAL_ONLY_NO_EXECUTABLE_AUTHORITY"
+     and .outcome == "ALLOW"
+     and .informationalOnly == true
+     and (.sourceResultDigest | test("^[a-f0-9]{64}$"))
+     and (.ceilings | length) == 4
+     and ([.ceilings[].kind] | sort)
+       == ["ASSIGNMENT","CAPABILITY","CONSTRAINT","PROFILE"]
+     and (.reasonFacts | length) >= 5
+     and (has("authority") | not)
+     and (has("credential") | not)
+     and (has("lease") | not)' "$output" >/dev/null
+}
+
 run_install() {
   local mode="$1" profile="$2" seed="$3"
   if [ "$profile" = RAMPAGE ]; then
     CM_DEMO_MODE="$mode" \
     CM_AUTHORITY_PROFILE="$profile" \
     CM_DEMO_SEED="$seed" \
+    CM_DEMO_PROJECT="$acceptance_project" \
+    CM_CHIMP_PORT="$acceptance_chimp_port" \
+    CM_ESPO_PORT="$acceptance_espo_port" \
+    CM_DOLI_PORT="$acceptance_doli_port" \
     CM_RAMPAGE_CONFIRM=I_UNDERSTAND_LOCAL_DEMO_ONLY \
       "$root/demo/install.sh"
   else
     CM_DEMO_MODE="$mode" \
     CM_AUTHORITY_PROFILE="$profile" \
     CM_DEMO_SEED="$seed" \
+    CM_DEMO_PROJECT="$acceptance_project" \
+    CM_CHIMP_PORT="$acceptance_chimp_port" \
+    CM_ESPO_PORT="$acceptance_espo_port" \
+    CM_DOLI_PORT="$acceptance_doli_port" \
       "$root/demo/install.sh"
   fi
 }
@@ -237,6 +268,9 @@ case "$scenario" in
     run_install complete SAFE_GUIDED yes
     archive_install
     assert_readback complete SAFE_GUIDED yes "$run_dir/readback.json"
+    assert_permission_xray "$run_dir/permission-xray.json"
+    "$root/demo/approval-workbench-smoke.sh" \
+      "$run_dir/approval-workbench-smoke.json"
     ;;
   RAMPAGE_LAB_COLD)
     purge_owned

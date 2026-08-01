@@ -1,0 +1,58 @@
+{
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "auth": { "mode": "none" }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "/opt/chimpmaera/workspace",
+      "model": { "primary": "cm-fixture/cm-agent-v1" },
+      "models": { "cm-fixture/cm-agent-v1": {} },
+      "thinkingDefault": "off"
+    }
+  },
+  "models": {
+    "mode": "replace",
+    "pricing": { "enabled": false },
+    "providers": {
+      "cm-fixture": {
+        "baseUrl": "http://capability-gateway:8080/v1",
+        "apiKey": "synthetic-workload-routing-marker-not-a-secret",
+        "api": "openai-completions",
+        "timeoutSeconds": 20,
+        "models": [
+          {
+            "id": "cm-agent-v1",
+            "name": "ChimpMaera deterministic AAS-035 fixture",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+            "contextWindow": 16384,
+            "maxTokens": 1024,
+            "compat": {
+              "requiresStringContent": false,
+              "strictMessageKeys": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "plugins": {
+    "allow": ["chimpmaera-capability"],
+    "load": { "paths": ["/opt/chimpmaera/plugins/chimpmaera-capability"] },
+    "entries": {
+      "chimpmaera-capability": {
+        "enabled": true,
+        "config": {
+          "baseUrl": "http://capability-gateway:8080",
+          "workloadIdentity": "workload:aas035-openclaw-agent-v1"
+        }
+      }
+    }
+  },
+  "tools": {
+    "allow": ["chimpmaera_capability_request"]
+  }
+}

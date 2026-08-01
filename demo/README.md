@@ -11,6 +11,16 @@ authenticated provider readiness, mapped fictional identities, a
 digest-bound catalog, one governed CRM-to-ERP order flow and the deterministic
 Admin-AI preview boundary.
 
+The v0.2 Wave 1 feature candidate adds a local Approval Workbench for the
+existing synthetic order escalation. It derives the readable business diff
+from a bounded provider snapshot, binds its local version plus requester,
+purpose, impacts, rollback and Policy, then rechecks freshness at approval and
+use. An authenticated local Approve issues a short one-use lease; Reject issues
+none. The provider gate and separate decision/effect receipts preserve those
+bindings. Stale, hidden, truncated, rejected, tampered, expired and replayed
+leases cannot execute. This remains a deterministic static-policy demo with no
+real provider transaction/ETag, live LLM or production owner identity.
+
 ## Requirements
 
 - Linux x86_64;
@@ -40,6 +50,25 @@ grant host privileges.
 Success prints `READY_VERIFIED` and loopback URLs for ChimpMaera, EspoCRM and
 Dolibarr. An unchanged rerun is idempotent. The Admin-AI PoC uses a
 deterministic local policy, not a live LLM or production delegation service.
+The dashboard permission X-ray is GET-only and informational: it displays the
+exact synthetic profile/assignment/capability/constraint intersection and
+issues no executable authority.
+
+The source tree also contains a Wave 3 Paperless-ngx zoo adapter contract. It
+is intentionally disabled in this installer (`CM_DMS=off`) and is tested only
+against synthetic HTTP fixtures. It reads bounded metadata through fixed GET
+paths and has no upload, content-download, delete or arbitrary-URL operation.
+The playable stack does not install or claim compatibility with Paperless.
+
+After a SAFE_GUIDED install, the bounded endpoint smoke can be run with:
+
+```sh
+./demo/approval-workbench-smoke.sh
+```
+
+The script creates one additional fictional Dolibarr order, proves a rejected
+proposal cannot act, proves an approved lease acts once, rejects replay, and
+writes digest-only evidence under `.chimpmaera-demo/public/`.
 
 ## Local runtime state
 

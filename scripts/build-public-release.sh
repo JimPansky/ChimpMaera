@@ -201,7 +201,8 @@ repository_only_files = {".github/FUNDING.yml", "SHA256SUMS"}
 for candidate in root.rglob("*"):
     relative = candidate.relative_to(root).as_posix()
     if (
-        relative.startswith(".git/")
+        relative == ".git"
+        or relative.startswith(".git/")
         or relative.startswith("node_modules/")
         or relative.startswith("dist/")
         or "/__pycache__/" in f"/{relative}"
@@ -223,6 +224,13 @@ for candidate in root.rglob("*"):
         and not relative.endswith(".pyc")
         and relative != "package-lock.before-version-reconcile.json"
         and relative not in repository_only_files
+        and not relative.startswith(".github/")
+        and not relative.startswith(".chimpmaera-acceptance/")
+        and not relative.startswith(".chimpmaera-demo/")
+        and not relative.startswith(".chimpmaera-aas035/")
+        and not relative.startswith(".chimpmaera-aas036/")
+        and not relative.startswith(".chimpmaera-aas037/")
+        and not relative.startswith("docs/development/")
     ):
         raise SystemExit(f"UNMANIFESTED_SOURCE_FILE:{relative}")
 

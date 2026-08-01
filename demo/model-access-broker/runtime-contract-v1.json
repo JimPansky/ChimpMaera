@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "chimpmaera.aas036/runtime-contract/v1",
+  "frontdoorIdentity": "frontdoor:aas036-capability-gateway-v1",
+  "workloadIdentity": "workload:isolated-openclaw",
+  "userIdentity": "user:synthetic-owner",
+  "tenant": "tenant:synthetic-zoo",
+  "purpose": "purpose:agent-assistance",
+  "delegationDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "route": {
+    "routeId": "route:synthetic-openai-chat-completions",
+    "provider": "provider:synthetic-model",
+    "model": "model:synthetic-v1",
+    "protocol": "OPENAI_CHAT_COMPLETIONS",
+    "credentialHandle": "credential-handle:synthetic-model-v1",
+    "providerUrl": "http://synthetic-provider:8082/v1/chat/completions"
+  },
+  "budgets": {
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "maxTokens": 4096,
+    "maxCostMicros": 100000,
+    "maxRequests": 32,
+    "timeoutMs": 30000
+  },
+  "audit": {
+    "contentCaptureDefault": false,
+    "storedFields": ["operationId", "correlationId", "tenantDigest", "purposeDigest", "requestDigest", "responseDigest", "decision", "usage", "issues"]
+  }
+}
