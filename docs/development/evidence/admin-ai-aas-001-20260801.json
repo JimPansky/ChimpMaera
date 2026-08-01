@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-evidence/v1",
+  "item": "AAS-001",
+  "phase": "ADMIN_AI_SECURITY_EXPANSION_PHASE_0",
+  "metric": {
+    "name": "aas_001_containment_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "implementationCommit": "72a489263dcd477dba394282a55d498ac2762318",
+  "frozenRelevantByteDigest": "74d21a96683cd0bd410f1c61ee24e700ba8c46d67179de344e5936db1f70ba03",
+  "gates": [
+    "RECONSTRUCT_AND_BIND",
+    "DESCRIPTOR_CONTAINMENT",
+    "RACE_SAFE_WRITE",
+    "CANARIES_AND_REGRESSION"
+  ],
+  "tests": {
+    "focusedSetupAndAas001": "PASS_13_OF_13",
+    "completeProject": "PASS_75_OF_75",
+    "typescriptBuild": "PASS",
+    "gitDiffCheck": "PASS"
+  },
+  "negativeEvidence": [
+    "redigested dot-dot, absolute, sibling-prefix, backslash and Unicode separator targets deny before effects even with owner confirmation",
+    "owned-root, config-target, backup-target and retry-evidence symlinks preserve outside canaries",
+    "an injected owned-directory swap after descriptor open denies before repair write",
+    "owner-authority, effect-state, audit-evidence and out-of-root canaries remain byte-identical"
+  ],
+  "smoke": {
+    "attempt1": {
+      "status": "PASS",
+      "elapsedMs": 67830,
+      "subsequentDefect": "NON_MATERIAL_RETRY_EVIDENCE_REMAINED_PATH_BASED"
+    },
+    "rerunJustification": "A real correcting byte change extended descriptor containment from material config repair to every repair receipt/status/event write; tests and relevant bytes were refrozen.",
+    "attempt2": {
+      "status": "PASS_READY_VERIFIED",
+      "elapsedMs": 70340,
+      "detailedEvidencePath": ".chimpmaera-acceptance/runs/SAFE_DEMO_COLD-02/",
+      "digests": {
+        "acceptance.json": "6ae1754254bfe2a4fa76ffa56f199e4f80a4e619283a80a7b91fbcf62d139050",
+        "approval-workbench-smoke.json": "fd1915f0129bc41693889250019b02a94e8594df91f8678e2a2b2894734202ce",
+        "config.json": "04b869737e677ef521052d9fa9c756b9a4f71b42aa032f5ad9d447ee6c48dd56",
+        "readback.json": "f3bec37630f8b6c06360c7d633e867b3c94663f51d91ff72ec8d5f8ac2049e3d",
+        "events.jsonl": "a25b7880089a93de1eb836076b466c1d9adb542934176a0f8b483c282afeca9b",
+        "latest-summary.json": "8652cec4d86ed26c5e2036be145a493086bd7bda783798e91b994a5900d32d8e"
+      }
+    },
+    "cleanup": "PASS_DEDICATED_ACCEPTANCE_RESIDUE_ZERO"
+  },
+  "rollback": "Revert the AAS-001 implementation and disable setup repair; retain diagnosis plus cleanup/rerun and never restore caller-supplied target execution.",
+  "claimBoundary": "Local Node/Linux descriptor-containment evidence only; no hostile-kernel, arbitrary-host sandbox, Windows, production identity/provider, release, publication, or security-certification claim.",
+  "verdict": "LOCAL_AAS_001_PASS_NOT_HOST_SANDBOX_OR_RELEASE_CLAIM",
+  "nextFrontier": "AAS-002"
+}

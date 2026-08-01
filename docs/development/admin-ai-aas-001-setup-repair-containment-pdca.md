@@ -59,5 +59,30 @@ this authorization.
 
 ## Do / Check / Act
 
-Implementation and evidence are pending. Completion requires all four gates,
-a clean focused test run, backlog evidence, and a post-change frontier review.
+Implementation commit `72a489263dcd477dba394282a55d498ac2762318`
+closes all four gates. Repair verification reconstructs the exact expected plan
+and rejects any redigested mutation. The coordinator requires its server-issued
+pending plan, verifies a frozen plan clone, walks fixed owned-root components
+without following symlinks, detects an injected root swap, rejects non-regular
+targets, and persists both material config repairs and non-material retry
+evidence through a held directory descriptor with exclusive temporary files,
+flushes, and atomic renames.
+
+Focused AAS-001 plus setup regressions passed 13/13. The complete project suite
+passed 75/75. `git diff --check` and TypeScript build passed. The first frozen
+smoke passed, then review found a real adjacent defect: non-material retry
+receipts still used path-based persistence. After that correcting byte change,
+tests were refrozen and the one justified rerun passed `READY_VERIFIED` in
+70,340 ms. Dedicated acceptance resources were purged with zero owned residue.
+Digest-only evidence is in
+`docs/development/evidence/admin-ai-aas-001-20260801.json`.
+
+Metric: `aas_001_containment_gates` **4/4 — complete**. Verdict:
+`LOCAL_AAS_001_PASS_NOT_HOST_SANDBOX_OR_RELEASE_CLAIM`.
+
+Frontier review found no reason to reopen a done or superseded item and no new
+standalone backlog gap: the retry-evidence escape was the same AAS-001 boundary
+and was corrected before closure. Under importance-first ordering, AAS-002 is
+the next internally ready item (P0/I5, no external activation needed for the
+local contract). AAS-001 becomes a regression boundary, not a recurring
+one-shot backlog item.

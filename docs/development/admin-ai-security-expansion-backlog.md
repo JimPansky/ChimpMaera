@@ -41,36 +41,34 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 3 | 1 | 2 | 0 | 0 | 11 |
+| P0 | 5 | 3 | 0 | 2 | 1 | 0 | 11 |
 | P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **9** | **1** | **2** | **0** | **0** | **34** |
+| **Total** | **22** | **9** | **0** | **2** | **1** | **0** | **34** |
 
-Top ten internally ready items, in selection order:
+Internally ready items, in selection order after AAS-001 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-001 | P0 | I5 current executable defect | M | No external dependency; closes a validated filesystem write escape |
-| 2 | AAS-002 | P0 | I5 | S | Local activation/generation contracts and negative tests |
-| 3 | AAS-003 | P0 | I5 | M | Local deterministic effective-rights facts and view |
-| 4 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
-| 5 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
-| 6 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
-| 7 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 8 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 9 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 10 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-002 | P0 | I5 | S | Local activation/generation contracts and negative tests |
+| 2 | AAS-003 | P0 | I5 | M | Local deterministic effective-rights facts and view |
+| 3 | AAS-009 | P0 | I5 before live LLM | L | Trust-label and typed-planning contracts can be proven with hostile fixtures |
+| 4 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
+| 5 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
+| 6 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
+| 7 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 8 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 9 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
-The authorized implementation loop must select `AAS-001` first. If it becomes
-genuinely externally blocked, record the missing evidence and select `AAS-002`;
-do not relabel `AAS-001` as lower importance.
+The authorized implementation loop completed `AAS-001` and must select
+`AAS-002` next. Closed AAS-001 does not reopen without new evidence.
 
 ## P0 — critical authority and containment
 
 ### AAS-001 — Contain setup-repair filesystem effects
 
-- **Status / priority:** `in_progress` / P0. **Importance / complexity:** I5 current
+- **Status / priority:** `done` / P0. **Importance / complexity:** I5 current
   executable defect / M. **Risk reduction:** critical. **User value:** prevents
   repair from overwriting Owner authority/evidence or sibling state. **Demo
   value:** high, exploit-shaped and deterministic.
@@ -87,7 +85,10 @@ do not relabel `AAS-001` as lower importance.
 - **Rollback boundary / fallback:** revert the slice and disable repair; never
   restore caller-supplied target execution. **External gates:** none for local
   closure; hostile-host/kernel sandbox claims remain gated.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** `72a489263dcd477dba394282a55d498ac2762318`;
+  `docs/development/evidence/admin-ai-aas-001-20260801.json` and
+  `docs/development/admin-ai-aas-001-setup-repair-containment-pdca.md`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-002 — Policy self-protection and generation fence
 
