@@ -128,6 +128,7 @@ packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-righ
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
 packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
 packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-access-broker.ts	0644
+packages/contracts/src/protected-audit-timeline.ts	packages/contracts/src/protected-audit-timeline.ts	0644
 packages/contracts/src/skill-admission.ts	packages/contracts/src/skill-admission.ts	0644
 packages/contracts/src/paperless-zoo-adapter.ts	packages/contracts/src/paperless-zoo-adapter.ts	0644
 packages/contracts/src/policy-evaluator.ts	packages/contracts/src/policy-evaluator.ts	0644
@@ -139,6 +140,7 @@ packages/contracts/src/poc-showcase.ts	packages/contracts/src/poc-showcase.ts	06
 packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	0644
 release/public-files.manifest	release/public-files.manifest	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
+schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 scripts/verify-supply-chain.mjs	scripts/verify-supply-chain.mjs	0755
 scripts/verify-openclaw-agent-runtime-lock.mjs	scripts/verify-openclaw-agent-runtime-lock.mjs	0755
@@ -150,6 +152,7 @@ tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
 tests/model-access-broker-runtime.test.mjs	tests/model-access-broker-runtime.test.mjs	0644
 tests/model-access-broker.test.ts	tests/model-access-broker.test.ts	0644
+tests/protected-audit-timeline.test.ts	tests/protected-audit-timeline.test.ts	0644
 tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-runtime.test.mjs	0644
 tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644

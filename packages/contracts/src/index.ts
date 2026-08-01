@@ -11,3 +11,4 @@ export * from "./injection-trust-boundary.js";
 export * from "./capability-catalogue.js";
 export * from "./model-access-broker.js";
 export * from "./skill-admission.js";
+export * from "./protected-audit-timeline.js";

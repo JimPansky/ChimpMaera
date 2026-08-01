@@ -42,18 +42,18 @@ negative evidence that no uncovered internally actionable gap remains.
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | P0 | 5 | 0 | 0 | 2 | 7 | 0 | 14 |
-| P1 | 11 | 2 | 0 | 0 | 3 | 0 | 16 |
+| P1 | 11 | 1 | 1 | 0 | 3 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **3** | **0** | **2** | **10** | **0** | **37** |
+| **Total** | **22** | **2** | **1** | **2** | **10** | **0** | **37** |
 
-Ready order after AAS-037 closure and frontier audit:
+Selected work and ready order after AAS-037 closure and frontier audit:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 2 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 3 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| WIP=1 | AAS-023 | P1 | I4 | L | Selected; protected local timeline implementation is in progress |
+| 1 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 2 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
 `AAS-009`, `AAS-016`, `AAS-012`, owner-priority `AAS-035`, `AAS-017`,
@@ -774,7 +774,7 @@ ordered tie-break; recurring I3 AAS-030 cannot displace it.
 
 ### AAS-023 — Protected audit timeline and deterministic explanation
 
-- **Status / priority:** `ready` / P1. **Importance / complexity:** I4 / L.
+- **Status / priority:** `in_progress` / P1. **Importance / complexity:** I4 / L.
   **Risk reduction:** high detection/accountability. **User value:** reconstruct
   what happened and why. **Demo value:** very high. **Canon:** extension,
   CM-CAN-05/10/14/16/17 and Administration.
