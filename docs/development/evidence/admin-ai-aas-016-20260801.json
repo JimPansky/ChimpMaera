@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "chimpmaera.admin-ai-security-implementation-evidence/v1",
+  "workItem": "AAS-016",
+  "metric": {
+    "name": "aas_016_authoritative_approval_diff_gates",
+    "passed": 4,
+    "total": 4
+  },
+  "verdict": "LOCAL_AAS_016_PASS_NOT_PROVIDER_TRANSACTION_OR_PRODUCTION_APPROVAL_CLAIM",
+  "generatedAt": "2026-08-01T11:59:07+02:00",
+  "baseline": "7f4a947d6c79a6b8712320e2378589fa810d6929",
+  "implementationCommit": "27221ad638addf150017542e81187f3fd3c54f09",
+  "gates": [
+    {
+      "id": 1,
+      "name": "bounded_authoritative_snapshot",
+      "status": "PASS",
+      "evidence": "An exact synthetic Dolibarr query produces a closed provider/tenant/entity/requester/purpose/material-field snapshot with a digest-derived version; hidden, truncated, extra, over-limit, malformed or existing-target state denies."
+    },
+    {
+      "id": 2,
+      "name": "snapshot_derived_display_binding",
+      "status": "PASS",
+      "evidence": "The displayed Diff is derived from the validated snapshot and binds requester, purpose, all material changes, data/budget/side-effect impacts, rollback, active Policy and snapshot digest/version into the proposal and lease."
+    },
+    {
+      "id": 3,
+      "name": "approval_and_use_time_freshness",
+      "status": "PASS",
+      "evidence": "Fresh state is re-read before the owner decision and before reservation/provider mutation; state/version/Policy/profile drift denies, and durable replay checks run on both sides of the asynchronous use-time read."
+    },
+    {
+      "id": 4,
+      "name": "adversarial_regression_evidence",
+      "status": "PASS",
+      "evidence": "Rapid parallel decisions, concurrent effect use, prohibited actor changes, approve-after-reject, tampered snapshot/Diff/authority fields, expiry, replay, restart and readback mismatch probes deny without a duplicate effect."
+    }
+  ],
+  "validation": {
+    "focusedAas016": "4/4",
+    "fullSuite": "91/91",
+    "videoTests": "15/15",
+    "checksums": "127/127",
+    "supplyChainChecks": "6/6",
+    "publicArchiveSha256": "f6697eb5dfc735921bdd92431f435e4b4c544067741c89a9ce66c18e330a8fbe",
+    "gitDiffCheck": "PASS"
+  },
+  "fullInstallSmoke": {
+    "status": "PASS_AFTER_CORRECTION",
+    "scenario": "SAFE_DEMO_COLD-02",
+    "elapsedMs": 66430,
+    "result": "READY_VERIFIED",
+    "approvalSmokeSha256": "d5e080f9f72df998a44309e37928b3fc32038e484b3d78c1615be8e348144353",
+    "approvedReadback": "VERIFIED",
+    "rejectedEffect": "DENIED",
+    "replayEffect": "AUTHORITY_LEASE_REPLAY_DENIED",
+    "ownedResidueAfterPurge": 0,
+    "rerunJustification": "SAFE_DEMO_COLD-01 exposed replay-denial ordering and an adjacent asynchronous reservation race; the second run followed real correcting runtime bytes plus a focused concurrency regression."
+  },
+  "artifactDigests": {
+    "snapshotContract": "48bdfb5154e5a1deb066de20c7edcd671211622950011b9d2bf22e17bfe69973",
+    "workbench": "9b7e133473dde1d060812d1689c4e21aea864a59fbfca3826018f52dda9769d6",
+    "effectGate": "8399adcc9a2e5d55a35ac3356dbb49c471bfdf60898e48e2d5a48fe01b68b935",
+    "tests": "2cb4aaad1ca1435c2c0abca543796f21de783ae678eabed1adac308ce1969e2b",
+    "canon": "79ed3d5ae16c18d186dd681d491e3f8fa90ab2ccb17726e37d2433f2436ce9e2",
+    "architecture": "45b49cea305b0106cb4d6e8ab1d75705040afdb35aeac5a7f8b945c9daf06836",
+    "knownLimitations": "efc35ed81b7c6cd777037f4b7bc862da043675c33485340f441bd1322666f473",
+    "publicManifest": "f2eeba006b0fde80a33299dfe2ccfd154395fcd8ce6456c6020d07e26233f63b",
+    "liveSmoke": "50c7bcf86f924cfc2f258f4d22ef322c3d16701fd446f7f4b04186759cea1d47"
+  },
+  "nonClaims": [
+    "No real provider ETag, conditional mutation or transaction isolation was tested or claimed.",
+    "No production requester/approver identity, IAM, MFA, quorum, anti-clickjacking or multi-tenant routing was tested or enabled.",
+    "The local owner actor and digest-derived version are deterministic fixtures, not production identity or freshness infrastructure.",
+    "No push, pull request, merge, tag, release, publication, production deployment or external-system action."
+  ]
+}

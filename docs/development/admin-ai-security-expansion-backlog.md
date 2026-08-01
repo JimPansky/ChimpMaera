@@ -42,25 +42,24 @@ negative evidence that no uncovered internally actionable gap remains.
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | P0 | 5 | 0 | 0 | 2 | 4 | 0 | 11 |
-| P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
+| P1 | 11 | 4 | 0 | 0 | 1 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **6** | **0** | **2** | **4** | **0** | **34** |
+| **Total** | **22** | **5** | **0** | **2** | **5** | **0** | **34** |
 
-Internally ready items, in selection order after AAS-009 closure:
+Internally ready items, in selection order after AAS-016 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-016 | P1 | I4 current material-Diff defect | L | Synthetic provider snapshot/ETag fixtures can close the local correctness gap |
-| 2 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
-| 3 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 4 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 5 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 6 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
+| 2 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
+| 3 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 4 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 5 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002` and
-`AAS-003`, then completed `AAS-009`; it must select `AAS-016` next. Closed
-items do not reopen without new evidence.
+`AAS-003`, then completed `AAS-009` and `AAS-016`; it must select `AAS-012`
+next. Closed items do not reopen without new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
 decision/use convergence, fallback, management/effect separation, audit and
@@ -84,6 +83,14 @@ boundaries remain represented by AAS-008/AAS-010/AAS-012/AAS-020/AAS-023/
 AAS-025/AAS-030; no distinct new control was discovered. AAS-016 now leads the
 ready frontier because its current material-Diff correctness defect outranks
 other I4 catalogue and lifecycle breadth.
+
+The AAS-016 frontier audit rechecked transactional effect mediation,
+requester/approver identity, tenant/data-purpose isolation, Policy lifecycle,
+audit causality, compensation and external claim boundaries. These remain
+represented by AAS-007/AAS-008/AAS-010/AAS-017/AAS-023/AAS-022; no distinct
+new internal item was discovered. AAS-012 now leads the ready I4 frontier
+because a finite inactive-by-default vocabulary is a prerequisite for several
+later controls and adds no runtime authority.
 
 ## P0 — critical authority and containment
 
@@ -415,7 +422,7 @@ other I4 catalogue and lifecycle breadth.
 
 ### AAS-016 — Authoritative approval Diff, routing and step-up
 
-- **Status / priority:** `ready` / P1. **Importance / complexity:** I4 current
+- **Status / priority:** `done` / P1. **Importance / complexity:** I4 current
   material-Diff defect / L. **Risk reduction:** high. **User value:** decision
   reflects real fresh state and accountable approvers. **Demo value:** high.
 - **Canon:** defect for current material Diff, then primitive/identity
@@ -431,7 +438,13 @@ other I4 catalogue and lifecycle breadth.
 - **Rollback boundary / fallback:** revert to escalation refusal for material
   actions rather than display a constant/stale Diff. **External gates:** real
   MFA/quorum/anti-clickjacking UI evidence.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `27221ad638addf150017542e81187f3fd3c54f09`; PDCA
+  `docs/development/admin-ai-aas-016-authoritative-approval-diff-pdca.md`;
+  evidence `docs/development/evidence/admin-ai-aas-016-20260801.json`;
+  local verdict
+  `LOCAL_AAS_016_PASS_NOT_PROVIDER_TRANSACTION_OR_PRODUCTION_APPROVAL_CLAIM`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-017 — Complete signed Policy lifecycle
 
