@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G1-20260801",
+  "issueId": "BLD-001",
+  "claimIds": [
+    "BLD-001-G1"
+  ],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "a2661b69dcf2619e5f8a6dd57f80a012eb3c14c4",
+  "reconciledBase": {
+    "publicMain": "bdaa4ccc55aacecdfc1200da3385dfd2b3ee4a8d",
+    "validatedDependencyCheckpoint": "253c26cc2f75a48f179c3d38c3e5b6ed33fa82d4",
+    "mergeCommit": "633f6987d1cefec50bcf40fa10e02097e09c08c9"
+  },
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 1/8",
+    "facts": [
+      "SAFE_GUIDED is selected when requestedProfile is null.",
+      "CUSTOM may AUTO_EXECUTE any registered right that remains inside all four explicit ceilings.",
+      "RAMPAGE and FULL_CONTROL_LAB normalize to RAMPAGE_FULL_CONTROL_LAB without bypassing Host/System, assignment or current-constraint ceilings.",
+      "Every registered right emits all four intersection facts, profile selection and final route.",
+      "The result carries no executable authority and is digest-bound to canonical normalized input."
+    ]
+  },
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "unknown profile",
+      "duplicate registered right",
+      "unknown assignment reference",
+      "CUSTOM override smuggled into SAFE_GUIDED",
+      "unknown hidden product-ceiling field"
+    ],
+    "result": "All throw BUILDER_AUTHORITY_INPUT_INVALID_DENIED before any authority or effect."
+  },
+  "validation": {
+    "focused": "4/4 PASS",
+    "completeRepository": "158/158 PASS: 153 non-supply-chain tests plus 5/5 isolated supply-chain/public-staging tests",
+    "checksums": "233/233 PASS",
+    "supplyChain": "6/6 PASS; repository-declaration scope only",
+    "deterministicPublicStaging": "PASS",
+    "videoSmoke": "NOT_RUN_PROPORTIONATE: no video source, renderer, asset, schema or runtime byte changed"
+  },
+  "rollback": {
+    "status": "VERIFIED_BY_BOUNDARY",
+    "action": "Revert a2661b6, leave Builder default-off and retain this evidence as negative/history record.",
+    "residue": "No runtime, service, credential, external account or customer system was created or mutated."
+  },
+  "nonClaims": [
+    "not an executable authority token",
+    "not production authorization or security certification",
+    "not a released or published feature",
+    "not live-system, hostile-host or universal-agent compatibility evidence"
+  ],
+  "externalMutationPerformed": false
+}

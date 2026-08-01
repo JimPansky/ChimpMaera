@@ -6,6 +6,7 @@ Delivery status: `in_progress`
 Claim status: `NOT_PROVEN`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
+Current metric: **1/8**
 
 ## Local issue contract
 
@@ -141,12 +142,32 @@ contribution route depends on it.
 
 ### Do
 
-In progress: G1 machine contract, JSON Schema and focused conformance probes.
+Implemented G1 as a generic closed TypeScript authority resolver, input JSON
+Schema and four focused conformance probes. SAFE_GUIDED is the default, CUSTOM
+may auto-route any effective registered right, and RAMPAGE/FULL_CONTROL_LAB
+aliases normalize without escaping the four explicit ceilings. Every decision
+emits the full intersection and route facts and the digest-bound result carries
+no executable authority.
 
 ### Check
 
-Pending focused and complete validation.
+- Focused BLD-001-G1 tests: **4/4 PASS**.
+- Complete repository tests: **158/158 PASS**. The 153 non-supply-chain tests
+  ran with the matching existing dependency tree; after removing that temporary
+  ignored symlink, the five source-tree/supply-chain/public-staging tests passed
+  separately against the clean source boundary.
+- Repository checksums: **233/233 PASS**.
+- Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
+  PASS.
+- Video smoke: not run because no video source, asset, renderer, schema or
+  runtime byte changed.
+- Implementation commit:
+  `a2661b69dcf2619e5f8a6dd57f80a012eb3c14c4`.
+- Evidence: `docs/development/evidence/bld-001-g1-20260801.json`.
 
 ### Act
 
-Keep WIP at one. Do not advance to G2 until G1 has a clean evidence checkpoint.
+Close G1 at **1/8** with verdict
+`LOCAL_BLD_001_G1_PASS_DECISION_MATRIX_ONLY_NOT_EXECUTABLE_AUTHORITY_PRODUCTION_OR_RELEASE_CLAIM`.
+Do not reopen G1 without regression evidence. Keep WIP at one and advance the
+same worktree to G2 guided intake/System Advisor discovery.
