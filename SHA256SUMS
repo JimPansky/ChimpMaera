@@ -35,6 +35,7 @@ fdd4ee3a52df32858271c60c3dab423445bfea057b401cc28cbc0a6719d64afa  ./demo/compose
 8ffa466e97ea14dbe4a530b245202ef96ba6e73345d92946b264ed8e209dcfbc  ./demo/identity-bootstrap.sh
 1d5847aa6637c975d7802014c96b497f993e7dd93d8d3186eab9e7e2517d3bc6  ./demo/install.sh
 61efd5fe35c5ff0fcfd84d0e482e8518a485015c6bb48dd4648987702ea7fecd  ./demo/lib/journal.sh
+e840046ea63a45939ca46ee3d13e48ff249e4f9a089c60cceca726976725b509  ./demo/management/policy-lifecycle.mjs
 2ca8b68ae00d0c8f6752b6c7e4ae81dbae9747ac59b24776b89d0284d26636e4  ./demo/manifests/authority/RAMPAGE-v1.json
 5fff550dd498c81b160f100606d34157bcd9bafedc08f2bed1c64b28536559d3  ./demo/manifests/authority/SAFE_GUIDED-v1.json
 901f6dfe3c409e3c489503dfe783847927e0a14dc84fdbf0e5cb13ffd7c31397  ./demo/manifests/authority/admin-ai-poc-policy-v1.json
@@ -79,16 +80,16 @@ a509d9db5668cfe5e3bcd32b6a0f8140f248ccbc403dc465cc12751b70329d51  ./demo/runtime
 bd658b60138d44cbe499bdeb82d7f49f052fb5284c85866cc59b2e728f473600  ./demo/seed-and-flow.sh
 ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfig.runtime.json
 1ded2f51daf04d1eeaaf2af332d046f292bcd99970aa7b3dc927ac1c161f760d  ./demo/uninstall.sh
-45b49cea305b0106cb4d6e8ab1d75705040afdb35aeac5a7f8b945c9daf06836  ./docs/ARCHITECTURE.md
+137e4f4da4450c0998fd1fdc0ad9a7d18657b9e0dcad9a53a9d36c4eacc0168c  ./docs/ARCHITECTURE.md
 79ed3d5ae16c18d186dd681d491e3f8fa90ab2ccb17726e37d2433f2436ce9e2  ./docs/CANON.md
-efc35ed81b7c6cd777037f4b7bc862da043675c33485340f441bd1322666f473  ./docs/KNOWN-LIMITATIONS.md
+16facfc16b188f92d23850ead3b214f5f0bc87fafb1894d3005f460bc299eacc  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
 84f990a52698064e1538175d2ac9f2454351c92622b98e0b57d28e3263bbdd11  ./docs/SUPPLY-CHAIN.md
 ea967ea2177dfaa57c132835401bea9508a29add130287aa4f03763278e8bca3  ./docs/ZOO-FIELD-GUIDE.md
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 a4852feaa297c4e84528ddcb958eda5a599539ee447e3c1d3fa90e62085c831f  ./package-lock.json
-22527a3c6322fc311518fe055711c22bb005cc3f5fbb419fd6b1ea3f91dd0029  ./package.json
+d3ce66fc12abb59ecfc974997def3e6f325b8accf8a311f93ebf38c97c9c2e09  ./package.json
 666513ba9a89c0eae0daa0e0159a262eb4e0aa105971a151a19bac1a9b6c4826  ./packages/contracts/src/canonical-json.ts
 6fb94da6548aba5f7796d21ce938fd02c608929b76c199e2870c5542ad69a822  ./packages/contracts/src/capability-catalogue.ts
 b0ae29b9bda430c16ff6091d09f411f87b55334e79f2482386f471f7da42cf11  ./packages/contracts/src/effective-rights.ts
@@ -102,7 +103,7 @@ c86b9fdf4bfffd88bb4062250dba043acff0047a45ed4d50d999f2f8d8cb262e  ./packages/con
 61c8584058f2a2a8600ef49f87febf0c4d4205ee671fc2ef295b5f17f0d307af  ./packages/contracts/src/poc-showcase.ts
 772b95d5b92f18a247ef4e35a902b57044670f8a9f6da95d73c4ac6073a83351  ./packages/contracts/src/policy-evaluator.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-9d880981ebad9d39b91cc88f399d2b3885ca4ea0f3e99a498865a8d8547154e2  ./release/public-files.manifest
+733a227020c761575f257a833b31073d188d3cd8465131c32861707489df8194  ./release/public-files.manifest
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
 91004fe201beedd2fdc3fda08e4c10f75ae051bdef0c6cf123e3297b0cb4fa15  ./scripts/build-public-release.sh
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
@@ -116,6 +117,7 @@ a2cecb00593c2e3d4cfc770b880dc1f3287a6c8de37573dce9748ea9536509ea  ./tests/demo-l
 48c811be0092214e4a6bab4ebfa7bd474b7f10da0e8848aa07e5a7f1b4b12aaf  ./tests/demo-paperless-ngx-zoo-adapter.test.mjs
 ba12408a713468d0cf116c19cd29506f6fe9eb48107859102790fd975753f271  ./tests/demo-policy-evaluator.test.mjs
 e6d7cc6236ddfbf35ac8e971140643f3b9b0a68c401558a6144b8c63a45b3cd7  ./tests/demo-policy-generation-fence.test.mjs
+6e8012075dc47f8354e4d18e98b7e14090abcdc335615849c320d6c710fdff01  ./tests/demo-policy-lifecycle.test.mjs
 7d98acfa30bc054954fa1c8268794164662128515b0324244695c5dc5b9bb347  ./tests/effective-rights.test.ts
 30ef44533c4ca5ff44dbd76c964ef409b4763a07fcc4cd54417d1a8c4f42289a  ./tests/injection-trust-boundary.test.ts
 e41b88bbc2e14e6af91163eb4be7fa830d946b473c02ce4cbc8162c862819d9b  ./tests/openclaw-agent-runtime-lock.test.mjs

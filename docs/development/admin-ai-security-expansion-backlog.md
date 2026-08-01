@@ -42,19 +42,18 @@ negative evidence that no uncovered internally actionable gap remains.
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | P0 | 5 | 0 | 0 | 2 | 5 | 0 | 12 |
-| P1 | 11 | 3 | 0 | 0 | 2 | 0 | 16 |
+| P1 | 11 | 2 | 1 | 0 | 2 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **4** | **0** | **2** | **7** | **0** | **35** |
+| **Total** | **22** | **3** | **1** | **2** | **7** | **0** | **35** |
 
-Remaining ready order after AAS-035 closure:
+Selected WIP=1 item is AAS-017. Remaining ready order during implementation:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
-| 2 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
-| 3 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
-| 4 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
+| 1 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
+| 2 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
+| 3 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
 The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
 `AAS-009`, `AAS-016`, `AAS-012` and owner-priority `AAS-035`; it must select
@@ -520,7 +519,7 @@ management-plane, delegation, schedule and credential controls.
 
 ### AAS-017 — Complete signed Policy lifecycle
 
-- **Status / priority:** `ready` / P1. **Importance / complexity:** I4 / L.
+- **Status / priority:** `in_progress` / P1. **Importance / complexity:** I4 / L.
   **Risk reduction:** high. **User value:** reviewable activation, migration and
   rollback. **Demo value:** high. **Canon:** primitive, CM-CAN-02/03/14/17.
 - **Source / dependencies / phase:** SEC-09; local signer/trust fixtures and

@@ -81,6 +81,19 @@ that record immediately before provider access. Generation divergence or an
 explicit fallback freezes dispatch; fallback bytes are never silently treated
 as a new generation.
 
+A separate, default-off local management-plane contract completes the signed
+Policy lifecycle around that fence. Ed25519-signed artifacts bind issuer/key,
+tenant, Policy ID, generation, validity and a closed runtime compatibility
+tuple. Draft, validation, deterministic semantic Diff, simulation, exact Owner
+approval, staging, activation, supersede, rollout confirmation, retire and
+revoke transitions produce an authenticated hash-chained receipt record.
+Authority widening requires an approval that binds that exact Diff. Trust
+drift, expiry, replay, unsupported runtime semantics, mixed worker generations
+or post-activation persistence failure denies or freezes; only the existing
+generation fence can activate or authorize use, and fallback is never implicit.
+The synthetic signing and approval keys are test fixtures, not runtime or Agent
+credentials.
+
 The local permission X-ray is a separate informational path. A closed-schema
 effective-rights compiler intersects synthetic profile, assignment, capability
 and constraint ceilings across action, resource, field, purpose and effect

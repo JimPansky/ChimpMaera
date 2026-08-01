@@ -52,6 +52,7 @@ demo/openclaw-agent/workspace/openclaw-workspace-state.json	demo/openclaw-agent/
 demo/identity-bootstrap.sh	demo/identity-bootstrap.sh	0755
 demo/install.sh	demo/install.sh	0755
 demo/lib/journal.sh	demo/lib/journal.sh	0644
+demo/management/policy-lifecycle.mjs	demo/management/policy-lifecycle.mjs	0644
 demo/manifests/authority/RAMPAGE-v1.json	demo/manifests/authority/RAMPAGE-v1.json	0644
 demo/manifests/authority/SAFE_GUIDED-v1.json	demo/manifests/authority/SAFE_GUIDED-v1.json	0644
 demo/manifests/authority/admin-ai-poc-policy-v1.json	demo/manifests/authority/admin-ai-poc-policy-v1.json	0644
@@ -115,6 +116,7 @@ tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644
 tests/demo-policy-generation-fence.test.mjs	tests/demo-policy-generation-fence.test.mjs	0644
+tests/demo-policy-lifecycle.test.mjs	tests/demo-policy-lifecycle.test.mjs	0644
 tests/demo-fixture-manifest.test.ts	tests/demo-fixture-manifest.test.ts	0644
 tests/poc-early-admin-ai-setup.test.ts	tests/poc-early-admin-ai-setup.test.ts	0644
 tests/poc-guided-demo-bootstrap.test.ts	tests/poc-guided-demo-bootstrap.test.ts	0644

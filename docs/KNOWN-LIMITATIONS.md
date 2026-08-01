@@ -39,6 +39,13 @@ These limits are part of the claim discipline required by
   not an independent production signer, HSM, transparency log, rollback-proof
   store or distributed rollout protocol. A compromised host or runtime key can
   forge this local boundary.
+- The signed Policy lifecycle is a default-off local management-plane contract
+  tested with synthetic Ed25519 and Owner-HMAC fixtures. It does not install a
+  signer, trust service, HSM, production key ceremony, rollout quorum,
+  transparency log or rollback-resistant store; the stock runtime exposes no
+  lifecycle activation API. The supported static demo Policy still rejects
+  broadened runtime semantics even when a lifecycle approval explicitly names
+  a widening.
 - The permission X-ray intersects exact synthetic local operands and is
   informational only. It does not prove production IAM/role-source freshness,
   tenant isolation or authorization completeness, and its ALLOW result is not
