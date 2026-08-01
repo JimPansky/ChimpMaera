@@ -16,6 +16,13 @@ These limits are part of the claim discipline required by
   recovery, upgrades and production identity integration are not claimed.
 - Loopback and internal-network controls reduce accidental exposure but do not
   protect against a compromised host or Docker daemon.
+- Docker is the shipped demo Reference Adapter, not a mandatory product
+  mechanism or one-container-per-Agent requirement. The current release does
+  not validate VM/MicroVM, WASM, remote-worker, or other OS-sandbox adapters.
+- The v0.1 demo does not establish complete mediation for arbitrary Agent
+  model, tool, skill, network, file, process, durable-Mind, secret, read, or
+  effect crossings. Gateway-only behavior without OS-enforced denial of
+  alternate paths is not claimed as isolation.
 - The deterministic fixtures are fictional and must not be replaced with real
   personal or customer data without a separate privacy and security design.
 - The Approval Workbench implements one readable business Diff and local
@@ -54,6 +61,10 @@ These limits are part of the claim discipline required by
   boundary tested with synthetic HTTP fixtures. The stock demo does not install
   or contact Paperless. Real-service compatibility, ingest, document content,
   OCR, lifecycle, retention and backup/restore are not claimed.
+- Observable inputs, outputs, decisions, actions and receipts do not expose or
+  prove complete internal model thoughts. Unknown side channels, runtime
+  vulnerabilities, kernel/hypervisor defects and untested production
+  environments remain outside all current claims.
 - Catalog and template entries are descriptive; not every entry is executable,
   and admission or popularity never grants runtime authority.
 - Managed skill admission is a default-off local candidate with deterministic

@@ -2,8 +2,12 @@
 
 This architecture preserves the v0.1 subset identified in
 [The ChimpMaera Canon](CANON.md) and adds the isolated v0.2 Wave 1 Approval
-Workbench candidate. [Known Limitations](KNOWN-LIMITATIONS.md) identifies
-boundaries that remain intentionally outside the local candidate.
+Workbench and later completed security candidates through AAS-023. The Canon's
+mechanism-independent product abstraction is the Agent Runtime Isolation
+Boundary / Untrusted Runtime Contract, detailed for engineering use in the
+[Agent Runtime Isolation Contract](development/agent-runtime-isolation-contract.md).
+[Known Limitations](KNOWN-LIMITATIONS.md) identifies boundaries that remain
+outside this local snapshot.
 
 ChimpMaera v0.1 is a local reference stack with three user-facing loopback
 services:
@@ -14,10 +18,12 @@ services:
 - Dolibarr receives one approved synthetic order and supplies the authoritative
   provider readback.
 
-MariaDB services remain on internal Docker networks. ChimpMaera communicates
-with the provider application networks but does not mount the Docker socket.
-The ChimpMaera container is non-root, read-only, capability-dropped and
-configured with `no-new-privileges`.
+The shipped demo uses Docker Compose as one Reference Adapter. MariaDB services
+remain on internal Docker networks. ChimpMaera communicates with the provider
+application networks but does not mount the Docker socket. The ChimpMaera
+container is non-root, read-only, capability-dropped and configured with
+`no-new-privileges`. This validates only the exact local adapter configuration;
+Docker is not a product-wide requirement or a per-Agent architecture.
 
 The installer creates random local secrets as Docker Compose file-backed
 secrets. No credential is bundled in the release. The installer journal and
@@ -31,7 +37,13 @@ effects.
 The effect path follows the Canon's separation: the seed path forms typed
 requests without provider credentials; the ChimpMaera runtime gate performs
 use-time enforcement; the provider is read back before a bound success receipt
-is recorded. Wave 1 adds one complete readable business Diff and local
+is recorded. The shipped v0.1 demo is not a general Agent Runtime Isolation
+Adapter and does not claim complete mediation for arbitrary model, skill,
+filesystem, durable-Mind, read, or process crossings. The following v0.2 and
+AAS components are local snapshot candidates, not retroactive v0.1 release
+claims.
+
+Wave 1 adds one complete readable business Diff and local
 Approve/Reject ceremony for the existing synthetic Dolibarr escalation.
 Production owner identity, a production approval service, provider Revoke and
 provider Rollback remain outside the candidate.

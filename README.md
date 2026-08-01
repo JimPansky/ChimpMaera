@@ -126,8 +126,9 @@ The Real Deal: [Controllable AI: Capability Is Not Authority | ChimpMaera](https
 ## Start here
 
 First read [The ChimpMaera Canon](docs/CANON.md), the laws that define how
-agency, authority, effects and evidence relate. Then read
-[The Zoo Field Guide](docs/ZOO-FIELD-GUIDE.md) for practical application notes.
+agency, authority, isolation, effects and evidence relate. Then read
+[The Zoo Field Guide](docs/ZOO-FIELD-GUIDE.md) for practical Profiles,
+deployment-adapter choices and evidence procedures.
 
 Then read [docs/QUICKSTART.md](docs/QUICKSTART.md) and run:
 
@@ -201,7 +202,9 @@ private company data.
 All published service ports bind to loopback. Backend networks are internal,
 the demo does not mount the Docker socket, and the ChimpMaera container runs
 as a non-root user with a read-only root filesystem. These are local PoC
-guardrails (`CM-SEC-009`), not a hostile-host or production-security claim.
+guardrails (`CM-SEC-009`) and one Docker Reference Adapter, not a per-Agent
+Docker product requirement, hostile-host boundary, or production-security
+claim.
 
 See [docs/KNOWN-LIMITATIONS.md](docs/KNOWN-LIMITATIONS.md) and
 [SECURITY.md](SECURITY.md) before use. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)

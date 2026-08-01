@@ -119,6 +119,10 @@ docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/ZOO-FIELD-GUIDE.md	docs/ZOO-FIELD-GUIDE.md	0644
+docs/development/agent-runtime-isolation-contract.md	docs/development/agent-runtime-isolation-contract.md	0644
+docs/development/canon-zoo-guide-normative-delta-matrix.json	docs/development/canon-zoo-guide-normative-delta-matrix.json	0644
+docs/development/canon-zoo-guide-security-architecture-impact-analysis.md	docs/development/canon-zoo-guide-security-architecture-impact-analysis.md	0644
+docs/development/github-agent-runtime-issue-audit.md	docs/development/github-agent-runtime-issue-audit.md	0644
 examples/poc-release/showcase-v1.json	examples/poc-release/showcase-v1.json	0644
 examples/poc-setup-planner/catalog-v1.json	examples/poc-setup-planner/catalog-v1.json	0644
 package-lock.json	package-lock.json	0644
