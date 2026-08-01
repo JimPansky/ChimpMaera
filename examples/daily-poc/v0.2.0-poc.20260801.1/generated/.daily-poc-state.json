@@ -1,0 +1,29 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "completedFiles": [
+    "SHA256SUMS",
+    "artifact-manifest.json",
+    "candidate-report.json",
+    "demo-guide.md",
+    "evidence-index.json",
+    "evidence-summary.md",
+    "known-limitations.md",
+    "provenance.json",
+    "readme-pointer.md",
+    "release-notes.md",
+    "run-report.json",
+    "sbom.spdx.json",
+    "snapshot.json",
+    "video-adapter.json",
+    "video-brief.json",
+    "video-narration.md",
+    "video-storyboard.json"
+  ],
+  "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "phase": "complete",
+  "reasons": [],
+  "resumable": false,
+  "revision": 17,
+  "schemaVersion": "chimpmaera.daily-poc-run-state/v1",
+  "verdict": "READY_CANDIDATE"
+}

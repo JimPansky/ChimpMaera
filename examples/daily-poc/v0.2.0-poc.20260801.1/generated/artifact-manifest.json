@@ -1,0 +1,67 @@
+{
+  "artifacts": [
+    {
+      "path": "demo-guide.md",
+      "sha256": "55c4066ea55cb405e6b93d4e50d3f36b4166def8f3e3ae5b3cfa4db64ea6c8dc",
+      "size": 1497
+    },
+    {
+      "path": "evidence-index.json",
+      "sha256": "be5a522bbb3627965455c177828c226033d3fe3b836d9b4575a3dfb6dbdfaf9d",
+      "size": 3441
+    },
+    {
+      "path": "evidence-summary.md",
+      "sha256": "ca41847ffe55d1af3c67069b22a7d53e8706476052807b6c76055b71e743dc22",
+      "size": 1337
+    },
+    {
+      "path": "known-limitations.md",
+      "sha256": "d32f6caa9cff00c83038c8ae3e399ad58d01f328d33d18b8adde6a9acd37c744",
+      "size": 650
+    },
+    {
+      "path": "provenance.json",
+      "sha256": "a2170f435f61c58f0d6cb94514de694cab3c14e31f403a8741718c58e7cb2edd",
+      "size": 714
+    },
+    {
+      "path": "readme-pointer.md",
+      "sha256": "2eaf8eab782e972b1e7f3a2b3bad940c6bede256470615bf81f7e43e3a0592fa",
+      "size": 165
+    },
+    {
+      "path": "release-notes.md",
+      "sha256": "ac7ed1fb6f4c2e17701f1f869b6bf7e4cc5a73dce0741cbd148a9507376a1a3a",
+      "size": 1233
+    },
+    {
+      "path": "sbom.spdx.json",
+      "sha256": "30181cca9032e454718915f9d3fd132a9358af459a3d2202341e6b10675022b6",
+      "size": 2159
+    },
+    {
+      "path": "video-adapter.json",
+      "sha256": "9cff30b88cc688c9d14c28fff8523b305078e25a47053ad3b1f99172e4f771a1",
+      "size": 1702
+    },
+    {
+      "path": "video-brief.json",
+      "sha256": "9081b92088678028f0db59474a4cc8609afe7789cd0a04842fd5db2edcb00461",
+      "size": 2885
+    },
+    {
+      "path": "video-narration.md",
+      "sha256": "f33e4e077e0947a2930c6adca83368b91a88fd72d3ae2fa62940780ac27eb4e2",
+      "size": 820
+    },
+    {
+      "path": "video-storyboard.json",
+      "sha256": "25c80c59801ebc558596516aaa26d0e295089490cdd538a1996a10eb541b5c95",
+      "size": 1562
+    }
+  ],
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "schemaVersion": "chimpmaera.daily-poc-artifacts/v1"
+}

@@ -1,0 +1,26 @@
+{
+  "artifactManifestSha256": "fcb24698a5965ba878f163499ed65988d8c7e29e1f065c160f5b5a52e6640b66",
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "materialChange": {
+    "changedFiles": [
+      "README.md",
+      "SHA256SUMS"
+    ],
+    "commitCount": 1
+  },
+  "publication": {
+    "githubPrerelease": false,
+    "readmeMutation": false,
+    "youtubeUpload": false
+  },
+  "publicationEffects": [],
+  "reasons": [],
+  "releaseTitle": "ChimpMaera POC Daily — 2026-08-01",
+  "schemaVersion": "chimpmaera.daily-poc-candidate-report/v1",
+  "verdict": "READY_CANDIDATE",
+  "video": {
+    "rendered": false,
+    "status": "DISABLED_DEFAULT"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "schemaVersion": "chimpmaera.daily-poc-storyboard/v1",
+  "segments": [
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-VIDEO-DISCOVERY",
+          "maturity": "MERGED",
+          "statement": "The merged repository README links readers to the current ChimpMaera video overview."
+        }
+      ],
+      "durationSeconds": 8,
+      "id": "VIDEO-SEGMENT-INTRO",
+      "order": 1,
+      "purpose": "State the frozen source delta and candidate boundary.",
+      "title": "What changed",
+      "useCaseRefs": [
+        "USE-CASE-VIDEO-DISCOVERY"
+      ],
+      "visuals": [
+        "Show the source base and head identifiers.",
+        "Highlight the README video section."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-VIDEO-BOUNDARY",
+          "maturity": "MERGED",
+          "statement": "The merged reference video contract requires public actions to remain forbidden during local validation and rendering."
+        }
+      ],
+      "durationSeconds": 12,
+      "id": "VIDEO-SEGMENT-SAFETY",
+      "order": 2,
+      "purpose": "Explain the closed video adapter and publication boundary.",
+      "title": "Why preparation stays local",
+      "useCaseRefs": [
+        "USE-CASE-VIDEO-PREFLIGHT"
+      ],
+      "visuals": [
+        "Show cm.video/v1 and publicActions forbidden.",
+        "Show render disabled and the missing accepted asset gates."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4"
+}

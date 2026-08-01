@@ -1,0 +1,24 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "compiler": "chimpmaera.daily-poc-compiler/v1",
+  "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "materialChange": {
+    "changedFiles": [
+      "README.md",
+      "SHA256SUMS"
+    ],
+    "commits": [
+      {
+        "id": "c0fa407d8224e98bdba9466850b8247f458ce914",
+        "subject": "docs: highlight ChimpMaera videos"
+      }
+    ]
+  },
+  "publicationEffects": [],
+  "schemaVersion": "chimpmaera.daily-poc-provenance/v1",
+  "source": {
+    "base": "f06ed8968fd3091e62af08c5caa7ace07e4e16a0",
+    "head": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  }
+}

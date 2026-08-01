@@ -1,0 +1,58 @@
+{
+  "adapter": "tools/video-production-reference/bin/cm-video",
+  "assets": [
+    {
+      "id": "VIDEO-ASSET-INTRO-SHOT",
+      "path": null,
+      "role": "SHOT",
+      "segmentRef": "VIDEO-SEGMENT-INTRO",
+      "sha256": null,
+      "status": "PLANNED"
+    },
+    {
+      "id": "VIDEO-ASSET-NARRATION",
+      "path": null,
+      "role": "AUDIO",
+      "segmentRef": null,
+      "sha256": null,
+      "status": "PLANNED"
+    },
+    {
+      "id": "VIDEO-ASSET-SAFETY-SHOT",
+      "path": null,
+      "role": "SHOT",
+      "segmentRef": "VIDEO-SEGMENT-SAFETY",
+      "sha256": null,
+      "status": "PLANNED"
+    }
+  ],
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "invocationPolicy": {
+    "approvalBinding": "LOCAL_RENDER:v0.2.0-poc.20260801.1",
+    "localRenderFlag": "--render-video",
+    "overwrite": false,
+    "publicationAvailable": false
+  },
+  "prerequisites": [
+    "Every shot is an accepted 1280x720 PNG with a locked SHA-256.",
+    "Narration is accepted mono 48 kHz WAV with a locked SHA-256.",
+    "Text and shot gates pass under cm.video/v1.",
+    "The exact local render approval binding is present.",
+    "Docker or the local reference CLI prerequisites pass without fallback."
+  ],
+  "publicActions": "forbidden",
+  "renderDefault": false,
+  "requiredStages": [
+    "manifest_validate",
+    "scene_plan",
+    "narration_and_storyboard",
+    "evidence_claim_crosscheck",
+    "draft_render",
+    "technical_and_claim_qc",
+    "publishable_asset_staging"
+  ],
+  "schemaVersion": "chimpmaera.daily-poc-video-adapter/v1",
+  "sourceManifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "status": "DISABLED_DEFAULT",
+  "targetContract": "cm.video/v1"
+}

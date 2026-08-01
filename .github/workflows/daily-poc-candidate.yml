@@ -1,0 +1,95 @@
+name: Daily POC candidate preparation
+
+on:
+  workflow_dispatch:
+    inputs:
+      manifest_path:
+        description: Repository-relative canonical Daily POC manifest
+        required: true
+        default: examples/daily-poc/v0.2.0-poc.20260801.1/manifest.json
+        type: string
+  schedule:
+    - cron: "30 15 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-poc-candidate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.event_name == 'workflow_dispatch' || vars.CM_DAILY_POC_SCHEDULE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      MANIFEST_PATH: ${{ inputs.manifest_path || 'examples/daily-poc/v0.2.0-poc.20260801.1/manifest.json' }}
+    steps:
+      - name: Check out pipeline without writable credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          path: pipeline
+
+      - name: Resolve frozen source head
+        id: manifest
+        working-directory: pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$MANIFEST_PATH"
+          head="$(node -e 'const fs=require("fs"); const m=JSON.parse(fs.readFileSync(process.env.MANIFEST_PATH,"utf8")); process.stdout.write(m.source.head)')"
+          test "${#head}" -eq 40
+          printf 'head=%s\n' "$head" >> "$GITHUB_OUTPUT"
+
+      - name: Check out immutable candidate source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          path: source
+          ref: ${{ steps.manifest.outputs.head }}
+
+      - name: Install exact compiler dependencies
+        working-directory: pipeline
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Run focused compiler and adversarial tests
+        working-directory: pipeline
+        run: npm run daily-poc:test
+
+      - name: Prepare candidate with every publication switch off
+        working-directory: pipeline
+        run: |
+          set -euo pipefail
+          node scripts/daily-poc.mjs prepare \
+            --manifest "$MANIFEST_PATH" \
+            --source-repo ../source \
+            --output candidate-output
+          test "$(node -e 'const fs=require("fs"); const r=JSON.parse(fs.readFileSync("candidate-output/candidate-report.json","utf8")); process.stdout.write(String(Boolean(r.publicationEffects?.length)))')" = false
+
+      - name: Verify deterministic candidate bytes
+        working-directory: pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          verdict="$(node -e 'const fs=require("fs"); const r=JSON.parse(fs.readFileSync("candidate-output/candidate-report.json","utf8")); process.stdout.write(r.verdict)')"
+          if test "$verdict" = READY_CANDIDATE; then
+            node scripts/daily-poc.mjs verify \
+              --manifest "$MANIFEST_PATH" \
+              --source-repo ../source \
+              --output candidate-output
+            (cd candidate-output && sha256sum -c SHA256SUMS)
+          elif test "$verdict" != NO_MATERIAL_CHANGE; then
+            exit 2
+          fi
+
+      - name: Retain candidate preparation evidence only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: daily-poc-candidate-${{ steps.manifest.outputs.head }}
+          path: pipeline/candidate-output
+          if-no-files-found: error
+          retention-days: 7

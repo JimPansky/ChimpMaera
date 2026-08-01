@@ -197,7 +197,11 @@ if total_bytes > 100 * 1024 * 1024:
     raise SystemExit("MANIFEST_BYTE_LIMIT")
 
 expected = set(destinations)
-repository_only_files = {".github/FUNDING.yml", "SHA256SUMS"}
+repository_only_files = {
+    ".github/FUNDING.yml",
+    ".github/workflows/daily-poc-candidate.yml",
+    "SHA256SUMS",
+}
 for candidate in root.rglob("*"):
     relative = candidate.relative_to(root).as_posix()
     if (

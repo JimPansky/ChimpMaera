@@ -1,0 +1,81 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260801.1",
+  "claims": [
+    {
+      "evidenceRefs": [
+        "EVID-VIDEO-README-MERGED",
+        "EVID-VIDEO-SCHEMA-MERGED",
+        "EVID-VIDEO-TEST-MERGED"
+      ],
+      "id": "CM-CLAIM-VIDEO-BOUNDARY",
+      "maturity": "MERGED",
+      "statement": "The merged reference video contract requires public actions to remain forbidden during local validation and rendering."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-README-MERGED"
+      ],
+      "id": "CM-CLAIM-VIDEO-DISCOVERY",
+      "maturity": "MERGED",
+      "statement": "The merged repository README links readers to the current ChimpMaera video overview."
+    }
+  ],
+  "description": "A short evidence-bound overview of the latest merged user-visible change and the local video safety boundary.",
+  "language": "en",
+  "publication": {
+    "youtubeUpload": false
+  },
+  "schemaVersion": "chimpmaera.daily-poc-video-brief/v1",
+  "segments": [
+    {
+      "claimRefs": [
+        "CM-CLAIM-VIDEO-DISCOVERY"
+      ],
+      "durationSeconds": 8,
+      "id": "VIDEO-SEGMENT-INTRO",
+      "narration": "The repository landing page now makes the current ChimpMaera videos easier to find. This package is a local daily candidate.",
+      "order": 1,
+      "purpose": "State the frozen source delta and candidate boundary.",
+      "title": "What changed",
+      "useCaseRefs": [
+        "USE-CASE-VIDEO-DISCOVERY"
+      ],
+      "visuals": [
+        "Show the source base and head identifiers.",
+        "Highlight the README video section."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-VIDEO-BOUNDARY"
+      ],
+      "durationSeconds": 12,
+      "id": "VIDEO-SEGMENT-SAFETY",
+      "narration": "The repository-native video contract validates locked inputs and keeps public actions forbidden. Rendering and publication remain separate decisions.",
+      "order": 2,
+      "purpose": "Explain the closed video adapter and publication boundary.",
+      "title": "Why preparation stays local",
+      "useCaseRefs": [
+        "USE-CASE-VIDEO-PREFLIGHT"
+      ],
+      "visuals": [
+        "Show cm.video/v1 and publicActions forbidden.",
+        "Show render disabled and the missing accepted asset gates."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+  "title": "ChimpMaera POC Daily — 2026-08-01",
+  "useCases": [
+    {
+      "demoUtility": "Provides a short, user-visible entry point for explaining the POC before deeper local demonstration.",
+      "id": "USE-CASE-VIDEO-DISCOVERY",
+      "title": "Find the current ChimpMaera video overview"
+    },
+    {
+      "demoUtility": "Makes the video-production boundary inspectable without requiring a render or bespoke release script.",
+      "id": "USE-CASE-VIDEO-PREFLIGHT",
+      "title": "Inspect the fail-closed video preparation contract"
+    }
+  ]
+}
