@@ -35,7 +35,7 @@
       "annotationDate": "2026-08-01T00:00:00Z",
       "annotationType": "OTHER",
       "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
-      "comment": "EVID-DAILY-PIPELINE tests/daily-poc.test.mjs sha256:7a2d0cd3ff6f3383d3ab38344db365fc94a329776fdeb96f51d638cfd6758991"
+      "comment": "EVID-DAILY-PIPELINE tests/daily-poc.test.mjs sha256:26eda1600d8acad61e17c23f280aed71b9b0ece6a6d852f0157ed9dfe3d7b755"
     },
     {
       "annotationDate": "2026-08-01T00:00:00Z",
@@ -67,7 +67,7 @@
       "externalRefs": [
         {
           "referenceCategory": "OTHER",
-          "referenceLocator": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+          "referenceLocator": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4",
           "referenceType": "gitCommit"
         }
       ],

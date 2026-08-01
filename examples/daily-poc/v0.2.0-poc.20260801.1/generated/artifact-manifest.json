@@ -2,17 +2,17 @@
   "artifacts": [
     {
       "path": "demo-guide.md",
-      "sha256": "7eaf7e5bc43dcf6cf95af4dc6d245f4d6647c02aae5f5bc1568b329acf78ffc2",
+      "sha256": "14898776cbaffc094fdd78e2abca7b4b606658060fcabd136306347e05ada417",
       "size": 3104
     },
     {
       "path": "evidence-index.json",
-      "sha256": "8bac66262482f2ddc064471f8ce8854678746b31a89cd42e93003bea73ac1f1e",
+      "sha256": "27d05eeed9ecc71f78fda1620bf6c388893649184df04d4c784213392dcf9615",
       "size": 5920
     },
     {
       "path": "evidence-summary.md",
-      "sha256": "40eab0aa049ef9198151985cc3408fb924a487225c7b2ba7fadb9583857bbd88",
+      "sha256": "d7ec42b0d5013031e688d67b863ae78495a4b880a52e19b1064fd7708ae51502",
       "size": 2584
     },
     {
@@ -22,8 +22,8 @@
     },
     {
       "path": "provenance.json",
-      "sha256": "495833f44abe4ae31ad212e1d9b41d285dc4e7d352d9d6f378b7846afe9cd982",
-      "size": 20013
+      "sha256": "386fa51fc0c4fd5ab92b725e74c5d9a1555d4144fb27b04a4a636ca710cae462",
+      "size": 20300
     },
     {
       "path": "readme-pointer.md",
@@ -32,22 +32,22 @@
     },
     {
       "path": "release-notes.md",
-      "sha256": "6b1c2a0a1fc05ff1d6c6381671fc2d023e5cacdb7ece80771b71fbed9f803eec",
-      "size": 9734
+      "sha256": "c06ac7b83f6a021c8ee4a408c1a6db188902efcca5359424ae4650ef1e88bde0",
+      "size": 9722
     },
     {
       "path": "sbom.spdx.json",
-      "sha256": "3f1802a7671f57399ed09091306239ba616d2c6d33897df3467bdf2fe0589f82",
+      "sha256": "5c2b792a7b9fce5fc206efbcf837fb8e644e4540b9bb8ad7a0552b5c788b578d",
       "size": 3317
     },
     {
       "path": "video-adapter.json",
-      "sha256": "93d9d3daedc70f7c27ae42a8f1bd7d24f803b7b344f27a7da94fb496bc7a8f5d",
+      "sha256": "4f71c57e7d43e76068c974d0882e5301ea785b43a837095ecb47795ee631f76e",
       "size": 1809
     },
     {
       "path": "video-brief.json",
-      "sha256": "6ac92add7c2b5247559abbc8909e245ccb7fcf4ab1b2cae7ea70c24985f5a15b",
+      "sha256": "2fdebf15b48db72a323d0f8b422d83fc6f38479c78bb8d7e3d745b6a35a6c899",
       "size": 9549
     },
     {
@@ -57,11 +57,11 @@
     },
     {
       "path": "video-storyboard.json",
-      "sha256": "0145883c0145761529234d4be915f4535fae92e1d036bd1d0af49f260f1b7f99",
+      "sha256": "c24e0ea927a91d663b033167dfae85efcf38da32e2089763a1d15d7bdb44ffa0",
       "size": 5852
     }
   ],
   "candidateVersion": "v0.2.0-poc.20260801.1",
-  "manifestSha256": "58fd709a8df5bda0dabe29ed792fd52ffcb3703aa3582ec63163ada5b3b93629",
+  "manifestSha256": "d8be509d68be9ef01ee1eca8f3d3d5d15046792890713ad3d535785eaeb741c1",
   "schemaVersion": "chimpmaera.daily-poc-artifacts/v1"
 }

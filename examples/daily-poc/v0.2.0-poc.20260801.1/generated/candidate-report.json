@@ -1,7 +1,7 @@
 {
-  "artifactManifestSha256": "7cbec16db9058156d1368b52a25ac7ac63e29a0ac755f4b7cdd05dccdb90e68d",
+  "artifactManifestSha256": "13d59699d433e57109c280445b481f917200f996cea281cc25fc42cbcfc61de2",
   "candidateVersion": "v0.2.0-poc.20260801.1",
-  "manifestSha256": "58fd709a8df5bda0dabe29ed792fd52ffcb3703aa3582ec63163ada5b3b93629",
+  "manifestSha256": "d8be509d68be9ef01ee1eca8f3d3d5d15046792890713ad3d535785eaeb741c1",
   "materialChange": {
     "changedFiles": [
       ".github/PULL_REQUEST_TEMPLATE.md",
@@ -87,6 +87,7 @@
       "demo/runtime/policy-evaluator.mjs",
       "demo/runtime/policy-generation-fence.mjs",
       "demo/runtime/server.mjs",
+      "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md",
       "docs/ARCHITECTURE.md",
       "docs/CANON.md",
       "docs/CONNECT-YOUR-FIRST-SYSTEM.md",
@@ -114,7 +115,6 @@
       "docs/development/admin-ai-security-expansion-backlog.md",
       "docs/development/admin-ai-security-scout-canon-ux.md",
       "docs/development/admin-ai-security-scout-security.md",
-      "docs/development/agent-runtime-isolation-contract.md",
       "docs/development/canon-zoo-guide-normative-delta-matrix.json",
       "docs/development/canon-zoo-guide-security-architecture-impact-analysis.md",
       "docs/development/daily-poc-change-log.md",
@@ -213,7 +213,7 @@
       "tests/supply-chain-verifier.test.mjs",
       "tools/video-production-reference/tests/test_cm_video.py"
     ],
-    "commitCount": 57
+    "commitCount": 59
   },
   "publication": {
     "githubPrerelease": false,

@@ -5,7 +5,7 @@
   "source": {
     "repository": "https://github.com/JimPansky/ChimpMaera.git",
     "base": "f00a4890f7fecb68f82e692f09cf1e46728fb88d",
-    "head": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+    "head": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
   },
   "targetVersion": "v0.2.0-poc.20260801.1",
   "history": [],
@@ -50,7 +50,7 @@
       "fileRefs": [
         "docs/CANON.md",
         "docs/ZOO-FIELD-GUIDE.md",
-        "docs/development/agent-runtime-isolation-contract.md"
+        "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md"
       ],
       "caseIds": [
         "CANON-RUNTIME-SECURITY-20260801"
@@ -82,7 +82,8 @@
       "description": "One manifest now drives release notes, evidence indexes, reproducible candidate bytes, and the update-video facts while publication remains outside the pipeline.",
       "commitIds": [
         "4c0e0513c51bc348be8617d78ccdb77346703cbf",
-        "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+        "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+        "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
       ],
       "issueIds": [
         "REL-DAILY-001"
@@ -230,7 +231,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-AAS-036-BROKER",
@@ -241,7 +242,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-AAS-023-AUDIT",
@@ -252,7 +253,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-EFFECT-GATE",
@@ -263,7 +264,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-README-CLAIMS",
@@ -274,7 +275,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-CANON-REVISION",
@@ -285,7 +286,7 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-CONTRIBUTION-GOVERNANCE",
@@ -296,18 +297,18 @@
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     },
     {
       "id": "EVID-DAILY-PIPELINE",
       "kind": "TEST",
       "path": "tests/daily-poc.test.mjs",
-      "sha256": "7a2d0cd3ff6f3383d3ab38344db365fc94a329776fdeb96f51d638cfd6758991",
+      "sha256": "26eda1600d8acad61e17c23f280aed71b9b0ece6a6d852f0157ed9dfe3d7b755",
       "maturity": "LOCALLY_VALIDATED",
       "status": "PASS",
       "observedOn": "2026-08-01",
       "validUntil": "2026-08-31",
-      "sourceCommit": "fe0d9f6d3cfe4fea54dae2f58866d7300374f79c"
+      "sourceCommit": "8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4"
     }
   ],
   "claims": [
@@ -465,7 +466,7 @@
     }
   ],
   "reproductionCommands": [
-    "git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..fe0d9f6d3cfe4fea54dae2f58866d7300374f79c",
+    "git diff --name-status f00a4890f7fecb68f82e692f09cf1e46728fb88d..8d7135f2fee1ed3ee3c6f24b6e4ffbac7772c4c4",
     "npm ci --ignore-scripts --no-audit --no-fund",
     "npm run lint",
     "npm test",
