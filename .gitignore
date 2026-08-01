@@ -5,6 +5,7 @@ __pycache__/
 .chimpmaera-demo/
 .chimpmaera-acceptance/
 .chimpmaera-aas035/
+.chimpmaera-aas036/
 .video-output/
 *.log
 .env

@@ -115,6 +115,12 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   }
   for (const dockerfilePath of [
     "demo/chimpmaera.Dockerfile",
+    "demo/openclaw-agent/gateway.Dockerfile",
+    "demo/openclaw-agent/openclaw.Dockerfile",
+    "demo/model-access-broker/broker.Dockerfile",
+    "demo/model-access-broker/frontdoor.Dockerfile",
+    "demo/model-access-broker/openclaw.Dockerfile",
+    "demo/model-access-broker/provider.Dockerfile",
     "tools/video-production-reference/Dockerfile",
   ]) {
     const source = await read(dockerfilePath);
@@ -128,6 +134,8 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   const localTags = new Set((lock.localBuildTags ?? []).map(({ reference }) => reference));
   for (const composePath of [
     "demo/compose.yaml",
+    "demo/openclaw-agent/compose.yaml",
+    "demo/model-access-broker/compose.yaml",
     "tools/video-production-reference/compose.yaml",
   ]) {
     const source = await read(composePath);

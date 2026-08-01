@@ -9,3 +9,4 @@ export * from "./paperless-zoo-adapter.js";
 export * from "./effective-rights.js";
 export * from "./injection-trust-boundary.js";
 export * from "./capability-catalogue.js";
+export * from "./model-access-broker.js";

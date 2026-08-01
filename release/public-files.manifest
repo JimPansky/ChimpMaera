@@ -28,6 +28,20 @@ demo/app/index.html	demo/app/index.html	0644
 demo/catalog-bootstrap.sh	demo/catalog-bootstrap.sh	0755
 demo/chimpmaera.Dockerfile	demo/chimpmaera.Dockerfile	0644
 demo/compose.yaml	demo/compose.yaml	0644
+demo/model-access-broker/broker.Dockerfile	demo/model-access-broker/broker.Dockerfile	0644
+demo/model-access-broker/broker.mjs	demo/model-access-broker/broker.mjs	0644
+demo/model-access-broker/compose.yaml	demo/model-access-broker/compose.yaml	0644
+demo/model-access-broker/fixture-probe.mjs	demo/model-access-broker/fixture-probe.mjs	0644
+demo/model-access-broker/frontdoor.Dockerfile	demo/model-access-broker/frontdoor.Dockerfile	0644
+demo/model-access-broker/frontdoor.mjs	demo/model-access-broker/frontdoor.mjs	0644
+demo/model-access-broker/lib.sh	demo/model-access-broker/lib.sh	0644
+demo/model-access-broker/openclaw.Dockerfile	demo/model-access-broker/openclaw.Dockerfile	0644
+demo/model-access-broker/provider.Dockerfile	demo/model-access-broker/provider.Dockerfile	0644
+demo/model-access-broker/provider.mjs	demo/model-access-broker/provider.mjs	0644
+demo/model-access-broker/reset.sh	demo/model-access-broker/reset.sh	0755
+demo/model-access-broker/runtime-contract-v1.json	demo/model-access-broker/runtime-contract-v1.json	0644
+demo/model-access-broker/setup.sh	demo/model-access-broker/setup.sh	0755
+demo/model-access-broker/smoke.sh	demo/model-access-broker/smoke.sh	0755
 demo/openclaw-agent/compose.yaml	demo/openclaw-agent/compose.yaml	0644
 demo/openclaw-agent/fixture-probe.mjs	demo/openclaw-agent/fixture-probe.mjs	0644
 demo/openclaw-agent/gateway.Dockerfile	demo/openclaw-agent/gateway.Dockerfile	0644
@@ -91,6 +105,7 @@ packages/contracts/src/capability-catalogue.ts	packages/contracts/src/capability
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
 packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
+packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-access-broker.ts	0644
 packages/contracts/src/paperless-zoo-adapter.ts	packages/contracts/src/paperless-zoo-adapter.ts	0644
 packages/contracts/src/policy-evaluator.ts	packages/contracts/src/policy-evaluator.ts	0644
 packages/contracts/src/poc-early-admin-ai-setup.ts	packages/contracts/src/poc-early-admin-ai-setup.ts	0644
@@ -110,6 +125,8 @@ tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
+tests/model-access-broker-runtime.test.mjs	tests/model-access-broker-runtime.test.mjs	0644
+tests/model-access-broker.test.ts	tests/model-access-broker.test.ts	0644
 tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
