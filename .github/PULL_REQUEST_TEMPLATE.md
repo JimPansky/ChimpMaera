@@ -1,19 +1,22 @@
-## Result
+## Summary
 
-What focused problem does this pull request improve? Link the issue.
+Describe the problem and the smallest useful change.
 
-## Relevant evidence
+## Validation
 
-List the focused checks that matter for this change. L0/L1 changes need only relevant checks; changed L2/L3 surfaces need applicable negative/security checks. Routine validation runs in CI.
+List the commands and scenarios used to validate the change.
 
-## Security relevance
+## Authority, safety and compatibility
 
-State any change to authority, effects, network access, credentials, data handling, schemas, cleanup or recovery. Write `None` when not applicable. Report vulnerability details privately through `SECURITY.md`.
+Describe any impact on permissions, effects, network access, data handling,
+schemas, evidence, cleanup or backward compatibility. Write `None` when the
+change has no such impact.
 
 ## Checklist
 
-- [ ] The change is focused; a draft or safe partial contribution is acceptable.
-- [ ] I linked the issue and stated the current result honestly.
-- [ ] I added no credentials, personal data, private prompts, local paths or non-public artifacts.
-- [ ] Fork PRs require no production credentials.
+- [ ] The change is narrow, reviewable and documented in English where needed.
+- [ ] I added positive tests and risk-appropriate negative tests.
+- [ ] `npm run lint`, `npm test` and relevant focused tests pass.
+- [ ] I did not add credentials, personal data, private prompts, local paths or non-public run artifacts.
 - [ ] I preserved fail-closed authority and evidence boundaries, or explained every deliberate change.
+- [ ] My commits include a DCO `Signed-off-by` line.

@@ -1,42 +1,94 @@
 # Contributing to ChimpMaera
 
-Focused code, tests, documentation, fixtures and design proposals are welcome.
+Focused code, tests, documentation, fixtures, and design improvements are
+welcome when they preserve ChimpMaera's authority, safety, evidence, license,
+media, and trademark boundaries.
 
-## Fast path
+## Find and claim work
 
-1. Choose an issue, or open a short one describing the problem and proposed result.
-2. Fork the repository and create a branch.
-3. Make one focused change.
-4. Run the relevant checks.
-5. Open a pull request linked to the issue. Draft and independently useful partial pull requests are welcome.
+Use the public issues and milestones as the project roadmap. Before starting:
 
-Commenting before implementation is optional and only helps avoid duplicate work. It is not a claim, assignment or pre-approval gate. Maintainers can clarify scope quickly and may suggest splitting large work. Maintainers may also start work before an issue is published; a backfilled issue is valid when it states the baseline and prior progress honestly.
+1. Choose a focused issue whose dependencies are clear.
+2. Comment with the exact acceptance-criteria unit you want to own, a short
+   implementation and test approach, and the evidence you intend to provide.
+3. Wait for a maintainer to confirm the unit and dependency state. This avoids
+   unsafe overlap; it is not employment, assignment of authority, or a promise
+   that a pull request will merge.
 
-## Validation
+Status labels have precise meanings:
 
-Use evidence proportional to the changed surface:
+- status:planned — defined for a later sequence; do not claim yet.
+- status:ready — dependency-clear and available for a claim.
+- status:blocked — an explicit dependency or maintainer gate is unmet.
+- status:in-progress — a maintainer confirmed the claimed unit and work began.
 
-- L0/L1 documentation, fixtures and low-risk changes need only their relevant focused checks.
-- Changed L2/L3 authority, network, runtime, credential, data or security surfaces need applicable positive and negative/security tests.
-- Routine checks run in CI where available; do not recreate CI as manual ceremony.
+Security-critical issues may be marked help wanted but are never beginner
+tasks. A good first issue label is used only for independent, low-risk work
+whose dependencies are already satisfied.
 
-The repository CI uses least-privilege, GitHub-hosted pull-request workflows. Fork pull requests receive no production credentials. Never add secrets, personal data, private prompts, host inventories, local paths or non-public artifacts. Use fictional fixtures.
+## Make a focused change
 
-Never use `pull_request_target`, owner/self-hosted infrastructure or secrets to execute untrusted contributor code. Preserve fail-closed authorization, strict schemas, loopback defaults, minimal audit data and ownership-scoped cleanup.
+- Create a branch and keep the change limited to the confirmed unit.
+- Link the issue in the pull request and describe which acceptance criteria it
+  addresses. Use closing keywords only when the merged change would complete
+  the whole issue.
+- Preserve fail-closed authorization, strict schemas, loopback and default-off
+  behavior, minimal audit data, and ownership-scoped cleanup.
+- Use fictional or synthetic fixtures. Never add credentials, personal data,
+  private prompts, host inventories, local filesystem paths, private evidence,
+  or non-public run artifacts.
+- State the supported result and non-claims honestly. A local branch or passing
+  test is not merged, released, deployed, or production-ready.
 
-Report suspected vulnerabilities privately through [SECURITY.md](SECURITY.md), not in an issue or pull request.
+Maintainers retain the gates for threat-model acceptance, sensitive
+integration, merge and release decisions, production credentials and
+infrastructure, and vulnerability disclosure. Contributors must not expand
+authority or bypass a dependency to make a test pass.
 
-## Progress and review
+## Test and provide evidence
 
-Post issue updates at material gates: started, locally validated, merged and released—not per commit. Use labels and checklists for current status. Maintainer work does not remove `help wanted` unless concurrent work would be unsafe.
+Run checks proportional to the changed surface. Documentation-only changes
+still require checksum and repository-contract validation. Code changes should
+normally run:
 
-An implementation issue closes when reviewed work is merged, or at release only when release is the explicit target. A private or local branch does not close an issue. Security-sensitive final integration, merge and release remain maintainer-controlled.
+    npm ci --ignore-scripts --no-audit --no-fund
+    npm run lint
+    npm test
+    npm run video:test
+    python3 -m unittest discover -s tools/video-production-reference/tests
+    sha256sum --check SHA256SUMS
 
-Contributors must have the right to submit their work under the repository license. No separate CLA, DCO sign-off, signed commit, assignment, bespoke tool or additional account setup is required by this guide.
+Add positive tests and risk-appropriate negative probes for changed behavior.
+Changes involving authority, networking, runtime isolation, credentials, data
+boundaries, schemas, effects, reset, or recovery require focused denial and
+failure-path coverage.
 
-## Security follow-ups
+Evidence should identify the exact tested commit and relevant versions or
+digests, include deterministic counts or readback, and be sufficient to check
+the supported claim. Sanitize logs and receipts. Do not publish raw exploit
+details or security-sensitive fixtures.
 
-The following are prioritized repository-hardening follow-ups, not contributor prerequisites:
+## Open the pull request
 
-- **P0, low friction:** enable secret scanning, push protection and CodeQL/default scanning when available.
-- **P0 before trusting external code:** add CODEOWNERS for high-risk paths and require one maintainer/code-owner approval for external pull requests while preserving an owner bypass. Until that can be configured safely—or a second maintainer exists—the maintainer-controlled merge gate remains the fallback.
+Summarize the smallest useful result, link its issue, list relevant validation
+and negative probes, and describe authority, safety, compatibility, rollback,
+and known limitations. Keep unrelated cleanup out of the pull request.
+
+Add a Developer Certificate of Origin sign-off to every commit:
+
+    Signed-off-by: Name <email>
+
+The sign-off certifies [DCO](DCO) version 1.1. Contributors must have the right
+to submit the work under the repository license. ChimpMaera uses DCO and does
+not require a separate Contributor License Agreement.
+
+CI is required but does not replace review. An issue progresses only when its
+evidence supports the transition: planned, in progress, locally validated,
+merged, and released are distinct states.
+
+## Security reporting
+
+Report suspected vulnerabilities through the private process in
+[SECURITY.md](SECURITY.md), never in a public issue or pull request. Do not
+publish credentials, exploit details, affected private infrastructure, or
+other sensitive evidence while seeking scope confirmation.
