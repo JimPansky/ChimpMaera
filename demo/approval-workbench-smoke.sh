@@ -92,25 +92,11 @@ approved_envelope="$(
     '{
       action:$request.decision.action,
       actionDigest:$request.decision.actionDigest,
-      businessDiff:$request.decision.businessDiff,
-      businessDiffDigest:$request.decision.businessDiffDigest,
+      businessDiff:$request.proposal.businessDiff,
+      businessDiffDigest:$request.proposal.businessDiffDigest,
       authority:$owner.authority
     }'
 )"
-approved_effect="$(gate_post /api/demo/effects "$approved_envelope")"
-decision_readback="$(
-  gate_get \
-    /api/demo/admin-ai/owner-decision-receipt \
-    decisionDigest \
-    "$approved_decision_digest"
-)"
-effect_readback="$(
-  gate_get \
-    /api/demo/effect-receipt \
-    replayKey \
-    admin-ai:poc:acceptance-order-approved-001
-)"
-
 rejected_request="$(admin_request admin-ai:poc:acceptance-order-rejected-001)"
 rejected_decision_digest="$(jq -r '.decision.decisionDigest' <<<"$rejected_request")"
 rejected_owner="$(
@@ -126,8 +112,8 @@ rejected_envelope="$(
     '{
       action:$request.decision.action,
       actionDigest:$request.decision.actionDigest,
-      businessDiff:$request.decision.businessDiff,
-      businessDiffDigest:$request.decision.businessDiffDigest,
+      businessDiff:$request.proposal.businessDiff,
+      businessDiffDigest:$request.proposal.businessDiffDigest,
       authority:null
     }'
 )"
@@ -136,6 +122,20 @@ rejected_status="$(
   gate_post_capture /api/demo/effects "$rejected_envelope" "$rejected_file"
 )"
 rejected_error="$(jq -r '.error' "$rejected_file")"
+
+approved_effect="$(gate_post /api/demo/effects "$approved_envelope")"
+decision_readback="$(
+  gate_get \
+    /api/demo/admin-ai/owner-decision-receipt \
+    decisionDigest \
+    "$approved_decision_digest"
+)"
+effect_readback="$(
+  gate_get \
+    /api/demo/effect-receipt \
+    replayKey \
+    admin-ai:poc:acceptance-order-approved-001
+)"
 
 replay_file="$tmp_dir/replay.json"
 replay_status="$(
@@ -147,7 +147,11 @@ jq -e '
   .decision.outcome == "OWNER_ESCALATION"
   and .proposal.businessDiff.summary
     == "Create one synthetic Dolibarr sales order if absent."
-  and .proposal.businessDiffDigest == .decision.businessDiffDigest
+  and .proposal.snapshot.complete == true
+  and .proposal.snapshot.truncated == false
+  and .proposal.snapshot.matches == []
+  and .proposal.businessDiff.priorState.snapshotDigest
+    == .proposal.snapshotDigest
 ' <<<"$approved_request" >/dev/null
 jq -e '
   .decisionReceipt.outcome == "OWNER_APPROVED_AUTHORITY_ISSUED"

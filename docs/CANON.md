@@ -124,14 +124,17 @@ after drift.
 
 Before a material effect, the system presents the purpose, authoritative prior
 state, intended subsequent state, and relevant risks. The diff is produced from
-the same immutable, effect-free Plan that is later enforced.
+the same immutable, effect-free Plan that is later enforced. The prior-state
+read is bounded, complete for the declared material fields, versioned and
+digest-bound; hidden, truncated, stale or unverifiable state fails closed.
 
 ### CM-CAN-07 — Approval Is Exact and Bound to Use
 
 An Approval binds the canonical digest, Actor, scope, target, Policy
 generation, expiry, and permitted number of uses. All bindings are revalidated
 when it is used; missing, changed, expired, revoked, or consumed authority is
-rejected.
+rejected. For state-dependent material effects, the authoritative snapshot and
+its version are revalidated at approval and immediately before the effect.
 
 ### CM-CAN-08 — Enforcement Occurs at the Effect Boundary
 

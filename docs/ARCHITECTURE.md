@@ -41,12 +41,18 @@ and the same enforcement boundary. `AUTO_GRANT` may execute only its permitted
 synthetic CRM effect. `OWNER_ESCALATION` creates a durable proposal with an
 exact business Diff; an authenticated local Approve emits a profile-, policy-,
 scope-, action- and Diff-bound short lease, while Reject emits no authority.
-The gate consumes an owner lease before provider access, performs semantic
-readback and records owner-decision and effect receipts. Missing, rejected,
+For the material synthetic order, the proposal first performs a bounded exact
+provider query and derives its Diff from the resulting closed snapshot. The
+snapshot binds requester, purpose, complete material fields, a digest-derived
+local version, impacts, rollback and active Policy. It is re-read before the
+owner decision and again at the use-time gate before lease reservation. The
+gate then consumes the lease, performs semantic readback and records bound
+decision/effect receipts. Missing, hidden, truncated, stale, rejected,
 tampered, expired, replayed or scope-mismatched authority fails closed. The
 owner signer key is created inside the runtime state volume and is not exposed
-to browser or seed code. No live LLM, production IAM, revoke service,
-distributed authority or production approval is claimed.
+to browser or seed code. No real provider ETag/transaction, live LLM,
+production IAM/MFA/quorum, revoke service, distributed authority or production
+approval is claimed.
 
 Wave 2 places the deterministic static policy behind a versioned,
 provider-neutral `PolicyEvaluator` contract. The evaluator sees neutral intent

@@ -9,7 +9,7 @@ import {
 
 const ACTOR = "agent:admin-ai-poc";
 const REQUEST_SCHEMA = "chimpmaera.demo/admin-ai-request/v1";
-const DECISION_SCHEMA = "chimpmaera.demo/admin-ai-decision/v3";
+const DECISION_SCHEMA = "chimpmaera.demo/admin-ai-decision/v4";
 
 function assertExactKeys(value, expected, code) {
   if (
@@ -62,44 +62,6 @@ function contactAction(replayKey) {
       provider: "espocrm",
       tenant: "panskys-zoo-demo",
     },
-  };
-}
-
-function businessDiff(action) {
-  if (action === null) return null;
-  if (action.scope.provider === "espocrm") {
-    return {
-      schemaVersion: "chimpmaera.demo/business-diff/v1",
-      summary: "Create one synthetic EspoCRM contact if absent.",
-      target: {
-        provider: "espocrm",
-        tenant: "panskys-zoo-demo",
-        entity: "Contact",
-      },
-      before: "No contact with admin-ai-poc@example.invalid is required to exist.",
-      changes: [
-        { field: "firstName", before: null, after: "Avery" },
-        { field: "lastName", before: null, after: "Admin AI PoC" },
-        { field: "emailAddress", before: null, after: "admin-ai-poc@example.invalid" },
-      ],
-      consequence: "Adds one fictional local CRM contact; no external communication.",
-    };
-  }
-  return {
-    schemaVersion: "chimpmaera.demo/business-diff/v1",
-    summary: "Create one synthetic Dolibarr sales order if absent.",
-    target: {
-      provider: "dolibarr",
-      tenant: "panskys-zoo-demo",
-      entity: "Order",
-    },
-    before: "No order with customer reference CM-ADMIN-AI-ESCALATION-001 is required to exist.",
-    changes: [
-      { field: "customerReference", before: null, after: "CM-ADMIN-AI-ESCALATION-001" },
-      { field: "customerId", before: null, after: 7 },
-      { field: "orderDateEpoch", before: null, after: 1767225600 },
-    ],
-    consequence: "Adds one fictional local ERP order; no payment, shipment, email, or deletion.",
   };
 }
 
@@ -226,10 +188,6 @@ export class AdminAiPoc {
     ) throw new Error("POLICY_DECISION_EXCEEDS_ADAPTER_CEILING_DENIED");
     const action = policyDecision.outcome === "DENY" ? null : plannedAction;
     const actionDigest = action === null ? null : sha256(canonicalJson(action));
-    const readableDiff = businessDiff(action);
-    const businessDiffDigest = readableDiff === null
-      ? null
-      : sha256(canonicalJson(readableDiff));
     const requestId = sha256(canonicalJson(request));
     const core = {
       schemaVersion: DECISION_SCHEMA,
@@ -239,7 +197,6 @@ export class AdminAiPoc {
       outcome: policyDecision.outcome,
       reasonCodes: policyDecision.reasonCodes,
       actionDigest,
-      businessDiffDigest,
       policyId: this.trustedPolicyContext.policyId,
       policyGeneration: this.trustedPolicyContext.policyGeneration,
       policyDigest: this.policyDigest,
@@ -264,7 +221,6 @@ export class AdminAiPoc {
         ...core,
         decisionDigest,
         action,
-        businessDiff: readableDiff,
         authority,
       },
     };

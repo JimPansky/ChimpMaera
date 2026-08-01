@@ -11,6 +11,12 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname } from "node:path";
+import {
+  APPROVAL_PURPOSE,
+  APPROVAL_REQUESTER,
+  createAuthoritativeApprovalSnapshot,
+  validateAuthoritativeApprovalSnapshot,
+} from "./authoritative-approval-snapshot.mjs";
 
 export function canonicalJson(value) {
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
@@ -195,6 +201,10 @@ function receiptCore(action, actionDigest, providerResult, readback, authority) 
       ...(authority.ownerDecisionReceiptDigest === undefined ? {} : {
         ownerDecisionReceiptDigest: authority.ownerDecisionReceiptDigest,
         businessDiffDigest: authority.businessDiffDigest,
+        snapshotDigest: authority.snapshotDigest,
+        snapshotVersion: authority.snapshotVersion,
+        requester: authority.requester,
+        purpose: authority.purpose,
         profileId: authority.profileId,
         profileGeneration: authority.profileGeneration,
       }),
@@ -453,6 +463,13 @@ export class DemoMutationGate {
     expiresAtMs,
   }) {
     const { proposalDigest, ...boundProposalCore } = proposal ?? {};
+    let snapshotValid = false;
+    try {
+      validateAuthoritativeApprovalSnapshot(proposal?.snapshot, proposal?.action);
+      snapshotValid = true;
+    } catch {
+      snapshotValid = false;
+    }
     if (
       proposal?.outcome !== "OWNER_ESCALATION"
       || proposal.profileId !== this.authorityContext.profileId
@@ -462,6 +479,11 @@ export class DemoMutationGate {
       || proposal.policyDigest !== this.adminAiPolicyDigest
       || sha256(canonicalJson(proposal.action)) !== proposal.actionDigest
       || sha256(canonicalJson(proposal.businessDiff)) !== proposal.businessDiffDigest
+      || !snapshotValid
+      || proposal.snapshotDigest !== proposal.snapshot.snapshotDigest
+      || proposal.snapshotVersion !== proposal.snapshot.version
+      || proposal.requester !== APPROVAL_REQUESTER
+      || proposal.purpose !== APPROVAL_PURPOSE
       || !/^[a-f0-9]{64}$/.test(proposal.decisionDigest ?? "")
       || !/^[a-f0-9]{64}$/.test(proposal.proposalDigest ?? "")
       || sha256(canonicalJson(boundProposalCore)) !== proposalDigest
@@ -478,6 +500,10 @@ export class DemoMutationGate {
       scope: proposal.action.scope,
       actionDigest: proposal.actionDigest,
       businessDiffDigest: proposal.businessDiffDigest,
+      snapshotDigest: proposal.snapshotDigest,
+      snapshotVersion: proposal.snapshotVersion,
+      requester: proposal.requester,
+      purpose: proposal.purpose,
       replayKey: proposal.replayKey,
       policyId: proposal.policyId,
       policyDigest: proposal.policyDigest,
@@ -517,7 +543,8 @@ export class DemoMutationGate {
       "decisionDigest", "expiresAtMs", "issuedAtMs", "kind", "leaseId",
       "maxUses", "notBeforeMs", "ownerDecisionReceiptDigest", "policyDigest",
       "policyGeneration", "policyId", "profileGeneration", "profileId", "proposalDigest",
-      "replayKey", "scope",
+      "purpose", "replayKey", "requester", "scope", "snapshotDigest",
+      "snapshotVersion",
     ];
     if (
       authority === null
@@ -538,6 +565,10 @@ export class DemoMutationGate {
       || !equalSecret(authority.actionDigest, computedDigest)
       || !equalSecret(authority.businessDiffDigest, businessDiffDigest)
       || sha256(canonicalJson(businessDiff)) !== businessDiffDigest
+      || authority.requester !== APPROVAL_REQUESTER
+      || authority.purpose !== APPROVAL_PURPOSE
+      || !/^[a-f0-9]{64}$/.test(authority.snapshotDigest ?? "")
+      || !/^[a-f0-9]{64}$/.test(authority.snapshotVersion ?? "")
       || !equalSecret(authority.replayKey, action.replayKey)
       || !/^[a-f0-9]{64}$/.test(authority.decisionDigest ?? "")
       || !/^[a-f0-9]{64}$/.test(authority.proposalDigest ?? "")
@@ -637,6 +668,27 @@ export class DemoMutationGate {
 
     const ownerLease = authority?.kind === "OWNER_ESCALATION_LEASE_HMAC_V1";
     if (ownerLease) {
+      if (this.state.consumedAuthorityLeases[authority.leaseId] !== undefined) {
+        throw new Error("AUTHORITY_LEASE_REPLAY_DENIED");
+      }
+      if (
+        this.state.effects[action.replayKey] !== undefined
+        || this.state.reservations[action.replayKey] !== undefined
+      ) throw new Error("EFFECT_REPLAY_OR_AMBIGUOUS_DENIED");
+      if (typeof this.provider.readAuthoritativeSnapshot !== "function") {
+        throw new Error("APPROVAL_SNAPSHOT_UNAVAILABLE_DENIED");
+      }
+      const currentSnapshot = validateAuthoritativeApprovalSnapshot(
+        await this.provider.readAuthoritativeSnapshot(action),
+        action,
+      );
+      if (
+        currentSnapshot.snapshotDigest !== authority.snapshotDigest
+        || currentSnapshot.version !== authority.snapshotVersion
+      ) throw new Error("APPROVAL_SNAPSHOT_STALE_DENIED");
+      // The provider read yields. Repeat the durable replay checks after it so
+      // concurrent callers cannot both pass the pre-read check and reserve one
+      // lease twice.
       if (this.state.consumedAuthorityLeases[authority.leaseId] !== undefined) {
         throw new Error("AUTHORITY_LEASE_REPLAY_DENIED");
       }
@@ -777,6 +829,26 @@ export function createHttpProvider({
       if (response.status === 404 && provider === "dolibarr") return [];
       if (!response.ok) throw new Error(`PROVIDER_${response.status}_DENIED`);
       return JSON.parse(text);
+    },
+    async readAuthoritativeSnapshot(action) {
+      const rows = await this.read("dolibarr", "/orders", {
+        // Read one sentinel beyond the closed snapshot limit so a hidden third
+        // match fails snapshot construction instead of being called complete.
+        limit: "3",
+        sqlfilters: "(t.ref_client:=:'CM-ADMIN-AI-ESCALATION-001')",
+      });
+      if (!Array.isArray(rows)) {
+        throw new Error("APPROVAL_SNAPSHOT_SOURCE_INVALID_DENIED");
+      }
+      return createAuthoritativeApprovalSnapshot(
+        action,
+        rows.map((row) => ({
+          id: Number(row?.id),
+          ref_client: row?.ref_client,
+          socid: Number(row?.socid),
+          date: Number(row?.date),
+        })),
+      );
     },
     async mutate(action) {
       return call(action.scope.provider, action.payload.path, {

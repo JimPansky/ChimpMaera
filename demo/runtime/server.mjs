@@ -263,6 +263,7 @@ const adminAiPoc = new AdminAiPoc({
 const approvalWorkbench = new ApprovalWorkbench({
   receiptPath: "/var/lib/chimpmaera/approval-workbench-store.json",
   issueAuthority: (fields) => mutationGate.ownerAuthority(fields),
+  readAuthoritativeSnapshot: (action) => provider.readAuthoritativeSnapshot(action),
   policyDigest: adminAiPolicySha256,
   policyGeneration: activePolicyState.generation,
   policyId: activePolicyState.policyId,
@@ -380,7 +381,7 @@ const proxy = createServer((incoming, outgoing) => {
     sendJson(outgoing, 200, {
       ...result,
       ...(result.decision.outcome === "OWNER_ESCALATION"
-        ? { proposal: approvalWorkbench.register(result.decision) }
+        ? { proposal: await approvalWorkbench.register(result.decision) }
         : {}),
     });
     return;
@@ -401,7 +402,7 @@ const proxy = createServer((incoming, outgoing) => {
       JSON.stringify(Object.keys(body).sort())
         !== JSON.stringify(["decisionDigest", "ownerDecision"])
     ) throw new Error("OWNER_DECISION_INVALID_DENIED");
-    sendJson(outgoing, 200, approvalWorkbench.decide({
+    sendJson(outgoing, 200, await approvalWorkbench.decide({
       ...body,
       ownerActor: "owner:local-demo",
     }));

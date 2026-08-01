@@ -22,6 +22,7 @@ COPY demo/runtime/server.mjs ./server.mjs
 COPY demo/runtime/enforcement-gate.mjs ./enforcement-gate.mjs
 COPY demo/runtime/admin-ai-poc.mjs ./admin-ai-poc.mjs
 COPY demo/runtime/admin-ai-policy.mjs ./admin-ai-policy.mjs
+COPY demo/runtime/authoritative-approval-snapshot.mjs ./authoritative-approval-snapshot.mjs
 COPY demo/runtime/policy-evaluator.mjs ./policy-evaluator.mjs
 COPY demo/runtime/policy-generation-fence.mjs ./policy-generation-fence.mjs
 COPY demo/runtime/paperless-ngx-zoo-adapter.mjs ./paperless-ngx-zoo-adapter.mjs

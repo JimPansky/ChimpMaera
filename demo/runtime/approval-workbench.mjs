@@ -6,10 +6,17 @@ import {
 } from "node:fs";
 import { dirname } from "node:path";
 import { canonicalJson, sha256 } from "./enforcement-gate.mjs";
+import {
+  APPROVAL_PURPOSE,
+  APPROVAL_REQUESTER,
+  assertApprovalSnapshotFresh,
+  deriveAuthoritativeBusinessDiff,
+  validateAuthoritativeApprovalSnapshot,
+} from "./authoritative-approval-snapshot.mjs";
 
-const STORE_SCHEMA = "chimpmaera.demo/approval-workbench-store/v1";
-const PROPOSAL_SCHEMA = "chimpmaera.demo/approval-proposal/v1";
-const RECEIPT_SCHEMA = "chimpmaera.demo/owner-decision-receipt/v1";
+const STORE_SCHEMA = "chimpmaera.demo/approval-workbench-store/v2";
+const PROPOSAL_SCHEMA = "chimpmaera.demo/approval-proposal/v2";
+const RECEIPT_SCHEMA = "chimpmaera.demo/owner-decision-receipt/v2";
 const OWNER_ACTOR = "owner:local-demo";
 
 function assertExactKeys(value, expected, code) {
@@ -32,7 +39,6 @@ function decisionCore(decision) {
   const {
     action,
     authority,
-    businessDiff,
     decisionDigest,
     ...core
   } = decision;
@@ -45,8 +51,6 @@ function validateEscalationDecision(decision) {
     "actionDigest",
     "actor",
     "authority",
-    "businessDiff",
-    "businessDiffDigest",
     "decisionDigest",
     "outcome",
     "policyDigest",
@@ -59,7 +63,7 @@ function validateEscalationDecision(decision) {
     "schemaVersion",
   ], "OWNER_ESCALATION_DECISION_INVALID_DENIED");
   if (
-    decision.schemaVersion !== "chimpmaera.demo/admin-ai-decision/v3"
+    decision.schemaVersion !== "chimpmaera.demo/admin-ai-decision/v4"
     || decision.actor !== "agent:admin-ai-poc"
     || decision.requestKind !== "SYNTHETIC_DOLIBARR_ORDER_CREATE"
     || decision.outcome !== "OWNER_ESCALATION"
@@ -75,18 +79,26 @@ function validateEscalationDecision(decision) {
   for (const value of [
     decision.requestId,
     decision.actionDigest,
-    decision.businessDiffDigest,
     decision.policyDigest,
     decision.decisionDigest,
   ]) assertHex(value, "OWNER_ESCALATION_DECISION_INVALID_DENIED");
   if (
     sha256(canonicalJson(decision.action)) !== decision.actionDigest
-    || sha256(canonicalJson(decision.businessDiff)) !== decision.businessDiffDigest
     || sha256(canonicalJson(decisionCore(decision))) !== decision.decisionDigest
   ) throw new Error("OWNER_ESCALATION_DECISION_INVALID_DENIED");
 }
 
-function proposalCore(decision, context) {
+function proposalCore(decision, context, snapshot) {
+  const policy = {
+    id: decision.policyId,
+    generation: decision.policyGeneration,
+    digest: decision.policyDigest,
+  };
+  const businessDiff = deriveAuthoritativeBusinessDiff(
+    decision.action,
+    snapshot,
+    policy,
+  );
   return {
     schemaVersion: PROPOSAL_SCHEMA,
     decisionDigest: decision.decisionDigest,
@@ -97,8 +109,13 @@ function proposalCore(decision, context) {
     reasonCodes: decision.reasonCodes,
     action: decision.action,
     actionDigest: decision.actionDigest,
-    businessDiff: decision.businessDiff,
-    businessDiffDigest: decision.businessDiffDigest,
+    businessDiff,
+    businessDiffDigest: sha256(canonicalJson(businessDiff)),
+    snapshot,
+    snapshotDigest: snapshot.snapshotDigest,
+    snapshotVersion: snapshot.version,
+    requester: snapshot.requester,
+    purpose: snapshot.purpose,
     replayKey: decision.replayKey,
     policyDigest: decision.policyDigest,
     policyGeneration: decision.policyGeneration,
@@ -123,17 +140,24 @@ function validateProposal(proposal) {
     "profileGeneration",
     "profileId",
     "proposalDigest",
+    "purpose",
     "reasonCodes",
     "replayKey",
+    "requester",
     "requestId",
     "requestKind",
     "schemaVersion",
+    "snapshot",
+    "snapshotDigest",
+    "snapshotVersion",
   ], "APPROVAL_PROPOSAL_INVALID_DENIED");
   if (
     proposal.schemaVersion !== PROPOSAL_SCHEMA
     || proposal.outcome !== "OWNER_ESCALATION"
     || proposal.profileId !== "SAFE_GUIDED"
     || proposal.policyId !== "admin-ai-poc-policy-v1"
+    || proposal.requester !== APPROVAL_REQUESTER
+    || proposal.purpose !== APPROVAL_PURPOSE
     || !Number.isSafeInteger(proposal.policyGeneration)
     || proposal.policyGeneration < 1
     || typeof proposal.profileGeneration !== "string"
@@ -145,10 +169,30 @@ function validateProposal(proposal) {
     proposal.decisionDigest,
     proposal.policyDigest,
     proposal.proposalDigest,
+    proposal.snapshotDigest,
+    proposal.snapshotVersion,
   ]) assertHex(value, "APPROVAL_PROPOSAL_INVALID_DENIED");
   const { proposalDigest, ...core } = proposal;
+  let expectedDiff;
+  try {
+    validateAuthoritativeApprovalSnapshot(proposal.snapshot, proposal.action);
+    expectedDiff = deriveAuthoritativeBusinessDiff(
+      proposal.action,
+      proposal.snapshot,
+      {
+        id: proposal.policyId,
+        generation: proposal.policyGeneration,
+        digest: proposal.policyDigest,
+      },
+    );
+  } catch {
+    throw new Error("APPROVAL_PROPOSAL_INVALID_DENIED");
+  }
   if (
     sha256(canonicalJson(proposal.action)) !== proposal.actionDigest
+    || proposal.snapshotDigest !== proposal.snapshot.snapshotDigest
+    || proposal.snapshotVersion !== proposal.snapshot.version
+    || canonicalJson(proposal.businessDiff) !== canonicalJson(expectedDiff)
     || sha256(canonicalJson(proposal.businessDiff))
       !== proposal.businessDiffDigest
     || sha256(canonicalJson(core)) !== proposalDigest
@@ -170,8 +214,12 @@ function validateDecisionReceipt(receipt, proposal) {
     "profileGeneration",
     "profileId",
     "proposalDigest",
+    "purpose",
     "receiptDigest",
+    "requester",
     "schemaVersion",
+    "snapshotDigest",
+    "snapshotVersion",
   ], "OWNER_DECISION_RECEIPT_INVALID_DENIED");
   const { receiptDigest, ...core } = receipt;
   if (
@@ -194,6 +242,10 @@ function validateDecisionReceipt(receipt, proposal) {
     || receipt.policyId !== proposal.policyId
     || receipt.profileId !== proposal.profileId
     || receipt.profileGeneration !== proposal.profileGeneration
+    || receipt.requester !== proposal.requester
+    || receipt.purpose !== proposal.purpose
+    || receipt.snapshotDigest !== proposal.snapshotDigest
+    || receipt.snapshotVersion !== proposal.snapshotVersion
     || sha256(canonicalJson(core)) !== receiptDigest
   ) throw new Error("OWNER_DECISION_RECEIPT_INVALID_DENIED");
 }
@@ -241,6 +293,7 @@ export class ApprovalWorkbench {
   constructor({
     receiptPath,
     issueAuthority,
+    readAuthoritativeSnapshot,
     now = () => Date.now(),
     leaseTtlMs = 60_000,
     policyDigest,
@@ -252,6 +305,7 @@ export class ApprovalWorkbench {
     if (
       typeof receiptPath !== "string"
       || typeof issueAuthority !== "function"
+      || typeof readAuthoritativeSnapshot !== "function"
       || typeof now !== "function"
       || !Number.isSafeInteger(leaseTtlMs)
       || leaseTtlMs < 1_000
@@ -266,6 +320,7 @@ export class ApprovalWorkbench {
     assertHex(policyDigest, "APPROVAL_WORKBENCH_CONFIG_INVALID_DENIED");
     this.receiptPath = receiptPath;
     this.issueAuthority = issueAuthority;
+    this.readAuthoritativeSnapshot = readAuthoritativeSnapshot;
     this.now = now;
     this.leaseTtlMs = leaseTtlMs;
     this.context = {
@@ -280,6 +335,7 @@ export class ApprovalWorkbench {
       proposals: {},
       decisions: {},
     };
+    this.pendingDecisions = new Set();
     try {
       this.state = normalizeStore(JSON.parse(readFileSync(receiptPath, "utf8")));
     } catch (error) {
@@ -296,7 +352,7 @@ export class ApprovalWorkbench {
     renameSync(temp, this.receiptPath);
   }
 
-  register(decision) {
+  async register(decision) {
     validateEscalationDecision(decision);
     if (
       decision.policyDigest !== this.context.policyDigest
@@ -305,7 +361,14 @@ export class ApprovalWorkbench {
     ) {
       throw new Error("APPROVAL_POLICY_CONTEXT_MISMATCH_DENIED");
     }
-    const core = proposalCore(decision, this.context);
+    const snapshot = validateAuthoritativeApprovalSnapshot(
+      await this.readAuthoritativeSnapshot(decision.action),
+      decision.action,
+    );
+    if (snapshot.matches.length !== 0) {
+      throw new Error("APPROVAL_TARGET_ALREADY_EXISTS_DENIED");
+    }
+    const core = proposalCore(decision, this.context, snapshot);
     const proposal = {
       ...core,
       proposalDigest: sha256(canonicalJson(core)),
@@ -322,7 +385,7 @@ export class ApprovalWorkbench {
     return proposal;
   }
 
-  decide({ decisionDigest, ownerDecision, ownerActor }) {
+  async decide({ decisionDigest, ownerDecision, ownerActor }) {
     assertHex(decisionDigest, "OWNER_DECISION_INVALID_DENIED");
     if (
       ownerActor !== OWNER_ACTOR
@@ -333,12 +396,33 @@ export class ApprovalWorkbench {
     if (this.state.decisions[decisionDigest] !== undefined) {
       throw new Error("OWNER_DECISION_ALREADY_FINAL_DENIED");
     }
-    validateProposal(proposal);
-    const decidedAtMs = this.now();
-    if (!Number.isSafeInteger(decidedAtMs) || decidedAtMs < 0) {
-      throw new Error("APPROVAL_CLOCK_INVALID_DENIED");
+    if (this.pendingDecisions.has(decisionDigest)) {
+      throw new Error("OWNER_DECISION_IN_PROGRESS_DENIED");
     }
-    const core = {
+    this.pendingDecisions.add(decisionDigest);
+    try {
+      validateProposal(proposal);
+      if (
+        ownerActor === proposal.actor
+        || ownerActor === proposal.requester
+      ) throw new Error("APPROVAL_SAME_ACTOR_DENIED");
+      if (
+        proposal.policyDigest !== this.context.policyDigest
+        || proposal.policyGeneration !== this.context.policyGeneration
+        || proposal.policyId !== this.context.policyId
+        || proposal.profileId !== this.context.profileId
+        || proposal.profileGeneration !== this.context.profileGeneration
+      ) throw new Error("APPROVAL_CONTEXT_STALE_DENIED");
+      assertApprovalSnapshotFresh(
+        proposal.snapshot,
+        await this.readAuthoritativeSnapshot(proposal.action),
+        proposal.action,
+      );
+      const decidedAtMs = this.now();
+      if (!Number.isSafeInteger(decidedAtMs) || decidedAtMs < 0) {
+        throw new Error("APPROVAL_CLOCK_INVALID_DENIED");
+      }
+      const core = {
       schemaVersion: RECEIPT_SCHEMA,
       proposalDigest: proposal.proposalDigest,
       decisionDigest,
@@ -355,12 +439,16 @@ export class ApprovalWorkbench {
       policyId: proposal.policyId,
       profileId: proposal.profileId,
       profileGeneration: proposal.profileGeneration,
+      requester: proposal.requester,
+      purpose: proposal.purpose,
+      snapshotDigest: proposal.snapshotDigest,
+      snapshotVersion: proposal.snapshotVersion,
     };
-    const receipt = {
+      const receipt = {
       ...core,
       receiptDigest: sha256(canonicalJson(core)),
     };
-    const authority = ownerDecision === "APPROVE"
+      const authority = ownerDecision === "APPROVE"
       ? this.issueAuthority({
         proposal,
         ownerDecisionReceiptDigest: receipt.receiptDigest,
@@ -368,9 +456,12 @@ export class ApprovalWorkbench {
         expiresAtMs: decidedAtMs + this.leaseTtlMs,
       })
       : null;
-    this.state.decisions[decisionDigest] = { receipt, authority };
-    this.persist();
-    return { status: "PASS", decisionReceipt: receipt, authority };
+      this.state.decisions[decisionDigest] = { receipt, authority };
+      this.persist();
+      return { status: "PASS", decisionReceipt: receipt, authority };
+    } finally {
+      this.pendingDecisions.delete(decisionDigest);
+    }
   }
 
   readDecision(decisionDigest) {

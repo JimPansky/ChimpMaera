@@ -22,6 +22,10 @@ These limits are part of the claim discipline required by
   Approve/Reject ceremony for the synthetic Dolibarr escalation only. It is not
   production IAM/MFA or a general approval service. The local API bearer stands
   in for the owner identity.
+- The material order Diff uses a bounded local Dolibarr query and a
+  digest-derived snapshot version, with freshness checks at approval and use.
+  This is not a provider transaction/ETag, production requester/approver
+  identity, step-up authentication, quorum or anti-clickjacking claim.
 - Provider Revoke and provider Rollback are not implemented claims. Installer
   Cleanup is distinct. A burned or ambiguous one-use lease requires a new owner
   decision after provider reconciliation.

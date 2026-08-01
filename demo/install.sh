@@ -189,6 +189,7 @@ journal_phase_start runtime_image_materialization "$(journal_sha_text "$(
       "$root/demo/runtime/enforcement-gate.mjs" \
       "$root/demo/runtime/admin-ai-poc.mjs" \
       "$root/demo/runtime/admin-ai-policy.mjs" \
+      "$root/demo/runtime/authoritative-approval-snapshot.mjs" \
       "$root/demo/runtime/policy-evaluator.mjs" \
       "$root/demo/runtime/paperless-ngx-zoo-adapter.mjs" \
       "$root/demo/runtime/approval-workbench.mjs"

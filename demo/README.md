@@ -12,12 +12,14 @@ digest-bound catalog, one governed CRM-to-ERP order flow and the deterministic
 Admin-AI preview boundary.
 
 The v0.2 Wave 1 feature candidate adds a local Approval Workbench for the
-existing synthetic order escalation. It shows an exact readable business diff,
-accepts an authenticated local Approve or Reject, issues a short one-use lease
-only after approval, enforces it at the provider gate, and reads back separate
-owner-decision and effect receipts. Rejected, tampered, expired and replayed
+existing synthetic order escalation. It derives the readable business diff
+from a bounded provider snapshot, binds its local version plus requester,
+purpose, impacts, rollback and Policy, then rechecks freshness at approval and
+use. An authenticated local Approve issues a short one-use lease; Reject issues
+none. The provider gate and separate decision/effect receipts preserve those
+bindings. Stale, hidden, truncated, rejected, tampered, expired and replayed
 leases cannot execute. This remains a deterministic static-policy demo with no
-live LLM or production owner identity.
+real provider transaction/ETag, live LLM or production owner identity.
 
 ## Requirements
 
