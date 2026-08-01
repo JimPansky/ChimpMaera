@@ -147,6 +147,7 @@ examples/poc-setup-planner/catalog-v1.json	examples/poc-setup-planner/catalog-v1
 package-lock.json	package-lock.json	0644
 package.json	package.json	0644
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
+packages/contracts/src/builder-authority.ts	packages/contracts/src/builder-authority.ts	0644
 packages/contracts/src/capability-catalogue.ts	packages/contracts/src/capability-catalogue.ts	0644
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
@@ -163,6 +164,7 @@ packages/contracts/src/poc-showcase-e2e.ts	packages/contracts/src/poc-showcase-e
 packages/contracts/src/poc-showcase.ts	packages/contracts/src/poc-showcase.ts	0644
 packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	0644
 release/public-files.manifest	release/public-files.manifest	0644
+schemas/contracts/builder-authority-v1.schema.json	schemas/contracts/builder-authority-v1.schema.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
@@ -173,6 +175,7 @@ scripts/daily-poc.mjs	scripts/daily-poc.mjs	0755
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
+tests/builder-authority.test.ts	tests/builder-authority.test.ts	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
