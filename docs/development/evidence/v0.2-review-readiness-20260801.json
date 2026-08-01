@@ -4,13 +4,14 @@
   "phase": "v0.2-review-readiness",
   "metric": {
     "name": "review_readiness_milestones",
-    "passed": 3,
+    "passed": 4,
     "total": 4,
-    "status": "CHECK_PENDING"
+    "status": "PASS"
   },
   "source": {
     "baselineCommit": "e698946d74342ae10ed25e93d6a45a99647dd2ba",
     "auditedCommit": "f12dbea072178b99b50990bd16766563ac47b80d",
+    "validatedReviewPacketCommit": "5fa6aed3cc64c5f61e7e57094d1fd82e328c6710",
     "branch": "feat/v0.2-review-readiness",
     "repositoryOnlyReviewFiles": true
   },
@@ -71,29 +72,37 @@
     "checks": [
       {
         "command": "npm run lint",
-        "status": "PENDING"
+        "status": "PASS"
       },
       {
         "command": "npm test",
-        "status": "PENDING"
+        "status": "PASS",
+        "passed": 70,
+        "failed": 0
       },
       {
         "command": "npm run video:test",
-        "status": "PENDING"
+        "status": "PASS",
+        "passed": 15,
+        "failed": 0
       },
       {
         "command": "npm run supply-chain:verify",
-        "status": "PENDING"
+        "status": "PASS",
+        "checks": 6
       },
       {
         "command": "sha256sum -c SHA256SUMS",
-        "status": "PENDING"
+        "status": "PASS",
+        "files": 120
       },
       {
         "command": "./scripts/build-public-release.sh --output <absolute-temporary-parent>/cm-v0.1-public-rc-20260801-review",
-        "status": "PENDING"
+        "status": "PASS",
+        "temporaryOutputRemoved": true
       }
-    ]
+    ],
+    "reportingNote": "All repository commands completed successfully under fail-fast execution. A report-only formatter then raised a quoting SyntaxError after the checks; no repository gate was rerun."
   },
   "rollbackAudit": {
     "method": "Each suffix was reverted with git revert --no-commit in an isolated local clone at auditedCommit; npm test then ran against the resulting tree.",
