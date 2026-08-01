@@ -41,24 +41,24 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 0 | 0 | 2 | 4 | 0 | 11 |
-| P1 | 11 | 4 | 0 | 0 | 1 | 0 | 16 |
+| P0 | 5 | 1 | 0 | 2 | 4 | 0 | 12 |
+| P1 | 11 | 3 | 0 | 0 | 2 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **5** | **0** | **2** | **5** | **0** | **34** |
+| **Total** | **22** | **5** | **0** | **2** | **6** | **0** | **35** |
 
-Internally ready items, in selection order after AAS-016 closure:
+Internally ready items, in selection order after AAS-012 closure:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | AAS-012 | P1 | I4 | S | Finite local catalogue can remain inactive by default |
+| 1 | AAS-035 | P0 | I5 owner-priority containment frontier | XL | Real OpenClaw fixture can start only after local provenance/licence/upstream-Docker proof |
 | 2 | AAS-017 | P1 | I4 | L | Signed lifecycle contracts and local trust fixtures need no production signer |
 | 3 | AAS-023 | P1 | I4 | L | Event schema, chaining and deterministic explanation can start locally |
 | 4 | AAS-025 | P1 | I4 | L | Local artifact trust policy/negative fixtures extend the existing verifier honestly |
 | 5 | AAS-030 | P2 | I3 recurring guard | M | Adds assurance without claiming that absent external systems were tested |
 
-The authorized implementation loop completed `AAS-001`, `AAS-002` and
-`AAS-003`, then completed `AAS-009` and `AAS-016`; it must select `AAS-012`
+The authorized implementation loop completed `AAS-001`, `AAS-002`, `AAS-003`,
+`AAS-009`, `AAS-016` and `AAS-012`; it must select owner-priority `AAS-035`
 next. Closed items do not reopen without new evidence.
 
 The AAS-002 frontier audit rechecked Policy lifecycle, tenant binding,
@@ -91,6 +91,16 @@ represented by AAS-007/AAS-008/AAS-010/AAS-017/AAS-023/AAS-022; no distinct
 new internal item was discovered. AAS-012 now leads the ready I4 frontier
 because a finite inactive-by-default vocabulary is a prerequisite for several
 later controls and adds no runtime authority.
+
+The AAS-012 frontier audit rechecked effect brokerage, runtime budgets,
+untrusted memory, network enforcement, artifact trust and composed assurance.
+Their reusable primitives remain AAS-008/AAS-019/AAS-020/AAS-021/AAS-025/
+AAS-030. Owner direction at 2026-08-01 12:46 CEST proves one distinct product
+integration gap rather than a duplicate framework primitive: a real OpenClaw
+agent runtime has not been confined as a default-off, Gateway-only ChimpMaera
+Docker workload. AAS-035 captures that measurable integration and now leads the
+frontier; data/ERP/CRM/BI/DMS breadth remains behind it absent a proven security
+prerequisite.
 
 ## P0 — critical authority and containment
 
@@ -354,11 +364,47 @@ later controls and adds no runtime authority.
   storage independence claim.
 - **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
 
+### AAS-035 — OpenClaw Agent Docker, closed Gateway-only runtime
+
+- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 explicit
+  Owner-priority containment frontier / XL. **Risk reduction:** critical before
+  exposing a real autonomous agent runtime. **User value:** a real agent can use
+  ChimpMaera's typed surface without becoming the Decision, Policy, Authority or
+  Effect control plane. **Demo value:** very high and end-to-end.
+- **Canon:** composition plus extension, CM-CAN-01/03/04/05/07/08/09/10/11/15/
+  16/17. **Source / dependencies / phase:** Owner direction 2026-08-01 12:46
+  CEST; completed AAS-012 plus runtime-specific boundaries shared with AAS-008,
+  AAS-019, AAS-020, AAS-021, AAS-025 and AAS-030; immediate product frontier.
+- **Acceptance evidence:** prove actual upstream Docker support, licence/
+  redistribution compatibility and exact version/image digest before image
+  selection; pinned default-off service; non-root read-only filesystem; no host
+  or Docker socket/mount; Gateway-only network; bounded scratch; workload
+  identity; zero embedded provider/system credentials; managed durable mind
+  store; health/readiness/reset; typed request succeeds only through Gateway/
+  Broker with receipt/readback; load/health evidence and zero owned residue
+  after deterministic teardown.
+- **Negative probes:** direct provider/ERP/CRM/Internet egress, filesystem/
+  process/host/Docker access, credential discovery, raw effect, unknown action,
+  incompatible catalogue/image, Gateway bypass, cross-tenant/mind-store access,
+  reset/replay/restart and resource-exhaustion paths fail closed without touching
+  the owner's running OpenClaw, Gateway, vLLM or model infrastructure.
+- **Rollback boundary / fallback:** service remains default-off; detach the
+  isolated Gateway network, stop only the ChimpMaera-owned fixture, purge its
+  bounded owned state and retain receipts. Unknown provenance/licence/upstream
+  support or any unavoidable ambient authority means no image selection and a
+  deny-only fixture, not a weaker runtime.
+- **Honest non-claims / external gates:** isolated local fixture evidence is not
+  production sandbox, host-kernel, registry signature, live-provider,
+  multi-tenant deployment or security-completeness proof. No current owner
+  OpenClaw/Gateway/vLLM/model change; no push, PR, merge, tag, release,
+  publication, live credential or external-system mutation.
+- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+
 ## P1 — high-value control product and hardened boundaries
 
 ### AAS-012 — Capability/action catalogue, inactive by default
 
-- **Status / priority:** `ready` / P1. **Importance / complexity:** I4 / S.
+- **Status / priority:** `done` / P1. **Importance / complexity:** I4 / S.
   **Risk reduction:** high. **User value:** finite understandable vocabulary.
   **Demo value:** high. **Canon:** primitive, CM-CAN-01/03/15/17.
 - **Source / dependencies / phase:** SEC-CTL-008; typed adapter descriptors;
@@ -369,7 +415,15 @@ later controls and adds no runtime authority.
   incompatible version deny.
 - **Rollback boundary / external gates:** remove catalogue version while all
   affected actions remain inactive; live adapter provenance is gated.
-- **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
+- **Completion commit/evidence:** implementation
+  `4e3a5952fc6c748b3fe4ac648c82968a18d3f39f`;
+  `docs/development/evidence/admin-ai-aas-012-20260801.json` and
+  `docs/development/admin-ai-aas-012-inactive-capability-catalogue-pdca.md`;
+  focused 4/4, full 95/95, video 15/15, checksums 129/129, supply-chain 6/6,
+  deterministic archive
+  `8a8f093804aa5d4e663a7648cbedb2125ec8072adbc5b69a1467d193a25435d8`;
+  verdict `LOCAL_AAS_012_PASS_INACTIVE_DESCRIPTION_NOT_PROVENANCE_ACTIVATION_OR_AUTHORITY_CLAIM`.
+  **Last reviewed:** 2026-08-01.
 
 ### AAS-013 — Effect-free Policy simulator
 

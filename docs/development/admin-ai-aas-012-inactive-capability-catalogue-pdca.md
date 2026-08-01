@@ -86,12 +86,51 @@ provider behavior, deployment isolation or executable authority.
 
 ## Do
 
-Pending implementation after this maturity review.
+Added a pure contracts module for one catalogue version containing exactly two
+synthetic adapters and actions. It validates a closed catalogue, adapter,
+action, compatibility, evidence and non-claim schema; canonicalizes unordered
+sets; binds the normalized catalogue and every action to SHA-256 digests; and
+returns only inactive descriptors. Admission and inspection carry an explicit
+`DENY` decision and cannot return executable authority or secret material.
+
+The focused four-gate test was registered in the complete suite and the two new
+public contract/test files were added to the bounded public manifest and
+repository checksum closure. No demo runtime, provider adapter, installer,
+Compose or install-path byte changed.
 
 ## Check
 
-Pending evidence.
+All four dedicated AAS-012 gates passed **4/4**. Safe reordering retained one
+catalogue digest. Both action descriptors exposed exact versions, digests,
+evidence, compatibility, fields/resources/paths and non-claims. Installation-
+shaped state injection and every unknown, duplicate, incompatible, open-surface
+or tampered probe denied with no descriptor or executable material.
+
+Complete validation passed: focused AAS-012 **4/4**, full suite **95/95**, video
+reference **15/15**, checksums **129/129** and supply-chain checks **6/6**. Two
+independent public builds were byte-identical at
+`8a8f093804aa5d4e663a7648cbedb2125ec8072adbc5b69a1467d193a25435d8`.
+The first checksum rewrite accidentally included the worktree `.git` pointer
+and then generated Python cache files; the corrected closure excludes control,
+dependency, build, development-evidence and generated-cache paths and passed
+the affected checks. This changed evidence bytes only and did not justify a
+second full suite or an unrelated Docker smoke.
+
+Metric: `aas_012_inactive_catalogue_gates` **4/4 — complete**. Verdict:
+`LOCAL_AAS_012_PASS_INACTIVE_DESCRIPTION_NOT_PROVENANCE_ACTIVATION_OR_AUTHORITY_CLAIM`.
 
 ## Act
 
-Pending completion review and frontier reprioritization.
+Close AAS-012 without reopening completed controls. The frontier audit rechecked
+effect brokerage, runtime limits, untrusted memory, network enforcement,
+artifact provenance and boundary-composition assurance. Their reusable control
+primitives remain AAS-008/AAS-019/AAS-020/AAS-021/AAS-025/AAS-030.
+
+Owner evidence at 2026-08-01 12:46 CEST establishes a distinct next product
+integration gap: no existing item proves that a real pinned OpenClaw agent can
+run default-off as an untrusted, zero-ambient-authority, Gateway-only Docker
+workload with managed mind state and typed E2E/negative evidence. This is not a
+duplicate primitive, so AAS-035 is added and selected ahead of framework/data
+breadth. Its provenance/licence/upstream-Docker proof precedes image selection;
+unknown provenance fails closed. The currently running owner OpenClaw, Gateway,
+vLLM and model infrastructure remain outside scope and untouched.
