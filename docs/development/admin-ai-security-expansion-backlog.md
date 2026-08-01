@@ -41,13 +41,13 @@ negative evidence that no uncovered internally actionable gap remains.
 
 | Priority | candidate | ready | in_progress | blocked_external | done | superseded | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| P0 | 5 | 2 | 0 | 2 | 2 | 0 | 11 |
+| P0 | 5 | 1 | 1 | 2 | 2 | 0 | 11 |
 | P1 | 11 | 5 | 0 | 0 | 0 | 0 | 16 |
 | P2 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
 | P3 | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
-| **Total** | **22** | **8** | **0** | **2** | **2** | **0** | **34** |
+| **Total** | **22** | **7** | **1** | **2** | **2** | **0** | **34** |
 
-Internally ready items, in selection order after AAS-002 closure:
+Internally ready items, in selection order with AAS-003 active:
 
 | Rank | ID | Priority | Importance | Complexity | Why ready now |
 | ---: | --- | --- | --- | --- | --- |
@@ -123,7 +123,7 @@ duplicate recurring backlog item.
 
 ### AAS-003 — Effective-rights compiler and permission X-ray
 
-- **Status / priority:** `ready` / P0. **Importance / complexity:** I5 / M.
+- **Status / priority:** `in_progress` / P0. **Importance / complexity:** I5 / M.
   **Risk reduction:** critical observability/prerequisite. **User value:** Owner
   can see the actual envelope and denial reasons. **Demo value:** very high.
 - **Canon:** primitive, CM-CAN-04/11/14. **Source:** SEC-CTL-002.
