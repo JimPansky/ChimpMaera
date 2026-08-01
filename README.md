@@ -15,6 +15,19 @@ service, support promise or permission to connect real systems. It contains no
 credentials and should be used only with synthetic data on a disposable or
 development host.
 
+**Open knowledge. Governed agency. Verifiable outcomes.**
+
+ChimpMaera is being developed around two reinforcing product promises:
+
+- **Governed agency:** capabilities do not become authority by accident;
+  provenance, scope, policy, approval and evidence constrain every effect.
+- **Open knowledge:** distributed systems, capabilities, operational knowledge
+  and evidence become explainable, governable and reusable agentic workflows.
+
+The current evidence covers the narrow local demo described above. The broader
+open-source Knowledge Operating System is the product direction, not a claim
+that every component below is already implemented in v0.1.
+
 ## Watch ChimpMaera
 
 Easy Start: [Meet Your New AI Colleague | ChimpMaera](https://youtu.be/8mB7O81Y2xA)
@@ -54,6 +67,38 @@ is not part of this release.
 - `schemas/`: public machine-readable contracts used by the candidate.
 - `tests/`: focused local tests for the governed effect gate and synthetic
   fixture integrity, including the deterministic Admin-AI preview boundary.
+
+## Knowledge that travels safely
+
+ChimpMaera is designed to standardize understanding across distributed source
+systems without requiring all operational data to be copied into one place. It
+formalizes dependencies, cause and effect, context, safe use and supporting
+evidence while the underlying records can remain in their systems of record.
+
+The intended knowledge-sharing building blocks are:
+
+- System Advisor Guides in vendor-neutral JSON, YAML or Markdown that different
+  AI systems can read consistently;
+- machine-readable manifests and a capability catalog;
+- reusable workflow recipes and a cause/effect/context graph;
+- BI semantic contracts for consistent analysis;
+- tests and evidence that bind recommendations to what was actually verified;
+- sanitized contribution bundles for deliberately sharing reusable knowledge.
+
+MCP can provide an optional access channel to these artifacts, but it does not
+define the knowledge. The portable Guides and contracts do.
+
+The intended community flywheel is compact:
+
+> integrate a system → formalize knowledge → correlate data → analyze in BI →
+> derive evidence-bound recommendations → feed validated Guides and recipes
+> back to the community
+
+Security enables this exchange. Shared artifacts carry provenance, trust class
+and tenant scope; redaction and owner-controlled publication protect sensitive
+context; shared or untrusted content grants no authority. ChimpMaera does not
+claim a central data lake, a universal ontology or automatic publication of
+private company data.
 
 ## Safety boundary
 
