@@ -85,7 +85,9 @@ The authorized implementation loop completed `AAS-001` and must select
 - **Rollback boundary / fallback:** revert the slice and disable repair; never
   restore caller-supplied target execution. **External gates:** none for local
   closure; hostile-host/kernel sandbox claims remain gated.
-- **Completion commit/evidence:** `72a489263dcd477dba394282a55d498ac2762318`;
+- **Completion commit/evidence:** implementation
+  `72a489263dcd477dba394282a55d498ac2762318`, public integrity closure
+  `bdfb7373d331e17903982afd6eb145ffa1879142`;
   `docs/development/evidence/admin-ai-aas-001-20260801.json` and
   `docs/development/admin-ai-aas-001-setup-repair-containment-pdca.md`.
   **Last reviewed:** 2026-08-01.

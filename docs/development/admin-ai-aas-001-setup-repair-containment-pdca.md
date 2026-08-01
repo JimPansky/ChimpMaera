@@ -69,12 +69,16 @@ evidence through a held directory descriptor with exclusive temporary files,
 flushes, and atomic renames.
 
 Focused AAS-001 plus setup regressions passed 13/13. The complete project suite
-passed 75/75. `git diff --check` and TypeScript build passed. The first frozen
-smoke passed, then review found a real adjacent defect: non-material retry
-receipts still used path-based persistence. After that correcting byte change,
-tests were refrozen and the one justified rerun passed `READY_VERIFIED` in
-70,340 ms. Dedicated acceptance resources were purged with zero owned residue.
-Digest-only evidence is in
+passed 75/75. `git diff --check`, all 120 repository checksums, TypeScript build
+and the six-check supply-chain verifier passed. The first frozen smoke passed,
+then review found a real adjacent defect: non-material retry receipts still
+used path-based persistence. After that correcting byte change, a justified
+rerun passed. A final integrity audit then found the three changed public files
+still had old `SHA256SUMS` entries and activated the earlier source-hygiene
+review marker: eight deferred public EOF findings were normalized on this real
+public-byte change and all checksums refreshed in `bdfb7373d331e17903982afd6eb145ffa1879142`.
+The final refrozen run passed `READY_VERIFIED` in 69,560 ms. Every dedicated
+acceptance stack was purged with zero owned residue. Digest-only evidence is in
 `docs/development/evidence/admin-ai-aas-001-20260801.json`.
 
 Metric: `aas_001_containment_gates` **4/4 — complete**. Verdict:
