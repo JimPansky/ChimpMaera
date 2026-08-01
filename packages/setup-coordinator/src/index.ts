@@ -1,11 +1,19 @@
 import {
+  closeSync,
+  constants,
   existsSync,
+  fstatSync,
+  fsyncSync,
+  lstatSync,
   mkdirSync,
+  openSync,
   readFileSync,
   renameSync,
   rmSync,
+  unlinkSync,
   writeFileSync,
 } from "node:fs";
+import { randomUUID } from "node:crypto";
 import {
   createServer,
   type IncomingMessage,
@@ -27,6 +35,7 @@ import {
   runPocEarlyAdminSyntheticSetupV1,
   verifyPocEarlyAdminRepairReceiptV1,
   verifyPocEarlyAdminStatusV1,
+  verifyPocGuidedDemoSetupPlanV1,
   type PocEarlyAdminAnswerV1,
   type PocAdminAuthoritySelectionV1,
   type PocEarlyAdminIssueCodeV1,
@@ -38,22 +47,38 @@ import {
 } from "../../contracts/src/index.js";
 
 export class PocEarlyAdminCoordinatorV1 {
+  private readonly plan: PocGuidedDemoSetupPlanV1;
+  private readonly workspaceRoot: string;
   private statusValue: PocEarlyAdminStatusV1;
   private pendingRepairValue: PocEarlyAdminRepairPlanV1 | undefined;
   private readonly ownedRoot: string;
+  private readonly ownedComponents: readonly string[];
   private readonly statusPath: string;
   private readonly eventsPath: string;
+  private readonly repairBoundaryObserver: (() => void) | undefined;
 
   constructor(
-    private readonly plan: PocGuidedDemoSetupPlanV1,
-    private readonly workspaceRoot: string,
+    planInput: PocGuidedDemoSetupPlanV1,
+    workspaceRootInput: string,
     options: Readonly<{
       policyAvailable?: boolean;
       resume?: boolean;
+      repairBoundaryObserver?: () => void;
     }> = {},
   ) {
-    this.ownedRoot = resolve(workspaceRoot, plan.storage.ownedStateRoot);
-    const safePrefix = `${resolve(workspaceRoot, "artifacts/poc-guided-demo/playgrounds")}/`;
+    this.workspaceRoot = resolve(workspaceRootInput);
+    const candidateOwnedRoot = resolve(
+      this.workspaceRoot,
+      planInput.storage.ownedStateRoot,
+    );
+    const safePrefix = `${resolve(this.workspaceRoot, "artifacts/poc-guided-demo/playgrounds")}/`;
+    if (!candidateOwnedRoot.startsWith(safePrefix)) {
+      throw new Error("UNSAFE_COORDINATOR_STATE_ROOT_DENIED");
+    }
+    this.plan = structuredClone(verifyPocGuidedDemoSetupPlanV1(planInput));
+    this.repairBoundaryObserver = options.repairBoundaryObserver;
+    this.ownedComponents = this.plan.storage.ownedStateRoot.split("/");
+    this.ownedRoot = resolve(this.workspaceRoot, this.plan.storage.ownedStateRoot);
     if (!this.ownedRoot.startsWith(safePrefix)) {
       throw new Error("UNSAFE_COORDINATOR_STATE_ROOT_DENIED");
     }
@@ -76,7 +101,7 @@ export class PocEarlyAdminCoordinatorV1 {
         this.appendEvent("RESUMED", this.statusValue.currentAction);
       }
     } else {
-      this.statusValue = buildPocEarlyAdminStatusV1(plan, {
+      this.statusValue = buildPocEarlyAdminStatusV1(this.plan, {
         ...(options.policyAvailable === undefined
           ? {}
           : { policyAvailable: options.policyAvailable }),
@@ -148,30 +173,26 @@ export class PocEarlyAdminCoordinatorV1 {
     repairPlan: PocEarlyAdminRepairPlanV1,
     ownerConfirmed: boolean,
   ): PocEarlyAdminRepairReceiptV1 {
+    if (
+      this.pendingRepairValue === undefined
+      || repairPlan.repairPlanDigest
+        !== this.pendingRepairValue.repairPlanDigest
+    ) {
+      throw new Error("REPAIR_NOT_SERVER_ISSUED_DENIED");
+    }
     const result = applyPocEarlyAdminRepairV1(
       this.statusValue,
       repairPlan,
       ownerConfirmed,
     );
-    if (repairPlan.action.actionId
-      === "REWRITE_OWNED_CONFIG_FROM_VERIFIED_PLAN") {
-      const configPath = resolve(this.workspaceRoot, repairPlan.action.target);
-      const backupPath = resolve(this.ownedRoot, "rollback-config.json");
-      if (existsSync(configPath)) {
-        this.atomicWrite(backupPath, readFileSync(configPath, "utf8"));
-      }
-      this.atomicWrite(configPath, `${JSON.stringify(this.plan.config, null, 2)}\n`);
-    } else if (repairPlan.action.actionId !== "RETRY_DECLARED_HEALTH_CHECKS") {
+    const rewritesConfig = repairPlan.action.actionId
+      === "REWRITE_OWNED_CONFIG_FROM_VERIFIED_PLAN";
+    if (!rewritesConfig
+      && repairPlan.action.actionId !== "RETRY_DECLARED_HEALTH_CHECKS") {
       throw new Error("UNDECLARED_ACTION_DENIED");
     }
-    verifyPocEarlyAdminRepairReceiptV1(result.receipt, repairPlan);
-    this.statusValue = result.status;
-    this.atomicWrite(
-      resolve(this.ownedRoot, "repair-receipt.json"),
-      `${JSON.stringify(result.receipt, null, 2)}\n`,
-    );
+    this.applyOwnedRepairResult(result.status, result.receipt, rewritesConfig);
     this.pendingRepairValue = undefined;
-    this.persist("REPAIR_APPLIED", repairPlan.action.actionId);
     return result.receipt;
   }
 
@@ -250,6 +271,174 @@ export class PocEarlyAdminCoordinatorV1 {
     const temporary = `${path}.tmp`;
     writeFileSync(temporary, content);
     renameSync(temporary, path);
+  }
+
+  private applyOwnedRepairResult(
+    nextStatus: PocEarlyAdminStatusV1,
+    receipt: PocEarlyAdminRepairReceiptV1,
+    rewritesConfig: boolean,
+  ): void {
+    verifyPocGuidedDemoSetupPlanV1(this.plan);
+    verifyPocEarlyAdminRepairReceiptV1(receipt, this.pendingRepairValue!);
+    this.withOwnedDirectory((directory) => {
+      this.repairBoundaryObserver?.();
+      this.assertOwnedRootStillBound(directory);
+      const evidenceNames = [
+        "repair-receipt.json",
+        "dashboard-status.json",
+        "dashboard-events.jsonl",
+      ] as const;
+      for (const name of evidenceNames) {
+        this.assertRegularOrAbsent(directory, name);
+      }
+      if (rewritesConfig) {
+        this.assertRegularOrAbsent(directory, "config.json");
+        this.assertRegularOrAbsent(directory, "rollback-config.json");
+      }
+      const previousConfig = rewritesConfig
+        ? this.readRegularIfPresent(directory, "config.json")
+        : undefined;
+      const previousEvents = this.readRegularIfPresent(
+        directory,
+        "dashboard-events.jsonl",
+      ) ?? "";
+      const event = JSON.stringify({
+        event: "REPAIR_APPLIED",
+        detail: receipt.actionId,
+        statusDigest: nextStatus.statusDigest,
+      });
+      if (rewritesConfig) {
+        if (previousConfig !== undefined) {
+          this.atomicWriteOwned(
+            directory,
+            "rollback-config.json",
+            previousConfig,
+          );
+        }
+        this.atomicWriteOwned(
+          directory,
+          "config.json",
+          `${JSON.stringify(this.plan.config, null, 2)}\n`,
+        );
+      }
+      this.atomicWriteOwned(
+        directory,
+        "repair-receipt.json",
+        `${JSON.stringify(receipt, null, 2)}\n`,
+      );
+      this.atomicWriteOwned(
+        directory,
+        "dashboard-status.json",
+        `${JSON.stringify(nextStatus, null, 2)}\n`,
+      );
+      this.atomicWriteOwned(
+        directory,
+        "dashboard-events.jsonl",
+        `${previousEvents}${event}\n`,
+      );
+    });
+    this.statusValue = nextStatus;
+  }
+
+  private withOwnedDirectory<T>(operation: (directory: number) => T): T {
+    let directory = openSync(
+      this.workspaceRoot,
+      constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW,
+    );
+    try {
+      for (const component of this.ownedComponents) {
+        const child = openSync(
+          `/proc/self/fd/${directory}/${component}`,
+          constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW,
+        );
+        closeSync(directory);
+        directory = child;
+      }
+      return operation(directory);
+    } finally {
+      closeSync(directory);
+    }
+  }
+
+  private assertOwnedRootStillBound(directory: number): void {
+    const opened = fstatSync(directory);
+    const current = lstatSync(this.ownedRoot);
+    if (
+      !current.isDirectory()
+      || current.isSymbolicLink()
+      || opened.dev !== current.dev
+      || opened.ino !== current.ino
+    ) {
+      throw new Error("OWNED_STATE_COMPONENT_SWAP_DENIED");
+    }
+  }
+
+  private assertRegularOrAbsent(directory: number, name: string): void {
+    const value = lstatSync(`/proc/self/fd/${directory}/${name}`, {
+      throwIfNoEntry: false,
+    });
+    if (value !== undefined && !value.isFile()) {
+      throw new Error("OWNED_STATE_NON_REGULAR_ENTRY_DENIED");
+    }
+  }
+
+  private readRegularIfPresent(
+    directory: number,
+    name: string,
+  ): string | undefined {
+    const path = `/proc/self/fd/${directory}/${name}`;
+    const value = lstatSync(path, { throwIfNoEntry: false });
+    if (value === undefined) return undefined;
+    if (!value.isFile()) throw new Error("OWNED_STATE_NON_REGULAR_ENTRY_DENIED");
+    const descriptor = openSync(
+      path,
+      constants.O_RDONLY | constants.O_NOFOLLOW,
+    );
+    try {
+      if (!fstatSync(descriptor).isFile()) {
+        throw new Error("OWNED_STATE_NON_REGULAR_ENTRY_DENIED");
+      }
+      return readFileSync(descriptor, "utf8");
+    } finally {
+      closeSync(descriptor);
+    }
+  }
+
+  private atomicWriteOwned(
+    directory: number,
+    name: string,
+    content: string,
+  ): void {
+    this.assertRegularOrAbsent(directory, name);
+    const root = `/proc/self/fd/${directory}`;
+    const temporaryName = `.${name}.${randomUUID()}.tmp`;
+    const temporaryPath = `${root}/${temporaryName}`;
+    const targetPath = `${root}/${name}`;
+    let descriptor: number | undefined;
+    try {
+      descriptor = openSync(
+        temporaryPath,
+        constants.O_WRONLY
+          | constants.O_CREAT
+          | constants.O_EXCL
+          | constants.O_NOFOLLOW,
+        0o600,
+      );
+      writeFileSync(descriptor, content, "utf8");
+      fsyncSync(descriptor);
+      closeSync(descriptor);
+      descriptor = undefined;
+      this.assertRegularOrAbsent(directory, name);
+      renameSync(temporaryPath, targetPath);
+      fsyncSync(directory);
+    } finally {
+      if (descriptor !== undefined) closeSync(descriptor);
+      try {
+        unlinkSync(temporaryPath);
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      }
+    }
   }
 
 }

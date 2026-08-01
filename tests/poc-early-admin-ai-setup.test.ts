@@ -1,6 +1,15 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { request } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -8,6 +17,7 @@ import { test } from "node:test";
 import {
   PocEarlyAdminSetupError,
   activatePocAdminAuthorityProfileV1,
+  applyPocEarlyAdminRepairV1,
   assertPocAdminActionAllowedV1,
   buildPocEarlyAdminRepairPlanV1,
   buildPocEarlyAdminStatusV1,
@@ -19,6 +29,7 @@ import {
   resetPocAdminAuthorityToSafeV1,
   runPocEarlyAdminSyntheticSetupV1,
   verifyPocEarlyAdminRepairReceiptV1,
+  verifyPocEarlyAdminRepairPlanV1,
   type PocEarlyAdminRepairActionV1,
   type PocEarlyAdminRepairPlanV1,
   type PocGuidedDemoSetupPlanV1,
@@ -81,6 +92,17 @@ function tempRoot(): string {
   return mkdtempSync(join(tmpdir(), "chimpmaera-early-admin-"));
 }
 
+function repairWithTarget(
+  repair: PocEarlyAdminRepairPlanV1,
+  target: string,
+): PocEarlyAdminRepairPlanV1 {
+  const { repairPlanDigest: _ignored, ...core } = {
+    ...repair,
+    action: { ...repair.action, target },
+  };
+  return { ...core, repairPlanDigest: hash(core) };
+}
+
 test("EARLY-ADMIN-E2E Stage A starts before install for three curated and local custom templates", () => {
   const templates = [...expectedPocGuidedDemoTemplatesV1(), localCustomTemplate()];
   for (const template of templates) {
@@ -140,6 +162,166 @@ test("EARLY-ADMIN-REPAIR diagnosis, confirmation, bounded repair, resume and pro
   assert.equal(promoted.authority.stage, "STAGE_B_ADMIN_AI");
   assert.equal(promoted.authority.shellAccess, false);
   assert.equal(promoted.authority.controlPlaneAdministration, false);
+  coordinator.cleanup();
+});
+
+test("AAS-001 reconstructs the exact repair action and rejects redigested path variants before effects", () => {
+  const root = tempRoot();
+  const plan = planFor(expectedPocGuidedDemoTemplatesV1()[0]!);
+  const coordinator = new PocEarlyAdminCoordinatorV1(plan, root);
+  const failed = coordinator.runSyntheticSetup("CONFIG_DIGEST_MISMATCH");
+  const repair = coordinator.diagnose("CONFIG_DIGEST_MISMATCH");
+  const canary = join(root, "authority-effect-audit.canary");
+  writeFileSync(canary, "owner-authority-and-evidence\n");
+  const baseline = readFileSync(canary, "utf8");
+  const ownedRoot = plan.storage.ownedStateRoot;
+  const targets = [
+    `${ownedRoot}/../authority.json`,
+    "/tmp/chimpmaera-absolute-target",
+    `${ownedRoot}-sibling/config.json`,
+    `${ownedRoot}\\config.json`,
+    `${ownedRoot}\u2215config.json`,
+    `${ownedRoot}\u2044config.json`,
+    `${ownedRoot}\uff0fconfig.json`,
+  ];
+  for (const target of targets) {
+    const redigested = repairWithTarget(repair, target);
+    assert.throws(
+      () => verifyPocEarlyAdminRepairPlanV1(redigested, failed),
+      /TAMPERED_OR_ESCALATED_REPAIR_PLAN_DENIED/,
+    );
+    assert.throws(
+      () => applyPocEarlyAdminRepairV1(failed, redigested, true),
+      /TAMPERED_OR_ESCALATED_REPAIR_PLAN_DENIED/,
+    );
+    assert.equal(readFileSync(canary, "utf8"), baseline);
+  }
+  assert.equal(
+    existsSync(join(root, "artifacts/poc-guided-demo/authority.json")),
+    false,
+  );
+  coordinator.cleanup();
+});
+
+test("AAS-001 confines a successful repair to fixed owned files and preserves external canaries", () => {
+  const root = tempRoot();
+  const plan = planFor(expectedPocGuidedDemoTemplatesV1()[0]!);
+  const coordinator = new PocEarlyAdminCoordinatorV1(plan, root);
+  coordinator.runSyntheticSetup("CONFIG_DIGEST_MISMATCH");
+  const repair = coordinator.diagnose("CONFIG_DIGEST_MISMATCH");
+  const owned = join(root, plan.storage.ownedStateRoot);
+  const previousConfig = readFileSync(join(owned, "config.json"), "utf8");
+  const canaries = ["owner-authority", "effect-state", "audit-evidence"]
+    .map((name) => join(root, `${name}.canary`));
+  for (const path of canaries) writeFileSync(path, `${path}\n`);
+  const baselines = canaries.map((path) => readFileSync(path, "utf8"));
+
+  const receipt = coordinator.applyRepair(repair, true);
+
+  assert.equal(receipt.repairPlanDigest, repair.repairPlanDigest);
+  assert.equal(
+    readFileSync(join(owned, "config.json"), "utf8"),
+    `${JSON.stringify(plan.config, null, 2)}\n`,
+  );
+  assert.equal(
+    readFileSync(join(owned, "rollback-config.json"), "utf8"),
+    previousConfig,
+  );
+  for (const [index, path] of canaries.entries()) {
+    assert.equal(readFileSync(path, "utf8"), baselines[index]);
+  }
+  coordinator.cleanup();
+});
+
+test("AAS-001 rejects owned-root, target and backup symlinks without touching outside bytes", () => {
+  for (const probe of ["owned-root", "target", "backup"] as const) {
+    const root = tempRoot();
+    const plan = planFor(expectedPocGuidedDemoTemplatesV1()[0]!);
+    const coordinator = new PocEarlyAdminCoordinatorV1(plan, root);
+    coordinator.runSyntheticSetup("CONFIG_DIGEST_MISMATCH");
+    const repair = coordinator.diagnose("CONFIG_DIGEST_MISMATCH");
+    const owned = join(root, plan.storage.ownedStateRoot);
+    const parked = `${owned}.parked`;
+    const outside = join(root, "outside");
+    mkdirSync(outside);
+    const canary = join(outside, "canary.json");
+    writeFileSync(canary, "outside-byte-identical\n");
+    const config = join(owned, "config.json");
+    const configBaseline = readFileSync(config, "utf8");
+    if (probe === "owned-root") {
+      renameSync(owned, parked);
+      symlinkSync(outside, owned, "dir");
+    } else {
+      const entry = probe === "target"
+        ? config
+        : join(owned, "rollback-config.json");
+      rmSync(entry, { force: true });
+      symlinkSync(canary, entry);
+    }
+
+    assert.throws(() => coordinator.applyRepair(repair, true));
+    assert.equal(readFileSync(canary, "utf8"), "outside-byte-identical\n");
+    if (probe === "owned-root") {
+      rmSync(owned);
+      renameSync(parked, owned);
+      assert.equal(readFileSync(config, "utf8"), configBaseline);
+    } else if (probe === "backup") {
+      assert.equal(readFileSync(config, "utf8"), configBaseline);
+    }
+    coordinator.cleanup();
+  }
+});
+
+test("AAS-001 detects an owned-directory swap after descriptor open and before repair write", () => {
+  const root = tempRoot();
+  const plan = planFor(expectedPocGuidedDemoTemplatesV1()[0]!);
+  const owned = join(root, plan.storage.ownedStateRoot);
+  const parked = `${owned}.parked`;
+  const outside = join(root, "outside");
+  let armed = false;
+  const coordinator = new PocEarlyAdminCoordinatorV1(plan, root, {
+    repairBoundaryObserver: () => {
+      if (!armed) return;
+      renameSync(owned, parked);
+      symlinkSync(outside, owned, "dir");
+    },
+  });
+  coordinator.runSyntheticSetup("CONFIG_DIGEST_MISMATCH");
+  const repair = coordinator.diagnose("CONFIG_DIGEST_MISMATCH");
+  mkdirSync(outside);
+  const canary = join(outside, "canary.json");
+  writeFileSync(canary, "swap-canary\n");
+  const configBaseline = readFileSync(join(owned, "config.json"), "utf8");
+  armed = true;
+
+  assert.throws(
+    () => coordinator.applyRepair(repair, true),
+    /OWNED_STATE_COMPONENT_SWAP_DENIED/,
+  );
+  assert.equal(readFileSync(canary, "utf8"), "swap-canary\n");
+  assert.equal(readFileSync(join(parked, "config.json"), "utf8"), configBaseline);
+  rmSync(owned);
+  renameSync(parked, owned);
+  coordinator.cleanup();
+});
+
+test("AAS-001 applies the descriptor boundary to non-material retry evidence", () => {
+  const root = tempRoot();
+  const plan = planFor(expectedPocGuidedDemoTemplatesV1()[0]!);
+  const coordinator = new PocEarlyAdminCoordinatorV1(plan, root);
+  coordinator.runSyntheticSetup("TRANSIENT_HEALTH_CHECK_FAILURE");
+  const repair = coordinator.diagnose("TRANSIENT_HEALTH_CHECK_FAILURE");
+  const owned = join(root, plan.storage.ownedStateRoot);
+  const canary = join(root, "outside-audit.canary");
+  writeFileSync(canary, "retry-canary\n");
+  rmSync(join(owned, "repair-receipt.json"), { force: true });
+  symlinkSync(canary, join(owned, "repair-receipt.json"));
+
+  assert.throws(
+    () => coordinator.applyRepair(repair, true),
+    /OWNED_STATE_NON_REGULAR_ENTRY_DENIED/,
+  );
+  assert.equal(readFileSync(canary, "utf8"), "retry-canary\n");
   coordinator.cleanup();
 });
 
