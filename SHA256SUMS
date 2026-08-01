@@ -177,7 +177,7 @@ d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/cont
 982f19ffaafd2ed726be891a5f8ca3c552c266832e8598f86a4009107b76ea83  ./schemas/contracts/protected-audit-timeline-v1.schema.json
 96717353050a8284599db2842e1db52e0b2090be712a3876ee61ed53f24eaa11  ./schemas/daily-poc-manifest-v1.schema.json
 3a30fe51f7c3011ed2a2a1828e789ff374d7675dd103906a9c4f5d04683b4eef  ./scripts/build-public-release.sh
-d650b92d733ef8b7e4563a8783b8727b95f01a4cdbcbc54a883764f71e21fc99  ./scripts/daily-poc.mjs
+be91df81b1ca05853e6e1dea225aaacdfd879efba331e4035dc97ad92f98cd50  ./scripts/daily-poc.mjs
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
 bb92008cdef16fa608930372dada402f48dfee9e172a1fa158aa3ceb893fe477  ./scripts/verify-supply-chain.mjs
 7459c5ecab8c958ffad6bb5daf559aa9aacec4f0714b004f1c36459a0314ef31  ./tests/capability-catalogue.test.ts
