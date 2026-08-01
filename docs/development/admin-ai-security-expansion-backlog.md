@@ -139,6 +139,11 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** canonical intersection returns allow/escalate/deny,
   contributing ceilings, reason codes and digest; rendered facts match the
   machine decision for golden cases.
+- **Retrospective scope (RET-001):** named versioned profiles include explicit
+  `FULL_CONTROL_LAB` truth: the view binds the actual OS ceiling, shows that no
+  hidden ChimpMaera action limits remain, requires an Owner warning, and states
+  that host-level authority can degrade audit and emergency controls rather
+  than presenting them as independent tamper-proof boundaries.
 - **Negative probes:** missing, unknown, stale or conflicting operand denies;
   capability alone never implies authority; UI cannot omit a restrictive
   operand or disagree with evaluated facts.
@@ -162,6 +167,9 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** freeze blocks plan/authority/use-time dispatch,
   survives restart, invalidates relevant generations, preserves queued/uncertain
   work, and requires stronger authorized recovery.
+- **Retrospective scope (RET-005):** frozen, queued, ambiguous and recovery
+  states remain visible with linked receipts; full-control mode never turns the
+  same-process stop or audit path into an independent security claim.
 - **Negative probes:** stop between approval/reservation/provider call; stale
   cache/worker/lease; Agent unfreeze/delete/rotate attempts; recovery never
   silently resumes queued effects.
@@ -181,6 +189,10 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** atomic owner/tenant/subject/capability/window
   reservation before dispatch; receipts bind budget epoch and remaining
   ceiling; ambiguity retains reservation until reconciliation.
+- **Retrospective scope (RET-006):** action, rate, cost and attention totals are
+  enforced atomically at use time through the existing authority/runtime budget
+  split; no parallel quota subsystem or non-causal reporting-only counter earns
+  closure credit.
 - **Negative probes:** concurrent final unit, restart/retry/delegation reset,
   stale/unknown counter, boundary-time race and ambiguous provider result never
   overspend or free authority early.
@@ -201,6 +213,12 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** every effect uses prepared→executing→accepted→
   verified→applied/ambiguous→reconciled/compensated with durable pre-effect
   reservation, fencing and bound authoritative reconciliation.
+- **Retrospective scope (RET-008, RET-010):** one machine-readable ownership
+  ledger names the authoritative writer and fencing state; split-brain or
+  ambiguous ownership never becomes retry authority. Compensation remains a
+  separate fresh-state, Diff, authority and Receipt-bound action after
+  reconciliation, while distributed-store guarantees remain an external
+  non-claim.
 - **Negative probes:** kill/restart at each transaction/network boundary,
   concurrent workers, lost response after commit, stale lock, mismatch and
   retry of changed content yield at most one effect and no false success.
@@ -220,6 +238,10 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** boundary-derived immutable subject/org/tenant/role/
   assurance/session; distinct workload/human credentials; separation of duties,
   step-up, disable and session revoke bound through receipt.
+- **Retrospective scope (RET-013):** local evidence uses synthetic
+  trust-domain/workload identity fixtures shaped for later SPIFFE/SPIRE
+  integration without claiming production IAM, workload attestation or a live
+  SPIRE deployment.
 - **Negative probes:** Agent/requester/different tenant/disabled/expired/
   downgraded identity, forged headers and same conflicting human roles cannot
   approve or execute.
@@ -240,6 +262,10 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** sole credentialed dispatcher with versioned closed
   schemas, inactive activation, exact resource/field ceilings, timeout,
   maximum effects and authoritative readback for every effect class.
+- **Retrospective scope (RET-007):** named composition evidence must prove that
+  authentication, effective authority, budgets, idempotency/reconciliation and
+  audit causally gate the actual provider call at use time; preflight-only or
+  reporting-only checks do not close this control.
 - **Negative probes:** raw shell/path/URL, dynamic plugin, schema extras,
   invented capability, credential drift and direct provider/OS call produce
   zero effects; catalogue/install never activates.
@@ -260,6 +286,9 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** origin/trust/tenant/data-class/instruction-eligibility
   labels; provider/tool/document/memory content is data only; model emits typed
   candidates; trusted code reconstructs; secrets are opaque handles.
+- **Retrospective scope (RET-009):** the same trust boundary covers prompt,
+  tool, document and memory injection; it does not introduce a second hijack
+  framework or let any content channel acquire instruction eligibility.
 - **Negative probes:** override/exfiltrate/self-approve/URL/path instructions in
   fields, tool errors, memory and encoded/Unicode/multi-turn channels cannot
   change calls, decisions or secret exposure.
@@ -349,6 +378,10 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
   Policy digest and explanation; ambiguity asks or denies. **Negative probes:**
   unsupported text, hidden defaults, template change and compiler drift never
   broaden Policy silently.
+- **Retrospective scope (RET-002, RET-011):** compact Owner goals, rules and
+  exceptions compile to typed deterministic Plan/Policy/Diff output; free text
+  and every deterministic or model provider emit untrusted candidates only.
+  Provider substitution cannot change authority or mint Control-Plane rights.
 - **Rollback boundary / external gates:** retain typed intent and last safe
   compiled Policy; free text remains non-authoritative. None for local proof.
 - **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
@@ -537,6 +570,10 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** artifact-type trust policy for source/signer/digest/
   provenance/SBOM/license/vulnerability/review/revoke, verified before build,
   install, activation and restart, bound to evidence.
+- **Retrospective scope (RET-012):** include format-aware model-artifact
+  fixtures, including Safetensors-oriented positive and negative cases, while
+  explicitly rejecting the claim that a safe serialization format alone proves
+  provenance, review, compatibility or runtime safety.
 - **Negative probes:** correct digest/wrong signer, forged/missing attestation,
   revoked key, confusion/lifecycle script, SBOM/CVE/license failure and mutable
   model/template block activation.
@@ -591,6 +628,11 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
   effective-rights preview, negative examples and simulation precede explicit
   versioned activation. **Negative probes:** catalogue/template/update cannot
   grant or silently expand rights.
+- **Retrospective scope (RET-003, RET-004):** onboarding starts in a separate
+  diagnosis/status/typed-repair bootstrap envelope and promotes authority only
+  through explicit health and Owner gates. It asks only material unknowns and
+  shows Plan, stage, health, warning, Receipt, resume and cleanup state without
+  silently expanding authority or outranking the active I5 frontier.
 - **Rollback boundary / external gates:** deactivate template Policy and retain
   prior envelope. Production fitness/certification remains a non-claim.
 - **Completion commit/evidence:** pending. **Last reviewed:** 2026-08-01.
@@ -620,6 +662,10 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** machine-readable threat/control/invariant matrix;
   schema fuzz/property, crash/concurrency/restart and configuration/byte-bound
   evidence; critical/high regressions gate completion.
+- **Retrospective scope (RET-015):** each applicable hard-E2E composition case
+  traces intent→Plan→Policy→approval→effect→Receipt→revoke/rollback/cleanup and
+  names its fail-closed probes; documentation-only linkage earns no closure
+  credit.
 - **Negative probes:** mutation removal of use-time scope/stop/reservation/
   tenant/timeout/signature/audit checks causes named failures; old-byte evidence
   cannot satisfy new claims.
@@ -638,6 +684,9 @@ ready P0/I5 item and therefore remains ahead of every I4 item.
 - **Acceptance evidence:** complete bounded export, access control, retention/
   deletion behavior, source/time provenance, tamper verification and privacy-
   preserving integrity tombstones.
+- **Retrospective scope (RET-014):** provide a digest/link/source/time-only
+  export profile and negative evidence that payloads, PII and secrets are not
+  included; this remains an export/privacy profile, not independent attestation.
 - **Negative probes:** missing sequence, unauthorized export, deletion/fork,
   clock/source drift and prohibited personal/secret fields are detected/denied.
 - **Rollback boundary / external gates:** preserve canonical local events and

@@ -10,6 +10,31 @@
     "reject": 4,
     "total": 22
   },
+  "integration": {
+    "status": "complete",
+    "baseline": "3f02727f9a9ba035f9ce7b3ab3017e7ba1925f2b",
+    "branch": "feat/admin-ai-retrospective-backlog-integration",
+    "backlogControlCount": 34,
+    "frontier": "AAS-009",
+    "newStableIds": [],
+    "mergedCandidateIds": [
+      "RET-001",
+      "RET-002",
+      "RET-003",
+      "RET-004",
+      "RET-005",
+      "RET-006",
+      "RET-007",
+      "RET-008",
+      "RET-009",
+      "RET-010",
+      "RET-011",
+      "RET-012",
+      "RET-013",
+      "RET-014",
+      "RET-015"
+    ]
+  },
   "orderingPolicy": "Security and operator benefit dominate complexity. For similar benefit, prefer lower complexity, fewer dependencies, higher reuse, lower maintenance and stronger demo/user value.",
   "sources": {
     "memory": [

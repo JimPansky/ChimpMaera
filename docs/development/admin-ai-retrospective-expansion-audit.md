@@ -4,11 +4,14 @@
 
 **Audit branch:** `feat/admin-ai-retrospective-backlog-audit`
 
+**Integration baseline:** `3f02727f9a9ba035f9ce7b3ab3017e7ba1925f2b`
+
+**Integration branch:** `feat/admin-ai-retrospective-backlog-integration`
+
 **Evidence date:** 2026-08-01
 
-**Gate status:** 4/5. Historical inventory, normalization, importance-first
-ranking and the decision ledger are complete. Canonical backlog integration is
-fail-closed until the AAS-003 writer publishes a newer clean checkpoint.
+**Gate status:** 5/5. Historical inventory, normalization, importance-first
+ranking, decision ledger and serial canonical-backlog integration are complete.
 
 ## Result
 
@@ -25,7 +28,7 @@ framework expansion.
 | Merge | 15 | Strengthen existing acceptance/non-claim language only. |
 | Defer | 3 | Keep outside the current local Admin-AI security frontier. |
 | Reject | 4 | Do not add a control or framework. |
-| **Total** | **22** | The canonical total remains 34 until serial integration. |
+| **Total** | **22** | The canonical total remains 34 after serial integration. |
 
 This is intentionally a zero-add audit. The current backlog already covers the
 recovered security capabilities at the right abstraction boundary. Historical
@@ -150,22 +153,20 @@ The per-candidate factors in the JSON ledger make the tie-breaks auditable.
 Notably, the high-demo guided setup work stays below the current I5 security
 frontier, and old full-control wording does not authorize host/root activation.
 
-## 4. Serial integration plan and fail-closed gate
+## 4. Serial integration record
 
-At audit time the AAS-003 worktree is dirty and is the sole active writer. This
-branch therefore contains audit artifacts only and does not edit the canonical
-backlog.
+The audit correctly stopped at 4/5 while AAS-003 was active. The durable
+security state later recorded AAS-003 complete at clean checkpoint
+`3f02727f9a9ba035f9ce7b3ab3017e7ba1925f2b`, with `AAS-009` as the next
+frontier. Integration then used a fresh worktree from that exact checkpoint.
 
-On a later scheduled run, integration must:
+The two audit artifacts were brought forward and all 15 accepted historical
+topics were merged as explicit `RET-*` scope in their existing primary AAS
+entries. No new stable ID was created, no closed control was reopened, and the
+selected frontier was not displaced. Authoritative totals remain 34 controls:
+22 candidate, 7 ready, 2 blocked external and 3 done; `AAS-009` remains next.
 
-1. read `memory/chimpmaera-admin-ai-security-analysis-state.json` and require a
-   newer clean checkpoint with `next != AAS-003`;
-2. create a fresh integration worktree from that exact checkpoint;
-3. bring in this report and JSON ledger, then apply only the 15 scope merges to
-   the existing AAS entries—no new IDs and no AAS-003 displacement;
-4. preserve authoritative counts at 34 unless new checkpoint evidence proves a
-   genuinely distinct gap;
-5. validate JSON, references, backlog counts/frontier, `git diff --check`, a
-   local commit and a clean tree before recording gate 5/5.
-
-Until those conditions hold, the correct outcome is 4/5 and `NO_REPLY`.
+Validation requires the decision JSON to parse, all 22 decisions and mapped AAS
+IDs to reconcile, source references and `RET-001..RET-015` scope annotations to
+exist, backlog counts/frontier to match the durable security state,
+`git diff --check` to pass, and the final local commit to leave a clean tree.
