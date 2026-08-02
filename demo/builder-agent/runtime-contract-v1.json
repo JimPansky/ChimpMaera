@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "chimpmaera.builder/runtime-contract/v1",
+  "fixtureId": "bld001-builder-agent-g6-v1",
+  "ownershipLabel": "io.chimpmaera.fixture=bld001-builder-agent-g6-v1",
+  "runtime": {
+    "upstreamVersion": "2026.7.1",
+    "upstreamIndexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "role": "UNTRUSTED_BUILDER_AGENT_NOT_POLICY_AUTHORITY_OR_EFFECT_PLANE",
+    "defaultOffProfile": "bld001",
+    "network": "bld001_gateway_only"
+  },
+  "builderProfile": {
+    "selected": "SAFE_GUIDED",
+    "effectiveRightsRule": "HOST_SYSTEM_CEILING_INTERSECT_OWNER_PROFILE_INTERSECT_ASSIGNMENTS_INTERSECT_CURRENT_CONSTRAINTS",
+    "hostSystemCeiling": [
+      "habitat.setpoint.update",
+      "habitat.temperature.read"
+    ],
+    "ownerProfileRights": [
+      "habitat.setpoint.update",
+      "habitat.temperature.read"
+    ],
+    "assignments": [
+      "habitat.setpoint.update",
+      "habitat.temperature.read"
+    ],
+    "currentConstraints": [
+      "habitat.setpoint.update",
+      "habitat.temperature.read"
+    ],
+    "effectiveRights": [
+      "habitat.setpoint.update",
+      "habitat.temperature.read"
+    ],
+    "routes": {
+      "habitat.setpoint.update": "OWNER_APPROVAL",
+      "habitat.temperature.read": "AUTO_EXECUTE"
+    }
+  },
+  "target": {
+    "tenant": "synthetic-zoo",
+    "systemId": "unknown-habitat-001",
+    "systemType": "unknown.habitat-controller",
+    "dataClassification": "SYNTHETIC",
+    "habitatId": "habitat-7",
+    "initialState": {
+      "temperatureC": 22.5,
+      "setpointC": 22
+    }
+  },
+  "admittedCapabilities": [
+    {
+      "capabilityId": "habitat.temperature.read",
+      "effectClass": "READ_ONLY",
+      "capabilityBindingDigest": "45b5cd2f099919bc57ae4f5b23e6b4b225522ad8d796454f87ce87cce9e3c654",
+      "route": "AUTO_EXECUTE"
+    },
+    {
+      "capabilityId": "habitat.setpoint.update",
+      "effectClass": "REVERSIBLE_WRITE",
+      "capabilityBindingDigest": "504d48c16a6b6306dce47680cca88d8bc75dff6b14c2c5da6699d2fff857eb68",
+      "admissionRecord": {
+        "capabilityId": "habitat.setpoint.update",
+        "systemType": "unknown.habitat-controller",
+        "operationId": "habitat.setpoint.update",
+        "effectClass": "REVERSIBLE_WRITE",
+        "dataClassification": "SYNTHETIC",
+        "lifecycleState": "ACTIVE_FOR_OWNED_FIXTURE_ONLY",
+        "recovery": "RESTORE_PRIOR_VALUE"
+      },
+      "route": "OWNER_APPROVAL"
+    }
+  ],
+  "syntheticOwnerApproval": {
+    "approvalId": "approval:bld001-g6-setpoint-23c",
+    "issuer": "owner:synthetic-fixture",
+    "operationId": "habitat.setpoint.update",
+    "approvedSetpointC": 23,
+    "approvalDigest": "5d472c30165820995d3a9519e3e9dfe08f167c8623bcbc98c103ab92be8f15bd"
+  },
+  "nonClaims": [
+    "NO_OWNER_OPENCLAW_OR_LIVE_SYSTEM_MUTATION",
+    "NO_PRODUCTION_SANDBOX_OR_HOST_KERNEL_BOUNDARY",
+    "NO_LIVE_PROVIDER_PRODUCTION_IAM_OR_NETWORK_POLICY",
+    "NO_UNIVERSAL_OPENCLAW_OR_TARGET_SYSTEM_COMPATIBILITY",
+    "NO_RELEASE_PUBLICATION_OR_CUSTOMER_DATA_EVIDENCE"
+  ]
+}
