@@ -6,7 +6,7 @@ Delivery status: `in_progress`
 Claim status: `NOT_PROVEN`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
-Current metric: **2/8**
+Current metric: **3/8**
 
 ## Local issue contract
 
@@ -103,8 +103,8 @@ evidence. The decision matrix is not an executable authority token.
 
 ## Autonomy gate
 
-- **Exact phase/metric:** BLD-001 Builder Agent M1, **2/8 → 8/8**; G1 and G2
-  are complete and the next bounded slice targets G3 only.
+- **Exact phase/metric:** BLD-001 Builder Agent M1, **3/8 → 8/8**; G1, G2
+  and G3 are complete and the next bounded slice targets G4 only.
 - **Autonomously reachable:** contracts, synthetic fixtures, tests, docs,
   isolated later runtime fixtures and local evidence require no external data
   or mutation.
@@ -113,7 +113,7 @@ evidence. The decision matrix is not an executable authority token.
 - **External/publication dependent:** push, PR, merge, tag, release, upload,
   outreach, production/customer evidence and mutation.
 - **Completed metric rule:** all prerequisite video/architecture gates and
-  AAS dependencies plus BLD-001-G1/G2 are complete and are not repeated
+  AAS dependencies plus BLD-001-G1/G2/G3 are complete and are not repeated
   without regression evidence.
 
 ## Reversible decisions
@@ -138,48 +138,55 @@ evidence. The decision matrix is not an executable authority token.
   context only from requested operations and require Guide coverage for every
   selected operation/context pair. **Review:** G7 second-system reuse and
   adversarial conformance.
+- **Assumption:** capability reuse requires an exact registered capability ID,
+  matching system type, operation ID and effect class; unmatched hints become
+  versioned inactive proposals. **Risk:** fuzzy matching or an incompatible ID
+  collision could bind the wrong adapter semantics. **Fallback:** fuzzy names
+  remain unresolved, exact incompatible collisions deny the entire resolution,
+  and every reused descriptor remains inactive/non-executable. **Review:** G4
+  planner/schema versioning and G7 adversarial second-system reuse.
 
 ## PDCA status
 
 ### Plan
 
-Freeze the full 8/8 contract before implementation. After the reusable G1
-authority primitive, implement G2 as a generic, effect-free discovery record
-because capability reuse and unresolved intent in G3 require normalized facts.
+Keep the full 8/8 contract frozen. G1 and G2 remain closed. Resolve G2's exact
+capability hints against a finite digest-bound registration input, reuse only
+semantically compatible exact matches and represent genuine gaps without
+creating authority, activation or an effect.
 
 ### Do
 
-G1 remains closed. Implemented G2 as a generic closed TypeScript discovery
-resolver, public input JSON Schema and synthetic unknown-habitat fixture. The
-resolver accepts arbitrary identifier-safe system types without core changes,
-normalizes requested operations and dependency objects, requires each selected
-operation and cause/effect context to be grounded in a matching System Advisor
-Guide, restricts all data to `SYNTHETIC`, rejects secret-like/hidden/cross-tenant
-input and emits a digest-bound record with no authority or effect.
+G1 and G2 remain closed. Implemented one generic G3 TypeScript resolver, public
+result JSON Schema and synthetic capability-registration fixture. Exact
+capability ID reuse additionally requires matching system type, operation ID
+and effect class plus a valid descriptor digest. The reused descriptor remains
+`INACTIVE`, non-executable and grants neither authority nor an effect. Every
+missing exact match becomes a deterministic versioned `UNRESOLVED_INTENT` with
+risk, dependencies and recommendation. Exact incompatible collisions,
+duplicates, lifecycle/digest/discovery tampering and hidden fields deny the
+whole resolution; fuzzy names remain unresolved.
 
 ### Check
 
-- Focused BLD-001-G2 tests: **5/5 PASS**.
-- Complete repository tests: **163/163 PASS in split source-boundary runs**.
-  The 158 non-supply-chain tests ran with the matching existing dependency
-  tree; after removing that temporary ignored symlink, the five
-  source-tree/supply-chain/public-staging tests passed separately against the
-  clean source boundary. The expected combined-run staging rejection of that
-  temporary symlink was retained as negative evidence, not treated as product
-  failure.
-- Repository checksums: **237/237 PASS**.
+- Focused BLD-001-G3 tests: **6/6 PASS**.
+- Complete repository tests: **169/169 PASS in split source-boundary runs**.
+  The 161 non-source-boundary tests ran with the matching existing dependency
+  tree; after removing that temporary untracked symlink, all eight clean
+  source-tree/supply-chain/public-staging tests passed separately.
+- Repository checksums: **241/241 PASS**.
 - Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
   PASS.
-- Video smoke: not run because no video source, asset, renderer, schema or
-  runtime byte changed.
+- Video/OpenClaw/Docker smoke: not run because no video, container, plugin,
+  Gateway, Broker or runtime byte changed. The one full isolated Builder smoke
+  remains assigned to G6 after relevant bytes freeze.
 - Implementation commit:
-  `a1ec061cdef16ab8c4fd03938f45c0270bdfbc63`.
-- Evidence: `docs/development/evidence/bld-001-g2-20260802.json`.
+  `f845c37472f24d6ad4e8b0bfd50f6d105a98efc3`.
+- Evidence: `docs/development/evidence/bld-001-g3-20260802.json`.
 
 ### Act
 
-Close G2 at **2/8** with verdict
-`LOCAL_BLD_001_G2_PASS_DISCOVERY_RECORD_ONLY_NO_AUTHORITY_EFFECT_PRODUCTION_OR_RELEASE_CLAIM`.
-Do not reopen G1 or G2 without regression evidence. Keep WIP at one and advance
-the same worktree to G3 registered capability reuse plus inactive
-`UNRESOLVED_INTENT` proposals.
+Close G3 at **3/8** with verdict
+`LOCAL_BLD_001_G3_PASS_INACTIVE_CAPABILITY_REUSE_AND_GAP_PLAN_ONLY_NO_AUTHORITY_EFFECT_PRODUCTION_OR_RELEASE_CLAIM`.
+Do not reopen G1, G2 or G3 without regression evidence. Keep WIP at one and
+advance the same worktree to G4 deterministic planning and generic scaffolds.
