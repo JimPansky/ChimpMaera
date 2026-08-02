@@ -133,6 +133,7 @@ demo/runtime/policy-evaluator.mjs	demo/runtime/policy-evaluator.mjs	0644
 demo/runtime/policy-generation-fence.mjs	demo/runtime/policy-generation-fence.mjs	0644
 demo/runtime/server.mjs	demo/runtime/server.mjs	0644
 demo/company-data/validate-company-data-pack.mjs	demo/company-data/validate-company-data-pack.mjs	0644
+demo/company-data/validate-company-data-graph.mjs	demo/company-data/validate-company-data-graph.mjs	0644
 demo/seed-and-flow.sh	demo/seed-and-flow.sh	0755
 demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
@@ -207,6 +208,7 @@ tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	06
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/company-data-pack.test.mjs	tests/company-data-pack.test.mjs	0644
+tests/company-data-graph.test.mjs	tests/company-data-graph.test.mjs	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/fixtures/builder/g2-zoo-system.json	tests/fixtures/builder/g2-zoo-system.json	0644
 tests/fixtures/builder/g3-capability-registry.json	tests/fixtures/builder/g3-capability-registry.json	0644

@@ -67,6 +67,25 @@ export function validateCompanyDataPack({ pack, schema, packBytes, schemaBytes, 
   const digests = {};
   const checks = [];
 
+  if (Buffer.isBuffer(packBytes)) {
+    try {
+      if (stableJson(JSON.parse(packBytes)) !== stableJson(pack)) {
+        addViolation(violations, "PACK_BYTES_MISMATCH", "$", "Validated pack does not match the supplied pack bytes.");
+      }
+    } catch {
+      addViolation(violations, "PACK_BYTES_MISMATCH", "$", "Supplied pack bytes are not valid JSON.");
+    }
+  }
+  if (Buffer.isBuffer(schemaBytes)) {
+    try {
+      if (stableJson(JSON.parse(schemaBytes)) !== stableJson(schema)) {
+        addViolation(violations, "SCHEMA_BYTES_MISMATCH", "$schema", "Compiled schema does not match the supplied schema bytes.");
+      }
+    } catch {
+      addViolation(violations, "SCHEMA_BYTES_MISMATCH", "$schema", "Supplied schema bytes are not valid JSON.");
+    }
+  }
+
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
   const validateSchema = ajv.compile(schema);
