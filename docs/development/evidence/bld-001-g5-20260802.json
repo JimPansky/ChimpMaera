@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G5-20260802",
+  "issueId": "BLD-001",
+  "claimIds": [
+    "BLD-001-G5"
+  ],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "6a03d708a529bda98730081be626eb55bc155171",
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 5/8",
+    "facts": [
+      "One deterministic G5 workflow verifies and binds the exact G4 Plan, contract and capability digests before producing local quality evidence.",
+      "Focused checks enforce synthetic-only inputs, inactive generic contracts, capability provenance, readback/recovery reconciliation and separate lifecycle routing.",
+      "A reused read requires matching no-change state, readback and receipt digests; a reusable reversible write requires a distinct effect state and final rollback to the exact prior digest.",
+      "UNRESOLVED_INTENT and higher-effect Owner-route-only operations remain explicit non-success with no readback or receipt fields.",
+      "Installation, activation, mutation and publication have four independent configured route decisions and digest bindings; no aggregate approval exists.",
+      "The emitted evidence package links BLD-001 and BLD-001-G5 and remains synthetic, locally_validated and NOT_RELEASED."
+    ]
+  },
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "source Plan digest tamper",
+      "capability binding substitution",
+      "readback state mismatch",
+      "rollback-state mismatch",
+      "attempted unresolved-intent execution",
+      "lifecycle-route omission",
+      "duplicate lifecycle-route category",
+      "aggregate approval field",
+      "raw or secret evidence field",
+      "post-report release-status mutation"
+    ],
+    "result": "Binding, reconciliation, lifecycle-route and evidence-shape drift denies; unresolved capability state stays explicit non-success rather than becoming success evidence."
+  },
+  "validation": {
+    "focused": "6/6 PASS including public JSON Schema, deterministic report, independent lifecycle routes, readback/unresolved reconciliation, ordering canonicalization, negative matrix and report mutation verification",
+    "completeRepository": "183/183 PASS in split source-boundary runs: 178/178 non-source-boundary plus 5/5 clean source-tree/supply-chain/public-staging",
+    "checksums": "247/247 PASS",
+    "supplyChain": "6/6 PASS; repository-declaration scope only",
+    "deterministicPublicStaging": "PASS",
+    "proportionateSmoke": "NOT_RUN: no video, container, plugin, Gateway, Broker or runtime byte changed; the isolated Builder/OpenClaw read and reversible-write smoke is the exact G6 gate"
+  },
+  "reversibleDecision": {
+    "assumption": "A G5 workflow may pass as PASS_PREPARATION_REQUIRED while a capability remains UNRESOLVED_INTENT, provided that operation is explicit non-success and carries no readback or receipt.",
+    "risk": "A workflow-level pass could be mistaken for adapter readiness or collapse four independent Owner lifecycle decisions.",
+    "fallback": "Bind observations and route decisions independently to the exact source Plan, deny mismatch or aggregation, retain NOT_RELEASED, and revert 6a03d70 if G6 cannot consume the contract without privileged specialization.",
+    "reviewPoint": "BLD-001-G6 fresh default-off isolated OpenClaw read and reversible-write E2E"
+  },
+  "rollback": {
+    "status": "VERIFIED_BY_BOUNDARY",
+    "action": "Revert 6a03d70, leave all Builder scaffolds inactive and retain this evidence as negative/history record.",
+    "residue": "No runtime, service, credential, external account, customer system, installation, activation, mutation or publication was created or changed."
+  },
+  "nonClaims": [
+    "not an installed or activated adapter or skill",
+    "not a live provider write, production readback or customer-data result",
+    "not the G6 isolated OpenClaw read and reversible-write E2E",
+    "not hostile-host containment, security certification or universal agent/system compatibility evidence",
+    "not a released, published or publicly available feature"
+  ],
+  "externalMutationPerformed": false
+}

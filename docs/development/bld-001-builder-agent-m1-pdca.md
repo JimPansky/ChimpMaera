@@ -6,7 +6,7 @@ Delivery status: `in_progress`
 Claim status: `NOT_PROVEN`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
-Current metric: **4/8**
+Current metric: **5/8**
 
 ## Local issue contract
 
@@ -103,8 +103,8 @@ evidence. The decision matrix is not an executable authority token.
 
 ## Autonomy gate
 
-- **Exact phase/metric:** BLD-001 Builder Agent M1, **4/8 → 8/8**; G1 through
-  G4 are complete and the next bounded slice targets G5 only.
+- **Exact phase/metric:** BLD-001 Builder Agent M1, **5/8 → 8/8**; G1 through
+  G5 are complete and the next bounded slice targets G6 only.
 - **Autonomously reachable:** contracts, synthetic fixtures, tests, docs,
   isolated later runtime fixtures and local evidence require no external data
   or mutation.
@@ -113,8 +113,8 @@ evidence. The decision matrix is not an executable authority token.
 - **External/publication dependent:** push, PR, merge, tag, release, upload,
   outreach, production/customer evidence and mutation.
 - **Completed metric rule:** all prerequisite video/architecture gates and
-  AAS dependencies plus BLD-001-G1/G2/G3/G4 are complete and are not repeated
-  without regression evidence.
+  AAS dependencies plus BLD-001-G1/G2/G3/G4/G5 are complete and are not
+  repeated without regression evidence.
 
 ## Reversible decisions
 
@@ -154,48 +154,57 @@ evidence. The decision matrix is not an executable authority token.
   denial remain mandatory; revert `6babee7` if G5/G7 cannot validate them
   without privileged specialization. **Review:** G5 evidence/readback workflow
   and G7 second-system conformance.
+- **Assumption:** G5 quality evidence may pass while a capability remains
+  `UNRESOLVED_INTENT`, but only as `PASS_PREPARATION_REQUIRED`; that operation
+  must remain explicit non-success with no readback or receipt. **Risk:** a
+  workflow-level pass could be mistaken for adapter readiness. **Fallback:**
+  bind every observation to the exact Plan, contract and capability digests,
+  keep unresolved and Owner-route-only operations unexecuted, and preserve the
+  `NOT_RELEASED` evidence boundary. **Review:** G6 must use a fresh default-off
+  isolated runtime with an actually admitted reversible-write capability.
 
 ## PDCA status
 
 ### Plan
 
-Keep the full 8/8 contract frozen. G1 through G3 remain closed. Recompute their
-typed outputs inside one deterministic G4 planner and emit a generic data-only
-system plan, graph, scaffolds, profile diff, fixtures and rollback contract.
+Keep the full 8/8 contract frozen. G1 through G4 remain closed. Bind the exact
+G4 Plan into one deterministic G5 quality workflow that runs focused checks,
+negative enforcement, synthetic readback/reconciliation and four independent
+Owner-configured lifecycle routes, then emits an honest evidence package.
 
 ### Do
 
-G1 through G3 remain closed. Implemented one generic G4 TypeScript planner and
-public result JSON Schema. The planner recomputes discovery, capability
-resolution and authority, rejects tenant/effect/right mismatches, then emits a
-synthetic planned-system manifest, dependency graph, generic ADAPTER or SKILL
-contracts, Owner-profile diff, synthetic fixture assertions and per-operation
-rollback plan. Capability descriptors and unresolved proposals are bound by
-digest; every scaffold remains `INACTIVE`, non-executable and grants neither
-authority nor effect authorization. There is no target-specific executable
-template or customer script path.
+G1 through G4 remain closed. Implemented one generic G5 TypeScript quality and
+evidence workflow plus public result JSON Schema. Every observation binds the
+exact Plan, contract and capability digests. Reused reads require matching
+no-change readback and receipt evidence; reversible writes require a changed
+state plus rollback to the exact prior digest; unresolved capabilities remain
+explicit non-success with no evidence-shaped success fields. Installation,
+activation, mutation and publication each receive their own route decision and
+digest—there is no aggregate approval. The emitted evidence package stays
+synthetic, `locally_validated` and `NOT_RELEASED`.
 
 ### Check
 
-- Focused BLD-001-G4 tests: **8/8 PASS**.
-- Complete repository tests: **177/177 PASS in split source-boundary runs**.
-  The 172 non-source-boundary tests ran with the matching existing dependency
+- Focused BLD-001-G5 tests: **6/6 PASS**.
+- Complete repository tests: **183/183 PASS in split source-boundary runs**.
+  The 178 non-source-boundary tests ran with the matching existing dependency
   tree; after removing that temporary untracked symlink, all five clean
   source-tree/supply-chain/public-staging tests passed separately.
-- Repository checksums: **244/244 PASS**.
+- Repository checksums: **247/247 PASS**.
 - Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
   PASS.
 - Video/OpenClaw/Docker smoke: not run because no video, container, plugin,
   Gateway, Broker or runtime byte changed. The one full isolated Builder smoke
-  remains assigned to G6 after the G5 evidence workflow freezes relevant
-  contracts.
+  remains assigned to G6 and will consume the now-frozen G5 evidence contract.
 - Implementation commit:
-  `6babee7d6498edcca169ffb0dfba7b9e6e591d92`.
-- Evidence: `docs/development/evidence/bld-001-g4-20260802.json`.
+  `6a03d708a529bda98730081be626eb55bc155171`.
+- Evidence: `docs/development/evidence/bld-001-g5-20260802.json`.
 
 ### Act
 
-Close G4 at **4/8** with verdict
-`LOCAL_BLD_001_G4_PASS_GENERIC_DATA_ONLY_PLAN_AND_SCAFFOLDS_NO_AUTHORITY_EFFECT_ACTIVATION_PRODUCTION_OR_RELEASE_CLAIM`.
-Do not reopen G1 through G4 without regression evidence. Keep WIP at one and
-advance the same worktree to G5 quality, security and evidence workflow.
+Close G5 at **5/8** with verdict
+`LOCAL_BLD_001_G5_PASS_SYNTHETIC_QUALITY_EVIDENCE_PREPARATION_REQUIRED_NO_INSTALLATION_ACTIVATION_MUTATION_PUBLICATION_PRODUCTION_OR_RELEASE_CLAIM`.
+Do not reopen G1 through G5 without regression evidence. Keep WIP at one and
+advance the same worktree to G6 fresh default-off isolated OpenClaw read and
+reversible-write E2E.
