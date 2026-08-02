@@ -167,20 +167,22 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertNotIn("# ChimpMaera v0.1", root_readme)
         self.assertNotIn("ChimpMaera v0.1 is", root_readme)
         self.assertIn(
-            "**Current public release:** [`v0.2.0-poc.20260802.2`]"
+            "**Current public release:** [`v0.2.0-poc.20260802.3`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.2) — the current published regular release.",
+            "v0.2.0-poc.20260802.3) — the current published regular release.",
             root_readme,
         )
         self.assertIn(
-            "**Daily candidate:** `v0.2.0-poc.20260802.3` — **not published**;"
-            " local governed company-data candidate only.",
+            "**Today's Daily:** [`v0.2.0-poc.20260802.3`]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
+            "v0.2.0-poc.20260802.3)"
+            " — the Daily snapshot dated 2026-08-02.",
             root_readme,
         )
         self.assertIn(
             "**Previous Daily provenance:** [`v0.2.0-poc.20260802.2`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.2) — the current published predecessor Daily.",
+            "v0.2.0-poc.20260802.2) — the historical predecessor Daily.",
             root_readme,
         )
         self.assertIn(

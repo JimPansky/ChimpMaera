@@ -31,9 +31,9 @@ boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
 
 ## Release status
 
-- **Current public release:** [`v0.2.0-poc.20260802.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.2) — the current published regular release.
-- **Daily candidate:** `v0.2.0-poc.20260802.3` — **not published**; local governed company-data candidate only.
-- **Previous Daily provenance:** [`v0.2.0-poc.20260802.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.2) — the current published predecessor Daily.
+- **Current public release:** [`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3) — the current published regular release.
+- **Today's Daily:** [`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3) — the Daily snapshot dated 2026-08-02.
+- **Previous Daily provenance:** [`v0.2.0-poc.20260802.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.2) — the historical predecessor Daily.
 - **Historical predecessor:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release.
 
 Daily snapshots are not production releases, security certifications, hosted
