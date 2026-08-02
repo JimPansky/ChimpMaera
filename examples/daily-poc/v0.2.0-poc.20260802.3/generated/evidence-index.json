@@ -1,0 +1,190 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.3",
+  "claims": [
+    {
+      "category": "FEATURE",
+      "evidenceRefs": [
+        "EVID-DATA-001",
+        "EVID-DATA-001-TEST"
+      ],
+      "id": "CM-CLAIM-DATA-001-PACK",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "FEATURE",
+      "evidenceRefs": [
+        "EVID-DATA-002",
+        "EVID-DATA-002-TEST"
+      ],
+      "id": "CM-CLAIM-DATA-002-GRAPH",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "OPERATIONS",
+      "evidenceRefs": [
+        "EVID-DATA-003",
+        "EVID-DATA-003-TEST"
+      ],
+      "id": "CM-CLAIM-DATA-003-REGISTRY",
+      "maturity": "LOCALLY_VALIDATED"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVID-DATA-001",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "demo/company-data/validate-company-data-pack.mjs",
+      "sha256": "c1cdbfd235ffc3648a6aa439d3b06ac627d2b4807140ad44642c2446ef552919",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-DATA-001-TEST",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "tests/company-data-pack.test.mjs",
+      "sha256": "b1c6f1a3f8abc0605e49c9307c69ac255b337af1ec84b3bacd05a5612e972a46",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-DATA-002",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "demo/company-data/validate-company-data-graph.mjs",
+      "sha256": "9c893f71387c68e3893e20e6d5c805a298eb1b9612cff9c1747e64c23457ddc2",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-DATA-002-TEST",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "tests/company-data-graph.test.mjs",
+      "sha256": "3b326ea362a317096ce28573c824473ffeec8b65c760950636d0b038dfbb9cf8",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-DATA-003",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "demo/company-data/validate-mapping-registry.mjs",
+      "sha256": "13f53ea29299a5297345d696992d9e0dcffa61f9dd72ef9e3f0a5b361735c78a",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-DATA-003-TEST",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "tests/mapping-registry.test.mjs",
+      "sha256": "48b8f150de6f711aefe946c0920a9981e32a9282592d3a0dfedecaaab6501827",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-DATA-GUIDE",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "docs/COMPANY-DATA-VALIDATION.md",
+      "sha256": "79b69d2cd72f62784d88b06bdf201cda91cd1679ec7cccf86a55800e5ce6a6b9",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    }
+  ],
+  "negativeProbes": [
+    {
+      "command": "Reject unknown type, duplicate identity, credential/endpoint/SQL/script field and invalid source digest",
+      "evidenceRefs": [
+        "EVID-DATA-001"
+      ],
+      "id": "PROBE-DATA-001-INPUT",
+      "result": "PASS"
+    },
+    {
+      "command": "Reject missing prerequisite, illegal transition, time travel, cross-customer asset and unclassified cycle",
+      "evidenceRefs": [
+        "EVID-DATA-002"
+      ],
+      "id": "PROBE-DATA-002-INTEGRITY",
+      "result": "PASS"
+    },
+    {
+      "command": "Reject target 404, target type/key drift, tampered replay, name-only reuse and second active mapping",
+      "evidenceRefs": [
+        "EVID-DATA-003"
+      ],
+      "id": "PROBE-DATA-003-LINEAGE",
+      "result": "PASS"
+    }
+  ],
+  "previousVerifiedSnapshot": {
+    "artifactManifestSha256": "085325944a9f00573a2949860bb1d128552933ed11c61d9e5aa4d2187cf8cabe",
+    "date": "2026-08-02",
+    "manifestSha256": "a57b774f132cd739b4b38eed3bc49237aa28cf9b65372600631c84ec6c902b0f",
+    "sequence": 2,
+    "snapshotDigest": "96d46c138799b21b245de8f23c33fc3aafdce639e46736aa283b1a5ac230fde5",
+    "sourceHead": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "version": "v0.2.0-poc.20260802.2"
+  },
+  "schemaVersion": "chimpmaera.daily-poc-evidence-index/v1",
+  "source": {
+    "base": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "head": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  },
+  "tests": [
+    {
+      "command": "npm run daily-poc:test",
+      "evidenceRefs": [
+        "EVID-DATA-GUIDE"
+      ],
+      "id": "TEST-DATA-DAILY-ADVERSARIAL",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run company-data:test",
+      "evidenceRefs": [
+        "EVID-DATA-001",
+        "EVID-DATA-002",
+        "EVID-DATA-003"
+      ],
+      "id": "TEST-DATA-FOCUSED",
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "evidenceRefs": [
+        "EVID-DATA-001",
+        "EVID-DATA-002",
+        "EVID-DATA-003"
+      ],
+      "id": "TEST-DATA-FULL",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run supply-chain:verify",
+      "evidenceRefs": [
+        "EVID-DATA-GUIDE"
+      ],
+      "id": "TEST-DATA-SUPPLY-CHAIN",
+      "result": "PASS"
+    }
+  ]
+}

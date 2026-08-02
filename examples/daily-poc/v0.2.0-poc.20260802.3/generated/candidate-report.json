@@ -1,0 +1,63 @@
+{
+  "artifactManifestSha256": "4321d8b42c0c3d31d37cfe5683971ed99f7f6e45375f9c6ebc0ff1cccb8d3d61",
+  "candidateVersion": "v0.2.0-poc.20260802.3",
+  "manifestSha256": "86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042",
+  "materialChange": {
+    "changedFiles": [
+      ".github/workflows/daily-poc-candidate.yml",
+      "README.md",
+      "SHA256SUMS",
+      "demo/company-data/validate-company-data-graph.mjs",
+      "demo/company-data/validate-company-data-pack.mjs",
+      "demo/company-data/validate-mapping-registry.mjs",
+      "docs/COMPANY-DATA-VALIDATION.md",
+      "docs/DAILY-POC-CANDIDATES.md",
+      "examples/company-data/erp-crm-canonical-company-data-pack.example.json",
+      "examples/company-data/erp-crm-canonical-company-data-pack.schema.json",
+      "examples/company-data/erp-crm-demo-data-object-catalog.json",
+      "examples/company-data/erp-crm-demo-seed-blueprint.json",
+      "examples/company-data/erp-crm-object-dependency-graph.json",
+      "examples/company-data/mapping-registry.schema.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/.daily-poc-state.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/SHA256SUMS",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/artifact-manifest.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/candidate-report.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/demo-guide.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/evidence-index.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/evidence-summary.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/known-limitations.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/provenance.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/readme-pointer.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/release-notes.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/run-report.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/sbom.spdx.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/snapshot.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-adapter.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-brief.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-narration.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-storyboard.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/manifest.json",
+      "package.json",
+      "release/public-files.manifest",
+      "tests/company-data-graph.test.mjs",
+      "tests/company-data-pack.test.mjs",
+      "tests/daily-poc.test.mjs",
+      "tests/mapping-registry.test.mjs"
+    ],
+    "commitCount": 6
+  },
+  "publication": {
+    "githubPrerelease": false,
+    "readmeMutation": false,
+    "youtubeUpload": false
+  },
+  "publicationEffects": [],
+  "reasons": [],
+  "releaseTitle": "ChimpMaera POC Daily — 2026-08-02",
+  "schemaVersion": "chimpmaera.daily-poc-candidate-report/v1",
+  "verdict": "READY_CANDIDATE",
+  "video": {
+    "rendered": false,
+    "status": "DISABLED_DEFAULT"
+  }
+}

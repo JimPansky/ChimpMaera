@@ -1,0 +1,81 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.3",
+  "compiler": "chimpmaera.daily-poc-compiler/v1",
+  "manifestSha256": "86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042",
+  "materialChange": {
+    "changedFiles": [
+      ".github/workflows/daily-poc-candidate.yml",
+      "README.md",
+      "SHA256SUMS",
+      "demo/company-data/validate-company-data-graph.mjs",
+      "demo/company-data/validate-company-data-pack.mjs",
+      "demo/company-data/validate-mapping-registry.mjs",
+      "docs/COMPANY-DATA-VALIDATION.md",
+      "docs/DAILY-POC-CANDIDATES.md",
+      "examples/company-data/erp-crm-canonical-company-data-pack.example.json",
+      "examples/company-data/erp-crm-canonical-company-data-pack.schema.json",
+      "examples/company-data/erp-crm-demo-data-object-catalog.json",
+      "examples/company-data/erp-crm-demo-seed-blueprint.json",
+      "examples/company-data/erp-crm-object-dependency-graph.json",
+      "examples/company-data/mapping-registry.schema.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/.daily-poc-state.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/SHA256SUMS",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/artifact-manifest.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/candidate-report.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/demo-guide.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/evidence-index.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/evidence-summary.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/known-limitations.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/provenance.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/readme-pointer.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/release-notes.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/run-report.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/sbom.spdx.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/snapshot.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-adapter.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-brief.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-narration.md",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/generated/video-storyboard.json",
+      "examples/daily-poc/v0.2.0-poc.20260802.2/manifest.json",
+      "package.json",
+      "release/public-files.manifest",
+      "tests/company-data-graph.test.mjs",
+      "tests/company-data-pack.test.mjs",
+      "tests/daily-poc.test.mjs",
+      "tests/mapping-registry.test.mjs"
+    ],
+    "commits": [
+      {
+        "id": "b817de31360f8ae8ba71c33d49df3cec8e88f1e5",
+        "subject": "feat: release BLD-001 Builder Agent in Daily .2 (#23)"
+      },
+      {
+        "id": "d2b9aa3e0f88dfdc81a8b8c3e30aa18fd295fa39",
+        "subject": "feat: validate canonical company data packs"
+      },
+      {
+        "id": "a9fa2c676fa1c82af5c974a609e62d7b1d620c3b",
+        "subject": "feat: validate company data dependency graphs"
+      },
+      {
+        "id": "4a42315c15c66842760fc654394637b43451039b",
+        "subject": "feat: validate mapping registry lineage"
+      },
+      {
+        "id": "ef266f817b44e306a434b571ed17f7e408ad1bbf",
+        "subject": "chore: prepare Daily .3 release identity"
+      },
+      {
+        "id": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+        "subject": "chore: connect Daily .2 source lineage"
+      }
+    ]
+  },
+  "publicationEffects": [],
+  "schemaVersion": "chimpmaera.daily-poc-provenance/v1",
+  "source": {
+    "base": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "head": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  }
+}

@@ -9,11 +9,11 @@ claims, non-claims, the README pointer, evidence indexes and video inputs.
 
 - Candidate version: `v<next-semver>-poc.YYYYMMDD.N`.
 - `N` starts at 1 and increments for each additional candidate on the same day.
-- Current repository example: `v0.2.0-poc.20260802.2`.
-- The current public release is `v0.1.0`; it is a separate stable predecessor
-  line, not the identity of the current Daily candidate.
-- `v0.2.0-poc.20260801.1` is the current example's explicit provenance
-  predecessor only. It must not appear in Today or Current candidate fields.
+- Current repository example: `v0.2.0-poc.20260802.3`.
+- The current public release is `v0.2.0-poc.20260802.2`; it is the explicit
+  publication and provenance predecessor, not the identity of the current
+  Daily candidate.
+- `v0.2.0-poc.20260802.2` must not appear in Today or Current candidate fields.
 - Until a tag and GitHub release exist, the Daily must be described as a local
   candidate and **not published**. A prepared or merged candidate is not a
   release.
@@ -45,7 +45,7 @@ the manifest or compiler in another worktree.
 npm ci --ignore-scripts --no-audit --no-fund
 npm run daily-poc:test
 node scripts/daily-poc.mjs prepare \
-  --manifest examples/daily-poc/v0.2.0-poc.20260802.2/manifest.json \
+  --manifest examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json \
   --source-repo /path/to/clean/frozen/source \
   --output /path/to/new/candidate-output
 ```

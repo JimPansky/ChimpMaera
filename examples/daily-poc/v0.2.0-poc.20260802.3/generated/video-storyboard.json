@@ -1,0 +1,54 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.3",
+  "schemaVersion": "chimpmaera.daily-poc-storyboard/v1",
+  "segments": [
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-DATA-001-PACK",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The local synthetic Company Data Pack validator checks its closed schema, forbidden fields, canonical and semantic identity uniqueness, and exact catalog, graph and source-blueprint digests before any mutation."
+        },
+        {
+          "id": "CM-CLAIM-DATA-002-GRAPH",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The local graph validator checks 90 nodes, 88/88 source coverage, 193 edges, references, cardinality, six classified cycles and state, time, money, quantity and customer rules, then emits a deterministic 270-operation staged DAG."
+        }
+      ],
+      "durationSeconds": 16,
+      "id": "VIDEO-SEGMENT-DATA-PACK-GRAPH",
+      "order": 1,
+      "purpose": "Explain digest-pinned pack validation and the staged dependency graph.",
+      "title": "Validate before mutation",
+      "useCaseRefs": [
+        "USE-CASE-GOVERNED-COMPANY-DATA"
+      ],
+      "visuals": [
+        "Show pack to graph to 270-operation staged DAG.",
+        "Show zero mutation and validation-only receipt fields."
+      ]
+    },
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-DATA-003-REGISTRY",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The local synthetic Mapping Registry validates exact canonical-to-target scope, one active binding, provenance, readback digests, append replay lineage and explicit stale, orphaned, superseded and compensated states."
+        }
+      ],
+      "durationSeconds": 14,
+      "id": "VIDEO-SEGMENT-DATA-LINEAGE",
+      "order": 2,
+      "purpose": "Explain append-oriented target binding and fail-closed drift states.",
+      "title": "Exact lineage, never name-only reuse",
+      "useCaseRefs": [
+        "USE-CASE-GOVERNED-COMPANY-DATA"
+      ],
+      "visuals": [
+        "Show one active binding and explicit stale, orphaned, superseded and compensated states.",
+        "Show 404, drift and replay denials."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042"
+}
