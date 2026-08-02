@@ -14,3 +14,4 @@ export * from "./skill-admission.js";
 export * from "./protected-audit-timeline.js";
 export * from "./builder-authority.js";
 export * from "./builder-discovery.js";
+export * from "./builder-capability-resolution.js";

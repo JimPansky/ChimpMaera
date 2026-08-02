@@ -149,6 +149,7 @@ package.json	package.json	0644
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
 packages/contracts/src/builder-authority.ts	packages/contracts/src/builder-authority.ts	0644
 packages/contracts/src/builder-discovery.ts	packages/contracts/src/builder-discovery.ts	0644
+packages/contracts/src/builder-capability-resolution.ts	packages/contracts/src/builder-capability-resolution.ts	0644
 packages/contracts/src/capability-catalogue.ts	packages/contracts/src/capability-catalogue.ts	0644
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
@@ -167,6 +168,7 @@ packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	
 release/public-files.manifest	release/public-files.manifest	0644
 schemas/contracts/builder-authority-v1.schema.json	schemas/contracts/builder-authority-v1.schema.json	0644
 schemas/contracts/builder-discovery-v1.schema.json	schemas/contracts/builder-discovery-v1.schema.json	0644
+schemas/contracts/builder-capability-resolution-v1.schema.json	schemas/contracts/builder-capability-resolution-v1.schema.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
@@ -179,6 +181,7 @@ tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	06
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/builder-authority.test.ts	tests/builder-authority.test.ts	0644
 tests/builder-discovery.test.ts	tests/builder-discovery.test.ts	0644
+tests/builder-capability-resolution.test.ts	tests/builder-capability-resolution.test.ts	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
@@ -197,6 +200,7 @@ tests/demo-policy-lifecycle.test.mjs	tests/demo-policy-lifecycle.test.mjs	0644
 tests/daily-poc.test.mjs	tests/daily-poc.test.mjs	0644
 tests/fixtures/daily-poc/negative-matrix.json	tests/fixtures/daily-poc/negative-matrix.json	0644
 tests/fixtures/builder/g2-zoo-system.json	tests/fixtures/builder/g2-zoo-system.json	0644
+tests/fixtures/builder/g3-capability-registry.json	tests/fixtures/builder/g3-capability-registry.json	0644
 tests/demo-fixture-manifest.test.ts	tests/demo-fixture-manifest.test.ts	0644
 tests/poc-early-admin-ai-setup.test.ts	tests/poc-early-admin-ai-setup.test.ts	0644
 tests/poc-guided-demo-bootstrap.test.ts	tests/poc-guided-demo-bootstrap.test.ts	0644

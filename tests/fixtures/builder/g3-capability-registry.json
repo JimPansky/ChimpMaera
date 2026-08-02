@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "chimpmaera.builder/capability-registration/v1",
+  "capabilityId": "habitat.temperature.read",
+  "catalogueId": "chimpmaera.local/synthetic-habitat-capabilities",
+  "catalogueVersion": "1.0.0",
+  "lifecycleState": "INACTIVE",
+  "systemTypes": [
+    "unknown.habitat-controller"
+  ],
+  "operationIds": [
+    "habitat.temperature.read"
+  ],
+  "effectClasses": [
+    "READ_ONLY"
+  ],
+  "dependencyRefs": [
+    "guide:unknown-habitat-v1",
+    "manifest:zoo-habitat-v1"
+  ],
+  "evidence": [
+    "docs/development/evidence/bld-001-g3-20260802.json"
+  ],
+  "recommendation": "Reuse this exact inactive descriptor for planning; admission, authority and execution remain separate.",
+  "descriptorDigest": "45b5cd2f099919bc57ae4f5b23e6b4b225522ad8d796454f87ce87cce9e3c654"
+}
