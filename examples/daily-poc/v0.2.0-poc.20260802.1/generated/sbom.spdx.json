@@ -1,0 +1,56 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "annotations": [
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-PACKAGE-METADATA-LOCAL package.json sha256:5cd7368e792f296da732b53d1f990361c0707ef1ec8df4253cecc002b621efdc"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-README-LOCAL README.md sha256:4507b3ab742a1fd024367f8dac44106425edc1a3d5d0893ef097ae750970f1bf"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-ROOT-CHECKSUMS-LOCAL SHA256SUMS sha256:51827ff502f776225cc7db354dd48a3f3b949a264a28306fcf6117b0d02be424"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-VIDEO-LINK-TEST-LOCAL tools/video-production-reference/tests/test_cm_video.py sha256:0edbe98673190f01f989d1aba814f82249b3c5408b157de6586d391bd427f236"
+    }
+  ],
+  "creationInfo": {
+    "comment": "Timestamp is deterministically derived from the canonical manifest date.",
+    "created": "2026-08-02T00:00:00Z",
+    "creators": [
+      "Tool: chimpmaera.daily-poc-compiler/v1"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://chimpmaera.local/spdx/v0.2.0-poc.20260802.1",
+  "name": "ChimpMaera-v0.2.0-poc.20260802.1-daily-poc-inputs",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-ChimpMaera",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "OTHER",
+          "referenceLocator": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+          "referenceType": "gitCommit"
+        }
+      ],
+      "filesAnalyzed": false,
+      "name": "ChimpMaera",
+      "versionInfo": "v0.2.0-poc.20260802.1"
+    }
+  ],
+  "spdxVersion": "SPDX-2.3"
+}

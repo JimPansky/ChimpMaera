@@ -1,0 +1,9 @@
+{
+  "artifactManifestSha256": "5c0712f78271163ce0fb209a9ac6b76db7f27274f6c4971d24dbec4016722a2e",
+  "date": "2026-08-02",
+  "manifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+  "sequence": 1,
+  "snapshotDigest": "2450394e85f35e17a53d213a6cfb3a4fb1e46ddd312de961e2d7eed880f5fce7",
+  "sourceHead": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+  "version": "v0.2.0-poc.20260802.1"
+}

@@ -2,7 +2,7 @@
   "name": "chimpmaera",
   "version": "0.1.0",
   "private": true,
-  "description": "Local synthetic ChimpMaera v0.1 proof of concept.",
+  "description": "Local synthetic proof of concept for governed AI workflows.",
   "license": "Apache-2.0",
   "type": "module",
   "engines": {

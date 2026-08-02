@@ -1,0 +1,30 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.1",
+  "compiler": "chimpmaera.daily-poc-compiler/v1",
+  "manifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+  "materialChange": {
+    "changedFiles": [
+      "README.md",
+      "SHA256SUMS",
+      "package.json",
+      "tools/video-production-reference/tests/test_cm_video.py"
+    ],
+    "commits": [
+      {
+        "id": "7e9e6c7ee4306e34ee82e40e444170b20c3affbb",
+        "subject": "docs: correct ChimpMaera video links"
+      },
+      {
+        "id": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+        "subject": "fix: clarify release identity and candidate status"
+      }
+    ]
+  },
+  "publicationEffects": [],
+  "schemaVersion": "chimpmaera.daily-poc-provenance/v1",
+  "source": {
+    "base": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "head": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  }
+}

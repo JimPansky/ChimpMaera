@@ -1,0 +1,348 @@
+{
+  "schemaVersion": "chimpmaera.daily-poc/v1",
+  "date": "2026-08-02",
+  "sequence": 1,
+  "source": {
+    "repository": "https://github.com/JimPansky/ChimpMaera.git",
+    "base": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "head": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+  },
+  "targetVersion": "v0.2.0-poc.20260802.1",
+  "history": [
+    {
+      "date": "2026-08-01",
+      "sequence": 1,
+      "version": "v0.2.0-poc.20260801.1",
+      "sourceHead": "c0fa407d8224e98bdba9466850b8247f458ce914",
+      "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+      "artifactManifestSha256": "fcb24698a5965ba878f163499ed65988d8c7e29e1f065c160f5b5a52e6640b66",
+      "snapshotDigest": "43cf097d1c8cb45f4a672f77ce1069f8247169ecd4cf868d133c011d49a59ad8"
+    }
+  ],
+  "highlights": [
+    {
+      "id": "REL-DAILY-HIGHLIGHT-RELEASE-IDENTITY",
+      "title": "README release identity is explicit and honest",
+      "description": "The README now uses a timeless product heading, identifies v0.1.0 only as the current public stable predecessor, marks v0.2.0-poc.20260802.1 as not published and labels the 2026-08-01 Daily solely as provenance.",
+      "commitIds": [
+        "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+      ],
+      "issueIds": [
+        "REL-DAILY-003"
+      ],
+      "fileRefs": [
+        "README.md",
+        "package.json"
+      ],
+      "caseIds": [
+        "REL-DAILY-003"
+      ]
+    },
+    {
+      "id": "REL-DAILY-HIGHLIGHT-VIDEO-LINKS",
+      "title": "README video destinations and labels are current",
+      "description": "The README preserves its three video positions while replacing stale destinations with clean canonical YouTube URLs and public titles verified on 2026-08-02.",
+      "commitIds": [
+        "7e9e6c7ee4306e34ee82e40e444170b20c3affbb"
+      ],
+      "issueIds": [
+        "REL-DAILY-002"
+      ],
+      "fileRefs": [
+        "README.md"
+      ],
+      "caseIds": [
+        "REL-DAILY-002"
+      ]
+    }
+  ],
+  "useCases": [
+    {
+      "id": "USE-CASE-CURRENT-VIDEO-LINKS",
+      "title": "Open the three current ChimpMaera videos from the README",
+      "inputs": [
+        "A local checkout of source commit f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+      ],
+      "steps": [
+        "Open README.md and locate the Watch ChimpMaera section.",
+        "Confirm the links appear in the documented overview, implementation and security order.",
+        "Open the clean URLs https://youtu.be/Dq_XLEzh5I8, https://youtu.be/w4fWgalD_WQ and https://youtu.be/SEPbE-EVoNs."
+      ],
+      "expectedOutcomes": [
+        "The three README labels match the current public YouTube titles as observed on 2026-08-02.",
+        "The three links contain no tracking query parameters.",
+        "The retired IDs are absent from the mutable README."
+      ],
+      "demoUtility": "Provides a precise, low-risk entry point to the current public project videos without changing runtime behavior.",
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "CONTROL-LINK-ORDER",
+      "description": "The three semantic README positions remain overview, implementation and security in that order.",
+      "default": true,
+      "allowedOverrides": [],
+      "dependencies": [
+        "Exact README-link test at the frozen source commit"
+      ]
+    },
+    {
+      "id": "CONTROL-PUBLICATION",
+      "description": "GitHub, YouTube and README publication effects are outside local candidate preparation.",
+      "default": false,
+      "allowedOverrides": [],
+      "dependencies": [
+        "Separate Owner-authorized publication stage"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVID-README-LOCAL",
+      "kind": "SOURCE",
+      "path": "README.md",
+      "sha256": "4507b3ab742a1fd024367f8dac44106425edc1a3d5d0893ef097ae750970f1bf",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+    },
+    {
+      "id": "EVID-PACKAGE-METADATA-LOCAL",
+      "kind": "SOURCE",
+      "path": "package.json",
+      "sha256": "5cd7368e792f296da732b53d1f990361c0707ef1ec8df4253cecc002b621efdc",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+    },
+    {
+      "id": "EVID-ROOT-CHECKSUMS-LOCAL",
+      "kind": "TEST",
+      "path": "SHA256SUMS",
+      "sha256": "51827ff502f776225cc7db354dd48a3f3b949a264a28306fcf6117b0d02be424",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+    },
+    {
+      "id": "EVID-VIDEO-LINK-TEST-LOCAL",
+      "kind": "TEST",
+      "path": "tools/video-production-reference/tests/test_cm_video.py",
+      "sha256": "0edbe98673190f01f989d1aba814f82249b3c5408b157de6586d391bd427f236",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212"
+    }
+  ],
+  "claims": [
+    {
+      "id": "CM-CLAIM-RELEASE-IDENTITY",
+      "category": "OPERATIONS",
+      "statement": "The locally validated README names v0.1.0 only as the stable predecessor, names v0.2.0-poc.20260801.1 only as the provenance predecessor, and gives v0.2.0-poc.20260802.1 a local-candidate status with publication disabled.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-DAILY-NOT-RELEASED",
+          "statement": "The v0.2.0-poc.20260802.1 Daily remains a local candidate and has no publication effects.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-CURRENT-VIDEO-LINKS",
+      "category": "FEATURE",
+      "statement": "The locally validated README contains the clean URLs https://youtu.be/Dq_XLEzh5I8, https://youtu.be/w4fWgalD_WQ and https://youtu.be/SEPbE-EVoNs in overview, implementation and security order.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-README-LINKS-NOT-RELEASED",
+          "statement": "The README correction is LOCALLY_VALIDATED / NOT_RELEASED and this candidate does not publish it.",
+          "contradictsClaimIds": []
+        },
+        {
+          "id": "NONCLAIM-NO-PRODUCT-RUNTIME-DELTA",
+          "statement": "This candidate claims no runtime, deployment, customer or production change.",
+          "contradictsClaimIds": []
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "id": "TEST-README-RELEASE-IDENTITY",
+      "command": "python3 -m unittest discover -s tools/video-production-reference/tests",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    },
+    {
+      "id": "TEST-EXACT-VIDEO-LINKS",
+      "command": "python3 -m unittest discover -s tools/video-production-reference/tests",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    },
+    {
+      "id": "TEST-ROOT-CHECKSUMS",
+      "command": "sha256sum -c SHA256SUMS",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-ROOT-CHECKSUMS-LOCAL"
+      ]
+    }
+  ],
+  "negativeProbes": [
+    {
+      "id": "PROBE-README-CURRENT-IDENTITY-NOT-V01",
+      "command": "Verify the README heading and lead do not use a legacy versioned product identity",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    },
+    {
+      "id": "PROBE-TODAY-FIELDS-NOT-PREDECESSOR",
+      "command": "Verify Current and Today fields do not use the 2026-08-01 predecessor identity",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    },
+    {
+      "id": "PROBE-UNPUBLISHED-DAILY-NOT-RELEASED",
+      "command": "Verify the Daily candidate is explicitly marked not published",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    },
+    {
+      "id": "PROBE-STALE-YOUTUBE-IDS-ABSENT",
+      "command": "Verify all three retired YouTube IDs are absent from README.md",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ]
+    },
+    {
+      "id": "PROBE-PUBLICATION-DISABLED",
+      "command": "Inspect candidate publication fields and effects",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-README-LOCAL"
+      ]
+    }
+  ],
+  "reproductionCommands": [
+    "git diff --name-status c0fa407d8224e98bdba9466850b8247f458ce914..f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+    "python3 -m unittest discover -s tools/video-production-reference/tests",
+    "sha256sum -c SHA256SUMS"
+  ],
+  "knownLimitations": [
+    "The eligible product delta is limited to README video-link correction and its local regression evidence.",
+    "Source commit f035ea90c0fb1e77b04bc6aa5ab19a40709d0212 is LOCALLY_VALIDATED / NOT_RELEASED and is not asserted to be merged.",
+    "The local Daily POC compiler and candidate packaging are provenance-bound preparation tools, not part of the executable product delta.",
+    "Public YouTube availability and titles were observed read-only on 2026-08-02 and may later change outside this repository.",
+    "No live provider, customer, deployment or production evidence is included."
+  ],
+  "externalGates": [
+    "A public GitHub prerelease requires a separate Owner-approved stage.",
+    "Any merge, push or README publication requires a separate Owner-approved stage.",
+    "Any YouTube mutation or upload requires a separate Owner-approved stage."
+  ],
+  "video": {
+    "title": "ChimpMaera POC Daily — 2026-08-02",
+    "language": "en",
+    "description": "A new evidence-bound brief for the locally validated README video-link correction; it is not yesterday's storyboard and has no publication authority.",
+    "renderDefault": false,
+    "rendererContract": "cm.video/v1",
+    "segments": [
+      {
+        "id": "VIDEO-SEGMENT-LINK-CORRECTION",
+        "order": 1,
+        "durationSeconds": 12,
+        "title": "Three current destinations",
+        "purpose": "State today's narrow source delta and exact ordering.",
+        "narration": "Today's local candidate corrects the README's three video destinations. The clean overview, implementation and security links are locally validated at one frozen source commit.",
+        "visuals": [
+          "Show the 2026-08-02 candidate identity and frozen source range.",
+          "Show the three README links in overview, implementation and security order."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-CURRENT-VIDEO-LINKS"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-CURRENT-VIDEO-LINKS"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-LOCAL-BOUNDARY",
+        "order": 2,
+        "durationSeconds": 8,
+        "title": "Local candidate boundary",
+        "purpose": "Prevent a local validation result from being narrated as a release.",
+        "narration": "The correction and this daily package remain local. No push, merge, tag, release, upload or README publication occurred.",
+        "visuals": [
+          "Show LOCALLY_VALIDATED / NOT_RELEASED.",
+          "Show every publication field disabled."
+        ],
+        "claimRefs": [],
+        "useCaseRefs": [
+          "USE-CASE-CURRENT-VIDEO-LINKS"
+        ]
+      }
+    ],
+    "assets": [
+      {
+        "id": "VIDEO-ASSET-README-LINKS-SHOT",
+        "role": "SHOT",
+        "status": "PLANNED",
+        "segmentRef": "VIDEO-SEGMENT-LINK-CORRECTION",
+        "path": null,
+        "sha256": null
+      },
+      {
+        "id": "VIDEO-ASSET-NARRATION",
+        "role": "AUDIO",
+        "status": "PLANNED",
+        "segmentRef": null,
+        "path": null,
+        "sha256": null
+      }
+    ],
+    "prerequisites": [
+      "Every shot is accepted and hash-locked before any local render.",
+      "Narration is accepted and hash-locked before any local render.",
+      "The exact LOCAL_RENDER candidate approval binding is present.",
+      "Publication remains unavailable from the adapter."
+    ]
+  },
+  "publication": {
+    "githubPrerelease": false,
+    "youtubeUpload": false,
+    "readmeMutation": false,
+    "approvals": []
+  }
+}

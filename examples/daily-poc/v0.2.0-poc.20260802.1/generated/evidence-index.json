@@ -1,0 +1,152 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.1",
+  "claims": [
+    {
+      "category": "FEATURE",
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "CM-CLAIM-CURRENT-VIDEO-LINKS",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "OPERATIONS",
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "CM-CLAIM-RELEASE-IDENTITY",
+      "maturity": "LOCALLY_VALIDATED"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVID-PACKAGE-METADATA-LOCAL",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "package.json",
+      "sha256": "5cd7368e792f296da732b53d1f990361c0707ef1ec8df4253cecc002b621efdc",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-README-LOCAL",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "README.md",
+      "sha256": "4507b3ab742a1fd024367f8dac44106425edc1a3d5d0893ef097ae750970f1bf",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-ROOT-CHECKSUMS-LOCAL",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "SHA256SUMS",
+      "sha256": "51827ff502f776225cc7db354dd48a3f3b949a264a28306fcf6117b0d02be424",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-VIDEO-LINK-TEST-LOCAL",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "tools/video-production-reference/tests/test_cm_video.py",
+      "sha256": "0edbe98673190f01f989d1aba814f82249b3c5408b157de6586d391bd427f236",
+      "sourceCommit": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    }
+  ],
+  "negativeProbes": [
+    {
+      "command": "Inspect candidate publication fields and effects",
+      "evidenceRefs": [
+        "EVID-README-LOCAL"
+      ],
+      "id": "PROBE-PUBLICATION-DISABLED",
+      "result": "PASS"
+    },
+    {
+      "command": "Verify the README heading and lead do not use a legacy versioned product identity",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "PROBE-README-CURRENT-IDENTITY-NOT-V01",
+      "result": "PASS"
+    },
+    {
+      "command": "Verify all three retired YouTube IDs are absent from README.md",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "PROBE-STALE-YOUTUBE-IDS-ABSENT",
+      "result": "PASS"
+    },
+    {
+      "command": "Verify Current and Today fields do not use the 2026-08-01 predecessor identity",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "PROBE-TODAY-FIELDS-NOT-PREDECESSOR",
+      "result": "PASS"
+    },
+    {
+      "command": "Verify the Daily candidate is explicitly marked not published",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "PROBE-UNPUBLISHED-DAILY-NOT-RELEASED",
+      "result": "PASS"
+    }
+  ],
+  "previousVerifiedSnapshot": {
+    "artifactManifestSha256": "fcb24698a5965ba878f163499ed65988d8c7e29e1f065c160f5b5a52e6640b66",
+    "date": "2026-08-01",
+    "manifestSha256": "58307cc534d35a2deb8b787b9fe48ee78a0556d6c90fe153442e4826fef3b0e4",
+    "sequence": 1,
+    "snapshotDigest": "43cf097d1c8cb45f4a672f77ce1069f8247169ecd4cf868d133c011d49a59ad8",
+    "sourceHead": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "version": "v0.2.0-poc.20260801.1"
+  },
+  "schemaVersion": "chimpmaera.daily-poc-evidence-index/v1",
+  "source": {
+    "base": "c0fa407d8224e98bdba9466850b8247f458ce914",
+    "head": "f035ea90c0fb1e77b04bc6aa5ab19a40709d0212",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  },
+  "tests": [
+    {
+      "command": "python3 -m unittest discover -s tools/video-production-reference/tests",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "TEST-EXACT-VIDEO-LINKS",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/video-production-reference/tests",
+      "evidenceRefs": [
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "TEST-README-RELEASE-IDENTITY",
+      "result": "PASS"
+    },
+    {
+      "command": "sha256sum -c SHA256SUMS",
+      "evidenceRefs": [
+        "EVID-ROOT-CHECKSUMS-LOCAL"
+      ],
+      "id": "TEST-ROOT-CHECKSUMS",
+      "result": "PASS"
+    }
+  ]
+}

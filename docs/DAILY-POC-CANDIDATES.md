@@ -9,16 +9,31 @@ claims, non-claims, the README pointer, evidence indexes and video inputs.
 
 - Candidate version: `v<next-semver>-poc.YYYYMMDD.N`.
 - `N` starts at 1 and increments for each additional candidate on the same day.
-- Example: `v0.2.0-poc.20260801.1`.
+- Current repository example: `v0.2.0-poc.20260802.1`.
+- The current public release is `v0.1.0`; it is a separate stable predecessor
+  line, not the identity of the current Daily candidate.
+- `v0.2.0-poc.20260801.1` is the current example's explicit provenance
+  predecessor only. It must not appear in Today or Current candidate fields.
+- Until a tag and GitHub release exist, the Daily must be described as a local
+  candidate and **not published**. A prepared or merged candidate is not a
+  release.
 - Underscores and other non-SemVer spellings fail schema validation.
 - GitHub release title, if a later authorized stage uses the candidate:
   `ChimpMaera POC Daily — YYYY-MM-DD`.
 - Stable releases and Daily POC candidates have separate lifecycles.
 
-Every prior snapshot embedded in `history` carries a self-digest. The compiler
-rejects tamper, duplicate date/sequence pairs and a previous source head that
-does not equal the new base. This is deterministic integrity evidence, not a
-signature: a later publication stage must bind any cryptographic attestation.
+Every prior snapshot embedded in `history` carries a self-digest. Daily history
+is limited to the same target release line. The compiler rejects tamper,
+cross-line mixing, malformed predecessor identities, non-earlier snapshots,
+duplicate date/sequence pairs and a previous source head that does not equal
+the new base. This is deterministic integrity evidence, not a signature: a
+later publication stage must bind any cryptographic attestation.
+
+The frozen source README must use the timeless `# ChimpMaera` product heading
+and separate `Current public release`, `Daily candidate` and `Provenance
+predecessor` status lines. The Daily line must contain the exact target version
+and `not published`; the predecessor identity is forbidden in that line.
+Unmarked foreign version lines in current manifest fields fail closed.
 
 ## Prepare locally
 
@@ -30,7 +45,7 @@ the manifest or compiler in another worktree.
 npm ci --ignore-scripts --no-audit --no-fund
 npm run daily-poc:test
 node scripts/daily-poc.mjs prepare \
-  --manifest examples/daily-poc/v0.2.0-poc.20260801.1/manifest.json \
+  --manifest examples/daily-poc/v0.2.0-poc.20260802.1/manifest.json \
   --source-repo /path/to/clean/frozen/source \
   --output /path/to/new/candidate-output
 ```
@@ -101,6 +116,10 @@ YouTube exists in the workflow.
   checkout at the manifest head.
 - `TAMPERED_PRIOR_SNAPSHOT`: restore the verified snapshot bytes; never repair
   only the digest.
+- `HISTORY_RELEASE_LINE_MISMATCH` or `UNMARKED_MIXED_RELEASE_LINE`: keep stable
+  history and Daily provenance explicit instead of blending their identities.
+- `README_*`: restore the timeless product heading and the three explicit,
+  correctly bound status lines; never describe a local Daily as released.
 - `STALE_EVIDENCE` or `EVIDENCE_HASH_MISMATCH`: recompute evidence from the
   frozen source and update maturity honestly.
 - `CLAIM_EXCEEDS_EVIDENCE_MATURITY`: lower the claim or obtain stronger

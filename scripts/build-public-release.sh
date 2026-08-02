@@ -202,6 +202,17 @@ repository_only_files = {
     ".github/workflows/daily-poc-candidate.yml",
     "SHA256SUMS",
 }
+repository_only_prefixes = (
+    "docs/DAILY-POC-",
+    "docs/development/daily-poc-",
+    "docs/development/evidence/",
+    "docs/development/rel-daily-",
+    "examples/daily-poc/",
+    "schemas/daily-poc-",
+    "scripts/daily-poc.",
+    "tests/daily-poc.",
+    "tests/fixtures/daily-poc/",
+)
 for candidate in root.rglob("*"):
     relative = candidate.relative_to(root).as_posix()
     if (
@@ -228,6 +239,7 @@ for candidate in root.rglob("*"):
         and not relative.endswith(".pyc")
         and relative != "package-lock.before-version-reconcile.json"
         and relative not in repository_only_files
+        and not relative.startswith(repository_only_prefixes)
         and not relative.startswith(".github/")
         and not relative.startswith(".chimpmaera-acceptance/")
         and not relative.startswith(".chimpmaera-demo/")

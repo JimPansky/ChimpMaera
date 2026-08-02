@@ -1,0 +1,74 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.1",
+  "claims": [
+    {
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "CM-CLAIM-CURRENT-VIDEO-LINKS",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The locally validated README contains the clean URLs https://youtu.be/Dq_XLEzh5I8, https://youtu.be/w4fWgalD_WQ and https://youtu.be/SEPbE-EVoNs in overview, implementation and security order."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-README-LOCAL",
+        "EVID-VIDEO-LINK-TEST-LOCAL"
+      ],
+      "id": "CM-CLAIM-RELEASE-IDENTITY",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The locally validated README names v0.1.0 only as the stable predecessor, names v0.2.0-poc.20260801.1 only as the provenance predecessor, and gives v0.2.0-poc.20260802.1 a local-candidate status with publication disabled."
+    }
+  ],
+  "description": "A new evidence-bound brief for the locally validated README video-link correction; it is not yesterday's storyboard and has no publication authority.",
+  "language": "en",
+  "publication": {
+    "youtubeUpload": false
+  },
+  "schemaVersion": "chimpmaera.daily-poc-video-brief/v1",
+  "segments": [
+    {
+      "claimRefs": [
+        "CM-CLAIM-CURRENT-VIDEO-LINKS"
+      ],
+      "durationSeconds": 12,
+      "id": "VIDEO-SEGMENT-LINK-CORRECTION",
+      "narration": "Today's local candidate corrects the README's three video destinations. The clean overview, implementation and security links are locally validated at one frozen source commit.",
+      "order": 1,
+      "purpose": "State today's narrow source delta and exact ordering.",
+      "title": "Three current destinations",
+      "useCaseRefs": [
+        "USE-CASE-CURRENT-VIDEO-LINKS"
+      ],
+      "visuals": [
+        "Show the 2026-08-02 candidate identity and frozen source range.",
+        "Show the three README links in overview, implementation and security order."
+      ]
+    },
+    {
+      "claimRefs": [],
+      "durationSeconds": 8,
+      "id": "VIDEO-SEGMENT-LOCAL-BOUNDARY",
+      "narration": "The correction and this daily package remain local. No push, merge, tag, release, upload or README publication occurred.",
+      "order": 2,
+      "purpose": "Prevent a local validation result from being narrated as a release.",
+      "title": "Local candidate boundary",
+      "useCaseRefs": [
+        "USE-CASE-CURRENT-VIDEO-LINKS"
+      ],
+      "visuals": [
+        "Show LOCALLY_VALIDATED / NOT_RELEASED.",
+        "Show every publication field disabled."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+  "title": "ChimpMaera POC Daily — 2026-08-02",
+  "useCases": [
+    {
+      "demoUtility": "Provides a precise, low-risk entry point to the current public project videos without changing runtime behavior.",
+      "id": "USE-CASE-CURRENT-VIDEO-LINKS",
+      "title": "Open the three current ChimpMaera videos from the README"
+    }
+  ]
+}
