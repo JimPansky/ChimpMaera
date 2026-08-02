@@ -1,0 +1,454 @@
+{
+  "schemaVersion": "chimpmaera.daily-poc/v1",
+  "date": "2026-08-02",
+  "sequence": 2,
+  "source": {
+    "repository": "https://github.com/JimPansky/ChimpMaera.git",
+    "base": "fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85",
+    "head": "990ce39d5e87ade8d0a7a9792672887d128f647e"
+  },
+  "targetVersion": "v0.2.0-poc.20260802.2",
+  "history": [
+    {
+      "date": "2026-08-02",
+      "sequence": 1,
+      "version": "v0.2.0-poc.20260802.1",
+      "sourceHead": "fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85",
+      "manifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+      "artifactManifestSha256": "5c0712f78271163ce0fb209a9ac6b76db7f27274f6c4971d24dbec4016722a2e",
+      "snapshotDigest": "923695de5610c9a7e77169bb933cc97afd8b4b6b6ecc3596bbd0297dc7856582"
+    }
+  ],
+  "highlights": [
+    {
+      "id": "BLD-001-HIGHLIGHT-GOVERNED-INTEGRATION",
+      "title": "From owner intent to a governed, reusable integration",
+      "description": "Builder Agent M1 turns guided owner intent into typed discovery, exact capability reuse or inactive unresolved-intent proposals, a digest-bound plan, reviewable contracts and independently checked reversible evidence.",
+      "commitIds": [
+        "990ce39d5e87ade8d0a7a9792672887d128f647e"
+      ],
+      "issueIds": [
+        "BLD-001",
+        "GH-22"
+      ],
+      "fileRefs": [
+        "demo/builder-agent/builder-core.mjs",
+        "packages/contracts/src/builder-authority.ts",
+        "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
+        "docs/development/evidence/bld-001-g8-20260802.json"
+      ],
+      "caseIds": [
+        "BLD-001"
+      ]
+    }
+  ],
+  "useCases": [
+    {
+      "id": "USE-CASE-BLD-001-GOVERNED-INTEGRATION",
+      "title": "Build a governed integration for a synthetic system",
+      "inputs": [
+        "An owner-selected SAFE_GUIDED, CUSTOM or RAMPAGE_FULL_CONTROL_LAB profile",
+        "A synthetic system manifest, System Advisor Guide and bounded goal",
+        "A typed capability registry and current constraints"
+      ],
+      "steps": [
+        "Discover the system and its relevant cause, effect and context records.",
+        "Reuse an exact registered capability or emit an inactive UNRESOLVED_INTENT proposal for a genuine gap.",
+        "Create a digest-bound integration plan, manifests, dependency graph, reviewable Diff, contracts, fixtures and rollback plan.",
+        "Run independent tests, negative probes, readback, reconciliation and receipt checks before any separately routed effect."
+      ],
+      "expectedOutcomes": [
+        "Effective rights equal the intersection of the host and system ceiling, owner profile, assignments and current constraints.",
+        "One target-neutral core is reused byte-identically across two synthetic system types.",
+        "The isolated default-off OpenClaw proof completes one read and one reversible write, records denials and receipts, resets exactly and leaves zero owned residue.",
+        "The contribution bundle remains sanitized, opt-in and unable to promote local validation to release status."
+      ],
+      "demoUtility": "Shows how an operator can inspect and adapt a reusable governed integration without granting new authority or connecting a real system.",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CORE",
+        "EVID-BLD-001-CONTRIBUTION"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "CONTROL-BLD-001-EFFECTIVE-RIGHTS",
+      "description": "Owner-selected profiles never exceed the real host/system ceiling, assignments or current constraints.",
+      "default": true,
+      "allowedOverrides": [
+        "SAFE_GUIDED",
+        "CUSTOM",
+        "RAMPAGE_FULL_CONTROL_LAB"
+      ],
+      "dependencies": [
+        "Typed authority matrix",
+        "Current system constraints"
+      ]
+    },
+    {
+      "id": "CONTROL-BLD-001-SEPARATE-ROUTES",
+      "description": "Installation, activation, mutation and publication remain separate quality and evidence routes.",
+      "default": true,
+      "allowedOverrides": [],
+      "dependencies": [
+        "Digest-bound plan",
+        "Independent approval and receipt evidence"
+      ]
+    },
+    {
+      "id": "CONTROL-BLD-001-CONTRIBUTION",
+      "description": "Contribution is inactive, sanitized and opt-in by default; local validation cannot become release status.",
+      "default": false,
+      "allowedOverrides": [],
+      "dependencies": [
+        "Closed allow-list sanitizer",
+        "Separate publication authorization"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVID-BLD-001-G8",
+      "kind": "TEST",
+      "path": "docs/development/evidence/bld-001-g8-20260802.json",
+      "sha256": "1e59bebb47db8c5fb04a370e1738f8332d55592b997d450a24bc38b6d81959cf",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e"
+    },
+    {
+      "id": "EVID-BLD-001-CORE",
+      "kind": "SOURCE",
+      "path": "demo/builder-agent/builder-core.mjs",
+      "sha256": "199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e"
+    },
+    {
+      "id": "EVID-BLD-001-CONTRIBUTION",
+      "kind": "SOURCE",
+      "path": "examples/builder-agent/contribution-bundle-v1.json",
+      "sha256": "b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e"
+    },
+    {
+      "id": "EVID-BLD-001-OPERATOR-GUIDE",
+      "kind": "SOURCE",
+      "path": "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
+      "sha256": "ff9fd52f21a4f0e991a60d7aefa9e2febc6aef109a81f2e0eae1fe475b19c1f6",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e"
+    },
+    {
+      "id": "EVID-BLD-001-README",
+      "kind": "SOURCE",
+      "path": "README.md",
+      "sha256": "55b4fa8a8e93c4f1366c9e0fffb0b0f9c47af8ef33d7d2e255365938b3fb5f19",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e"
+    }
+  ],
+  "claims": [
+    {
+      "id": "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION",
+      "category": "FEATURE",
+      "statement": "Builder Agent M1 locally validates a reusable path from owner intent through typed discovery, exact capability reuse or inactive unresolved intent, digest-bound planning, validation, reversible execution evidence and sanitized contribution preparation.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CORE",
+        "EVID-BLD-001-CONTRIBUTION"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-BLD-001-NOT-PRODUCTION",
+          "statement": "This local PoC uses synthetic evidence and is not production-ready, customer evidence or proof of universal target compatibility.",
+          "contradictsClaimIds": []
+        },
+        {
+          "id": "NONCLAIM-BLD-001-NO-AUTHORITY-EXPANSION",
+          "statement": "Builder Agent M1 cannot invent host or target-system authority, self-approve or grant permission to connect a real system.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-BLD-001-ISOLATED-PROOF",
+      "category": "OPERATIONS",
+      "statement": "The isolated default-off OpenClaw reference proof locally validates one read, one reversible write, denials, receipts, exact reset and zero owned residue against synthetic targets.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-BLD-001-NOT-SECURITY-CERTIFICATION",
+          "statement": "The isolated synthetic proof is not a security certification, hostile-host containment result or production assurance.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-BLD-001-CONTRIBUTION-BOUNDARY",
+      "category": "OPERATIONS",
+      "statement": "The contribution bundle is locally validated as sanitized, opt-in, issue/claim/evidence-linked and structurally unable to represent local validation as release status.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CONTRIBUTION"
+      ],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-BLD-001-NO-AUTOMATIC-PUBLICATION",
+          "statement": "No company data, raw prompt, secret or contribution bundle is automatically uploaded or published.",
+          "contradictsClaimIds": []
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "id": "TEST-BLD-001-FOCUSED",
+      "command": "Run the focused BLD-001 contract, runtime and conformance tests",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "TEST-BLD-001-FULL",
+      "command": "npm test",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "TEST-BLD-001-DAILY-ADVERSARIAL",
+      "command": "npm run daily-poc:test",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "TEST-BLD-001-SUPPLY-CHAIN",
+      "command": "npm run supply-chain:verify",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "TEST-BLD-001-CHECKSUMS",
+      "command": "sha256sum --check SHA256SUMS",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "TEST-BLD-001-VIDEO-COPY",
+      "command": "npm run video:test",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-README"
+      ]
+    },
+    {
+      "id": "TEST-BLD-001-ISOLATED-SMOKE",
+      "command": "./demo/builder-agent/smoke.sh",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    }
+  ],
+  "negativeProbes": [
+    {
+      "id": "PROBE-BLD-001-DIRECT-BYPASS",
+      "command": "Attempt a direct target effect outside Gateway and Broker",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "PROBE-BLD-001-SECRET-AND-TENANT",
+      "command": "Attempt secret reflection and cross-tenant access",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "PROBE-BLD-001-SKILL-AND-APPROVAL",
+      "command": "Attempt unauthorized skill activation and self-approval",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "PROBE-BLD-001-REPLAY-AND-MUTATION",
+      "command": "Attempt replay and post-approval mutation",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "PROBE-BLD-001-ROLLBACK",
+      "command": "Force rollback readback failure and require non-success evidence",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    },
+    {
+      "id": "PROBE-BLD-001-LEAKAGE-AND-STATUS",
+      "command": "Attempt private-path leakage and release-status escalation through the contribution bundle",
+      "result": "PASS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ]
+    }
+  ],
+  "reproductionCommands": [
+    "git diff --name-status fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85..990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "npm ci --ignore-scripts --no-audit --no-fund",
+    "npm run lint",
+    "npm test",
+    "npm run daily-poc:test",
+    "npm run supply-chain:verify",
+    "npm run video:test",
+    "sha256sum --check SHA256SUMS",
+    "./demo/builder-agent/smoke.sh"
+  ],
+  "knownLimitations": [
+    "v0.1.0 is a historical predecessor only and is not the current public release.",
+    "Local proof of concept with synthetic evidence only.",
+    "No production or customer-system evidence is included.",
+    "Not production-ready and not a security certification.",
+    "No proof of universal target, adapter or hostile-host compatibility.",
+    "No autonomous authority expansion and no permission to connect real systems.",
+    "Registry signatures, complete provenance, complete SBOM, current vulnerability status and complete licence clearance are outside this repository-only proof."
+  ],
+  "externalGates": [
+    "Release publication requires the authorized protected-main workflow, required current CI and exact merged-byte verification.",
+    "Any real-system, production or customer mutation requires separate authorization and evidence.",
+    "YouTube upload and social posting remain outside this release workflow."
+  ],
+  "video": {
+    "title": "ChimpMaera POC Daily — 2026-08-02",
+    "language": "en",
+    "description": "An evidence-bound preparation package for Builder Agent M1. Rendering and upload remain disabled.",
+    "renderDefault": false,
+    "rendererContract": "cm.video/v1",
+    "segments": [
+      {
+        "id": "VIDEO-SEGMENT-BLD-001-INTENT",
+        "order": 1,
+        "durationSeconds": 12,
+        "title": "Owner intent, bounded rights",
+        "purpose": "Explain owner-selected profiles and the effective-rights intersection.",
+        "narration": "Builder Agent M1 starts with owner intent. Effective rights remain the intersection of the real system ceiling, the selected profile, assignments and current constraints.",
+        "visuals": [
+          "Show SAFE_GUIDED, CUSTOM and RAMPAGE_FULL_CONTROL_LAB as owner-selected profiles.",
+          "Show the four-way effective-rights intersection."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-BLD-001-GOVERNED-INTEGRATION"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-BLD-001-PLAN",
+        "order": 2,
+        "durationSeconds": 16,
+        "title": "Reuse before invention",
+        "purpose": "Show discovery, exact reuse, inactive gaps and reviewable planning.",
+        "narration": "Guided discovery reuses an exact capability when one exists. A genuine gap becomes an inactive unresolved-intent proposal. The resulting plan binds manifests, dependencies, contracts, fixtures, reviewable changes and rollback by digest.",
+        "visuals": [
+          "Show discovery flowing to exact reuse or inactive unresolved intent.",
+          "Show a digest-bound plan and reviewable Diff."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-BLD-001-GOVERNED-INTEGRATION"
+        ]
+      },
+      {
+        "id": "VIDEO-SEGMENT-BLD-001-EVIDENCE",
+        "order": 3,
+        "durationSeconds": 14,
+        "title": "Evidence before effect",
+        "purpose": "Show isolated proof, denials, receipts, reset and the contribution boundary.",
+        "narration": "Independent tests, negative probes, readback and receipts precede separately routed effects. The isolated proof completes one read and one reversible write, resets exactly and leaves zero owned residue. Contribution remains sanitized and opt-in.",
+        "visuals": [
+          "Show the isolated read, reversible write, denial, receipt and reset sequence.",
+          "Show the opt-in contribution bundle and the local PoC non-claims."
+        ],
+        "claimRefs": [
+          "CM-CLAIM-BLD-001-ISOLATED-PROOF",
+          "CM-CLAIM-BLD-001-CONTRIBUTION-BOUNDARY"
+        ],
+        "useCaseRefs": [
+          "USE-CASE-BLD-001-GOVERNED-INTEGRATION"
+        ]
+      }
+    ],
+    "assets": [
+      {
+        "id": "VIDEO-ASSET-BLD-001-SHOTS",
+        "role": "SHOT",
+        "status": "PLANNED",
+        "segmentRef": "VIDEO-SEGMENT-BLD-001-INTENT",
+        "path": null,
+        "sha256": null
+      },
+      {
+        "id": "VIDEO-ASSET-BLD-001-NARRATION",
+        "role": "AUDIO",
+        "status": "PLANNED",
+        "segmentRef": null,
+        "path": null,
+        "sha256": null
+      }
+    ],
+    "prerequisites": [
+      "Every public-copy byte must pass the named hash-bound English review before rendering.",
+      "Every shot and narration asset must be accepted and hash-locked before rendering.",
+      "Publication remains unavailable from the video adapter.",
+      "YouTube upload requires separate authorization."
+    ]
+  },
+  "publication": {
+    "githubPrerelease": false,
+    "youtubeUpload": false,
+    "readmeMutation": false,
+    "approvals": [
+      "OWNER_AUTHORIZED_GITHUB_RELEASE_WORKFLOW_2026-08-02"
+    ]
+  }
+}

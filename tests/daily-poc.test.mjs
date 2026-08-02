@@ -15,8 +15,8 @@ import test from "node:test";
 
 const ROOT = resolve(import.meta.dirname, "..");
 const CLI = join(ROOT, "scripts", "daily-poc.mjs");
-const EXAMPLE = join(ROOT, "examples", "daily-poc", "v0.2.0-poc.20260802.1", "manifest.json");
-const TARGET_VERSION = "v0.2.0-poc.20260802.1";
+const EXAMPLE = join(ROOT, "examples", "daily-poc", "v0.2.0-poc.20260802.2", "manifest.json");
+const TARGET_VERSION = "v0.2.0-poc.20260802.2";
 const MATRIX = JSON.parse(readFileSync(join(ROOT, "tests", "fixtures", "daily-poc", "negative-matrix.json"), "utf8"));
 
 function canonicalize(value) {
@@ -52,6 +52,7 @@ function fixture() {
   const root = mkdtempSync(join(tmpdir(), "cm-daily-poc-test-"));
   const source = join(root, "source");
   const manifest = JSON.parse(readFileSync(EXAMPLE, "utf8"));
+  const predecessorVersion = manifest.history.at(-1)?.version ?? "v0.2.0-poc.20260802.1";
   mkdirSync(join(source, "tools", "video-production-reference", "schemas"), { recursive: true });
   mkdirSync(join(source, "tools", "video-production-reference", "tests"), { recursive: true });
   writeFileSync(join(source, "README.md"), "# ChimpMaera\n\nBase.\n", "utf8");
@@ -76,7 +77,7 @@ function fixture() {
   writeFileSync(join(source, "package.json"), "{\"name\":\"chimpmaera-fixture\",\"private\":true,\"description\":\"current\"}\n", "utf8");
   writeFileSync(
     join(source, "README.md"),
-    `# ChimpMaera\n\nBase.\n\n## Release status\n\n- **Current public release:** v0.1.0 — published; stable predecessor.\n- **Today's Daily:** [\`${TARGET_VERSION}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${TARGET_VERSION}) — Daily snapshot dated 2026-08-02.\n- **Previous Daily provenance:** \`v0.2.0-poc.20260801.1\` — predecessor provenance only.\n\n## Videos\n\nCurrent overview.\n`,
+    `# ChimpMaera\n\nBase.\n\n## Release status\n\n- **Current public release:** v0.1.0 — published; stable predecessor.\n- **Today's Daily:** [\`${TARGET_VERSION}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${TARGET_VERSION}) — Daily snapshot dated 2026-08-02.\n- **Previous Daily provenance:** \`${predecessorVersion}\` — predecessor provenance only.\n\n## Videos\n\nCurrent overview.\n`,
     "utf8",
   );
   git(source, "add", "README.md", "package.json");
@@ -318,14 +319,14 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
   const v01References = strings({ ...manifest, history: [] }).filter((value) => /\bv0\.1(?:\.0)?\b/.test(value));
   assert.ok(v01References.length > 0);
   for (const value of v01References) {
-    assert.match(value, /\b(?:current public release|stable predecessor)\b/i);
+    assert.match(value, /\b(?:current public release|stable predecessor|historical predecessor)\b/i);
   }
   assert.equal(manifest.date, "2026-08-02");
-  assert.equal(manifest.targetVersion, "v0.2.0-poc.20260802.1");
+  assert.equal(manifest.targetVersion, "v0.2.0-poc.20260802.2");
   assert.equal(manifest.video.title, "ChimpMaera POC Daily — 2026-08-02");
   assert.deepEqual(
     manifest.history.map(({ date, version }) => ({ date, version })),
-    [{ date: "2026-08-01", version: "v0.2.0-poc.20260801.1" }],
+    [{ date: "2026-08-02", version: "v0.2.0-poc.20260802.1" }],
   );
 
   const fx = fixture();
@@ -338,20 +339,20 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
   }
   for (const text of texts.values()) {
     for (const line of text.split("\n").filter((item) => /\bv0\.1(?:\.0)?\b/.test(item))) {
-      assert.match(line, /\b(?:current public release|stable predecessor)\b/i);
+      assert.match(line, /\b(?:current public release|stable predecessor|historical predecessor)\b/i);
     }
   }
-  const predecessorFiles = [...texts].filter(([, text]) => text.includes("2026-08-01")).map(([name]) => name);
-  assert.deepEqual(predecessorFiles, ["evidence-index.json", "release-notes.md"]);
-  for (const line of texts.get("release-notes.md").split("\n").filter((item) => item.includes("2026-08-01"))) {
-    assert.match(line, /provenance/i);
-  }
-  for (const url of ["https://youtu.be/Dq_XLEzh5I8", "https://youtu.be/w4fWgalD_WQ", "https://youtu.be/SEPbE-EVoNs"]) {
-    assert.ok(combined.includes(url), url);
-  }
+  const predecessorFiles = [...texts]
+    .filter(([, text]) => text.includes("v0.2.0-poc.20260802.1"))
+    .map(([name]) => name);
+  assert.deepEqual(predecessorFiles, ["evidence-index.json"]);
+  assert.equal(manifest.publication.youtubeUpload, false);
+  const videoAdapter = JSON.parse(texts.get("video-adapter.json"));
+  assert.equal(videoAdapter.invocationPolicy.publicationAvailable, false);
+  assert.equal(videoAdapter.publicActions, "forbidden");
   assert.equal(JSON.parse(texts.get("candidate-report.json")).releaseTitle, "ChimpMaera POC Daily — 2026-08-02");
-  assert.equal(JSON.parse(texts.get("snapshot.json")).version, "v0.2.0-poc.20260802.1");
-  assert.equal(JSON.parse(texts.get("run-report.json")).candidateVersion, "v0.2.0-poc.20260802.1");
+  assert.equal(JSON.parse(texts.get("snapshot.json")).version, "v0.2.0-poc.20260802.2");
+  assert.equal(JSON.parse(texts.get("run-report.json")).candidateVersion, "v0.2.0-poc.20260802.2");
 });
 
 test("v0.1 public staging excludes repository-only daily pipeline surfaces", () => {

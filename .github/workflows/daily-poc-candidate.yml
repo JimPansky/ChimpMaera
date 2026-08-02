@@ -6,7 +6,7 @@ on:
       manifest_path:
         description: Repository-relative canonical Daily POC manifest
         required: true
-        default: examples/daily-poc/v0.2.0-poc.20260802.1/manifest.json
+        default: examples/daily-poc/v0.2.0-poc.20260802.2/manifest.json
         type: string
   schedule:
     - cron: "30 15 * * *"
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      MANIFEST_PATH: ${{ inputs.manifest_path || 'examples/daily-poc/v0.2.0-poc.20260802.1/manifest.json' }}
+      MANIFEST_PATH: ${{ inputs.manifest_path || 'examples/daily-poc/v0.2.0-poc.20260802.2/manifest.json' }}
     steps:
       - name: Check out pipeline without writable credentials
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
