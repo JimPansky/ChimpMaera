@@ -6,7 +6,7 @@ Delivery status: `in_progress`
 Claim status: `NOT_PROVEN`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
-Current metric: **3/8**
+Current metric: **4/8**
 
 ## Local issue contract
 
@@ -103,8 +103,8 @@ evidence. The decision matrix is not an executable authority token.
 
 ## Autonomy gate
 
-- **Exact phase/metric:** BLD-001 Builder Agent M1, **3/8 → 8/8**; G1, G2
-  and G3 are complete and the next bounded slice targets G4 only.
+- **Exact phase/metric:** BLD-001 Builder Agent M1, **4/8 → 8/8**; G1 through
+  G4 are complete and the next bounded slice targets G5 only.
 - **Autonomously reachable:** contracts, synthetic fixtures, tests, docs,
   isolated later runtime fixtures and local evidence require no external data
   or mutation.
@@ -113,7 +113,7 @@ evidence. The decision matrix is not an executable authority token.
 - **External/publication dependent:** push, PR, merge, tag, release, upload,
   outreach, production/customer evidence and mutation.
 - **Completed metric rule:** all prerequisite video/architecture gates and
-  AAS dependencies plus BLD-001-G1/G2/G3 are complete and are not repeated
+  AAS dependencies plus BLD-001-G1/G2/G3/G4 are complete and are not repeated
   without regression evidence.
 
 ## Reversible decisions
@@ -145,48 +145,57 @@ evidence. The decision matrix is not an executable authority token.
   remain unresolved, exact incompatible collisions deny the entire resolution,
   and every reused descriptor remains inactive/non-executable. **Review:** G4
   planner/schema versioning and G7 adversarial second-system reuse.
+- **Assumption:** G4 emits only generic data contracts over recomputed G1/G2/G3
+  records; each contract binds the exact capability descriptor or unresolved
+  proposal digest and every effectful operation carries a pre-activation
+  recovery strategy. **Risk:** an extracted scaffold could lose provenance or
+  be mistaken for executable target code. **Fallback:** generic template IDs,
+  closed schemas, inactive/non-executable constants and source-digest mismatch
+  denial remain mandatory; revert `6babee7` if G5/G7 cannot validate them
+  without privileged specialization. **Review:** G5 evidence/readback workflow
+  and G7 second-system conformance.
 
 ## PDCA status
 
 ### Plan
 
-Keep the full 8/8 contract frozen. G1 and G2 remain closed. Resolve G2's exact
-capability hints against a finite digest-bound registration input, reuse only
-semantically compatible exact matches and represent genuine gaps without
-creating authority, activation or an effect.
+Keep the full 8/8 contract frozen. G1 through G3 remain closed. Recompute their
+typed outputs inside one deterministic G4 planner and emit a generic data-only
+system plan, graph, scaffolds, profile diff, fixtures and rollback contract.
 
 ### Do
 
-G1 and G2 remain closed. Implemented one generic G3 TypeScript resolver, public
-result JSON Schema and synthetic capability-registration fixture. Exact
-capability ID reuse additionally requires matching system type, operation ID
-and effect class plus a valid descriptor digest. The reused descriptor remains
-`INACTIVE`, non-executable and grants neither authority nor an effect. Every
-missing exact match becomes a deterministic versioned `UNRESOLVED_INTENT` with
-risk, dependencies and recommendation. Exact incompatible collisions,
-duplicates, lifecycle/digest/discovery tampering and hidden fields deny the
-whole resolution; fuzzy names remain unresolved.
+G1 through G3 remain closed. Implemented one generic G4 TypeScript planner and
+public result JSON Schema. The planner recomputes discovery, capability
+resolution and authority, rejects tenant/effect/right mismatches, then emits a
+synthetic planned-system manifest, dependency graph, generic ADAPTER or SKILL
+contracts, Owner-profile diff, synthetic fixture assertions and per-operation
+rollback plan. Capability descriptors and unresolved proposals are bound by
+digest; every scaffold remains `INACTIVE`, non-executable and grants neither
+authority nor effect authorization. There is no target-specific executable
+template or customer script path.
 
 ### Check
 
-- Focused BLD-001-G3 tests: **6/6 PASS**.
-- Complete repository tests: **169/169 PASS in split source-boundary runs**.
-  The 161 non-source-boundary tests ran with the matching existing dependency
-  tree; after removing that temporary untracked symlink, all eight clean
+- Focused BLD-001-G4 tests: **8/8 PASS**.
+- Complete repository tests: **177/177 PASS in split source-boundary runs**.
+  The 172 non-source-boundary tests ran with the matching existing dependency
+  tree; after removing that temporary untracked symlink, all five clean
   source-tree/supply-chain/public-staging tests passed separately.
-- Repository checksums: **241/241 PASS**.
+- Repository checksums: **244/244 PASS**.
 - Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
   PASS.
 - Video/OpenClaw/Docker smoke: not run because no video, container, plugin,
   Gateway, Broker or runtime byte changed. The one full isolated Builder smoke
-  remains assigned to G6 after relevant bytes freeze.
+  remains assigned to G6 after the G5 evidence workflow freezes relevant
+  contracts.
 - Implementation commit:
-  `f845c37472f24d6ad4e8b0bfd50f6d105a98efc3`.
-- Evidence: `docs/development/evidence/bld-001-g3-20260802.json`.
+  `6babee7d6498edcca169ffb0dfba7b9e6e591d92`.
+- Evidence: `docs/development/evidence/bld-001-g4-20260802.json`.
 
 ### Act
 
-Close G3 at **3/8** with verdict
-`LOCAL_BLD_001_G3_PASS_INACTIVE_CAPABILITY_REUSE_AND_GAP_PLAN_ONLY_NO_AUTHORITY_EFFECT_PRODUCTION_OR_RELEASE_CLAIM`.
-Do not reopen G1, G2 or G3 without regression evidence. Keep WIP at one and
-advance the same worktree to G4 deterministic planning and generic scaffolds.
+Close G4 at **4/8** with verdict
+`LOCAL_BLD_001_G4_PASS_GENERIC_DATA_ONLY_PLAN_AND_SCAFFOLDS_NO_AUTHORITY_EFFECT_ACTIVATION_PRODUCTION_OR_RELEASE_CLAIM`.
+Do not reopen G1 through G4 without regression evidence. Keep WIP at one and
+advance the same worktree to G5 quality, security and evidence workflow.
