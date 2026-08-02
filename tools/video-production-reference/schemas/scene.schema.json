@@ -12,7 +12,21 @@
     "shotPath": {"type": "string", "minLength": 1},
     "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "status": {"enum": ["accepted", "rejected", "unknown"]},
-    "visualPrinciple": {"type": "string"}
+    "visualPrinciple": {"type": "string"},
+    "role": {"enum": ["content", "outro"]},
+    "visualDescription": {"type": "string", "minLength": 1},
+    "claimRefs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "nonClaimRefs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "safeArea": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": {"type": "number", "minimum": 0},
+        "y": {"type": "number", "minimum": 0},
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "textBoxes": {"type": "array", "items": {"type": "object"}}
   }
 }
-

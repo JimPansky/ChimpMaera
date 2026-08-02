@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 import wave
 
+from .methodology import MethodologyError, validate_methodology_job
+
 try:
     import yaml
 except Exception:  # pragma: no cover
@@ -108,7 +110,7 @@ def wav_info(path):
 
 def validate_job(job, job_path, output_root=None, render_requested=False):
     _require(isinstance(job, dict), "job must be an object")
-    _require(job.get("apiVersion") == "cm.video/v1", "apiVersion must be cm.video/v1")
+    _require(job.get("apiVersion") in ("cm.video/v1", "cm.video/v2"), "apiVersion must be cm.video/v1 or cm.video/v2")
     _require(job.get("kind") == "VideoJob", "kind must be VideoJob")
     metadata = job.get("metadata") or {}
     spec = job.get("spec") or {}
@@ -222,6 +224,13 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
         for needle in FORBIDDEN_STRINGS:
             _require(needle not in content, f"forbidden string found in {text_path}: {needle}")
 
+    methodology_result = None
+    if job.get("apiVersion") == "cm.video/v2":
+        try:
+            methodology_result = validate_methodology_job(job, job_path, assets_root, expected_duration)
+        except MethodologyError as exc:
+            raise ContractError(str(exc)) from exc
+
     return {
         "status": "PASS",
         "mode": spec["mode"],
@@ -233,4 +242,5 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
         "publicActions": "FORBIDDEN",
         "assets": observed_assets,
         "durationSeconds": expected_duration,
+        "methodology": methodology_result,
     }

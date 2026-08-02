@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "cm.public-copy-policy/v1",
+  "policyId": "chimpmaera-public-english/v1",
+  "language": "en",
+  "canonicalName": "ChimpMaera",
+  "narrationNumberStyle": "english-words",
+  "visibleNumberStyle": "digits-with-english-units-and-dot-decimals",
+  "immutableNumberExceptions": ["version", "date", "timestamp", "hash", "id", "url", "filename", "machine-identifier"],
+  "forbiddenTerms": ["Chimp Maera", "Chimp Myra", "Chimp Mera", "ChimpMera", "CentipApe", "Centipape", "evergreen"],
+  "forbiddenLanguageTokens": ["eins", "zwei", "drei", "vier", "fünf", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "prozent", "sekunden", "und", "oder", "nicht", "mit", "für", "fuer"],
+  "scope": ["narration", "subtitles", "on-screen-copy", "title", "description", "thumbnail", "alt-text", "metadata", "hashtags"]
+}
