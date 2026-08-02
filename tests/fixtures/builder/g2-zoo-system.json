@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "chimpmaera.builder/discovery-input/v1",
+  "tenant": "synthetic-zoo",
+  "actor": "agent:builder",
+  "intake": {
+    "goal": "Inspect habitat temperature and prepare a reversible set-point correction.",
+    "requestedOperationIds": [
+      "habitat.temperature.read",
+      "habitat.setpoint.update"
+    ],
+    "constraints": [
+      "No external network access.",
+      "Use synthetic fixture records only."
+    ]
+  },
+  "machineManifest": {
+    "schemaVersion": "chimpmaera.builder/machine-manifest/v1",
+    "manifestId": "manifest:zoo-habitat-v1",
+    "tenant": "synthetic-zoo",
+    "systemId": "system:zoo-habitat-lab",
+    "systemType": "unknown.habitat-controller",
+    "dataClassification": "SYNTHETIC",
+    "objects": [
+      {
+        "objectType": "habitat",
+        "description": "A synthetic animal habitat with a target temperature.",
+        "dependencyObjectTypes": ["sensor"]
+      },
+      {
+        "objectType": "sensor",
+        "description": "A synthetic temperature sensor attached to a habitat.",
+        "dependencyObjectTypes": []
+      }
+    ],
+    "operations": [
+      {
+        "operationId": "habitat.setpoint.update",
+        "objectType": "habitat",
+        "effectClass": "REVERSIBLE_WRITE",
+        "cause": "An owner-approved correction requests a new synthetic set point.",
+        "effect": "The habitat target changes and can be restored to its recorded prior value.",
+        "reversible": true,
+        "contextRefs": ["context:setpoint-rollback", "context:setpoint-safety"],
+        "capabilityHint": "habitat.setpoint.update"
+      },
+      {
+        "operationId": "habitat.temperature.read",
+        "objectType": "sensor",
+        "effectClass": "READ_ONLY",
+        "cause": "A diagnostic request asks for the current synthetic temperature.",
+        "effect": "A bounded temperature record is returned without changing the target.",
+        "reversible": false,
+        "contextRefs": ["context:temperature-read"],
+        "capabilityHint": "habitat.temperature.read"
+      }
+    ]
+  },
+  "guides": [
+    {
+      "schemaVersion": "chimpmaera.builder/system-advisor-guide/v1",
+      "guideId": "guide:unknown-habitat-v1",
+      "systemType": "unknown.habitat-controller",
+      "title": "Synthetic habitat controller System Advisor Guide",
+      "operationRefs": [
+        "habitat.setpoint.update",
+        "habitat.temperature.read"
+      ],
+      "contextRefs": [
+        "context:setpoint-rollback",
+        "context:setpoint-safety",
+        "context:temperature-read"
+      ],
+      "contentDigest": "8f3ad2d4803c75f5b50f36d7a06fc17d6ef06da338060d71d57d3d577211da12"
+    }
+  ],
+  "contexts": [
+    {
+      "contextId": "context:setpoint-rollback",
+      "kind": "ROLLBACK",
+      "statement": "Record the prior synthetic set point and restore it if readback differs.",
+      "dataClassification": "SYNTHETIC",
+      "sourceRef": "guide:unknown-habitat-v1"
+    },
+    {
+      "contextId": "context:setpoint-safety",
+      "kind": "SAFETY",
+      "statement": "A set-point change requires separate effect authorization and bounded readback.",
+      "dataClassification": "SYNTHETIC",
+      "sourceRef": "guide:unknown-habitat-v1"
+    },
+    {
+      "contextId": "context:temperature-read",
+      "kind": "CAUSE_EFFECT",
+      "statement": "Reading temperature returns one synthetic observation and performs no write.",
+      "dataClassification": "SYNTHETIC",
+      "sourceRef": "guide:unknown-habitat-v1"
+    }
+  ]
+}

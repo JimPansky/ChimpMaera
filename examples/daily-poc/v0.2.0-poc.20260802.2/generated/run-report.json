@@ -1,0 +1,47 @@
+{
+  "artifact_sha256_digests": {
+    "demo-guide.md": "0c32f024c578d0069f4797045b7c5390685d3ecf1dd1d829fd6cb32e87eec746",
+    "evidence-index.json": "b81d63450792345e3da91cd2e887de30f5775d203939d79f3f85ec4951d37dff",
+    "evidence-summary.md": "f4991eb80145f1293ed2cc2d48babc2cebaabbd20a496496accecb9f6f9c4827",
+    "known-limitations.md": "ed719cebf4b2b0a26e9fc60902bada1c3e2588d0b0ddc58677efe94e4b6eb871",
+    "provenance.json": "f0f489a3d02a85ed44630d51583f2fedea666c42c11483ad94662e410ea5d99d",
+    "readme-pointer.md": "43e77d68be11caa980b5715f1219c929ad433d78407852b9482032a087ccbcd9",
+    "release-notes.md": "672a755d1e4d198b6c7269cde0c8d1cb5b777dde78896373d52ac1b8eb6ad5a7",
+    "sbom.spdx.json": "a1292312a8f9e4eec5dd367b09ce33366eecf20da65835160f35ae2b33055f88",
+    "video-adapter.json": "7eff9bfa9d06114fb18467c4b8ad2c6c69e119bf8c4c95c2defed43ae63d3f18",
+    "video-brief.json": "193ccf93e54ff1d7f9e4fd9cffdd65bb32e9ff7b6c70797a8ab518f76320774a",
+    "video-narration.md": "88d01a495cce949d5d51154af4d4a7533b8cf9d33bd15a43232f44130cd6e223",
+    "video-storyboard.json": "103602959a07a2947be8ee1035377c31eec90f0e29b1089c31c555b8399fc0b0"
+  },
+  "candidateVersion": "v0.2.0-poc.20260802.2",
+  "claim_evidence_deviations": [],
+  "failed_gates": [],
+  "gate_durations": {
+    "gate_1": 1,
+    "gate_2": 1,
+    "gate_3": 1,
+    "gate_4": 1,
+    "gate_5": 1,
+    "gate_6": 1,
+    "gate_7": 1,
+    "gate_8": 1
+  },
+  "manifestSha256": "a57b774f132cd739b4b38eed3bc49237aa28cf9b65372600631c84ec6c902b0f",
+  "manual_interventions": 0,
+  "qc_results": {
+    "claimScan": "PASS",
+    "internalPathScan": "PASS",
+    "secretScan": "PASS"
+  },
+  "render_results": {
+    "rendered": false,
+    "status": "DISABLED_DEFAULT"
+  },
+  "retries": 0,
+  "run_duration": {
+    "unit": "logical_gate_steps",
+    "value": 8
+  },
+  "schemaVersion": "chimpmaera.daily-poc-run-report/v1",
+  "timingNote": "Logical durations keep normalized candidate outputs reproducible; workflow wall time is observed outside the package."
+}

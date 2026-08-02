@@ -115,6 +115,8 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   }
   for (const dockerfilePath of [
     "demo/chimpmaera.Dockerfile",
+    "demo/builder-agent/gateway.Dockerfile",
+    "demo/builder-agent/openclaw.Dockerfile",
     "demo/openclaw-agent/gateway.Dockerfile",
     "demo/openclaw-agent/openclaw.Dockerfile",
     "demo/model-access-broker/broker.Dockerfile",
@@ -136,6 +138,7 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   const localTags = new Set((lock.localBuildTags ?? []).map(({ reference }) => reference));
   for (const composePath of [
     "demo/compose.yaml",
+    "demo/builder-agent/compose.yaml",
     "demo/openclaw-agent/compose.yaml",
     "demo/model-access-broker/compose.yaml",
     "demo/managed-skill-lifecycle/compose.yaml",

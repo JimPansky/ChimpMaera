@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G2-20260802",
+  "issueId": "BLD-001",
+  "claimIds": [
+    "BLD-001-G2"
+  ],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "a1ec061cdef16ab8c4fd03938f45c0270bdfbc63",
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 2/8",
+    "facts": [
+      "A previously unknown synthetic system type is accepted without changing the generic Builder core.",
+      "Typed guided intake selects registered manifest operations and their transitive object dependencies.",
+      "Every selected operation and cause/effect context is grounded in a matching System Advisor Guide.",
+      "The record is deterministic, digest-bound, synthetic-only and explicitly carries no authority or effect.",
+      "Arbitrary raw payload fields and live/customer data classifications are outside the closed input contract."
+    ]
+  },
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "cross-tenant machine manifest",
+      "unregistered requested operation",
+      "Guide without full requested-operation grounding",
+      "secret-like guided goal",
+      "hidden raw payload field"
+    ],
+    "result": "All throw BUILDER_DISCOVERY_INPUT_INVALID_DENIED before authority, effect or raw-data capture."
+  },
+  "validation": {
+    "focused": "5/5 PASS including public JSON Schema, deterministic discovery, context binding, unknown-system reuse and negative matrix",
+    "completeRepository": "163/163 PASS in split source-boundary runs: 158/158 non-supply-chain plus 5/5 clean source-tree/supply-chain/public-staging",
+    "combinedRunNegativeEvidence": "The temporary ignored dependency symlink intentionally caused SOURCE_TREE_SYMLINK:node_modules in the combined staging test; after unlink, the clean-source staging test passed.",
+    "checksums": "237/237 PASS",
+    "supplyChain": "6/6 PASS; repository-declaration scope only",
+    "deterministicPublicStaging": "PASS",
+    "videoSmoke": "NOT_RUN_PROPORTIONATE: no video source, renderer, asset, schema or runtime byte changed"
+  },
+  "reversibleDecision": {
+    "assumption": "The generic core accepts any identifier-safe system type while Guides bind operation and context semantics.",
+    "risk": "Broad Guides could include unrelated context or fixture-specific concepts could leak into core behavior.",
+    "fallback": "Select only requested-operation contexts, keep target facts in fixtures, reject unknown fields and revert a1ec061 if G7 reuse fails.",
+    "reviewPoint": "BLD-001-G7 second-system reuse and adversarial conformance"
+  },
+  "rollback": {
+    "status": "VERIFIED_BY_BOUNDARY",
+    "action": "Revert a1ec061, leave Builder default-off and retain this evidence as negative/history record.",
+    "residue": "No runtime, service, credential, external account or customer system was created or mutated."
+  },
+  "nonClaims": [
+    "not an executable authority or effect request",
+    "not live-system, customer-data or production evidence",
+    "not security certification or universal compatibility evidence",
+    "not a released or published feature"
+  ],
+  "externalMutationPerformed": false
+}

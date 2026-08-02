@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/builder-capability-resolution-v1.schema.json",
+  "title": "ChimpMaera Builder capability resolution v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "claim",
+    "tenant",
+    "systemId",
+    "discoveryRecordDigest",
+    "registeredCapabilitiesDigest",
+    "reusedCapabilities",
+    "unresolvedIntents",
+    "inputDigest",
+    "resultDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "chimpmaera.builder/capability-resolution/v1"
+    },
+    "claim": {
+      "const": "CAPABILITY_REUSE_PLAN_ONLY_NO_AUTHORITY_OR_EFFECT"
+    },
+    "tenant": {
+      "$ref": "#/$defs/identifier"
+    },
+    "systemId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "discoveryRecordDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "registeredCapabilitiesDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "reusedCapabilities": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/reusedCapability"
+      }
+    },
+    "unresolvedIntents": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "$ref": "#/$defs/unresolvedIntent"
+      }
+    },
+    "inputDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "resultDigest": {
+      "$ref": "#/$defs/digest"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]*$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "effectClass": {
+      "enum": [
+        "READ_ONLY",
+        "REVERSIBLE_WRITE",
+        "IRREVERSIBLE_EFFECT",
+        "INSTALL_ACTIVATE",
+        "PUBLICATION"
+      ]
+    },
+    "reusedCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operationId",
+        "capabilityId",
+        "catalogueId",
+        "catalogueVersion",
+        "descriptorDigest",
+        "lifecycleState",
+        "executable",
+        "authorityGranted",
+        "effectAuthorized"
+      ],
+      "properties": {
+        "operationId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "capabilityId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "catalogueId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "catalogueVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "descriptorDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "lifecycleState": {
+          "const": "INACTIVE"
+        },
+        "executable": {
+          "const": false
+        },
+        "authorityGranted": {
+          "const": false
+        },
+        "effectAuthorized": {
+          "const": false
+        }
+      }
+    },
+    "unresolvedIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "proposalVersion",
+        "proposalId",
+        "status",
+        "lifecycleState",
+        "operationId",
+        "capabilityHint",
+        "effectClass",
+        "risk",
+        "dependencyRefs",
+        "recommendation",
+        "executable",
+        "authorityGranted",
+        "effectAuthorized"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "chimpmaera.builder/unresolved-intent/v1"
+        },
+        "proposalVersion": {
+          "const": "1.0.0"
+        },
+        "proposalId": {
+          "type": "string",
+          "pattern": "^unresolved:[a-f0-9]{24}$"
+        },
+        "status": {
+          "const": "UNRESOLVED_INTENT"
+        },
+        "lifecycleState": {
+          "const": "INACTIVE"
+        },
+        "operationId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "capabilityHint": {
+          "$ref": "#/$defs/identifier"
+        },
+        "effectClass": {
+          "$ref": "#/$defs/effectClass"
+        },
+        "risk": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320
+        },
+        "dependencyRefs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "recommendation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320
+        },
+        "executable": {
+          "const": false
+        },
+        "authorityGranted": {
+          "const": false
+        },
+        "effectAuthorized": {
+          "const": false
+        }
+      }
+    }
+  }
+}

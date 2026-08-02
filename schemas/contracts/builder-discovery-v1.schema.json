@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/contracts/builder-discovery-v1.schema.json",
+  "title": "ChimpMaera Builder guided discovery input v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tenant",
+    "actor",
+    "intake",
+    "machineManifest",
+    "guides",
+    "contexts"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "chimpmaera.builder/discovery-input/v1"
+    },
+    "tenant": {
+      "$ref": "#/$defs/identifier"
+    },
+    "actor": {
+      "$ref": "#/$defs/identifier"
+    },
+    "intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal", "requestedOperationIds", "constraints"],
+      "properties": {
+        "goal": {
+          "$ref": "#/$defs/longText"
+        },
+        "requestedOperationIds": {
+          "$ref": "#/$defs/nonEmptyIdentifiers"
+        },
+        "constraints": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/shortText"
+          }
+        }
+      }
+    },
+    "machineManifest": {
+      "$ref": "#/$defs/machineManifest"
+    },
+    "guides": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/guide"
+      }
+    },
+    "contexts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/context"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]{0,127}$"
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "longText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "identifiers": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "nonEmptyIdentifiers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "machineManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "manifestId",
+        "tenant",
+        "systemId",
+        "systemType",
+        "dataClassification",
+        "objects",
+        "operations"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "chimpmaera.builder/machine-manifest/v1"
+        },
+        "manifestId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "tenant": {
+          "$ref": "#/$defs/identifier"
+        },
+        "systemId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "systemType": {
+          "$ref": "#/$defs/identifier"
+        },
+        "dataClassification": {
+          "const": "SYNTHETIC"
+        },
+        "objects": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/object"
+          }
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        }
+      }
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectType", "description", "dependencyObjectTypes"],
+      "properties": {
+        "objectType": {
+          "$ref": "#/$defs/identifier"
+        },
+        "description": {
+          "$ref": "#/$defs/shortText"
+        },
+        "dependencyObjectTypes": {
+          "$ref": "#/$defs/identifiers"
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operationId",
+        "objectType",
+        "effectClass",
+        "cause",
+        "effect",
+        "reversible",
+        "contextRefs",
+        "capabilityHint"
+      ],
+      "properties": {
+        "operationId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "objectType": {
+          "$ref": "#/$defs/identifier"
+        },
+        "effectClass": {
+          "enum": [
+            "READ_ONLY",
+            "REVERSIBLE_WRITE",
+            "IRREVERSIBLE_EFFECT",
+            "INSTALL_ACTIVATE",
+            "PUBLICATION"
+          ]
+        },
+        "cause": {
+          "$ref": "#/$defs/shortText"
+        },
+        "effect": {
+          "$ref": "#/$defs/shortText"
+        },
+        "reversible": {
+          "type": "boolean"
+        },
+        "contextRefs": {
+          "$ref": "#/$defs/nonEmptyIdentifiers"
+        },
+        "capabilityHint": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "guide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "guideId",
+        "systemType",
+        "title",
+        "operationRefs",
+        "contextRefs",
+        "contentDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "chimpmaera.builder/system-advisor-guide/v1"
+        },
+        "guideId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "systemType": {
+          "$ref": "#/$defs/identifier"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "operationRefs": {
+          "$ref": "#/$defs/nonEmptyIdentifiers"
+        },
+        "contextRefs": {
+          "$ref": "#/$defs/nonEmptyIdentifiers"
+        },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contextId",
+        "kind",
+        "statement",
+        "dataClassification",
+        "sourceRef"
+      ],
+      "properties": {
+        "contextId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "kind": {
+          "enum": ["CAUSE_EFFECT", "SAFETY", "ROLLBACK"]
+        },
+        "statement": {
+          "$ref": "#/$defs/longText"
+        },
+        "dataClassification": {
+          "const": "SYNTHETIC"
+        },
+        "sourceRef": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    }
+  }
+}

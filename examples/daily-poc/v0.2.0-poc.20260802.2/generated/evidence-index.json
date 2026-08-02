@@ -1,0 +1,212 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.2",
+  "claims": [
+    {
+      "category": "OPERATIONS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CONTRIBUTION"
+      ],
+      "id": "CM-CLAIM-BLD-001-CONTRIBUTION-BOUNDARY",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "FEATURE",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CORE",
+        "EVID-BLD-001-CONTRIBUTION"
+      ],
+      "id": "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION",
+      "maturity": "LOCALLY_VALIDATED"
+    },
+    {
+      "category": "OPERATIONS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "CM-CLAIM-BLD-001-ISOLATED-PROOF",
+      "maturity": "LOCALLY_VALIDATED"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVID-BLD-001-CONTRIBUTION",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "examples/builder-agent/contribution-bundle-v1.json",
+      "sha256": "b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-BLD-001-CORE",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "demo/builder-agent/builder-core.mjs",
+      "sha256": "199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-BLD-001-G8",
+      "kind": "TEST",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "docs/development/evidence/bld-001-g8-20260802.json",
+      "sha256": "1e59bebb47db8c5fb04a370e1738f8332d55592b997d450a24bc38b6d81959cf",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-BLD-001-OPERATOR-GUIDE",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
+      "sha256": "ff9fd52f21a4f0e991a60d7aefa9e2febc6aef109a81f2e0eae1fe475b19c1f6",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    },
+    {
+      "id": "EVID-BLD-001-README",
+      "kind": "SOURCE",
+      "maturity": "LOCALLY_VALIDATED",
+      "observedOn": "2026-08-02",
+      "path": "README.md",
+      "sha256": "55b4fa8a8e93c4f1366c9e0fffb0b0f9c47af8ef33d7d2e255365938b3fb5f19",
+      "sourceCommit": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+      "status": "PASS",
+      "validUntil": "2026-09-01"
+    }
+  ],
+  "negativeProbes": [
+    {
+      "command": "Attempt a direct target effect outside Gateway and Broker",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "PROBE-BLD-001-DIRECT-BYPASS",
+      "result": "PASS"
+    },
+    {
+      "command": "Attempt private-path leakage and release-status escalation through the contribution bundle",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "PROBE-BLD-001-LEAKAGE-AND-STATUS",
+      "result": "PASS"
+    },
+    {
+      "command": "Attempt replay and post-approval mutation",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "PROBE-BLD-001-REPLAY-AND-MUTATION",
+      "result": "PASS"
+    },
+    {
+      "command": "Force rollback readback failure and require non-success evidence",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "PROBE-BLD-001-ROLLBACK",
+      "result": "PASS"
+    },
+    {
+      "command": "Attempt secret reflection and cross-tenant access",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "PROBE-BLD-001-SECRET-AND-TENANT",
+      "result": "PASS"
+    },
+    {
+      "command": "Attempt unauthorized skill activation and self-approval",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "PROBE-BLD-001-SKILL-AND-APPROVAL",
+      "result": "PASS"
+    }
+  ],
+  "previousVerifiedSnapshot": {
+    "artifactManifestSha256": "5c0712f78271163ce0fb209a9ac6b76db7f27274f6c4971d24dbec4016722a2e",
+    "date": "2026-08-02",
+    "manifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+    "sequence": 1,
+    "snapshotDigest": "923695de5610c9a7e77169bb933cc97afd8b4b6b6ecc3596bbd0297dc7856582",
+    "sourceHead": "fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85",
+    "version": "v0.2.0-poc.20260802.1"
+  },
+  "schemaVersion": "chimpmaera.daily-poc-evidence-index/v1",
+  "source": {
+    "base": "fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85",
+    "head": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  },
+  "tests": [
+    {
+      "command": "sha256sum --check SHA256SUMS",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "TEST-BLD-001-CHECKSUMS",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run daily-poc:test",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "TEST-BLD-001-DAILY-ADVERSARIAL",
+      "result": "PASS"
+    },
+    {
+      "command": "Run the focused BLD-001 contract, runtime and conformance tests",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "TEST-BLD-001-FOCUSED",
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "TEST-BLD-001-FULL",
+      "result": "PASS"
+    },
+    {
+      "command": "./demo/builder-agent/smoke.sh",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "TEST-BLD-001-ISOLATED-SMOKE",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run supply-chain:verify",
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "TEST-BLD-001-SUPPLY-CHAIN",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run video:test",
+      "evidenceRefs": [
+        "EVID-BLD-001-README"
+      ],
+      "id": "TEST-BLD-001-VIDEO-COPY",
+      "result": "PASS"
+    }
+  ]
+}

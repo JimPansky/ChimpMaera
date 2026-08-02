@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G4-20260802",
+  "issueId": "BLD-001",
+  "claimIds": [
+    "BLD-001-G4"
+  ],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "6babee7d6498edcca169ffb0dfba7b9e6e591d92",
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 4/8",
+    "facts": [
+      "One deterministic planner recomputes and binds the G2 discovery, G3 capability resolution and G1 authority decision digests before emitting any output.",
+      "The output includes a synthetic planned-system manifest, object/dependency graph, generic adapter-or-skill contracts, Owner-profile diff, fixtures and per-operation rollback plan.",
+      "Registered capability descriptors and unresolved-intent proposals remain separately digest-bound, INACTIVE, non-executable and grant neither authority nor effect authorization.",
+      "SAFE_GUIDED remains the default; CUSTOM and RAMPAGE_FULL_CONTROL_LAB profile differences are represented without becoming executable authority.",
+      "The same generic templates support ADAPTER and SKILL scaffolds without target-specific executable code or a privileged script per decision."
+    ]
+  },
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "semantically unordered discovery and authority inputs canonicalize to the same plan",
+      "cross-tenant authority input",
+      "missing authority right",
+      "authority effect-class mismatch",
+      "tampered capability descriptor digest",
+      "non-synthetic system classification",
+      "hidden customer-specific script field",
+      "post-plan executable mutation",
+      "authority-shaped hidden output field"
+    ],
+    "result": "Mismatched, incomplete, tampered or hidden-field input denies before a plan; output mutation denies verification."
+  },
+  "validation": {
+    "focused": "8/8 PASS including public JSON Schema, canonicalization, generic adapter/skill output, profile diff, rollback/fixtures, broad Owner profile, adversarial input matrix and result verification",
+    "completeRepository": "177/177 PASS in split source-boundary runs: 172/172 non-source-boundary plus 5/5 clean source-tree/supply-chain/public-staging",
+    "checksums": "244/244 PASS",
+    "supplyChain": "6/6 PASS; repository-declaration scope only",
+    "deterministicPublicStaging": "PASS",
+    "proportionateSmoke": "NOT_RUN: no video, container, plugin, Gateway, Broker or runtime byte changed; the isolated Builder/OpenClaw read/write smoke remains assigned to G6 after the G5 evidence workflow freezes relevant contracts"
+  },
+  "reversibleDecision": {
+    "assumption": "G4 may emit only generic data contracts over recomputed G1/G2/G3 records; a capability gap remains an inactive unresolved reference and every effectful operation receives a pre-activation recovery strategy.",
+    "risk": "An extracted scaffold could lose its capability provenance or imply target-specific executable behavior.",
+    "fallback": "Bind every scaffold to the exact capability descriptor or proposal digest, retain generic template IDs, deny source mismatch and revert 6babee7 if G5/G7 cannot validate the contract without privileged specialization.",
+    "reviewPoint": "BLD-001-G5 evidence/readback workflow and BLD-001-G7 second-system adversarial reuse"
+  },
+  "rollback": {
+    "status": "VERIFIED_BY_BOUNDARY",
+    "action": "Revert 6babee7, leave Builder default-off and retain this evidence as negative/history record.",
+    "residue": "No runtime, service, credential, external account or customer system was created or mutated."
+  },
+  "nonClaims": [
+    "not an activated adapter or skill, executable authority, approval or effect request",
+    "not a live-system, customer-data, provider or production integration",
+    "not the G5 quality/evidence workflow or G6 isolated OpenClaw read/write E2E",
+    "not security certification or universal agent/system compatibility evidence",
+    "not a released, published or publicly available feature"
+  ],
+  "externalMutationPerformed": false
+}

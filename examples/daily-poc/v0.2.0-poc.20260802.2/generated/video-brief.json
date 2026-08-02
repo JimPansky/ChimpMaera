@@ -1,0 +1,104 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.2",
+  "claims": [
+    {
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CONTRIBUTION"
+      ],
+      "id": "CM-CLAIM-BLD-001-CONTRIBUTION-BOUNDARY",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The contribution bundle is locally validated as sanitized, opt-in, issue/claim/evidence-linked and structurally unable to represent local validation as release status."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-BLD-001-G8",
+        "EVID-BLD-001-CORE",
+        "EVID-BLD-001-CONTRIBUTION"
+      ],
+      "id": "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "Builder Agent M1 locally validates a reusable path from owner intent through typed discovery, exact capability reuse or inactive unresolved intent, digest-bound planning, validation, reversible execution evidence and sanitized contribution preparation."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-BLD-001-G8"
+      ],
+      "id": "CM-CLAIM-BLD-001-ISOLATED-PROOF",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The isolated default-off OpenClaw reference proof locally validates one read, one reversible write, denials, receipts, exact reset and zero owned residue against synthetic targets."
+    }
+  ],
+  "description": "An evidence-bound preparation package for Builder Agent M1. Rendering and upload remain disabled.",
+  "language": "en",
+  "publication": {
+    "youtubeUpload": false
+  },
+  "schemaVersion": "chimpmaera.daily-poc-video-brief/v1",
+  "segments": [
+    {
+      "claimRefs": [
+        "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION"
+      ],
+      "durationSeconds": 12,
+      "id": "VIDEO-SEGMENT-BLD-001-INTENT",
+      "narration": "Builder Agent M1 starts with owner intent. Effective rights remain the intersection of the real system ceiling, the selected profile, assignments and current constraints.",
+      "order": 1,
+      "purpose": "Explain owner-selected profiles and the effective-rights intersection.",
+      "title": "Owner intent, bounded rights",
+      "useCaseRefs": [
+        "USE-CASE-BLD-001-GOVERNED-INTEGRATION"
+      ],
+      "visuals": [
+        "Show SAFE_GUIDED, CUSTOM and RAMPAGE_FULL_CONTROL_LAB as owner-selected profiles.",
+        "Show the four-way effective-rights intersection."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-BLD-001-GOVERNED-INTEGRATION"
+      ],
+      "durationSeconds": 16,
+      "id": "VIDEO-SEGMENT-BLD-001-PLAN",
+      "narration": "Guided discovery reuses an exact capability when one exists. A genuine gap becomes an inactive unresolved-intent proposal. The resulting plan binds manifests, dependencies, contracts, fixtures, reviewable changes and rollback by digest.",
+      "order": 2,
+      "purpose": "Show discovery, exact reuse, inactive gaps and reviewable planning.",
+      "title": "Reuse before invention",
+      "useCaseRefs": [
+        "USE-CASE-BLD-001-GOVERNED-INTEGRATION"
+      ],
+      "visuals": [
+        "Show discovery flowing to exact reuse or inactive unresolved intent.",
+        "Show a digest-bound plan and reviewable Diff."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-BLD-001-ISOLATED-PROOF",
+        "CM-CLAIM-BLD-001-CONTRIBUTION-BOUNDARY"
+      ],
+      "durationSeconds": 14,
+      "id": "VIDEO-SEGMENT-BLD-001-EVIDENCE",
+      "narration": "Independent tests, negative probes, readback and receipts precede separately routed effects. The isolated proof completes one read and one reversible write, resets exactly and leaves zero owned residue. Contribution remains sanitized and opt-in.",
+      "order": 3,
+      "purpose": "Show isolated proof, denials, receipts, reset and the contribution boundary.",
+      "title": "Evidence before effect",
+      "useCaseRefs": [
+        "USE-CASE-BLD-001-GOVERNED-INTEGRATION"
+      ],
+      "visuals": [
+        "Show the isolated read, reversible write, denial, receipt and reset sequence.",
+        "Show the opt-in contribution bundle and the local PoC non-claims."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "a57b774f132cd739b4b38eed3bc49237aa28cf9b65372600631c84ec6c902b0f",
+  "title": "ChimpMaera POC Daily — 2026-08-02",
+  "useCases": [
+    {
+      "demoUtility": "Shows how an operator can inspect and adapt a reusable governed integration without granting new authority or connecting a real system.",
+      "id": "USE-CASE-BLD-001-GOVERNED-INTEGRATION",
+      "title": "Build a governed integration for a synthetic system"
+    }
+  ]
+}

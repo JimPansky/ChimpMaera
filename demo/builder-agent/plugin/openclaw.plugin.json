@@ -1,0 +1,17 @@
+{
+  "id": "chimpmaera-builder",
+  "name": "ChimpMaera BLD-001 Builder Gateway",
+  "description": "Exposes two admitted synthetic Builder operations to the isolated OpenClaw fixture.",
+  "version": "1.0.0",
+  "activation": { "onStartup": true },
+  "contracts": { "tools": ["chimpmaera_builder_request"] },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["baseUrl", "workloadIdentity"],
+    "properties": {
+      "baseUrl": { "type": "string", "const": "http://builder-gateway:8080" },
+      "workloadIdentity": { "type": "string", "const": "workload:bld001-builder-agent-g6-v1" }
+    }
+  }
+}

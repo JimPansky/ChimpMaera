@@ -1,0 +1,62 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "annotations": [
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-BLD-001-CONTRIBUTION examples/builder-agent/contribution-bundle-v1.json sha256:b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-BLD-001-CORE demo/builder-agent/builder-core.mjs sha256:199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-BLD-001-G8 docs/development/evidence/bld-001-g8-20260802.json sha256:1e59bebb47db8c5fb04a370e1738f8332d55592b997d450a24bc38b6d81959cf"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-BLD-001-OPERATOR-GUIDE docs/BUILDER-AGENT-OPERATOR-GUIDE.md sha256:ff9fd52f21a4f0e991a60d7aefa9e2febc6aef109a81f2e0eae1fe475b19c1f6"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-BLD-001-README README.md sha256:55b4fa8a8e93c4f1366c9e0fffb0b0f9c47af8ef33d7d2e255365938b3fb5f19"
+    }
+  ],
+  "creationInfo": {
+    "comment": "Timestamp is deterministically derived from the canonical manifest date.",
+    "created": "2026-08-02T00:00:00Z",
+    "creators": [
+      "Tool: chimpmaera.daily-poc-compiler/v1"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://chimpmaera.local/spdx/v0.2.0-poc.20260802.2",
+  "name": "ChimpMaera-v0.2.0-poc.20260802.2-daily-poc-inputs",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-ChimpMaera",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "OTHER",
+          "referenceLocator": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+          "referenceType": "gitCommit"
+        }
+      ],
+      "filesAnalyzed": false,
+      "name": "ChimpMaera",
+      "versionInfo": "v0.2.0-poc.20260802.2"
+    }
+  ],
+  "spdxVersion": "SPDX-2.3"
+}

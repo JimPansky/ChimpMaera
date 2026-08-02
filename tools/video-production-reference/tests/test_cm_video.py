@@ -167,20 +167,28 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertNotIn("# ChimpMaera v0.1", root_readme)
         self.assertNotIn("ChimpMaera v0.1 is", root_readme)
         self.assertIn(
-            "**Current public release:** [v0.1.0]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)"
-            " — the stable predecessor line published on 2026-07-31.",
+            "**Current public release:** [`v0.2.0-poc.20260802.2`]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
+            "v0.2.0-poc.20260802.2) — the current published regular release.",
             root_readme,
         )
         self.assertIn(
-            "**Today's Daily:** [`v0.2.0-poc.20260802.1`]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.1)"
+            "**Today's Daily:** [`v0.2.0-poc.20260802.2`]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
+            "v0.2.0-poc.20260802.2)"
             " — the Daily snapshot dated 2026-08-02.",
             root_readme,
         )
         self.assertIn(
-            "**Previous Daily provenance:** `v0.2.0-poc.20260801.1`"
-            " — predecessor provenance only; it is not today's identity.",
+            "**Previous Daily provenance:** [`v0.2.0-poc.20260802.1`]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
+            "v0.2.0-poc.20260802.1) — the historical predecessor Daily.",
+            root_readme,
+        )
+        self.assertIn(
+            "**Historical predecessor:** [`v0.1.0`]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)"
+            " — historical only; it is not the current release.",
             root_readme,
         )
         video_heading = "## Watch ChimpMaera"

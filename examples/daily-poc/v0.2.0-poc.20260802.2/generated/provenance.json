@@ -1,0 +1,369 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.2",
+  "compiler": "chimpmaera.daily-poc-compiler/v1",
+  "manifestSha256": "a57b774f132cd739b4b38eed3bc49237aa28cf9b65372600631c84ec6c902b0f",
+  "materialChange": {
+    "changedFiles": [
+      ".gitignore",
+      "README.md",
+      "SHA256SUMS",
+      "demo/builder-agent/builder-core.mjs",
+      "demo/builder-agent/compose.yaml",
+      "demo/builder-agent/fixture-probe.mjs",
+      "demo/builder-agent/gateway.Dockerfile",
+      "demo/builder-agent/gateway.mjs",
+      "demo/builder-agent/lib.sh",
+      "demo/builder-agent/openclaw.Dockerfile",
+      "demo/builder-agent/openclaw.json",
+      "demo/builder-agent/plugin/index.mjs",
+      "demo/builder-agent/plugin/openclaw.plugin.json",
+      "demo/builder-agent/plugin/package.json",
+      "demo/builder-agent/reset.sh",
+      "demo/builder-agent/runtime-contract-second-system-v1.json",
+      "demo/builder-agent/runtime-contract-v1.json",
+      "demo/builder-agent/setup.sh",
+      "demo/builder-agent/smoke.sh",
+      "demo/builder-agent/workspace/AGENTS.md",
+      "demo/builder-agent/workspace/HEARTBEAT.md",
+      "demo/builder-agent/workspace/IDENTITY.md",
+      "demo/builder-agent/workspace/SOUL.md",
+      "demo/builder-agent/workspace/TOOLS.md",
+      "demo/builder-agent/workspace/USER.md",
+      "demo/builder-agent/workspace/openclaw-workspace-state.json",
+      "demo/manifests/supply-chain/artifact-lock-v1.json",
+      "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
+      "docs/BUILDER-CONFIGURATION-DEFAULTS.md",
+      "docs/CONNECT-YOUR-FIRST-SYSTEM.md",
+      "docs/SYSTEM-ADVISOR-GUIDE.md",
+      "docs/development/bld-001-builder-agent-m1-pdca.md",
+      "docs/development/evidence/bld-001-g1-20260801.json",
+      "docs/development/evidence/bld-001-g2-20260802.json",
+      "docs/development/evidence/bld-001-g3-20260802.json",
+      "docs/development/evidence/bld-001-g4-20260802.json",
+      "docs/development/evidence/bld-001-g5-20260802.json",
+      "docs/development/evidence/bld-001-g6-20260802.json",
+      "docs/development/evidence/bld-001-g7-20260802.json",
+      "docs/development/evidence/bld-001-g8-20260802.json",
+      "examples/builder-agent/contribution-bundle-v1.json",
+      "examples/builder-agent/contribution-input-v1.json",
+      "package.json",
+      "packages/contracts/src/builder-authority.ts",
+      "packages/contracts/src/builder-capability-resolution.ts",
+      "packages/contracts/src/builder-contribution-bundle.ts",
+      "packages/contracts/src/builder-discovery.ts",
+      "packages/contracts/src/builder-integration-plan.ts",
+      "packages/contracts/src/builder-quality-evidence.ts",
+      "packages/contracts/src/index.ts",
+      "release/public-files.manifest",
+      "schemas/contracts/builder-authority-v1.schema.json",
+      "schemas/contracts/builder-capability-resolution-v1.schema.json",
+      "schemas/contracts/builder-contribution-bundle-v1.schema.json",
+      "schemas/contracts/builder-discovery-v1.schema.json",
+      "schemas/contracts/builder-integration-plan-v1.schema.json",
+      "schemas/contracts/builder-quality-evidence-v1.schema.json",
+      "scripts/build-public-release.sh",
+      "scripts/daily-poc.mjs",
+      "scripts/verify-supply-chain.mjs",
+      "tests/builder-agent-runtime.test.mjs",
+      "tests/builder-authority.test.ts",
+      "tests/builder-capability-resolution.test.ts",
+      "tests/builder-contribution-bundle.test.ts",
+      "tests/builder-discovery.test.ts",
+      "tests/builder-integration-plan.test.ts",
+      "tests/builder-quality-evidence.test.ts",
+      "tests/builder-reuse-conformance.test.mjs",
+      "tests/fixtures/builder/g2-zoo-system.json",
+      "tests/fixtures/builder/g3-capability-registry.json",
+      "tools/video-production-reference/tests/test_cm_video.py"
+    ],
+    "commits": [
+      {
+        "id": "6154a50d7f41ee59f1d7b69b4086e620285b30f9",
+        "subject": "feat: add v0.2 approval workbench wave 1"
+      },
+      {
+        "id": "dcc1050f7d3649f062db97c54d9c4a5915862391",
+        "subject": "docs: finalize v0.2 wave 1 checkpoint"
+      },
+      {
+        "id": "2f89e07bd5195522868eea665352192be62e7125",
+        "subject": "feat: add provider-neutral policy evaluator"
+      },
+      {
+        "id": "a32623cea713202241c9fc1ad4b2c3c743e5a354",
+        "subject": "feat: add read-only Paperless zoo adapter"
+      },
+      {
+        "id": "1b9e6bcb137e76b4f688fa2382f0520c339bbc43",
+        "subject": "build: verify declared supply-chain inputs"
+      },
+      {
+        "id": "f0c0b3aea09de48a9ed3416bcd3a002f32b4efa2",
+        "subject": "docs: finalize v0.2 waves 1 through 4 evidence"
+      },
+      {
+        "id": "f12dbea072178b99b50990bd16766563ac47b80d",
+        "subject": "fix: deny supply-chain verifier path escapes"
+      },
+      {
+        "id": "5fa6aed3cc64c5f61e7e57094d1fd82e328c6710",
+        "subject": "docs: prepare v0.2 local review packet"
+      },
+      {
+        "id": "232b056e6bb07ecea58248a2e7655b07a631a72d",
+        "subject": "docs: close v0.2 review-readiness gate"
+      },
+      {
+        "id": "b548b3d8b25448d078457e30d2b0d17edfa70162",
+        "subject": "docs: adversarially verify v0.2 review candidate"
+      },
+      {
+        "id": "47da5ac4f70221b485b4a2a1989dd1ffe9666d06",
+        "subject": "docs: decide v0.2 source hygiene risk"
+      },
+      {
+        "id": "0d278cbd573b893f3f90936cb3ebfbdc042a8916",
+        "subject": "docs: integrate Admin-AI security analysis backlog"
+      },
+      {
+        "id": "282ad5f74e935849969b9233f70fa5b2134a67c9",
+        "subject": "docs: plan AAS-001 repair containment"
+      },
+      {
+        "id": "72a489263dcd477dba394282a55d498ac2762318",
+        "subject": "fix: contain setup repair filesystem effects"
+      },
+      {
+        "id": "468902be6963fc8d8b1d05aaf05776d999dc9a05",
+        "subject": "docs: close AAS-001 and advance frontier"
+      },
+      {
+        "id": "bdfb7373d331e17903982afd6eb145ffa1879142",
+        "subject": "chore: refresh public integrity closure"
+      },
+      {
+        "id": "1d526f2daab618c036b5239388c0d67a07df05a1",
+        "subject": "docs: finalize AAS-001 evidence closure"
+      },
+      {
+        "id": "e088c7dc2e9990aa21b6c2ca66e3fd0e06924e4b",
+        "subject": "docs: freeze AAS-002 policy fence PDCA contract"
+      },
+      {
+        "id": "8d58bed570038a4ba2068d6aa728a9190dffc763",
+        "subject": "feat: fence Admin AI policy generations"
+      },
+      {
+        "id": "a0b7a08999a8d7bfe7e654c05b41c04fa06dd78f",
+        "subject": "docs: close AAS-002 and advance security frontier"
+      },
+      {
+        "id": "fca22d835400cc350795eb1622e38eaf983466b6",
+        "subject": "docs: start AAS-003 effective-rights PDCA"
+      },
+      {
+        "id": "7c85a065da6bdd200cacc02ccfac8ddbd7484199",
+        "subject": "feat: add effective-rights permission x-ray"
+      },
+      {
+        "id": "3f02727f9a9ba035f9ce7b3ab3017e7ba1925f2b",
+        "subject": "docs: close AAS-003 and advance security frontier"
+      },
+      {
+        "id": "676c8160db69423a3dc1b3995e9279ee6f7e47bc",
+        "subject": "docs: audit retrospective Admin-AI expansion topics"
+      },
+      {
+        "id": "da5fff1fd5d1b03c98e7ad6c2026e99a9cd907b0",
+        "subject": "docs: integrate retrospective Admin-AI scope"
+      },
+      {
+        "id": "ea4bba05942e87546bedb8d7825d688bbb8548ce",
+        "subject": "docs: plan AAS-009 trust boundary"
+      },
+      {
+        "id": "f7641d2dc81ca2008da4c30b4d697d60569427fb",
+        "subject": "feat: add AAS-009 injection trust boundary"
+      },
+      {
+        "id": "7f4a947d6c79a6b8712320e2378589fa810d6929",
+        "subject": "docs: close AAS-009 and advance frontier"
+      },
+      {
+        "id": "27221ad638addf150017542e81187f3fd3c54f09",
+        "subject": "feat: bind approval diff to fresh provider state"
+      },
+      {
+        "id": "501122f855e4d0987896b649d0f93f3e2a6bd64c",
+        "subject": "docs: close AAS-016 and advance frontier"
+      },
+      {
+        "id": "89841b60c3beb3a9dd0a32449d23d21eef25a037",
+        "subject": "docs: plan AAS-012 inactive catalogue"
+      },
+      {
+        "id": "4e3a5952fc6c748b3fe4ac648c82968a18d3f39f",
+        "subject": "feat: add inactive capability catalogue"
+      },
+      {
+        "id": "3a2609036233f68f5e9e9afbb6b497c9ba969fa1",
+        "subject": "docs: close AAS-012 and select OpenClaw runtime"
+      },
+      {
+        "id": "6d681a5680cce23a204e5aa453857e864bf210ce",
+        "subject": "docs: plan AAS-035 OpenClaw runtime"
+      },
+      {
+        "id": "6742ea5e16c3855160a0ca7d59e1f4d583d23671",
+        "subject": "chore: lock OpenClaw runtime provenance"
+      },
+      {
+        "id": "cf1ce64ce33ca6e3e658af69f986a2e3b72a60b7",
+        "subject": "docs: advance AAS-035 to runtime gates"
+      },
+      {
+        "id": "2ddfd1e112e57b1b9ca9c1ec1c37f6640dd9fd7d",
+        "subject": "feat: add isolated OpenClaw agent runtime"
+      },
+      {
+        "id": "7502ef9dd472c7aef7f5763c62d154634f8a4d70",
+        "subject": "docs: close AAS-035 runtime gates"
+      },
+      {
+        "id": "3f157c768d5769487a1e5feb1d97b239b3121d0f",
+        "subject": "docs: checkpoint AAS-035 and select AAS-017"
+      },
+      {
+        "id": "8b257dc5d50aece375cbf32f89dfed7d280ca984",
+        "subject": "feat: add signed policy lifecycle"
+      },
+      {
+        "id": "29d61bfaaf3d640ed952367fc4c68da80d21cc7b",
+        "subject": "docs: checkpoint AAS-017 and select AAS-036"
+      },
+      {
+        "id": "9a95eb869eff00f30afb8c66f3fc2d9f12d74023",
+        "subject": "feat: add guarded model access broker"
+      },
+      {
+        "id": "da76543e12390c3f3d899e178eac17bc4f513759",
+        "subject": "docs: checkpoint AAS-036 and select AAS-037"
+      },
+      {
+        "id": "94cc5f24436b274a252dae3ff9b0326fcf1b2c30",
+        "subject": "feat: add managed skill lifecycle boundary"
+      },
+      {
+        "id": "386c7274f7c82791ca59609ac212de8e15289bd6",
+        "subject": "docs: checkpoint AAS-037 and select AAS-023"
+      },
+      {
+        "id": "ae3eb35f9c091649eec28a97426962e653e7e091",
+        "subject": "feat: add protected audit timeline"
+      },
+      {
+        "id": "253c26cc2f75a48f179c3d38c3e5b6ed33fa82d4",
+        "subject": "docs: checkpoint AAS-023 and select BLD-001"
+      },
+      {
+        "id": "633f6987d1cefec50bcf40fa10e02097e09c08c9",
+        "subject": "chore: reconcile BLD-001 with validated local checkpoint"
+      },
+      {
+        "id": "a2661b69dcf2619e5f8a6dd57f80a012eb3c14c4",
+        "subject": "feat: add Builder owner authority matrix"
+      },
+      {
+        "id": "393bf2752c703b8961717c25b0594132804e3333",
+        "subject": "docs: checkpoint BLD-001 gate 1"
+      },
+      {
+        "id": "a1ec061cdef16ab8c4fd03938f45c0270bdfbc63",
+        "subject": "feat: add guided Builder system discovery"
+      },
+      {
+        "id": "e5a822c088a06475ecf281cd14f700af11415187",
+        "subject": "docs: checkpoint BLD-001 gate 2"
+      },
+      {
+        "id": "f845c37472f24d6ad4e8b0bfd50f6d105a98efc3",
+        "subject": "feat: add Builder capability gap resolution"
+      },
+      {
+        "id": "e15c52e32227491be239293f0daa3950758cb6df",
+        "subject": "docs: checkpoint BLD-001 gate 3"
+      },
+      {
+        "id": "6babee7d6498edcca169ffb0dfba7b9e6e591d92",
+        "subject": "feat: add generic Builder integration planning"
+      },
+      {
+        "id": "cb476660afa31ecbf170417e66b42741c8de4914",
+        "subject": "docs: checkpoint BLD-001 gate 4"
+      },
+      {
+        "id": "6a03d708a529bda98730081be626eb55bc155171",
+        "subject": "feat: add Builder quality evidence workflow"
+      },
+      {
+        "id": "d5b844dd8f5cad5f9561a6163e2f9a0168b3968e",
+        "subject": "docs: checkpoint BLD-001 gate 5"
+      },
+      {
+        "id": "4a50303b4d65df7c046834135884fed45b25af7a",
+        "subject": "feat: prove Builder Agent isolated read and rollback"
+      },
+      {
+        "id": "8001417884107418816df4f3939b5428644883bc",
+        "subject": "docs: checkpoint BLD-001 gate 6"
+      },
+      {
+        "id": "1bdebb800cba9fc56aa3de939159e576dac8bcd1",
+        "subject": "feat: prove Builder second-system conformance"
+      },
+      {
+        "id": "f4f06727ef6fbb3f5d823e04d1790a4d5822bdf0",
+        "subject": "docs: checkpoint BLD-001 gate 7"
+      },
+      {
+        "id": "a12c7c4cb0d48b966af87f6b8b142a4542c1220b",
+        "subject": "feat: close Builder contribution boundary"
+      },
+      {
+        "id": "4cf0c284c26e6a827bce760f9fcdd85b6dfdfef3",
+        "subject": "docs: checkpoint BLD-001 gate 8"
+      },
+      {
+        "id": "be00df23d9c482b04eac556e9463f53a3d66ff59",
+        "subject": "fix: deny separator-adjacent private paths"
+      },
+      {
+        "id": "93967d773ded3fca8d8e1c97826f818f2a9321d7",
+        "subject": "docs: finalize BLD-001 closure evidence"
+      },
+      {
+        "id": "eeeb1b1250c6f3f664e06c3d4b8b300efc53e3c7",
+        "subject": "feat: integrate BLD-001 Builder Agent for Daily .2"
+      },
+      {
+        "id": "94b2a3d58a51afb06c6048e0feac36e5b8cc9388",
+        "subject": "test: align release identity assertions for Daily .2"
+      },
+      {
+        "id": "351c83d4e140e4c8d09e91f59d4156d5bd8d618f",
+        "subject": "fix: support same-day Daily provenance"
+      },
+      {
+        "id": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+        "subject": "fix: keep candidate evidence accurate after publication"
+      }
+    ]
+  },
+  "publicationEffects": [],
+  "schemaVersion": "chimpmaera.daily-poc-provenance/v1",
+  "source": {
+    "base": "fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85",
+    "head": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "repository": "https://github.com/JimPansky/ChimpMaera.git"
+  }
+}

@@ -31,9 +31,10 @@ boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
 
 ## Release status
 
-- **Current public release:** [v0.1.0](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — the stable predecessor line published on 2026-07-31.
-- **Today's Daily:** [`v0.2.0-poc.20260802.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.1) — the Daily snapshot dated 2026-08-02.
-- **Previous Daily provenance:** `v0.2.0-poc.20260801.1` — predecessor provenance only; it is not today's identity.
+- **Current public release:** [`v0.2.0-poc.20260802.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.2) — the current published regular release.
+- **Today's Daily:** [`v0.2.0-poc.20260802.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.2) — the Daily snapshot dated 2026-08-02.
+- **Previous Daily provenance:** [`v0.2.0-poc.20260802.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.1) — the historical predecessor Daily.
+- **Historical predecessor:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release.
 
 Daily snapshots are not production releases, security certifications, hosted
 services, support promises or permission to connect real systems. Use only
@@ -69,8 +70,8 @@ Remove only installer-owned resources with:
 ./demo/uninstall.sh --purge
 ```
 
-The stable public release line remains **v0.1.0**. The Daily snapshot has its
-own explicit version and provenance in [Release status](#release-status).
+The current release and its exact Daily provenance are listed in
+[Release status](#release-status); `v0.1.0` is historical only.
 
 ## How it works
 

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G7-20260802",
+  "issueId": "BLD-001",
+  "claimIds": ["BLD-001-G7"],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "1bdebb800cba9fc56aa3de939159e576dac8bcd1",
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 7/8",
+    "facts": [
+      "One target-neutral Builder core performs contract validation, rights and approval binding, request validation, replay, read, reversible write, persisted readback, rollback, receipts, reset and evidence for both synthetic systems.",
+      "The shared core SHA-256 is 199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6 for the synthetic habitat controller and the distinct synthetic warehouse-lighting controller; the core contains no target-specific system, field or operation terms.",
+      "Both systems completed one read and one Owner-routed reversible write with exact same-receipt replay, two receipts and zero target drift.",
+      "The second system changed only data contracts and adapter field bindings; no second privileged script, direct target route or capability-specific core branch was added.",
+      "Rights-intersection, admission-record and synthetic Owner-approval integrity drift deny at startup."
+    ]
+  },
+  "systems": [
+    {
+      "fixtureId": "bld001-builder-agent-g6-v1",
+      "systemType": "unknown.habitat-controller",
+      "contractSha256": "249e6024f7ac60bec751f37de040213372c7158e545688d7183446fc65afa051"
+    },
+    {
+      "fixtureId": "bld001-builder-agent-g7-warehouse-lighting-v1",
+      "systemType": "unknown.warehouse-lighting",
+      "contractSha256": "71e99d77df6db58ba222febd12c5169f7dbf91fb25b3b18252a10e618801b9e9"
+    }
+  ],
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "direct target or skill-activation API absent",
+      "secret-bearing hidden-field smuggling denied without secret reflection",
+      "cross-tenant request denied",
+      "unauthorized skill activation denied",
+      "Agent self-approval substitution denied",
+      "same-request replay returns the exact existing receipt without another effect",
+      "post-approval payload mutation denied",
+      "fault-injected rollback-readback mismatch produces no success receipt and leaves zero target drift",
+      "effective-rights, admission and Owner-approval integrity drift deny at startup"
+    ],
+    "result": "The full adversarial matrix passed for both synthetic systems; malformed and integrity-invalid input failed closed regardless of profile semantics."
+  },
+  "validation": {
+    "focused": "11/11 PASS across retained G6 runtime assertions and G7 two-system/adversarial conformance",
+    "completeRepository": "194/194 PASS in split source-boundary runs: 193/194 with the exact temporary dependency link where only public staging correctly rejected that link, followed by 5/5 clean supply-chain/public-staging tests after link removal",
+    "checksums": "272/272 PASS",
+    "supplyChain": "6/6 declaration checks PASS; deterministic public staging PASS",
+    "proportionateSmoke": "REAL ISOLATED OPENCLAW PASS: bld001-g6-20260802T074147Z in 31,841 ms after shared-core byte change; four model calls, one read, one reversible write, seven denials, exact restart/reset, unchanged Owner fingerprint and zero owned residue"
+  },
+  "runtimeRegression": {
+    "runId": "bld001-g6-20260802T074147Z",
+    "elapsedMs": 31841,
+    "contractDigest": "8b58d976d4fe5fb1f70f87ddfda6b62dea01ae68e5c5a0da38228a68e28058da",
+    "ownerFingerprint": "adfde9f354cb0bedb4ac697d48a4a78528d9631d52a6309cdf0272e4cdd8909b",
+    "modelCalls": 4,
+    "reads": 1,
+    "writes": 1,
+    "denials": 7,
+    "ownedTargetDrift": 0,
+    "ownedRuntimeResidue": 0
+  },
+  "reversibleDecision": {
+    "assumption": "Target-specific field and operation data may live in digest-bound system contracts while one target-neutral core interprets the closed READ_FIELD and REVERSIBLE_WRITE_FIELD adapter kinds.",
+    "risk": "A future target could need semantics not safely expressible by these two adapter kinds, or an adapter binding could be mistaken for universal compatibility.",
+    "fallback": "Reject unknown adapter kinds, keep new capabilities inactive as UNRESOLVED_INTENT, retain the G6 runtime smoke as regression oracle and revert implementation commit 1bdebb8 on any cross-system or rollback mismatch.",
+    "reviewPoint": "BLD-001-G8 contribution-bundle schema, operator/System Advisor documentation and final 8/8 closure"
+  },
+  "rollback": {
+    "status": "VERIFIED_REAL_FIXTURE_AND_LOCAL_CONFORMANCE",
+    "action": "Revert 1bdebb8, restore checkpoint 8001417 and retain this G7 result as historical or negative evidence.",
+    "residue": "The real fixture reset/purge left zero ownership-labelled containers, networks, volumes or derivative images; both in-memory conformance systems ended at their initial target digests."
+  },
+  "nonClaims": [
+    "not Owner OpenClaw, live provider, live target, production or customer evidence",
+    "not proof for arbitrary adapter kinds, target semantics or universal system compatibility",
+    "not hostile-host containment, security certification or complete supply-chain assurance",
+    "not authorization to install, activate, publish, upload or contribute any bundle",
+    "not released, merged, published or publicly available"
+  ],
+  "externalMutationPerformed": false
+}
