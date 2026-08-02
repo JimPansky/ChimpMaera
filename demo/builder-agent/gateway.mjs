@@ -1,87 +1,11 @@
-import { createHash } from "node:crypto";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
+import { canonical, createBuilderCore } from "./builder-core.mjs";
 
 const contract = JSON.parse(readFileSync("./runtime-contract-v1.json", "utf8"));
 const statePath = "/var/lib/chimpmaera/state.json";
 const modelMarker = "synthetic-builder-routing-marker-not-a-secret";
 const workloadIdentity = "workload:bld001-builder-agent-g6-v1";
-const requestKeys = [
-  "approvalDigest",
-  "capabilityBindingDigest",
-  "operationId",
-  "payload",
-  "requestId",
-  "schemaVersion",
-  "systemId",
-  "tenant",
-].sort();
-
-function canonical(value) {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
-  if (value !== null && typeof value === "object") {
-    return `{${Object.keys(value).sort().map(
-      (key) => `${JSON.stringify(key)}:${canonical(value[key])}`,
-    ).join(",")}}`;
-  }
-  return JSON.stringify(value);
-}
-
-function digest(value) {
-  return createHash("sha256").update(canonical(value)).digest("hex");
-}
-
-function exactObject(value, keys) {
-  return value !== null
-    && typeof value === "object"
-    && !Array.isArray(value)
-    && JSON.stringify(Object.keys(value).sort()) === JSON.stringify([...keys].sort());
-}
-
-function validateContract() {
-  const profile = contract.builderProfile;
-  const rightsInputs = [
-    profile.hostSystemCeiling,
-    profile.ownerProfileRights,
-    profile.assignments,
-    profile.currentConstraints,
-  ];
-  if (
-    profile.selected !== "SAFE_GUIDED"
-    || rightsInputs.some((rights) => !Array.isArray(rights) || new Set(rights).size !== rights.length)
-  ) throw new Error("RUNTIME_CONTRACT_INVALID");
-  const intersection = [...new Set(rightsInputs[0])]
-    .filter((right) => rightsInputs.slice(1).every((rights) => rights.includes(right)))
-    .sort();
-  if (canonical(intersection) !== canonical([...profile.effectiveRights].sort())) {
-    throw new Error("RUNTIME_EFFECTIVE_RIGHTS_INVALID");
-  }
-  const write = contract.admittedCapabilities.find(
-    (entry) => entry.capabilityId === "habitat.setpoint.update",
-  );
-  if (
-    contract.admittedCapabilities.length !== 2
-    || write?.effectClass !== "REVERSIBLE_WRITE"
-    || write?.route !== "OWNER_APPROVAL"
-    || digest(write.admissionRecord) !== write.capabilityBindingDigest
-  ) throw new Error("RUNTIME_ADMISSION_INVALID");
-  const approvalCore = { ...contract.syntheticOwnerApproval };
-  delete approvalCore.approvalDigest;
-  if (digest(approvalCore) !== contract.syntheticOwnerApproval.approvalDigest) {
-    throw new Error("RUNTIME_OWNER_APPROVAL_INVALID");
-  }
-}
-
-validateContract();
-
-function initialState() {
-  return {
-    schemaVersion: "chimpmaera.builder/runtime-state/v1",
-    target: structuredClone(contract.target.initialState),
-    receipts: {},
-    counters: { modelCalls: 0, readAttempts: 0, reads: 0, writeAttempts: 0, writes: 0, denials: 0 },
-  };
-}
 
 function persist(value) {
   const temporary = `${statePath}.tmp`;
@@ -89,25 +13,16 @@ function persist(value) {
   renameSync(temporary, statePath);
 }
 
-function loadState() {
+function load() {
   try {
-    const value = JSON.parse(readFileSync(statePath, "utf8"));
-    if (
-      value?.schemaVersion !== "chimpmaera.builder/runtime-state/v1"
-      || !exactObject(value.target, ["setpointC", "temperatureC"])
-      || typeof value.receipts !== "object"
-      || typeof value.counters !== "object"
-    ) throw new Error("STATE_INVALID");
-    return value;
+    return JSON.parse(readFileSync(statePath, "utf8"));
   } catch (error) {
-    if (error?.code !== "ENOENT") throw error;
-    const value = initialState();
-    persist(value);
-    return value;
+    if (error?.code === "ENOENT") return undefined;
+    throw error;
   }
 }
 
-let state = loadState();
+const core = createBuilderCore({ contract, workloadIdentity, loadState: load, persistState: persist });
 
 function json(response, status, value) {
   response.writeHead(status, {
@@ -139,155 +54,22 @@ function requireWorkload(request) {
   }
 }
 
-function capability(operationId) {
-  return contract.admittedCapabilities.find((entry) => entry.capabilityId === operationId);
-}
-
-function requestTemplate(operationId) {
-  const admitted = capability(operationId);
-  if (admitted === undefined) throw new Error("CAPABILITY_NOT_ADMITTED_DENIED");
-  const read = operationId === "habitat.temperature.read";
-  return {
-    schemaVersion: "chimpmaera.builder/runtime-request/v1",
-    tenant: contract.target.tenant,
-    systemId: contract.target.systemId,
-    operationId,
-    requestId: read ? "bld001-g6-read-0001" : "bld001-g6-write-0001",
-    capabilityBindingDigest: admitted.capabilityBindingDigest,
-    approvalDigest: read ? null : contract.syntheticOwnerApproval.approvalDigest,
-    payload: read
-      ? { habitatId: contract.target.habitatId }
-      : { habitatId: contract.target.habitatId, setpointC: contract.syntheticOwnerApproval.approvedSetpointC },
-  };
-}
-
-function validateRequest(value) {
-  if (
-    !exactObject(value, requestKeys)
-    || value.schemaVersion !== "chimpmaera.builder/runtime-request/v1"
-    || value.tenant !== contract.target.tenant
-    || value.systemId !== contract.target.systemId
-    || !/^bld001-g6-(?:read|write)-[0-9]{4}$/.test(value.requestId)
-  ) throw new Error("BUILDER_REQUEST_BINDING_DENIED");
-  const expected = requestTemplate(value.operationId);
-  if (
-    value.capabilityBindingDigest !== expected.capabilityBindingDigest
-    || value.approvalDigest !== expected.approvalDigest
-    || canonical(value.payload) !== canonical(expected.payload)
-  ) throw new Error("BUILDER_REQUEST_CAPABILITY_OR_PAYLOAD_DENIED");
-  const effectiveRights = contract.builderProfile.effectiveRights;
-  if (!effectiveRights.includes(value.operationId)) throw new Error("EFFECTIVE_RIGHTS_DENIED");
-  const admitted = capability(value.operationId);
-  if (admitted.route !== contract.builderProfile.routes[value.operationId]) {
-    throw new Error("OWNER_ROUTE_BINDING_DENIED");
-  }
-  return admitted;
-}
-
-function receiptCore(value, admitted, outcome, beforeDigest, effectDigest, readbackDigest, finalDigest) {
-  return {
-    schemaVersion: "chimpmaera.builder/runtime-receipt/v1",
-    issueId: "BLD-001",
-    claimId: "BLD-001-G6",
-    workloadIdentity,
-    tenant: value.tenant,
-    systemId: value.systemId,
-    operationId: value.operationId,
-    requestId: value.requestId,
-    requestDigest: digest(value),
-    selectedProfile: contract.builderProfile.selected,
-    effectiveRightsDigest: digest(contract.builderProfile.effectiveRights),
-    capabilityBindingDigest: admitted.capabilityBindingDigest,
-    route: admitted.route,
-    approvalDigest: value.approvalDigest,
-    beforeDigest,
-    effectDigest,
-    readbackDigest,
-    finalDigest,
-    outcome,
-  };
-}
-
-function executeBuilder(value) {
-  const admitted = validateRequest(value);
-  const requestDigest = digest(value);
-  const prior = state.receipts[value.requestId];
-  if (prior !== undefined) {
-    if (prior.requestDigest !== requestDigest) throw new Error("REPLAY_CONFLICT_DENIED");
-    return { status: "PASS", replayState: "REPLAY_SAME_RECEIPT", receipt: prior };
-  }
-
-  const beforeDigest = digest(state.target);
-  let effectDigest;
-  let readback;
-  let outcome;
-  if (value.operationId === "habitat.temperature.read") {
-    state.counters.readAttempts += 1;
-    readback = {
-      habitatId: value.payload.habitatId,
-      temperatureC: state.target.temperatureC,
-    };
-    effectDigest = beforeDigest;
-    outcome = "SYNTHETIC_READ_NO_CHANGE_VERIFIED";
-    state.counters.reads += 1;
-  } else if (value.operationId === "habitat.setpoint.update") {
-    state.counters.writeAttempts += 1;
-    const priorSetpointC = state.target.setpointC;
-    let effectReadback;
-    try {
-      state.target.setpointC = value.payload.setpointC;
-      persist(state);
-      effectReadback = JSON.parse(readFileSync(statePath, "utf8")).target;
-      if (effectReadback.setpointC !== value.payload.setpointC) {
-        throw new Error("WRITE_READBACK_MISMATCH_DENIED");
-      }
-    } finally {
-      state.target.setpointC = priorSetpointC;
-      persist(state);
-    }
-    effectDigest = digest(effectReadback);
-    readback = {
-      habitatId: value.payload.habitatId,
-      priorSetpointC,
-      appliedSetpointC: effectReadback.setpointC,
-    };
-    const rollbackReadback = JSON.parse(readFileSync(statePath, "utf8")).target;
-    if (digest(rollbackReadback) !== beforeDigest) throw new Error("ROLLBACK_MISMATCH_DENIED");
-    outcome = "SYNTHETIC_REVERSIBLE_WRITE_ROLLBACK_VERIFIED";
-    state.counters.writes += 1;
-  } else {
-    throw new Error("CAPABILITY_NOT_ADMITTED_DENIED");
-  }
-  const finalDigest = digest(state.target);
-  const readbackDigest = digest(readback);
-  const core = receiptCore(
-    value,
-    admitted,
-    outcome,
-    beforeDigest,
-    effectDigest,
-    readbackDigest,
-    finalDigest,
-  );
-  const receipt = { ...core, receiptDigest: digest(core) };
-  state.receipts[value.requestId] = receipt;
-  persist(state);
-  return { status: "PASS", replayState: "FIRST_EXECUTION", readback, receipt };
-}
-
 function requestedOperation(messages) {
   const userText = messages
     .filter((message) => message.role === "user")
     .map((message) => typeof message.content === "string" ? message.content : canonical(message.content))
     .join("\n")
     .toLowerCase();
-  if (userText.includes("reversible") || userText.includes("setpoint")) {
-    return "habitat.setpoint.update";
+  const ranked = contract.admittedCapabilities
+    .map((entry) => ({
+      entry,
+      matches: entry.intentTerms.filter((term) => userText.includes(term.toLowerCase())).length,
+    }))
+    .sort((left, right) => right.matches - left.matches);
+  if (ranked[0].matches === 0 || ranked[0].matches === ranked[1]?.matches) {
+    throw new Error("MODEL_INTENT_UNRESOLVED_DENIED");
   }
-  if (userText.includes("temperature") || userText.includes("read")) {
-    return "habitat.temperature.read";
-  }
-  throw new Error("MODEL_INTENT_UNRESOLVED_DENIED");
+  return ranked[0].entry.capabilityId;
 }
 
 function parseToolResult(toolResult) {
@@ -311,11 +93,11 @@ function modelResult(messages) {
         role: "assistant",
         content: null,
         tool_calls: [{
-          id: operationId === "habitat.temperature.read" ? "call_bld001_read_0001" : "call_bld001_write_0001",
+          id: operationId.includes("read") ? "call_bld001_read_0001" : "call_bld001_write_0001",
           type: "function",
           function: {
             name: "chimpmaera_builder_request",
-            arguments: JSON.stringify(requestTemplate(operationId)),
+            arguments: JSON.stringify(core.requestTemplate(operationId)),
           },
         }],
       },
@@ -365,8 +147,7 @@ const server = createServer((request, response) => {
       return;
     }
     if (request.method === "GET" && request.url === "/readyz") {
-      persist(state);
-      json(response, 200, { status: "PASS", contractDigest: digest(contract) });
+      json(response, 200, { status: "PASS", contractDigest: core.evidence().contractDigest });
       return;
     }
     if (request.method === "GET" && request.url === "/v1/models") {
@@ -378,53 +159,29 @@ const server = createServer((request, response) => {
       if (request.headers.authorization !== `Bearer ${modelMarker}`) throw new Error("MODEL_ROUTE_IDENTITY_DENIED");
       const value = await body(request);
       if (value.model !== "cm-builder-v1" || !Array.isArray(value.messages)) throw new Error("MODEL_REQUEST_DENIED");
-      state.counters.modelCalls += 1;
-      persist(state);
+      core.recordModelCall();
       sendCompletion(response, value, modelResult(value.messages));
       return;
     }
     if (request.method === "POST" && request.url === "/v1/builder/execute") {
       requireWorkload(request);
-      json(response, 200, executeBuilder(await body(request)));
+      json(response, 200, core.execute(await body(request)));
       return;
     }
     if (request.method === "GET" && request.url === "/v1/evidence") {
       requireWorkload(request);
-      const initialTargetDigest = digest(contract.target.initialState);
-      const currentTargetDigest = digest(state.target);
-      json(response, 200, {
-        status: "PASS",
-        contractDigest: digest(contract),
-        selectedProfile: contract.builderProfile.selected,
-        effectiveRights: contract.builderProfile.effectiveRights,
-        counters: state.counters,
-        initialTargetDigest,
-        currentTargetDigest,
-        ownedTargetDrift: initialTargetDigest === currentTargetDigest ? 0 : 1,
-        receiptDigests: Object.values(state.receipts).map((entry) => entry.receiptDigest).sort(),
-        outcomes: Object.values(state.receipts).map((entry) => entry.outcome).sort(),
-      });
+      json(response, 200, core.evidence());
       return;
     }
     if (request.method === "POST" && request.url === "/v1/reset") {
       requireWorkload(request);
-      const value = await body(request);
-      if (
-        !exactObject(value, ["systemId", "tenant"])
-        || value.tenant !== contract.target.tenant
-        || value.systemId !== contract.target.systemId
-      ) throw new Error("RESET_SCOPE_DENIED");
-      const retainedReceiptDigests = Object.values(state.receipts).map((entry) => entry.receiptDigest).sort();
-      state = initialState();
-      persist(state);
-      json(response, 200, { status: "PASS", retainedReceiptDigests, ownedTargetDrift: 0 });
+      json(response, 200, core.reset(await body(request)));
       return;
     }
     throw new Error("ROUTE_DENIED");
   };
   run().catch((error) => {
-    state.counters.denials += 1;
-    persist(state);
+    core.recordDenial();
     json(response, 403, { status: "DENY", error: error instanceof Error ? error.message : "REQUEST_DENIED" });
   });
 });

@@ -151,6 +151,8 @@
     "manifestPath": "release/public-files.manifest",
     "requiredPaths": [
       "demo/builder-agent/compose.yaml",
+      "demo/builder-agent/builder-core.mjs",
+      "demo/builder-agent/runtime-contract-second-system-v1.json",
       "demo/builder-agent/runtime-contract-v1.json",
       "demo/approval-workbench-smoke.sh",
       "demo/managed-skill-lifecycle/compose.yaml",
@@ -168,6 +170,7 @@
       "scripts/verify-supply-chain.mjs",
       "tests/demo-approval-workbench.test.mjs",
       "tests/builder-agent-runtime.test.mjs",
+      "tests/builder-reuse-conformance.test.mjs",
       "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
       "tests/demo-policy-evaluator.test.mjs",
       "tests/demo-policy-generation-fence.test.mjs",

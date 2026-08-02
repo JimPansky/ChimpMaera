@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "chimpmaera.builder/runtime-contract/v1",
+  "claimId": "BLD-001-G7",
+  "fixtureId": "bld001-builder-agent-g7-warehouse-lighting-v1",
+  "ownershipLabel": "io.chimpmaera.fixture=bld001-builder-agent-g7-warehouse-lighting-v1",
+  "runtime": {
+    "role": "UNTRUSTED_BUILDER_AGENT_NOT_POLICY_AUTHORITY_OR_EFFECT_PLANE",
+    "defaultOffProfile": "bld001",
+    "network": "synthetic-in-memory-only"
+  },
+  "builderProfile": {
+    "selected": "SAFE_GUIDED",
+    "effectiveRightsRule": "HOST_SYSTEM_CEILING_INTERSECT_OWNER_PROFILE_INTERSECT_ASSIGNMENTS_INTERSECT_CURRENT_CONSTRAINTS",
+    "hostSystemCeiling": ["zone.brightness.update", "zone.illuminance.read"],
+    "ownerProfileRights": ["zone.brightness.update", "zone.illuminance.read"],
+    "assignments": ["zone.brightness.update", "zone.illuminance.read"],
+    "currentConstraints": ["zone.brightness.update", "zone.illuminance.read"],
+    "effectiveRights": ["zone.brightness.update", "zone.illuminance.read"],
+    "routes": {
+      "zone.brightness.update": "OWNER_APPROVAL",
+      "zone.illuminance.read": "AUTO_EXECUTE"
+    }
+  },
+  "target": {
+    "tenant": "synthetic-warehouse",
+    "systemId": "unknown-lighting-002",
+    "systemType": "unknown.warehouse-lighting",
+    "dataClassification": "SYNTHETIC",
+    "initialState": {"illuminanceLux": 410, "brightnessPct": 55}
+  },
+  "admittedCapabilities": [
+    {
+      "capabilityId": "zone.illuminance.read",
+      "effectClass": "READ_ONLY",
+      "intentTerms": ["illuminance", "read"],
+      "capabilityBindingDigest": "41058992f1ebccaa00c1b7abe2e6d0526f4e638d5db511d6ccb83dc1ca3dcfe8",
+      "admissionRecord": {
+        "capabilityId": "zone.illuminance.read",
+        "systemType": "unknown.warehouse-lighting",
+        "operationId": "zone.illuminance.read",
+        "effectClass": "READ_ONLY",
+        "dataClassification": "SYNTHETIC",
+        "lifecycleState": "ACTIVE_FOR_OWNED_FIXTURE_ONLY"
+      },
+      "route": "AUTO_EXECUTE",
+      "request": {
+        "requestId": "bld001-g7-second-read-0001",
+        "approvalDigest": null,
+        "payload": {"zoneId": "zone-12"}
+      },
+      "adapter": {
+        "kind": "READ_FIELD",
+        "entityPayloadField": "zoneId",
+        "stateField": "illuminanceLux"
+      }
+    },
+    {
+      "capabilityId": "zone.brightness.update",
+      "effectClass": "REVERSIBLE_WRITE",
+      "intentTerms": ["reversible", "brightness"],
+      "capabilityBindingDigest": "6edfdaf3b410549cbf103d3b1c015664c48b573d61e55ac3104177863c5b6724",
+      "admissionRecord": {
+        "capabilityId": "zone.brightness.update",
+        "systemType": "unknown.warehouse-lighting",
+        "operationId": "zone.brightness.update",
+        "effectClass": "REVERSIBLE_WRITE",
+        "dataClassification": "SYNTHETIC",
+        "lifecycleState": "ACTIVE_FOR_OWNED_FIXTURE_ONLY",
+        "recovery": "RESTORE_PRIOR_VALUE"
+      },
+      "route": "OWNER_APPROVAL",
+      "request": {
+        "requestId": "bld001-g7-second-write-0001",
+        "approvalDigest": "da6f87f280fbbcaf5f4e635a421f9d687b98baa91d27f85762be0eea001bd091",
+        "payload": {"zoneId": "zone-12", "brightnessPct": 65}
+      },
+      "adapter": {
+        "kind": "REVERSIBLE_WRITE_FIELD",
+        "entityPayloadField": "zoneId",
+        "payloadField": "brightnessPct",
+        "stateField": "brightnessPct"
+      }
+    }
+  ],
+  "syntheticOwnerApprovals": [{
+    "approvalId": "approval:bld001-g7-brightness-65pct",
+    "issuer": "owner:synthetic-fixture",
+    "operationId": "zone.brightness.update",
+    "approvedBrightnessPct": 65,
+    "approvalDigest": "da6f87f280fbbcaf5f4e635a421f9d687b98baa91d27f85762be0eea001bd091"
+  }],
+  "nonClaims": [
+    "NO_OWNER_OPENCLAW_OR_LIVE_SYSTEM_MUTATION",
+    "NO_PRODUCTION_OR_CUSTOMER_SYSTEM_COMPATIBILITY",
+    "NO_LIVE_CREDENTIAL_PROVIDER_OR_NETWORK_POLICY",
+    "NO_SECURITY_CERTIFICATION_OR_UNIVERSAL_TARGET_SUPPORT",
+    "NO_RELEASE_PUBLICATION_OR_CUSTOMER_DATA_EVIDENCE"
+  ]
+}

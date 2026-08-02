@@ -82,9 +82,9 @@ test("BLD-001-G6 binds owner sovereignty, admitted generic capabilities and reco
   assert.equal(write.effectClass, "REVERSIBLE_WRITE");
   assert.equal(write.admissionRecord.recovery, "RESTORE_PRIOR_VALUE");
   assert.equal(digest(write.admissionRecord), write.capabilityBindingDigest);
-  const approvalCore = structuredClone(contract.syntheticOwnerApproval);
+  const approvalCore = structuredClone(contract.syntheticOwnerApprovals[0]);
   delete approvalCore.approvalDigest;
-  assert.equal(digest(approvalCore), contract.syntheticOwnerApproval.approvalDigest);
+  assert.equal(digest(approvalCore), contract.syntheticOwnerApprovals[0].approvalDigest);
   assert.equal(contract.target.dataClassification, "SYNTHETIC");
   assert.equal(contract.nonClaims.length, 5);
 });
@@ -105,16 +105,18 @@ test("BLD-001-G6 OpenClaw exposes one generic Builder tool and no direct target 
 
 test("BLD-001-G6 Gateway performs persisted effect readback before exact rollback", () => {
   const gateway = readFileSync(path.join(fixture, "gateway.mjs"), "utf8");
-  assert.match(gateway, /state\.target\.setpointC = value\.payload\.setpointC;\n\s+persist\(state\)/);
-  assert.match(gateway, /effectReadback = JSON\.parse\(readFileSync\(statePath/);
-  assert.match(gateway, /finally \{/);
-  assert.match(gateway, /state\.target\.setpointC = priorSetpointC;\n\s+persist\(state\)/);
-  assert.match(gateway, /ROLLBACK_MISMATCH_DENIED/);
-  assert.match(gateway, /initialTargetDigest === currentTargetDigest \? 0 : 1/);
-  assert.match(gateway, /CAPABILITY_NOT_ADMITTED_DENIED/);
-  assert.match(gateway, /OWNER_ROUTE_BINDING_DENIED/);
-  assert.match(gateway, /RUNTIME_EFFECTIVE_RIGHTS_INVALID/);
-  assert.match(gateway, /RUNTIME_OWNER_APPROVAL_INVALID/);
+  const core = readFileSync(path.join(fixture, "builder-core.mjs"), "utf8");
+  assert.match(gateway, /createBuilderCore\(\{ contract, workloadIdentity, loadState: load, persistState: persist \}\)/);
+  assert.match(core, /state\.target\[adapter\.stateField\] = value\.payload\[adapter\.payloadField\];\n\s+persistState\(state\)/);
+  assert.match(core, /effectReadback = loadState\(\)\.target/);
+  assert.match(core, /finally \{/);
+  assert.match(core, /state\.target\[adapter\.stateField\] = priorValue;\n\s+persistState\(state\)/);
+  assert.match(core, /ROLLBACK_MISMATCH_DENIED/);
+  assert.match(core, /initialTargetDigest === currentTargetDigest \? 0 : 1/);
+  assert.match(core, /CAPABILITY_NOT_ADMITTED_DENIED/);
+  assert.match(core, /OWNER_ROUTE_BINDING_DENIED/);
+  assert.match(core, /RUNTIME_EFFECTIVE_RIGHTS_INVALID/);
+  assert.match(core, /RUNTIME_OWNER_APPROVAL_INVALID/);
 });
 
 test("BLD-001-G6 setup, smoke and purge stay ownership-scoped and resumable", () => {

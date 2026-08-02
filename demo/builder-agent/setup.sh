@@ -17,6 +17,7 @@ source_sha256="$({
     "$cm_bld001_root/demo/builder-agent/gateway.Dockerfile" \
     "$cm_bld001_root/demo/builder-agent/openclaw.Dockerfile" \
     "$cm_bld001_root/demo/builder-agent/gateway.mjs" \
+    "$cm_bld001_root/demo/builder-agent/builder-core.mjs" \
     "$cm_bld001_root/demo/builder-agent/fixture-probe.mjs" \
     "$cm_bld001_root/demo/builder-agent/openclaw.json" \
     "$cm_bld001_root/demo/builder-agent/runtime-contract-v1.json"

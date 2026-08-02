@@ -65,6 +65,7 @@ demo/model-access-broker/runtime-contract-v1.json	demo/model-access-broker/runti
 demo/model-access-broker/setup.sh	demo/model-access-broker/setup.sh	0755
 demo/model-access-broker/smoke.sh	demo/model-access-broker/smoke.sh	0755
 demo/builder-agent/compose.yaml	demo/builder-agent/compose.yaml	0644
+demo/builder-agent/builder-core.mjs	demo/builder-agent/builder-core.mjs	0644
 demo/builder-agent/fixture-probe.mjs	demo/builder-agent/fixture-probe.mjs	0644
 demo/builder-agent/gateway.Dockerfile	demo/builder-agent/gateway.Dockerfile	0644
 demo/builder-agent/gateway.mjs	demo/builder-agent/gateway.mjs	0644
@@ -75,6 +76,7 @@ demo/builder-agent/plugin/index.mjs	demo/builder-agent/plugin/index.mjs	0644
 demo/builder-agent/plugin/openclaw.plugin.json	demo/builder-agent/plugin/openclaw.plugin.json	0644
 demo/builder-agent/plugin/package.json	demo/builder-agent/plugin/package.json	0644
 demo/builder-agent/reset.sh	demo/builder-agent/reset.sh	0755
+demo/builder-agent/runtime-contract-second-system-v1.json	demo/builder-agent/runtime-contract-second-system-v1.json	0644
 demo/builder-agent/runtime-contract-v1.json	demo/builder-agent/runtime-contract-v1.json	0644
 demo/builder-agent/setup.sh	demo/builder-agent/setup.sh	0755
 demo/builder-agent/smoke.sh	demo/builder-agent/smoke.sh	0755
@@ -210,6 +212,7 @@ tests/builder-capability-resolution.test.ts	tests/builder-capability-resolution.
 tests/builder-integration-plan.test.ts	tests/builder-integration-plan.test.ts	0644
 tests/builder-quality-evidence.test.ts	tests/builder-quality-evidence.test.ts	0644
 tests/builder-agent-runtime.test.mjs	tests/builder-agent-runtime.test.mjs	0644
+tests/builder-reuse-conformance.test.mjs	tests/builder-reuse-conformance.test.mjs	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644

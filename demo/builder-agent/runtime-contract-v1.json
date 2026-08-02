@@ -1,5 +1,6 @@
 {
   "schemaVersion": "chimpmaera.builder/runtime-contract/v1",
+  "claimId": "BLD-001-G6",
   "fixtureId": "bld001-builder-agent-g6-v1",
   "ownershipLabel": "io.chimpmaera.fixture=bld001-builder-agent-g6-v1",
   "runtime": {
@@ -52,12 +53,24 @@
     {
       "capabilityId": "habitat.temperature.read",
       "effectClass": "READ_ONLY",
+      "intentTerms": ["temperature", "read"],
       "capabilityBindingDigest": "45b5cd2f099919bc57ae4f5b23e6b4b225522ad8d796454f87ce87cce9e3c654",
-      "route": "AUTO_EXECUTE"
+      "route": "AUTO_EXECUTE",
+      "request": {
+        "requestId": "bld001-g6-read-0001",
+        "approvalDigest": null,
+        "payload": {"habitatId": "habitat-7"}
+      },
+      "adapter": {
+        "kind": "READ_FIELD",
+        "entityPayloadField": "habitatId",
+        "stateField": "temperatureC"
+      }
     },
     {
       "capabilityId": "habitat.setpoint.update",
       "effectClass": "REVERSIBLE_WRITE",
+      "intentTerms": ["reversible", "setpoint"],
       "capabilityBindingDigest": "504d48c16a6b6306dce47680cca88d8bc75dff6b14c2c5da6699d2fff857eb68",
       "admissionRecord": {
         "capabilityId": "habitat.setpoint.update",
@@ -68,16 +81,27 @@
         "lifecycleState": "ACTIVE_FOR_OWNED_FIXTURE_ONLY",
         "recovery": "RESTORE_PRIOR_VALUE"
       },
-      "route": "OWNER_APPROVAL"
+      "route": "OWNER_APPROVAL",
+      "request": {
+        "requestId": "bld001-g6-write-0001",
+        "approvalDigest": "5d472c30165820995d3a9519e3e9dfe08f167c8623bcbc98c103ab92be8f15bd",
+        "payload": {"habitatId": "habitat-7", "setpointC": 23}
+      },
+      "adapter": {
+        "kind": "REVERSIBLE_WRITE_FIELD",
+        "entityPayloadField": "habitatId",
+        "payloadField": "setpointC",
+        "stateField": "setpointC"
+      }
     }
   ],
-  "syntheticOwnerApproval": {
+  "syntheticOwnerApprovals": [{
     "approvalId": "approval:bld001-g6-setpoint-23c",
     "issuer": "owner:synthetic-fixture",
     "operationId": "habitat.setpoint.update",
     "approvedSetpointC": 23,
     "approvalDigest": "5d472c30165820995d3a9519e3e9dfe08f167c8623bcbc98c103ab92be8f15bd"
-  },
+  }],
   "nonClaims": [
     "NO_OWNER_OPENCLAW_OR_LIVE_SYSTEM_MUTATION",
     "NO_PRODUCTION_SANDBOX_OR_HOST_KERNEL_BOUNDARY",
