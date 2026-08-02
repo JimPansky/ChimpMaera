@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "cm.public-video-process-delta/v1",
+  "deltaId": "public-video-process-delta-2026-08-02-01",
+  "methodologyVersion": "2026.08.02-v2",
+  "status": "ACCEPTED",
+  "sourceEvidenceSha256": "8b29fd810b30ce903e730d87e1258eb3933defa5ea1908b6bde5b0830e8e9f2c",
+  "portableImprovements": [
+    {
+      "id": "claim-evidence-nonclaim-binding",
+      "classification": "portable-now",
+      "rule": "Bind every material claim to evidence and timed visuals, and preserve explicit non-claims.",
+      "publicComponents": ["job contract", "validator", "fixtures"]
+    },
+    {
+      "id": "named-hash-bound-reviews",
+      "classification": "portable-now",
+      "rule": "English-copy and semantic-correlation reviews name a reviewer and bind the reviewed revision by SHA-256.",
+      "publicComponents": ["job contract", "evidence manifest", "negative probes"]
+    },
+    {
+      "id": "designed-ten-second-outro",
+      "classification": "needs-adaptation",
+      "rule": "Require a deliberately designed ten-second final view with start, quarter, midpoint, and end timing probes; do not promote silent-outro acceptance.",
+      "publicComponents": ["job contract", "timing validator", "smoke fixture"]
+    },
+    {
+      "id": "portable-media-qa-bundle",
+      "classification": "portable-now",
+      "rule": "Combine full decode, stream parity, loudness, subtitle, safe-area, ASR, OCR, and checksum evidence without claiming that the reference image bundles every model.",
+      "publicComponents": ["QA gates", "evidence manifest", "smoke fixture"]
+    },
+    {
+      "id": "negative-probe-contract",
+      "classification": "portable-now",
+      "rule": "A gate is incomplete unless representative invalid fixtures fail for the expected reason.",
+      "publicComponents": ["tests", "fixtures", "smoke path"]
+    }
+  ],
+  "evidenceBoundary": {
+    "historicalEvidenceRewritten": false,
+    "privateRunArtifactsPublished": false,
+    "productionClaim": false,
+    "note": "Only public-safe process rules and source digests are carried forward; run media and internal evidence remain outside this reference."
+  }
+}

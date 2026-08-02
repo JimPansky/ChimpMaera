@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "cm.video-methodology-consumed-deltas/v1",
+  "methodologyVersion": "2026.08.02-v2",
+  "baselineMethodologyVersion": "2026.07.30-v1",
+  "consumedDeltas": [
+    {
+      "deltaId": "public-video-process-delta-2026-08-02-01",
+      "publicDeltaPath": "process-delta-2026-08-02-01.json",
+      "publicDeltaSha256": "4d1b19ca6852d7519046fe88830c0033e6655e039ffcc2bbffa3c6568ef59039",
+      "sourceEvidenceSha256": "8b29fd810b30ce903e730d87e1258eb3933defa5ea1908b6bde5b0830e8e9f2c",
+      "sourceClassification": "digest-only; private run evidence not published"
+    }
+  ],
+  "decisionRecord": {
+    "assumption": "Portable process rules can be adopted without publishing the originating run artifacts.",
+    "risk": "A future process may invalidate a portable rule or require a stronger probe.",
+    "fallback": "Retain the immutable 2026.07.30-v1 image and reject a candidate delta when any gate fails.",
+    "reviewMarker": "review:video-methodology-drift-audit",
+    "rollbackMarker": "rollback:restore-2026.07.30-v1-methodology"
+  }
+}

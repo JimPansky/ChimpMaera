@@ -1,15 +1,19 @@
 # ChimpMaera Video Production Reference
 
-This directory ships a release-ready reference Docker for the current
+This directory ships a public reference Docker for the current
 ChimpMaera video-production workflow. It is intentionally reference-quality:
 small, inspectable, fail-closed, and faithful to the contracts used for the
 current CM videos. It is not a universal studio and it is not a production or
 security certification.
 
-The core image validates a versioned `cm.video/v1` `VideoJob`, checks every
-asset declared by the job, refuses public side effects, renders ordered PNG
-shots plus an accepted WAV to MP4 only when explicitly authorized, and emits QA
-evidence.
+The core image validates backward-compatible `cm.video/v1` jobs and governed
+`cm.video/v2` jobs, checks every asset declared by the job, refuses public side
+effects, renders ordered PNG shots plus an accepted WAV to MP4 only when
+explicitly authorized, and emits QA evidence.
+
+The inspectable methodology version is `2026.08.02-v2`. See
+`METHODOLOGY-CHANGELOG.md`, `methodology/consumed-deltas.json`, and
+`schemas/process-delta.schema.json` for the evidence-backed evolution record.
 
 ## Community Invitation
 
@@ -93,13 +97,23 @@ The runtime profile is network-disabled, non-root, read-only root filesystem,
 drops all capabilities, sets `no-new-privileges`, mounts `/job` and `/assets`
 read-only, mounts `/output` writable, and does not mount the Docker socket.
 
-## Optional GPU/TTS Profile
+## Governed Methodology Layer
 
-`Dockerfile.gpu` and `compose.gpu.yaml` document the current Qwen3-TTS,
-Whisper, CUDA, NVENC, and offline `/models` mount contract. The GPU image is
-`NOT_BUILT_BY_DEFAULT`. It must not silently fall back between CPU/GPU or
-between model commits. Build and use it only after reviewing
-`docs/CURRENT-LIMITS.md`.
+The v2 contract is renderer-neutral and adds:
+
+- a hash-bound public-copy policy (the included example enforces ChimpMaera,
+  English-only public copy, and English narration numbers);
+- claim/evidence/non-claim bindings and timed claim-to-visual scene mappings;
+- named, revision-hash-bound English-copy and semantic reviews;
+- safe-area and subtitle preflight;
+- a deliberately designed ten-second outro with four timing probes; and
+- a post-render evidence manifest covering full decode, stream parity,
+  loudness, subtitles, safe area, ASR, and OCR.
+
+The CPU image does not bundle ASR/OCR models. It validates their hash-bound
+receipts. A `smoke-fixture` may use clearly labelled fixture receipts, while a
+`publication-candidate` requires every gate to use `executionMode: executed`.
+This prevents fixture evidence from being promoted as publication evidence.
 
 ## Output Evidence
 
@@ -112,5 +126,14 @@ A successful render creates `/output/<immutableOutputVersion>/` with:
 - `SHA256SUMS`
 - `candidate.mp4`
 
-Validate-only writes no MP4. Rendering and QA use `ffprobe`, full decode, and
-SHA-256 checksums.
+Validate-only writes no MP4. Rendering and QA use `ffprobe`, full decode, EBU
+R128 loudness/true-peak, black-frame detection, and SHA-256 checksums. The
+smoke also validates the consumed-delta chain, negative probes, four outro
+frames, the methodology evidence manifest, and the OCI methodology label.
+
+Inspect a built image:
+
+```bash
+docker image inspect chimpmaera/video-production-reference:2026-08-02-v2 \
+  --format '{{ index .Config.Labels "org.chimpmaera.video.methodology.version" }}'
+```

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "cm.video-methodology-probes/v1",
+  "positiveFixture": {
+    "generator": "examples/minimal/generate_assets.py",
+    "expected": "PASS",
+    "methodologyVersion": "2026.08.02-v2"
+  },
+  "negativeProbes": [
+    {"id": "claim-without-evidence", "expectedError": "lacks valid evidenceRefs"},
+    {"id": "semantic-review-without-reviewer", "expectedError": "semanticCorrelation reviewer"},
+    {"id": "nine-second-outro", "expectedError": "exactly ten seconds"},
+    {"id": "outro-probe-drift", "expectedError": "outro timing probe mismatch"},
+    {"id": "silent-outro-policy", "expectedError": "silent-outro"},
+    {"id": "text-outside-safe-area", "expectedError": "text box starts outside safe area"},
+    {"id": "unbound-nonclaim", "expectedError": "every non-claim"},
+    {"id": "narration-digit", "expectedError": "ordinary narration numbers"},
+    {"id": "noncanonical-brand", "expectedError": "forbidden public-copy term"},
+    {"id": "tampered-consumed-delta", "expectedError": "public delta checksum mismatch"},
+    {"id": "publication-uses-fixture-asr", "expectedError": "cannot use fixture evidence"}
+  ]
+}

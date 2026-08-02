@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/public-video-process-delta-v1.json",
+  "title": "Public video process delta",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "deltaId", "methodologyVersion", "status", "sourceEvidenceSha256", "portableImprovements", "evidenceBoundary"],
+  "properties": {
+    "schemaVersion": {"const": "cm.public-video-process-delta/v1"},
+    "deltaId": {"type": "string", "minLength": 1},
+    "methodologyVersion": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-v[0-9]+$"},
+    "status": {"const": "ACCEPTED"},
+    "sourceEvidenceSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "portableImprovements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "classification", "rule", "publicComponents"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "classification": {"enum": ["portable-now", "needs-adaptation"]},
+          "rule": {"type": "string", "minLength": 1},
+          "publicComponents": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "evidenceBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["historicalEvidenceRewritten", "privateRunArtifactsPublished", "productionClaim", "note"],
+      "properties": {
+        "historicalEvidenceRewritten": {"const": false},
+        "privateRunArtifactsPublished": {"const": false},
+        "productionClaim": {"const": false},
+        "note": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -4,10 +4,15 @@ failClosed: true
 requiredOrder:
   - source_and_checksum
   - narration_and_localization
+  - claim_evidence_nonclaim_binding
+  - timed_claim_visual_correlation
+  - named_hash_bound_reviews
   - asset_locks
   - text_and_shot_preflight
   - full_render
   - decode_and_media
+  - subtitles_safe_area_asr_ocr
+  - designed_ten_second_outro
   - checksum_archive
 rules:
   noFullRenderBeforeTextGate: true
@@ -18,6 +23,14 @@ rules:
   approvedOutputsMustNotBeOverwritten: true
   naturalIdiomaticLocalizationRequired: true
   literalTranslationForbidden: true
+  publicCopyFailClosed: true
+  negativeFixturesRequired: true
+  claimEvidenceAndVisualRefsRequired: true
+  explicitNonClaimsRequired: true
+  englishCopyReviewNamedAndHashBound: true
+  semanticReviewNamedAndHashBound: true
+  designedOutroDurationSeconds: 10
+  silentOutroAcceptanceForbidden: true
 media:
   width: 1280
   height: 720
@@ -25,7 +38,14 @@ media:
   pixelFormat: yuv420p
   audioSampleRate: 48000
   audioChannels: 1
+  portableEvidenceFamilies:
+    - full-decode
+    - stream-parity
+    - loudness
+    - subtitles
+    - safe-area
+    - asr
+    - ocr
   transition:
     type: direct-dissolve
     seconds: 0.20
-

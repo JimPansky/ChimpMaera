@@ -3,7 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: chimpmaera/video-production-reference:2026-07-30-v1
+      args:
+        VCS_REF: "${CM_VIDEO_VCS_REF:-uncommitted}"
+    image: chimpmaera/video-production-reference:2026-08-02-v2
     network_mode: "none"
     read_only: true
     user: "${CM_VIDEO_UID:-65532}:${CM_VIDEO_GID:-65532}"

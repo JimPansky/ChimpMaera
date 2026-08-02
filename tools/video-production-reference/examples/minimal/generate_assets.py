@@ -5,6 +5,7 @@ from pathlib import Path
 import struct
 import wave
 import zlib
+import shutil
 
 ROOT = Path(__file__).resolve().parent
 ASSETS = ROOT / "assets"
@@ -96,7 +97,7 @@ def png(path, title, base, accent):
 
 def wav(path):
     rate = 48000
-    seconds = 7.2
+    seconds = 20.0
     with wave.open(str(path), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
@@ -112,9 +113,8 @@ def main():
     ASSETS.mkdir(parents=True, exist_ok=True)
     JOB.mkdir(parents=True, exist_ok=True)
     shots = [
-        ("S01", "CANON LOCK", (11, 23, 24), (84, 214, 180), 0.0, 2.4),
-        ("S02", "APPROVAL GATE", (18, 25, 36), (232, 189, 104), 2.4, 4.8),
-        ("S03", "EVIDENCE QA", (20, 33, 30), (233, 127, 120), 4.8, 7.2),
+        ("S01", "EVIDENCE QA", (11, 23, 24), (84, 214, 180), 0.0, 10.0),
+        ("S02", "JOIN THE ZOO", (18, 25, 36), (232, 189, 104), 10.0, 20.0),
     ]
     rendered = []
     for sid, title, base, accent, start, end in shots:
@@ -124,14 +124,21 @@ def main():
     audio = ASSETS / "locked-tone.wav"
     wav(audio)
     narration = JOB / "NARRATION.md"
-    narration.write_text("Narration explains principles. Visuals carry IDs, hashes, amounts, versions, and evidence details.\n", encoding="utf-8")
+    narration.write_text("ChimpMaera binds every material claim to evidence and timed visuals. The synthetic fixture is not production evidence. Join the Zoo.\n", encoding="utf-8")
     facts = JOB / "SCENE-OBJECT-MATRIX.csv"
-    facts.write_text("scene,principle,visual-details\nS01,canon,synthetic hashes\nS02,approval,synthetic gates\nS03,evidence,synthetic manifest\n", encoding="utf-8")
-    job = f"""apiVersion: cm.video/v1
+    facts.write_text("scene,principle,visual-details\nS01,evidence,synthetic hashes\nS02,non-claim,synthetic boundary\n", encoding="utf-8")
+    subtitles = ASSETS / "captions.en.srt"
+    subtitles.write_text("1\n00:00:00,000 --> 00:00:10,000\nChimpMaera binds every material claim to evidence and timed visuals.\n\n2\n00:00:10,000 --> 00:00:19,900\nThe synthetic fixture is not production evidence. Join the Zoo.\n", encoding="utf-8")
+    policy_source = ROOT / "chimpmaera-public-copy.json"
+    if not policy_source.is_file():
+        policy_source = ROOT.parents[1] / "policies" / "chimpmaera-public-copy.json"
+    policy = ASSETS / "chimpmaera-public-copy.json"
+    shutil.copy2(policy_source, policy)
+    job = f"""apiVersion: cm.video/v2
 kind: VideoJob
 metadata:
   name: minimal-synthetic-reference
-  immutableOutputVersion: "synthetic-v1"
+  immutableOutputVersion: "synthetic-v2"
 spec:
   mode: full-render
   roots:
@@ -143,6 +150,50 @@ spec:
   narrationVisualLaw:
     narrationExplainsPrinciples: true
     visualsCarryDetails: true
+  methodology:
+    version: "2026.08.02-v2"
+    publicCopyPolicy:
+      path: /assets/chimpmaera-public-copy.json
+      sha256: {sha(policy)}
+    reviews:
+      englishCopy:
+        status: PASS
+        reviewer: synthetic-fixture-reviewer
+        revisionSha256: {sha(narration)}
+      semanticCorrelation:
+        status: PASS
+        reviewer: synthetic-fixture-reviewer
+        revisionSha256: {sha(facts)}
+    evidence:
+      - id: E-NARRATION
+        path: /job/NARRATION.md
+        locator: job/NARRATION.md
+        sha256: {sha(narration)}
+      - id: E-SCENE-MATRIX
+        path: /job/SCENE-OBJECT-MATRIX.csv
+        locator: job/SCENE-OBJECT-MATRIX.csv
+        sha256: {sha(facts)}
+    claimBindings:
+      - id: CLAIM-EVIDENCE-BINDING
+        classification: claim
+        text: Every material claim is bound to evidence and timed visuals.
+        evidenceRefs: [E-NARRATION, E-SCENE-MATRIX]
+        visualRefs: [S01]
+      - id: NONCLAIM-PRODUCTION
+        classification: non-claim
+        text: This synthetic fixture is not production evidence.
+        limitation: Local synthetic smoke only.
+    outro:
+      designed: true
+      durationSeconds: 10.0
+      startSeconds: 10.0
+      endSeconds: 20.0
+      terminalAudioPolicy: continuous-program
+      timingProbes:
+        - {{name: start, seconds: 10.0}}
+        - {{name: quarter, seconds: 12.5}}
+        - {{name: midpoint, seconds: 15.0}}
+        - {{name: end, seconds: 19.9}}
   locks:
     narration:
       path: /job/NARRATION.md
@@ -155,7 +206,7 @@ spec:
     height: 720
     fps: 30
     pixelFormat: yuv420p
-    durationSeconds: 7.2
+    durationSeconds: 20.0
     transition:
       type: direct-dissolve
       seconds: 0.20
@@ -171,7 +222,15 @@ spec:
     requireShotGateBeforeFullRender: true
     requireChecksums: true
     contract: ../../qa-gates.yaml
+    loudness:
+      integratedLufsMin: -30.0
+      integratedLufsMax: -10.0
+      truePeakMaxDbfs: -1.0
   assets:
+    subtitles:
+      path: /assets/captions.en.srt
+      sha256: {sha(subtitles)}
+      language: en
     audio:
       id: locked-tone
       path: /assets/locked-tone.wav
@@ -181,6 +240,9 @@ spec:
 """
     job += "    shots:\n"
     for sid, path, digest, start, end in rendered:
+        role = "outro" if sid == "S02" else "content"
+        claim_refs = "[CLAIM-EVIDENCE-BINDING]" if sid == "S01" else "[]"
+        non_claim_refs = "[NONCLAIM-PRODUCTION]" if sid == "S02" else "[]"
         job += f"""      - sceneId: {sid}
         path: /assets/{path.name}
         sha256: {digest}
@@ -188,6 +250,13 @@ spec:
         endSeconds: {end}
         status: accepted
         mediaClass: png-shot
+        role: {role}
+        visualDescription: Timed synthetic evidence view for {sid}.
+        claimRefs: {claim_refs}
+        nonClaimRefs: {non_claim_refs}
+        safeArea: {{x: 64, y: 36, width: 1152, height: 648}}
+        textBoxes:
+          - {{x: 128, y: 174, width: 800, height: 120, text: "ChimpMaera evidence view"}}
 """
     (JOB / "video-job.yaml").write_text(job, encoding="utf-8")
     print(JOB / "video-job.yaml")

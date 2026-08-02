@@ -118,9 +118,8 @@ def render_job(job, job_path, output_root, require_full=True):
     }
     (out_dir / "OUTPUT-MANIFEST.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (out_dir / "RENDER-COMMAND.txt").write_text(" ".join(cmd) + "\n", encoding="utf-8")
-    qa = qa_output(job, str(out_dir))
+    qa = qa_output(job, str(out_dir), job_path)
     status = {"status": "PASS", "rendered": True, "qa": qa["status"], "candidateSha256": manifest["candidate"]["sha256"]}
     (out_dir / "STATUS.json").write_text(json.dumps(status, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     write_sha256sums(out_dir)
     return status
-

@@ -75,5 +75,8 @@ jobs:
       - name: Run video-tooling tests
         run: npm run video:test
 
+      - name: Run video-reference Docker smoke
+        run: npm run video:smoke
+
       - name: Confirm tests did not modify tracked files
         run: git diff --exit-code

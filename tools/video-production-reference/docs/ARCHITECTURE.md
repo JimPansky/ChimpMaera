@@ -4,11 +4,12 @@
 
 Ship the current ChimpMaera video-development environment as an inspectable
 reference, not as a mature studio. The implementation follows the handoff
-contracts from `cm-video-production-implementation-handoff-20260730`.
+contracts proven by the public-safe delta chain in `../methodology/`.
 
 ## Runtime Shape
 
-The core image contains only Python, PyYAML, FFmpeg, schemas, QA gates, and the
+The core image contains only Python, PyYAML, FFmpeg, schemas, policies,
+methodology metadata, QA gates, and the
 `cm-video` CLI. Runtime security is supplied by Compose and smoke commands:
 network off, non-root UID 65532, read-only root, all capabilities dropped,
 `no-new-privileges`, read-only `/job` and `/assets`, writable `/output`, and no
@@ -16,16 +17,27 @@ Docker socket.
 
 ## Flow
 
-1. `validate` loads the `cm.video/v1` job and fails closed on missing declared
+1. `validate` loads a backward-compatible `cm.video/v1` or governed
+   `cm.video/v2` job and fails closed on missing declared
    assets, hash mismatch, path escape, rejected/unknown status, public actions,
    invalid timing, missing text/shot gates, wrong PNG dimensions, wrong WAV
    format, or forbidden strings. `spec.referenceAssets` is optional; omission
-   is valid, while declarations are checked exactly.
+   is valid, while declarations are checked exactly. V2 also validates
+   public-copy policy digests, English narration-number rules,
+   claim/evidence/non-claim integrity, timed visual bindings, safe areas,
+   subtitles, named hash-bound reviews, and the ten-second outro probes.
 2. `render` repeats validation, refuses an existing immutable output directory,
    assembles static PNG shots with direct dissolves, pads/trims locked WAV audio,
    writes `candidate.mp4`, and records the exact render command.
 3. `qa` runs `ffprobe`, full-decodes the MP4, checks dimensions, fps, pixel
-   format, duration, audio sample rate, and writes QA evidence plus checksums.
+   format, duration and audio sample rate, measures EBU R128 loudness and true
+   peak, rejects black-frame events, and writes QA evidence plus checksums.
+4. `validate-methodology-evidence` verifies artifact hashes, seven portable QA
+   families, named revision-bound reviews, and four outro probes. Fixture
+   evidence is accepted only for a manifest explicitly marked
+   `smoke-fixture`; publication candidates require executed evidence.
+5. `validate-consumed-deltas` verifies the public process-delta chain and its
+   assumption/risk/fallback/review/rollback record.
 
 ## Evidence Files
 
@@ -33,11 +45,11 @@ Each render produces a versioned output directory with `STATUS.json`,
 `OUTPUT-MANIFEST.json`, `QA.json`, `RENDER-COMMAND.txt`, `SHA256SUMS`, and
 `candidate.mp4`.
 
-## Optional GPU/TTS
+## Model-backed QA Boundary
 
-The GPU/TTS profile is deliberately separate. It documents the actual Qwen3-TTS
-and Whisper contract, including offline `/models` mount and model commit, but it
-is not built by default and cannot silently fall back to a different path.
+No ASR, OCR, TTS, CUDA, NVENC, or model weights are bundled. The reference
+validates contracts and receipts around those steps; it does not claim model
+accuracy or host equivalence.
 
 ## Reference Media Boundary
 

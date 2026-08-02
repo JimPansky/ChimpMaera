@@ -121,7 +121,7 @@
       "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
     },
     {
-      "reference": "chimpmaera/video-production-reference:2026-07-30-v1",
+      "reference": "chimpmaera/video-production-reference:2026-08-02-v2",
       "composePath": "tools/video-production-reference/compose.yaml",
       "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
     }

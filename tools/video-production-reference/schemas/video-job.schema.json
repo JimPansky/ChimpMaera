@@ -6,7 +6,7 @@
   "required": ["apiVersion", "kind", "metadata", "spec"],
   "additionalProperties": false,
   "properties": {
-    "apiVersion": {"const": "cm.video/v1"},
+    "apiVersion": {"enum": ["cm.video/v1", "cm.video/v2"]},
     "kind": {"const": "VideoJob"},
     "metadata": {
       "type": "object",
@@ -64,8 +64,43 @@
               "mediaClass": {"enum": ["png-shot", "wav-audio", "text", "csv", "svg", "model"]}
             }
           }
+        },
+        "methodology": {
+          "type": "object",
+          "description": "Required for cm.video/v2. Validated fail-closed by the reference runtime.",
+          "required": ["version", "publicCopyPolicy", "reviews", "evidence", "claimBindings", "outro"],
+          "properties": {
+            "version": {"const": "2026.08.02-v2"},
+            "publicCopyPolicy": {
+              "type": "object",
+              "required": ["path", "sha256"],
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+              }
+            },
+            "reviews": {"type": "object"},
+            "evidence": {"type": "array", "minItems": 1},
+            "claimBindings": {"type": "array", "minItems": 1},
+            "outro": {
+              "type": "object",
+              "required": ["designed", "durationSeconds", "startSeconds", "endSeconds", "terminalAudioPolicy", "timingProbes"],
+              "properties": {
+                "designed": {"const": true},
+                "durationSeconds": {"const": 10},
+                "terminalAudioPolicy": {"not": {"const": "silent"}},
+                "timingProbes": {"type": "array", "minItems": 4, "maxItems": 4}
+              }
+            }
+          }
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"apiVersion": {"const": "cm.video/v2"}}},
+      "then": {"properties": {"spec": {"required": ["methodology"]}}}
+    }
+  ]
 }
