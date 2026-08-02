@@ -154,8 +154,8 @@ eb590360ce80425606f44830a902c0a6525bc5c674c5e32095ce225500c28442  ./docs/SECURIT
 d4bcc9ada247118e6f653f7849edcc0d2dc18a26a0533d8708094b453faccc62  ./docs/SUPPLY-CHAIN.md
 e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-ADVISOR-GUIDE.md
 4eabfdd9292dc68df07998a83a91af3a189a5deb74fe05bc2eb9b28567b756de  ./docs/ZOO-FIELD-GUIDE.md
-593a71fc60842d02e1ea0e854f891f5fda5ee1db8f023e127dd2b0920bb2837f  ./examples/builder-agent/contribution-bundle-v1.json
-12bf4f0e92b2845df0d41a2392ea3242793282b0a7ab8a09cbde797613cadbd9  ./examples/builder-agent/contribution-input-v1.json
+b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6  ./examples/builder-agent/contribution-bundle-v1.json
+bed17ca192ea01731aa77ca10c7d60672d6bd6b437a26e7165e20bd473e03ee2  ./examples/builder-agent/contribution-input-v1.json
 40f542f73fb3ca0f18067014ee13cc5f39c8dee9bef00777559e6d6cd78e2df3  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json
 7d8a1b611db2768ce2979466220555a4310b73bcab9a0a9e3fa6c872333e4ba4  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS
 1500d79185cabeac509c1bf805bd2631c84ab324da2294027352b126bc7e8408  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/artifact-manifest.json
@@ -181,7 +181,7 @@ a4852feaa297c4e84528ddcb958eda5a599539ee447e3c1d3fa90e62085c831f  ./package-lock
 69b61cdc75b55916318faddfa8e03dac2db73c5f7a5929c71497f4ca5713a181  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
-c35217926c0b3761b67a2f4635e305e35d8d6cbb164f6330f76b9b85513a8a50  ./packages/contracts/src/builder-contribution-bundle.ts
+974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts
 cc25d6bf46efe11e0a68d1b8346279e23188dec021357f0d9ef654d341926b46  ./packages/contracts/src/builder-discovery.ts
 0508371ed8bc39811563969f9a58dd7c0a678d0baf5e6dbe9ea01fa1015c00c6  ./packages/contracts/src/builder-integration-plan.ts
 c9fbd0ad768470a0b4e5a9d6c8df6ede3ecf521a22c64dd2b305c40927312427  ./packages/contracts/src/builder-quality-evidence.ts
@@ -218,7 +218,7 @@ a3f80bddb9cd7c767db74a7fffc1a56009e3cf1a11eb14f927fef4521e1cb1ad  ./scripts/veri
 c8f07f427e39d50ddc142c7f5d6ed0382e1058fd179eb178226a1a1b870f118c  ./tests/builder-agent-runtime.test.mjs
 a8479c98b9b211bb9ead59877b8ba0b4c1f9ff9cd0e5455ee52aaa103d34716a  ./tests/builder-authority.test.ts
 932dc4c32fc2963dfeba37514ccf94d37cf9350b9f05848d60ca98a3e497d05b  ./tests/builder-capability-resolution.test.ts
-56c0f41b35979f8102b2d46a86ac233c934bba0ec5b98a2680acb1e4a18075c6  ./tests/builder-contribution-bundle.test.ts
+d7460b81e2855d881f6f1a2836ce0a16eb3235497289d097cb122c2e15cf988c  ./tests/builder-contribution-bundle.test.ts
 491474baafefabbd73874ba294d16bced0707f71f1dd718285ef1e5d9a172457  ./tests/builder-discovery.test.ts
 2861051684d67a61ad62e484a2178cacf300af620bf369541909e8e6e5398028  ./tests/builder-integration-plan.test.ts
 4c2de11b24976709c3571306546d5c458a25bc86f62177a2c361cd5645c9e759  ./tests/builder-quality-evidence.test.ts

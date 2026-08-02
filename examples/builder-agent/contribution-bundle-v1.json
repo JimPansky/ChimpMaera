@@ -1,6 +1,6 @@
 {
   "schemaVersion": "chimpmaera.builder/contribution-bundle/v1",
-  "bundleId": "bundle:ff91ade0d8ae15a9f02f3d64",
+  "bundleId": "bundle:d19a59c7ae49b0bcd86580be",
   "issueId": "BLD-001",
   "claimIds": ["BLD-001-G1", "BLD-001-G2", "BLD-001-G3", "BLD-001-G4", "BLD-001-G5", "BLD-001-G6", "BLD-001-G7", "BLD-001-G8"],
   "scope": [
@@ -51,9 +51,9 @@
     { "path": "docs/BUILDER-AGENT-OPERATOR-GUIDE.md", "sha256": "ff9fd52f21a4f0e991a60d7aefa9e2febc6aef109a81f2e0eae1fe475b19c1f6" },
     { "path": "docs/BUILDER-CONFIGURATION-DEFAULTS.md", "sha256": "b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69" },
     { "path": "docs/SYSTEM-ADVISOR-GUIDE.md", "sha256": "e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9" },
-    { "path": "packages/contracts/src/builder-contribution-bundle.ts", "sha256": "c35217926c0b3761b67a2f4635e305e35d8d6cbb164f6330f76b9b85513a8a50" },
+    { "path": "packages/contracts/src/builder-contribution-bundle.ts", "sha256": "974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae" },
     { "path": "schemas/contracts/builder-contribution-bundle-v1.schema.json", "sha256": "02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0" },
-    { "path": "tests/builder-contribution-bundle.test.ts", "sha256": "56c0f41b35979f8102b2d46a86ac233c934bba0ec5b98a2680acb1e4a18075c6" }
+    { "path": "tests/builder-contribution-bundle.test.ts", "sha256": "d7460b81e2855d881f6f1a2836ce0a16eb3235497289d097cb122c2e15cf988c" }
   ],
   "recoverySteps": [
     "Keep publication authorization absent and retain digest-only negative evidence",
@@ -79,6 +79,6 @@
       "UNKNOWN_FIELD"
     ]
   },
-  "inputDigest": "8505814bddb43ab9c1bb74a03bee82c40ca5987d5a536bae1d940e1754e19b27",
-  "bundleDigest": "f2647c0e166aa1bc8fa6973ebf770f1dac42528a9932b04fd38bddb32e551d32"
+  "inputDigest": "9f481bb4b435a5a98390470c5d7f86214b864459838a0d98f4f83a2047ae53fa",
+  "bundleDigest": "a1984b533ae6768a7358a610ba56e09ca051810bb59f36acfd9534329b4aa8b3"
 }

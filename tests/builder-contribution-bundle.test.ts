@@ -109,7 +109,7 @@ test("BLD-001-G8 allow-list denies credential and private-path leakage without r
   const cases = [
     mutate(input(), (draft) => { draft.scope[0] = "token sk-1234567890abcdef"; }),
     mutate(input(), (draft) => {
-      draft.nonClaims[0] = `stored in /${"home"}/operator/private.json`;
+      draft.nonClaims[0] = `stored-at=/${"home"}/operator/private.json`;
     }),
     mutate(input(), (draft) => { draft.sourceArtifacts[0].path = "../../private/runtime.json"; }),
     mutate(input(), (draft) => { draft.recoverySteps[0] = "rawRuntimeReceipt must be copied"; }),

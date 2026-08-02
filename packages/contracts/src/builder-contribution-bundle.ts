@@ -95,7 +95,7 @@ const UNSAFE_TEXT = [
   /(?:^|[\s"'=])(?:sk-[A-Za-z0-9_-]{12,}|gh[opusr]_[A-Za-z0-9]{12,}|hf_[A-Za-z0-9]{12,})/i,
   /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
   /\b(?:authorization|bearer)\s*[:=]\s*\S+/i,
-  /(?:^|[\s(])(?:\/home\/|\/mnt\/|\/var\/|\/etc\/|[A-Za-z]:\\)/,
+  /(?:\/(?:home|mnt|var|etc)\/|[A-Za-z]:\\)/,
   /\b(?:rawPrompt|rawRuntimeReceipt|credentialValue|customerRecord|tenantPayload)\b/i,
 ] as const;
 
