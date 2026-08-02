@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/builder-integration-plan-v1.schema.json",
+  "title": "ChimpMaera Builder generic integration plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "claim",
+    "tenant",
+    "systemId",
+    "systemType",
+    "planningStatus",
+    "sourceBindings",
+    "systemManifest",
+    "objectDependencyGraph",
+    "integrationContracts",
+    "profileDiff",
+    "fixtures",
+    "rollbackPlan",
+    "inputDigest",
+    "planDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.builder/integration-plan/v1" },
+    "claim": { "const": "DATA_ONLY_GENERIC_PLAN_NO_AUTHORITY_EFFECT_ACTIVATION_OR_PUBLICATION" },
+    "tenant": { "$ref": "#/$defs/identifier" },
+    "systemId": { "$ref": "#/$defs/identifier" },
+    "systemType": { "$ref": "#/$defs/identifier" },
+    "planningStatus": { "enum": ["PREPARATION_REQUIRED", "READY_FOR_QUALITY_GATE"] },
+    "sourceBindings": { "$ref": "#/$defs/sourceBindings" },
+    "systemManifest": { "$ref": "#/$defs/systemManifest" },
+    "objectDependencyGraph": { "$ref": "#/$defs/objectGraph" },
+    "integrationContracts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/integrationContract" }
+    },
+    "profileDiff": { "$ref": "#/$defs/profileDiff" },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/fixture" }
+    },
+    "rollbackPlan": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/rollback" }
+    },
+    "inputDigest": { "$ref": "#/$defs/digest" },
+    "planDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]*$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "effectClass": {
+      "enum": ["READ_ONLY", "REVERSIBLE_WRITE", "IRREVERSIBLE_EFFECT", "INSTALL_ACTIVATE", "PUBLICATION"]
+    },
+    "route": {
+      "enum": ["AUTO_EXECUTE", "OWNER_APPROVAL", "DENY"]
+    },
+    "sourceBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["discoveryRecordDigest", "capabilityResolutionDigest", "authorityResultDigest"],
+      "properties": {
+        "discoveryRecordDigest": { "$ref": "#/$defs/digest" },
+        "capabilityResolutionDigest": { "$ref": "#/$defs/digest" },
+        "authorityResultDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "systemManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "sourceManifestId",
+        "sourceManifestDigest",
+        "tenant",
+        "systemId",
+        "systemType",
+        "dataClassification",
+        "objectTypes",
+        "operationIds",
+        "manifestDigest"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.builder/planned-system-manifest/v1" },
+        "sourceManifestId": { "$ref": "#/$defs/identifier" },
+        "sourceManifestDigest": { "$ref": "#/$defs/digest" },
+        "tenant": { "$ref": "#/$defs/identifier" },
+        "systemId": { "$ref": "#/$defs/identifier" },
+        "systemType": { "$ref": "#/$defs/identifier" },
+        "dataClassification": { "const": "SYNTHETIC" },
+        "objectTypes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "operationIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "manifestDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "graphNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectType", "description"],
+      "properties": {
+        "objectType": { "$ref": "#/$defs/identifier" },
+        "description": { "type": "string", "minLength": 1, "maxLength": 256 }
+      }
+    },
+    "graphEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromObjectType", "toDependencyObjectType"],
+      "properties": {
+        "fromObjectType": { "$ref": "#/$defs/identifier" },
+        "toDependencyObjectType": { "$ref": "#/$defs/identifier" }
+      }
+    },
+    "objectGraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "nodes", "edges", "graphDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.builder/object-dependency-graph/v1" },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/graphNode" }
+        },
+        "edges": {
+          "type": "array",
+          "maxItems": 256,
+          "items": { "$ref": "#/$defs/graphEdge" }
+        },
+        "graphDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "integrationContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "contractId",
+        "templateId",
+        "scaffoldKind",
+        "operationId",
+        "objectType",
+        "effectClass",
+        "capabilityState",
+        "capabilityRef",
+        "capabilityBindingDigest",
+        "lifecycleState",
+        "executable",
+        "authorityGranted",
+        "effectAuthorized"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.builder/generic-integration-contract/v1" },
+        "contractId": { "type": "string", "pattern": "^contract:[a-f0-9]{24}$" },
+        "templateId": {
+          "enum": [
+            "chimpmaera.builder/generic-adapter-contract/v1",
+            "chimpmaera.builder/generic-skill-contract/v1"
+          ]
+        },
+        "scaffoldKind": { "enum": ["ADAPTER", "SKILL"] },
+        "operationId": { "$ref": "#/$defs/identifier" },
+        "objectType": { "$ref": "#/$defs/identifier" },
+        "effectClass": { "$ref": "#/$defs/effectClass" },
+        "capabilityState": { "enum": ["REUSE_REGISTERED", "UNRESOLVED_INTENT"] },
+        "capabilityRef": { "$ref": "#/$defs/identifier" },
+        "capabilityBindingDigest": { "$ref": "#/$defs/digest" },
+        "lifecycleState": { "const": "INACTIVE" },
+        "executable": { "const": false },
+        "authorityGranted": { "const": false },
+        "effectAuthorized": { "const": false }
+      }
+    },
+    "profileEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rightId",
+        "effectClass",
+        "safeGuidedRoute",
+        "selectedRoute",
+        "changedFromSafeGuided",
+        "effective",
+        "reasonFacts"
+      ],
+      "properties": {
+        "rightId": { "$ref": "#/$defs/identifier" },
+        "effectClass": { "$ref": "#/$defs/effectClass" },
+        "safeGuidedRoute": { "enum": ["AUTO_EXECUTE", "OWNER_APPROVAL"] },
+        "selectedRoute": { "$ref": "#/$defs/route" },
+        "changedFromSafeGuided": { "type": "boolean" },
+        "effective": { "type": "boolean" },
+        "reasonFacts": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 1, "maxLength": 160 }
+        }
+      }
+    },
+    "profileDiff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selectedProfile", "entries"],
+      "properties": {
+        "selectedProfile": { "enum": ["SAFE_GUIDED", "CUSTOM", "RAMPAGE_FULL_CONTROL_LAB"] },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/profileEntry" }
+        }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixtureId", "operationId", "dataClassification", "mode", "assertions"],
+      "properties": {
+        "fixtureId": { "type": "string", "pattern": "^fixture:[a-f0-9]{24}$" },
+        "operationId": { "$ref": "#/$defs/identifier" },
+        "dataClassification": { "const": "SYNTHETIC" },
+        "mode": { "enum": ["READ_EXPECTATION", "REVERSIBLE_WRITE_ROLLBACK", "EFFECT_RECOVERY_PROBE"] },
+        "assertions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "requiredBeforeActivation", "strategy", "contextRefs", "successEvidence"],
+      "properties": {
+        "operationId": { "$ref": "#/$defs/identifier" },
+        "requiredBeforeActivation": { "type": "boolean" },
+        "strategy": {
+          "enum": [
+            "NOT_APPLICABLE_READ_ONLY",
+            "RESTORE_PRIOR_VALUE",
+            "OWNER_DEFINED_RECOVERY_REQUIRED",
+            "DEACTIVATE_AND_REMOVE_OWNED_RESIDUE",
+            "WITHDRAWAL_OR_CORRECTION_REQUIRED"
+          ]
+        },
+        "contextRefs": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "successEvidence": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    }
+  }
+}

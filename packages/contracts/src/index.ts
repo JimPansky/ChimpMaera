@@ -15,3 +15,4 @@ export * from "./protected-audit-timeline.js";
 export * from "./builder-authority.js";
 export * from "./builder-discovery.js";
 export * from "./builder-capability-resolution.js";
+export * from "./builder-integration-plan.js";
