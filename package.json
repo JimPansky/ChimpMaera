@@ -20,7 +20,10 @@
     "video:test": "python3 -m unittest discover -s tools/video-production-reference/tests",
     "demo:install": "./demo/install.sh",
     "demo:uninstall": "./demo/uninstall.sh --purge",
-    "video:smoke": "./tools/video-production-reference/scripts/smoke.sh"
+    "video:smoke": "./tools/video-production-reference/scripts/smoke.sh",
+    "release-governance:test": "node --test tests/release-governance.test.mjs",
+    "release-governance:verify": "node scripts/verify-release-governance.mjs",
+    "release-governance:public-readback": "node scripts/verify-release-governance.mjs --public-readback"
   },
   "dependencies": {
     "ajv": "8.20.0",

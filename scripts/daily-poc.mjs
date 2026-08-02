@@ -340,41 +340,13 @@ function semanticIssues(manifest, sourceRepo, facts) {
     const heading = readme.match(/^# (.+)$/m)?.[1] ?? null;
     if (heading !== "ChimpMaera") issues.push("README_CURRENT_IDENTITY_MUST_BE_TIMELESS");
     const lines = readme.split("\n");
-    const publicLine = lines.find((line) => line.includes("**Current public release:**"));
-    if (!publicLine || !/\bpublished\b/i.test(publicLine) || /\bnot published\b/i.test(publicLine)) {
+    const publicLine = lines.find((line) => line.includes("**Current regular Latest release:**"));
+    if (!publicLine || !/\bLatest\b/i.test(publicLine) || /\bnot published\b/i.test(publicLine)) {
       issues.push("README_PUBLIC_RELEASE_STATUS_MISSING_OR_INVALID");
     }
-    const preparedDailyLine = lines.find((line) => line.includes("**Daily candidate:**"));
-    const publishedDailyLine = lines.find((line) => line.includes("**Today's Daily:**"));
-    const dailyLink = `[\`${manifest.targetVersion}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${manifest.targetVersion})`;
-    const preparedDailyValid = preparedDailyLine
-      && preparedDailyLine.includes(`\`${manifest.targetVersion}\``)
-      && preparedDailyLine.includes("**not published**");
-    const publishedDailyValid = publishedDailyLine
-      && publishedDailyLine.includes(dailyLink)
-      && !/\bnot published\b/i.test(publishedDailyLine);
-    if (!preparedDailyValid && !publishedDailyValid) {
-      issues.push("README_DAILY_STATUS_MISSING_OR_MISMATCHED");
-    }
-    const dailyLine = publishedDailyLine ?? preparedDailyLine;
-    const previous = [...manifest.history].sort((left, right) =>
-      `${left.date}:${String(left.sequence).padStart(10, "0")}`.localeCompare(
-        `${right.date}:${String(right.sequence).padStart(10, "0")}`,
-        "en",
-      ),
-    ).at(-1);
-    if (previous) {
-      const predecessorLine = lines.find((line) =>
-        line.includes("**Previous Daily provenance:**") || line.includes("**Provenance predecessor:**"),
-      );
-      if (!predecessorLine || !predecessorLine.includes(`\`${previous.version}\``)) {
-        issues.push("README_PROVENANCE_PREDECESSOR_MISSING_OR_MISMATCHED");
-      }
-      const predecessorDateLeaksIntoDifferentDay = previous.date !== manifest.date
-        && dailyLine?.includes(dateToken(previous.date));
-      if (dailyLine && (dailyLine.includes(previous.version) || predecessorDateLeaksIntoDifferentDay)) {
-        issues.push("README_CURRENT_FIELD_USES_PREDECESSOR_IDENTITY");
-      }
+    const activeReleaseSection = readme.split(/^## /m).find((value) => value.startsWith("Release status")) ?? "";
+    if (/Today's Daily|Previous Daily|POC Daily|Daily snapshot/i.test(activeReleaseSection)) {
+      issues.push("README_CALENDAR_RELEASE_IDENTITY_DENIED");
     }
   } catch (error) {
     issues.push(`${error.code ?? "README_STATUS_ERROR"}:README.md:${error.message}`);
@@ -477,13 +449,18 @@ function markdownList(items, render) {
   return items.length ? items.map((item) => `- ${render(item)}`).join("\n") : "- None";
 }
 
+function incrementCandidateTitle(manifest) {
+  const functionalName = manifest.highlights[0]?.title ?? "Functional product change";
+  return `ChimpMaera — ${functionalName} (Increment Candidate)`;
+}
+
 function buildCoreArtifacts(manifest, manifestDigest, facts, previous, videoStatus) {
   const highlights = sortById(manifest.highlights);
   const claims = sortById(manifest.claims);
   const useCases = sortById(manifest.useCases);
   const evidence = sortById(manifest.evidence);
   const segments = [...manifest.video.segments].sort((a, b) => a.order - b.order || a.id.localeCompare(b.id, "en"));
-  const releaseTitle = `ChimpMaera POC Daily — ${manifest.date}`;
+  const releaseTitle = incrementCandidateTitle(manifest);
 
   const trace = (item) => {
     const issueIds = item.issueIds.length ? item.issueIds.join(", ") : "none";
@@ -506,7 +483,7 @@ function buildCoreArtifacts(manifest, manifestDigest, facts, previous, videoStat
     return `Claim ${claim.id} [${claim.maturity}]: ${claim.statement}`;
   }).join("\n")}\n`).join("\n")}\nFinal disclosure: this deterministic video package records prepublication preparation. Verify any later publication status independently.\n`;
 
-  const readmePointer = `## Daily POC candidate package\n\n[${releaseTitle}](./release-notes.md) — \`${manifest.targetVersion}\` — deterministic candidate evidence; consult GitHub release metadata for current public status.\n`;
+  const readmePointer = `## Product increment candidate package\n\n[${releaseTitle}](./release-notes.md) — \`${manifest.targetVersion}\` — deterministic candidate evidence; consult anonymous GitHub release readback for current public status.\n`;
 
   const videoBrief = {
     schemaVersion: "chimpmaera.daily-poc-video-brief/v1",
@@ -842,7 +819,7 @@ function prepare(args) {
   const candidateReport = canonicalJson({
     schemaVersion: "chimpmaera.daily-poc-candidate-report/v1",
     candidateVersion: manifest.targetVersion,
-    releaseTitle: `ChimpMaera POC Daily — ${manifest.date}`,
+    releaseTitle: incrementCandidateTitle(manifest),
     manifestSha256: manifestDigest,
     artifactManifestSha256,
     verdict: "READY_CANDIDATE",

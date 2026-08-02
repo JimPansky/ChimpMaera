@@ -10,9 +10,10 @@
 
 **Open knowledge. Governed agency. Verifiable outcomes.**
 
-ChimpMaera is an open-source Knowledge Operating System for turning scattered
-system knowledge into reusable guides, contracts and workflows—without turning
-an AI agent into an authority. Today you can run a local, synthetic
+ChimpMaera is an open-source proof of concept and direction for a Knowledge
+Operating System that turns scattered system knowledge into reusable guides,
+contracts and workflows—without turning an AI agent into an authority. Today
+you can run a local, synthetic
 CRM-to-ERP proof of concept and inspect how a proposed action is governed,
 executed, read back and proven.
 
@@ -31,13 +32,15 @@ boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
 
 ## Release status
 
-- **Current public release:** [`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3) — the current published regular release.
-- **Today's Daily:** [`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3) — the Daily snapshot dated 2026-08-02.
-- **Previous Daily provenance:** [`v0.2.0-poc.20260802.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.2) — the historical predecessor Daily.
+- **Current regular Latest release:** [`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3) — **Governed Company Data Increment**.
 - **Historical predecessor:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release.
 
-Daily snapshots are not production releases, security certifications, hosted
-services, support promises or permission to connect real systems. Use only
+Releases are accepted functional increments, not calendar events. Editorial
+updates may describe progress, decisions, learnings or previews, but they do
+not gate or prove publication. The exact Latest/draft/prerelease and anonymous
+asset-readback rules are in [Release governance](docs/RELEASE-GOVERNANCE.md).
+This release is not a production release, security certification, hosted
+service, support promise or permission to connect real systems. Use only
 synthetic data on a disposable or development host.
 
 ## What you can do today
@@ -70,7 +73,7 @@ Remove only installer-owned resources with:
 ./demo/uninstall.sh --purge
 ```
 
-The current release and its exact Daily provenance are listed in
+The current release and its evidence policy are listed in
 [Release status](#release-status); `v0.1.0` is historical only.
 
 ## How it works
@@ -130,11 +133,8 @@ community—not company membership, employment or authority.
 
 ## Watch ChimpMaera
 
-These videos explain the project direction but are not release evidence:
-
-- [Why ChimpMaera? Open Knowledge, Governed AI, Verifiable Outcomes](https://youtu.be/Dq_XLEzh5I8)
-- [How does ChimpMaera actually work? 🛠️](https://youtu.be/w4fWgalD_WQ)
-- [Security by Default: How ChimpMaera Contains AI Agents](https://youtu.be/SEPbE-EVoNs)
+Current overview videos are temporarily unavailable while their public naming
+and claims are re-verified. No video is release evidence.
 
 ## Project details
 

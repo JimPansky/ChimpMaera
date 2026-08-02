@@ -6,16 +6,23 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 
 ## Scope and evidence snapshot
 
-The restructuring baseline is public `main` commit
-[`f63a72d1e124`](https://github.com/JimPansky/ChimpMaera/commit/f63a72d1e124),
-two commits after the `v0.1.0` tag. **v0.1.0 remains the only tagged and
-published release.** The v0.2 POC candidate on `main` is merged source, not a
-tagged release. This documentation-only restructuring changes no runtime or
-installer bytes.
+The current public regular release is
+[`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3),
+the **Governed Company Data Increment**. `v0.1.0` is historical. Release state
+is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred
+from a local branch, a tag alone, a date or an editorial update. Documentation
+on `main` may postdate the released asset bytes and does not silently change
+their claims.
 
 The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
+
+Table counts are dated observations from their linked 2026-08-01 synthetic
+evidence records, not a volatile claim about the current repository-wide test
+total or live issue state. The listed reproduction command and commit-bound CI
+result are authoritative for a newer snapshot; a changed count does not broaden
+the claim boundary.
 
 ## Claim maturity
 
@@ -23,8 +30,9 @@ Maturity terms are strict:
 
 - **PROVEN IN THIS SNAPSHOT** — executable contract/test evidence is present
   in this repository snapshot and the stated command passes on these bytes.
-- **LOCALLY VALIDATED — NOT RELEASED** — a checked-in, commit-bound local
-  runtime smoke exists; its presence on public `main` is not release evidence.
+- **LOCALLY VALIDATED — SYNTHETIC EVIDENCE** — a checked-in, commit-bound local
+  runtime smoke exists. Inclusion in a public release does not turn it into
+  production, certification or independent evidence.
 - **PLANNED / IN PROGRESS** — roadmap only. An issue is never evidence.
 - **NOT CLAIMED — EXTERNAL GATES** — the claim requires evidence this local
   snapshot cannot provide.
@@ -40,7 +48,7 @@ Maturity terms are strict:
 | `CM-SEC-008` | Verified audit explanations are built only from signed, ordered, digest-linked facts and an exact head/count checkpoint; tampered, missing, reordered or forked facts do not render verified success. | [audit tests](../tests/protected-audit-timeline.test.ts); `npm run build && node --test dist/tests/protected-audit-timeline.test.js` | **4/4 PASS**; AAS-023 full suite **132/132 PASS** | Synthetic Ed25519/local checkpoint. Not hostile-host tamper-proof storage, an independent witness, trusted time, production key custody or retention compliance. |
 | `CM-SEC-009` | The stock demo publishes only loopback ports, keeps databases on internal networks, mounts no Docker socket, and runs ChimpMaera non-root with a read-only root, dropped capabilities and no-new-privileges. | [Compose contract](../demo/compose.yaml); [supply-chain verifier tests](../tests/supply-chain-verifier.test.mjs); `npm run supply-chain:verify` | **6/6 PASS** declaration/runtime-posture checks | Repository and local Compose posture only. It does not resist a compromised host kernel or Docker daemon and does not establish production network isolation. |
 
-### LOCALLY VALIDATED — NOT RELEASED
+### LOCALLY VALIDATED — SYNTHETIC EVIDENCE
 
 | Claim ID | Exact claim | Evidence / reproduce | Recorded result | Boundary |
 | --- | --- | --- | --- | --- |
@@ -48,20 +56,17 @@ Maturity terms are strict:
 | `CM-SEC-006` | The isolated Agent fixture has zero ambient provider/host/tenant credentials and one Gateway-only application path; direct Internet, provider, peer, host, socket and unmanaged-effect paths are denied by the tested fixture. | `docs/development/evidence/admin-ai-aas-035-20260801.json`; [runtime tests](../tests/openclaw-agent-runtime.test.mjs); `./demo/openclaw-agent/smoke.sh` | AAS-035 **12/12 PASS**; frozen smoke records **5** denials, **1** mediated effect with receipt/readback, stable Owner fingerprint and zero owned residue | Docker shares the host kernel. This is not a production sandbox, hostile-host boundary, complete supply-chain audit or production network/IAM claim. |
 | `CM-SEC-007` | Declared effects are executed only at the broker/gate boundary. Transport acceptance is not success: authoritative provider readback and a bound receipt are mandatory; rejection, drift, ambiguity and replay do not become success. | `docs/development/evidence/admin-ai-aas-016-20260801.json`; [effect-gate tests](../tests/demo-enforcement-gate.test.mjs); [approval tests](../tests/demo-approval-workbench.test.mjs); `./demo/acceptance.sh SAFE_DEMO_COLD` | AAS-016 **4/4 PASS**; corrected cold smoke `READY_VERIFIED`, approved readback `VERIFIED`, rejected effect `DENIED`, replay denied, zero owned residue | One synthetic Dolibarr order path and local fixture identity. No provider transaction/ETag, production approval/IAM/MFA/quorum, provider Revoke or production Rollback claim. |
 
-### PLANNED / IN PROGRESS — ISSUES ARE NOT EVIDENCE
+### HISTORICAL ROADMAP PROVENANCE — NOT CURRENT ISSUE STATE
 
-`CM-ROADMAP-001`: public issue [#3](https://github.com/JimPansky/ChimpMaera/issues/3)
-tracks the inactive catalogue and was still **open / in progress** when checked
-on 2026-08-01.
-The OpenClaw epic [#2](https://github.com/JimPansky/ChimpMaera/issues/2) and
-children [#4](https://github.com/JimPansky/ChimpMaera/issues/4),
+The 2026-08-01 assurance review recorded issue [#3](https://github.com/JimPansky/ChimpMaera/issues/3)
+as open/in progress and epic [#2](https://github.com/JimPansky/ChimpMaera/issues/2)
+plus children [#4](https://github.com/JimPansky/ChimpMaera/issues/4),
 [#5](https://github.com/JimPansky/ChimpMaera/issues/5),
 [#6](https://github.com/JimPansky/ChimpMaera/issues/6),
 [#7](https://github.com/JimPansky/ChimpMaera/issues/7) and
-[#8](https://github.com/JimPansky/ChimpMaera/issues/8) were still **open /
-blocked**. Public `main` contains AAS-012 and isolated OpenClaw candidates,
-but merged source does **not** silently change issue state, satisfy every issue
-acceptance criterion or turn planned work into released evidence.
+[#8](https://github.com/JimPansky/ChimpMaera/issues/8) as open/blocked. That is
+a dated provenance snapshot, not a live status claim; current state must be
+read from GitHub. Issues remain roadmap links, not evidence by themselves.
 
 ### NOT CLAIMED — EXTERNAL GATES
 
