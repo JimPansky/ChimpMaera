@@ -173,16 +173,14 @@ class BundledReferenceAssets(unittest.TestCase):
             root_readme,
         )
         self.assertIn(
-            "**Today's Daily:** [`v0.2.0-poc.20260802.2`]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.2)"
-            " — the Daily snapshot dated 2026-08-02.",
+            "**Daily candidate:** `v0.2.0-poc.20260802.3` — **not published**;"
+            " local governed company-data candidate only.",
             root_readme,
         )
         self.assertIn(
-            "**Previous Daily provenance:** [`v0.2.0-poc.20260802.1`]"
+            "**Previous Daily provenance:** [`v0.2.0-poc.20260802.2`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.1) — the historical predecessor Daily.",
+            "v0.2.0-poc.20260802.2) — the current published predecessor Daily.",
             root_readme,
         )
         self.assertIn(
