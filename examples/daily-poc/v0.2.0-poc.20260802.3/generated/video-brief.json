@@ -1,0 +1,86 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.3",
+  "claims": [
+    {
+      "evidenceRefs": [
+        "EVID-DATA-001",
+        "EVID-DATA-001-TEST"
+      ],
+      "id": "CM-CLAIM-DATA-001-PACK",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The local synthetic Company Data Pack validator checks its closed schema, forbidden fields, canonical and semantic identity uniqueness, and exact catalog, graph and source-blueprint digests before any mutation."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-DATA-002",
+        "EVID-DATA-002-TEST"
+      ],
+      "id": "CM-CLAIM-DATA-002-GRAPH",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The local graph validator checks 90 nodes, 88/88 source coverage, 193 edges, references, cardinality, six classified cycles and state, time, money, quantity and customer rules, then emits a deterministic 270-operation staged DAG."
+    },
+    {
+      "evidenceRefs": [
+        "EVID-DATA-003",
+        "EVID-DATA-003-TEST"
+      ],
+      "id": "CM-CLAIM-DATA-003-REGISTRY",
+      "maturity": "LOCALLY_VALIDATED",
+      "statement": "The local synthetic Mapping Registry validates exact canonical-to-target scope, one active binding, provenance, readback digests, append replay lineage and explicit stale, orphaned, superseded and compensated states."
+    }
+  ],
+  "description": "A planned evidence-bound explanation of local company-data validation. Rendering and upload remain disabled and are not release evidence.",
+  "language": "en",
+  "publication": {
+    "youtubeUpload": false
+  },
+  "schemaVersion": "chimpmaera.daily-poc-video-brief/v1",
+  "segments": [
+    {
+      "claimRefs": [
+        "CM-CLAIM-DATA-001-PACK",
+        "CM-CLAIM-DATA-002-GRAPH"
+      ],
+      "durationSeconds": 16,
+      "id": "VIDEO-SEGMENT-DATA-PACK-GRAPH",
+      "narration": "ChimpMaera validates the synthetic company pack, every source digest and identity, then checks references, business rules and six classified cycles before it emits a staged plan. The validator carries no authority and performs no target action.",
+      "order": 1,
+      "purpose": "Explain digest-pinned pack validation and the staged dependency graph.",
+      "title": "Validate before mutation",
+      "useCaseRefs": [
+        "USE-CASE-GOVERNED-COMPANY-DATA"
+      ],
+      "visuals": [
+        "Show pack to graph to 270-operation staged DAG.",
+        "Show zero mutation and validation-only receipt fields."
+      ]
+    },
+    {
+      "claimRefs": [
+        "CM-CLAIM-DATA-003-REGISTRY"
+      ],
+      "durationSeconds": 14,
+      "id": "VIDEO-SEGMENT-DATA-LINEAGE",
+      "narration": "Canonical-to-target reuse requires the exact tenant, type, generated ID, semantic key and readback digest. Missing or drifted targets become explicit orphaned or stale evidence. Historical lineage is appended, never silently overwritten.",
+      "order": 2,
+      "purpose": "Explain append-oriented target binding and fail-closed drift states.",
+      "title": "Exact lineage, never name-only reuse",
+      "useCaseRefs": [
+        "USE-CASE-GOVERNED-COMPANY-DATA"
+      ],
+      "visuals": [
+        "Show one active binding and explicit stale, orphaned, superseded and compensated states.",
+        "Show 404, drift and replay denials."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042",
+  "title": "ChimpMaera POC Daily — 2026-08-02",
+  "useCases": [
+    {
+      "demoUtility": "Lets an operator inspect deterministic data-integrity and lineage receipts before a separately authorized target adapter is considered.",
+      "id": "USE-CASE-GOVERNED-COMPANY-DATA",
+      "title": "Validate a synthetic company-data import plan before mutation"
+    }
+  ]
+}

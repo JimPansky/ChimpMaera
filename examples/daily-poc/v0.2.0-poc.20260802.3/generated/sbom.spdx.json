@@ -1,0 +1,74 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "annotations": [
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-001 demo/company-data/validate-company-data-pack.mjs sha256:c1cdbfd235ffc3648a6aa439d3b06ac627d2b4807140ad44642c2446ef552919"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-001-TEST tests/company-data-pack.test.mjs sha256:b1c6f1a3f8abc0605e49c9307c69ac255b337af1ec84b3bacd05a5612e972a46"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-002 demo/company-data/validate-company-data-graph.mjs sha256:9c893f71387c68e3893e20e6d5c805a298eb1b9612cff9c1747e64c23457ddc2"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-002-TEST tests/company-data-graph.test.mjs sha256:3b326ea362a317096ce28573c824473ffeec8b65c760950636d0b038dfbb9cf8"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-003 demo/company-data/validate-mapping-registry.mjs sha256:13f53ea29299a5297345d696992d9e0dcffa61f9dd72ef9e3f0a5b361735c78a"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-003-TEST tests/mapping-registry.test.mjs sha256:48b8f150de6f711aefe946c0920a9981e32a9282592d3a0dfedecaaab6501827"
+    },
+    {
+      "annotationDate": "2026-08-02T00:00:00Z",
+      "annotationType": "OTHER",
+      "annotator": "Tool: chimpmaera.daily-poc-compiler/v1",
+      "comment": "EVID-DATA-GUIDE docs/COMPANY-DATA-VALIDATION.md sha256:79b69d2cd72f62784d88b06bdf201cda91cd1679ec7cccf86a55800e5ce6a6b9"
+    }
+  ],
+  "creationInfo": {
+    "comment": "Timestamp is deterministically derived from the canonical manifest date.",
+    "created": "2026-08-02T00:00:00Z",
+    "creators": [
+      "Tool: chimpmaera.daily-poc-compiler/v1"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://chimpmaera.local/spdx/v0.2.0-poc.20260802.3",
+  "name": "ChimpMaera-v0.2.0-poc.20260802.3-daily-poc-inputs",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-ChimpMaera",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "OTHER",
+          "referenceLocator": "38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+          "referenceType": "gitCommit"
+        }
+      ],
+      "filesAnalyzed": false,
+      "name": "ChimpMaera",
+      "versionInfo": "v0.2.0-poc.20260802.3"
+    }
+  ],
+  "spdxVersion": "SPDX-2.3"
+}

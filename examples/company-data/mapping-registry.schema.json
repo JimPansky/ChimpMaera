@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.invalid/schemas/mapping-registry.schema.json",
+  "title": "ChimpMaera append-oriented Mapping Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "registryId", "packRef", "fixedClock", "entries", "observations", "nonClaims"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.mapping-registry/v1" },
+    "registryId": { "$ref": "#/$defs/stableId" },
+    "packRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packId", "packVersion", "digest"],
+      "properties": {
+        "packId": { "$ref": "#/$defs/stableId" },
+        "packVersion": { "type": "string", "pattern": "^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}\\.[0-9]+$" },
+        "digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "fixedClock": { "type": "string", "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "observations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/observation" }
+    },
+    "nonClaims": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 10, "maxLength": 180 }
+    }
+  },
+  "$defs": {
+    "stableId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]{2,220}$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence", "mappingId", "packId", "packVersion", "canonicalObjectId", "objectType",
+        "semanticKeyDigest", "targetSystem", "targetTenant", "targetObjectType", "targetGeneratedId",
+        "adapterId", "adapterVersion", "capabilityDigest", "sourceBundleDigest", "mappingDecisionDigest",
+        "actionDigest", "targetReadbackDigest", "targetVersion", "verifiedAt", "status", "replacesMappingId",
+        "receiptId", "reuseBasis", "previousEntryDigest", "entryDigest"
+      ],
+      "properties": {
+        "sequence": { "type": "integer", "minimum": 1 },
+        "mappingId": { "$ref": "#/$defs/stableId" },
+        "packId": { "$ref": "#/$defs/stableId" },
+        "packVersion": { "type": "string" },
+        "canonicalObjectId": { "$ref": "#/$defs/stableId" },
+        "objectType": { "type": "string", "pattern": "^[A-Z][A-Z0-9-]{2,80}$" },
+        "semanticKeyDigest": { "$ref": "#/$defs/sha256" },
+        "targetSystem": { "$ref": "#/$defs/stableId" },
+        "targetTenant": { "$ref": "#/$defs/stableId" },
+        "targetObjectType": { "$ref": "#/$defs/stableId" },
+        "targetGeneratedId": { "$ref": "#/$defs/stableId" },
+        "adapterId": { "$ref": "#/$defs/stableId" },
+        "adapterVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "capabilityDigest": { "$ref": "#/$defs/sha256" },
+        "sourceBundleDigest": { "$ref": "#/$defs/sha256" },
+        "mappingDecisionDigest": { "$ref": "#/$defs/sha256" },
+        "actionDigest": { "$ref": "#/$defs/sha256" },
+        "targetReadbackDigest": { "$ref": "#/$defs/sha256" },
+        "targetVersion": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "verifiedAt": { "type": "string", "format": "date-time" },
+        "status": { "enum": ["ACTIVE", "STALE", "ORPHANED", "SUPERSEDED", "COMPENSATED"] },
+        "replacesMappingId": { "oneOf": [{ "$ref": "#/$defs/stableId" }, { "type": "null" }] },
+        "receiptId": { "$ref": "#/$defs/stableId" },
+        "reuseBasis": { "enum": ["NEW_BINDING_RECEIPT", "EXACT_GENERATED_ID_READBACK"] },
+        "previousEntryDigest": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "entryDigest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mappingId", "found", "targetSystem", "targetTenant", "targetObjectType", "targetGeneratedId",
+        "semanticKeyDigest", "targetReadbackDigest", "targetVersion", "observedAt", "resultDigest"
+      ],
+      "properties": {
+        "mappingId": { "$ref": "#/$defs/stableId" },
+        "found": { "type": "boolean" },
+        "targetSystem": { "$ref": "#/$defs/stableId" },
+        "targetTenant": { "$ref": "#/$defs/stableId" },
+        "targetObjectType": { "oneOf": [{ "$ref": "#/$defs/stableId" }, { "type": "null" }] },
+        "targetGeneratedId": { "$ref": "#/$defs/stableId" },
+        "semanticKeyDigest": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "targetReadbackDigest": { "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "targetVersion": { "oneOf": [{ "type": "string", "minLength": 1, "maxLength": 120 }, { "type": "null" }] },
+        "observedAt": { "type": "string", "format": "date-time" },
+        "resultDigest": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

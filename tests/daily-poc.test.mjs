@@ -15,8 +15,8 @@ import test from "node:test";
 
 const ROOT = resolve(import.meta.dirname, "..");
 const CLI = join(ROOT, "scripts", "daily-poc.mjs");
-const EXAMPLE = join(ROOT, "examples", "daily-poc", "v0.2.0-poc.20260802.2", "manifest.json");
-const TARGET_VERSION = "v0.2.0-poc.20260802.2";
+const EXAMPLE = join(ROOT, "examples", "daily-poc", "v0.2.0-poc.20260802.3", "manifest.json");
+const TARGET_VERSION = "v0.2.0-poc.20260802.3";
 const MATRIX = JSON.parse(readFileSync(join(ROOT, "tests", "fixtures", "daily-poc", "negative-matrix.json"), "utf8"));
 
 function canonicalize(value) {
@@ -102,10 +102,11 @@ function fixture() {
       snapshotDigest: "0".repeat(64),
     });
   }
-  manifest.history[0].sourceHead = base;
-  const historyPayload = { ...manifest.history[0] };
+  const immediatePredecessor = manifest.history.at(-1);
+  immediatePredecessor.sourceHead = base;
+  const historyPayload = { ...immediatePredecessor };
   delete historyPayload.snapshotDigest;
-  manifest.history[0].snapshotDigest = sha256(canonicalJson(historyPayload));
+  immediatePredecessor.snapshotDigest = sha256(canonicalJson(historyPayload));
   for (const evidence of manifest.evidence) {
     evidence.sourceCommit = head;
     evidence.sha256 = sha256(readFileSync(join(source, evidence.path)));
@@ -317,16 +318,19 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
     assert.equal(manifestText.includes(stale), false, stale);
   }
   const v01References = strings({ ...manifest, history: [] }).filter((value) => /\bv0\.1(?:\.0)?\b/.test(value));
-  assert.ok(v01References.length > 0);
+  assert.equal(v01References.length, 0);
   for (const value of v01References) {
     assert.match(value, /\b(?:current public release|stable predecessor|historical predecessor)\b/i);
   }
   assert.equal(manifest.date, "2026-08-02");
-  assert.equal(manifest.targetVersion, "v0.2.0-poc.20260802.2");
+  assert.equal(manifest.targetVersion, "v0.2.0-poc.20260802.3");
   assert.equal(manifest.video.title, "ChimpMaera POC Daily — 2026-08-02");
   assert.deepEqual(
     manifest.history.map(({ date, version }) => ({ date, version })),
-    [{ date: "2026-08-02", version: "v0.2.0-poc.20260802.1" }],
+    [
+      { date: "2026-08-02", version: "v0.2.0-poc.20260802.1" },
+      { date: "2026-08-02", version: "v0.2.0-poc.20260802.2" },
+    ],
   );
 
   const fx = fixture();
@@ -343,7 +347,7 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
     }
   }
   const predecessorFiles = [...texts]
-    .filter(([, text]) => text.includes("v0.2.0-poc.20260802.1"))
+    .filter(([, text]) => text.includes("v0.2.0-poc.20260802.2"))
     .map(([name]) => name);
   assert.deepEqual(predecessorFiles, ["evidence-index.json"]);
   assert.equal(manifest.publication.youtubeUpload, false);
@@ -351,8 +355,8 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
   assert.equal(videoAdapter.invocationPolicy.publicationAvailable, false);
   assert.equal(videoAdapter.publicActions, "forbidden");
   assert.equal(JSON.parse(texts.get("candidate-report.json")).releaseTitle, "ChimpMaera POC Daily — 2026-08-02");
-  assert.equal(JSON.parse(texts.get("snapshot.json")).version, "v0.2.0-poc.20260802.2");
-  assert.equal(JSON.parse(texts.get("run-report.json")).candidateVersion, "v0.2.0-poc.20260802.2");
+  assert.equal(JSON.parse(texts.get("snapshot.json")).version, "v0.2.0-poc.20260802.3");
+  assert.equal(JSON.parse(texts.get("run-report.json")).candidateVersion, "v0.2.0-poc.20260802.3");
 });
 
 test("v0.1 public staging excludes repository-only daily pipeline surfaces", () => {

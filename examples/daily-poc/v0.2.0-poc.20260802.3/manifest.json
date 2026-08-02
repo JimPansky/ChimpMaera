@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "chimpmaera.daily-poc/v1",
+  "date": "2026-08-02",
+  "sequence": 3,
+  "source": {
+    "repository": "https://github.com/JimPansky/ChimpMaera.git",
+    "base": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+    "head": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+  },
+  "targetVersion": "v0.2.0-poc.20260802.3",
+  "history": [
+    {
+      "date": "2026-08-02",
+      "sequence": 1,
+      "version": "v0.2.0-poc.20260802.1",
+      "sourceHead": "fbc659257b3d2a39e0c5c7a65fac8d01d4a98b85",
+      "manifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+      "artifactManifestSha256": "5c0712f78271163ce0fb209a9ac6b76db7f27274f6c4971d24dbec4016722a2e",
+      "snapshotDigest": "923695de5610c9a7e77169bb933cc97afd8b4b6b6ecc3596bbd0297dc7856582"
+    },
+    {
+      "date": "2026-08-02",
+      "sequence": 2,
+      "version": "v0.2.0-poc.20260802.2",
+      "sourceHead": "990ce39d5e87ade8d0a7a9792672887d128f647e",
+      "manifestSha256": "a57b774f132cd739b4b38eed3bc49237aa28cf9b65372600631c84ec6c902b0f",
+      "artifactManifestSha256": "085325944a9f00573a2949860bb1d128552933ed11c61d9e5aa4d2187cf8cabe",
+      "snapshotDigest": "96d46c138799b21b245de8f23c33fc3aafdce639e46736aa283b1a5ac230fde5"
+    }
+  ],
+  "highlights": [
+    {
+      "id": "DATA-HIGHLIGHT-GOVERNED-COMPANY-DATA",
+      "title": "Governed canonical company data before any target action",
+      "description": "A digest-pinned synthetic Company Data Pack now validates closed schema and identity rules, a 90-node dependency graph with deterministic staged DAG, and append-oriented canonical-to-target mapping lineage without target authority or mutation.",
+      "commitIds": ["d2b9aa3e0f88dfdc81a8b8c3e30aa18fd295fa39", "a9fa2c676fa1c82af5c974a609e62d7b1d620c3b", "4a42315c15c66842760fc654394637b43451039b"],
+      "issueIds": ["DATA-001", "DATA-002", "DATA-003", "GH-24"],
+      "fileRefs": [
+        "demo/company-data/validate-company-data-pack.mjs",
+        "demo/company-data/validate-company-data-graph.mjs",
+        "demo/company-data/validate-mapping-registry.mjs",
+        "docs/COMPANY-DATA-VALIDATION.md"
+      ],
+      "caseIds": ["DATA-001", "DATA-002", "DATA-003"]
+    }
+  ],
+  "useCases": [
+    {
+      "id": "USE-CASE-GOVERNED-COMPANY-DATA",
+      "title": "Validate a synthetic company-data import plan before mutation",
+      "inputs": [
+        "A versioned synthetic Canonical Company Data Pack",
+        "Its digest-pinned 88-object catalog, 90-node dependency graph and source blueprint",
+        "A synthetic append-oriented Mapping Registry with exact target readbacks"
+      ],
+      "steps": [
+        "Validate the closed pack schema, forbidden fields, canonical and semantic identities and every pinned source digest.",
+        "Resolve graph references and cardinality, validate lifecycle/time/money/quantity/customer rules, classify six cycles and emit a deterministic 270-operation staged DAG.",
+        "Validate one active canonical-to-target binding per target/type/tenant, append digest lineage, provenance, exact readback and explicit stale/orphan/superseded/compensated states."
+      ],
+      "expectedOutcomes": [
+        "The coherent synthetic pack passes before any mutation is possible.",
+        "Missing prerequisites, illegal transitions, time travel, cross-customer assets and unclassified cycles fail closed.",
+        "404 targets, type or semantic-key drift, replay tampering, name-only reuse and second active mappings fail closed."
+      ],
+      "demoUtility": "Lets an operator inspect deterministic data-integrity and lineage receipts before a separately authorized target adapter is considered.",
+      "evidenceRefs": ["EVID-DATA-001", "EVID-DATA-002", "EVID-DATA-003"]
+    }
+  ],
+  "controls": [
+    {
+      "id": "CONTROL-DATA-VALIDATOR-ONLY",
+      "description": "All DATA receipts are validation-only, carry no authority and have mutation disabled.",
+      "default": true,
+      "allowedOverrides": [],
+      "dependencies": ["Closed local schema", "Synthetic-only source artifacts"]
+    },
+    {
+      "id": "CONTROL-DATA-DIGEST-BINDING",
+      "description": "Pack, catalog, graph, source blueprint, staged DAG and registry lineage are digest-bound and deterministically read back.",
+      "default": true,
+      "allowedOverrides": [],
+      "dependencies": ["SHA-256 source refs", "Append digest chain"]
+    },
+    {
+      "id": "CONTROL-DATA-FAIL-CLOSED",
+      "description": "Every named negative probe denies with zero mutation, zero authority and zero success claim.",
+      "default": true,
+      "allowedOverrides": [],
+      "dependencies": ["DATA-001 before DATA-002", "DATA-002 before DATA-003"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "EVID-DATA-001",
+      "kind": "SOURCE",
+      "path": "demo/company-data/validate-company-data-pack.mjs",
+      "sha256": "c1cdbfd235ffc3648a6aa439d3b06ac627d2b4807140ad44642c2446ef552919",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    },
+    {
+      "id": "EVID-DATA-002",
+      "kind": "SOURCE",
+      "path": "demo/company-data/validate-company-data-graph.mjs",
+      "sha256": "9c893f71387c68e3893e20e6d5c805a298eb1b9612cff9c1747e64c23457ddc2",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    },
+    {
+      "id": "EVID-DATA-003",
+      "kind": "SOURCE",
+      "path": "demo/company-data/validate-mapping-registry.mjs",
+      "sha256": "13f53ea29299a5297345d696992d9e0dcffa61f9dd72ef9e3f0a5b361735c78a",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    },
+    {
+      "id": "EVID-DATA-GUIDE",
+      "kind": "SOURCE",
+      "path": "docs/COMPANY-DATA-VALIDATION.md",
+      "sha256": "79b69d2cd72f62784d88b06bdf201cda91cd1679ec7cccf86a55800e5ce6a6b9",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    },
+    {
+      "id": "EVID-DATA-001-TEST",
+      "kind": "TEST",
+      "path": "tests/company-data-pack.test.mjs",
+      "sha256": "b1c6f1a3f8abc0605e49c9307c69ac255b337af1ec84b3bacd05a5612e972a46",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    },
+    {
+      "id": "EVID-DATA-002-TEST",
+      "kind": "TEST",
+      "path": "tests/company-data-graph.test.mjs",
+      "sha256": "3b326ea362a317096ce28573c824473ffeec8b65c760950636d0b038dfbb9cf8",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    },
+    {
+      "id": "EVID-DATA-003-TEST",
+      "kind": "TEST",
+      "path": "tests/mapping-registry.test.mjs",
+      "sha256": "48b8f150de6f711aefe946c0920a9981e32a9282592d3a0dfedecaaab6501827",
+      "maturity": "LOCALLY_VALIDATED",
+      "status": "PASS",
+      "observedOn": "2026-08-02",
+      "validUntil": "2026-09-01",
+      "sourceCommit": "38f88a0ba3fc3b46497905fc292ae8599db3e5af"
+    }
+  ],
+  "claims": [
+    {
+      "id": "CM-CLAIM-DATA-001-PACK",
+      "category": "FEATURE",
+      "statement": "The local synthetic Company Data Pack validator checks its closed schema, forbidden fields, canonical and semantic identity uniqueness, and exact catalog, graph and source-blueprint digests before any mutation.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": ["EVID-DATA-001", "EVID-DATA-001-TEST"],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-DATA-NO-ETL-MDM",
+          "statement": "This validator is not a generic ETL, MDM or workflow platform and is not an operational record of truth.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-DATA-002-GRAPH",
+      "category": "FEATURE",
+      "statement": "The local graph validator checks 90 nodes, 88/88 source coverage, 193 edges, references, cardinality, six classified cycles and state, time, money, quantity and customer rules, then emits a deterministic 270-operation staged DAG.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": ["EVID-DATA-002", "EVID-DATA-002-TEST"],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-DATA-NO-PROVIDER",
+          "statement": "Graph validation does not prove production-provider compatibility, target API behavior or permission to write a business database.",
+          "contradictsClaimIds": []
+        }
+      ]
+    },
+    {
+      "id": "CM-CLAIM-DATA-003-REGISTRY",
+      "category": "OPERATIONS",
+      "statement": "The local synthetic Mapping Registry validates exact canonical-to-target scope, one active binding, provenance, readback digests, append replay lineage and explicit stale, orphaned, superseded and compensated states.",
+      "maturity": "LOCALLY_VALIDATED",
+      "evidenceRefs": ["EVID-DATA-003", "EVID-DATA-003-TEST"],
+      "nonClaims": [
+        {
+          "id": "NONCLAIM-DATA-NO-TARGET-AUTHORITY",
+          "statement": "Registry validation grants no target authority, performs no target call and makes no statutory accounting, tax, banking, certified-EDI or production-DMS claim.",
+          "contradictsClaimIds": []
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "id": "TEST-DATA-FOCUSED",
+      "command": "npm run company-data:test",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-001", "EVID-DATA-002", "EVID-DATA-003"]
+    },
+    {
+      "id": "TEST-DATA-FULL",
+      "command": "npm test",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-001", "EVID-DATA-002", "EVID-DATA-003"]
+    },
+    {
+      "id": "TEST-DATA-SUPPLY-CHAIN",
+      "command": "npm run supply-chain:verify",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-GUIDE"]
+    },
+    {
+      "id": "TEST-DATA-DAILY-ADVERSARIAL",
+      "command": "npm run daily-poc:test",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-GUIDE"]
+    }
+  ],
+  "negativeProbes": [
+    {
+      "id": "PROBE-DATA-001-INPUT",
+      "command": "Reject unknown type, duplicate identity, credential/endpoint/SQL/script field and invalid source digest",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-001"]
+    },
+    {
+      "id": "PROBE-DATA-002-INTEGRITY",
+      "command": "Reject missing prerequisite, illegal transition, time travel, cross-customer asset and unclassified cycle",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-002"]
+    },
+    {
+      "id": "PROBE-DATA-003-LINEAGE",
+      "command": "Reject target 404, target type/key drift, tampered replay, name-only reuse and second active mapping",
+      "result": "PASS",
+      "evidenceRefs": ["EVID-DATA-003"]
+    }
+  ],
+  "reproductionCommands": [
+    "git diff --name-status 990ce39d5e87ade8d0a7a9792672887d128f647e..38f88a0ba3fc3b46497905fc292ae8599db3e5af",
+    "npm ci --ignore-scripts --no-audit --no-fund",
+    "npm run lint",
+    "npm run company-data:test",
+    "npm test",
+    "npm run daily-poc:test",
+    "npm run supply-chain:verify",
+    "node demo/company-data/validate-company-data-pack.mjs",
+    "node demo/company-data/validate-company-data-graph.mjs",
+    "node demo/company-data/validate-mapping-registry.mjs"
+  ],
+  "knownLimitations": [
+    "Local proof of concept with synthetic evidence only.",
+    "No target API call, direct business-database write or customer-system evidence is included.",
+    "No generic ETL, MDM, workflow or operational record-of-truth claim.",
+    "No production-provider compatibility, security certification or statutory accounting claim.",
+    "Registry signatures, complete provenance, current vulnerability status and complete licence clearance remain outside this repository-only proof."
+  ],
+  "externalGates": [
+    "Release publication requires the authorized protected-main workflow, required current CI and exact merged-byte verification.",
+    "Any real-system, production or customer mutation requires separate authorization and evidence.",
+    "YouTube upload and Reddit posting remain outside this release workflow."
+  ],
+  "video": {
+    "title": "ChimpMaera POC Daily — 2026-08-02",
+    "language": "en",
+    "description": "A planned evidence-bound explanation of local company-data validation. Rendering and upload remain disabled and are not release evidence.",
+    "renderDefault": false,
+    "rendererContract": "cm.video/v1",
+    "segments": [
+      {
+        "id": "VIDEO-SEGMENT-DATA-PACK-GRAPH",
+        "order": 1,
+        "durationSeconds": 16,
+        "title": "Validate before mutation",
+        "purpose": "Explain digest-pinned pack validation and the staged dependency graph.",
+        "narration": "ChimpMaera validates the synthetic company pack, every source digest and identity, then checks references, business rules and six classified cycles before it emits a staged plan. The validator carries no authority and performs no target action.",
+        "visuals": ["Show pack to graph to 270-operation staged DAG.", "Show zero mutation and validation-only receipt fields."],
+        "claimRefs": ["CM-CLAIM-DATA-001-PACK", "CM-CLAIM-DATA-002-GRAPH"],
+        "useCaseRefs": ["USE-CASE-GOVERNED-COMPANY-DATA"]
+      },
+      {
+        "id": "VIDEO-SEGMENT-DATA-LINEAGE",
+        "order": 2,
+        "durationSeconds": 14,
+        "title": "Exact lineage, never name-only reuse",
+        "purpose": "Explain append-oriented target binding and fail-closed drift states.",
+        "narration": "Canonical-to-target reuse requires the exact tenant, type, generated ID, semantic key and readback digest. Missing or drifted targets become explicit orphaned or stale evidence. Historical lineage is appended, never silently overwritten.",
+        "visuals": ["Show one active binding and explicit stale, orphaned, superseded and compensated states.", "Show 404, drift and replay denials."],
+        "claimRefs": ["CM-CLAIM-DATA-003-REGISTRY"],
+        "useCaseRefs": ["USE-CASE-GOVERNED-COMPANY-DATA"]
+      }
+    ],
+    "assets": [
+      {
+        "id": "VIDEO-ASSET-DATA-SHOTS",
+        "role": "SHOT",
+        "status": "PLANNED",
+        "segmentRef": "VIDEO-SEGMENT-DATA-PACK-GRAPH",
+        "path": null,
+        "sha256": null
+      },
+      {
+        "id": "VIDEO-ASSET-DATA-NARRATION",
+        "role": "AUDIO",
+        "status": "PLANNED",
+        "segmentRef": null,
+        "path": null,
+        "sha256": null
+      }
+    ],
+    "prerequisites": [
+      "Every public-copy byte must pass the named hash-bound English review before rendering.",
+      "Every shot and narration asset must be accepted and hash-locked before rendering.",
+      "Publication remains unavailable from the video adapter.",
+      "YouTube upload requires separate authorization."
+    ]
+  },
+  "publication": {
+    "githubPrerelease": false,
+    "youtubeUpload": false,
+    "readmeMutation": false,
+    "approvals": ["OWNER_AUTHORIZED_GITHUB_RELEASE_WORKFLOW_2026-08-02"]
+  }
+}
