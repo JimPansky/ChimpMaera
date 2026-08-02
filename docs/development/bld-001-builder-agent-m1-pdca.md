@@ -6,7 +6,7 @@ Delivery status: `in_progress`
 Claim status: `NOT_PROVEN`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
-Current metric: **5/8**
+Current metric: **6/8**
 
 ## Local issue contract
 
@@ -103,8 +103,8 @@ evidence. The decision matrix is not an executable authority token.
 
 ## Autonomy gate
 
-- **Exact phase/metric:** BLD-001 Builder Agent M1, **5/8 → 8/8**; G1 through
-  G5 are complete and the next bounded slice targets G6 only.
+- **Exact phase/metric:** BLD-001 Builder Agent M1, **6/8 → 8/8**; G1 through
+  G6 are complete and the next bounded slice targets G7 only.
 - **Autonomously reachable:** contracts, synthetic fixtures, tests, docs,
   isolated later runtime fixtures and local evidence require no external data
   or mutation.
@@ -113,7 +113,7 @@ evidence. The decision matrix is not an executable authority token.
 - **External/publication dependent:** push, PR, merge, tag, release, upload,
   outreach, production/customer evidence and mutation.
 - **Completed metric rule:** all prerequisite video/architecture gates and
-  AAS dependencies plus BLD-001-G1/G2/G3/G4/G5 are complete and are not
+  AAS dependencies plus BLD-001-G1/G2/G3/G4/G5/G6 are complete and are not
   repeated without regression evidence.
 
 ## Reversible decisions
@@ -162,49 +162,62 @@ evidence. The decision matrix is not an executable authority token.
   keep unresolved and Owner-route-only operations unexecuted, and preserve the
   `NOT_RELEASED` evidence boundary. **Review:** G6 must use a fresh default-off
   isolated runtime with an actually admitted reversible-write capability.
+- **Assumption:** G6 may bind the same generic Builder request tool to a fresh
+  fixture-only admitted reversible-write descriptor and a digest-bound
+  synthetic Owner approval while keeping the Agent untrusted. **Risk:** a
+  fixture contract could drift from the effective-rights intersection, hide a
+  durable target mutation or be mistaken for live compatibility evidence.
+  **Fallback:** validate the rights intersection, admission and approval
+  digests at Gateway startup; restore the persisted prior value in `finally`,
+  require matching final/before digests, semantic reset and ownership-scoped
+  purge; revert `4a50303` on any mismatch. **Review:** G7 must reuse the same
+  generic tool/core for a second system and exercise the full adversarial
+  conformance matrix.
 
 ## PDCA status
 
 ### Plan
 
-Keep the full 8/8 contract frozen. G1 through G4 remain closed. Bind the exact
-G4 Plan into one deterministic G5 quality workflow that runs focused checks,
-negative enforcement, synthetic readback/reconciliation and four independent
-Owner-configured lifecycle routes, then emits an honest evidence package.
+Keep the full 8/8 contract frozen and G1 through G5 closed. Build one fresh,
+default-off and ownership-scoped OpenClaw fixture that consumes generic Builder
+contracts, admits exactly one read and one reversible write for an unknown
+synthetic target, and proves Gateway/Broker receipts, persisted readback,
+rollback, semantic reset and zero owned residue.
 
 ### Do
 
-G1 through G4 remain closed. Implemented one generic G5 TypeScript quality and
-evidence workflow plus public result JSON Schema. Every observation binds the
-exact Plan, contract and capability digests. Reused reads require matching
-no-change readback and receipt evidence; reversible writes require a changed
-state plus rollback to the exact prior digest; unresolved capabilities remain
-explicit non-success with no evidence-shaped success fields. Installation,
-activation, mutation and publication each receive their own route decision and
-digest—there is no aggregate approval. The emitted evidence package stays
-synthetic, `locally_validated` and `NOT_RELEASED`.
+G1 through G5 remain closed. Added one pinned OpenClaw 2026.7.1 Builder profile,
+one closed internal network, one generic Builder tool and one Gateway/Broker
+with a synthetic habitat target. The Gateway recomputes the Owner-sovereignty
+intersection, fixture admission and Owner-approval digests at startup. The
+OpenClaw Agent completed the admitted no-change temperature read and the
+Owner-routed set-point write. The write was persisted, read back and restored
+to the exact prior digest in a `finally` recovery boundary. Reset and purge are
+idempotent and limited to resources carrying the G6 ownership label.
 
 ### Check
 
-- Focused BLD-001-G5 tests: **6/6 PASS**.
-- Complete repository tests: **183/183 PASS in split source-boundary runs**.
-  The 178 non-source-boundary tests ran with the matching existing dependency
+- Focused BLD-001-G6 tests: **6/6 PASS**.
+- Complete repository tests: **189/189 PASS in split source-boundary runs**.
+  The 184 non-source-boundary tests ran with the matching existing dependency
   tree; after removing that temporary untracked symlink, all five clean
   source-tree/supply-chain/public-staging tests passed separately.
-- Repository checksums: **247/247 PASS**.
+- Repository checksums: **269/269 PASS**.
 - Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
   PASS.
-- Video/OpenClaw/Docker smoke: not run because no video, container, plugin,
-  Gateway, Broker or runtime byte changed. The one full isolated Builder smoke
-  remains assigned to G6 and will consume the now-frozen G5 evidence contract.
+- Real isolated OpenClaw smoke:
+  `bld001-g6-20260802T071108Z` **PASS in 30,972 ms**. It recorded four model
+  calls, one read, one reversible write, seven denials, two bound receipts,
+  unchanged Owner process/config fingerprint, exact target rollback, reset to
+  zero counters/receipts and zero owned runtime residue.
 - Implementation commit:
-  `6a03d708a529bda98730081be626eb55bc155171`.
-- Evidence: `docs/development/evidence/bld-001-g5-20260802.json`.
+  `4a50303b4d65df7c046834135884fed45b25af7a`.
+- Evidence: `docs/development/evidence/bld-001-g6-20260802.json`.
 
 ### Act
 
-Close G5 at **5/8** with verdict
-`LOCAL_BLD_001_G5_PASS_SYNTHETIC_QUALITY_EVIDENCE_PREPARATION_REQUIRED_NO_INSTALLATION_ACTIVATION_MUTATION_PUBLICATION_PRODUCTION_OR_RELEASE_CLAIM`.
-Do not reopen G1 through G5 without regression evidence. Keep WIP at one and
-advance the same worktree to G6 fresh default-off isolated OpenClaw read and
-reversible-write E2E.
+Close G6 at **6/8** with verdict
+`LOCAL_BLD_001_G6_PASS_REAL_ISOLATED_OPENCLAW_SYNTHETIC_READ_REVERSIBLE_WRITE_ROLLBACK_ZERO_OWNED_RESIDUE_NOT_PRODUCTION_OR_RELEASED`.
+Do not reopen G1 through G6 without regression evidence. Keep WIP at one and
+advance the same worktree to G7 second-system reuse and adversarial conformance
+without changing the generic Builder core.
