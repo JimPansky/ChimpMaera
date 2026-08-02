@@ -1,0 +1,3571 @@
+{
+  "schemaVersion": "chimpmaera.company-data-pack/v1",
+  "packId": "cm-company-integrity-v1",
+  "packVersion": "2026.08.01.1",
+  "catalogRef": {
+    "path": "examples/company-data/erp-crm-demo-data-object-catalog.json",
+    "sha256": "sha256:dcb96e1af7acae17c5ac9671810c25d0bb44c9ae7cbff1f0348c2045887f1606"
+  },
+  "graphRef": {
+    "path": "examples/company-data/erp-crm-object-dependency-graph.json",
+    "sha256": "sha256:5db9c0c4765ddfb3023730dadee98e52357a1e131cd1e208fd32f78df324329d"
+  },
+  "fixedClock": "2026-10-10T12:00:00Z",
+  "mode": "SYNTHETIC_DEMO",
+  "company": {
+    "legalEntityId": "cm:organization:org-legal-entity-demo-001",
+    "baseCurrencyId": "cm:organization:org-currency-demo-001",
+    "timezone": "Europe/Paris"
+  },
+  "policies": {
+    "idPolicy": "CANONICAL_IDS_SEPARATE_FROM_TARGET_IDS",
+    "targetWritePolicy": "OFFICIAL_API_OR_APPLICATION_SERVICE_ONLY",
+    "historyPolicy": "MIXED_PER_TYPE",
+    "piiPolicy": {
+      "purpose": "Local synthetic ERP CRM process-integrity demonstration",
+      "processing": "LOCAL_ONLY",
+      "minimization": true,
+      "retentionDays": 90,
+      "exportMode": "SYNTHETIC_ONLY",
+      "deletionMode": "TOMBSTONE_AND_COMPENSATE"
+    },
+    "replacementPolicy": "EXPLICIT_IMPACT_PLAN_NO_CASCADE",
+    "mappingRegistryPolicy": "TARGET_IDS_AND_PROVENANCE_OUTSIDE_PACK_IN_RECEIPTS"
+  },
+  "sourceBundles": [
+    {
+      "bundleId": "synthetic-blueprint-v1",
+      "sourceKind": "SYNTHETIC_GENERATOR_OUTPUT",
+      "sourceName": "Seed blueprint anchors (99 records; 139 planned full-profile volume)",
+      "contentDigest": "sha256:030f03dba5939ded1e9c0292fcf09b8ea1d53d3c215f90975d91403096d4af83",
+      "containsRealData": false,
+      "stagingFormat": {
+        "encoding": "UTF-8",
+        "delimiter": "NOT_APPLICABLE",
+        "recordSets": [
+          "anchor-records",
+          "analysis-extensions"
+        ]
+      }
+    }
+  ],
+  "mappingProfiles": [
+    {
+      "mappingProfileId": "blueprint-approved-v1",
+      "sourceBundleId": "synthetic-blueprint-v1",
+      "profileVersion": 1,
+      "status": "APPROVED",
+      "decisions": [
+        {
+          "decisionId": "identity-map",
+          "recordSet": "anchor-records",
+          "sourcePath": "id",
+          "targetObjectType": "ORG-LEGAL-ENTITY",
+          "targetField": "legalName",
+          "transform": "IDENTITY",
+          "nullPolicy": "REJECT",
+          "approved": true,
+          "decisionDigest": "sha256:34c6c99abdb07a69f0fecbf46d5fa2a0ca81ec9705ffb602609335b1b505f53a",
+          "aiSuggestion": {
+            "suggested": false,
+            "confidence": 1,
+            "rationale": "Deterministic reviewed mapping."
+          }
+        },
+        {
+          "decisionId": "date-map",
+          "recordSet": "anchor-records",
+          "sourcePath": "values.orderDate",
+          "targetObjectType": "SALES-ORDER",
+          "targetField": "orderDate",
+          "transform": "ISO_DATE",
+          "nullPolicy": "REJECT",
+          "approved": true,
+          "decisionDigest": "sha256:b08c9a4046b0f8d547057e23acd0dd85062d2019f188d43b3400c934b4efae23",
+          "aiSuggestion": {
+            "suggested": false,
+            "confidence": 1,
+            "rationale": "Deterministic reviewed mapping."
+          }
+        },
+        {
+          "decisionId": "decimal-map",
+          "recordSet": "anchor-records",
+          "sourcePath": "values.totalNet",
+          "targetObjectType": "SALES-ORDER",
+          "targetField": "totalNet",
+          "transform": "DECIMAL_STRING",
+          "nullPolicy": "REJECT",
+          "approved": true,
+          "decisionDigest": "sha256:d3fb4aa6d69f08455be84439ef6242731bf13f74f63d69e831f940ee4941a8cb",
+          "aiSuggestion": {
+            "suggested": false,
+            "confidence": 1,
+            "rationale": "Deterministic reviewed mapping."
+          }
+        },
+        {
+          "decisionId": "reference-map",
+          "recordSet": "anchor-records",
+          "sourcePath": "refs.customerId",
+          "targetObjectType": "SALES-ORDER",
+          "targetField": "customerId",
+          "transform": "LOOKUP_SEMANTIC_KEY",
+          "nullPolicy": "REJECT",
+          "approved": true,
+          "decisionDigest": "sha256:820022d37173b30edd362788bc055fc91c18a0db3497a723cd763fbe072b05fe",
+          "aiSuggestion": {
+            "suggested": false,
+            "confidence": 1,
+            "rationale": "Deterministic reviewed mapping."
+          }
+        }
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "canonicalId": "cm:organization:org-legal-entity-demo-001",
+      "objectType": "ORG-LEGAL-ENTITY",
+      "semanticKey": {
+        "legalName": "Monkis Zoo Enterprises"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "legalName": "Monkis Zoo Enterprises",
+        "countryCode": "FR",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "baseCurrencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-LEGAL-ENTITY-DEMO-001",
+        "recordDigest": "sha256:69a259d4f3e3dcc36b1190ed1f7d691b8dd264104a667f7a5774de505ec5abe5",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-LEGAL-ENTITY:cm:organization:org-legal-entity-demo-001:ENSURE:001",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-currency-demo-001",
+      "objectType": "ORG-CURRENCY",
+      "semanticKey": {
+        "isoCode": "EUR"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "isoCode": "EUR",
+        "decimals": 2,
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-CURRENCY-DEMO-001",
+        "recordDigest": "sha256:a855d198a7c37ea076b7f65752b43314817a851338fd8973e043098bce2fc73c",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-CURRENCY:cm:organization:org-currency-demo-001:ENSURE:002",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-currency-demo-002",
+      "objectType": "ORG-CURRENCY",
+      "semanticKey": {
+        "isoCode": "USD"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "isoCode": "USD",
+        "decimals": 2,
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-CURRENCY-DEMO-002",
+        "recordDigest": "sha256:7b5c805973d59c97f5dff3d4c0adccde4dd8c6cd06d356695f1d970d3ce6d39b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-CURRENCY:cm:organization:org-currency-demo-002:ENSURE:003",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-site-demo-001",
+      "objectType": "ORG-SITE",
+      "semanticKey": {
+        "siteCode": "ENS-HQ"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "siteCode": "ENS-HQ",
+        "name": "Ensdenton Office & Workshop",
+        "city": "Ensdenton",
+        "countryCode": "FR",
+        "timezone": "Europe/Paris",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "entityId": "cm:organization:org-legal-entity-demo-001"
+      },
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-SITE-DEMO-001",
+        "recordDigest": "sha256:826c812f46fd1e97e4fc7c19148e575ec2ecdb4138b84f309cdca8ffb98704e3",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-SITE:cm:organization:org-site-demo-001:ENSURE:004",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-site-demo-002",
+      "objectType": "ORG-SITE",
+      "semanticKey": {
+        "siteCode": "ENS-WH"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "siteCode": "ENS-WH",
+        "name": "Ensdenton Warehouse",
+        "city": "Ensdenton",
+        "countryCode": "FR",
+        "timezone": "Europe/Paris",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "entityId": "cm:organization:org-legal-entity-demo-001"
+      },
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-SITE-DEMO-002",
+        "recordDigest": "sha256:6a60c5a982dd94cfa080342106abae497ad79b26e0cb1b67930d34265d6b4176",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-SITE:cm:organization:org-site-demo-002:ENSURE:005",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-org-unit-demo-001",
+      "objectType": "ORG-ORG-UNIT",
+      "semanticKey": {
+        "orgUnitCode": "EXEC"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "orgUnitCode": "EXEC",
+        "name": "Management",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "entityId": "cm:organization:org-legal-entity-demo-001",
+        "managerEmployeeId": "cm:identity:iam-employee-demo-001"
+      },
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-ORG-UNIT-DEMO-001",
+        "recordDigest": "sha256:9a870584a52518bdbf12d7edd4713fc2762cb0ae6b600c943a67ac8b0a07f2ee",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-ORG-UNIT:cm:organization:org-org-unit-demo-001:ENSURE:006",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-org-unit-demo-002",
+      "objectType": "ORG-ORG-UNIT",
+      "semanticKey": {
+        "orgUnitCode": "SALES"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "orgUnitCode": "SALES",
+        "name": "Sales",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "entityId": "cm:organization:org-legal-entity-demo-001",
+        "managerEmployeeId": "cm:identity:iam-employee-demo-002"
+      },
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-ORG-UNIT-DEMO-002",
+        "recordDigest": "sha256:89f188398431347f56c6fbd4b7b775befcbd6814e3c98cf1ad1a376594d2370a",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-ORG-UNIT:cm:organization:org-org-unit-demo-002:ENSURE:007",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-tax-code-demo-001",
+      "objectType": "ORG-TAX-CODE",
+      "semanticKey": {
+        "code": "DEMO-STD"
+      },
+      "state": "DRAFT",
+      "effectiveAt": "2026-01-01T12:00:00Z",
+      "values": {
+        "code": "DEMO-STD",
+        "rate": "20.00",
+        "validFrom": "2026-01-01",
+        "demoOnly": true
+      },
+      "references": {},
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-TAX-CODE-DEMO-001",
+        "recordDigest": "sha256:dd8846f28845cc61a2af715d82d7030ff9fd565ddcdecf62825271ae9c5227eb",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-TAX-CODE:cm:organization:org-tax-code-demo-001:ENSURE:008",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-payment-term-demo-001",
+      "objectType": "ORG-PAYMENT-TERM",
+      "semanticKey": {
+        "code": "NET30"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "NET30",
+        "dueDays": 30,
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-PAYMENT-TERM-DEMO-001",
+        "recordDigest": "sha256:b1be1f3dc690e103dcbcf50a967db72df0387e3364a83fd1ba0da813ffeb5b1d",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-PAYMENT-TERM:cm:organization:org-payment-term-demo-001:ENSURE:009",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-number-sequence-demo-001",
+      "objectType": "ORG-NUMBER-SEQUENCE",
+      "semanticKey": {
+        "documentType": "SALES_ORDER"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "documentType": "SALES_ORDER",
+        "prefix": "SO-2026-",
+        "nextNumber": 1001,
+        "resetPolicy": "DATASET_ONLY"
+      },
+      "references": {},
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-NUMBER-SEQUENCE-DEMO-001",
+        "recordDigest": "sha256:45dfd01cdb8ae0d15d57bbeae996f862595634913ae04a25a2664df8ce892ed3",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-NUMBER-SEQUENCE:cm:organization:org-number-sequence-demo-001:ENSURE:010",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:organization:org-business-calendar-demo-001",
+      "objectType": "ORG-BUSINESS-CALENDAR",
+      "semanticKey": {
+        "sourceRecordId": "ORG-BUSINESS-CALENDAR-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "timezone": "Europe/Paris",
+        "workDays": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "holidays": [],
+        "status": "ACTIVE"
+      },
+      "references": {
+        "siteId": "cm:organization:org-site-demo-001"
+      },
+      "dataClass": "INTERNAL_MASTER",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "ORG-BUSINESS-CALENDAR-DEMO-001",
+        "recordDigest": "sha256:1a2563207573c7cf7ea6d86f42ed044e82ee252f30b376fa3a26807166e3715e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "ORG-BUSINESS-CALENDAR:cm:organization:org-business-calendar-demo-001:ENSURE:011",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-employee-demo-001",
+      "objectType": "IAM-EMPLOYEE",
+      "semanticKey": {
+        "employeeNumber": "EMP-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "employeeNumber": "EMP-001",
+        "displayName": "Sarah Monki",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "orgUnitId": "cm:organization:org-org-unit-demo-001",
+        "siteId": "cm:organization:org-site-demo-001"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-EMPLOYEE-DEMO-001",
+        "recordDigest": "sha256:147b2e5c433aa7789c0ef211d957652075dae6dadbc5eaecbe458fd822cdae9e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-EMPLOYEE:cm:identity:iam-employee-demo-001:ENSURE:012",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-employee-demo-002",
+      "objectType": "IAM-EMPLOYEE",
+      "semanticKey": {
+        "employeeNumber": "EMP-002"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "employeeNumber": "EMP-002",
+        "displayName": "Thomas",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "orgUnitId": "cm:organization:org-org-unit-demo-002",
+        "siteId": "cm:organization:org-site-demo-001",
+        "managerEmployeeId": "cm:identity:iam-employee-demo-001"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-EMPLOYEE-DEMO-002",
+        "recordDigest": "sha256:b58c26d301feec0d3259e24ac24edd733032c4c7fd9ea4b04a1a865b19250348",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-EMPLOYEE:cm:identity:iam-employee-demo-002:ENSURE:013",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-employee-demo-003",
+      "objectType": "IAM-EMPLOYEE",
+      "semanticKey": {
+        "employeeNumber": "EMP-003"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "employeeNumber": "EMP-003",
+        "displayName": "Hotze Field",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "orgUnitId": "cm:organization:org-org-unit-demo-001",
+        "siteId": "cm:organization:org-site-demo-001",
+        "managerEmployeeId": "cm:identity:iam-employee-demo-001"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-EMPLOYEE-DEMO-003",
+        "recordDigest": "sha256:4cf1589c6387724c94085813fb7f34e67892b46ec9390c5ab0cb862dc7019ca8",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-EMPLOYEE:cm:identity:iam-employee-demo-003:ENSURE:014",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-user-demo-001",
+      "objectType": "IAM-USER",
+      "semanticKey": {
+        "login": "sarah.monki"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "login": "sarah.monki",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "employeeId": "cm:identity:iam-employee-demo-001"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-USER-DEMO-001",
+        "recordDigest": "sha256:16ee50f43c34e488b3f412f823ad994179f13d34682c18adfda4ad81cbb6b8b3",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-USER:cm:identity:iam-user-demo-001:ENSURE:015",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-user-demo-002",
+      "objectType": "IAM-USER",
+      "semanticKey": {
+        "login": "thomas.sales"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "login": "thomas.sales",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "employeeId": "cm:identity:iam-employee-demo-002"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-USER-DEMO-002",
+        "recordDigest": "sha256:0f26fcdc9241707745f281460eb04bf0e8c90c4f536e63f0ef2080959678568e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-USER:cm:identity:iam-user-demo-002:ENSURE:016",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-user-demo-003",
+      "objectType": "IAM-USER",
+      "semanticKey": {
+        "login": "hotze.field"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "login": "hotze.field",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "employeeId": "cm:identity:iam-employee-demo-003"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-USER-DEMO-003",
+        "recordDigest": "sha256:212f139c70538284ce12cb2a2f4ad709893b4d78865ecd8962fe5940ea65049a",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-USER:cm:identity:iam-user-demo-003:ENSURE:017",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-team-demo-001",
+      "objectType": "IAM-TEAM",
+      "semanticKey": {
+        "teamCode": "SALES"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "teamCode": "SALES",
+        "name": "Sales",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "orgUnitId": "cm:organization:org-org-unit-demo-002"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-TEAM-DEMO-001",
+        "recordDigest": "sha256:c1e0e8bde41ecf89a90945ce9a6338b1bcfb5aae80b3c85c0efd94bfb6c882a9",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-TEAM:cm:identity:iam-team-demo-001:ENSURE:018",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-role-demo-001",
+      "objectType": "IAM-ROLE",
+      "semanticKey": {
+        "sourceRecordId": "IAM-ROLE-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Managing Director",
+        "capabilities": [
+          "business.approve",
+          "dashboard.executive.read"
+        ],
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-ROLE-DEMO-001",
+        "recordDigest": "sha256:74b93ee97bca9fde8865611acd4738e1ea9b1d8aaf33ed3725c105044aaa5c42",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-ROLE:cm:identity:iam-role-demo-001:ENSURE:019",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-role-demo-002",
+      "objectType": "IAM-ROLE",
+      "semanticKey": {
+        "sourceRecordId": "IAM-ROLE-DEMO-002"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Head of Sales",
+        "capabilities": [
+          "crm.manage",
+          "quote.create"
+        ],
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-ROLE-DEMO-002",
+        "recordDigest": "sha256:4802bfa94605d6ff85846f2f7efa274794fd0a4120689e3b7a2ac5a24f80662a",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-ROLE:cm:identity:iam-role-demo-002:ENSURE:020",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-role-demo-003",
+      "objectType": "IAM-ROLE",
+      "semanticKey": {
+        "sourceRecordId": "IAM-ROLE-DEMO-003"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Caretaker",
+        "capabilities": [
+          "maintenance.assigned.read",
+          "maintenance.assigned.update"
+        ],
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-ROLE-DEMO-003",
+        "recordDigest": "sha256:e583383624f91876beacd5f70850ce4bc0d29bf074489c80a077a64b06666c32",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-ROLE:cm:identity:iam-role-demo-003:ENSURE:021",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-role-assignment-demo-001",
+      "objectType": "IAM-ROLE-ASSIGNMENT",
+      "semanticKey": {
+        "sourceRecordId": "IAM-ROLE-ASSIGNMENT-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T12:00:00Z",
+      "values": {
+        "scope": "ORG:EXEC",
+        "validFrom": "2026-08-01",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "userId": "cm:identity:iam-user-demo-001",
+        "roleId": "cm:identity:iam-role-demo-001"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-ROLE-ASSIGNMENT-DEMO-001",
+        "recordDigest": "sha256:dbabbbfcffbaecb86034b535eec2280e0e07f4723c4c51b798cdac030f05a311",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-ROLE-ASSIGNMENT:cm:identity:iam-role-assignment-demo-001:ENSURE:022",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-role-assignment-demo-002",
+      "objectType": "IAM-ROLE-ASSIGNMENT",
+      "semanticKey": {
+        "sourceRecordId": "IAM-ROLE-ASSIGNMENT-DEMO-002"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T12:00:00Z",
+      "values": {
+        "scope": "ORG:SALES",
+        "validFrom": "2026-08-01",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "userId": "cm:identity:iam-user-demo-002",
+        "roleId": "cm:identity:iam-role-demo-002"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-ROLE-ASSIGNMENT-DEMO-002",
+        "recordDigest": "sha256:316ecfb3993b6cf739e9609b6899b15fca521d354320ffc7e2cfea261d78ec67",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-ROLE-ASSIGNMENT:cm:identity:iam-role-assignment-demo-002:ENSURE:023",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-role-assignment-demo-003",
+      "objectType": "IAM-ROLE-ASSIGNMENT",
+      "semanticKey": {
+        "sourceRecordId": "IAM-ROLE-ASSIGNMENT-DEMO-003"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T12:00:00Z",
+      "values": {
+        "scope": "ASSIGNED_WORK_ORDERS_ONLY",
+        "validFrom": "2026-08-01",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "userId": "cm:identity:iam-user-demo-003",
+        "roleId": "cm:identity:iam-role-demo-003"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-ROLE-ASSIGNMENT-DEMO-003",
+        "recordDigest": "sha256:4f2897d888018a9f81278c3cf71f39c2c09900f8464800dfea1cb260053de4f2",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-ROLE-ASSIGNMENT:cm:identity:iam-role-assignment-demo-003:ENSURE:024",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:identity:iam-approval-demo-001",
+      "objectType": "IAM-APPROVAL",
+      "semanticKey": {
+        "sourceRecordId": "IAM-APPROVAL-DEMO-001"
+      },
+      "state": "PENDING",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "objectType": "SALES-QUOTATION",
+        "decision": "APPROVED",
+        "reason": "Synthetic threshold approval",
+        "decidedAt": "2026-08-03T10:00:00Z"
+      },
+      "references": {
+        "objectId": "cm:sales:sales-quotation-demo-001",
+        "requesterUserId": "cm:identity:iam-user-demo-002",
+        "approverUserId": "cm:identity:iam-user-demo-001"
+      },
+      "dataClass": "IDENTITY_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "IAM-APPROVAL-DEMO-001",
+        "recordDigest": "sha256:a5d80bcccc83438d7464e6fa48e1bb57247b67e27493b575d6abbf3b32325aa7",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "IAM-APPROVAL:cm:identity:iam-approval-demo-001:ENSURE:025",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:crm:crm-pipeline-stage-demo-001",
+      "objectType": "CRM-PIPELINE-STAGE",
+      "semanticKey": {
+        "code": "QUALIFIED"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "QUALIFIED",
+        "name": "Qualified",
+        "order": 3,
+        "probability": "0.40",
+        "terminal": false
+      },
+      "references": {},
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "CRM-PIPELINE-STAGE-DEMO-001",
+        "recordDigest": "sha256:44e5e282648c56928cac85adc7377eea84099acb53f30e26743e6e26a12cedd1",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "CRM-PIPELINE-STAGE:cm:crm:crm-pipeline-stage-demo-001:ENSURE:026",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:crm:crm-lead-demo-001",
+      "objectType": "CRM-LEAD",
+      "semanticKey": {
+        "sourceRecordId": "CRM-LEAD-DEMO-001"
+      },
+      "state": "QUALIFIED",
+      "effectiveAt": "2026-08-03T08:00:00Z",
+      "values": {
+        "companyName": "Reinhard’s Gardening Enterprises",
+        "source": "WEB_DEMO",
+        "status": "QUALIFIED",
+        "createdAt": "2026-08-03T08:00:00Z"
+      },
+      "references": {
+        "ownerUserId": "cm:identity:iam-user-demo-002"
+      },
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "CRM-LEAD-DEMO-001",
+        "recordDigest": "sha256:944be2300571b982432519b525d43d091eb432be9080b3430f3fb3698a747476",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "CRM-LEAD:cm:crm:crm-lead-demo-001:ENSURE:027",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:crm:crm-account-demo-001",
+      "objectType": "CRM-ACCOUNT",
+      "semanticKey": {
+        "sourceRecordId": "CRM-ACCOUNT-DEMO-001"
+      },
+      "state": "ACTIVE_CUSTOMER",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Reinhard’s Gardening Enterprises",
+        "segment": "LANDSCAPING_B2B",
+        "status": "ACTIVE_CUSTOMER"
+      },
+      "references": {
+        "ownerUserId": "cm:identity:iam-user-demo-002",
+        "erpCustomerId": "cm:sales:sales-customer-demo-001"
+      },
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "CRM-ACCOUNT-DEMO-001",
+        "recordDigest": "sha256:d7a65a6560cb04c708e46b9a338d6b5f91dffaa9c6aa76030048cd7c8ae6e835",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "CRM-ACCOUNT:cm:crm:crm-account-demo-001:ENSURE:028",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:crm:crm-contact-demo-001",
+      "objectType": "CRM-CONTACT",
+      "semanticKey": {
+        "sourceRecordId": "CRM-CONTACT-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "displayName": "Robin Reed",
+        "role": "Operations Contact",
+        "email": "robin.reed@reinhards-gardening.example",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "accountId": "cm:crm:crm-account-demo-001"
+      },
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "CRM-CONTACT-DEMO-001",
+        "recordDigest": "sha256:95b97fa2db948280f07403821426a96c3dfc75d0c539229985ec4485be250b77",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "CRM-CONTACT:cm:crm:crm-contact-demo-001:ENSURE:029",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:crm:crm-opportunity-demo-001",
+      "objectType": "CRM-OPPORTUNITY",
+      "semanticKey": {
+        "sourceRecordId": "CRM-OPPORTUNITY-DEMO-001"
+      },
+      "state": "WON",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Wildlife-park habitat renewal",
+        "amount": "42000.00",
+        "closeDate": "2026-09-30",
+        "status": "WON"
+      },
+      "references": {
+        "accountId": "cm:crm:crm-account-demo-001",
+        "stageId": "cm:crm:crm-pipeline-stage-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001",
+        "ownerUserId": "cm:identity:iam-user-demo-002"
+      },
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "CRM-OPPORTUNITY-DEMO-001",
+        "recordDigest": "sha256:11d024cfd582f21f30b2c3e8438b91bd7049a34915b23f0ddd94e22e2b0a1b0e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "CRM-OPPORTUNITY:cm:crm:crm-opportunity-demo-001:ENSURE:030",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:crm:crm-activity-demo-001",
+      "objectType": "CRM-ACTIVITY",
+      "semanticKey": {
+        "sourceRecordId": "CRM-ACTIVITY-DEMO-001"
+      },
+      "state": "OVERDUE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "type": "CALL",
+        "subject": "Confirm habitat measurements",
+        "dueAt": "2026-08-02T10:00:00Z",
+        "status": "OVERDUE"
+      },
+      "references": {
+        "accountId": "cm:crm:crm-account-demo-001",
+        "contactId": "cm:crm:crm-contact-demo-001",
+        "opportunityId": "cm:crm:crm-opportunity-demo-001",
+        "ownerUserId": "cm:identity:iam-user-demo-002"
+      },
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "CRM-ACTIVITY-DEMO-001",
+        "recordDigest": "sha256:59494cf6845cdc5afa2b730b8f5ca56ab19e419c9460a14a1ff3dccc3f24b890",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "CRM-ACTIVITY:cm:crm:crm-activity-demo-001:ENSURE:031",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-customer-demo-001",
+      "objectType": "SALES-CUSTOMER",
+      "semanticKey": {
+        "customerNumber": "CUST-1001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "customerNumber": "CUST-1001",
+        "name": "Reinhard’s Gardening Enterprises",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "accountId": "cm:crm:crm-account-demo-001",
+        "paymentTermId": "cm:organization:org-payment-term-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-CUSTOMER-DEMO-001",
+        "recordDigest": "sha256:f2894bf11004c934169b0b2168245616f01965592ef216c055c154fad4c47a96",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-CUSTOMER:cm:sales:sales-customer-demo-001:ENSURE:032",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-category-demo-001",
+      "objectType": "SALES-CATEGORY",
+      "semanticKey": {
+        "code": "ENCLOSURE"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "ENCLOSURE",
+        "name": "Enclosure components",
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-CATEGORY-DEMO-001",
+        "recordDigest": "sha256:4af4fadecdac0f873e24920c82020717becab4d2dfe33d550ac27015c540ca70",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-CATEGORY:cm:sales:sales-category-demo-001:ENSURE:033",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-uom-demo-001",
+      "objectType": "SALES-UOM",
+      "semanticKey": {
+        "code": "EA"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "EA",
+        "name": "Each",
+        "precision": 0,
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-UOM-DEMO-001",
+        "recordDigest": "sha256:3dcfd5bc739891b1d08c677ea118dd027031f23e06831f25ce1b6e18470d703b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-UOM:cm:sales:sales-uom-demo-001:ENSURE:034",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-product-demo-001",
+      "objectType": "SALES-PRODUCT",
+      "semanticKey": {
+        "sku": "ENC-PANEL-2400"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "sku": "ENC-PANEL-2400",
+        "name": "Habitat safety panel 2400",
+        "type": "STOCK",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "categoryId": "cm:sales:sales-category-demo-001",
+        "uomId": "cm:sales:sales-uom-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-PRODUCT-DEMO-001",
+        "recordDigest": "sha256:710cad7f40f69833165618c609623832b0149986386519826bfe9bcd2813a897",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-PRODUCT:cm:sales:sales-product-demo-001:ENSURE:035",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-price-list-demo-001",
+      "objectType": "SALES-PRICE-LIST",
+      "semanticKey": {
+        "code": "B2B-EUR-2026"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-01-01T12:00:00Z",
+      "values": {
+        "code": "B2B-EUR-2026",
+        "validFrom": "2026-01-01",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-PRICE-LIST-DEMO-001",
+        "recordDigest": "sha256:dfad335ec16f0a5ee950edd559ef2116a3b3455a31cfd847824af53b01275c3a",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-PRICE-LIST:cm:sales:sales-price-list-demo-001:ENSURE:036",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-price-list-item-demo-001",
+      "objectType": "SALES-PRICE-LIST-ITEM",
+      "semanticKey": {
+        "sourceRecordId": "SALES-PRICE-LIST-ITEM-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "unitPrice": "1200.00",
+        "minimumQuantity": "1",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "priceListId": "cm:sales:sales-price-list-demo-001",
+        "productId": "cm:sales:sales-product-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-PRICE-LIST-ITEM-DEMO-001",
+        "recordDigest": "sha256:8bae751e3996b1ebc8e871a498376f93cb5803d64d1153b64daa8abe2785c241",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-PRICE-LIST-ITEM:cm:sales:sales-price-list-item-demo-001:ENSURE:037",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-quotation-demo-001",
+      "objectType": "SALES-QUOTATION",
+      "semanticKey": {
+        "quotationNumber": "Q-2026-1001"
+      },
+      "state": "ACCEPTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "quotationNumber": "Q-2026-1001",
+        "validUntil": "2026-08-31",
+        "status": "ACCEPTED",
+        "totalNet": "42000.00"
+      },
+      "references": {
+        "opportunityId": "cm:crm:crm-opportunity-demo-001",
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-QUOTATION-DEMO-001",
+        "recordDigest": "sha256:db9dd1ad7c919837e4745b845270d6d2b6e7c44fbd00260642e6782367a622a5",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-QUOTATION:cm:sales:sales-quotation-demo-001:ENSURE:038",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-08-02T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:17027f33ea3fb26027c9aeca2f9ce13d38f6a779a4c8627b9e47b05105f162dc"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "SUBMITTED",
+          "occurredAt": "2026-08-02T09:00:00Z",
+          "actionType": "SUBMIT",
+          "eventDigest": "sha256:c78595361848c36bc2c534879bebc222e6ba0a49e99e6dda8493362213f05c54"
+        },
+        {
+          "sequence": 3,
+          "from": "SUBMITTED",
+          "to": "APPROVED",
+          "occurredAt": "2026-08-02T10:00:00Z",
+          "actionType": "APPROVE",
+          "eventDigest": "sha256:dca0a9f55ee045dc517389107280dde17a279b39e578f95836ca163c39ab5542"
+        },
+        {
+          "sequence": 4,
+          "from": "APPROVED",
+          "to": "SENT",
+          "occurredAt": "2026-08-02T11:00:00Z",
+          "actionType": "ACTIVATE",
+          "eventDigest": "sha256:50b235343cc1fe0501748f201e3a032fe89a2bf402ade78b9af91a83c99e3edf"
+        },
+        {
+          "sequence": 5,
+          "from": "SENT",
+          "to": "ACCEPTED",
+          "occurredAt": "2026-08-02T12:00:00Z",
+          "actionType": "CLOSE",
+          "eventDigest": "sha256:dd475df08de21a767c52c01ccf6813e11d58e0e5b01248a1628ea515cd0a30f2"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:sales:sales-quote-line-demo-001",
+      "objectType": "SALES-QUOTE-LINE",
+      "semanticKey": {
+        "sourceRecordId": "SALES-QUOTE-LINE-DEMO-001"
+      },
+      "state": "DRAFT",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "description": "Habitat panel package",
+        "quantity": "35",
+        "unitPrice": "1200.00",
+        "lineTotal": "42000.00"
+      },
+      "references": {
+        "quotationId": "cm:sales:sales-quotation-demo-001",
+        "productId": "cm:sales:sales-product-demo-001",
+        "uomId": "cm:sales:sales-uom-demo-001",
+        "taxCodeId": "cm:organization:org-tax-code-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-QUOTE-LINE-DEMO-001",
+        "recordDigest": "sha256:c5613d207763d1cc2a2bd43ec02ec6f6c23ea8f94cfc3f30eacdc99fd03e1318",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-QUOTE-LINE:cm:sales:sales-quote-line-demo-001:ENSURE:039",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:sales-order-demo-001",
+      "objectType": "SALES-ORDER",
+      "semanticKey": {
+        "orderNumber": "SO-2026-1001"
+      },
+      "state": "PART_FULFILLED",
+      "effectiveAt": "2026-08-03T12:00:00Z",
+      "values": {
+        "orderNumber": "SO-2026-1001",
+        "orderDate": "2026-08-03",
+        "status": "PART_FULFILLED",
+        "totalNet": "42000.00"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "quotationId": "cm:sales:sales-quotation-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-ORDER-DEMO-001",
+        "recordDigest": "sha256:7cf8c61f932af0e02bc0fa646c23742edf3de47eaef6b14d79b1eae86aa81909",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-ORDER:cm:sales:sales-order-demo-001:ENSURE:040",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-08-03T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:ecf010332acc298cab926f8a7760733dac41175bb6d0f301965227745cee3df7"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "CONFIRMED",
+          "occurredAt": "2026-08-03T09:00:00Z",
+          "actionType": "CONFIRM",
+          "eventDigest": "sha256:f6704974446f8443f2c85a8b462746cfd6c3f23cfd09f89f6192738edf44d218"
+        },
+        {
+          "sequence": 3,
+          "from": "CONFIRMED",
+          "to": "PART_FULFILLED",
+          "occurredAt": "2026-08-10T12:00:00Z",
+          "actionType": "DELIVER",
+          "eventDigest": "sha256:faf1977b4bfb9c88f85aee77cb97b23e3be2c78ac04d4faf443254909a0671a4"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:sales:sales-order-line-demo-001",
+      "objectType": "SALES-ORDER-LINE",
+      "semanticKey": {
+        "sourceRecordId": "SALES-ORDER-LINE-DEMO-001"
+      },
+      "state": "OPEN",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "description": "Habitat panel package",
+        "quantity": "35",
+        "unitPrice": "1200.00",
+        "fulfilmentStatus": "PART_FULFILLED"
+      },
+      "references": {
+        "salesOrderId": "cm:sales:sales-order-demo-001",
+        "productId": "cm:sales:sales-product-demo-001",
+        "uomId": "cm:sales:sales-uom-demo-001",
+        "taxCodeId": "cm:organization:org-tax-code-demo-001"
+      },
+      "dataClass": "CUSTOMER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SALES-ORDER-LINE-DEMO-001",
+        "recordDigest": "sha256:8e9861c3b0a5ea7c7fd6496713e9e591a25f997f1561ab1a58d2307e6a05af76",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-ORDER-LINE:cm:sales:sales-order-line-demo-001:ENSURE:041",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:procurement:proc-supplier-demo-001",
+      "objectType": "PROC-SUPPLIER",
+      "semanticKey": {
+        "supplierNumber": "SUP-2001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "supplierNumber": "SUP-2001",
+        "name": "Canopy Components SAS",
+        "gln": "3012345000008",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "currencyId": "cm:organization:org-currency-demo-001",
+        "paymentTermId": "cm:organization:org-payment-term-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-SUPPLIER-DEMO-001",
+        "recordDigest": "sha256:4234669d4b72071901ce180fa487ef55c4a10c7cb20a68c70b86502d5b08e9d2",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-SUPPLIER:cm:procurement:proc-supplier-demo-001:ENSURE:042",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:procurement:proc-purchase-order-demo-001",
+      "objectType": "PROC-PURCHASE-ORDER",
+      "semanticKey": {
+        "poNumber": "PO-2026-2001"
+      },
+      "state": "PART_RECEIVED",
+      "effectiveAt": "2026-08-03T12:00:00Z",
+      "values": {
+        "poNumber": "PO-2026-2001",
+        "orderDate": "2026-08-03",
+        "status": "PART_RECEIVED",
+        "totalNet": "21000.00"
+      },
+      "references": {
+        "supplierId": "cm:procurement:proc-supplier-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-PURCHASE-ORDER-DEMO-001",
+        "recordDigest": "sha256:5fd99f4b5b23b509dbcd378280dd2eb8c741c3650c7908bebd794e2a463d2363",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-PURCHASE-ORDER:cm:procurement:proc-purchase-order-demo-001:ENSURE:043",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-07-28T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:6c4d444a7d17c015f9848684497c4891556224015e8b779ddb4462ca592b5bcc"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "PENDING_APPROVAL",
+          "occurredAt": "2026-07-28T09:00:00Z",
+          "actionType": "SUBMIT",
+          "eventDigest": "sha256:ac69089dc26b80787d6eacaa2b2eb6ed2454e6f4b51db68b5aa7de05dbfd3b40"
+        },
+        {
+          "sequence": 3,
+          "from": "PENDING_APPROVAL",
+          "to": "APPROVED",
+          "occurredAt": "2026-07-28T10:00:00Z",
+          "actionType": "APPROVE",
+          "eventDigest": "sha256:345a444b8731d2f83c6a9e45b484cc64840c974b84510b547fce109675be0127"
+        },
+        {
+          "sequence": 4,
+          "from": "APPROVED",
+          "to": "SENT",
+          "occurredAt": "2026-07-28T11:00:00Z",
+          "actionType": "ACTIVATE",
+          "eventDigest": "sha256:c421e09e42e7d55937cd20e09f6ecb183d46bc7d516543cd77a7b7663f7e946e"
+        },
+        {
+          "sequence": 5,
+          "from": "SENT",
+          "to": "PART_RECEIVED",
+          "occurredAt": "2026-08-04T09:00:00Z",
+          "actionType": "RECEIVE",
+          "eventDigest": "sha256:04142e1184c5286d3185059ccce5d9161cf8ca34b933f5b3a679a1d08a0e3735"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:procurement:proc-po-line-demo-001",
+      "objectType": "PROC-PO-LINE",
+      "semanticKey": {
+        "sourceRecordId": "PROC-PO-LINE-DEMO-001"
+      },
+      "state": "OPEN",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "quantity": "35",
+        "unitPrice": "600.00",
+        "receiptStatus": "PART_RECEIVED"
+      },
+      "references": {
+        "purchaseOrderId": "cm:procurement:proc-purchase-order-demo-001",
+        "productId": "cm:sales:sales-product-demo-001",
+        "uomId": "cm:sales:sales-uom-demo-001",
+        "taxCodeId": "cm:organization:org-tax-code-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-PO-LINE-DEMO-001",
+        "recordDigest": "sha256:52cb97ffe8e6499edc4f19c32f5de5cc48b0a7721a28d16f3fcd88b8cf37e6d1",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-PO-LINE:cm:procurement:proc-po-line-demo-001:ENSURE:044",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:inventory:inv-warehouse-demo-001",
+      "objectType": "INV-WAREHOUSE",
+      "semanticKey": {
+        "code": "ENS-WH"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "ENS-WH",
+        "name": "Ensdenton Warehouse",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "siteId": "cm:organization:org-site-demo-002"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-WAREHOUSE-DEMO-001",
+        "recordDigest": "sha256:9666f5014fc4ae07c4947d5034972e9a51f3b4e0265c7b1fa0f66bd2e257d568",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-WAREHOUSE:cm:inventory:inv-warehouse-demo-001:ENSURE:045",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:inventory:inv-bin-demo-001",
+      "objectType": "INV-BIN",
+      "semanticKey": {
+        "code": "A-01"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "A-01",
+        "type": "PICK",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "warehouseId": "cm:inventory:inv-warehouse-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-BIN-DEMO-001",
+        "recordDigest": "sha256:3e63595696fc07b718a6b4441c61aba44aea25cac799d21ad890fb42f36b94bd",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-BIN:cm:inventory:inv-bin-demo-001:ENSURE:046",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:procurement:proc-goods-receipt-demo-001",
+      "objectType": "PROC-GOODS-RECEIPT",
+      "semanticKey": {
+        "receiptNumber": "GR-2026-3001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-04T09:00:00Z",
+      "values": {
+        "receiptNumber": "GR-2026-3001",
+        "receivedAt": "2026-08-04T09:00:00Z",
+        "status": "POSTED"
+      },
+      "references": {
+        "purchaseOrderId": "cm:procurement:proc-purchase-order-demo-001",
+        "warehouseId": "cm:inventory:inv-warehouse-demo-001",
+        "receivedByUserId": "cm:identity:iam-user-demo-003"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-GOODS-RECEIPT-DEMO-001",
+        "recordDigest": "sha256:ade2c8745e5bbdc344cf89ad64212bbf9ca8af6d1737ce057b35d840eacf1719",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-GOODS-RECEIPT:cm:procurement:proc-goods-receipt-demo-001:ENSURE:047",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-08-04T08:50:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:3facebbcc17582ce0c37db39dcc583c24e68b215d50b1484aa89c70c97be17f9"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "POSTED",
+          "occurredAt": "2026-08-04T09:00:00Z",
+          "actionType": "POST",
+          "eventDigest": "sha256:a1e1e7635c0469578734534b83ae65e402d98f29246c5fcd213f69362c9be9e0"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:procurement:proc-receipt-line-demo-001",
+      "objectType": "PROC-RECEIPT-LINE",
+      "semanticKey": {
+        "sourceRecordId": "PROC-RECEIPT-LINE-DEMO-001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "quantityAccepted": "20",
+        "quantityRejected": "1",
+        "status": "POSTED"
+      },
+      "references": {
+        "goodsReceiptId": "cm:procurement:proc-goods-receipt-demo-001",
+        "poLineId": "cm:procurement:proc-po-line-demo-001",
+        "productId": "cm:sales:sales-product-demo-001",
+        "binId": "cm:inventory:inv-bin-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-RECEIPT-LINE-DEMO-001",
+        "recordDigest": "sha256:a0e48cc104375ed91436ab36eb1c20c13fcf8967707b4dac403b5917ae05e6db",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-RECEIPT-LINE:cm:procurement:proc-receipt-line-demo-001:ENSURE:048",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:procurement:proc-supplier-invoice-demo-001",
+      "objectType": "PROC-SUPPLIER-INVOICE",
+      "semanticKey": {
+        "supplierInvoiceNumber": "CC-INV-7781"
+      },
+      "state": "APPROVED",
+      "effectiveAt": "2026-08-04T12:00:00Z",
+      "values": {
+        "supplierInvoiceNumber": "CC-INV-7781",
+        "invoiceDate": "2026-08-04",
+        "status": "APPROVED",
+        "totalGross": "14400.00"
+      },
+      "references": {
+        "supplierId": "cm:procurement:proc-supplier-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001",
+        "sourceMessageId": "cm:edi_mapping:edi-message-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-SUPPLIER-INVOICE-DEMO-001",
+        "recordDigest": "sha256:3a57c7d477d7ff889db94a2ca7ca3d7600e03634016e7fcde798d58f18d3032e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-SUPPLIER-INVOICE:cm:procurement:proc-supplier-invoice-demo-001:ENSURE:049",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "RECEIVED",
+          "occurredAt": "2026-08-04T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:6def756e87b4e704017bd0206784f97444ebac4983a25a1a0d446eccb1f26e60"
+        },
+        {
+          "sequence": 2,
+          "from": "RECEIVED",
+          "to": "MAPPING_BLOCKED",
+          "occurredAt": "2026-08-04T08:05:00Z",
+          "actionType": "SUBMIT",
+          "eventDigest": "sha256:1f36941cb2d94bcd939024960a8f479108d081abf6e05e3f4df2fd78fe28b16f"
+        },
+        {
+          "sequence": 3,
+          "from": "MAPPING_BLOCKED",
+          "to": "MATCH_BLOCKED",
+          "occurredAt": "2026-08-04T08:35:00Z",
+          "actionType": "LINK",
+          "eventDigest": "sha256:fdb363f2554d1613b2db5b87e11254bc66a7da9a1b69d17de94407451fa4a956"
+        },
+        {
+          "sequence": 4,
+          "from": "MATCH_BLOCKED",
+          "to": "PENDING_APPROVAL",
+          "occurredAt": "2026-08-04T09:30:00Z",
+          "actionType": "SUBMIT",
+          "eventDigest": "sha256:a470ed2a6fcc5ee4d4534ef9169e13d6dc61bdaa37535695810b6a948b22e079"
+        },
+        {
+          "sequence": 5,
+          "from": "PENDING_APPROVAL",
+          "to": "APPROVED",
+          "occurredAt": "2026-08-04T10:00:00Z",
+          "actionType": "APPROVE",
+          "eventDigest": "sha256:a38ae66000d5bd6fb7a5cd97ce8421294a6752416e2af357a26d712c5db5bcb2"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:procurement:proc-supplier-invoice-line-demo-001",
+      "objectType": "PROC-SUPPLIER-INVOICE-LINE",
+      "semanticKey": {
+        "sourceRecordId": "PROC-SUPPLIER-INVOICE-LINE-DEMO-001"
+      },
+      "state": "MATCHED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "description": "Accepted panels",
+        "quantity": "20",
+        "unitPrice": "600.00",
+        "status": "MATCHED"
+      },
+      "references": {
+        "supplierInvoiceId": "cm:procurement:proc-supplier-invoice-demo-001",
+        "productId": "cm:sales:sales-product-demo-001",
+        "poLineId": "cm:procurement:proc-po-line-demo-001",
+        "taxCodeId": "cm:organization:org-tax-code-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-SUPPLIER-INVOICE-LINE-DEMO-001",
+        "recordDigest": "sha256:0e5e67eb3d80fe1f8734f041cb9e50f844ae2c19cc0148102d060c9a4483577b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-SUPPLIER-INVOICE-LINE:cm:procurement:proc-supplier-invoice-line-demo-001:ENSURE:050",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:procurement:proc-three-way-match-demo-001",
+      "objectType": "PROC-THREE-WAY-MATCH",
+      "semanticKey": {
+        "sourceRecordId": "PROC-THREE-WAY-MATCH-DEMO-001"
+      },
+      "state": "MATCHED",
+      "effectiveAt": "2026-08-04T10:00:00Z",
+      "values": {
+        "quantityVariance": "0",
+        "priceVariance": "0.00",
+        "status": "MATCHED",
+        "checkedAt": "2026-08-04T10:00:00Z"
+      },
+      "references": {
+        "supplierInvoiceId": "cm:procurement:proc-supplier-invoice-demo-001",
+        "purchaseOrderId": "cm:procurement:proc-purchase-order-demo-001",
+        "goodsReceiptId": "cm:procurement:proc-goods-receipt-demo-001"
+      },
+      "dataClass": "SUPPLIER_COMMERCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROC-THREE-WAY-MATCH-DEMO-001",
+        "recordDigest": "sha256:ef78348549bf4b577bc68afd7724a450f36332e0ebc6bf12a7be5d3f06effacf",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROC-THREE-WAY-MATCH:cm:procurement:proc-three-way-match-demo-001:ENSURE:051",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:inventory:inv-stock-item-demo-001",
+      "objectType": "INV-STOCK-ITEM",
+      "semanticKey": {
+        "productId": "cm:sales:sales-product-demo-001",
+        "binId": "cm:inventory:inv-bin-demo-001"
+      },
+      "state": "OUT",
+      "effectiveAt": "2026-08-04T10:00:00Z",
+      "values": {
+        "onHand": "20",
+        "reserved": "20",
+        "available": "0",
+        "asOf": "2026-08-04T10:00:00Z",
+        "status": "OUT"
+      },
+      "references": {
+        "productId": "cm:sales:sales-product-demo-001",
+        "binId": "cm:inventory:inv-bin-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-STOCK-ITEM-DEMO-001",
+        "recordDigest": "sha256:011064a22658fc9fb0fc650c1dbfa804c380d80ea38c4bb56a8752d616897165",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-STOCK-ITEM:cm:inventory:inv-stock-item-demo-001:ENSURE:052",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:inventory:inv-stock-movement-demo-001",
+      "objectType": "INV-STOCK-MOVEMENT",
+      "semanticKey": {
+        "sourceRecordId": "INV-STOCK-MOVEMENT-DEMO-001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-04T09:00:00Z",
+      "values": {
+        "quantity": "20",
+        "reason": "GOODS_RECEIPT",
+        "occurredAt": "2026-08-04T09:00:00Z",
+        "sourceType": "PROC-GOODS-RECEIPT",
+        "sourceId": "cm:procurement:proc-goods-receipt-demo-001",
+        "status": "POSTED"
+      },
+      "references": {
+        "productId": "cm:sales:sales-product-demo-001",
+        "toBinId": "cm:inventory:inv-bin-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-STOCK-MOVEMENT-DEMO-001",
+        "recordDigest": "sha256:e750496ce185e585d86a4a8cdca122b31496b77fae5a2f0a9443c993401765e6",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-STOCK-MOVEMENT:cm:inventory:inv-stock-movement-demo-001:ENSURE:053",
+      "replacementPolicy": "IMMUTABLE_HISTORY",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "PLANNED",
+          "occurredAt": "2026-08-04T08:59:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:d8efccccb29f3b7deaa54610e0aec4ee1d044ad9495d0b18804d22956690d6a6"
+        },
+        {
+          "sequence": 2,
+          "from": "PLANNED",
+          "to": "POSTED",
+          "occurredAt": "2026-08-04T09:00:00Z",
+          "actionType": "POST",
+          "eventDigest": "sha256:e1a6aabb55a366fe8d8156d137b50a5debfbc071e56ff3db88d039d8f877d7cb"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:inventory:inv-reservation-demo-001",
+      "objectType": "INV-RESERVATION",
+      "semanticKey": {
+        "sourceRecordId": "INV-RESERVATION-DEMO-001"
+      },
+      "state": "PARTIAL",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "quantity": "20",
+        "status": "PARTIAL"
+      },
+      "references": {
+        "salesOrderLineId": "cm:sales:sales-order-line-demo-001",
+        "productId": "cm:sales:sales-product-demo-001",
+        "warehouseId": "cm:inventory:inv-warehouse-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-RESERVATION-DEMO-001",
+        "recordDigest": "sha256:a9848eb70145227c8ac04f89e146599553679bab8a0ed34a13bc032792017d40",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-RESERVATION:cm:inventory:inv-reservation-demo-001:ENSURE:054",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "REQUESTED",
+          "occurredAt": "2026-08-04T10:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:d64ecf899d2be71ded456be54e08e5a3f0afe0ebaabdc3a27faaf2127a7ce202"
+        },
+        {
+          "sequence": 2,
+          "from": "REQUESTED",
+          "to": "PARTIAL",
+          "occurredAt": "2026-08-04T10:01:00Z",
+          "actionType": "RESERVE",
+          "eventDigest": "sha256:44dd45a099f35361a38c59d9dea0b85b90cf2b100210dcd2d071b2905b8fbc46"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:inventory:inv-lot-serial-demo-001",
+      "objectType": "INV-LOT-SERIAL",
+      "semanticKey": {
+        "identifier": "SAFE-CTRL-0001"
+      },
+      "state": "INSTALLED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "identifier": "SAFE-CTRL-0001",
+        "trackingMode": "SERIAL",
+        "status": "INSTALLED"
+      },
+      "references": {
+        "productId": "cm:sales:sales-product-demo-001",
+        "installedAssetId": "cm:project_service:project-installed-asset-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-LOT-SERIAL-DEMO-001",
+        "recordDigest": "sha256:10663d0d04e9a77ec7a2cb86de166040f656e2a43c02c0f8ba3b4ca889efd03e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-LOT-SERIAL:cm:inventory:inv-lot-serial-demo-001:ENSURE:055",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:inventory:inv-replenishment-demo-001",
+      "objectType": "INV-REPLENISHMENT",
+      "semanticKey": {
+        "sourceRecordId": "INV-REPLENISHMENT-DEMO-001"
+      },
+      "state": "SUGGESTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "reorderPoint": "10",
+        "targetLevel": "40",
+        "suggestedQuantity": "40",
+        "status": "SUGGESTED"
+      },
+      "references": {
+        "productId": "cm:sales:sales-product-demo-001",
+        "warehouseId": "cm:inventory:inv-warehouse-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "INV-REPLENISHMENT-DEMO-001",
+        "recordDigest": "sha256:af1e66c2b4a6aa800f3848c4a68c00f5203809bda04e44eb28b3e6b12c4884ab",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-REPLENISHMENT:cm:inventory:inv-replenishment-demo-001:ENSURE:056",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:receivables:ar-delivery-demo-001",
+      "objectType": "AR-DELIVERY",
+      "semanticKey": {
+        "deliveryNumber": "DEL-2026-4001"
+      },
+      "state": "DELIVERED",
+      "effectiveAt": "2026-08-10T12:00:00Z",
+      "values": {
+        "deliveryNumber": "DEL-2026-4001",
+        "deliveredAt": "2026-08-10T12:00:00Z",
+        "status": "DELIVERED"
+      },
+      "references": {
+        "salesOrderId": "cm:sales:sales-order-demo-001",
+        "shipFromWarehouseId": "cm:inventory:inv-warehouse-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-DELIVERY-DEMO-001",
+        "recordDigest": "sha256:ee9ebd7634d10ebe2e22a2291cc82728871ff8bd5d9ce56cc7921b42e861bcb5",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-DELIVERY:cm:receivables:ar-delivery-demo-001:ENSURE:057",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-08-09T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:72627bf2f818d64ac88779653e3f34b9d97ff7baea9fc1af27128083a0582262"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "SHIPPED",
+          "occurredAt": "2026-08-10T09:00:00Z",
+          "actionType": "DELIVER",
+          "eventDigest": "sha256:61746157bfea3bfff2bf4d2a070958999ef3e6077b619485593f51fe92265ca3"
+        },
+        {
+          "sequence": 3,
+          "from": "SHIPPED",
+          "to": "DELIVERED",
+          "occurredAt": "2026-08-10T12:00:00Z",
+          "actionType": "CLOSE",
+          "eventDigest": "sha256:0be59d9686aead755e29e7fd1fbc6405f9508e4d837d1c8ea6888990d9469b9f"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:receivables:ar-delivery-line-demo-001",
+      "objectType": "AR-DELIVERY-LINE",
+      "semanticKey": {
+        "sourceRecordId": "AR-DELIVERY-LINE-DEMO-001"
+      },
+      "state": "DELIVERED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "quantity": "20",
+        "status": "DELIVERED"
+      },
+      "references": {
+        "deliveryId": "cm:receivables:ar-delivery-demo-001",
+        "salesOrderLineId": "cm:sales:sales-order-line-demo-001",
+        "productId": "cm:sales:sales-product-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-DELIVERY-LINE-DEMO-001",
+        "recordDigest": "sha256:458f781f052d99aa921394896be29f7a92a3e7e0d365427b75fdebcbd354223b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-DELIVERY-LINE:cm:receivables:ar-delivery-line-demo-001:ENSURE:058",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:receivables:ar-customer-invoice-demo-001",
+      "objectType": "AR-CUSTOMER-INVOICE",
+      "semanticKey": {
+        "invoiceNumber": "INV-2026-5001"
+      },
+      "state": "PART_PAID",
+      "effectiveAt": "2026-08-10T12:00:00Z",
+      "values": {
+        "invoiceNumber": "INV-2026-5001",
+        "invoiceDate": "2026-08-10",
+        "dueDate": "2026-09-09",
+        "status": "PART_PAID",
+        "totalGross": "28800.00"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "salesOrderId": "cm:sales:sales-order-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001",
+        "eligibilityDeliveryId": "cm:receivables:ar-delivery-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-CUSTOMER-INVOICE-DEMO-001",
+        "recordDigest": "sha256:787cc1a0b83792f8f8089cee7db3cad3f0d090e18aced8766a7194041ffad8ec",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-CUSTOMER-INVOICE:cm:receivables:ar-customer-invoice-demo-001:ENSURE:059",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-08-10T12:05:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:d8a15002f7ef29b5aaf3c05b44e7dcd33f250adbca9029b3394bde3abfa614e3"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "ISSUED",
+          "occurredAt": "2026-08-10T13:00:00Z",
+          "actionType": "ISSUE",
+          "eventDigest": "sha256:e22d9d69368abb2ea85a397f6ca3fa69975fc23a74ab0b98d0e12013c1b983ba"
+        },
+        {
+          "sequence": 3,
+          "from": "ISSUED",
+          "to": "PART_PAID",
+          "occurredAt": "2026-08-20T12:00:00Z",
+          "actionType": "ALLOCATE",
+          "eventDigest": "sha256:f77f3c31d4279936656cfc5d552d3e728de5182261083b75a892aabe3e55fe17"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:receivables:ar-customer-invoice-line-demo-001",
+      "objectType": "AR-CUSTOMER-INVOICE-LINE",
+      "semanticKey": {
+        "sourceRecordId": "AR-CUSTOMER-INVOICE-LINE-DEMO-001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "description": "Delivered habitat panels",
+        "quantity": "20",
+        "unitPrice": "1200.00",
+        "status": "POSTED"
+      },
+      "references": {
+        "customerInvoiceId": "cm:receivables:ar-customer-invoice-demo-001",
+        "salesOrderLineId": "cm:sales:sales-order-line-demo-001",
+        "taxCodeId": "cm:organization:org-tax-code-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-CUSTOMER-INVOICE-LINE-DEMO-001",
+        "recordDigest": "sha256:38de2fb3c15a1cbe879f81c821e9515ffeaf45096cb29c3af86b50db70444c1e",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-CUSTOMER-INVOICE-LINE:cm:receivables:ar-customer-invoice-line-demo-001:ENSURE:060",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:receivables:ar-payment-demo-001",
+      "objectType": "AR-PAYMENT",
+      "semanticKey": {
+        "reference": "SYNTH-STMT-001"
+      },
+      "state": "PART_ALLOCATED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "direction": "INBOUND",
+        "reference": "SYNTH-STMT-001",
+        "amount": "14400.00",
+        "receivedPaidAt": "2026-08-20",
+        "status": "PART_ALLOCATED"
+      },
+      "references": {
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-PAYMENT-DEMO-001",
+        "recordDigest": "sha256:91a95f4e50a1c378bca1d59649008c830d03de4c8a8e8c2c755293dbc0ccca17",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-PAYMENT:cm:receivables:ar-payment-demo-001:ENSURE:061",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:receivables:ar-allocation-demo-001",
+      "objectType": "AR-ALLOCATION",
+      "semanticKey": {
+        "sourceRecordId": "AR-ALLOCATION-DEMO-001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "documentType": "AR-CUSTOMER-INVOICE",
+        "amount": "14400.00",
+        "status": "POSTED"
+      },
+      "references": {
+        "paymentId": "cm:receivables:ar-payment-demo-001",
+        "documentId": "cm:receivables:ar-customer-invoice-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-ALLOCATION-DEMO-001",
+        "recordDigest": "sha256:0afc797d1e686beafda8e1a6bb902f84e7369dc546ce68d0e80801347e190f2f",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-ALLOCATION:cm:receivables:ar-allocation-demo-001:ENSURE:062",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "DRAFT",
+          "occurredAt": "2026-08-20T11:59:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:02f5e06507db3e2f8ac31547a007714635e781fb2026e1539211d43d0d665d03"
+        },
+        {
+          "sequence": 2,
+          "from": "DRAFT",
+          "to": "POSTED",
+          "occurredAt": "2026-08-20T12:00:00Z",
+          "actionType": "POST",
+          "eventDigest": "sha256:3c137cedb9f45d8b175e5efc690dff025e8b66a266c07cf9ba5ededacbab012d"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:receivables:ar-credit-note-demo-001",
+      "objectType": "AR-CREDIT-NOTE",
+      "semanticKey": {
+        "creditNoteNumber": "CN-2026-5001"
+      },
+      "state": "ISSUED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "creditNoteNumber": "CN-2026-5001",
+        "reasonCode": "ONE_PANEL_RETURN",
+        "amount": "1440.00",
+        "status": "ISSUED"
+      },
+      "references": {
+        "customerInvoiceId": "cm:receivables:ar-customer-invoice-demo-001",
+        "returnAuthorizationId": "cm:receivables:rma:rma-2026-5001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-CREDIT-NOTE-DEMO-001",
+        "recordDigest": "sha256:88bf6d6b3192eeb8fc7f368005df183be3d31e6fa471e0bd1728ddfc3c050103",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-CREDIT-NOTE:cm:receivables:ar-credit-note-demo-001:ENSURE:063",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:receivables:ar-aging-snapshot-demo-001",
+      "objectType": "AR-AGING-SNAPSHOT",
+      "semanticKey": {
+        "sourceRecordId": "AR-AGING-SNAPSHOT-DEMO-001"
+      },
+      "state": "GENERATED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "asOfDate": "2026-09-10",
+        "ledger": "AR",
+        "buckets": {
+          "current": "0.00",
+          "1_30": "14400.00"
+        }
+      },
+      "references": {
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "AR-AGING-SNAPSHOT-DEMO-001",
+        "recordDigest": "sha256:5b7f1e632bcc7e0cfb60a8df2d2ae96cff37a97e3f7f6ffc26d7f55ba32ee2b9",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-AGING-SNAPSHOT:cm:receivables:ar-aging-snapshot-demo-001:ENSURE:064",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:project_service:project-habitat-project-demo-001",
+      "objectType": "PROJECT-HABITAT-PROJECT",
+      "semanticKey": {
+        "projectNumber": "PRJ-2026-6001"
+      },
+      "state": "IN_PROGRESS",
+      "effectiveAt": "2026-08-05T12:00:00Z",
+      "values": {
+        "projectNumber": "PRJ-2026-6001",
+        "name": "Wildlife-park habitat renewal",
+        "startDate": "2026-08-05",
+        "targetDate": "2026-09-15",
+        "status": "IN_PROGRESS",
+        "budgetAmount": "36000.00"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "salesOrderId": "cm:sales:sales-order-demo-001",
+        "managerEmployeeId": "cm:identity:iam-employee-demo-001"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-HABITAT-PROJECT-DEMO-001",
+        "recordDigest": "sha256:8083f8eef77b4d1d70e40dc056bee7bf40537f75aeacf9e1b4001bf82a7af736",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-HABITAT-PROJECT:cm:project_service:project-habitat-project-demo-001:ENSURE:065",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:project_service:project-work-package-demo-001",
+      "objectType": "PROJECT-WORK-PACKAGE",
+      "semanticKey": {
+        "sourceRecordId": "PROJECT-WORK-PACKAGE-DEMO-001"
+      },
+      "state": "IN_PROGRESS",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Install enclosure panels",
+        "plannedCost": "18000.00",
+        "status": "IN_PROGRESS"
+      },
+      "references": {
+        "projectId": "cm:project_service:project-habitat-project-demo-001",
+        "ownerEmployeeId": "cm:identity:iam-employee-demo-003"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-WORK-PACKAGE-DEMO-001",
+        "recordDigest": "sha256:33adfc0016454fcf86346664fd07b6c58c899556b9eb983f94e7dfe2600bbb73",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-WORK-PACKAGE:cm:project_service:project-work-package-demo-001:ENSURE:066",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:project_service:project-task-demo-001",
+      "objectType": "PROJECT-TASK",
+      "semanticKey": {
+        "sourceRecordId": "PROJECT-TASK-DEMO-001"
+      },
+      "state": "BLOCKED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "title": "Safety inspection before handover",
+        "dueDate": "2026-09-14",
+        "status": "BLOCKED"
+      },
+      "references": {
+        "workPackageId": "cm:project_service:project-work-package-demo-001",
+        "assigneeEmployeeId": "cm:identity:iam-employee-demo-003"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-TASK-DEMO-001",
+        "recordDigest": "sha256:667e070fe0c646f4188031d0cc4da9e4898de27fbb9303703dfa9f61ee934d94",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-TASK:cm:project_service:project-task-demo-001:ENSURE:067",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:project_service:project-installed-asset-demo-001",
+      "objectType": "PROJECT-INSTALLED-ASSET",
+      "semanticKey": {
+        "assetTag": "ASSET-7001"
+      },
+      "state": "IN_SERVICE",
+      "effectiveAt": "2026-09-12T12:00:00Z",
+      "values": {
+        "assetTag": "ASSET-7001",
+        "installedAt": "2026-09-12",
+        "status": "IN_SERVICE"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "siteId": "cm:sales:customer-site:reinhard-garden-01",
+        "productId": "cm:sales:sales-product-demo-001",
+        "lotSerialId": "cm:inventory:inv-lot-serial-demo-001",
+        "originDeliveryLineId": "cm:receivables:ar-delivery-line-demo-001"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-INSTALLED-ASSET-DEMO-001",
+        "recordDigest": "sha256:156e75caf06a6857745df8bd2a661e5a6bc9ad97b2d5917cabcf676e074563f9",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-INSTALLED-ASSET:cm:project_service:project-installed-asset-demo-001:ENSURE:068",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "PLANNED",
+          "occurredAt": "2026-09-12T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:76d60c978433faed799f196d785a9bf2e9f81b00c513aef38cb09eb436de68e5"
+        },
+        {
+          "sequence": 2,
+          "from": "PLANNED",
+          "to": "INSTALLED",
+          "occurredAt": "2026-09-12T12:00:00Z",
+          "actionType": "INSTALL",
+          "eventDigest": "sha256:4ac88dcf272bad81d08e6d6dce0311892178a3072e798177c37057ecfcd623ed"
+        },
+        {
+          "sequence": 3,
+          "from": "INSTALLED",
+          "to": "IN_SERVICE",
+          "occurredAt": "2026-09-12T13:00:00Z",
+          "actionType": "ACTIVATE",
+          "eventDigest": "sha256:d62b71ca8472e0848445ab13344b75b095073787065c8610f2209a6078afe8f3"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:project_service:project-service-contract-demo-001",
+      "objectType": "PROJECT-SERVICE-CONTRACT",
+      "semanticKey": {
+        "contractNumber": "SVC-2026-7001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-09-15T12:00:00Z",
+      "values": {
+        "contractNumber": "SVC-2026-7001",
+        "startDate": "2026-09-15",
+        "endDate": "2027-09-14",
+        "coverage": "QUARTERLY_INSPECTION",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "salesOrderId": "cm:sales:sales-order-demo-001",
+        "coveredAssetId": "cm:project_service:project-installed-asset-demo-001"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-SERVICE-CONTRACT-DEMO-001",
+        "recordDigest": "sha256:2cdcbe31f4a0685ee4c88a15b6c8f57ddbcb054f3a8274e520ad8c9159929923",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-SERVICE-CONTRACT:cm:project_service:project-service-contract-demo-001:ENSURE:069",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:project_service:project-maint-work-order-demo-001",
+      "objectType": "PROJECT-MAINT-WORK-ORDER",
+      "semanticKey": {
+        "workOrderNumber": "WO-2026-8001"
+      },
+      "state": "SCHEDULED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "workOrderNumber": "WO-2026-8001",
+        "priority": "MEDIUM",
+        "status": "SCHEDULED"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "installedAssetId": "cm:project_service:project-installed-asset-demo-001",
+        "serviceContractId": "cm:project_service:project-service-contract-demo-001",
+        "assignedEmployeeId": "cm:identity:iam-employee-demo-003"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-MAINT-WORK-ORDER-DEMO-001",
+        "recordDigest": "sha256:993603f7d71804e18d33f7ce44f2edde8587680d9b7b282f5c01316095906b2f",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-MAINT-WORK-ORDER:cm:project_service:project-maint-work-order-demo-001:ENSURE:070",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:project_service:project-service-visit-demo-001",
+      "objectType": "PROJECT-SERVICE-VISIT",
+      "semanticKey": {
+        "sourceRecordId": "PROJECT-SERVICE-VISIT-DEMO-001"
+      },
+      "state": "NO_ACCESS",
+      "effectiveAt": "2026-10-01T09:05:00Z",
+      "values": {
+        "scheduledStart": "2026-10-01T09:00:00Z",
+        "outcome": "NO_ACCESS",
+        "status": "NO_ACCESS"
+      },
+      "references": {
+        "workOrderId": "cm:project_service:project-maint-work-order-demo-001",
+        "technicianEmployeeId": "cm:identity:iam-employee-demo-003"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-SERVICE-VISIT-DEMO-001",
+        "recordDigest": "sha256:0705b4b24b4e93985bdfd8ef8fdf83447f36300dbb2ec29c213b71e899c3cd9c",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-SERVICE-VISIT:cm:project_service:project-service-visit-demo-001:ENSURE:071",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "SCHEDULED",
+          "occurredAt": "2026-09-25T08:00:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:b59c25210687f436a536abdccf55cd27b8458c9583bae435d3b75ea566a5dbaf"
+        },
+        {
+          "sequence": 2,
+          "from": "SCHEDULED",
+          "to": "NO_ACCESS",
+          "occurredAt": "2026-10-01T09:05:00Z",
+          "actionType": "CLOSE",
+          "eventDigest": "sha256:82b4473d4b5d975d0d528f6316ea0412c3bf831bd227ff402395af8caf2205f6"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:project_service:project-time-expense-demo-001",
+      "objectType": "PROJECT-TIME-EXPENSE",
+      "semanticKey": {
+        "sourceRecordId": "PROJECT-TIME-EXPENSE-DEMO-001"
+      },
+      "state": "APPROVED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "entryType": "TIME",
+        "quantity": "4.00",
+        "amount": "320.00",
+        "entryDate": "2026-09-12",
+        "status": "APPROVED"
+      },
+      "references": {
+        "employeeId": "cm:identity:iam-employee-demo-003",
+        "projectId": "cm:project_service:project-habitat-project-demo-001"
+      },
+      "dataClass": "CUSTOMER_SITE_WORKFORCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "PROJECT-TIME-EXPENSE-DEMO-001",
+        "recordDigest": "sha256:b51011616c79f01d6e5ef57cdbb84058f53970713cbdfd0cb7a8b9caa0a6452b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "PROJECT-TIME-EXPENSE:cm:project_service:project-time-expense-demo-001:ENSURE:072",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:finance:fin-fiscal-period-demo-001",
+      "objectType": "FIN-FISCAL-PERIOD",
+      "semanticKey": {
+        "sourceRecordId": "FIN-FISCAL-PERIOD-DEMO-001"
+      },
+      "state": "OPEN",
+      "effectiveAt": "2026-08-01T12:00:00Z",
+      "values": {
+        "startDate": "2026-08-01",
+        "endDate": "2026-08-31",
+        "status": "OPEN",
+        "demoOnly": true
+      },
+      "references": {},
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-FISCAL-PERIOD-DEMO-001",
+        "recordDigest": "sha256:ba5d8ad55610e3c61ee255e0c08f76dee206a4880487c436d5768ec02df8465b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-FISCAL-PERIOD:cm:finance:fin-fiscal-period-demo-001:ENSURE:073",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:finance:fin-account-demo-001",
+      "objectType": "FIN-ACCOUNT",
+      "semanticKey": {
+        "accountCode": "1100"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "accountCode": "1100",
+        "name": "Accounts receivable",
+        "type": "ASSET",
+        "status": "ACTIVE",
+        "demoOnly": true
+      },
+      "references": {},
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-ACCOUNT-DEMO-001",
+        "recordDigest": "sha256:861caa2f379ee660e79c370312e0ef0dd9e3b1dc7de0e0477088e72b62536e09",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-ACCOUNT:cm:finance:fin-account-demo-001:ENSURE:074",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:finance:fin-account-demo-002",
+      "objectType": "FIN-ACCOUNT",
+      "semanticKey": {
+        "accountCode": "4000"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "accountCode": "4000",
+        "name": "Demo sales revenue",
+        "type": "REVENUE",
+        "status": "ACTIVE",
+        "demoOnly": true
+      },
+      "references": {},
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-ACCOUNT-DEMO-002",
+        "recordDigest": "sha256:5f7c261eb822c36050398c9d496a1a531087770a1d71ce349897a3d48819fd8a",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-ACCOUNT:cm:finance:fin-account-demo-002:ENSURE:075",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:finance:fin-cost-center-demo-001",
+      "objectType": "FIN-COST-CENTER",
+      "semanticKey": {
+        "code": "PROJECTS"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "code": "PROJECTS",
+        "name": "Habitat Projects",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "orgUnitId": "cm:organization:org-org-unit-demo-001"
+      },
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-COST-CENTER-DEMO-001",
+        "recordDigest": "sha256:a66d57222cb10bbd7d7ccd7ec6ff44faadccb20eaf39a9e60a399f7a63dc1a8c",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-COST-CENTER:cm:finance:fin-cost-center-demo-001:ENSURE:076",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:finance:fin-journal-entry-demo-001",
+      "objectType": "FIN-JOURNAL-ENTRY",
+      "semanticKey": {
+        "journalNumber": "JE-2026-9001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "journalNumber": "JE-2026-9001",
+        "postingDate": "2026-08-10",
+        "sourceType": "AR-CUSTOMER-INVOICE",
+        "sourceId": "cm:receivables:ar-customer-invoice-demo-001",
+        "status": "POSTED",
+        "totalDebit": "28800.00",
+        "totalCredit": "28800.00"
+      },
+      "references": {
+        "periodId": "cm:finance:fin-fiscal-period-demo-001"
+      },
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-JOURNAL-ENTRY-DEMO-001",
+        "recordDigest": "sha256:a9c9229fef07b56e316f16bda2bc0db81262b64fd69b36bb276649add19e479b",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-JOURNAL-ENTRY:cm:finance:fin-journal-entry-demo-001:ENSURE:077",
+      "replacementPolicy": "IMMUTABLE_HISTORY"
+    },
+    {
+      "canonicalId": "cm:finance:fin-journal-line-demo-001",
+      "objectType": "FIN-JOURNAL-LINE",
+      "semanticKey": {
+        "sourceRecordId": "FIN-JOURNAL-LINE-DEMO-001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "debit": "28800.00",
+        "credit": "0.00",
+        "status": "POSTED"
+      },
+      "references": {
+        "journalEntryId": "cm:finance:fin-journal-entry-demo-001",
+        "accountId": "cm:finance:fin-account-demo-001",
+        "currencyId": "cm:organization:org-currency-demo-001",
+        "costCenterId": "cm:finance:fin-cost-center-demo-001"
+      },
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-JOURNAL-LINE-DEMO-001",
+        "recordDigest": "sha256:9eff220932bebc0be2a73a07c6719d995eee0b514c9b5bcf4f6934281e73ffaf",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-JOURNAL-LINE:cm:finance:fin-journal-line-demo-001:ENSURE:078",
+      "replacementPolicy": "IMMUTABLE_HISTORY"
+    },
+    {
+      "canonicalId": "cm:finance:fin-journal-line-demo-002",
+      "objectType": "FIN-JOURNAL-LINE",
+      "semanticKey": {
+        "sourceRecordId": "FIN-JOURNAL-LINE-DEMO-002"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "debit": "0.00",
+        "credit": "28800.00",
+        "status": "POSTED"
+      },
+      "references": {
+        "journalEntryId": "cm:finance:fin-journal-entry-demo-001",
+        "accountId": "cm:finance:fin-account-demo-002",
+        "currencyId": "cm:organization:org-currency-demo-001",
+        "costCenterId": "cm:finance:fin-cost-center-demo-001"
+      },
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-JOURNAL-LINE-DEMO-002",
+        "recordDigest": "sha256:e09cc621e1aa5720e2cb58d27c136e78004afea7f7fbac837e659cbc32aad895",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-JOURNAL-LINE:cm:finance:fin-journal-line-demo-002:ENSURE:079",
+      "replacementPolicy": "IMMUTABLE_HISTORY"
+    },
+    {
+      "canonicalId": "cm:finance:fin-budget-demo-001",
+      "objectType": "FIN-BUDGET",
+      "semanticKey": {
+        "sourceRecordId": "FIN-BUDGET-DEMO-001"
+      },
+      "state": "APPROVED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "amount": "36000.00",
+        "status": "APPROVED"
+      },
+      "references": {
+        "periodId": "cm:finance:fin-fiscal-period-demo-001",
+        "costCenterId": "cm:finance:fin-cost-center-demo-001",
+        "accountId": "cm:finance:fin-account-demo-002",
+        "currencyId": "cm:organization:org-currency-demo-001"
+      },
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-BUDGET-DEMO-001",
+        "recordDigest": "sha256:1800d2a27546f241468c02ca8c7da2adf4e730b481aba773bed03d7d09123049",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-BUDGET:cm:finance:fin-budget-demo-001:ENSURE:080",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:finance:fin-reconciliation-demo-001",
+      "objectType": "FIN-RECONCILIATION",
+      "semanticKey": {
+        "sourceRecordId": "FIN-RECONCILIATION-DEMO-001"
+      },
+      "state": "MATCHED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "type": "AR_CONTROL",
+        "asOfDate": "2026-08-31",
+        "sourceTotal": "14400.00",
+        "ledgerTotal": "14400.00",
+        "difference": "0.00",
+        "status": "MATCHED"
+      },
+      "references": {},
+      "dataClass": "CONFIDENTIAL_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "FIN-RECONCILIATION-DEMO-001",
+        "recordDigest": "sha256:e7f9228ade758bca4883f1000475e2d58645c56f92d819126c94c197b5bb69f7",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "FIN-RECONCILIATION:cm:finance:fin-reconciliation-demo-001:ENSURE:081",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:dms:dms-document-demo-001",
+      "objectType": "DMS-DOCUMENT",
+      "semanticKey": {
+        "sourceRecordId": "DMS-DOCUMENT-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-05T08:00:00Z",
+      "values": {
+        "documentType": "HABITAT_PLAN",
+        "title": "Habitat plan A",
+        "sourceSystem": "SYNTHETIC_METADATA",
+        "classification": "PROJECT",
+        "createdAt": "2026-08-05T08:00:00Z",
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "CLASSIFIED_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "DMS-DOCUMENT-DEMO-001",
+        "recordDigest": "sha256:27992889cbec7b820369e7633f889147eae1f7afa90d3f5206bc3b3cdf7112de",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "DMS-DOCUMENT:cm:dms:dms-document-demo-001:ENSURE:082",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:dms:dms-document-link-demo-001",
+      "objectType": "DMS-DOCUMENT-LINK",
+      "semanticKey": {
+        "sourceRecordId": "DMS-DOCUMENT-LINK-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "objectType": "PROJECT-HABITAT-PROJECT",
+        "linkRole": "PLAN",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "documentId": "cm:dms:dms-document-demo-001",
+        "objectId": "cm:project_service:project-habitat-project-demo-001"
+      },
+      "dataClass": "CLASSIFIED_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "DMS-DOCUMENT-LINK-DEMO-001",
+        "recordDigest": "sha256:6d98d5a7b72b3d97bec3566aa8e6ccf48ba6823a3ca944a6ae83f070d7a2493a",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "DMS-DOCUMENT-LINK:cm:dms:dms-document-link-demo-001:ENSURE:083",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:dms:dms-document-version-demo-001",
+      "objectType": "DMS-DOCUMENT-VERSION",
+      "semanticKey": {
+        "sourceRecordId": "DMS-DOCUMENT-VERSION-DEMO-001"
+      },
+      "state": "CURRENT",
+      "effectiveAt": "2026-08-05T08:00:00Z",
+      "values": {
+        "versionLabel": "A",
+        "contentDigest": "sha256:5d9003a1713e8fc5295e2150162fd44acec63ce08ffb6a366bfe4eea64df7cd8",
+        "createdAt": "2026-08-05T08:00:00Z",
+        "status": "CURRENT"
+      },
+      "references": {
+        "documentId": "cm:dms:dms-document-demo-001"
+      },
+      "dataClass": "CLASSIFIED_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "DMS-DOCUMENT-VERSION-DEMO-001",
+        "recordDigest": "sha256:09176561273ee113341f3e452a93ac84b685bf62e80ae8e329a2f61d298bb823",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "DMS-DOCUMENT-VERSION:cm:dms:dms-document-version-demo-001:ENSURE:084",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:dms:dms-evidence-receipt-demo-001",
+      "objectType": "DMS-EVIDENCE-RECEIPT",
+      "semanticKey": {
+        "digest": "sha256:332a1a26096ec1355769150b5f752511c18d31ec6ff678b481a22a0c20d8e1cb"
+      },
+      "state": "RECORDED",
+      "effectiveAt": "2026-08-04T08:30:00Z",
+      "values": {
+        "eventType": "MAPPING_REPAIR_APPROVED",
+        "objectType": "EDI-MAPPING-REPAIR",
+        "digest": "sha256:332a1a26096ec1355769150b5f752511c18d31ec6ff678b481a22a0c20d8e1cb",
+        "recordedAt": "2026-08-04T08:30:00Z",
+        "claimBoundary": "LOCAL_SYNTHETIC_METADATA_ONLY"
+      },
+      "references": {
+        "objectId": "cm:edi_mapping:edi-mapping-repair-demo-001"
+      },
+      "dataClass": "CLASSIFIED_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "DMS-EVIDENCE-RECEIPT-DEMO-001",
+        "recordDigest": "sha256:090a547f8261a21527301a1b0559019fb6bcacfdd60e1548aa527f073cf83d40",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "DMS-EVIDENCE-RECEIPT:cm:dms:dms-evidence-receipt-demo-001:ENSURE:085",
+      "replacementPolicy": "IMMUTABLE_HISTORY"
+    },
+    {
+      "canonicalId": "cm:support:support-case-demo-001",
+      "objectType": "SUPPORT-CASE",
+      "semanticKey": {
+        "caseNumber": "CASE-2026-1001"
+      },
+      "state": "IN_PROGRESS",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "caseNumber": "CASE-2026-1001",
+        "priority": "MEDIUM",
+        "status": "IN_PROGRESS",
+        "caseType": "COMPLAINT"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "contactId": "cm:crm:crm-contact-demo-001",
+        "installedAssetId": "cm:project_service:project-installed-asset-demo-001",
+        "ownerUserId": "cm:identity:iam-user-demo-003",
+        "historicalSalesOrderId": "cm:sales:sales-order-demo-001",
+        "historicalInvoiceId": "cm:receivables:ar-customer-invoice-demo-001"
+      },
+      "dataClass": "CUSTOMER_SUPPORT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SUPPORT-CASE-DEMO-001",
+        "recordDigest": "sha256:b4a82f72ad6db04c87c160803626bbfd0733a6378e9761f70a21c9a015e7f820",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SUPPORT-CASE:cm:support:support-case-demo-001:ENSURE:086",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:support:support-case-activity-demo-001",
+      "objectType": "SUPPORT-CASE-ACTIVITY",
+      "semanticKey": {
+        "sourceRecordId": "SUPPORT-CASE-ACTIVITY-DEMO-001"
+      },
+      "state": "RECORDED",
+      "effectiveAt": "2026-09-28T08:30:00Z",
+      "values": {
+        "type": "WORK_ORDER_CREATED",
+        "occurredAt": "2026-09-28T08:30:00Z",
+        "summary": "Inspection work order created"
+      },
+      "references": {
+        "caseId": "cm:support:support-case-demo-001",
+        "actorUserId": "cm:identity:iam-user-demo-003"
+      },
+      "dataClass": "CUSTOMER_SUPPORT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SUPPORT-CASE-ACTIVITY-DEMO-001",
+        "recordDigest": "sha256:d73e21e7dfadd2022baaa762e9f7f1b57caeadd0e7aedbf6a8c0a47898e50c86",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SUPPORT-CASE-ACTIVITY:cm:support:support-case-activity-demo-001:ENSURE:087",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:support:support-service-history-demo-001",
+      "objectType": "SUPPORT-SERVICE-HISTORY",
+      "semanticKey": {
+        "sourceRecordId": "SUPPORT-SERVICE-HISTORY-DEMO-001"
+      },
+      "state": "GENERATED",
+      "effectiveAt": "2026-10-01T12:00:00Z",
+      "values": {
+        "asOf": "2026-10-01T12:00:00Z",
+        "eventRefs": [
+          "cm:support:support-case-demo-001",
+          "cm:project_service:project-maint-work-order-demo-001",
+          "cm:project_service:project-service-visit-demo-001"
+        ],
+        "status": "GENERATED"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001"
+      },
+      "dataClass": "CUSTOMER_SUPPORT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "SUPPORT-SERVICE-HISTORY-DEMO-001",
+        "recordDigest": "sha256:edeb70e9b79c8b40bd079ac9aefab81f6fd364428a1b996fc659bfb9e2cd42e7",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SUPPORT-SERVICE-HISTORY:cm:support:support-service-history-demo-001:ENSURE:088",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:bi:bi-dimension-demo-001",
+      "objectType": "BI-DIMENSION",
+      "semanticKey": {
+        "sourceRecordId": "BI-DIMENSION-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Customer",
+        "sourceObjectType": "SALES-CUSTOMER",
+        "keyField": "customerId",
+        "refreshAsOf": "2026-08-31T23:59:59Z",
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "DERIVED_ROLE_SCOPED",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "BI-DIMENSION-DEMO-001",
+        "recordDigest": "sha256:b0dcf1fbc0c75181bd16713fc9df825d8f9b169e4c67993ca36e3c712a3836e6",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "BI-DIMENSION:cm:bi:bi-dimension-demo-001:ENSURE:089",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:bi:bi-metric-demo-001",
+      "objectType": "BI-METRIC",
+      "semanticKey": {
+        "sourceRecordId": "BI-METRIC-DEMO-001"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-31T23:59:59Z",
+      "values": {
+        "name": "Open AR",
+        "definition": "sum issued invoice open amount",
+        "grain": "customer",
+        "sourceObjectTypes": [
+          "AR-CUSTOMER-INVOICE",
+          "AR-ALLOCATION"
+        ],
+        "asOf": "2026-08-31T23:59:59Z",
+        "status": "ACTIVE"
+      },
+      "references": {},
+      "dataClass": "DERIVED_ROLE_SCOPED",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "BI-METRIC-DEMO-001",
+        "recordDigest": "sha256:49872d6d999f547ab8b5b1ddf119ea4105adf9581f5bd02e93402d115410b517",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "BI-METRIC:cm:bi:bi-metric-demo-001:ENSURE:090",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:bi:bi-dashboard-demo-001",
+      "objectType": "BI-DASHBOARD",
+      "semanticKey": {
+        "sourceRecordId": "BI-DASHBOARD-DEMO-001"
+      },
+      "state": "PUBLISHED",
+      "effectiveAt": "2026-08-31T23:59:59Z",
+      "values": {
+        "name": "Executive company cockpit",
+        "asOf": "2026-08-31T23:59:59Z",
+        "status": "PUBLISHED"
+      },
+      "references": {
+        "audienceRoleIds": [
+          "cm:identity:iam-role-demo-001"
+        ],
+        "metricIds": [
+          "cm:bi:bi-metric-demo-001"
+        ]
+      },
+      "dataClass": "DERIVED_ROLE_SCOPED",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "BI-DASHBOARD-DEMO-001",
+        "recordDigest": "sha256:f72533ec438c7abf5886f79565a29eededad5c89add9a9e5d972646f0c3e8b65",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "BI-DASHBOARD:cm:bi:bi-dashboard-demo-001:ENSURE:091",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:bi:bi-drillthrough-demo-001",
+      "objectType": "BI-DRILLTHROUGH",
+      "semanticKey": {
+        "sourceRecordId": "BI-DRILLTHROUGH-DEMO-001"
+      },
+      "state": "GENERATED",
+      "effectiveAt": "2026-08-31T23:59:59Z",
+      "values": {
+        "sourceObjectType": "AR-CUSTOMER-INVOICE",
+        "sourceObjectIds": [
+          "cm:receivables:ar-customer-invoice-demo-001"
+        ],
+        "filters": {
+          "customerId": "cm:sales:sales-customer-demo-001"
+        },
+        "asOf": "2026-08-31T23:59:59Z",
+        "status": "GENERATED"
+      },
+      "references": {
+        "metricId": "cm:bi:bi-metric-demo-001"
+      },
+      "dataClass": "DERIVED_ROLE_SCOPED",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "BI-DRILLTHROUGH-DEMO-001",
+        "recordDigest": "sha256:038e9cde7aa1c7de2ea3fa5b3054279e5e18f1cb0d04bba60cf6312fe0c9f1fa",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "BI-DRILLTHROUGH:cm:bi:bi-drillthrough-demo-001:ENSURE:092",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:edi_mapping:edi-trading-partner-demo-001",
+      "objectType": "EDI-TRADING-PARTNER",
+      "semanticKey": {
+        "gln": "3012345000008"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "name": "Canopy Components SAS",
+        "gln": "3012345000008",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "supplierId": "cm:procurement:proc-supplier-demo-001"
+      },
+      "dataClass": "INTEGRATION_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "EDI-TRADING-PARTNER-DEMO-001",
+        "recordDigest": "sha256:75d6c372cd1f84ec83cd08e413b69be533024403c347035e0edaa0fe2991d56d",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "EDI-TRADING-PARTNER:cm:edi_mapping:edi-trading-partner-demo-001:ENSURE:093",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:edi_mapping:edi-message-demo-001",
+      "objectType": "EDI-MESSAGE",
+      "semanticKey": {
+        "messageDigest": "sha256:1442e826158173168ba3a21a38023f1b2d0787e94d04b173e399e52f740a2fa9"
+      },
+      "state": "IMPORTED",
+      "effectiveAt": "2026-08-04T08:00:00Z",
+      "values": {
+        "messageType": "INVOIC",
+        "senderGln": "3012345000008",
+        "receiverGln": "3099999000001",
+        "receivedAt": "2026-08-04T08:00:00Z",
+        "messageDigest": "sha256:1442e826158173168ba3a21a38023f1b2d0787e94d04b173e399e52f740a2fa9",
+        "status": "IMPORTED",
+        "rawFixtureRef": "fixtures/invoic/missing-gln-v1.edi"
+      },
+      "references": {
+        "tradingPartnerId": "cm:edi_mapping:edi-trading-partner-demo-001"
+      },
+      "dataClass": "INTEGRATION_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "EDI-MESSAGE-DEMO-001",
+        "recordDigest": "sha256:dc10884926aafcb23fbe3a2f0732cdbb8e7990555e28a089751facac9e605f67",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "EDI-MESSAGE:cm:edi_mapping:edi-message-demo-001:ENSURE:094",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:edi_mapping:edi-cross-system-map-demo-001",
+      "objectType": "EDI-CROSS-SYSTEM-MAP",
+      "semanticKey": {
+        "mappingType": "SUPPLIER_GLN",
+        "sourceSystem": "EDI",
+        "sourceKey": "3012345000008"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "mappingType": "SUPPLIER_GLN",
+        "sourceSystem": "EDI",
+        "sourceKey": "3012345000008",
+        "targetSystem": "ERP",
+        "targetKey": "cm:procurement:proc-supplier-demo-001",
+        "status": "ACTIVE",
+        "provenance": "approved repair EDI-MAPPING-REPAIR-DEMO-001"
+      },
+      "references": {},
+      "dataClass": "INTEGRATION_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "EDI-CROSS-SYSTEM-MAP-DEMO-001",
+        "recordDigest": "sha256:bf11f63a615f30bec97e8d1ecf39cde9e60407399e7c366a592fd99767616fba",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "EDI-CROSS-SYSTEM-MAP:cm:edi_mapping:edi-cross-system-map-demo-001:ENSURE:095",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:edi_mapping:edi-mapping-repair-demo-001",
+      "objectType": "EDI-MAPPING-REPAIR",
+      "semanticKey": {
+        "sourceRecordId": "EDI-MAPPING-REPAIR-DEMO-001"
+      },
+      "state": "APPLIED",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "proposal": {
+          "sourceKey": "3012345000008",
+          "targetKey": "cm:procurement:proc-supplier-demo-001"
+        },
+        "decision": "APPLIED",
+        "status": "APPLIED"
+      },
+      "references": {
+        "mappingId": "cm:edi_mapping:edi-cross-system-map-demo-001",
+        "messageId": "cm:edi_mapping:edi-message-demo-001",
+        "requesterUserId": "cm:identity:iam-user-demo-002",
+        "approverUserId": "cm:identity:iam-user-demo-001",
+        "evidenceReceiptId": "cm:dms:dms-evidence-receipt-demo-001"
+      },
+      "dataClass": "INTEGRATION_METADATA",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "EDI-MAPPING-REPAIR-DEMO-001",
+        "recordDigest": "sha256:fbff3aa912e7cb39f8fa6b3336d7d7af2440de91fbd58f246398a42b65bf4063",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "EDI-MAPPING-REPAIR:cm:edi_mapping:edi-mapping-repair-demo-001:ENSURE:096",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:demo_control:reset-seed-run-demo-001",
+      "objectType": "RESET-SEED-RUN",
+      "semanticKey": {
+        "datasetVersion": "2026.08.01.1"
+      },
+      "state": "VERIFIED",
+      "effectiveAt": "2026-08-03T08:05:00Z",
+      "values": {
+        "datasetVersion": "2026.08.01.1",
+        "seedDigest": "sha256:22e044666847566828ab6f82348b789a7b5d61175f3ba4b1cf7b743e91f903bc",
+        "startedAt": "2026-08-03T08:00:00Z",
+        "completedAt": "2026-08-03T08:05:00Z",
+        "status": "VERIFIED",
+        "ownedRoot": "dataset/cm-demo-company-v1"
+      },
+      "references": {},
+      "dataClass": "INTERNAL_EVIDENCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "RESET-SEED-RUN-DEMO-001",
+        "recordDigest": "sha256:af07a7443947695e505d4be21d06e55ff039f88240ef6a6511326b91d84bde57",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "RESET-SEED-RUN:cm:demo_control:reset-seed-run-demo-001:ENSURE:097",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:demo_control:reset-scenario-result-demo-001",
+      "objectType": "RESET-SCENARIO-RESULT",
+      "semanticKey": {
+        "sourceRecordId": "RESET-SCENARIO-RESULT-DEMO-001"
+      },
+      "state": "PASSED",
+      "effectiveAt": "2026-08-03T08:06:00Z",
+      "values": {
+        "scenarioId": "SCN-01",
+        "outcome": "PASSED",
+        "objectDigests": [],
+        "negativeProbeResults": [
+          "PANSKYS_CURRENT_DENIED"
+        ],
+        "recordedAt": "2026-08-03T08:06:00Z",
+        "status": "PASSED"
+      },
+      "references": {
+        "seedRunId": "cm:demo_control:reset-seed-run-demo-001"
+      },
+      "dataClass": "INTERNAL_EVIDENCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "RESET-SCENARIO-RESULT-DEMO-001",
+        "recordDigest": "sha256:e888fb86776525855a4578d7ac39a6006b03c1e30e0f3970224391996a6b6686",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "RESET-SCENARIO-RESULT:cm:demo_control:reset-scenario-result-demo-001:ENSURE:098",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:demo_control:reset-reset-receipt-demo-001",
+      "objectType": "RESET-RESET-RECEIPT",
+      "semanticKey": {
+        "sourceRecordId": "RESET-RESET-RECEIPT-DEMO-001"
+      },
+      "state": "COMPLETED",
+      "effectiveAt": "2026-08-03T08:10:00Z",
+      "values": {
+        "scope": "dataset/cm-demo-company-v1",
+        "preDigest": "sha256:3d33f0efa0dd22719e2d3207356f481f170755bb548912dab0e37d553ef835b6",
+        "postDigest": "sha256:817d3542e2989a85c94ccdf608497c95543df2ff29d7ffe3a125d6e376783265",
+        "completedAt": "2026-08-03T08:10:00Z",
+        "status": "COMPLETED"
+      },
+      "references": {
+        "seedRunId": "cm:demo_control:reset-seed-run-demo-001"
+      },
+      "dataClass": "INTERNAL_EVIDENCE",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "anchor-records",
+        "recordKey": "RESET-RESET-RECEIPT-DEMO-001",
+        "recordDigest": "sha256:e8c40f2fc9a01fe45ce8d5e48384d4f6a31370103f6dafa77cdc31048b77cd26",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "RESET-RESET-RECEIPT:cm:demo_control:reset-reset-receipt-demo-001:ENSURE:099",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:sales:customer-site:reinhard-garden-01",
+      "objectType": "SALES-CUSTOMER-SITE",
+      "semanticKey": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "siteCode": "GARDEN-01"
+      },
+      "state": "ACTIVE",
+      "effectiveAt": "2026-08-01T08:00:00Z",
+      "values": {
+        "siteCode": "GARDEN-01",
+        "name": "Synthetic customer service site",
+        "city": "Example-sur-Loire",
+        "countryCode": "FR",
+        "timezone": "Europe/Paris",
+        "status": "ACTIVE"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "contactId": "cm:crm:crm-contact-demo-001"
+      },
+      "dataClass": "CUSTOMER_CONTACT_PII",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "analysis-extensions",
+        "recordKey": "SALES-CUSTOMER-SITE-EXT-001",
+        "recordDigest": "sha256:cd8524f3f75ca42d743f301843e5b84351b5a88d2bca28a40cb123f701f8fc4f",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "SALES-CUSTOMER-SITE:cm:sales:customer-site:reinhard-garden-01:ENSURE:100",
+      "replacementPolicy": "IMPACT_PLAN_REQUIRED"
+    },
+    {
+      "canonicalId": "cm:receivables:rma:rma-2026-5001",
+      "objectType": "AR-RETURN-AUTHORIZATION",
+      "semanticKey": {
+        "rmaNumber": "RMA-2026-5001"
+      },
+      "state": "RECEIVED",
+      "effectiveAt": "2026-09-07T10:00:00Z",
+      "values": {
+        "rmaNumber": "RMA-2026-5001",
+        "quantity": "1",
+        "reasonCode": "DAMAGED_PANEL",
+        "status": "RECEIVED"
+      },
+      "references": {
+        "customerId": "cm:sales:sales-customer-demo-001",
+        "caseId": "cm:support:support-case-demo-001",
+        "salesOrderId": "cm:sales:sales-order-demo-001",
+        "salesOrderLineId": "cm:sales:sales-order-line-demo-001",
+        "deliveryId": "cm:receivables:ar-delivery-demo-001",
+        "customerInvoiceId": "cm:receivables:ar-customer-invoice-demo-001",
+        "creditNoteId": "cm:receivables:ar-credit-note-demo-001",
+        "returnMovementId": "cm:inventory:movement:rma-2026-5001-return",
+        "approvalId": "cm:identity:iam-approval-demo-001"
+      },
+      "dataClass": "CUSTOMER_FINANCIAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "analysis-extensions",
+        "recordKey": "AR-RETURN-AUTHORIZATION-EXT-001",
+        "recordDigest": "sha256:49ea41479fae046fb2ab82bc945ee3ada23341b6115c62bc789f3e2bc3bf9362",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "AR-RETURN-AUTHORIZATION:cm:receivables:rma:rma-2026-5001:ENSURE:101",
+      "replacementPolicy": "IMMUTABLE_AFTER_RECEIPT",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "REQUESTED",
+          "occurredAt": "2026-09-05T09:30:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:448edbabb11496be3a59de16609c11164ee2289727a0beec7c7417a72e89f9de"
+        },
+        {
+          "sequence": 2,
+          "from": "REQUESTED",
+          "to": "AUTHORIZED",
+          "occurredAt": "2026-09-06T08:00:00Z",
+          "actionType": "APPROVE",
+          "eventDigest": "sha256:c6a48bdb07645d8428cb00a72625c4a46be1855b04b02794edb36f97bdbf9f05"
+        },
+        {
+          "sequence": 3,
+          "from": "AUTHORIZED",
+          "to": "RECEIVED",
+          "occurredAt": "2026-09-07T10:00:00Z",
+          "actionType": "RETURN",
+          "eventDigest": "sha256:97c8b5213715043b394d19422d53a637fa1840729c911e332d329cf77c9c36a8"
+        }
+      ]
+    },
+    {
+      "canonicalId": "cm:inventory:movement:rma-2026-5001-return",
+      "objectType": "INV-STOCK-MOVEMENT",
+      "semanticKey": {
+        "movementId": "MOV-RETURN-001"
+      },
+      "state": "POSTED",
+      "effectiveAt": "2026-09-07T10:00:00Z",
+      "values": {
+        "quantity": "1",
+        "reason": "CUSTOMER_RETURN",
+        "occurredAt": "2026-09-07T10:00:00Z",
+        "sourceType": "AR-RETURN-AUTHORIZATION",
+        "sourceId": "cm:receivables:rma:rma-2026-5001",
+        "status": "POSTED"
+      },
+      "references": {
+        "productId": "cm:sales:sales-product-demo-001",
+        "toBinId": "cm:inventory:inv-bin-demo-001"
+      },
+      "dataClass": "INTERNAL_OPERATIONAL",
+      "source": {
+        "bundleId": "synthetic-blueprint-v1",
+        "recordSet": "analysis-extensions",
+        "recordKey": "INV-STOCK-MOVEMENT-RETURN-EXT-001",
+        "recordDigest": "sha256:3786923812b4308da3e25006d56b332629b042f0c9ebe28a9174454b2dd04fa9",
+        "mappingProfileId": "blueprint-approved-v1"
+      },
+      "idempotencyKey": "INV-STOCK-MOVEMENT:cm:inventory:movement:rma-2026-5001-return:ENSURE:102",
+      "replacementPolicy": "IMMUTABLE_HISTORY",
+      "transitions": [
+        {
+          "sequence": 1,
+          "from": null,
+          "to": "PLANNED",
+          "occurredAt": "2026-09-07T09:59:00Z",
+          "actionType": "CREATE",
+          "eventDigest": "sha256:f5748e7d3dff4664fc641d843b4e14e897c7b373af61344f45ceaf736f2accf3"
+        },
+        {
+          "sequence": 2,
+          "from": "PLANNED",
+          "to": "POSTED",
+          "occurredAt": "2026-09-07T10:00:00Z",
+          "actionType": "POST",
+          "eventDigest": "sha256:ff1d44bd352cc71a0bc3bf03a661fc25747e25f197121d8e96dd8d1317b4d662"
+        }
+      ]
+    }
+  ],
+  "expectedProcesses": [
+    {
+      "processId": "customer-order-rma-credit",
+      "objectIds": [
+        "cm:crm:crm-account-demo-001",
+        "cm:crm:crm-contact-demo-001",
+        "cm:sales:sales-customer-demo-001",
+        "cm:sales:sales-product-demo-001",
+        "cm:sales:sales-price-list-demo-001",
+        "cm:sales:sales-quotation-demo-001",
+        "cm:sales:sales-order-demo-001",
+        "cm:inventory:inv-reservation-demo-001",
+        "cm:receivables:ar-delivery-demo-001",
+        "cm:receivables:ar-customer-invoice-demo-001",
+        "cm:receivables:ar-payment-demo-001",
+        "cm:support:support-case-demo-001",
+        "cm:receivables:rma:rma-2026-5001",
+        "cm:receivables:ar-credit-note-demo-001"
+      ],
+      "assertions": [
+        "REFERENCES_RESOLVE",
+        "STATES_REACHABLE",
+        "TIMELINE_MONOTONIC",
+        "CURRENCY_CONSISTENT",
+        "TAX_VALID_AT_EVENT",
+        "UOM_COMPATIBLE",
+        "MONEY_RECONCILES",
+        "QUANTITY_RECONCILES",
+        "CUSTOMER_CONSISTENT",
+        "TARGET_READBACK_MATCHES",
+        "CROSS_SYSTEM_MAPPING_UNIQUE"
+      ]
+    },
+    {
+      "processId": "supplier-po-receipt-match",
+      "objectIds": [
+        "cm:procurement:proc-supplier-demo-001",
+        "cm:procurement:proc-purchase-order-demo-001",
+        "cm:procurement:proc-po-line-demo-001",
+        "cm:procurement:proc-goods-receipt-demo-001",
+        "cm:procurement:proc-receipt-line-demo-001",
+        "cm:procurement:proc-supplier-invoice-demo-001",
+        "cm:procurement:proc-supplier-invoice-line-demo-001",
+        "cm:procurement:proc-three-way-match-demo-001"
+      ],
+      "assertions": [
+        "REFERENCES_RESOLVE",
+        "STATES_REACHABLE",
+        "TIMELINE_MONOTONIC",
+        "CURRENCY_CONSISTENT",
+        "TAX_VALID_AT_EVENT",
+        "UOM_COMPATIBLE",
+        "MONEY_RECONCILES",
+        "QUANTITY_RECONCILES",
+        "SUPPLIER_MATCHES",
+        "TARGET_READBACK_MATCHES"
+      ]
+    },
+    {
+      "processId": "project-asset-service",
+      "objectIds": [
+        "cm:sales:sales-customer-demo-001",
+        "cm:sales:customer-site:reinhard-garden-01",
+        "cm:sales:sales-order-demo-001",
+        "cm:receivables:ar-delivery-demo-001",
+        "cm:project_service:project-habitat-project-demo-001",
+        "cm:project_service:project-installed-asset-demo-001",
+        "cm:project_service:project-service-contract-demo-001",
+        "cm:support:support-case-demo-001",
+        "cm:project_service:project-maint-work-order-demo-001",
+        "cm:project_service:project-service-visit-demo-001"
+      ],
+      "assertions": [
+        "REFERENCES_RESOLVE",
+        "STATES_REACHABLE",
+        "TIMELINE_MONOTONIC",
+        "CUSTOMER_CONSISTENT",
+        "TARGET_READBACK_MATCHES",
+        "CROSS_SYSTEM_MAPPING_UNIQUE"
+      ]
+    }
+  ],
+  "targetIntents": [
+    {
+      "intentId": "intent-crm-account",
+      "objectId": "cm:crm:crm-account-demo-001",
+      "target": "espocrm",
+      "adapterId": "espocrm-rest-v1",
+      "typedAction": "ENSURE_DRAFT",
+      "onUnsupportedHistory": "FAIL"
+    },
+    {
+      "intentId": "intent-sales-order",
+      "objectId": "cm:sales:sales-order-demo-001",
+      "target": "dolibarr",
+      "adapterId": "dolibarr-rest-v22",
+      "typedAction": "TRANSITION_STATE",
+      "onUnsupportedHistory": "FAIL"
+    },
+    {
+      "intentId": "intent-customer-invoice",
+      "objectId": "cm:receivables:ar-customer-invoice-demo-001",
+      "target": "dolibarr",
+      "adapterId": "dolibarr-rest-v22",
+      "typedAction": "TRANSITION_STATE",
+      "onUnsupportedHistory": "DOCUMENTARY_SNAPSHOT_NON_CLAIM"
+    },
+    {
+      "intentId": "intent-reconcile",
+      "objectId": "cm:receivables:ar-customer-invoice-demo-001",
+      "target": "chimpmaera",
+      "adapterId": "chimpmaera-canonical-v1",
+      "typedAction": "RECONCILE",
+      "onUnsupportedHistory": "FAIL"
+    }
+  ],
+  "nonClaims": [
+    "No real people, companies, credentials or external communication.",
+    "No statutory accounting, tax filing, banking, certified EDI or production DMS.",
+    "Historical state replay is claimed only after target-specific transition and readback tests.",
+    "RMA and customer-site are explicit catalog extensions pending implementation."
+  ]
+}

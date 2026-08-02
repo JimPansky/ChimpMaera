@@ -1,0 +1,956 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.invalid/schemas/erp-crm-canonical-company-data-pack.schema.json",
+  "title": "ChimpMaera Canonical Company Data Pack",
+  "description": "Versioned declarative source of company simulation truth. Never an operational shadow database and never a credential/code carrier.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packId",
+    "packVersion",
+    "catalogRef",
+    "graphRef",
+    "fixedClock",
+    "mode",
+    "company",
+    "policies",
+    "sourceBundles",
+    "mappingProfiles",
+    "objects",
+    "expectedProcesses",
+    "nonClaims"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "chimpmaera.company-data-pack/v1"
+    },
+    "packId": {
+      "$ref": "#/$defs/stableId"
+    },
+    "packVersion": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}\\.[0-9]+$"
+    },
+    "catalogRef": {
+      "$ref": "#/$defs/digestRef"
+    },
+    "graphRef": {
+      "$ref": "#/$defs/digestRef"
+    },
+    "fixedClock": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mode": {
+      "enum": [
+        "SYNTHETIC_DEMO",
+        "LEGACY_MIGRATION_STAGING",
+        "TEST_FIXTURE"
+      ]
+    },
+    "company": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legalEntityId",
+        "baseCurrencyId",
+        "timezone"
+      ],
+      "properties": {
+        "legalEntityId": {
+          "$ref": "#/$defs/canonicalId"
+        },
+        "baseCurrencyId": {
+          "$ref": "#/$defs/canonicalId"
+        },
+        "timezone": {
+          "type": "string",
+          "pattern": "^[A-Za-z_]+/[A-Za-z_]+$"
+        }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "idPolicy",
+        "targetWritePolicy",
+        "historyPolicy",
+        "piiPolicy",
+        "replacementPolicy",
+        "mappingRegistryPolicy"
+      ],
+      "properties": {
+        "idPolicy": {
+          "const": "CANONICAL_IDS_SEPARATE_FROM_TARGET_IDS"
+        },
+        "targetWritePolicy": {
+          "const": "OFFICIAL_API_OR_APPLICATION_SERVICE_ONLY"
+        },
+        "historyPolicy": {
+          "enum": [
+            "STATE_MACHINE_REPLAY",
+            "DOCUMENTARY_SNAPSHOT_NON_CLAIM",
+            "MIXED_PER_TYPE"
+          ]
+        },
+        "piiPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "purpose",
+            "processing",
+            "minimization",
+            "retentionDays",
+            "exportMode",
+            "deletionMode"
+          ],
+          "properties": {
+            "purpose": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 200
+            },
+            "processing": {
+              "const": "LOCAL_ONLY"
+            },
+            "minimization": {
+              "const": true
+            },
+            "retentionDays": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3650
+            },
+            "exportMode": {
+              "enum": [
+                "REDACTED",
+                "SYNTHETIC_ONLY"
+              ]
+            },
+            "deletionMode": {
+              "enum": [
+                "DEPENDENCY_AWARE",
+                "TOMBSTONE_AND_COMPENSATE"
+              ]
+            }
+          }
+        },
+        "replacementPolicy": {
+          "const": "EXPLICIT_IMPACT_PLAN_NO_CASCADE"
+        },
+        "mappingRegistryPolicy": {
+          "const": "TARGET_IDS_AND_PROVENANCE_OUTSIDE_PACK_IN_RECEIPTS"
+        }
+      }
+    },
+    "sourceBundles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/sourceBundle"
+      }
+    },
+    "mappingProfiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/mappingProfile"
+      }
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/canonicalObject"
+      }
+    },
+    "expectedProcesses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/expectedProcess"
+      }
+    },
+    "targetIntents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/targetIntent"
+      }
+    },
+    "nonClaims": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 240
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "const": "SYNTHETIC_DEMO"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "sourceBundles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "containsRealData": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9._-]{2,79}$"
+    },
+    "canonicalId": {
+      "type": "string",
+      "pattern": "^cm:[a-z][a-z0-9_-]*:[a-z0-9][a-z0-9._:-]{2,159}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "digestRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^examples/company-data/[a-z0-9._/-]+$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "safeString": {
+      "type": "string",
+      "maxLength": 4096,
+      "not": {
+        "pattern": "^([Hh][Tt][Tt][Pp][Ss]?://|[Jj][Dd][Bb][Cc]:|[Ff][Ii][Ll][Ee]:|[Ss][Ss][Hh]:|[Ss][Ee][Ll][Ee][Cc][Tt]\\s|[Ii][Nn][Ss][Ee][Rr][Tt]\\s|[Uu][Pp][Dd][Aa][Tt][Ee]\\s|[Dd][Ee][Ll][Ee][Tt][Ee]\\s|[Dd][Rr][Oo][Pp]\\s|[Aa][Ll][Tt][Ee][Rr]\\s|[Ee][Xx][Ee][Cc]\\s|#!/)"
+      }
+    },
+    "safeScalar": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/safeString"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "safeValue": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/safeScalar"
+        },
+        {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/safeScalar"
+          }
+        },
+        {
+          "$ref": "#/$defs/safeObject"
+        }
+      ]
+    },
+    "safeObject": {
+      "type": "object",
+      "maxProperties": 100,
+      "propertyNames": {
+        "not": {
+          "pattern": "^(password|Password|PASSWORD|passwd|Passwd|PASSWD|secret|Secret|SECRET|token|Token|TOKEN|api[-_]?key|API[-_]?KEY|credential|Credential|CREDENTIAL|private[-_]?key|PRIVATE[-_]?KEY|sql|SQL|query|Query|QUERY|url|URL|uri|URI|endpoint|Endpoint|ENDPOINT|script|Script|SCRIPT|command|Command|COMMAND)$"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      }
+    },
+    "referenceValue": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/canonicalId"
+        },
+        {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/canonicalId"
+          }
+        }
+      ]
+    },
+    "sourceBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundleId",
+        "sourceKind",
+        "sourceName",
+        "contentDigest",
+        "containsRealData",
+        "stagingFormat"
+      ],
+      "properties": {
+        "bundleId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "sourceKind": {
+          "enum": [
+            "CANONICAL_JSON",
+            "LEGACY_CSV",
+            "LEGACY_API_EXPORT",
+            "LEGACY_ARCHIVE_EXPORT",
+            "SYNTHETIC_GENERATOR_OUTPUT"
+          ]
+        },
+        "sourceName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "containsRealData": {
+          "type": "boolean"
+        },
+        "stagingFormat": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "encoding",
+            "recordSets"
+          ],
+          "properties": {
+            "encoding": {
+              "const": "UTF-8"
+            },
+            "delimiter": {
+              "enum": [
+                ",",
+                ";",
+                "\\t",
+                "NOT_APPLICABLE"
+              ]
+            },
+            "recordSets": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/stableId"
+              }
+            }
+          }
+        }
+      }
+    },
+    "mappingProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mappingProfileId",
+        "sourceBundleId",
+        "profileVersion",
+        "status",
+        "decisions"
+      ],
+      "properties": {
+        "mappingProfileId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "sourceBundleId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "profileVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "DRAFT",
+            "APPROVED",
+            "RETIRED"
+          ]
+        },
+        "decisions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "decisionId",
+              "recordSet",
+              "sourcePath",
+              "targetObjectType",
+              "targetField",
+              "transform",
+              "nullPolicy",
+              "approved"
+            ],
+            "properties": {
+              "decisionId": {
+                "$ref": "#/$defs/stableId"
+              },
+              "recordSet": {
+                "$ref": "#/$defs/stableId"
+              },
+              "sourcePath": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.\\[\\]-]+$"
+              },
+              "targetObjectType": {
+                "enum": [
+                  "ORG-LEGAL-ENTITY",
+                  "ORG-SITE",
+                  "ORG-ORG-UNIT",
+                  "ORG-CURRENCY",
+                  "ORG-TAX-CODE",
+                  "ORG-PAYMENT-TERM",
+                  "ORG-NUMBER-SEQUENCE",
+                  "ORG-BUSINESS-CALENDAR",
+                  "IAM-USER",
+                  "IAM-EMPLOYEE",
+                  "IAM-TEAM",
+                  "IAM-ROLE",
+                  "IAM-ROLE-ASSIGNMENT",
+                  "IAM-APPROVAL",
+                  "CRM-LEAD",
+                  "CRM-ACCOUNT",
+                  "CRM-CONTACT",
+                  "CRM-OPPORTUNITY",
+                  "CRM-ACTIVITY",
+                  "CRM-PIPELINE-STAGE",
+                  "SALES-CUSTOMER",
+                  "SALES-PRODUCT",
+                  "SALES-CATEGORY",
+                  "SALES-UOM",
+                  "SALES-PRICE-LIST",
+                  "SALES-PRICE-LIST-ITEM",
+                  "SALES-QUOTATION",
+                  "SALES-QUOTE-LINE",
+                  "SALES-ORDER",
+                  "SALES-ORDER-LINE",
+                  "PROC-SUPPLIER",
+                  "PROC-RFQ",
+                  "PROC-RFQ-LINE",
+                  "PROC-PURCHASE-ORDER",
+                  "PROC-PO-LINE",
+                  "PROC-GOODS-RECEIPT",
+                  "PROC-RECEIPT-LINE",
+                  "PROC-SUPPLIER-INVOICE",
+                  "PROC-SUPPLIER-INVOICE-LINE",
+                  "PROC-THREE-WAY-MATCH",
+                  "INV-WAREHOUSE",
+                  "INV-BIN",
+                  "INV-STOCK-ITEM",
+                  "INV-STOCK-MOVEMENT",
+                  "INV-RESERVATION",
+                  "INV-LOT-SERIAL",
+                  "INV-REPLENISHMENT",
+                  "AR-DELIVERY",
+                  "AR-DELIVERY-LINE",
+                  "AR-CUSTOMER-INVOICE",
+                  "AR-CUSTOMER-INVOICE-LINE",
+                  "AR-CREDIT-NOTE",
+                  "AR-PAYMENT",
+                  "AR-ALLOCATION",
+                  "AR-AGING-SNAPSHOT",
+                  "PROJECT-HABITAT-PROJECT",
+                  "PROJECT-WORK-PACKAGE",
+                  "PROJECT-TASK",
+                  "PROJECT-INSTALLED-ASSET",
+                  "PROJECT-SERVICE-CONTRACT",
+                  "PROJECT-MAINT-WORK-ORDER",
+                  "PROJECT-SERVICE-VISIT",
+                  "PROJECT-TIME-EXPENSE",
+                  "FIN-ACCOUNT",
+                  "FIN-JOURNAL-ENTRY",
+                  "FIN-JOURNAL-LINE",
+                  "FIN-FISCAL-PERIOD",
+                  "FIN-COST-CENTER",
+                  "FIN-BUDGET",
+                  "FIN-RECONCILIATION",
+                  "DMS-DOCUMENT",
+                  "DMS-DOCUMENT-LINK",
+                  "DMS-DOCUMENT-VERSION",
+                  "DMS-EVIDENCE-RECEIPT",
+                  "SUPPORT-CASE",
+                  "SUPPORT-CASE-ACTIVITY",
+                  "SUPPORT-SERVICE-HISTORY",
+                  "BI-DIMENSION",
+                  "BI-METRIC",
+                  "BI-DASHBOARD",
+                  "BI-DRILLTHROUGH",
+                  "EDI-MESSAGE",
+                  "EDI-TRADING-PARTNER",
+                  "EDI-CROSS-SYSTEM-MAP",
+                  "EDI-MAPPING-REPAIR",
+                  "RESET-SEED-RUN",
+                  "RESET-SCENARIO-RESULT",
+                  "RESET-RESET-RECEIPT",
+                  "AR-RETURN-AUTHORIZATION",
+                  "SALES-CUSTOMER-SITE"
+                ]
+              },
+              "targetField": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "transform": {
+                "enum": [
+                  "IDENTITY",
+                  "TRIM",
+                  "UPPERCASE",
+                  "LOWERCASE",
+                  "ISO_DATE",
+                  "ISO_DATETIME_UTC",
+                  "DECIMAL_STRING",
+                  "INTEGER",
+                  "BOOLEAN",
+                  "ENUM_TABLE",
+                  "LOOKUP_SEMANTIC_KEY",
+                  "CONSTANT_APPROVED"
+                ]
+              },
+              "transformArgs": {
+                "$ref": "#/$defs/safeObject"
+              },
+              "nullPolicy": {
+                "enum": [
+                  "REJECT",
+                  "OMIT",
+                  "DEFAULT_APPROVED"
+                ]
+              },
+              "approved": {
+                "type": "boolean"
+              },
+              "decisionDigest": {
+                "$ref": "#/$defs/sha256"
+              },
+              "aiSuggestion": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "suggested",
+                  "confidence",
+                  "rationale"
+                ],
+                "properties": {
+                  "suggested": {
+                    "type": "boolean"
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "canonicalObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonicalId",
+        "objectType",
+        "semanticKey",
+        "state",
+        "effectiveAt",
+        "values",
+        "references",
+        "dataClass",
+        "source",
+        "idempotencyKey",
+        "replacementPolicy"
+      ],
+      "properties": {
+        "canonicalId": {
+          "$ref": "#/$defs/canonicalId"
+        },
+        "objectType": {
+          "enum": [
+            "ORG-LEGAL-ENTITY",
+            "ORG-SITE",
+            "ORG-ORG-UNIT",
+            "ORG-CURRENCY",
+            "ORG-TAX-CODE",
+            "ORG-PAYMENT-TERM",
+            "ORG-NUMBER-SEQUENCE",
+            "ORG-BUSINESS-CALENDAR",
+            "IAM-USER",
+            "IAM-EMPLOYEE",
+            "IAM-TEAM",
+            "IAM-ROLE",
+            "IAM-ROLE-ASSIGNMENT",
+            "IAM-APPROVAL",
+            "CRM-LEAD",
+            "CRM-ACCOUNT",
+            "CRM-CONTACT",
+            "CRM-OPPORTUNITY",
+            "CRM-ACTIVITY",
+            "CRM-PIPELINE-STAGE",
+            "SALES-CUSTOMER",
+            "SALES-PRODUCT",
+            "SALES-CATEGORY",
+            "SALES-UOM",
+            "SALES-PRICE-LIST",
+            "SALES-PRICE-LIST-ITEM",
+            "SALES-QUOTATION",
+            "SALES-QUOTE-LINE",
+            "SALES-ORDER",
+            "SALES-ORDER-LINE",
+            "PROC-SUPPLIER",
+            "PROC-RFQ",
+            "PROC-RFQ-LINE",
+            "PROC-PURCHASE-ORDER",
+            "PROC-PO-LINE",
+            "PROC-GOODS-RECEIPT",
+            "PROC-RECEIPT-LINE",
+            "PROC-SUPPLIER-INVOICE",
+            "PROC-SUPPLIER-INVOICE-LINE",
+            "PROC-THREE-WAY-MATCH",
+            "INV-WAREHOUSE",
+            "INV-BIN",
+            "INV-STOCK-ITEM",
+            "INV-STOCK-MOVEMENT",
+            "INV-RESERVATION",
+            "INV-LOT-SERIAL",
+            "INV-REPLENISHMENT",
+            "AR-DELIVERY",
+            "AR-DELIVERY-LINE",
+            "AR-CUSTOMER-INVOICE",
+            "AR-CUSTOMER-INVOICE-LINE",
+            "AR-CREDIT-NOTE",
+            "AR-PAYMENT",
+            "AR-ALLOCATION",
+            "AR-AGING-SNAPSHOT",
+            "PROJECT-HABITAT-PROJECT",
+            "PROJECT-WORK-PACKAGE",
+            "PROJECT-TASK",
+            "PROJECT-INSTALLED-ASSET",
+            "PROJECT-SERVICE-CONTRACT",
+            "PROJECT-MAINT-WORK-ORDER",
+            "PROJECT-SERVICE-VISIT",
+            "PROJECT-TIME-EXPENSE",
+            "FIN-ACCOUNT",
+            "FIN-JOURNAL-ENTRY",
+            "FIN-JOURNAL-LINE",
+            "FIN-FISCAL-PERIOD",
+            "FIN-COST-CENTER",
+            "FIN-BUDGET",
+            "FIN-RECONCILIATION",
+            "DMS-DOCUMENT",
+            "DMS-DOCUMENT-LINK",
+            "DMS-DOCUMENT-VERSION",
+            "DMS-EVIDENCE-RECEIPT",
+            "SUPPORT-CASE",
+            "SUPPORT-CASE-ACTIVITY",
+            "SUPPORT-SERVICE-HISTORY",
+            "BI-DIMENSION",
+            "BI-METRIC",
+            "BI-DASHBOARD",
+            "BI-DRILLTHROUGH",
+            "EDI-MESSAGE",
+            "EDI-TRADING-PARTNER",
+            "EDI-CROSS-SYSTEM-MAP",
+            "EDI-MAPPING-REPAIR",
+            "RESET-SEED-RUN",
+            "RESET-SCENARIO-RESULT",
+            "RESET-RESET-RECEIPT",
+            "AR-RETURN-AUTHORIZATION",
+            "SALES-CUSTOMER-SITE"
+          ]
+        },
+        "semanticKey": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "state": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]{1,63}$"
+        },
+        "effectiveAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "values": {
+          "$ref": "#/$defs/safeObject"
+        },
+        "references": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Za-z][A-Za-z0-9]*Id(s)?$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/referenceValue"
+          }
+        },
+        "dataClass": {
+          "enum": [
+            "PUBLIC_SYNTHETIC",
+            "INTERNAL_MASTER",
+            "IDENTITY_PII",
+            "CUSTOMER_CONTACT_PII",
+            "CUSTOMER_COMMERCIAL",
+            "SUPPLIER_COMMERCIAL",
+            "INTERNAL_OPERATIONAL",
+            "CUSTOMER_FINANCIAL",
+            "CUSTOMER_SITE_WORKFORCE",
+            "CONFIDENTIAL_FINANCIAL",
+            "CLASSIFIED_METADATA",
+            "CUSTOMER_SUPPORT_PII",
+            "DERIVED_ROLE_SCOPED",
+            "INTEGRATION_METADATA",
+            "INTERNAL_EVIDENCE"
+          ]
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bundleId",
+            "recordSet",
+            "recordKey",
+            "recordDigest",
+            "mappingProfileId"
+          ],
+          "properties": {
+            "bundleId": {
+              "$ref": "#/$defs/stableId"
+            },
+            "recordSet": {
+              "$ref": "#/$defs/stableId"
+            },
+            "recordKey": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "recordDigest": {
+              "$ref": "#/$defs/sha256"
+            },
+            "mappingProfileId": {
+              "$ref": "#/$defs/stableId"
+            }
+          }
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[A-Z0-9-]+:[A-Za-z0-9:._-]{3,220}$"
+        },
+        "replacementPolicy": {
+          "enum": [
+            "IMPACT_PLAN_REQUIRED",
+            "IMMUTABLE_HISTORY",
+            "IMMUTABLE_AFTER_RECEIPT"
+          ]
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sequence",
+              "from",
+              "to",
+              "occurredAt",
+              "actionType",
+              "eventDigest"
+            ],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "from": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "to": {
+                "type": "string"
+              },
+              "occurredAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "actionType": {
+                "enum": [
+                  "CREATE",
+                  "SUBMIT",
+                  "APPROVE",
+                  "ACTIVATE",
+                  "VALIDATE",
+                  "CONFIRM",
+                  "RESERVE",
+                  "RECEIVE",
+                  "DELIVER",
+                  "ISSUE",
+                  "ALLOCATE",
+                  "POST",
+                  "INSTALL",
+                  "OPEN",
+                  "CLOSE",
+                  "RETURN",
+                  "CREDIT",
+                  "REVERSE",
+                  "CANCEL",
+                  "LINK"
+                ]
+              },
+              "eventDigest": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      }
+    },
+    "expectedProcess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "processId",
+        "objectIds",
+        "assertions"
+      ],
+      "properties": {
+        "processId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "objectIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/canonicalId"
+          }
+        },
+        "assertions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "REFERENCES_RESOLVE",
+              "STATES_REACHABLE",
+              "TIMELINE_MONOTONIC",
+              "CURRENCY_CONSISTENT",
+              "TAX_VALID_AT_EVENT",
+              "UOM_COMPATIBLE",
+              "MONEY_RECONCILES",
+              "QUANTITY_RECONCILES",
+              "CUSTOMER_CONSISTENT",
+              "SUPPLIER_MATCHES",
+              "TARGET_READBACK_MATCHES",
+              "CROSS_SYSTEM_MAPPING_UNIQUE"
+            ]
+          }
+        }
+      }
+    },
+    "targetIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intentId",
+        "objectId",
+        "target",
+        "adapterId",
+        "typedAction",
+        "onUnsupportedHistory"
+      ],
+      "properties": {
+        "intentId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "objectId": {
+          "$ref": "#/$defs/canonicalId"
+        },
+        "target": {
+          "enum": [
+            "espocrm",
+            "dolibarr",
+            "chimpmaera",
+            "paperless-read-seam"
+          ]
+        },
+        "adapterId": {
+          "enum": [
+            "espocrm-rest-v1",
+            "dolibarr-rest-v22",
+            "chimpmaera-canonical-v1",
+            "paperless-metadata-read-v1"
+          ]
+        },
+        "typedAction": {
+          "enum": [
+            "ENSURE_DRAFT",
+            "PATCH_LINKS",
+            "TRANSITION_STATE",
+            "READBACK",
+            "RECONCILE",
+            "COMPENSATE"
+          ]
+        },
+        "onUnsupportedHistory": {
+          "enum": [
+            "FAIL",
+            "DOCUMENTARY_SNAPSHOT_NON_CLAIM"
+          ]
+        }
+      }
+    }
+  }
+}
