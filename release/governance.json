@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "chimpmaera.release-governance/v1",
+  "repository": "JimPansky/ChimpMaera",
+  "currentRelease": {
+    "tag": "v0.2.0-poc.20260802.3",
+    "title": "ChimpMaera — Governed Company Data Increment",
+    "increment": "Governed Company Data Increment",
+    "targetCommitish": "main",
+    "tagObjectSha": "439b679636e9a7060edd4a4dea887c7fe2b00744",
+    "draft": false,
+    "prerelease": false,
+    "mustBeLatest": true,
+    "assets": [
+      {
+        "name": "chimpmaera-v0.2.0-poc.20260802.3-daily-poc.tar.gz",
+        "size": 11797,
+        "sha256": "8afdd41255219eba9090e3b20c48b7df974746e71293ff0dd64ba9a01e3d2d77"
+      },
+      {
+        "name": "chimpmaera-v0.2.0-poc.20260802.3-daily-poc.tar.gz.sha256",
+        "size": 116,
+        "sha256": "3f3d8d288f4ef984b159f7aa7f47256e1dc7befc5dc198d7d1580af64358796b"
+      }
+    ],
+    "assetManifest": {
+      "name": "chimpmaera-v0.2.0-poc.20260802.3-daily-poc.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260802.3-daily-poc.tar.gz"
+    }
+  },
+  "policy": {
+    "latest": "The newest accepted regular product increment is draft=false, prerelease=false and must resolve from GitHub /releases/latest after publication.",
+    "draft": "Draft releases are preparation only and must never be described as public or current.",
+    "prerelease": "Prereleases are optional preview artifacts and must never be described as regular Latest.",
+    "anonymousReadbackRequired": true,
+    "assetManifestRequired": true,
+    "assetHashesRequired": true
+  },
+  "activePublicFiles": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "docs/SECURITY-ASSURANCE.md",
+    "docs/KNOWN-LIMITATIONS.md",
+    "docs/RELEASE-GOVERNANCE.md",
+    "release/governance.json"
+  ],
+  "historicalArchivePrefixes": [
+    "docs/development/",
+    "examples/daily-poc/"
+  ],
+  "videos": {
+    "activeVerifiedIds": [],
+    "withdrawnIds": [
+      "Dq_XLEzh5I8",
+      "w4fWgalD_WQ",
+      "SEPbE-EVoNs"
+    ]
+  },
+  "claimEvidence": [
+    {
+      "claimId": "CM-REL-001",
+      "claim": "v0.2.0-poc.20260802.3 is the current regular Latest release.",
+      "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
+      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
+    },
+    {
+      "claimId": "CM-REL-002",
+      "claim": "The increment contains governed validation for local synthetic company data.",
+      "evidencePaths": ["docs/COMPANY-DATA-VALIDATION.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md"],
+      "nonClaims": ["No production-data fitness is claimed.", "No universal ETL, MDM or system-of-record capability is claimed.", "No security certification is claimed."]
+    },
+    {
+      "claimId": "CM-REL-003",
+      "claim": "Published release assets are bound to an explicit manifest, byte sizes and SHA-256 digests.",
+      "evidencePaths": ["docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
+      "nonClaims": ["Repository tests do not replace anonymous public asset readback.", "Release metadata edits do not authorize tag or asset replacement."]
+    }
+  ]
+}

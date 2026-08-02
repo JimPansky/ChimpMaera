@@ -44,6 +44,7 @@ Use evidence proportional to the changed surface:
 The complete local check set is:
 
     npm ci --ignore-scripts --no-audit --no-fund
+    npm run release-governance:verify
     npm run lint
     npm test
     npm run video:test
@@ -82,11 +83,20 @@ only when the change is actually published. Never present `locally validated`
 as `released`, or `planned` as `proven`. Security-sensitive final integration,
 merge, and release remain maintainer-controlled.
 
-Each published snapshot's release notes use `Added`, `Changed`, `Security`,
+Each published release is named for a functional product increment, never a
+calendar-driven “Daily” identity. Its notes use `Added`, `Changed`, `Security`,
 `Evidence`, `Known limitations`, and `Planned next`, with applicable issue,
-pull-request, and claim IDs in each section. Daily Manifests use the same
-traceability contract when those references exist. Issues are roadmap links,
-not evidence by themselves.
+pull-request, and claim IDs in each section. They must also bind the exact tag,
+target, asset manifest, asset names/sizes/SHA-256 values, claim/evidence
+mappings and non-claims. Publication is complete only after anonymous public
+readback confirms the tag, regular Latest state (`draft=false`,
+`prerelease=false`), public docs, metadata and asset bytes.
+
+An editorial Daily may tell progress, decisions, learnings or preview a future
+increment. It does not gate a release and must not describe a candidate as
+published before that anonymous readback passes. Historical Daily manifests
+remain provenance, not current release identity. Follow the canonical
+[release governance contract](docs/RELEASE-GOVERNANCE.md).
 
 ## Pull-request contract
 

@@ -1,7 +1,9 @@
 # Known limitations
 
 These limits are part of the claim discipline required by
-[The ChimpMaera Canon](CANON.md).
+[The ChimpMaera Canon](CANON.md). They apply to the current regular release
+`v0.2.0-poc.20260802.3` and its local synthetic evidence; a later documentation
+change does not broaden the released asset claims.
 
 - This is a local synthetic proof of concept, not a production deployment or
   security certification.
@@ -19,7 +21,7 @@ These limits are part of the claim discipline required by
 - Docker is the shipped demo Reference Adapter, not a mandatory product
   mechanism or one-container-per-Agent requirement. The current release does
   not validate VM/MicroVM, WASM, remote-worker, or other OS-sandbox adapters.
-- The v0.1 demo does not establish complete mediation for arbitrary Agent
+- The current local demo does not establish complete mediation for arbitrary Agent
   model, tool, skill, network, file, process, durable-Mind, secret, read, or
   effect crossings. Gateway-only behavior without OS-enforced denial of
   alternate paths is not claimed as isolation.

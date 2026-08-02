@@ -1,4 +1,4 @@
-# ChimpMaera v0.1 public release identity manifest
+# ChimpMaera functional product-increment public-file manifest
 # Format: source<TAB>destination<TAB>mode
 .gitignore	.gitignore	0644
 assets/brand/chimpmaera-master.svg	assets/brand/chimpmaera-master.svg	0644
@@ -146,6 +146,7 @@ docs/CANON.md	docs/CANON.md	0644
 docs/CONNECT-YOUR-FIRST-SYSTEM.md	docs/CONNECT-YOUR-FIRST-SYSTEM.md	0644
 docs/COMPANY-DATA-VALIDATION.md	docs/COMPANY-DATA-VALIDATION.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
+docs/RELEASE-GOVERNANCE.md	docs/RELEASE-GOVERNANCE.md	0644
 docs/SECURITY-ASSURANCE.md	docs/SECURITY-ASSURANCE.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
@@ -186,6 +187,7 @@ packages/contracts/src/poc-showcase-e2e.ts	packages/contracts/src/poc-showcase-e
 packages/contracts/src/poc-showcase.ts	packages/contracts/src/poc-showcase.ts	0644
 packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	0644
 release/public-files.manifest	release/public-files.manifest	0644
+release/governance.json	release/governance.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/builder-authority-v1.schema.json	schemas/contracts/builder-authority-v1.schema.json	0644
 schemas/contracts/builder-capability-resolution-v1.schema.json	schemas/contracts/builder-capability-resolution-v1.schema.json	0644
@@ -195,6 +197,7 @@ schemas/contracts/builder-integration-plan-v1.schema.json	schemas/contracts/buil
 schemas/contracts/builder-quality-evidence-v1.schema.json	schemas/contracts/builder-quality-evidence-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
+scripts/verify-release-governance.mjs	scripts/verify-release-governance.mjs	0755
 scripts/verify-supply-chain.mjs	scripts/verify-supply-chain.mjs	0755
 scripts/verify-openclaw-agent-runtime-lock.mjs	scripts/verify-openclaw-agent-runtime-lock.mjs	0755
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
@@ -235,6 +238,7 @@ tests/poc-setup-compatibility-planner.test.ts	tests/poc-setup-compatibility-plan
 tests/poc-showcase-e2e.test.ts	tests/poc-showcase-e2e.test.ts	0644
 tests/poc-showcase.test.ts	tests/poc-showcase.test.ts	0644
 tests/supply-chain-verifier.test.mjs	tests/supply-chain-verifier.test.mjs	0644
+tests/release-governance.test.mjs	tests/release-governance.test.mjs	0644
 tools/video-production-reference/ASSET-USAGE.md	tools/video-production-reference/ASSET-USAGE.md	0644
 tools/video-production-reference/Dockerfile	tools/video-production-reference/Dockerfile	0644
 tools/video-production-reference/README.md	tools/video-production-reference/README.md	0644

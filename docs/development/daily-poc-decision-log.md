@@ -35,14 +35,15 @@ Reason: manifest text is not Owner authority. Fallback: a future separately
 authorized publication stage may consume only a `READY_CANDIDATE` snapshot and
 must record its own effects and receipts.
 
-## REL-DAILY-D005 — product, public release and Daily are distinct identities
+## REL-DAILY-D005 — product increment and editorial Daily are distinct
 
-Decision: README product identity is timeless. The current public release,
-today's unpublished Daily and the previous Daily provenance snapshot use
-separate labeled fields. Package version `0.1.0` continues to describe the
-only published stable line; it is not promoted merely because a Daily exists.
+Decision: README product identity is timeless. A public release uses a
+functional increment name and its status comes only from anonymous GitHub
+readback. An editorial Daily may describe progress, decisions, learnings or a
+preview, but it does not gate, name or prove a release. Historical candidate
+snapshots remain dated provenance and are not active status fields.
 
-Reason: a versioned heading and unconstrained free text allowed stable and
-Daily lineages to look like one release. Fallback: if the public release state
-changes, update the explicit public field from observed release evidence and
-rebuild a new same-day sequence; never rewrite candidate status as publication.
+Reason: calendar labels and unconstrained free text allowed editorial and
+release lineages to look like one identity. Fallback: update the explicit
+functional release field only from observed public evidence; never rewrite
+candidate or editorial status as publication.

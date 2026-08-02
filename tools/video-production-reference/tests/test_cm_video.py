@@ -167,24 +167,13 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertNotIn("# ChimpMaera v0.1", root_readme)
         self.assertNotIn("ChimpMaera v0.1 is", root_readme)
         self.assertIn(
-            "**Current public release:** [`v0.2.0-poc.20260802.3`]"
+            "**Current regular Latest release:** [`v0.2.0-poc.20260802.3`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.3) — the current published regular release.",
+            "v0.2.0-poc.20260802.3) — **Governed Company Data Increment**.",
             root_readme,
         )
-        self.assertIn(
-            "**Today's Daily:** [`v0.2.0-poc.20260802.3`]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.3)"
-            " — the Daily snapshot dated 2026-08-02.",
-            root_readme,
-        )
-        self.assertIn(
-            "**Previous Daily provenance:** [`v0.2.0-poc.20260802.2`]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.2) — the historical predecessor Daily.",
-            root_readme,
-        )
+        self.assertNotIn("**Today's Daily:**", root_readme)
+        self.assertNotIn("**Previous Daily provenance:**", root_readme)
         self.assertIn(
             "**Historical predecessor:** [`v0.1.0`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)"
@@ -194,15 +183,10 @@ class BundledReferenceAssets(unittest.TestCase):
         video_heading = "## Watch ChimpMaera"
         self.assertIn(video_heading, root_readme)
         narrow_section = root_readme.split(video_heading, 1)[1].split("\n## ", 1)[0]
-        expected_videos = (
-            ("Why ChimpMaera? Open Knowledge, Governed AI, Verifiable Outcomes", "https://youtu.be/Dq_XLEzh5I8"),
-            ("How does ChimpMaera actually work? 🛠️", "https://youtu.be/w4fWgalD_WQ"),
-            ("Security by Default: How ChimpMaera Contains AI Agents", "https://youtu.be/SEPbE-EVoNs"),
-        )
-        expected_lines = [f"- [{title}]({url})" for title, url in expected_videos]
         observed_lines = [line for line in narrow_section.splitlines() if line.startswith("- [")]
-        self.assertEqual(observed_lines, expected_lines)
-        for stale_id in ("8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0"):
+        self.assertEqual(observed_lines, [])
+        self.assertIn("temporarily unavailable", narrow_section)
+        for stale_id in ("Dq_XLEzh5I8", "w4fWgalD_WQ", "SEPbE-EVoNs", "8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0"):
             self.assertNotIn(stale_id, root_readme)
         for needle in needles:
             self.assertNotIn(needle, narrow_section.lower())

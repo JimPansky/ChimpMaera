@@ -89,7 +89,7 @@ test("real repository declarations produce a bounded PASS report", async () => {
 test("public release staging accepts an isolated Git worktree control file", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "cm-public-build-test-"));
   try {
-    const output = path.join(target, "cm-v0.1-public-rc-20260801-test");
+    const output = path.join(target, "cm-product-increment-rc-20260802-test");
     await execFile(path.join(root, "scripts/build-public-release.sh"), [
       "--output",
       output,

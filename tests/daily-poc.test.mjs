@@ -77,7 +77,7 @@ function fixture() {
   writeFileSync(join(source, "package.json"), "{\"name\":\"chimpmaera-fixture\",\"private\":true,\"description\":\"current\"}\n", "utf8");
   writeFileSync(
     join(source, "README.md"),
-    `# ChimpMaera\n\nBase.\n\n## Release status\n\n- **Current public release:** v0.1.0 — published; stable predecessor.\n- **Today's Daily:** [\`${TARGET_VERSION}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${TARGET_VERSION}) — Daily snapshot dated 2026-08-02.\n- **Previous Daily provenance:** \`${predecessorVersion}\` — predecessor provenance only.\n\n## Videos\n\nCurrent overview.\n`,
+    `# ChimpMaera\n\nBase.\n\n## Release status\n\n- **Current regular Latest release:** [\`${TARGET_VERSION}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${TARGET_VERSION}) — Governed Company Data Increment.\n- **Historical predecessor:** \`${predecessorVersion}\` — provenance only.\n\n## Videos\n\nCurrent overview.\n`,
     "utf8",
   );
   git(source, "add", "README.md", "package.json");
@@ -212,17 +212,17 @@ function mutate(fx, kind) {
         "utf8",
       );
       break;
-    case "PRIOR_DAY_CURRENT_FIELD":
+    case "ACTIVE_CALENDAR_RELEASE_IDENTITY":
       writeFileSync(
         join(fx.source, "README.md"),
-        readFileSync(join(fx.source, "README.md"), "utf8").replace(TARGET_VERSION, "v0.2.0-poc.20260801.1"),
+        readFileSync(join(fx.source, "README.md"), "utf8").replace("## Videos", "- **Today's Daily:** calendar release identity.\n\n## Videos"),
         "utf8",
       );
       break;
-    case "DAILY_RELEASE_LINK_MISMATCH":
+    case "MISSING_LATEST_RELEASE_FIELD":
       writeFileSync(
         join(fx.source, "README.md"),
-        readFileSync(join(fx.source, "README.md"), "utf8").replace(`/tag/${TARGET_VERSION}`, "/tag/v0.2.0-poc.20260801.1"),
+        readFileSync(join(fx.source, "README.md"), "utf8").replace("**Current regular Latest release:**", "**Current public release:**"),
         "utf8",
       );
       break;
@@ -354,7 +354,7 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
   const videoAdapter = JSON.parse(texts.get("video-adapter.json"));
   assert.equal(videoAdapter.invocationPolicy.publicationAvailable, false);
   assert.equal(videoAdapter.publicActions, "forbidden");
-  assert.equal(JSON.parse(texts.get("candidate-report.json")).releaseTitle, "ChimpMaera POC Daily — 2026-08-02");
+  assert.equal(JSON.parse(texts.get("candidate-report.json")).releaseTitle, "ChimpMaera — Governed canonical company data before any target action (Increment Candidate)");
   assert.equal(JSON.parse(texts.get("snapshot.json")).version, "v0.2.0-poc.20260802.3");
   assert.equal(JSON.parse(texts.get("run-report.json")).candidateVersion, "v0.2.0-poc.20260802.3");
 });

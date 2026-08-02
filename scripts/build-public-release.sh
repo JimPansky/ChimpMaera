@@ -45,7 +45,7 @@ manifest="$source_root/release/public-files.manifest"
 
 output_parent="$(dirname -- "$output")"
 output_name="$(basename -- "$output")"
-[[ "$output_name" =~ ^cm-v0[.]1-public-rc-[0-9]{8}([-.][A-Za-z0-9.-]+)?$ ]] || {
+[[ "$output_name" =~ ^cm-product-increment-rc-[0-9]{8}([-.][A-Za-z0-9.-]+)?$ ]] || {
   printf 'Output basename is outside the release naming contract.\n' >&2
   exit 64
 }

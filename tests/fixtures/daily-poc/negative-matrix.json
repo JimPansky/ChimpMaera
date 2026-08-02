@@ -18,8 +18,8 @@
     {"id": "publication_without_stage_authorization", "mutation": "PUBLICATION_ENABLED", "expectedReason": "PUBLICATION_REQUEST_WITHOUT_SEPARATE_AUTHORIZED_STAGE"},
     {"id": "unmarked_v0_1_current_identity_mix", "mutation": "UNMARKED_V01_MIX", "expectedReason": "UNMARKED_MIXED_RELEASE_LINE:v0.1"},
     {"id": "versioned_v0_1_readme_identity", "mutation": "VERSIONED_README_IDENTITY", "expectedReason": "README_CURRENT_IDENTITY_MUST_BE_TIMELESS"},
-    {"id": "prior_day_identity_in_current_field", "mutation": "PRIOR_DAY_CURRENT_FIELD", "expectedReason": "README_DAILY_STATUS_MISSING_OR_MISMATCHED"},
-    {"id": "daily_release_link_mismatch", "mutation": "DAILY_RELEASE_LINK_MISMATCH", "expectedReason": "README_DAILY_STATUS_MISSING_OR_MISMATCHED"},
+    {"id": "active_calendar_release_identity", "mutation": "ACTIVE_CALENDAR_RELEASE_IDENTITY", "expectedReason": "README_CALENDAR_RELEASE_IDENTITY_DENIED"},
+    {"id": "missing_latest_release_field", "mutation": "MISSING_LATEST_RELEASE_FIELD", "expectedReason": "README_PUBLIC_RELEASE_STATUS_MISSING_OR_INVALID"},
     {"id": "video_renderer_unavailable", "mutation": "RENDERER_UNAVAILABLE", "expectedReason": "VIDEO_RENDERER_UNAVAILABLE"}
   ]
 }
