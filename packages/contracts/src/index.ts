@@ -17,3 +17,4 @@ export * from "./builder-discovery.js";
 export * from "./builder-capability-resolution.js";
 export * from "./builder-integration-plan.js";
 export * from "./builder-quality-evidence.js";
+export * from "./builder-contribution-bundle.js";

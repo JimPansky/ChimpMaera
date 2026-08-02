@@ -130,19 +130,20 @@ authority Revoke and installer Cleanup separately; they are not synonyms.
 ### 9. Add BI and share deliberately
 
 **PLANNED, OPTIONAL:** Add a versioned BI Semantic Contract and Dashboard Pack
-only after the read-only mappings and lineage are verified. A contribution
-bundle must be sanitized, provenance-labelled, tenant-safe, redacted and
-explicitly approved for publication by its owner. Shared or untrusted knowledge
-never grants authority, and private company data is never published
-automatically.
+only after the read-only mappings and lineage are verified. A locally validated
+Builder contract can create a closed, synthetic, digest-only contribution
+bundle, but it remains opt-in, `NOT_RELEASED` and carries no publication
+authorization. Publication still requires a separate authorized Owner action.
+Shared or untrusted knowledge never grants authority, and private company data
+is never published automatically.
 
 ## Maturity summary
 
 | Maturity | Scope |
 | --- | --- |
 | **Works in public snapshot** | Pinned synthetic CRM/ERP installation, `SAFE_GUIDED` local default, generated file-backed demo secrets, governed synthetic effect, provider readback, receipt and ownership-scoped cleanup. |
-| **Locally validated, not released** | Setup-planning contracts and tests model built-in/custom catalog trust and prevent custom content from activating `FULL_CONTROL_LAB`; there is no released onboarding UI or CLI for external systems. |
-| **Planned** | General adapter/profile discovery, System Advisor Guide and Machine Manifest tooling, Capability Mapping, Workload Identity/tenant binding, Permission X-ray, typed external read-only connectors, reversible-write onboarding, BI packs and sanitized contribution packaging. |
+| **Locally validated, not released** | Setup-planning and Builder contracts model Owner profiles, guided discovery, System Advisor Guides, generic inactive scaffolds, synthetic evidence, isolated read/reversible-write fixtures, second-system reuse and sanitized opt-in contribution packaging. There is no released onboarding UI or CLI for external systems. |
+| **Planned** | Live-system profiles, Workload Identity/tenant integrations, Permission X-ray UI, typed external connectors, production reversible-write onboarding and BI packs. |
 
 Keep planned work behind its own evidence gate. Promotion requires shipped
 artifacts, reproducible tests and current readback evidence—not an issue,

@@ -137,6 +137,8 @@ demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
 docs/ARCHITECTURE.md	docs/ARCHITECTURE.md	0644
 docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	0644
+docs/BUILDER-AGENT-OPERATOR-GUIDE.md	docs/BUILDER-AGENT-OPERATOR-GUIDE.md	0644
+docs/BUILDER-CONFIGURATION-DEFAULTS.md	docs/BUILDER-CONFIGURATION-DEFAULTS.md	0644
 docs/CANON.md	docs/CANON.md	0644
 docs/CONNECT-YOUR-FIRST-SYSTEM.md	docs/CONNECT-YOUR-FIRST-SYSTEM.md	0644
 docs/DAILY-POC-CANDIDATES.md	docs/DAILY-POC-CANDIDATES.md	0644
@@ -145,6 +147,7 @@ docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
 docs/SECURITY-ASSURANCE.md	docs/SECURITY-ASSURANCE.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
+docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
 docs/ZOO-FIELD-GUIDE.md	docs/ZOO-FIELD-GUIDE.md	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json	examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS	examples/daily-poc/v0.2.0-poc.20260801.1/generated/SHA256SUMS	0644
@@ -165,12 +168,15 @@ examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-brief.json	examples/dai
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-narration.md	examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-narration.md	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-storyboard.json	examples/daily-poc/v0.2.0-poc.20260801.1/generated/video-storyboard.json	0644
 examples/daily-poc/v0.2.0-poc.20260801.1/manifest.json	examples/daily-poc/v0.2.0-poc.20260801.1/manifest.json	0644
+examples/builder-agent/contribution-input-v1.json	examples/builder-agent/contribution-input-v1.json	0644
+examples/builder-agent/contribution-bundle-v1.json	examples/builder-agent/contribution-bundle-v1.json	0644
 examples/poc-release/showcase-v1.json	examples/poc-release/showcase-v1.json	0644
 examples/poc-setup-planner/catalog-v1.json	examples/poc-setup-planner/catalog-v1.json	0644
 package-lock.json	package-lock.json	0644
 package.json	package.json	0644
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
 packages/contracts/src/builder-authority.ts	packages/contracts/src/builder-authority.ts	0644
+packages/contracts/src/builder-contribution-bundle.ts	packages/contracts/src/builder-contribution-bundle.ts	0644
 packages/contracts/src/builder-discovery.ts	packages/contracts/src/builder-discovery.ts	0644
 packages/contracts/src/builder-capability-resolution.ts	packages/contracts/src/builder-capability-resolution.ts	0644
 packages/contracts/src/builder-integration-plan.ts	packages/contracts/src/builder-integration-plan.ts	0644
@@ -192,6 +198,7 @@ packages/contracts/src/poc-showcase.ts	packages/contracts/src/poc-showcase.ts	06
 packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	0644
 release/public-files.manifest	release/public-files.manifest	0644
 schemas/contracts/builder-authority-v1.schema.json	schemas/contracts/builder-authority-v1.schema.json	0644
+schemas/contracts/builder-contribution-bundle-v1.schema.json	schemas/contracts/builder-contribution-bundle-v1.schema.json	0644
 schemas/contracts/builder-discovery-v1.schema.json	schemas/contracts/builder-discovery-v1.schema.json	0644
 schemas/contracts/builder-capability-resolution-v1.schema.json	schemas/contracts/builder-capability-resolution-v1.schema.json	0644
 schemas/contracts/builder-integration-plan-v1.schema.json	schemas/contracts/builder-integration-plan-v1.schema.json	0644
@@ -207,6 +214,7 @@ tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/builder-authority.test.ts	tests/builder-authority.test.ts	0644
+tests/builder-contribution-bundle.test.ts	tests/builder-contribution-bundle.test.ts	0644
 tests/builder-discovery.test.ts	tests/builder-discovery.test.ts	0644
 tests/builder-capability-resolution.test.ts	tests/builder-capability-resolution.test.ts	0644
 tests/builder-integration-plan.test.ts	tests/builder-integration-plan.test.ts	0644

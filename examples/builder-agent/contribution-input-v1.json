@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "chimpmaera.builder/contribution-input/v1",
+  "issueId": "BLD-001",
+  "claimIds": [
+    "BLD-001-G1",
+    "BLD-001-G2",
+    "BLD-001-G3",
+    "BLD-001-G4",
+    "BLD-001-G5",
+    "BLD-001-G6",
+    "BLD-001-G7",
+    "BLD-001-G8"
+  ],
+  "scope": [
+    "Generic target-neutral Builder Agent contracts and synthetic fixtures",
+    "Owner-selected authority guided discovery evidence and opt-in contribution metadata"
+  ],
+  "nonScope": [
+    "Automatic publication installation activation or production mutation",
+    "Customer data live credentials Owner infrastructure or privileged target-specific scripts"
+  ],
+  "dependencies": [
+    { "dependencyId": "AAS-012", "status": "LOCALLY_VALIDATED" },
+    { "dependencyId": "AAS-023", "status": "LOCALLY_VALIDATED" },
+    { "dependencyId": "AAS-035", "status": "LOCALLY_VALIDATED" },
+    { "dependencyId": "AAS-036", "status": "LOCALLY_VALIDATED" },
+    { "dependencyId": "AAS-037", "status": "LOCALLY_VALIDATED" }
+  ],
+  "acceptanceCriteria": [
+    { "criterionId": "BLD-001-G1", "description": "Owner profiles and effective-rights intersection are deterministic and explainable", "status": "PASS" },
+    { "criterionId": "BLD-001-G2", "description": "Guided intake discovers a bounded synthetic system through typed manifests guides and context", "status": "PASS" },
+    { "criterionId": "BLD-001-G3", "description": "Exact capabilities are reused while genuine gaps remain inactive unresolved intent", "status": "PASS" },
+    { "criterionId": "BLD-001-G4", "description": "One generic planner emits inactive adapter or skill scaffolds fixtures and recovery", "status": "PASS" },
+    { "criterionId": "BLD-001-G5", "description": "Quality evidence reconciles readback recovery and four independent lifecycle routes", "status": "PASS" },
+    { "criterionId": "BLD-001-G6", "description": "Isolated OpenClaw proves one read and one reversible write with exact reset", "status": "PASS" },
+    { "criterionId": "BLD-001-G7", "description": "A second synthetic system reuses the byte-identical core and passes adversarial probes", "status": "PASS" },
+    { "criterionId": "BLD-001-G8", "description": "Sanitized opt-in bundle documentation validation and clean local checkpoint close M1", "status": "PASS" }
+  ],
+  "negativeProbes": [
+    { "probeId": "CREDENTIAL_LEAK_DENIED", "description": "Credential-shaped and private-key content is denied without reflection", "status": "PASS" },
+    { "probeId": "CUSTOMER_DATA_DENIED", "description": "Customer and tenant payload fields are outside the closed contract", "status": "PASS" },
+    { "probeId": "PRIVATE_PATH_DENIED", "description": "Private absolute and escaping source paths are denied", "status": "PASS" },
+    { "probeId": "PUBLICATION_SELF_APPROVAL_DENIED", "description": "The bundle cannot grant or infer publication authorization", "status": "PASS" },
+    { "probeId": "RAW_EVIDENCE_DENIED", "description": "Raw prompts runtime receipts and unrestricted evidence fields are denied", "status": "PASS" },
+    { "probeId": "RELEASE_STATUS_ESCALATION_DENIED", "description": "Local validation cannot be rewritten as released", "status": "PASS" },
+    { "probeId": "SOURCE_ESCAPE_DENIED", "description": "Only bounded public relative source paths are accepted", "status": "PASS" },
+    { "probeId": "UNKNOWN_FIELD_DENIED", "description": "Every unknown input output and nested field fails closed", "status": "PASS" }
+  ],
+  "evidenceReferences": [
+    { "evidenceId": "BLD-001-E-G1-20260801", "sha256": "3bde4cbff3d680ccae72faa1971636d5c67089a6b1a239381a55aa1caf4f900d" },
+    { "evidenceId": "BLD-001-E-G2-20260802", "sha256": "6a14090b15fb8a3e4b0ee433034310af98caf239e1da8e108e4ac02bab8e175f" },
+    { "evidenceId": "BLD-001-E-G3-20260802", "sha256": "b0f9e7421b04f605fd88f411c2407f3f48cd80c67d2e7096004c7ed22cc27614" },
+    { "evidenceId": "BLD-001-E-G4-20260802", "sha256": "8b0c62078f5359e9232c41cd454bf5e739f88f1af464441701b57c6c5515b6c8" },
+    { "evidenceId": "BLD-001-E-G5-20260802", "sha256": "225e132fbea78a0a56936ee4fa19e5eee83156c67d04518f2c8387f7dded7135" },
+    { "evidenceId": "BLD-001-E-G6-20260802", "sha256": "4442398bd10823d74a226c653bafaeb3e76a4b1d0acdd9ea9e5351362d68631c" },
+    { "evidenceId": "BLD-001-E-G7-20260802", "sha256": "6d3d3b8dab542394d9ee6ae09a05eecb81d2d7ff98f192856a9ea12f1cfa0af0" }
+  ],
+  "sourceArtifacts": [
+    { "path": "docs/BUILDER-AGENT-OPERATOR-GUIDE.md", "sha256": "ff9fd52f21a4f0e991a60d7aefa9e2febc6aef109a81f2e0eae1fe475b19c1f6" },
+    { "path": "docs/BUILDER-CONFIGURATION-DEFAULTS.md", "sha256": "b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69" },
+    { "path": "docs/SYSTEM-ADVISOR-GUIDE.md", "sha256": "e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9" },
+    { "path": "packages/contracts/src/builder-contribution-bundle.ts", "sha256": "c35217926c0b3761b67a2f4635e305e35d8d6cbb164f6330f76b9b85513a8a50" },
+    { "path": "schemas/contracts/builder-contribution-bundle-v1.schema.json", "sha256": "02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0" },
+    { "path": "tests/builder-contribution-bundle.test.ts", "sha256": "56c0f41b35979f8102b2d46a86ac233c934bba0ec5b98a2680acb1e4a18075c6" }
+  ],
+  "recoverySteps": [
+    "Keep publication authorization absent and retain digest-only negative evidence",
+    "Revert the bounded G8 implementation and restore the clean G7 checkpoint"
+  ],
+  "nonClaims": [
+    "Not hostile-host containment security certification or universal compatibility",
+    "Not production customer or live-provider evidence",
+    "Not released merged published uploaded or publicly available"
+  ]
+}
