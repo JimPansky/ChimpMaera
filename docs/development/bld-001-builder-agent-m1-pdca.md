@@ -2,11 +2,11 @@
 
 Date: 2026-08-01
 Stable issue ID: `BLD-001`
-Delivery status: `in_progress`
-Claim status: `NOT_PROVEN`
+Delivery status: `locally_validated`
+Claim status: `LOCAL_SYNTHETIC_PROVEN_NOT_RELEASED`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
-Current metric: **7/8**
+Current metric: **8/8**
 
 ## Local issue contract
 
@@ -103,8 +103,8 @@ evidence. The decision matrix is not an executable authority token.
 
 ## Autonomy gate
 
-- **Exact phase/metric:** BLD-001 Builder Agent M1, **7/8 → 8/8**; G1 through
-  G7 are complete and the next bounded slice targets G8 only.
+- **Exact phase/metric:** BLD-001 Builder Agent M1, **8/8 complete**. This metric
+  is closed and must not be optimized again without new regression evidence.
 - **Autonomously reachable:** contracts, synthetic fixtures, tests, docs,
   isolated later runtime fixtures and local evidence require no external data
   or mutation.
@@ -112,9 +112,9 @@ evidence. The decision matrix is not an executable authority token.
   plans may be drafted but not published or activated.
 - **External/publication dependent:** push, PR, merge, tag, release, upload,
   outreach, production/customer evidence and mutation.
-- **Completed metric rule:** all prerequisite video/architecture gates and
-  AAS dependencies plus BLD-001-G1/G2/G3/G4/G5/G6/G7 are complete and are not
-  repeated without regression evidence.
+- **Completed metric rule:** all prerequisite video/architecture gates, AAS
+  dependencies and BLD-001-G1 through G8 are complete and are not repeated
+  without regression evidence.
 
 ## Reversible decisions
 
@@ -183,55 +183,62 @@ evidence. The decision matrix is not an executable authority token.
   `1bdebb8` is reverted on any cross-system or rollback mismatch. **Review:**
   G8 contribution-bundle schema, Operator/System Advisor documentation and
   final 8/8 non-claim closure.
+- **Assumption:** G8 may publish only a closed synthetic metadata shape to a
+  local bundle while publication authorization remains structurally absent.
+  **Risk:** prose or path fields could leak private metadata, or a local bundle
+  could be mistaken for a release. **Fallback:** deny unknown fields,
+  credential-shaped values, private/absolute paths, raw prompt/runtime receipt
+  fields and any delivery/release escalation; revert `a12c7c4` on mismatch.
+  **Review:** next portfolio frontier selection and any future contribution
+  schema version.
 
 ## PDCA status
 
 ### Plan
 
-Keep the full 8/8 contract frozen and G1 through G6 closed. Extract one
-target-neutral Builder core from the proven G6 runtime, bind it through closed
-data contracts to the original system and a distinct second synthetic system,
-and prove the complete G7 adversarial matrix. Rerun G6 only as proportionate
-regression evidence because the shared runtime bytes change.
+Keep G1 through G7 closed. Add one closed, deterministic contribution bundle
+contract that exports only synthetic Issue/Claim/Evidence metadata, public
+relative source paths and digests. Add Operator/System Advisor guides and an
+explicit defaults catalogue. Validate leakage/status denials, checksum closure,
+supply-chain declarations and deterministic public staging. Do not repeat the
+G6 runtime smoke because no runtime/Gateway/core byte changes.
 
 ### Do
 
-G1 through G6 remain closed. Added one shared core with no habitat, warehouse,
-set-point, illuminance or brightness terms. Zoo habitat and warehouse lighting
-now supply only digest-bound contracts and generic adapter field mappings. Both
-systems exercised read, Owner-routed reversible write, exact replay, receipts
-and zero drift through the same core bytes. Added fail-closed probes for direct
-bypass/API absence, secret smuggling, cross-tenant access, unauthorized skill
-activation, self-approval, replay, post-approval mutation, rollback-readback
-failure and startup integrity drift.
+G1 through G7 remain closed. Added the versioned contribution input/output
+contracts, a closed allow-list sanitizer, JSON Schema, deterministic synthetic
+input and generated bundle, and six focused tests. The bundle is always
+`SYNTHETIC`, `OPT_IN`, `LOCALLY_VALIDATED`, `NOT_RELEASED` with publication
+authorization `ABSENT`. Added Operator, System Advisor and configuration/default
+guides and moved sanitized contribution packaging from planned to locally
+validated while keeping live integrations and publication planned/external.
 
 ### Check
 
-- Focused retained G6 plus G7 tests: **11/11 PASS**.
-- Complete repository tests: **194/194 PASS in split source-boundary runs**.
-  The exact temporary dependency link let 193 tests pass and caused only the
-  intended public-staging rejection; after link removal, all five clean
-  source-tree/supply-chain/public-staging tests passed separately.
-- Repository checksums: **272/272 PASS**.
-- Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
-  PASS.
-- Shared core SHA-256:
-  `199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6`
-  for both synthetic systems.
-- Proportionate real isolated OpenClaw regression smoke:
-  `bld001-g6-20260802T074147Z` **PASS in 31,841 ms**. It recorded four model
-  calls, one read, one reversible write, seven denials, two bound receipts,
-  unchanged Owner process/config fingerprint, exact target rollback, reset to
-  zero counters/receipts and zero owned runtime residue.
+- G8 focused sanitizer/schema/example tests: **6/6 PASS**.
+- Complete repository tests: **200/200 PASS in split source-boundary runs**.
+  The exact temporary dependency link let 199 tests pass and caused only the
+  intended public-staging symlink rejection; after link removal all five clean
+  source-tree/supply-chain/public-staging tests passed.
+- Repository checksums: **280/280 PASS**.
+- Supply-chain declaration checks: **6/6 PASS**; deterministic clean public
+  staging PASS.
+- Generated bundle SHA-256:
+  `593a71fc60842d02e1ea0e854f891f5fda5ee1db8f023e127dd2b0920bb2837f`;
+  internal bundle digest:
+  `f2647c0e166aa1bc8fa6973ebf770f1dac42528a9932b04fd38bddb32e551d32`.
+- Proportionate runtime smoke: **NOT_APPLICABLE**. G8 changed only contracts,
+  schema, tests, examples, documentation and public-closure declarations; the
+  G6/G7 runtime, Gateway, shared core and fixture contracts are byte-unchanged.
 - Implementation commit:
-  `1bdebb800cba9fc56aa3de939159e576dac8bcd1`.
-- Evidence: `docs/development/evidence/bld-001-g7-20260802.json`.
+  `a12c7c4cb0d48b966af87f6b8b142a4542c1220b`.
+- Evidence: `docs/development/evidence/bld-001-g8-20260802.json`.
 
 ### Act
 
-Close G7 at **7/8** with verdict
-`LOCAL_BLD_001_G7_PASS_BYTE_IDENTICAL_TWO_SYSTEM_CORE_ADVERSARIAL_CONFORMANCE_G6_REGRESSION_ZERO_RESIDUE_NOT_PRODUCTION_OR_RELEASED`.
-Do not reopen G1 through G7 without regression evidence. Keep WIP at one and
-advance the same worktree to G8 sanitized contribution bundle, Operator/System
-Advisor documentation, final validation and 8/8 PDCA closure. Do not publish,
-upload, merge or represent local validation as release evidence.
+Close BLD-001 at **8/8** with verdict
+`LOCAL_BLD_001_M1_PASS_SANITIZED_OPT_IN_CONTRIBUTION_DOCS_FULL_VALIDATION_NOT_PRODUCTION_OR_RELEASED`.
+Do not reopen G1 through G8 without new regression evidence. Keep the local
+checkpoint clean, close this product writer, update the canonical portfolio
+state and select the highest-value internally reachable next case. Do not push,
+publish, upload, merge or represent local validation as release evidence.
