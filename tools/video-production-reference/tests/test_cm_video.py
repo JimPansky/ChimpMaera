@@ -169,7 +169,7 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertIn(
             "**Current public release:** [`v0.2.0-poc.20260802.2`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260802.2) — the current regular release.",
+            "v0.2.0-poc.20260802.2) — the current published regular release.",
             root_readme,
         )
         self.assertIn(

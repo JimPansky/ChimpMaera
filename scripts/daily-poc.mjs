@@ -370,7 +370,9 @@ function semanticIssues(manifest, sourceRepo, facts) {
       if (!predecessorLine || !predecessorLine.includes(`\`${previous.version}\``)) {
         issues.push("README_PROVENANCE_PREDECESSOR_MISSING_OR_MISMATCHED");
       }
-      if (dailyLine && (dailyLine.includes(previous.version) || dailyLine.includes(dateToken(previous.date)))) {
+      const predecessorDateLeaksIntoDifferentDay = previous.date !== manifest.date
+        && dailyLine?.includes(dateToken(previous.date));
+      if (dailyLine && (dailyLine.includes(previous.version) || predecessorDateLeaksIntoDifferentDay)) {
         issues.push("README_CURRENT_FIELD_USES_PREDECESSOR_IDENTITY");
       }
     }
