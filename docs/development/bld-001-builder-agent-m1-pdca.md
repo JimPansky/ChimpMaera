@@ -6,7 +6,7 @@ Delivery status: `in_progress`
 Claim status: `NOT_PROVEN`
 Branch: `feat/bld-001-zoo-builder-m1`
 Starting metric: **0/8**
-Current metric: **6/8**
+Current metric: **7/8**
 
 ## Local issue contract
 
@@ -103,8 +103,8 @@ evidence. The decision matrix is not an executable authority token.
 
 ## Autonomy gate
 
-- **Exact phase/metric:** BLD-001 Builder Agent M1, **6/8 → 8/8**; G1 through
-  G6 are complete and the next bounded slice targets G7 only.
+- **Exact phase/metric:** BLD-001 Builder Agent M1, **7/8 → 8/8**; G1 through
+  G7 are complete and the next bounded slice targets G8 only.
 - **Autonomously reachable:** contracts, synthetic fixtures, tests, docs,
   isolated later runtime fixtures and local evidence require no external data
   or mutation.
@@ -113,7 +113,7 @@ evidence. The decision matrix is not an executable authority token.
 - **External/publication dependent:** push, PR, merge, tag, release, upload,
   outreach, production/customer evidence and mutation.
 - **Completed metric rule:** all prerequisite video/architecture gates and
-  AAS dependencies plus BLD-001-G1/G2/G3/G4/G5/G6 are complete and are not
+  AAS dependencies plus BLD-001-G1/G2/G3/G4/G5/G6/G7 are complete and are not
   repeated without regression evidence.
 
 ## Reversible decisions
@@ -173,51 +173,65 @@ evidence. The decision matrix is not an executable authority token.
   purge; revert `4a50303` on any mismatch. **Review:** G7 must reuse the same
   generic tool/core for a second system and exercise the full adversarial
   conformance matrix.
+- **Assumption:** G7 may express target-specific fields and operations only in
+  digest-bound system contracts while one byte-identical core interprets the
+  closed `READ_FIELD` and `REVERSIBLE_WRITE_FIELD` adapter kinds. **Risk:** a
+  later target may need semantics those two kinds cannot safely express, or a
+  data binding may be mistaken for universal compatibility. **Fallback:**
+  unknown kinds deny, unsupported operations remain inactive
+  `UNRESOLVED_INTENT`, G6 remains the runtime regression oracle and commit
+  `1bdebb8` is reverted on any cross-system or rollback mismatch. **Review:**
+  G8 contribution-bundle schema, Operator/System Advisor documentation and
+  final 8/8 non-claim closure.
 
 ## PDCA status
 
 ### Plan
 
-Keep the full 8/8 contract frozen and G1 through G5 closed. Build one fresh,
-default-off and ownership-scoped OpenClaw fixture that consumes generic Builder
-contracts, admits exactly one read and one reversible write for an unknown
-synthetic target, and proves Gateway/Broker receipts, persisted readback,
-rollback, semantic reset and zero owned residue.
+Keep the full 8/8 contract frozen and G1 through G6 closed. Extract one
+target-neutral Builder core from the proven G6 runtime, bind it through closed
+data contracts to the original system and a distinct second synthetic system,
+and prove the complete G7 adversarial matrix. Rerun G6 only as proportionate
+regression evidence because the shared runtime bytes change.
 
 ### Do
 
-G1 through G5 remain closed. Added one pinned OpenClaw 2026.7.1 Builder profile,
-one closed internal network, one generic Builder tool and one Gateway/Broker
-with a synthetic habitat target. The Gateway recomputes the Owner-sovereignty
-intersection, fixture admission and Owner-approval digests at startup. The
-OpenClaw Agent completed the admitted no-change temperature read and the
-Owner-routed set-point write. The write was persisted, read back and restored
-to the exact prior digest in a `finally` recovery boundary. Reset and purge are
-idempotent and limited to resources carrying the G6 ownership label.
+G1 through G6 remain closed. Added one shared core with no habitat, warehouse,
+set-point, illuminance or brightness terms. Zoo habitat and warehouse lighting
+now supply only digest-bound contracts and generic adapter field mappings. Both
+systems exercised read, Owner-routed reversible write, exact replay, receipts
+and zero drift through the same core bytes. Added fail-closed probes for direct
+bypass/API absence, secret smuggling, cross-tenant access, unauthorized skill
+activation, self-approval, replay, post-approval mutation, rollback-readback
+failure and startup integrity drift.
 
 ### Check
 
-- Focused BLD-001-G6 tests: **6/6 PASS**.
-- Complete repository tests: **189/189 PASS in split source-boundary runs**.
-  The 184 non-source-boundary tests ran with the matching existing dependency
-  tree; after removing that temporary untracked symlink, all five clean
+- Focused retained G6 plus G7 tests: **11/11 PASS**.
+- Complete repository tests: **194/194 PASS in split source-boundary runs**.
+  The exact temporary dependency link let 193 tests pass and caused only the
+  intended public-staging rejection; after link removal, all five clean
   source-tree/supply-chain/public-staging tests passed separately.
-- Repository checksums: **269/269 PASS**.
+- Repository checksums: **272/272 PASS**.
 - Supply-chain declaration checks: **6/6 PASS**; deterministic public staging
   PASS.
-- Real isolated OpenClaw smoke:
-  `bld001-g6-20260802T071108Z` **PASS in 30,972 ms**. It recorded four model
+- Shared core SHA-256:
+  `199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6`
+  for both synthetic systems.
+- Proportionate real isolated OpenClaw regression smoke:
+  `bld001-g6-20260802T074147Z` **PASS in 31,841 ms**. It recorded four model
   calls, one read, one reversible write, seven denials, two bound receipts,
   unchanged Owner process/config fingerprint, exact target rollback, reset to
   zero counters/receipts and zero owned runtime residue.
 - Implementation commit:
-  `4a50303b4d65df7c046834135884fed45b25af7a`.
-- Evidence: `docs/development/evidence/bld-001-g6-20260802.json`.
+  `1bdebb800cba9fc56aa3de939159e576dac8bcd1`.
+- Evidence: `docs/development/evidence/bld-001-g7-20260802.json`.
 
 ### Act
 
-Close G6 at **6/8** with verdict
-`LOCAL_BLD_001_G6_PASS_REAL_ISOLATED_OPENCLAW_SYNTHETIC_READ_REVERSIBLE_WRITE_ROLLBACK_ZERO_OWNED_RESIDUE_NOT_PRODUCTION_OR_RELEASED`.
-Do not reopen G1 through G6 without regression evidence. Keep WIP at one and
-advance the same worktree to G7 second-system reuse and adversarial conformance
-without changing the generic Builder core.
+Close G7 at **7/8** with verdict
+`LOCAL_BLD_001_G7_PASS_BYTE_IDENTICAL_TWO_SYSTEM_CORE_ADVERSARIAL_CONFORMANCE_G6_REGRESSION_ZERO_RESIDUE_NOT_PRODUCTION_OR_RELEASED`.
+Do not reopen G1 through G7 without regression evidence. Keep WIP at one and
+advance the same worktree to G8 sanitized contribution bundle, Operator/System
+Advisor documentation, final validation and 8/8 PDCA closure. Do not publish,
+upload, merge or represent local validation as release evidence.
