@@ -1,0 +1,49 @@
+{
+  "adapter": "tools/video-production-reference/bin/cm-video",
+  "assets": [
+    {
+      "id": "VIDEO-ASSET-NARRATION",
+      "path": null,
+      "role": "AUDIO",
+      "segmentRef": null,
+      "sha256": null,
+      "status": "PLANNED"
+    },
+    {
+      "id": "VIDEO-ASSET-README-LINKS-SHOT",
+      "path": null,
+      "role": "SHOT",
+      "segmentRef": "VIDEO-SEGMENT-LINK-CORRECTION",
+      "sha256": null,
+      "status": "PLANNED"
+    }
+  ],
+  "candidateVersion": "v0.2.0-poc.20260802.1",
+  "invocationPolicy": {
+    "approvalBinding": "LOCAL_RENDER:v0.2.0-poc.20260802.1",
+    "localRenderFlag": "--render-video",
+    "overwrite": false,
+    "publicationAvailable": false
+  },
+  "prerequisites": [
+    "Every shot is accepted and hash-locked before any local render.",
+    "Narration is accepted and hash-locked before any local render.",
+    "The exact LOCAL_RENDER candidate approval binding is present.",
+    "Publication remains unavailable from the adapter."
+  ],
+  "publicActions": "forbidden",
+  "renderDefault": false,
+  "requiredStages": [
+    "manifest_validate",
+    "scene_plan",
+    "narration_and_storyboard",
+    "evidence_claim_crosscheck",
+    "draft_render",
+    "technical_and_claim_qc",
+    "publishable_asset_staging"
+  ],
+  "schemaVersion": "chimpmaera.daily-poc-video-adapter/v1",
+  "sourceManifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81",
+  "status": "DISABLED_DEFAULT",
+  "targetContract": "cm.video/v1"
+}

@@ -29,6 +29,16 @@ boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
 **not a security boundary**. Read the
 [exact claims, evidence, maturity and TCB limits](docs/SECURITY-ASSURANCE.md).
 
+## Release status
+
+- **Current public release:** [v0.1.0](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — the stable predecessor line published on 2026-07-31.
+- **Today's Daily:** [`v0.2.0-poc.20260802.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.1) — the Daily snapshot dated 2026-08-02.
+- **Previous Daily provenance:** `v0.2.0-poc.20260801.1` — predecessor provenance only; it is not today's identity.
+
+Daily snapshots are not production releases, security certifications, hosted
+services, support promises or permission to connect real systems. Use only
+synthetic data on a disposable or development host.
+
 ## What you can do today
 
 - Run the loopback-only demo with fictional EspoCRM and Dolibarr data.
@@ -59,9 +69,8 @@ Remove only installer-owned resources with:
 ./demo/uninstall.sh --purge
 ```
 
-The latest tagged and published release is **v0.1.0**. Current `main` also
-contains an **unreleased v0.2 POC candidate**; merged or locally validated work
-is not a release.
+The stable public release line remains **v0.1.0**. The Daily snapshot has its
+own explicit version and provenance in [Release status](#release-status).
 
 ## How it works
 
@@ -120,11 +129,11 @@ community—not company membership, employment or authority.
 
 ## Watch ChimpMaera
 
-These videos were filmed against earlier builds. They explain the direction,
-but are not evidence of the current snapshot or release maturity:
-[easy start](https://youtu.be/8mB7O81Y2xA),
-[governed actions](https://youtu.be/8lj5nd-LJa4) and
-[capability is not authority](https://youtu.be/mxN9biyelZ0).
+These videos explain the project direction but are not release evidence:
+
+- [Why ChimpMaera? Open Knowledge, Governed AI, Verifiable Outcomes](https://youtu.be/Dq_XLEzh5I8)
+- [How does ChimpMaera actually work? 🛠️](https://youtu.be/w4fWgalD_WQ)
+- [Security by Default: How ChimpMaera Contains AI Agents](https://youtu.be/SEPbE-EVoNs)
 
 ## Project details
 

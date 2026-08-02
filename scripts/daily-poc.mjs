@@ -145,6 +145,18 @@ function dateToken(date) {
   return date.replaceAll("-", "");
 }
 
+function versionLine(version) {
+  const match = /^v([0-9]+)\.([0-9]+)\.([0-9]+)(?:-|$)/.exec(version);
+  return match ? `${match[1]}.${match[2]}` : null;
+}
+
+function stringValues(value) {
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value)) return value.flatMap(stringValues);
+  if (value && typeof value === "object") return Object.values(value).flatMap(stringValues);
+  return [];
+}
+
 function uniqueIds(values, label) {
   const seen = new Set();
   const issues = [];
@@ -162,6 +174,7 @@ function snapshotPayload(snapshot) {
 
 function verifyHistory(manifest) {
   const issues = [];
+  const targetLine = versionLine(manifest.targetVersion);
   for (const snapshot of manifest.history) {
     const observed = sha256(canonicalJson(snapshotPayload(snapshot)));
     if (observed !== snapshot.snapshotDigest) {
@@ -169,6 +182,18 @@ function verifyHistory(manifest) {
     }
     if (snapshot.date === manifest.date && snapshot.sequence === manifest.sequence) {
       issues.push(`DUPLICATE_DAILY_SEQUENCE:${manifest.date}:${manifest.sequence}`);
+    }
+    const targetCore = manifest.targetVersion.split("-poc.", 1)[0];
+    const expectedVersion = targetLine
+      ? `${targetCore}-poc.${dateToken(snapshot.date)}.${snapshot.sequence}`
+      : null;
+    if (versionLine(snapshot.version) !== targetLine) {
+      issues.push(`HISTORY_RELEASE_LINE_MISMATCH:${snapshot.version}:${manifest.targetVersion}`);
+    } else if (snapshot.version !== expectedVersion) {
+      issues.push(`HISTORY_VERSION_DATE_OR_SEQUENCE_MISMATCH:${snapshot.version}`);
+    }
+    if (`${snapshot.date}:${String(snapshot.sequence).padStart(10, "0")}` >= `${manifest.date}:${String(manifest.sequence).padStart(10, "0")}`) {
+      issues.push(`HISTORY_NOT_PREDECESSOR:${snapshot.version}`);
     }
   }
   const ordered = [...manifest.history].sort((left, right) =>
@@ -278,6 +303,22 @@ function semanticIssues(manifest, sourceRepo, facts) {
   ];
   const expectedVersion = new RegExp(`^v(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)-poc\\.${dateToken(manifest.date)}\\.${manifest.sequence}$`);
   if (!expectedVersion.test(manifest.targetVersion)) issues.push("VERSION_DATE_OR_SEQUENCE_MISMATCH");
+  const targetLine = versionLine(manifest.targetVersion);
+  const { history: ignoredHistory, ...currentManifest } = manifest;
+  for (const value of stringValues(currentManifest)) {
+    for (const match of value.matchAll(/\bv([0-9]+)\.([0-9]+)(?:\.[0-9]+)?\b/g)) {
+      const observedLine = `${match[1]}.${match[2]}`;
+      if (
+        observedLine !== targetLine &&
+        !/\b(?:histor(?:y|ical)|predecessor|provenance|current public release|stable)\b/i.test(value)
+      ) {
+        issues.push(`UNMARKED_MIXED_RELEASE_LINE:v${observedLine}`);
+      }
+    }
+  }
+  if (manifest.video.title !== `ChimpMaera POC Daily — ${manifest.date}`) {
+    issues.push("CURRENT_DAILY_TITLE_MISMATCH");
+  }
   if (manifest.source.base === manifest.source.head && facts.changedFiles.length !== 0) {
     issues.push("SOURCE_DIFF_CONTRADICTION");
   }
@@ -293,6 +334,49 @@ function semanticIssues(manifest, sourceRepo, facts) {
     }
   }
   if (facts.changedFiles.length > 0 && manifest.highlights.length === 0) issues.push("MATERIAL_CHANGE_WITHOUT_HIGHLIGHT");
+
+  try {
+    const readme = readFileSync(resolveRepoPath(sourceRepo, "README.md"), "utf8");
+    const heading = readme.match(/^# (.+)$/m)?.[1] ?? null;
+    if (heading !== "ChimpMaera") issues.push("README_CURRENT_IDENTITY_MUST_BE_TIMELESS");
+    const lines = readme.split("\n");
+    const publicLine = lines.find((line) => line.includes("**Current public release:**"));
+    if (!publicLine || !/\bpublished\b/i.test(publicLine) || /\bnot published\b/i.test(publicLine)) {
+      issues.push("README_PUBLIC_RELEASE_STATUS_MISSING_OR_INVALID");
+    }
+    const preparedDailyLine = lines.find((line) => line.includes("**Daily candidate:**"));
+    const publishedDailyLine = lines.find((line) => line.includes("**Today's Daily:**"));
+    const dailyLink = `[\`${manifest.targetVersion}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${manifest.targetVersion})`;
+    const preparedDailyValid = preparedDailyLine
+      && preparedDailyLine.includes(`\`${manifest.targetVersion}\``)
+      && preparedDailyLine.includes("**not published**");
+    const publishedDailyValid = publishedDailyLine
+      && publishedDailyLine.includes(dailyLink)
+      && !/\bnot published\b/i.test(publishedDailyLine);
+    if (!preparedDailyValid && !publishedDailyValid) {
+      issues.push("README_DAILY_STATUS_MISSING_OR_MISMATCHED");
+    }
+    const dailyLine = publishedDailyLine ?? preparedDailyLine;
+    const previous = [...manifest.history].sort((left, right) =>
+      `${left.date}:${String(left.sequence).padStart(10, "0")}`.localeCompare(
+        `${right.date}:${String(right.sequence).padStart(10, "0")}`,
+        "en",
+      ),
+    ).at(-1);
+    if (previous) {
+      const predecessorLine = lines.find((line) =>
+        line.includes("**Previous Daily provenance:**") || line.includes("**Provenance predecessor:**"),
+      );
+      if (!predecessorLine || !predecessorLine.includes(`\`${previous.version}\``)) {
+        issues.push("README_PROVENANCE_PREDECESSOR_MISSING_OR_MISMATCHED");
+      }
+      if (dailyLine && (dailyLine.includes(previous.version) || dailyLine.includes(dateToken(previous.date)))) {
+        issues.push("README_CURRENT_FIELD_USES_PREDECESSOR_IDENTITY");
+      }
+    }
+  } catch (error) {
+    issues.push(`${error.code ?? "README_STATUS_ERROR"}:README.md:${error.message}`);
+  }
 
   const evidence = new Map(manifest.evidence.map((item) => [item.id, item]));
   const claims = new Map(manifest.claims.map((item) => [item.id, item]));

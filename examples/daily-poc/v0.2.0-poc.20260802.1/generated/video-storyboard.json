@@ -1,0 +1,43 @@
+{
+  "candidateVersion": "v0.2.0-poc.20260802.1",
+  "schemaVersion": "chimpmaera.daily-poc-storyboard/v1",
+  "segments": [
+    {
+      "claimFacts": [
+        {
+          "id": "CM-CLAIM-CURRENT-VIDEO-LINKS",
+          "maturity": "LOCALLY_VALIDATED",
+          "statement": "The locally validated README contains the clean URLs https://youtu.be/Dq_XLEzh5I8, https://youtu.be/w4fWgalD_WQ and https://youtu.be/SEPbE-EVoNs in overview, implementation and security order."
+        }
+      ],
+      "durationSeconds": 12,
+      "id": "VIDEO-SEGMENT-LINK-CORRECTION",
+      "order": 1,
+      "purpose": "State today's narrow source delta and exact ordering.",
+      "title": "Three current destinations",
+      "useCaseRefs": [
+        "USE-CASE-CURRENT-VIDEO-LINKS"
+      ],
+      "visuals": [
+        "Show the 2026-08-02 candidate identity and frozen source range.",
+        "Show the three README links in overview, implementation and security order."
+      ]
+    },
+    {
+      "claimFacts": [],
+      "durationSeconds": 8,
+      "id": "VIDEO-SEGMENT-LOCAL-BOUNDARY",
+      "order": 2,
+      "purpose": "Prevent a local validation result from being narrated as a release.",
+      "title": "Local candidate boundary",
+      "useCaseRefs": [
+        "USE-CASE-CURRENT-VIDEO-LINKS"
+      ],
+      "visuals": [
+        "Show LOCALLY_VALIDATED / NOT_RELEASED.",
+        "Show every publication field disabled."
+      ]
+    }
+  ],
+  "sourceManifestSha256": "b6b31b137480c0136a9dd1d0342321c06f3c9b76ebbb14b6accfe0a583c30c81"
+}

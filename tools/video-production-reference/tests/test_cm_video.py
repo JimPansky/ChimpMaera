@@ -162,9 +162,40 @@ class BundledReferenceAssets(unittest.TestCase):
         files = [repo_root / "README.md"]
         files.extend(path for path in ROOT.rglob("*") if path.is_file())
         root_readme = (repo_root / "README.md").read_text(encoding="utf-8")
+        self.assertTrue(root_readme.startswith("<p align=\"center\">"))
+        self.assertIn("\n# ChimpMaera\n", root_readme)
+        self.assertNotIn("# ChimpMaera v0.1", root_readme)
+        self.assertNotIn("ChimpMaera v0.1 is", root_readme)
+        self.assertIn(
+            "**Current public release:** [v0.1.0]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)"
+            " — the stable predecessor line published on 2026-07-31.",
+            root_readme,
+        )
+        self.assertIn(
+            "**Today's Daily:** [`v0.2.0-poc.20260802.1`]"
+            "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.1)"
+            " — the Daily snapshot dated 2026-08-02.",
+            root_readme,
+        )
+        self.assertIn(
+            "**Previous Daily provenance:** `v0.2.0-poc.20260801.1`"
+            " — predecessor provenance only; it is not today's identity.",
+            root_readme,
+        )
         video_heading = "## Watch ChimpMaera"
         self.assertIn(video_heading, root_readme)
         narrow_section = root_readme.split(video_heading, 1)[1].split("\n## ", 1)[0]
+        expected_videos = (
+            ("Why ChimpMaera? Open Knowledge, Governed AI, Verifiable Outcomes", "https://youtu.be/Dq_XLEzh5I8"),
+            ("How does ChimpMaera actually work? 🛠️", "https://youtu.be/w4fWgalD_WQ"),
+            ("Security by Default: How ChimpMaera Contains AI Agents", "https://youtu.be/SEPbE-EVoNs"),
+        )
+        expected_lines = [f"- [{title}]({url})" for title, url in expected_videos]
+        observed_lines = [line for line in narrow_section.splitlines() if line.startswith("- [")]
+        self.assertEqual(observed_lines, expected_lines)
+        for stale_id in ("8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0"):
+            self.assertNotIn(stale_id, root_readme)
         for needle in needles:
             self.assertNotIn(needle, narrow_section.lower())
         for path in files:

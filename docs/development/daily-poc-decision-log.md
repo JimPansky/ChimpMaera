@@ -34,3 +34,15 @@ the preparation compiler even if approvals are written into the manifest.
 Reason: manifest text is not Owner authority. Fallback: a future separately
 authorized publication stage may consume only a `READY_CANDIDATE` snapshot and
 must record its own effects and receipts.
+
+## REL-DAILY-D005 — product, public release and Daily are distinct identities
+
+Decision: README product identity is timeless. The current public release,
+today's unpublished Daily and the previous Daily provenance snapshot use
+separate labeled fields. Package version `0.1.0` continues to describe the
+only published stable line; it is not promoted merely because a Daily exists.
+
+Reason: a versioned heading and unconstrained free text allowed stable and
+Daily lineages to look like one release. Fallback: if the public release state
+changes, update the explicit public field from observed release evidence and
+rebuild a new same-day sequence; never rewrite candidate status as publication.
