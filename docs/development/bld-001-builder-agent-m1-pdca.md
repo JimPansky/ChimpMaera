@@ -188,7 +188,7 @@ evidence. The decision matrix is not an executable authority token.
   **Risk:** prose or path fields could leak private metadata, or a local bundle
   could be mistaken for a release. **Fallback:** deny unknown fields,
   credential-shaped values, private/absolute paths, raw prompt/runtime receipt
-  fields and any delivery/release escalation; revert `a12c7c4` on mismatch.
+  fields and any delivery/release escalation; revert `be00df2` on mismatch.
   **Review:** next portfolio frontier selection and any future contribution
   schema version.
 
@@ -216,6 +216,9 @@ validated while keeping live integrations and publication planned/external.
 ### Check
 
 - G8 focused sanitizer/schema/example tests: **6/6 PASS**.
+- Final PDCA negative probe found and corrected a separator-adjacent private
+  absolute-path bypass (`path=/...`) before closure; the strengthened probe is
+  included in the final 6/6 and full-suite results.
 - Complete repository tests: **200/200 PASS in split source-boundary runs**.
   The exact temporary dependency link let 199 tests pass and caused only the
   intended public-staging symlink rejection; after link removal all five clean
@@ -224,14 +227,14 @@ validated while keeping live integrations and publication planned/external.
 - Supply-chain declaration checks: **6/6 PASS**; deterministic clean public
   staging PASS.
 - Generated bundle SHA-256:
-  `593a71fc60842d02e1ea0e854f891f5fda5ee1db8f023e127dd2b0920bb2837f`;
+  `b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6`;
   internal bundle digest:
-  `f2647c0e166aa1bc8fa6973ebf770f1dac42528a9932b04fd38bddb32e551d32`.
+  `a1984b533ae6768a7358a610ba56e09ca051810bb59f36acfd9534329b4aa8b3`.
 - Proportionate runtime smoke: **NOT_APPLICABLE**. G8 changed only contracts,
   schema, tests, examples, documentation and public-closure declarations; the
   G6/G7 runtime, Gateway, shared core and fixture contracts are byte-unchanged.
 - Implementation commit:
-  `a12c7c4cb0d48b966af87f6b8b142a4542c1220b`.
+  `be00df23d9c482b04eac556e9463f53a3d66ff59`.
 - Evidence: `docs/development/evidence/bld-001-g8-20260802.json`.
 
 ### Act

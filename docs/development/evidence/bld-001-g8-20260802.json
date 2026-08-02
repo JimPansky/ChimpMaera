@@ -5,7 +5,7 @@
   "claimIds": ["BLD-001-G8"],
   "deliveryStatus": "locally_validated",
   "releaseStatus": "NOT_RELEASED",
-  "implementationCommit": "a12c7c4cb0d48b966af87f6b8b142a4542c1220b",
+  "implementationCommit": "be00df23d9c482b04eac556e9463f53a3d66ff59",
   "acceptance": {
     "status": "PASS",
     "metric": "BLD-001 8/8",
@@ -13,15 +13,15 @@
       "One closed deterministic contract emits only synthetic Issue Claim Evidence scope dependency acceptance negative-probe recovery non-claim and public-relative source metadata.",
       "Every output is OPT_IN and LOCALLY_VALIDATED with release status NOT_RELEASED and publication authorization structurally ABSENT.",
       "Unknown fields status escalation credential-shaped content private or escaping paths raw prompt or runtime receipt fields and customer or tenant payload fields deny without reflecting the candidate value.",
-      "The checked-in synthetic input regenerates the checked-in bundle byte-semantically with bundle digest f2647c0e166aa1bc8fa6973ebf770f1dac42528a9932b04fd38bddb32e551d32.",
+      "The checked-in synthetic input regenerates the checked-in bundle byte-semantically with bundle digest a1984b533ae6768a7358a610ba56e09ca051810bb59f36acfd9534329b4aa8b3.",
       "Operator System Advisor and configuration/default guides preserve Owner sovereignty separate lifecycle routes fail-closed discovery recovery and honest non-claims."
     ]
   },
   "bundle": {
     "path": "examples/builder-agent/contribution-bundle-v1.json",
-    "sha256": "593a71fc60842d02e1ea0e854f891f5fda5ee1db8f023e127dd2b0920bb2837f",
-    "bundleId": "bundle:ff91ade0d8ae15a9f02f3d64",
-    "bundleDigest": "f2647c0e166aa1bc8fa6973ebf770f1dac42528a9932b04fd38bddb32e551d32",
+    "sha256": "b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6",
+    "bundleId": "bundle:d19a59c7ae49b0bcd86580be",
+    "bundleDigest": "a1984b533ae6768a7358a610ba56e09ca051810bb59f36acfd9534329b4aa8b3",
     "dataClassification": "SYNTHETIC",
     "contributionMode": "OPT_IN",
     "publicationAuthorization": "ABSENT"
@@ -33,6 +33,7 @@
       "raw prompt and runtime receipt fields denied",
       "credential and private-key shaped content denied without reflection",
       "private absolute and escaping public-source paths denied",
+      "separator-adjacent private absolute paths denied after final PDCA negative-probe correction",
       "dependency delivery and bundle release-status escalation denied",
       "publication self-authorization denied",
       "bundle mutation and sanitizer-policy drift denied by digest and closed verification"
@@ -53,12 +54,12 @@
   "reversibleDecision": {
     "assumption": "A useful contribution bundle may contain only synthetic closed metadata digests and bounded public relative source paths while publication authorization remains absent.",
     "risk": "Prose or path values could leak private metadata or local validation could be mistaken for release evidence.",
-    "fallback": "Deny unknown fields unsafe value classes and status escalation keep publication separately unauthorized and revert a12c7c4 if any leakage or status mismatch is found.",
+    "fallback": "Deny unknown fields unsafe value classes and status escalation keep publication separately unauthorized and revert be00df2 if any leakage or status mismatch is found.",
     "reviewPoint": "Any future contribution schema version or portfolio case that introduces a new evidence class."
   },
   "rollback": {
     "status": "LOCAL_REVERSIBLE",
-    "action": "Revert a12c7c4 restore checkpoint f4f0672 and retain this G8 result as historical or negative evidence.",
+    "action": "Revert be00df2 and a12c7c4 restore checkpoint f4f0672 and retain this G8 result as historical or negative evidence.",
     "residue": "No runtime profile target system credential publication endpoint or external resource was touched."
   },
   "nonClaims": [
