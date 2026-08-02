@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/builder-contribution-bundle-v1.schema.json",
+  "title": "ChimpMaera Builder sanitized contribution bundle v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "bundleId", "issueId", "claimIds", "scope", "nonScope",
+    "dependencies", "acceptanceCriteria", "negativeProbes", "evidenceReferences",
+    "sourceArtifacts", "recoverySteps", "nonClaims", "dataClassification",
+    "contributionMode", "publicationAuthorization", "deliveryStatus", "releaseStatus",
+    "sanitization", "inputDigest", "bundleDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.builder/contribution-bundle/v1" },
+    "bundleId": { "type": "string", "pattern": "^bundle:[a-f0-9]{24}$" },
+    "issueId": { "$ref": "#/$defs/issueId" },
+    "claimIds": { "$ref": "#/$defs/claimIds" },
+    "scope": { "$ref": "#/$defs/textArray" },
+    "nonScope": { "$ref": "#/$defs/textArray" },
+    "dependencies": {
+      "type": "array", "minItems": 1, "maxItems": 32,
+      "items": { "$ref": "#/$defs/dependency" }
+    },
+    "acceptanceCriteria": {
+      "type": "array", "minItems": 1, "maxItems": 16,
+      "items": { "$ref": "#/$defs/acceptance" }
+    },
+    "negativeProbes": {
+      "type": "array", "minItems": 1, "maxItems": 32,
+      "items": { "$ref": "#/$defs/negativeProbe" }
+    },
+    "evidenceReferences": {
+      "type": "array", "minItems": 1, "maxItems": 32,
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "sourceArtifacts": {
+      "type": "array", "minItems": 1, "maxItems": 64,
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "recoverySteps": { "$ref": "#/$defs/textArray" },
+    "nonClaims": { "$ref": "#/$defs/textArray" },
+    "dataClassification": { "const": "SYNTHETIC" },
+    "contributionMode": { "const": "OPT_IN" },
+    "publicationAuthorization": { "const": "ABSENT" },
+    "deliveryStatus": { "const": "LOCALLY_VALIDATED" },
+    "releaseStatus": { "const": "NOT_RELEASED" },
+    "sanitization": { "$ref": "#/$defs/sanitization" },
+    "inputDigest": { "$ref": "#/$defs/digest" },
+    "bundleDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "issueId": { "type": "string", "pattern": "^[A-Z]+-[0-9]+$" },
+    "claimId": { "type": "string", "pattern": "^[A-Z]+-[0-9]+-G[0-9]+$" },
+    "claimIds": {
+      "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true,
+      "items": { "$ref": "#/$defs/claimId" }
+    },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "text": { "type": "string", "minLength": 1, "maxLength": 320 },
+    "textArray": {
+      "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true,
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["dependencyId", "status"],
+      "properties": {
+        "dependencyId": { "$ref": "#/$defs/issueId" },
+        "status": { "const": "LOCALLY_VALIDATED" }
+      }
+    },
+    "acceptance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["criterionId", "description", "status"],
+      "properties": {
+        "criterionId": { "$ref": "#/$defs/claimId" },
+        "description": { "$ref": "#/$defs/text" },
+        "status": { "const": "PASS" }
+      }
+    },
+    "negativeProbe": {
+      "type": "object", "additionalProperties": false,
+      "required": ["probeId", "description", "status"],
+      "properties": {
+        "probeId": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,63}$" },
+        "description": { "$ref": "#/$defs/text" },
+        "status": { "const": "PASS" }
+      }
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidenceId", "sha256"],
+      "properties": {
+        "evidenceId": { "type": "string", "pattern": "^[A-Z]+-[0-9]+-E-G[0-9]+-[0-9]{8}$" },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string", "maxLength": 200,
+          "pattern": "^(demo|docs|examples|packages|schemas|scripts|tests)/[A-Za-z0-9._/-]+$"
+        },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "sanitization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policyId", "excludedClasses"],
+      "properties": {
+        "policyId": { "const": "chimpmaera.builder/contribution-allow-list/v1" },
+        "excludedClasses": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "CREDENTIAL_OR_TOKEN" },
+            { "const": "PRIVATE_OR_ABSOLUTE_PATH" },
+            { "const": "RAW_PROMPT_OR_RUNTIME_RECEIPT" },
+            { "const": "CUSTOMER_OR_TENANT_DATA" },
+            { "const": "UNKNOWN_FIELD" }
+          ],
+          "items": false,
+          "minItems": 5,
+          "maxItems": 5
+        }
+      }
+    }
+  }
+}

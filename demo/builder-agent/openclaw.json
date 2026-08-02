@@ -1,0 +1,58 @@
+{
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "auth": { "mode": "none" }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "/opt/chimpmaera/workspace",
+      "model": { "primary": "cm-builder-fixture/cm-builder-v1" },
+      "models": { "cm-builder-fixture/cm-builder-v1": {} },
+      "thinkingDefault": "off"
+    }
+  },
+  "models": {
+    "mode": "replace",
+    "pricing": { "enabled": false },
+    "providers": {
+      "cm-builder-fixture": {
+        "baseUrl": "http://builder-gateway:8080/v1",
+        "apiKey": "synthetic-builder-routing-marker-not-a-secret",
+        "api": "openai-completions",
+        "timeoutSeconds": 20,
+        "models": [
+          {
+            "id": "cm-builder-v1",
+            "name": "ChimpMaera deterministic BLD-001 Builder fixture",
+            "reasoning": false,
+            "input": ["text"],
+            "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+            "contextWindow": 16384,
+            "maxTokens": 1024,
+            "compat": {
+              "requiresStringContent": false,
+              "strictMessageKeys": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "plugins": {
+    "allow": ["chimpmaera-builder"],
+    "load": { "paths": ["/opt/chimpmaera/plugins/chimpmaera-builder"] },
+    "entries": {
+      "chimpmaera-builder": {
+        "enabled": true,
+        "config": {
+          "baseUrl": "http://builder-gateway:8080",
+          "workloadIdentity": "workload:bld001-builder-agent-g6-v1"
+        }
+      }
+    }
+  },
+  "tools": {
+    "allow": ["chimpmaera_builder_request"]
+  }
+}

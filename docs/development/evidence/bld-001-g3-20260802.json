@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G3-20260802",
+  "issueId": "BLD-001",
+  "claimIds": [
+    "BLD-001-G3"
+  ],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "f845c37472f24d6ad4e8b0bfd50f6d105a98efc3",
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 3/8",
+    "facts": [
+      "An exact capability ID is reused only when its digest-bound inactive registration also matches system type, operation ID and effect class.",
+      "The reused descriptor remains INACTIVE, non-executable and grants neither authority nor effect authorization.",
+      "A missing exact match produces one deterministic versioned inactive UNRESOLVED_INTENT with risk, dependencies and recommendation.",
+      "A fuzzy name is not reused; an exact but incompatible ID collision denies the complete resolution.",
+      "The contract is generic and contains no customer-specific privileged script, credential, raw payload, provider call or activation path."
+    ]
+  },
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "empty registry leaves both operations unresolved",
+      "fuzzy capability name is not reused",
+      "exact capability ID with incompatible effect class",
+      "duplicate capability registration",
+      "tampered descriptor digest",
+      "ACTIVE lifecycle injection",
+      "tampered discovery record digest",
+      "hidden raw payload and authority-shaped result fields",
+      "post-resolution executable mutation"
+    ],
+    "result": "Gaps remain inactive and effect-free; incompatible or malformed inputs throw BUILDER_CAPABILITY_RESOLUTION_INVALID_DENIED."
+  },
+  "validation": {
+    "focused": "6/6 PASS including public JSON Schema, exact reuse, deterministic gap proposal, fuzzy non-reuse, adversarial input matrix and result verification",
+    "completeRepository": "169/169 PASS in split source-boundary runs: 161/161 non-source-boundary plus 8/8 clean source-tree/supply-chain/public-staging",
+    "checksums": "241/241 PASS",
+    "supplyChain": "6/6 PASS; repository-declaration scope only",
+    "deterministicPublicStaging": "PASS",
+    "proportionateSmoke": "NOT_RUN: no video, container, plugin, Gateway, Broker or runtime byte changed; the one isolated Builder/OpenClaw smoke remains assigned to G6 after relevant byte freeze"
+  },
+  "reversibleDecision": {
+    "assumption": "Only exact capability IDs with matching system, operation and effect metadata are reusable; every unmatched hint is a versioned inactive proposal.",
+    "risk": "Fuzzy matching could bind an incompatible adapter, while a colliding identifier could conceal incompatible semantics.",
+    "fallback": "Never fuzzy-match; deny exact incompatible collisions; keep reused descriptors and gap proposals inactive, non-executable and effect-free; revert f845c37 if the G4 planner cannot consume the contract safely.",
+    "reviewPoint": "BLD-001-G4 planner/schema versioning and BLD-001-G7 adversarial second-system reuse"
+  },
+  "rollback": {
+    "status": "VERIFIED_BY_BOUNDARY",
+    "action": "Revert f845c37, leave Builder default-off and retain this evidence as negative/history record.",
+    "residue": "No runtime, service, credential, external account or customer system was created or mutated."
+  },
+  "nonClaims": [
+    "not capability activation, executable authority, approval or an effect request",
+    "not a live-system, customer-data, provider or production integration",
+    "not security certification or universal agent/system compatibility evidence",
+    "not a released, published or publicly available feature"
+  ],
+  "externalMutationPerformed": false
+}

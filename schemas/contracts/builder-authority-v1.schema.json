@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/contracts/builder-authority-v1.schema.json",
+  "title": "ChimpMaera Builder authority input v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tenant",
+    "actor",
+    "requestedProfile",
+    "registeredRights",
+    "hostSystemCeiling",
+    "assignments",
+    "currentConstraints",
+    "customRules"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "chimpmaera.builder/authority-input/v1"
+    },
+    "tenant": {
+      "$ref": "#/$defs/identifier"
+    },
+    "actor": {
+      "$ref": "#/$defs/identifier"
+    },
+    "requestedProfile": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "enum": [
+            "SAFE_GUIDED",
+            "CUSTOM",
+            "RAMPAGE_FULL_CONTROL_LAB",
+            "RAMPAGE",
+            "FULL_CONTROL_LAB"
+          ]
+        }
+      ]
+    },
+    "registeredRights": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rightId", "effectClass"],
+        "properties": {
+          "rightId": {
+            "$ref": "#/$defs/identifier"
+          },
+          "effectClass": {
+            "enum": [
+              "READ_ONLY",
+              "REVERSIBLE_WRITE",
+              "IRREVERSIBLE_EFFECT",
+              "INSTALL_ACTIVATE",
+              "PUBLICATION"
+            ]
+          }
+        }
+      }
+    },
+    "hostSystemCeiling": {
+      "$ref": "#/$defs/rightReferences"
+    },
+    "assignments": {
+      "$ref": "#/$defs/rightReferences"
+    },
+    "currentConstraints": {
+      "$ref": "#/$defs/rightReferences"
+    },
+    "customRules": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rightId", "route"],
+        "properties": {
+          "rightId": {
+            "$ref": "#/$defs/identifier"
+          },
+          "route": {
+            "enum": ["AUTO_EXECUTE", "OWNER_APPROVAL"]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]{0,127}$"
+    },
+    "rightReferences": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    }
+  }
+}

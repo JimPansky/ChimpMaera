@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "chimpmaera.builder/evidence/v1",
+  "evidenceId": "BLD-001-E-G8-20260802",
+  "issueId": "BLD-001",
+  "claimIds": ["BLD-001-G8"],
+  "deliveryStatus": "locally_validated",
+  "releaseStatus": "NOT_RELEASED",
+  "implementationCommit": "be00df23d9c482b04eac556e9463f53a3d66ff59",
+  "acceptance": {
+    "status": "PASS",
+    "metric": "BLD-001 8/8",
+    "facts": [
+      "One closed deterministic contract emits only synthetic Issue Claim Evidence scope dependency acceptance negative-probe recovery non-claim and public-relative source metadata.",
+      "Every output is OPT_IN and LOCALLY_VALIDATED with release status NOT_RELEASED and publication authorization structurally ABSENT.",
+      "Unknown fields status escalation credential-shaped content private or escaping paths raw prompt or runtime receipt fields and customer or tenant payload fields deny without reflecting the candidate value.",
+      "The checked-in synthetic input regenerates the checked-in bundle byte-semantically with bundle digest a1984b533ae6768a7358a610ba56e09ca051810bb59f36acfd9534329b4aa8b3.",
+      "Operator System Advisor and configuration/default guides preserve Owner sovereignty separate lifecycle routes fail-closed discovery recovery and honest non-claims."
+    ]
+  },
+  "bundle": {
+    "path": "examples/builder-agent/contribution-bundle-v1.json",
+    "sha256": "b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6",
+    "bundleId": "bundle:d19a59c7ae49b0bcd86580be",
+    "bundleDigest": "a1984b533ae6768a7358a610ba56e09ca051810bb59f36acfd9534329b4aa8b3",
+    "dataClassification": "SYNTHETIC",
+    "contributionMode": "OPT_IN",
+    "publicationAuthorization": "ABSENT"
+  },
+  "negativeProbes": {
+    "status": "PASS",
+    "cases": [
+      "hidden top-level and nested fields denied",
+      "raw prompt and runtime receipt fields denied",
+      "credential and private-key shaped content denied without reflection",
+      "private absolute and escaping public-source paths denied",
+      "separator-adjacent private absolute paths denied after final PDCA negative-probe correction",
+      "dependency delivery and bundle release-status escalation denied",
+      "publication self-authorization denied",
+      "bundle mutation and sanitizer-policy drift denied by digest and closed verification"
+    ]
+  },
+  "validation": {
+    "focused": "6/6 PASS for deterministic generation schema exact example ordering hidden-field leakage path status and digest probes",
+    "completeRepository": "200/200 PASS in split source-boundary runs: 199/200 with the exact temporary dependency link where only public staging correctly rejected that link followed by 5/5 clean supply-chain and public-staging tests after link removal",
+    "checksums": "280/280 PASS",
+    "supplyChain": "6/6 declaration checks PASS and deterministic clean public staging PASS",
+    "proportionateSmoke": "NOT_APPLICABLE because G8 changed no runtime Gateway shared-core fixture-contract or infrastructure byte"
+  },
+  "documentation": [
+    { "path": "docs/BUILDER-AGENT-OPERATOR-GUIDE.md", "sha256": "ff9fd52f21a4f0e991a60d7aefa9e2febc6aef109a81f2e0eae1fe475b19c1f6" },
+    { "path": "docs/SYSTEM-ADVISOR-GUIDE.md", "sha256": "e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9" },
+    { "path": "docs/BUILDER-CONFIGURATION-DEFAULTS.md", "sha256": "b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69" }
+  ],
+  "reversibleDecision": {
+    "assumption": "A useful contribution bundle may contain only synthetic closed metadata digests and bounded public relative source paths while publication authorization remains absent.",
+    "risk": "Prose or path values could leak private metadata or local validation could be mistaken for release evidence.",
+    "fallback": "Deny unknown fields unsafe value classes and status escalation keep publication separately unauthorized and revert be00df2 if any leakage or status mismatch is found.",
+    "reviewPoint": "Any future contribution schema version or portfolio case that introduces a new evidence class."
+  },
+  "rollback": {
+    "status": "LOCAL_REVERSIBLE",
+    "action": "Revert be00df2 and a12c7c4 restore checkpoint f4f0672 and retain this G8 result as historical or negative evidence.",
+    "residue": "No runtime profile target system credential publication endpoint or external resource was touched."
+  },
+  "nonClaims": [
+    "not Owner OpenClaw live-provider production or customer evidence",
+    "not proof of hostile-host containment security certification or universal compatibility",
+    "not authorization to install activate mutate publish upload or contribute",
+    "not released merged published uploaded or publicly available"
+  ],
+  "verdict": "LOCAL_BLD_001_M1_PASS_SANITIZED_OPT_IN_CONTRIBUTION_DOCS_FULL_VALIDATION_NOT_PRODUCTION_OR_RELEASED",
+  "externalMutationPerformed": false
+}

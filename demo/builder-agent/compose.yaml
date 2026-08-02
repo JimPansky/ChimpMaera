@@ -1,0 +1,71 @@
+name: ${CM_BLD001_PROJECT:-chimpmaera-bld001-builder}
+services:
+  builder-gateway:
+    profiles: [bld001]
+    image: chimpmaera/bld001-builder-gateway:local
+    build:
+      context: ../..
+      dockerfile: demo/builder-agent/gateway.Dockerfile
+      provenance: false
+    labels:
+      io.chimpmaera.fixture: bld001-builder-agent-g6-v1
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.50
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=8m,mode=1777"]
+    volumes: [bld001_target_state:/var/lib/chimpmaera]
+    networks: [bld001_gateway_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 2s
+  builder-agent:
+    profiles: [bld001]
+    image: chimpmaera/bld001-builder-agent:local
+    build:
+      context: ../..
+      dockerfile: demo/builder-agent/openclaw.Dockerfile
+      provenance: false
+    labels:
+      io.chimpmaera.fixture: bld001-builder-agent-g6-v1
+    depends_on:
+      builder-gateway: {condition: service_healthy}
+    environment:
+      OPENCLAW_CONFIG_PATH: /opt/chimpmaera/openclaw.json
+      OPENCLAW_STATE_DIR: /var/lib/openclaw
+      HOME: /var/lib/openclaw/user
+      NO_PROXY: builder-gateway,127.0.0.1,localhost
+    command: ["node", "openclaw.mjs", "gateway"]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1.00
+    tmpfs:
+      - "/tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777"
+      - "/var/lib/openclaw/user/.cache:rw,noexec,nosuid,nodev,size=16m,mode=700,uid=1000,gid=1000"
+    volumes: [bld001_openclaw_state:/var/lib/openclaw]
+    networks: [bld001_gateway_only]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:18789/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 2s
+      retries: 30
+      start_period: 10s
+volumes:
+  bld001_target_state:
+    labels: {io.chimpmaera.fixture: bld001-builder-agent-g6-v1}
+  bld001_openclaw_state:
+    labels: {io.chimpmaera.fixture: bld001-builder-agent-g6-v1}
+networks:
+  bld001_gateway_only:
+    internal: true
+    labels: {io.chimpmaera.fixture: bld001-builder-agent-g6-v1}
