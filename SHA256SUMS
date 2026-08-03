@@ -3,9 +3,9 @@
 6280695beeca55974545ba5cf5aa036c0a3e1fc47b03d02a30d287bd0a0aef8c  ./.github/ISSUE_TEMPLATE/config.yml
 b1d31372f1800ca9780fe990d980891db9280ebadd74d060015052019e641da1  ./.github/ISSUE_TEMPLATE/feature-request.yml
 deec68918022452012f00abeb2d6b5578a3763a02320139ce074bf124b61c608  ./.github/PULL_REQUEST_TEMPLATE.md
-7ebf56629318a40d45ad69e3f82c018d4bf3196bfd97faed1307bfb049dc1e31  ./.github/workflows/ci.yml
+a390f5d5179f2d85e3fcd40c21d898d427d7a032471b30b4cb8fe4dea2ea4db9  ./.github/workflows/ci.yml
 3cb93d13f4a3ed8f4666fbd68d033aa5446d473ddd35a39b12fad8e57e29b00a  ./.github/workflows/daily-poc-candidate.yml
-04414e708c78c192eee149ae1c375306ebb174343a0cb5030555e2baa4d2c58b  ./.github/workflows/video-deep-audit.yml
+4cc238f11f4b70566e80c2510cf2e37ba20f0cd4cc5c39aa387b0641a1495a93  ./.github/workflows/video-deep-audit.yml
 56690063fedd6a594cb37f26fdf1538fdd02802243886e9dcae43536f58c110a  ./.gitignore
 84837a2b9a6391379d91a54a1619629b4f50788c95dca0e328f87bb469866ade  ./CITATION.cff
 ba943be96394ec332cab2ce2f3ce06f122d9f224f304c765a74dc58cca809310  ./CODE_OF_CONDUCT.md
@@ -91,7 +91,7 @@ f35377c67289c34b8065b4697123b3819cb28dc165a60b5db7c77d29a506d964  ./demo/manifes
 018dabd1652aa5f432e2796ca53e01601fd99ef4c8fe6b097af269f65349a004  ./demo/manifests/fixtures/panskys-zoo-demo-v1.json
 c677329275e16579eebacc0b7146dc25c52fb4d949a9a20e9a355f6ad39deba8  ./demo/manifests/identity/panskys-zoo-v1.json
 61f5cf1450ec57b78feaeb77ea3d641a6072634aa62e3998ce1a82ed7502fead  ./demo/manifests/network/local-egress-policy-v1.json
-353a932a78783cc9544e78f0f1f4fb09c7f0d480548c3dddae4343ba1c734677  ./demo/manifests/supply-chain/artifact-lock-v1.json
+db2b9fad5068f9d0e21df1c1b610493a64dcde326b5d7417992bddbe6d8ba3e4  ./demo/manifests/supply-chain/artifact-lock-v1.json
 9c8daccbea511ea8fd7dac9cd2ec3ca83507b2e908be85b747bc956c9d489adb  ./demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json
 b7068fac151a9d1c7d0394feb6fbec5a33dad8c8d070a5ec6e72a4c8918ef118  ./demo/model-access-broker/broker.Dockerfile
 e5dd9ee8e825fc98a9b71df8121e42f37cd299c60d797682b31469165396f13d  ./demo/model-access-broker/broker.mjs
@@ -298,7 +298,7 @@ da2109476338820e2ae5b2b42f720cf2d7c3b359122ee28bcea6fea65e1b1818  ./scripts/dail
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
 277b0e83fd12ec3b3f0cdaf7bd4632c1c0fd65a41e3b5a5c9d4e2767a015b80a  ./scripts/verify-release-governance.mjs
 4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1  ./scripts/verify-secure-default-proof.mjs
-4731e6fc6e42dabd6ddcd3c612407a5e699387c4e0d98719f8092348dbb28c75  ./scripts/verify-supply-chain.mjs
+51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f  ./scripts/verify-supply-chain.mjs
 87075fbc76815ad2f53005661a78d255ae4565504578cf4a9bac9f2283bb40d2  ./security/secure-default-proof-evidence-v1.json
 130c08bf8894b0c927a3a1100be4644c7a25c02257200c24da502bcd1dd69613  ./security/secure-default-proof-v1.json
 c8f07f427e39d50ddc142c7f5d6ed0382e1058fd179eb178226a1a1b870f118c  ./tests/builder-agent-runtime.test.mjs

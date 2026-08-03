@@ -47,8 +47,15 @@ jobs:
           printf 'DOCKER_CONFIG=%s\n' "$compose_root" >> "$GITHUB_ENV"
           DOCKER_CONFIG="$compose_root" docker compose version
 
-      - name: Set up BuildKit builder
-        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Set up runner-provided BuildKit builder
+        run: |
+          docker buildx version
+          docker buildx create \
+            --name chimpmaera-video-deep-audit \
+            --driver docker-container \
+            --driver-opt image=moby/buildkit@sha256:2f5adac4ecd194d9f8c10b7b5d7bceb5186853db1b26e5abd3a657af0b7e26ec \
+            --use
+          docker buildx inspect --bootstrap
 
       - name: Run cache-free full video smoke
         env:

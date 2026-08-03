@@ -192,6 +192,10 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   );
   const npmVersion = lock.npm.packageManager.replace(/^npm@/, "");
   const composeTool = lock.ci.dockerCompose;
+  assert(
+    /^moby\/buildkit@sha256:[a-f0-9]{64}$/.test(lock.ci.buildkitImage ?? ""),
+    "SUPPLY_CHAIN_CI_BUILDKIT_IMAGE_INVALID_DENIED",
+  );
   for (const workflowPath of workflowPaths) {
     const workflow = await read(workflowPath);
     const actions = [...workflow.matchAll(/^\s*uses:\s*\S+@([^\s#]+)/gm)];
@@ -203,6 +207,12 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     assert(
       workflow.includes(`npm install --global npm@${npmVersion}`),
       "SUPPLY_CHAIN_CI_NPM_VERSION_DRIFT_DENIED",
+    );
+    assert(
+      workflow.split(lock.ci.buildkitImage).length - 1 === 1
+      && workflow.includes("--driver docker-container")
+      && workflow.includes("--driver-opt image="),
+      "SUPPLY_CHAIN_CI_BUILDKIT_IMAGE_INVALID_DENIED",
     );
     assert(
       /^v\d+\.\d+\.\d+$/.test(composeTool?.version)
