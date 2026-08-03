@@ -5,7 +5,7 @@
     "tag": "v0.2.0-poc.20260803.2",
     "title": "ChimpMaera — Public Truth and Discoverability Increment",
     "increment": "Public Truth and Discoverability Increment",
-    "targetCommitish": "main",
+    "targetCommitish": "0c662257ce30f48ce6f5f3ab3b3cde718705e646",
     "tagObjectSha": "0c662257ce30f48ce6f5f3ab3b3cde718705e646",
     "draft": false,
     "prerelease": false,
