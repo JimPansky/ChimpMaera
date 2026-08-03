@@ -148,12 +148,21 @@ export function validateRepository(root = process.cwd()) {
   }
 
   const canon = consistencyDocs.get("docs/CANON.md");
+  const canonRuleIds = [...canon.matchAll(/^### (CM-CAN-\d{2}) —/gm)].map((match) => match[1]);
+  const expectedCanonRuleIds = Array.from({ length: 28 }, (_, index) => `CM-CAN-${String(index + 1).padStart(2, "0")}`);
+  issue(
+    issues,
+    canonRuleIds.length === expectedCanonRuleIds.length
+      && new Set(canonRuleIds).size === expectedCanonRuleIds.length
+      && canonRuleIds.every((id, index) => id === expectedCanonRuleIds[index]),
+    "CANON_RULE_SET_INVALID:EXPECTED_CM-CAN-01_THROUGH_CM-CAN-28",
+  );
   for (const invariant of [
     "Knowledge Record / Knowledge Contract",
     "Governed Template",
     "Applicability / Invalidation",
-    "Governed Knowledge Reuse Never Grants Authority",
-    "Supersession is append-only and traceable",
+    "Knowledge and template promotion",
+    "Supersession is append-only, traceable, and reversible",
   ]) issue(issues, canon.includes(invariant), `CANON_KNOWLEDGE_INVARIANT_MISSING:${invariant}`);
 
   const zoo = consistencyDocs.get("docs/ZOO-FIELD-GUIDE.md");

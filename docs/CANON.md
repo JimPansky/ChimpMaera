@@ -232,6 +232,11 @@ maturity. Provenance, signatures, reviews, ratings, and popularity may inform
 trust, but do not activate runtime rights. Discovery, admission, installation,
 Profile request, activation, and effect are separate transitions.
 
+Knowledge and template promotion, selection, reuse, installation, or
+supersession likewise never grant Authority, activate a capability, or widen a
+Profile. Governed knowledge reuse remains an input to these separate
+transitions, never a substitute for them.
+
 ### CM-CAN-16 — Claims Follow Current Evidence
 
 Every tested-property, security, maturity, reliability, or compatibility claim
@@ -239,12 +244,25 @@ binds the exact version, adapter, configuration, environment, threat model, and
 evidence window tested. Historical or documentary Evidence does not transfer.
 Missing Evidence must not be represented as proof or success.
 
+Evidence attached to a Knowledge Record, Knowledge Contract, or Governed
+Template supports a claim only inside its exact Applicability binding.
+Resemblance, popularity, and prior success do not transfer Evidence to a new
+provider, tenant, version, assumption, or outcome.
+
 ### CM-CAN-17 — Evolution Is Explicit and Reviewable
 
 New versions preserve applicable invariants or provide an explicit migration
 covering risk, compatibility, Evidence, and fallback. Changes to action,
 authority, isolation, Receipt, Replay, admission, model, state, or skill
 semantics require versioned contracts and fresh Evidence.
+
+Every dependent Knowledge Record, Knowledge Contract, and Governed Template
+binds its sources, assumptions, outcomes, and Applicability conditions. Drift
+in any binding invalidates or downgrades dependents until fresh Evidence is
+recorded. Supersession is append-only, traceable, and reversible where rollback
+is applicable: an immutable revision points to its predecessor and reason,
+preserves negative and historical Evidence, and retains an authorised path to
+a known safe revision.
 
 ### CM-CAN-18 — No Ambient Authority or Standing Privilege
 
@@ -331,22 +349,6 @@ proof, but is not the product principle. Maturity advances only for the exact
 contract surfaces and failure modes evidenced. No adapter proves resistance to
 unknown side channels, compromised kernels or hypervisors, undiscovered
 runtime flaws, or untested production environments.
-
-### CM-CAN-29 — Governed Knowledge Reuse Never Grants Authority
-
-Knowledge and template promotion, selection, reuse, installation or
-supersession never grants Authority, activates a capability or widens a
-Profile. Evidence supports a claim only inside the exact Applicability binding
-that produced it; resemblance, popularity and prior success do not transfer
-Evidence to a new provider, tenant, version, assumption or outcome.
-
-Every dependent Knowledge Record, Contract and Governed Template binds its
-sources, assumptions and outcomes. Drift in any bound source, assumption,
-result or applicability condition invalidates or downgrades dependents until
-fresh Evidence is recorded. Supersession is append-only and traceable: a new
-immutable revision points to the prior revision and reason, preserves negative
-and historical Evidence, and retains an authorised reversible path to a known
-safe revision when rollback is applicable.
 
 ## Administration
 
