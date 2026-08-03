@@ -29,6 +29,7 @@ test("release governance negative probes fail closed", async (t) => {
   const probes = [
     ["README stale tag", "README_CURRENT_RELEASE_MISMATCH", (root) => replace(root, "README.md", "v0.2.0-poc.20260803.1", "v0.1.0")],
     ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Authority-Bounded Integration Contracts Increment", "Today's Daily snapshot")],
+    ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "direction is not a claim of current product maturity", "direction is current product maturity")],
     ["stale Security claim", "SECURITY_STALE_RELEASE_CLAIM_DENIED", (root) => replace(root, "docs/SECURITY-ASSURANCE.md", "## Claim maturity", "v0.1.0 remains the only tagged and published release.\n\n## Claim maturity")],
     ["stale limitation version", "LIMITATIONS_STALE_V01_BINDING_DENIED", (root) => replace(root, "docs/KNOWN-LIMITATIONS.md", "The current local demo", "The v0.1 demo")],
     ["withdrawn video", "WITHDRAWN_ACTIVE_VIDEO_DENIED:Dq_XLEzh5I8", (root) => replace(root, "README.md", "Current overview videos are temporarily unavailable", "https://youtu.be/Dq_XLEzh5I8")],

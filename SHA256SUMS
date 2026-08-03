@@ -14,7 +14,7 @@ bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.m
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
 c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-56961f040aef1c60d396df685e9a89a4cdfdf8c6c7b1654abd2418a8344fa3fe  ./README.md
+b2aee95f49c98fa3e08d95c231dddc15b85e0b92c8329a249619018ee1ad932d  ./README.md
 b815818c4be3d7f494358bac6a171668f55fa0b0887a22d07eb3fce08dd331e2  ./SECURITY.md
 405161d717617714546697edb5c01582436c0f2a611da4a2861763ea958b93d9  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
@@ -148,12 +148,15 @@ b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69  ./docs/BUILDER
 f827b356dace27dd6b0db2294b570a020b35c4b3fc6f1440823ea35f789b0509  ./docs/CONNECT-YOUR-FIRST-SYSTEM.md
 fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-POC-CANDIDATES.md
 2b9696cc826d9d4f609ea8afee428328b5d5e8bdd0ae70ea45fe886773769ad8  ./docs/DAILY-POC-ITERATION.md
+679bae40f1a8858f6f1e618016eec9ba9697788bbb7d67dd06e2071e12f6d404  ./docs/DISCOVERABILITY-BASELINE.md
 896c525d6f85fc051c0d152c7a111c69e76d964d119a6131b8c7337dd616e529  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
+34d5c0d600b66bf2b674bd2334b7d16ad92df0806edee1e0b3f6f44f47d20fa2  ./docs/README.md
 261a36734bc371fbf98906064fa55649e1b5d26c1f8342e31129fae6751ccb6d  ./docs/RELEASE-GOVERNANCE.md
 58fb0be5781c61e345ed63a2dfa7c367b01fc80c103c0f86b5d343301be4e949  ./docs/SECURITY-ASSURANCE.md
 d4bcc9ada247118e6f653f7849edcc0d2dc18a26a0533d8708094b453faccc62  ./docs/SUPPLY-CHAIN.md
 e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-ADVISOR-GUIDE.md
+e7b64b1de504a574c8a2c53f848b169cb6c50966b4892705494f1130bd5cc41b  ./docs/VISIBILITY-CHANNEL-MATRIX.md
 4eabfdd9292dc68df07998a83a91af3a189a5deb74fe05bc2eb9b28567b756de  ./docs/ZOO-FIELD-GUIDE.md
 b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6  ./examples/builder-agent/contribution-bundle-v1.json
 bed17ca192ea01731aa77ca10c7d60672d6bd6b437a26e7165e20bd473e03ee2  ./examples/builder-agent/contribution-input-v1.json
@@ -263,7 +266,7 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 d18bf5f5593571a016c9f261f00f69c53282a34ce3cd79a8d92e094f6b1225c9  ./release/governance.json
-46c50c9d7c0bd4991dce13a9cae99fc84d4f4b2d831de17a9db10a8b75843201  ./release/public-files.manifest
+90094b0a49a0d958264cb7cfb70242b1b68667d80e427effcc80012b79400562  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -281,7 +284,7 @@ c5e9e5ff60901523bc6e4014213a9e80728c364204b5a084cc9f5c323db5ab1e  ./schemas/cont
 bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d  ./scripts/build-public-release.sh
 0ff8a7754050817e4aea4184ea2af153095cee0763aa481e6933879ef01e0e73  ./scripts/daily-poc.mjs
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
-12ebe1d0aaddb628f2029bc0045ea3170ced859881eed5d92c0cc56159522f30  ./scripts/verify-release-governance.mjs
+8eb59b3dec25a3ac770e587cd061b555c9a37c060d2ac61fb5791abdb4999efa  ./scripts/verify-release-governance.mjs
 a3f80bddb9cd7c767db74a7fffc1a56009e3cf1a11eb14f927fef4521e1cb1ad  ./scripts/verify-supply-chain.mjs
 c8f07f427e39d50ddc142c7f5d6ed0382e1058fd179eb178226a1a1b870f118c  ./tests/builder-agent-runtime.test.mjs
 a8479c98b9b211bb9ead59877b8ba0b4c1f9ff9cd0e5455ee52aaa103d34716a  ./tests/builder-authority.test.ts
@@ -325,7 +328,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
-18a347e76b894d515ad5b5ff71a3fbfa1188607efd00de2237ae0bf367ef1311  ./tests/release-governance.test.mjs
+3edd6642c0df444497844345a15a9c26f0963654ce97c6cdad49b397d8624407  ./tests/release-governance.test.mjs
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
 1c38239f4676952f45aae15f2b3f0fa01e22cf68661922251e023cf9826745f4  ./tests/supply-chain-verifier.test.mjs
 df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update-doctor-compose-adapter.test.ts

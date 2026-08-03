@@ -8,19 +8,20 @@
 
 # ChimpMaera
 
-**Open knowledge. Governed agency. Verifiable outcomes.**
+**A local control plane for governed, verifiable AI-agent actions across
+business systems.**
 
-ChimpMaera is an open-source proof of concept and direction for a Knowledge
-Operating System that turns scattered system knowledge into reusable guides,
-contracts and workflows—without turning an AI agent into an authority. Today
-you can run a local, synthetic
-CRM-to-ERP proof of concept and inspect how a proposed action is governed,
-executed, read back and proven.
+ChimpMaera is an open-source local proof of concept. Today it demonstrates how
+an AI agent can propose cross-system work while policy, approval, brokered
+execution, authoritative readback and receipts remain outside the model. Its
+broader direction is a vendor-neutral **Knowledge Operating System** that turns
+scattered system knowledge into reusable guides, contracts and workflows; that
+direction is not a claim of current product maturity.
 
 [**Try the local POC**](#quickstart) ·
+[**Get the Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
 [**See how it works**](#how-it-works) ·
-[**Verify security evidence**](docs/SECURITY-ASSURANCE.md) ·
-[**Join the Zoo**](#join-the-zoo)
+[**Browse the docs**](docs/README.md)
 
 **Security, without magic words:** models and agents are untrusted proposers.
 Inside the declared governed paths there is **no ambient authority, no master
@@ -43,16 +44,23 @@ This release is not a production release, security certification, hosted
 service, support promise or permission to connect real systems. Use only
 synthetic data on a disposable or development host.
 
-## What you can do today
+## What works today
 
-- Run the loopback-only demo with fictional EspoCRM and Dolibarr data.
-- Watch a safe proposal reach approval, execution, readback and a receipt—and
-  watch denied, drifted or replayed actions fail closed.
-- Inspect portable knowledge artifacts, typed capability contracts, policies,
-  tests and evidence.
-- Use the working local path to
-  [design a governed connection](docs/CONNECT-YOUR-FIRST-SYSTEM.md) for another
-  system without claiming an integration that has not been evidenced.
+- **Governed action path:** run a loopback-only demo with fictional EspoCRM and
+  Dolibarr data; observe proposal, policy, approval, execution, readback and a
+  bound receipt, plus fail-closed denial, drift and replay probes.
+- **Portable contracts and evidence:** inspect typed capabilities, policies,
+  verification bundles, Update/Doctor diagnostics and synthetic fixtures.
+- **Authority-free discovery and explanation:** exercise the local HMI/harness
+  contracts, Azure/Entra identity profile and Power Platform read connector
+  without granting external write authority.
+- **Connection design:** use the working local path to
+  [design a governed connection](docs/CONNECT-YOUR-FIRST-SYSTEM.md) without
+  claiming an integration that has not been evidenced.
+
+All current proof is local and synthetic. See the
+[documentation and capability hub](docs/README.md) for maturity, evidence and
+non-claims.
 
 ## Quickstart
 
@@ -122,6 +130,8 @@ community—not company membership, employment or authority.
 
 ## Go deeper
 
+- [Documentation and capability hub](docs/README.md): task-oriented entry
+  points, current capability evidence and document ownership.
 - [The ChimpMaera Canon](docs/CANON.md): normative laws for agency, authority,
   effects and evidence.
 - [Zoo Field Guide](docs/ZOO-FIELD-GUIDE.md): practical Profiles, adapters and
@@ -149,3 +159,6 @@ rights. [CITATION.cff](CITATION.cff) provides citation metadata.
 [contributor workflow](CONTRIBUTING.md) apply. Voluntary creator support is
 available through [Ko-fi](https://ko-fi.com/chimpmaera) and
 [Buy Me a Coffee](https://buymeacoffee.com/jimpansky).
+
+Follow regular product increments through the discreet
+[Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom).
