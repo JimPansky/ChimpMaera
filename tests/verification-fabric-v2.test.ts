@@ -52,7 +52,7 @@ test("VF-002 freezes a closed versioned Evidence DAG schema and canonical manife
 test("single-node changes select the owner, downstream integrity and mandatory hard gates", () => {
   const result = plan(["scripts/verification-plan.mjs"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["repository-integrity", "vf-shadow-v2"]);
+  assert.deepEqual(result.selectedNodes, ["repository-integrity", "secure-default-proof", "vf-shadow-v2"]);
   assert.ok(result.selectedTests.includes("node --test dist/tests/verification-fabric-v2.test.js"));
   assert.deepEqual(result.hardGates, [...graph().hardGates].sort((a, b) => a.localeCompare(b, "en")));
 });
@@ -64,7 +64,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["repository-integrity", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 

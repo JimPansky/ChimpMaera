@@ -69,6 +69,9 @@ jobs:
       - name: Verify supply-chain declarations
         run: npm run supply-chain:verify
 
+      - name: Run SAFE_GUIDED secure-default proof
+        run: npm run proof:secure-default
+
       - name: Run project tests
         run: npm test
 

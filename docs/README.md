@@ -41,6 +41,8 @@ Status labels used here:
 
 - [Security Assurance](SECURITY-ASSURANCE.md): scoped claims, maturity, TCB,
   evidence and non-claims.
+- [SAFE_GUIDED secure-default proof](SECURE-DEFAULT-PROOF.md): human claim
+  matrix, closed machine manifest and one deterministic proof command.
 - [Known Limitations](KNOWN-LIMITATIONS.md): explicit gaps and external gates.
 - [Supply-chain verification](SUPPLY-CHAIN.md): offline declaration checks and
   their limits.

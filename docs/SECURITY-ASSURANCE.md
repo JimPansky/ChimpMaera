@@ -37,6 +37,21 @@ Maturity terms are strict:
 - **NOT CLAIMED — EXTERNAL GATES** — the claim requires evidence this local
   snapshot cannot provide.
 
+## Runnable SAFE_GUIDED proof
+
+The bounded [`SAFE_GUIDED` secure-default proof](SECURE-DEFAULT-PROOF.md)
+turns the relevant claims and uncertainties into a closed, SHA-256-bound
+manifest plus focused positive/adversarial probes. Run it with:
+
+```sh
+npm run proof:secure-default
+```
+
+The command also executes `npm test` as its authoritative comparator; it does
+not use Verification Fabric v2 to skip tests. Its claims apply only to the
+declared local synthetic `SAFE_GUIDED` path. `FULL_CONTROL_LAB` and `RAMPAGE`
+do not inherit them.
+
 ### PROVEN IN THIS SNAPSHOT
 
 | Claim ID | Exact claim | Evidence / reproduce | Result | Boundary |

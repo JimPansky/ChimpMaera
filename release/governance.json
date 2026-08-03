@@ -151,6 +151,12 @@
       "evidencePaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"],
       "nonClaims": ["Local deterministic synthetic proof only; no live Power Platform import, tenant compatibility, Entra consent, OBO, DLP, Gateway integration, certification or production behavior is proven."],
       "traceability": {"pdcaPaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-011",
+      "claim": "ChimpMaera ships a directly runnable, closed and digest-bound repository proof for the local synthetic SAFE_GUIDED secure-default path.",
+      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md", "security/secure-default-proof-v1.json", "security/secure-default-proof-evidence-v1.json"],
+      "nonClaims": ["No production readiness, universal security, hostile-host resistance, certification or live-provider/tenant compatibility is claimed.", "FULL_CONTROL_LAB and RAMPAGE do not inherit SAFE_GUIDED claims.", "The proof reuses Verification Fabric v2 but does not authorize incremental test skipping."]
     }
   ]
 }
