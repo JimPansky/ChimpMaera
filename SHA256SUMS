@@ -6,7 +6,7 @@ deec68918022452012f00abeb2d6b5578a3763a02320139ce074bf124b61c608  ./.github/PULL
 b3c5e91b8ae9dee1d489380334e79f5647077d96b7078ac5779337feda263133  ./.github/workflows/ci.yml
 3cb93d13f4a3ed8f4666fbd68d033aa5446d473ddd35a39b12fad8e57e29b00a  ./.github/workflows/daily-poc-candidate.yml
 56690063fedd6a594cb37f26fdf1538fdd02802243886e9dcae43536f58c110a  ./.gitignore
-9d20ed6fe93fcae2a953faeb383701aa4a272c66cf67eff75703065628506177  ./CITATION.cff
+45c85b2e710df46d91f2f626ece81dd076e3011d3f53d07a62f068692014fded  ./CITATION.cff
 ba943be96394ec332cab2ce2f3ce06f122d9f224f304c765a74dc58cca809310  ./CODE_OF_CONDUCT.md
 9ae8a2e38ef93981b26e37ff70f84097a1809ae016bb0528cf7caf769466b337  ./CONTRIBUTING.md
 9ed8fd6143a87d489c618aaffcea5e5000fc372ae86ca9d3e45e7b7c32be658e  ./DCO
@@ -238,8 +238,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-a4852feaa297c4e84528ddcb958eda5a599539ee447e3c1d3fa90e62085c831f  ./package-lock.json
-d5a7c7e5c94427f00189204ba6d0a1f27dd126d229e358cfa725e7d771dde154  ./package.json
+123d726a54c0015b0d650926edc10a002fc17e0c4d873e71a46abb472c7798e6  ./package-lock.json
+d2178ef7d95fa669f867c2ebce329612aef61a41805f1ffa0ed8dd386910c09c  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
 974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts

@@ -2,9 +2,22 @@ cff-version: "1.2.0"
 message: "If you use ChimpMaera, please cite the software using these metadata."
 type: software
 title: "ChimpMaera"
-version: "0.1.0"
-date-released: "2026-07-31"
+version: "0.2.0-poc.20260803.1"
+date-released: "2026-08-03"
 authors:
   - name: "Jim Pansky"
+abstract: >-
+  Open-source local proof of concept for governed, verifiable AI-agent actions
+  across business systems, with policy, approval, brokered execution,
+  authoritative readback and receipts.
 repository-code: "https://github.com/JimPansky/ChimpMaera"
+url: "https://github.com/JimPansky/ChimpMaera"
+keywords:
+  - ai-agents
+  - agent-governance
+  - ai-governance
+  - policy-enforcement
+  - human-in-the-loop
+  - auditability
+  - business-systems
 license: Apache-2.0
