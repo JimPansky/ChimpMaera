@@ -8,92 +8,86 @@
 
 # ChimpMaera
 
-**Governed by default. Adaptable by design.**
+**Governed by default. Adaptable by design. Improved through evidence.**
 
-ChimpMaera is an open-source local proof of concept: a control plane for governed, verifiable AI-agent actions across
-business systems. Today it
-demonstrates how an agent can propose cross-system work while policy, approval,
-brokered execution, authoritative readback and receipts stay outside the
-model. The broader direction is a vendor-neutral **Knowledge Operating System**
-that turns scattered system knowledge into reusable guides, contracts and
-workflows. That direction is not a claim of current product maturity.
+ChimpMaera is an open-source local proof of concept: a control plane for governed, verifiable AI-agent actions across business systems.
+An agent may propose work;
+the control plane keeps policy, approval, credentials, execution, authoritative readback
+and receipts outside the model. Stable capability contracts and governed
+knowledge make the same intent reusable without treating a new provider as new
+authority. The broader direction is a vendor-neutral **Knowledge Operating System**;
+that direction is not a claim of current product maturity.
 
-[**Run POC**](#quickstart) ·
+[**Run the POC**](#quickstart) ·
 [**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
 [**How it works**](#how-it-works)
 
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
 [Documentation hub](docs/README.md)
 
-## What works today
+## How it works
 
-- **Governed CRM → ERP effects:** the released loopback demo proposes a
-  fictional order, applies policy and approval, executes through the bounded
-  broker, then requires provider readback and a receipt. Denial, drift and
-  replay probes fail closed. [Run the POC](docs/QUICKSTART.md).
-- **Reusable adaptation and interfaces:** released Builder and HMI/harness
-  contracts cover typed discovery, planning, synthetic reuse, authority-free
-  discover/explain flows, and contribution preparation without publication
-  authority. There is no user-facing live-system builder or production UI.
-  [See maturity details](docs/README.md#extend).
-- **Verification and diagnostics:** released Verification Fabric contracts
-  bind checks to evidence and verdicts; v2 adds Shadow-only Evidence-DAG impact
-  planning while the complete suite remains authoritative. Update/Doctor
-  remains check-only and read-only.
-  [Review evidence boundaries](docs/SECURITY-ASSURANCE.md).
-- **Scoped identity and reads:** released Entra identity and Power Platform
-  read contracts are closed and authority-free; live tenant consent, import
-  and compatibility require external evidence. [Read the limitations](docs/KNOWN-LIMITATIONS.md).
-
-## Governed by default
-
-<p align="center">
-  <img src="assets/diagrams/safe-guided-flow.svg" width="720" alt="SAFE_GUIDED flow: Owner asks, Agent proposes, Gateway decides, approval is obtained if required, Broker executes, and authoritative readback plus a receipt prove the result.">
-</p>
-
-This diagram covers only the governed `SAFE_GUIDED` reference path. In that
-path the Agent is an untrusted proposer: it cannot approve itself, choose
-credentials or perform the effect. `FULL_CONTROL_LAB` / `RAMPAGE` can bypass
-ChimpMaera action and approval gates, inherits the host ceiling and is **not a
-security boundary**.
-
-## Adaptable by design
+- **Governed by default.** The caged Agent is an untrusted proposer. A narrow,
+  typed proposal enters the Gateway, where identity, tenant, purpose, rights,
+  policy and approval are evaluated at use time. A broker performs only the
+  allowed atom; validation, provider readback, receipts and declared recovery
+  or rollback close the loop.
+- **Adaptable by design.** Stable capability and knowledge contracts separate a
+  user's need from provider-specific APIs. Reusable templates supply safe
+  defaults; typed adapters bind concrete fields and routes. Rights profiles,
+  approval, validation and evidence remain explicit for every binding.
+  AI may assist discovery, mapping, template selection, adapter/configuration
+  proposals and test generation, but deterministic validators and provider
+  readback decide activation truth.
+- **Improved through evidence.** **Adaptive Knowledge Engineering** is
+  ChimpMaera's discipline for turning observations, domain knowledge,
+  integration behavior, tests and outcomes into versioned, provenance-bound
+  knowledge that can be validated, improved, superseded and reused across
+  agents, tools and systems. Every integration can teach the system how to
+  adapt the next one—without silently expanding authority.
 
 <p align="center">
-  <img src="assets/diagrams/capability-provider-bindings.svg" width="720" alt="Adaptability architecture: consumers bind to stable capability contracts, which connect by solid paths to released local-synthetic CRM and ERP adapters and by dashed paths to a prepared alternative provider adapter; every binding remains under explicit rights, validation, readback, receipts and rollback controls.">
+  <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="Combined ChimpMaera architecture: a contained AI agent sends typed proposals through a mediating Gateway to stable capability contracts and provider adapters; solid routes show locally evidenced reference paths, dashed routes show prepared add or replace direction, and a provenance-bound knowledge and evidence loop improves later adaptations without adding authority.">
 </p>
 
-Stable capability contracts separate user needs from provider implementation.
-Templates and typed adapters reuse governed intent across systems. In the
-broader product direction, AI can propose mappings, configuration and
-validation plans; trusted code validates every binding.
+Text fallback: **Agent proposal → Gateway context/capability/policy/approval
+checks → brokered effect → provider readback and receipt.** Stable contracts,
+templates and typed adapters connect capabilities to providers. The governed
+knowledge loop is **knowledge and feedback → typed records → provenance and
+evidence → contracts/templates/adapters → application → tests/readback →
+outcome → improved revision**. Ingestion, confidence/verification, default
+selection and execution authority are separate; unverified knowledge may
+exist without becoming an authoritative default.
 
-Their composition creates an open-ended, user-need-driven configuration space
-across many system, tool and provider combinations. Released proof is narrower:
-local synthetic contracts and selected bindings—not universal live
-compatibility.
+Solid paths are locally evidenced `SAFE_GUIDED` reference or local-synthetic
+capability paths. Dashed paths are prepared add/replace product direction.
+Containment plus mediated execution is the security boundary. The diagram is
+not proof of generic filesystem/process/Docker mediation or universal provider
+addition. See the
+[combined technical architecture](docs/ARCHITECTURE.md#combined-architecture-containment-mediation-and-adaptation).
 
-Provider selection never silently widens authority. Rights profiles,
-validation, readback, receipts and recovery/rollback stay explicit per binding.
-Solid paths above are released local-synthetic evidence; dashed paths are
-prepared product direction. See the
-[technical architecture](docs/ARCHITECTURE.md#capability-contracts-and-provider-bindings).
+## Proof today
 
-## Releases
+- The target-neutral core is reused across the released synthetic CRM and ERP
+  path: policy and approval precede the bounded effect, then semantic readback
+  and a digest-bound receipt verify it. Denial, drift and replay probes fail
+  closed. [Run the proof](docs/SECURE-DEFAULT-PROOF.md).
+- Released Builder, HMI/harness and capability contracts cover typed discovery,
+  planning, synthetic reuse, authority-free discover/explain flows and
+  contribution preparation. Selected local-synthetic bindings and the
+  `SAFE_GUIDED` reference path are evidence—not a live-system builder or
+  production UI.
+- The released foundation includes typed/provenance-bound artifacts,
+  contracts, templates, adapters, verification/evidence mechanisms, and
+  supersession and negative-evidence patterns. Positive evidence, negative
+  probes, owner corrections and rejected variants can inform later governed
+  revisions. [Explore Governed Knowledge Harvest](docs/KNOWLEDGE-HARVEST.md).
 
-- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
-- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)
-- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)
-
-Release pages document included capabilities and evidence boundaries. Recent
-governed increments also identify related issues/PRs and publish downloadable
-assets with SHA-256 checksum information.
-
-This is a local, synthetic PoC—not a production release, hosted service,
-security certification, support promise or permission to connect real systems.
-Use only synthetic data on a disposable or development host. See
-[release governance](docs/RELEASE-GOVERNANCE.md) for publication evidence and
-anonymous readback rules.
+Broader live-system onboarding, provider add/replace, resource-plane adapters
+and an outcome-validating autonomous learning loop across arbitrary live
+systems remain direction. Provenance-bound knowledge expands an open-ended,
+user-need-driven option space across system, tool and provider combinations;
+each combination still needs its own applicability boundary and evidence.
 
 ## Quickstart
 
@@ -104,8 +98,8 @@ root:
 ./demo/install.sh
 ```
 
-Open the loopback URL printed by the installer. The demo creates only local
-random secrets and fictional fixtures. Use the [full quickstart](docs/QUICKSTART.md)
+Open the loopback URL printed by the installer. The demo creates local random
+secrets and fictional fixtures. See the [full quickstart](docs/QUICKSTART.md)
 for prerequisites and troubleshooting.
 
 Remove only installer-owned resources:
@@ -114,23 +108,32 @@ Remove only installer-owned resources:
 ./demo/uninstall.sh --purge
 ```
 
-## Evidence and limitations
+## Evidence and scope
 
-- [Documentation and capability hub](docs/README.md): task-oriented routes,
-  maturity labels and document ownership.
+- [Documentation and capability hub](docs/README.md): task-oriented routes and
+  maturity labels.
 - [Security Assurance](docs/SECURITY-ASSURANCE.md): exact scoped claims,
-  evidence, TCB and non-claims.
-- [Runnable SAFE_GUIDED proof](docs/SECURE-DEFAULT-PROOF.md): claim/evidence
-  matrix, closed manifest and the deterministic `npm run proof:secure-default`
-  command.
+  evidence, trusted computing base and non-claims.
 - [Known Limitations](docs/KNOWN-LIMITATIONS.md): production, identity,
   provider, isolation and external-evidence gaps.
-- [Canon](docs/CANON.md) and [Architecture](docs/ARCHITECTURE.md): durable laws
-  and the current local reference design.
+- [Canon](docs/CANON.md) and [Architecture](docs/ARCHITECTURE.md): durable laws,
+  trust boundaries and adapters.
 
-Shared or untrusted knowledge grants no authority. ChimpMaera does not claim a
-central data lake, universal ontology, automatic publication of private data,
-generic live-system integration or quantified faster onboarding.
+This is a local synthetic PoC, not a hosted service, production release,
+security certification or support promise. Use synthetic data on a disposable
+or development host. Shared, ingested or unverified knowledge grants no
+authority.
+
+## Releases
+
+- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
+- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)
+- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)
+
+Release pages own included capabilities, increment details, evidence boundaries,
+related issues/PRs, tests, assets and SHA-256 information;
+[release governance](docs/RELEASE-GOVERNANCE.md) defines publication evidence
+and anonymous readback.
 
 ## Project and community
 
@@ -138,14 +141,15 @@ generic live-system integration or quantified faster onboarding.
   vulnerability through the [private security route](SECURITY.md).
 - Watch the verified public overviews: [Why ChimpMaera?](https://youtu.be/Dq_XLEzh5I8),
   [How does it work?](https://youtu.be/w4fWgalD_WQ), and
-  [Security by Default](https://youtu.be/SEPbE-EVoNs). Videos are not release
-  evidence.
+  [Security by Default](https://youtu.be/SEPbE-EVoNs). Videos illustrate the
+  approach; release evidence remains in the repository and release pages.
 
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference media follows
 [MEDIA-LICENSE.md](MEDIA-LICENSE.md); Apache-2.0 grants no trademark rights.
 [CITATION.cff](CITATION.cff) provides citation metadata. Community conduct and
-the Developer Certificate of Origin are defined in [CONTRIBUTING.md](CONTRIBUTING.md).
+the Developer Certificate of Origin are defined in
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 Voluntary creator support:
 

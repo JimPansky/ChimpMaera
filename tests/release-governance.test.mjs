@@ -39,39 +39,42 @@ test("root security and support documents remain version-agnostic", () => {
   assert.match(support, /without warranty, service-level objective or\s+production-support commitment/i);
 });
 
-test("README presents governed adaptability without overstating provider compatibility", () => {
+test("README presents governed adaptability and evidence-driven improvement without overstating scope", () => {
   const readme = readFileSync(join(ROOT, "README.md"), "utf8");
-  const diagram = readFileSync(join(ROOT, "assets", "diagrams", "capability-provider-bindings.svg"), "utf8");
+  const diagram = readFileSync(join(ROOT, "assets", "diagrams", "caged-agent-gateway-constellation.svg"), "utf8");
   const manifest = readFileSync(join(ROOT, "release", "public-files.manifest"), "utf8");
-  const adaptabilityStart = readme.indexOf("## Adaptable by design");
-  const adaptabilityEnd = readme.indexOf("\n## ", adaptabilityStart + 4);
-  const adaptabilitySection = readme.slice(adaptabilityStart, adaptabilityEnd);
+  const words = readme.replace(/<[^>]+>/g, " ").trim().split(/\s+/);
+  const h2s = readme.match(/^## /gm) ?? [];
 
-  assert.match(readme, /Governed by default\. Adaptable by design\./);
-  assert.ok(readme.indexOf("## What works today") < readme.indexOf("## Governed by default"));
-  assert.ok(readme.indexOf("## Governed by default") < adaptabilityStart);
-  assert.ok(adaptabilityStart < readme.indexOf("## Releases"));
-  assert.match(adaptabilitySection, /open-ended, user-need-driven configuration\s+space/);
-  assert.match(adaptabilitySection, /not universal live\s+compatibility/);
-  assert.match(adaptabilitySection, /Provider selection never silently widens authority/);
-  assert.doesNotMatch(adaptabilitySection, /\b(?:infinite|one-click|minutes?|hours?)\b/i);
+  assert.match(readme, /Governed by default\. Adaptable by design\. Improved through evidence\./);
+  assert.ok(readme.indexOf("## How it works") < readme.indexOf("## Proof today"));
+  assert.ok(readme.indexOf("## Proof today") < readme.indexOf("## Quickstart"));
+  assert.ok(readme.indexOf("## Evidence and scope") < readme.indexOf("## Releases"));
+  assert.match(readme, /\*\*Adaptive Knowledge Engineering\*\*/);
+  assert.match(readme, /Every integration can teach the system how to\s+adapt the next one—without silently expanding authority/);
+  assert.match(readme, /open-ended,\s+user-need-driven option space/);
+  assert.match(readme, /unverified knowledge may\s+exist without becoming an authoritative default/);
+  assert.doesNotMatch(readme, /\b(?:infinite|one-click|minutes?|hours?|production-ready)\b/i);
+  assert.ok(words.length >= 600 && words.length <= 900, `README_WORD_COUNT:${words.length}`);
+  assert.ok(h2s.length <= 8, `README_H2_COUNT:${h2s.length}`);
 
-  assert.match(diagram, /role="img" aria-labelledby="title desc"/);
-  assert.match(diagram, /<title id="title">/);
-  assert.match(diagram, /<desc id="desc">/);
-  assert.match(diagram, /@media \(prefers-color-scheme: dark\)/);
-  assert.equal((diagram.match(/<rect class="node /g) ?? []).length, 7);
-  assert.ok(diagram.indexOf("<!-- Connectors are behind nodes.") < diagram.indexOf("<rect class=\"node "));
-  assert.match(diagram, /RELEASED · SYNTHETIC/);
-  assert.match(diagram, /PRODUCT DIRECTION/);
-  assert.doesNotMatch(diagram, /<(?:image|script)\b|(?:href|src)="https?:\/\//i);
-  assert.match(manifest, /^assets\/diagrams\/capability-provider-bindings\.svg\tassets\/diagrams\/capability-provider-bindings\.svg\t0644$/m);
+  assert.match(diagram, /role="img" aria-labelledby="caged-title caged-desc"/);
+  assert.match(diagram, /<title id="caged-title">/);
+  assert.match(diagram, /<desc id="caged-desc">/);
+  assert.ok(diagram.indexOf("<!-- Connectors are behind nodes.") < diagram.indexOf("<!-- Left containment -->"));
+  assert.equal((diagram.match(/marker-end=/g) ?? []).length, 8);
+  assert.match(diagram, /ADAPTIVE KNOWLEDGE ENGINEERING/);
+  assert.match(diagram, /Solid routes = locally evidenced reference paths/);
+  assert.match(diagram, /Dashed routes = prepared add\/replace direction/);
+  assert.match(diagram, /Security boundary = containment \+ mediated execution/);
+  assert.doesNotMatch(diagram, /<(?:image|script|linearGradient|radialGradient)\b|(?:href|src)="https?:\/\//i);
+  assert.match(manifest, /^assets\/diagrams\/caged-agent-gateway-constellation\.svg\tassets\/diagrams\/caged-agent-gateway-constellation\.svg\t0644$/m);
 });
 
 test("release governance negative probes fail closed", async (t) => {
   const probes = [
     ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)", "[Version-bound release](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)")],
-    ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages document included capabilities", "Today's Daily snapshot")],
+    ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages own included capabilities", "Today's Daily snapshot owns included capabilities")],
     ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "direction is not a claim of current product maturity", "direction is current product maturity")],
     ["root Security static Latest claim", "ROOT_SECURITY_VERSION_BINDING_DENIED", (root) => append(root, "SECURITY.md", "The latest tagged release is v9.9.9.")],
     ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/tag/v9.9.9")],
