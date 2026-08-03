@@ -24,17 +24,18 @@ direction is not a claim of current product maturity.
 [**Browse the docs**](docs/README.md)
 
 **Security, without magic words:** models and agents are untrusted proposers.
-Inside the declared governed paths there is **no ambient authority, no master
-key and no unmediated effect path**. Typed, default-off capabilities, policy,
-approval, brokered execution, authoritative readback and receipts enforce that
-boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
+In the governed `SAFE_GUIDED` reference path there is **no ambient authority,
+no master key and no unmediated effect path**. Typed, default-off capabilities,
+policy, approval, brokered execution, authoritative readback and receipts
+enforce that boundary. The opt-in `FULL_CONTROL_LAB` / `RAMPAGE` profile can
+bypass ChimpMaera action and approval gates, inherits the host ceiling and is
 **not a security boundary**. Read the
 [exact claims, evidence, maturity and TCB limits](docs/SECURITY-ASSURANCE.md).
 
 ## Release status
 
 - **Current regular Latest release:** [`v0.2.0-poc.20260803.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.1) — **Authority-Bounded Integration Contracts Increment**.
-- **Historical predecessor:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release.
+- **Initial public baseline:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release or its direct predecessor.
 
 Releases are accepted functional increments, not calendar events. Editorial
 updates may describe progress, decisions, learnings or previews, but they do
@@ -143,8 +144,12 @@ community—not company membership, employment or authority.
 
 ## Watch ChimpMaera
 
-Current overview videos are temporarily unavailable while their public naming
-and claims are re-verified. No video is release evidence.
+- [Why ChimpMaera? Open Knowledge, Governed AI, Verifiable Outcomes](https://youtu.be/Dq_XLEzh5I8)
+- [How does ChimpMaera actually work?](https://youtu.be/w4fWgalD_WQ)
+- [Security by Default: How ChimpMaera Contains AI Agents](https://youtu.be/SEPbE-EVoNs)
+
+These links were anonymously availability-checked. No video is release
+evidence; repository claims and limitations remain authoritative.
 
 ## Project details
 
@@ -156,9 +161,15 @@ Use [SECURITY.md](SECURITY.md) for private vulnerability reporting and
 rights. [CITATION.cff](CITATION.cff) provides citation metadata.
 [Community conduct](CODE_OF_CONDUCT.md), the
 [Developer Certificate of Origin](CONTRIBUTING.md) and the
-[contributor workflow](CONTRIBUTING.md) apply. Voluntary creator support is
-available through [Ko-fi](https://ko-fi.com/chimpmaera) and
-[Buy Me a Coffee](https://buymeacoffee.com/jimpansky).
+[contributor workflow](CONTRIBUTING.md) apply.
+
+Voluntary creator support:
+
+<p>
+  <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support ChimpMaera on Ko-fi" width="180" height="33"></a>
+  &nbsp;
+  <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support ChimpMaera on Buy Me a Coffee" width="180" height="33"></a>
+</p>
 
 Follow regular product increments through the discreet
 [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom).

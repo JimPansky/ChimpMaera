@@ -1,15 +1,17 @@
 # Architecture
 
-This architecture preserves the v0.1 subset identified in
-[The ChimpMaera Canon](CANON.md) and adds the isolated v0.2 Wave 1 Approval
-Workbench and later completed security candidates through AAS-023. The Canon's
+This architecture preserves the initial `v0.1.0` subset identified in
+[The ChimpMaera Canon](CANON.md) and describes the current released local PoC,
+including the Approval Workbench and later local-synthetic security surfaces.
+The Canon's
 mechanism-independent product abstraction is the Agent Runtime Isolation
 Boundary / Untrusted Runtime Contract, detailed for engineering use in the
 [Agent Runtime Isolation Contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md).
 [Known Limitations](KNOWN-LIMITATIONS.md) identifies boundaries that remain
 outside this local snapshot.
 
-ChimpMaera v0.1 is a local reference stack with three user-facing loopback
+The current ChimpMaera release includes a local reference stack with three
+user-facing loopback
 services:
 
 - ChimpMaera coordinates the guided demo, enforces the local action boundary
@@ -34,19 +36,19 @@ the CRM/ERP runtime. Its default path validates versioned jobs and can perform
 a synthetic CPU-only smoke without models, GPU activation or public side
 effects.
 
-The effect path follows the Canon's separation: the seed path forms typed
+The `SAFE_GUIDED` effect path follows the Canon's separation: the seed path forms typed
 requests without provider credentials; the ChimpMaera runtime gate performs
 use-time enforcement; the provider is read back before a bound success receipt
-is recorded. The shipped v0.1 demo is not a general Agent Runtime Isolation
+is recorded. The shipped local demo is not a general Agent Runtime Isolation
 Adapter and does not claim complete mediation for arbitrary model, skill,
-filesystem, durable-Mind, read, or process crossings. The following v0.2 and
-AAS components are local snapshot candidates, not retroactive v0.1 release
-claims.
+filesystem, durable-Mind, read, or process crossings. The following components
+are current released local-synthetic surfaces where identified as shipped; they
+are not retroactive `v0.1.0` claims or production evidence.
 
-Wave 1 adds one complete readable business Diff and local
+The released Wave 1 surface adds one complete readable business Diff and local
 Approve/Reject ceremony for the existing synthetic Dolibarr escalation.
 Production owner identity, a production approval service, provider Revoke and
-provider Rollback remain outside the candidate.
+provider Rollback remain outside the local PoC.
 
 The Admin-AI PoC is a deterministic local preview wired through a static policy
 and the same enforcement boundary. `AUTO_GRANT` may execute only its permitted

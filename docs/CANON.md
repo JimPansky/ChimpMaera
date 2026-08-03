@@ -2,9 +2,10 @@
 
 ## The Laws of Agency, Authority, and Evolution
 
-**Version:** 0.2 local revision candidate
+**Version:** 0.2 local revision
 
-**Status:** English canonical candidate; not merged or released
+**Status:** English canonical documentation in the current public source;
+individual product surfaces retain their own evidence and maturity boundaries
 **Language governance:** English is the canonical language for maintained
 repository product and technical documentation. Localized material belongs to
 separate localization workflows and does not control this document.

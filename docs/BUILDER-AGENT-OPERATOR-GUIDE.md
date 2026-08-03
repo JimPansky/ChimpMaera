@@ -1,8 +1,9 @@
 # Builder Agent operator guide
 
-Status: **LOCALLY VALIDATED, NOT RELEASED**. This document describes the
-Builder contract and synthetic reference fixture present on this branch. It is
-not a command to connect a live system and grants no publication authority.
+Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**. The Builder contracts,
+tests and synthetic reference fixture are present in the current public
+release. They are not a user-facing arbitrary-system builder, a command to
+connect a live system, production evidence or publication authority.
 
 ## Operator flow
 
@@ -28,8 +29,8 @@ not a command to connect a live system and grants no publication authority.
 7. Validate readback, receipts and rollback in a synthetic isolated fixture.
    Installation, activation, mutation and publication are separate routes.
 8. Generate a sanitized contribution bundle only when sharing is deliberately
-   requested. The v1 bundle is opt-in, synthetic, `LOCALLY_VALIDATED`,
-   `NOT_RELEASED`, and always carries publication authorization `ABSENT`.
+   requested. The released v1 contract is opt-in and synthetic, and every
+   generated bundle carries publication authorization `ABSENT`.
 
 ## Stop conditions
 
@@ -56,5 +57,5 @@ Accept a local checkpoint only when focused tests, negative probes, full tests,
 checksum closure, supply-chain declarations and deterministic public staging
 pass in proportion to the changed surface. Local synthetic evidence is not
 production authorization, customer-data fitness, hostile-host containment,
-security certification, universal agent/system compatibility, public
-availability or a release.
+security certification or universal agent/system compatibility. Release of the
+contract bytes does not authorize a live connection, activation or publication.

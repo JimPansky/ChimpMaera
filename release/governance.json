@@ -48,11 +48,15 @@
     "examples/daily-poc/"
   ],
   "videos": {
-    "activeVerifiedIds": [],
-    "withdrawnIds": [
+    "activeVerifiedIds": [
       "Dq_XLEzh5I8",
       "w4fWgalD_WQ",
       "SEPbE-EVoNs"
+    ],
+    "withdrawnIds": [
+      "8mB7O81Y2xA",
+      "8lj5nd-LJa4",
+      "mxN9biyelZ0"
     ]
   },
   "claimEvidence": [
