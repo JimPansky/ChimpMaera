@@ -6,6 +6,7 @@ import re
 import wave
 
 from .methodology import MethodologyError, validate_methodology_job
+from .visual_governance import VisualGovernanceError, load_json as load_governance_json, validate_storyboard
 
 try:
     import yaml
@@ -181,6 +182,15 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
         _require(spec.get("mode") == "full-render", "full render requires spec.mode full-render")
         _require(gates.get("textGate") == "PASS", "full render requires textGate PASS")
         _require(gates.get("shotGate") == "PASS", "full render requires shotGate PASS")
+        pre_render = spec.get("preRenderGate") or {}
+        _require(pre_render.get("status") == "PASS_AUTOMATED", "full render requires storyboard pre-render gate")
+        storyboard_path = _resolve_declared(pre_render.get("storyboardPath"), job_path)
+        _require(storyboard_path.is_file(), "full render storyboard package is missing")
+        _check_hash({"id": "storyboard", "sha256": pre_render.get("storyboardSha256")}, storyboard_path)
+        try:
+            governance = validate_storyboard(load_governance_json(storyboard_path), stage="FULL_RENDER")
+        except VisualGovernanceError as exc:
+            raise ContractError(str(exc)) from exc
 
     roots = spec.get("roots") or {}
     assets_root = roots.get("assets")
@@ -282,4 +292,5 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
         "durationSeconds": expected_duration,
         "durationRole": "LOCKED_ASSET_MEASUREMENT_NOT_EDITORIAL_TARGET",
         "methodology": methodology_result,
+        "visualGovernance": governance if render.get("full") else None,
     }

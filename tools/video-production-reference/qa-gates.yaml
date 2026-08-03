@@ -10,6 +10,8 @@ requiredOrder:
   - asset_locks
   - content_driven_editorial_duration
   - text_and_shot_preflight
+  - storyboard_and_contact_sheet_preflight
+  - exact_revision_human_visual_and_editorial_review
   - full_render
   - decode_and_media
   - subtitles_safe_area_asr_ocr
@@ -18,6 +20,13 @@ requiredOrder:
 rules:
   noFullRenderBeforeTextGate: true
   noFullRenderBeforeShotGate: true
+  noTtsOrFullRenderBeforeStoryboardGate: true
+  noTtsOrFullRenderWhileHumanVisualReviewPendingOrRejected: true
+  noTtsOrFullRenderWhileHumanEditorialReviewPendingOrRejected: true
+  revisionChangeInvalidatesHumanApprovals: true
+  passAutomatedNeverImpliesPublicationReadiness: true
+  noSendUnlessExactRevisionFinalQaAndHumanFinalApproval: true
+  appendOnlyHumanRejectionSupersessionAndRollback: true
   noAlternativeKeeper: true
   noDeprecatedCentipApeLogo: true
   noPublicOrPushAction: true
@@ -40,6 +49,27 @@ rules:
   noAudioPaddingToPreset: true
   designedOutroDurationSeconds: 10
   silentOutroAcceptanceForbidden: true
+  oneSemanticVisualActionPerScene: true
+  progressiveEvidenceBearingVisualDevelopment: true
+  narrationAndOnScreenCopyComplementary: true
+  paragraphSlidesForbidden: true
+  decorativeMotionForbidden: true
+  brandingIsRestrainedFrame: true
+  staticOrSilentTailMaximumSeconds: 1.5
+  criticalTermsExactSpellingAndPronunciationInputsRequired: true
+visualDesignReview:
+  revisionBound: true
+  required:
+    - hierarchy_and_focal_point
+    - alignment_grid_margins_optical_balance_safe_area
+    - typography_size_weight_line_length_subtitle_collision
+    - color_harmony_contrast_dark_light_color_blind_differentiation
+    - icon_style_stroke_corner_radius_shadow_brand_restraint
+    - motion_continuity_easing_entry_exit_transition_camera_purpose
+    - mobile_readability
+    - density_and_empty_space_balance
+    - causal_explanation_not_decoration
+    - screenshot_and_diagram_legibility_crop_position
 media:
   width: 1280
   height: 720

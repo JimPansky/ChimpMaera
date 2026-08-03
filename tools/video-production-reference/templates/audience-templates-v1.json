@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "cm.video-audience-templates/v1",
+  "truthRule": "Audience templates adapt framing, vocabulary, pacing, evidence depth and CTA; they never fork the factual core.",
+  "templates": [
+    {
+      "id": "TECHNICAL_EXPERT",
+      "goal": "Enable architecture, security and implementation scrutiny.",
+      "assumedKnowledge": ["system boundaries", "authority", "digests", "verification DAGs"],
+      "vocabularyBudget": "UNRESTRICTED_DOMAIN_TERMS_DEFINE_PROJECT_SPECIFICS",
+      "pacing": "FAST_MECHANISM_THEN_PROOF",
+      "evidenceDepth": "FALSIFIABLE_CLAIM_PLUS_IMPLEMENTATION_DETAIL",
+      "visualGrammar": ["DEPENDENCY_DAG", "CONTRACT_EXCERPT", "TERMINAL_EXCERPT", "MEASURED_EVIDENCE"],
+      "cta": "Inspect the receipt or offer a counterexample.",
+      "antiPatterns": ["analogy instead of mechanism", "claim without comparator", "marketing superlative"],
+      "passExample": "Show the invalidated DAG nodes, selected checks and authoritative comparator.",
+      "failExample": "A card that says verification is smarter."
+    },
+    {
+      "id": "TECHNICAL_DECISION_MAKER",
+      "goal": "Support a bounded adoption or risk decision.",
+      "assumedKnowledge": ["architecture", "risk", "operating model"],
+      "vocabularyBudget": "SYSTEM_TERMS_WITH_SHORT_DEFINITIONS",
+      "pacing": "RISK_BOUNDARY_PROOF_TRADEOFF",
+      "evidenceDepth": "REPRESENTATIVE_PROOF_AND_ADOPTION_IMPLICATIONS",
+      "visualGrammar": ["AUTHORITY_FLOW", "COMPARISON", "MEASURED_EVIDENCE"],
+      "cta": "Decide whether the bounded pilot merits evaluation.",
+      "antiPatterns": ["implementation detail before business boundary", "ROI invented from local tests"],
+      "passExample": "Show the authority boundary first, then the receipt and residual risk.",
+      "failExample": "Lead with class names and omit operational consequences."
+    },
+    {
+      "id": "OPERATOR",
+      "goal": "Make setup, observation, failure and rollback realistic.",
+      "assumedKnowledge": ["CLI", "containers", "logs", "backups"],
+      "vocabularyBudget": "OPERATIONAL_TERMS_ONLY",
+      "pacing": "OUTCOME_PATH_FAILURE_ROLLBACK",
+      "evidenceDepth": "COMMAND_READBACK_FAILURE_MODE_REALISTIC_EFFORT",
+      "visualGrammar": ["TERMINAL_EXCERPT", "STATE_TRANSITION", "MEASURED_EVIDENCE"],
+      "cta": "Run the read-only preflight and inspect the receipt.",
+      "antiPatterns": ["happy path only", "hidden prerequisites", "rollback as footnote"],
+      "passExample": "Show setup, observable success, denied write and rollback marker.",
+      "failExample": "Say easy to deploy without steps or failure signals."
+    },
+    {
+      "id": "GENERAL_TECH",
+      "goal": "Build a truthful mental model with minimal jargon.",
+      "assumedKnowledge": ["apps", "permissions", "checks"],
+      "vocabularyBudget": "ONE_NEW_PROJECT_TERM_PER_BEAT",
+      "pacing": "CONCRETE_EXAMPLE_VISIBLE_FLOW_RECAP",
+      "evidenceDepth": "VISIBLE_CAUSAL_FLOW_PLUS_BOUNDARY",
+      "visualGrammar": ["AUTHORITY_FLOW", "STATE_TRANSITION", "PUBLIC_TRUTH_PATH"],
+      "cta": "Explore the bounded example and its limits.",
+      "antiPatterns": ["jargon stack", "cute analogy that changes the truth", "paragraph slides"],
+      "passExample": "Use a doorway analogy, then show the real permission flow and receipt.",
+      "failExample": "Replace the actual boundary with a cartoon lock."
+    },
+    {
+      "id": "CONTRIBUTOR",
+      "goal": "Make a safe extension path and evidence expectations obvious.",
+      "assumedKnowledge": ["Git", "tests", "interfaces", "pull requests"],
+      "vocabularyBudget": "OSS_AND_EXTENSION_TERMS",
+      "pacing": "PROBLEM_EXTENSION_POINT_PREFLIGHT_EVIDENCE_PATH",
+      "evidenceDepth": "INTERFACE_TEST_NEGATIVE_FIXTURE_CONTRIBUTION_RECEIPT",
+      "visualGrammar": ["CONTRIBUTION_PREFLIGHT", "CONTRACT_EXCERPT", "DEPENDENCY_DAG"],
+      "cta": "Prepare and validate an evidence bundle; submission remains a separate action.",
+      "antiPatterns": ["preflight implies submit", "tests hidden", "maintainer authority implied"],
+      "passExample": "Prepare, validate and package evidence, then stop before submit.",
+      "failExample": "Animate a pull request merge after local validation."
+    }
+  ]
+}

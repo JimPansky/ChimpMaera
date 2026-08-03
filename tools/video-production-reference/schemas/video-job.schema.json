@@ -67,6 +67,16 @@
             "publicActions": {"const": "forbidden"}
           }
         },
+        "preRenderGate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "storyboardPath", "storyboardSha256"],
+          "properties": {
+            "status": {"const": "PASS_AUTOMATED"},
+            "storyboardPath": {"type": "string", "minLength": 1},
+            "storyboardSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+          }
+        },
         "referenceAssets": {
           "type": "array",
           "description": "Optional, replaceable assets declared by this job. Omission is valid.",
@@ -119,6 +129,10 @@
     {
       "if": {"properties": {"apiVersion": {"const": "cm.video/v2"}}},
       "then": {"properties": {"spec": {"required": ["methodology", "publicationCopy"]}}}
+    },
+    {
+      "if": {"properties": {"spec": {"properties": {"render": {"properties": {"full": {"const": true}}}}}}},
+      "then": {"properties": {"spec": {"required": ["preRenderGate"]}}}
     }
   ]
 }

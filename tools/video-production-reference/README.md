@@ -1,5 +1,13 @@
 # ChimpMaera Video Production Reference
 
+Canonical authoring and governance:
+
+- [Governed visual storytelling](docs/VISUAL-LANGUAGE-AUTHORING.md)
+- [Audience discovery and audience lock](docs/AUDIENCE-DISCOVERY.md)
+- [2026-08-03 hardening evidence and maturity](docs/PROCESS-HARDENING-EVIDENCE.md)
+- Machine contracts: `schemas/storyboard.schema.json`, `schemas/audience-discovery-canvas.schema.json`, `schemas/script-package.schema.json`, `schemas/learning-record.schema.json`
+- Versioned audience, visual grammar, script, learning and privacy-safe event templates: `templates/`
+
 This directory ships a public reference Docker for the current
 ChimpMaera video-production workflow. It is intentionally reference-quality:
 small, inspectable, fail-closed, and faithful to the contracts used for the

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "cm.learning-record/v1",
+  "id": "learning-id",
+  "stage": "L0_RAW_OBSERVATION",
+  "assertionClass": "FACT",
+  "provenance": [{"input": "", "transformation": "", "decision": "", "output": "", "testEvidence": "", "outcome": ""}],
+  "sourceDigests": ["0000000000000000000000000000000000000000000000000000000000000000"],
+  "confidence": "LOW",
+  "scope": {"audience": [], "contentFamilies": [], "toolchainVersion": ""},
+  "applicabilityBoundary": "",
+  "evidence": {"positive": [], "negative": [], "rejectedVariants": [], "unresolvedHypotheses": []},
+  "dependencies": [],
+  "derivedFrom": [],
+  "reviewerGate": {"status": "PENDING", "reviewer": null},
+  "reviewDate": "",
+  "expiryOrReviewDate": "",
+  "supersession": {"supersedes": null, "supersededBy": null},
+  "rollback": {"target": "", "trigger": ""},
+  "crossAudienceReuse": false,
+  "declaredAdaptation": null
+}
