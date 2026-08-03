@@ -4,7 +4,7 @@
   "title": "Reusable public-copy policy",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "policyId", "language", "canonicalName", "narrationNumberStyle", "visibleNumberStyle", "immutableNumberExceptions", "forbiddenTerms", "forbiddenLanguageTokens", "scope"],
+  "required": ["schemaVersion", "policyId", "language", "canonicalName", "narrationNumberStyle", "visibleNumberStyle", "immutableNumberExceptions", "forbiddenTerms", "forbiddenLanguageTokens", "scope", "publicationReadyAudienceCopy"],
   "properties": {
     "schemaVersion": {"const": "cm.public-copy-policy/v1"},
     "policyId": {"type": "string", "minLength": 1},
@@ -15,6 +15,35 @@
     "immutableNumberExceptions": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "forbiddenTerms": {"type": "array", "items": {"type": "string", "minLength": 1}},
     "forbiddenLanguageTokens": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "scope": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+    "scope": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "publicationReadyAudienceCopy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gateVersion", "requiredChannels", "rules"],
+      "properties": {
+        "gateVersion": {"const": "2026.08.03-v1"},
+        "requiredChannels": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"enum": ["voice-over", "subtitles", "on-screen-text", "thumbnail", "public-title", "public-description", "final-asr", "final-ocr"]}
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "pattern", "message"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "pattern": {"type": "string", "minLength": 1},
+              "message": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -25,19 +25,33 @@ Docker socket.
    is valid, while declarations are checked exactly. V2 also validates
    public-copy policy digests, English narration-number rules,
    claim/evidence/non-claim integrity, timed visual bindings, safe areas,
-   subtitles, named hash-bound reviews, and the ten-second outro probes.
+   subtitles, named hash-bound reviews, the ten-second outro probes, and the
+   publication-ready audience-copy boundary for narration, visible copy, and
+   optional title/description/thumbnail fields. It also rejects fixed Daily
+   target/max/gate and cut/pad-to-fit controls.
 2. `render` repeats validation, refuses an existing immutable output directory,
-   assembles static PNG shots with direct dissolves, pads/trims locked WAV audio,
-   writes `candidate.mp4`, and records the exact render command.
+   assembles static PNG shots with direct dissolves, preserves the already
+   duration-matched locked WAV without trim/pad-to-fit filters, writes
+   `candidate.mp4`, and records the exact render command.
 3. `qa` runs `ffprobe`, full-decodes the MP4, checks dimensions, fps, pixel
    format, duration and audio sample rate, measures EBU R128 loudness and true
    peak, rejects black-frame events, and writes QA evidence plus checksums.
 4. `validate-methodology-evidence` verifies artifact hashes, seven portable QA
    families, named revision-bound reviews, and four outro probes. Fixture
    evidence is accepted only for a manifest explicitly marked
-   `smoke-fixture`; publication candidates require executed evidence.
+   `smoke-fixture`; publication candidates require executed evidence. The
+   hash-bound ASR/OCR receipts must expose `audienceText`, which is checked by
+   the same publication-ready copy policy while sidecar status remains outside
+   the audience field.
 5. `validate-consumed-deltas` verifies the public process-delta chain and its
    assumption/risk/fallback/review/rollback record.
+6. `validate-audience-copy-fixtures` replays positive and negative fixtures in
+   the container and rejects stale policy hashes, channel coverage, or rule
+   coverage.
+
+Editorial duration is content-driven. Scene and clip timing remains a technical
+assembly contract, but no total Daily runtime is a target, maximum, pass/fail
+goal, truncation trigger, or padding target.
 
 ## Evidence Files
 

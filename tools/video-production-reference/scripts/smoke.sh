@@ -6,7 +6,7 @@ TMP="$(mktemp -d)"
 cleanup() {
   status=$?
   if [ "$status" -ne 0 ]; then
-    for report in validate.json render.json qa.json consumed-deltas.json evidence-validation.json; do
+    for report in validate.json render.json qa.json consumed-deltas.json audience-copy-fixtures.json evidence-validation.json; do
       if [ -s "$TMP/$report" ]; then
         sed -n '1,240p' "$TMP/$report" >&2
       fi
@@ -34,7 +34,7 @@ cp "$ROOT/examples/minimal/generate_evidence.py" "$TMP/generate_evidence.py"
 cp "$ROOT/policies/chimpmaera-public-copy.json" "$TMP/chimpmaera-public-copy.json"
 (cd "$TMP" && python3 generate_assets.py >/dev/null)
 
-IMAGE="chimpmaera/video-production-reference:smoke-20260802-v2"
+IMAGE="chimpmaera/video-production-reference:smoke-20260803-copy-gate-v1"
 RUN_UID="$(id -u)"
 RUN_GID="$(id -g)"
 if [ "$RUN_UID" = "0" ]; then
@@ -90,6 +90,12 @@ docker run --rm --network none --read-only --cap-drop ALL \
   --security-opt no-new-privileges:true \
   "$IMAGE" validate-consumed-deltas --manifest /app/methodology/consumed-deltas.json >"$TMP/consumed-deltas.json"
 
+docker run --rm --network none --read-only --cap-drop ALL \
+  --security-opt no-new-privileges:true \
+  "$IMAGE" validate-audience-copy-fixtures \
+    --policy /app/policies/chimpmaera-public-copy.json \
+    --fixtures /app/fixtures/audience-copy-gate.json >"$TMP/audience-copy-fixtures.json"
+
 mkdir -p "$TMP/evidence"
 for probe in "10.0:outro-start.png" "12.5:outro-quarter.png" "15.0:outro-midpoint.png" "19.9:outro-end.png"; do
   second="${probe%%:*}"
@@ -117,6 +123,11 @@ docker image inspect "$IMAGE" \
   --format '{{ index .Config.Labels "org.chimpmaera.video.methodology.version" }}' \
   | grep -Fx "2026.08.02-v2" >"$TMP/oci-label-check.txt"
 
+docker image inspect "$IMAGE" \
+  --format '{{ index .Config.Labels "org.chimpmaera.video.audience-copy-gate.version" }}' \
+  | grep -Fx "2026.08.03-v1" >"$TMP/oci-audience-copy-label-check.txt"
+
 cat "$TMP/render.json"
+cat "$TMP/audience-copy-fixtures.json"
 cat "$TMP/evidence-validation.json"
-echo "SMOKE PASS: synthetic-v2 with governed methodology evidence"
+echo "SMOKE PASS: synthetic-v2 with governed methodology and audience-copy evidence"

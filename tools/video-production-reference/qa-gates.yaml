@@ -8,6 +8,7 @@ requiredOrder:
   - timed_claim_visual_correlation
   - named_hash_bound_reviews
   - asset_locks
+  - content_driven_editorial_duration
   - text_and_shot_preflight
   - full_render
   - decode_and_media
@@ -25,10 +26,18 @@ rules:
   literalTranslationForbidden: true
   publicCopyFailClosed: true
   negativeFixturesRequired: true
+  publicationReadyAudienceCopyRequired: true
+  operationalStatusSidecarOnly: true
+  finalAsrOcrAudienceCopyRequired: true
+  positiveMaturityAndReleaseTruthFixturesRequired: true
   claimEvidenceAndVisualRefsRequired: true
   explicitNonClaimsRequired: true
   englishCopyReviewNamedAndHashBound: true
   semanticReviewNamedAndHashBound: true
+  noFixedDailyTargetOrMaximum: true
+  timingValuesAreProductionOnly: true
+  noNarrationTruncationToPreset: true
+  noAudioPaddingToPreset: true
   designedOutroDurationSeconds: 10
   silentOutroAcceptanceForbidden: true
 media:

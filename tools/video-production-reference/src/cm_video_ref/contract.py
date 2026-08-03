@@ -2,6 +2,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import wave
 
 from .methodology import MethodologyError, validate_methodology_job
@@ -20,6 +21,26 @@ FORBIDDEN_STRINGS = (
     "hf_",
     "telegram",
 )
+FORBIDDEN_EDITORIAL_DURATION_KEYS = {
+    "durationtarget",
+    "durationtargetseconds",
+    "targetduration",
+    "targetdurationseconds",
+    "maximumduration",
+    "maximumdurationseconds",
+    "maxduration",
+    "maxdurationseconds",
+    "minimumduration",
+    "minimumdurationseconds",
+    "minduration",
+    "mindurationseconds",
+    "durationgate",
+    "durationpassfail",
+    "truncatetofit",
+    "truncationtofit",
+    "padtofit",
+    "paddingtofit",
+}
 
 
 class ContractError(Exception):
@@ -46,6 +67,21 @@ def sha256_file(path):
 def _require(condition, message):
     if not condition:
         raise ContractError(message)
+
+
+def _normalized_key(value):
+    return re.sub(r"[^a-z0-9]", "", str(value).casefold())
+
+
+def _reject_editorial_duration_controls(value, location="job"):
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if _normalized_key(key) in FORBIDDEN_EDITORIAL_DURATION_KEYS:
+                raise ContractError(f"fixed Daily duration control forbidden at {location}.{key}")
+            _reject_editorial_duration_controls(item, f"{location}.{key}")
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            _reject_editorial_duration_controls(item, f"{location}[{index}]")
 
 
 def _resolve_declared(path_value, job_path, assets_root=None):
@@ -114,6 +150,7 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
     _require(job.get("kind") == "VideoJob", "kind must be VideoJob")
     metadata = job.get("metadata") or {}
     spec = job.get("spec") or {}
+    _reject_editorial_duration_controls(spec, "spec")
     _require(metadata.get("immutableOutputVersion"), "metadata.immutableOutputVersion is required")
     _require(spec.get("mode") in ("validate-only", "full-render"), "spec.mode must be validate-only or full-render")
 
@@ -187,6 +224,7 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
     audio_digest = _check_hash(audio, audio_path)
     info = wav_info(audio_path)
     _require(info["sampleRate"] == 48000 and info["channels"] == 1, "audio must be locked mono 48 kHz WAV")
+    _require(abs(info["durationSeconds"] - expected_duration) <= 0.05, "locked audio duration must match measured video duration; truncation or padding to fit is forbidden")
     observed_assets.append({"id": "audio", "path": str(audio_path), "sha256": audio_digest, "type": "wav"})
 
     locks = spec.get("locks") or {}
@@ -242,5 +280,6 @@ def validate_job(job, job_path, output_root=None, render_requested=False):
         "publicActions": "FORBIDDEN",
         "assets": observed_assets,
         "durationSeconds": expected_duration,
+        "durationRole": "LOCKED_ASSET_MEASUREMENT_NOT_EDITORIAL_TARGET",
         "methodology": methodology_result,
     }

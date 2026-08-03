@@ -314,9 +314,11 @@ tools/video-production-reference/docs/ARCHITECTURE.md	tools/video-production-ref
 tools/video-production-reference/docs/CURRENT-LIMITS.md	tools/video-production-reference/docs/CURRENT-LIMITS.md	0644
 tools/video-production-reference/examples/minimal/generate_assets.py	tools/video-production-reference/examples/minimal/generate_assets.py	0755
 tools/video-production-reference/examples/minimal/generate_evidence.py	tools/video-production-reference/examples/minimal/generate_evidence.py	0755
+tools/video-production-reference/fixtures/audience-copy-gate.json	tools/video-production-reference/fixtures/audience-copy-gate.json	0644
 tools/video-production-reference/fixtures/methodology-probes.json	tools/video-production-reference/fixtures/methodology-probes.json	0644
 tools/video-production-reference/methodology/consumed-deltas.json	tools/video-production-reference/methodology/consumed-deltas.json	0644
 tools/video-production-reference/methodology/process-delta-2026-08-02-01.json	tools/video-production-reference/methodology/process-delta-2026-08-02-01.json	0644
+tools/video-production-reference/methodology/process-delta-2026-08-03-01.json	tools/video-production-reference/methodology/process-delta-2026-08-03-01.json	0644
 tools/video-production-reference/policies/chimpmaera-public-copy.json	tools/video-production-reference/policies/chimpmaera-public-copy.json	0644
 tools/video-production-reference/qa-gates.yaml	tools/video-production-reference/qa-gates.yaml	0644
 tools/video-production-reference/schemas/asset-lock.schema.json	tools/video-production-reference/schemas/asset-lock.schema.json	0644
@@ -328,6 +330,7 @@ tools/video-production-reference/schemas/scene.schema.json	tools/video-productio
 tools/video-production-reference/schemas/video-job.schema.json	tools/video-production-reference/schemas/video-job.schema.json	0644
 tools/video-production-reference/scripts/smoke.sh	tools/video-production-reference/scripts/smoke.sh	0755
 tools/video-production-reference/src/cm_video_ref/__init__.py	tools/video-production-reference/src/cm_video_ref/__init__.py	0644
+tools/video-production-reference/src/cm_video_ref/audience_copy.py	tools/video-production-reference/src/cm_video_ref/audience_copy.py	0644
 tools/video-production-reference/src/cm_video_ref/cli.py	tools/video-production-reference/src/cm_video_ref/cli.py	0644
 tools/video-production-reference/src/cm_video_ref/contract.py	tools/video-production-reference/src/cm_video_ref/contract.py	0644
 tools/video-production-reference/src/cm_video_ref/methodology.py	tools/video-production-reference/src/cm_video_ref/methodology.py	0644

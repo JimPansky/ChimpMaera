@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from cm_video_ref.contract import ContractError, load_job, validate_job
 from cm_video_ref.methodology import MethodologyError, validate_consumed_manifest, validate_evidence_manifest
+from cm_video_ref.audience_copy import AudienceCopyError, validate_audience_copy_fixtures
 
 
 def generate(tmp):
@@ -49,6 +50,7 @@ class ContractNegativeProbes(unittest.TestCase):
         self.assertEqual(result["methodology"]["methodologyVersion"], "2026.08.02-v2")
         self.assertEqual(result["methodology"]["outroDurationSeconds"], 10.0)
         self.assertEqual(result["methodology"]["namedHashBoundReviews"], 2)
+        self.assertEqual(result["durationRole"], "LOCKED_ASSET_MEASUREMENT_NOT_EDITORIAL_TARGET")
 
     def test_bundled_assets_are_optional_and_omitted_by_minimal_job(self):
         self.assertNotIn("referenceAssets", self.job["spec"])
@@ -128,6 +130,29 @@ class ContractNegativeProbes(unittest.TestCase):
         self.job["spec"]["assets"]["shots"][1]["startSeconds"] = 3.0
         self.assert_rejects("scene timing")
 
+    def test_fixed_daily_duration_controls_rejected(self):
+        for key in ("targetDurationSeconds", "maximumDurationSeconds", "durationGate", "paddingToFit"):
+            with self.subTest(key=key):
+                candidate = json.loads(json.dumps(self.job))
+                candidate["spec"][key] = 90 if key != "paddingToFit" else True
+                with self.assertRaisesRegex(ContractError, "fixed Daily duration control forbidden"):
+                    validate_job(candidate, str(self.job_path), str(self.output), render_requested=True)
+
+    def test_audio_duration_mismatch_rejected_instead_of_cut_or_pad(self):
+        audio = Path(self.job["spec"]["assets"]["audio"]["path"])
+        with wave.open(str(audio), "wb") as stream:
+            stream.setnchannels(1)
+            stream.setsampwidth(2)
+            stream.setframerate(48000)
+            stream.writeframes(b"\0\0" * (19 * 48000))
+        self.job["spec"]["assets"]["audio"]["sha256"] = hashlib.sha256(audio.read_bytes()).hexdigest()
+        self.assert_rejects("truncation or padding to fit is forbidden")
+
+    def test_renderer_has_no_audio_cut_or_pad_to_preset_filter(self):
+        source = (ROOT / "src/cm_video_ref/render.py").read_text(encoding="utf-8")
+        self.assertNotIn("apad", source)
+        self.assertNotIn("atrim", source)
+
     def test_rejected_asset_rejected(self):
         self.job["spec"]["assets"]["shots"][0]["status"] = "rejected"
         self.assert_rejects("unknown or rejected asset")
@@ -176,6 +201,23 @@ class ContractNegativeProbes(unittest.TestCase):
         self.job["spec"]["methodology"]["evidence"][0]["sha256"] = digest
         self.assert_rejects("forbidden public-copy term")
 
+    def test_public_title_operational_status_rejected(self):
+        self.job["spec"]["publicationCopy"]["title"] = "ChimpMaera review candidate"
+        self.assert_rejects("review-candidate-status")
+
+    def test_thumbnail_qa_status_rejected(self):
+        self.job["spec"]["publicationCopy"]["thumbnailText"] = "QA PASS"
+        self.assert_rejects("qa-gate-status")
+
+    def test_product_maturity_boundary_is_preserved(self):
+        self.job["spec"]["publicationCopy"]["description"] = "This local synthetic proof of concept is not production-ready."
+        result = validate_job(self.job, str(self.job_path))
+        self.assertEqual(result["status"], "PASS")
+
+    def test_missing_publication_copy_rejected(self):
+        del self.job["spec"]["publicationCopy"]
+        self.assert_rejects("publicationCopy is required")
+
 
 class MethodologyMetadataTests(unittest.TestCase):
     def make_evidence_manifest(self, tmp):
@@ -183,8 +225,14 @@ class MethodologyMetadataTests(unittest.TestCase):
         artifacts = []
         for artifact_id in ("qa", "subtitles", "safe-area", "asr", "ocr", "review", "probe-one", "probe-two", "probe-three", "probe-four"):
             path = root / f"{artifact_id}.txt"
-            path.write_text(f"synthetic {artifact_id}\n", encoding="utf-8")
+            if artifact_id in {"asr", "ocr"}:
+                path.write_text(json.dumps({"audienceText": "Local synthetic proof of concept"}) + "\n", encoding="utf-8")
+            else:
+                path.write_text(f"synthetic {artifact_id}\n", encoding="utf-8")
             artifacts.append({"id": artifact_id, "path": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+        policy = root / "chimpmaera-public-copy.json"
+        shutil.copy2(ROOT / "policies" / "chimpmaera-public-copy.json", policy)
+        artifacts.append({"id": "public-copy-policy", "path": policy.name, "sha256": hashlib.sha256(policy.read_bytes()).hexdigest()})
         revision = "a" * 64
         manifest = {
             "schemaVersion": "cm.video-methodology-evidence/v1",
@@ -192,6 +240,7 @@ class MethodologyMetadataTests(unittest.TestCase):
             "purpose": "smoke-fixture",
             "jobRevisionSha256": revision,
             "artifacts": artifacts,
+            "publicCopyPolicy": {"artifactRef": "public-copy-policy"},
             "automatedGates": [
                 {"family": "full-decode", "status": "PASS", "executionMode": "executed", "evidenceRef": "qa"},
                 {"family": "stream-parity", "status": "PASS", "executionMode": "executed", "evidenceRef": "qa"},
@@ -215,7 +264,10 @@ class MethodologyMetadataTests(unittest.TestCase):
     def test_consumed_delta_manifest_and_hash(self):
         result = validate_consumed_manifest(str(ROOT / "methodology" / "consumed-deltas.json"))
         self.assertEqual(result["status"], "PASS")
-        self.assertEqual(result["consumedDeltas"], ["public-video-process-delta-2026-08-02-01"])
+        self.assertEqual(result["consumedDeltas"], [
+            "public-video-process-delta-2026-08-02-01",
+            "public-video-process-delta-2026-08-03-01",
+        ])
 
     def test_consumed_delta_tamper_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -231,7 +283,17 @@ class MethodologyMetadataTests(unittest.TestCase):
             path, _ = self.make_evidence_manifest(tmp)
             result = validate_evidence_manifest(str(path), tmp)
             self.assertEqual(result["status"], "PASS")
-            self.assertEqual(result["verifiedArtifacts"], 10)
+            self.assertEqual(result["verifiedArtifacts"], 11)
+
+    def test_final_asr_operational_status_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path, manifest = self.make_evidence_manifest(tmp)
+            asr = Path(tmp) / "asr.txt"
+            asr.write_text(json.dumps({"audienceText": "Human review pending"}) + "\n", encoding="utf-8")
+            next(item for item in manifest["artifacts"] if item["id"] == "asr")["sha256"] = hashlib.sha256(asr.read_bytes()).hexdigest()
+            path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(MethodologyError, "human-review-status"):
+                validate_evidence_manifest(str(path), tmp)
 
     def test_publication_manifest_rejects_fixture_asr(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -247,14 +309,51 @@ class MethodologyMetadataTests(unittest.TestCase):
         self.assertGreaterEqual(len(fixture["negativeProbes"]), 10)
         self.assertEqual(len({item["id"] for item in fixture["negativeProbes"]}), len(fixture["negativeProbes"]))
 
+    def test_publication_ready_audience_copy_fixtures(self):
+        fixture_path = ROOT / "fixtures" / "audience-copy-gate.json"
+        result = validate_audience_copy_fixtures(
+            ROOT / "policies" / "chimpmaera-public-copy.json",
+            fixture_path,
+        )
+        self.assertEqual(result["status"], "PASS")
+        self.assertEqual(result["positiveFixtures"], 8)
+        self.assertEqual(result["negativeFixtures"], 9)
+        self.assertEqual(len(result["rules"]), 9)
+        delta = json.loads((ROOT / "methodology" / "process-delta-2026-08-03-01.json").read_text(encoding="utf-8"))
+        self.assertEqual(delta["sourceEvidenceSha256"], hashlib.sha256(fixture_path.read_bytes()).hexdigest())
+
+    def test_audience_copy_fixture_staleness_fails_closed(self):
+        source = json.loads((ROOT / "fixtures" / "audience-copy-gate.json").read_text(encoding="utf-8"))
+        mutations = (
+            ("stale-policy", lambda data: data.__setitem__("policySha256", "0" * 64), "policy checksum is stale"),
+            ("missing-positive-channel", lambda data: data["positiveFixtures"].pop(), "positive audience-copy channel coverage"),
+            ("missing-rule-coverage", lambda data: data["negativeFixtures"].pop(), "negative audience-copy rule coverage"),
+        )
+        for name, mutate, expected in mutations:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                fixture = json.loads(json.dumps(source))
+                mutate(fixture)
+                fixture_path = Path(tmp) / "audience-copy-gate.json"
+                fixture_path.write_text(json.dumps(fixture) + "\n", encoding="utf-8")
+                with self.assertRaisesRegex(AudienceCopyError, expected):
+                    validate_audience_copy_fixtures(ROOT / "policies" / "chimpmaera-public-copy.json", fixture_path)
+
     def test_schema_files_are_valid_json(self):
         for path in (ROOT / "schemas").glob("*.json"):
             json.loads(path.read_text(encoding="utf-8"))
+
+    def test_duration_policy_is_documented_as_content_driven(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        gates = (ROOT / "qa-gates.yaml").read_text(encoding="utf-8")
+        self.assertIn("no fixed target or maximum duration", readme)
+        self.assertIn("75–90 seconds", readme)
+        self.assertIn("noFixedDailyTargetOrMaximum: true", gates)
 
     def test_oci_methodology_labels_are_inspectable(self):
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
         self.assertIn('org.opencontainers.image.version="2026.08.02-v2"', dockerfile)
         self.assertIn('org.chimpmaera.video.methodology.version="2026.08.02-v2"', dockerfile)
+        self.assertIn('org.chimpmaera.video.audience-copy-gate.version="2026.08.03-v1"', dockerfile)
 
     def test_reference_tree_has_no_private_paths_or_token_shapes(self):
         patterns = (

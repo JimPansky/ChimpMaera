@@ -9,6 +9,13 @@
       "publicDeltaSha256": "4d1b19ca6852d7519046fe88830c0033e6655e039ffcc2bbffa3c6568ef59039",
       "sourceEvidenceSha256": "8b29fd810b30ce903e730d87e1258eb3933defa5ea1908b6bde5b0830e8e9f2c",
       "sourceClassification": "digest-only; private run evidence not published"
+    },
+    {
+      "deltaId": "public-video-process-delta-2026-08-03-01",
+      "publicDeltaPath": "process-delta-2026-08-03-01.json",
+      "publicDeltaSha256": "db6be4f0ea6b986c84cbe21296b1e2295149546f76c43d50d4c3f5a03843cd1a",
+      "sourceEvidenceSha256": "b6e24f9ab9629c56cf4748c0d5de7e9ce5440bc73c73bbf253aecd6436f4d432",
+      "sourceClassification": "public positive/negative fixture matrix"
     }
   ],
   "decisionRecord": {

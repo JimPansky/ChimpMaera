@@ -150,6 +150,10 @@ spec:
   narrationVisualLaw:
     narrationExplainsPrinciples: true
     visualsCarryDetails: true
+  publicationCopy:
+    title: ChimpMaera local synthetic reference
+    description: This reference is not production-ready and does not certify a deployment.
+    thumbnailText: Explore ChimpMaera
   methodology:
     version: "2026.08.02-v2"
     publicCopyPolicy:
