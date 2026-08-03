@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "chimpmaera.hmi/contribute-preflight/v1",
+  "operation": "contribute",
+  "requestDigest": "eb69df5a8ae68341106f5c26d20a7e30c45b2bf2e79bc30d264f5a089abc37da",
+  "inputDigest": "55c3461a3ceb5bfe58e4a48cb2f41b44014f1f24815abe7ced28cf4a2257869b",
+  "generationDigest": "8c43b9686dcd4f3a3cbafff951f1e4ac5e30aeba5b083e214345c703bd3b09dd",
+  "preparationStatus": "PREPARATION_ONLY",
+  "preflightReasons": ["CONTRIBUTION_CAPABILITY_ABSENT", "PUBLICATION_ROUTE_ABSENT"],
+  "subjectCapabilityIds": [],
+  "citedSourceIds": ["cm:hmi-source-001"],
+  "evidenceStatus": "LOCAL_SYNTHETIC",
+  "authority": {
+    "requestedRights": [],
+    "routeIds": [],
+    "writeTargets": []
+  },
+  "effects": {
+    "submissionPerformed": false,
+    "publicationPerformed": false
+  }
+}

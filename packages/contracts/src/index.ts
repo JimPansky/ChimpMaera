@@ -26,5 +26,6 @@ export * from "./hmi-harness-adapter.js";
 export * from "./hmi-disclosure-safety.js";
 export * from "./hmi-discover-payload.js";
 export * from "./hmi-explain-payload.js";
+export * from "./hmi-contribute-preflight.js";
 export * from "./azure-identity-profile.js";
 export * from "./power-platform-read-connector.js";
