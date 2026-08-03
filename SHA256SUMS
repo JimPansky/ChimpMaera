@@ -14,7 +14,7 @@ bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.m
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
 c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-89d2ce217fcaa32e955d29e892c2824c075ffd489e98f04aa15592a15cea0e30  ./README.md
+f4d46e8822ce3262f239191ddf21eeae3c9f841b8850dd6ab80d810420d5cc63  ./README.md
 b815818c4be3d7f494358bac6a171668f55fa0b0887a22d07eb3fce08dd331e2  ./SECURITY.md
 405161d717617714546697edb5c01582436c0f2a611da4a2861763ea958b93d9  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
@@ -22,6 +22,7 @@ b4bee53218ad05edba3d866f715d8519e683802224c14a5f41cdd74a16d4fb88  ./WITHDRAWAL.m
 0f39dbb1f8c41281e5a18aa22359ec16d6e3313d36d265fe14adb41826d0b638  ./assets/brand/chimpmaera-master.svg
 e6acb8b2086483172a8df5adf6372adbc1eff0bd964c0ba6533780c8ebff4f8d  ./assets/brand/chimpmaera-negative.png
 b50fe4214a2f153f4db678ff12d3f3366c964c259cf3c0682f52ff791bc423bd  ./assets/brand/chimpmaera-negative.svg
+44219d57e33a98bddd5e8d2420570c93989e5fa6e8ac244a48b8d424376ab916  ./assets/diagrams/safe-guided-flow.svg
 a4c17e1554ed12b0db34566e6d568eaf10cd47bd6786a4818fd51bc4f5dc85c4  ./assets/support/buy-me-a-coffee.png
 5fd4875c3c79a68998bf7e4cd14e4c1f00ce0be2cb32562105291f87001af578  ./assets/support/buy-me-a-coffee.svg
 fe652ee8908baf3d8899b5a82431b7552a35cf342f50cda68f90e00a673e4fc8  ./assets/support/ko-fi.png
@@ -151,7 +152,7 @@ fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-P
 679bae40f1a8858f6f1e618016eec9ba9697788bbb7d67dd06e2071e12f6d404  ./docs/DISCOVERABILITY-BASELINE.md
 896c525d6f85fc051c0d152c7a111c69e76d964d119a6131b8c7337dd616e529  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
-34d5c0d600b66bf2b674bd2334b7d16ad92df0806edee1e0b3f6f44f47d20fa2  ./docs/README.md
+5039245ee276a08ccd813228e9e06b835176bb2a59c53378d4a4e6b9b6b1b2c2  ./docs/README.md
 261a36734bc371fbf98906064fa55649e1b5d26c1f8342e31129fae6751ccb6d  ./docs/RELEASE-GOVERNANCE.md
 58fb0be5781c61e345ed63a2dfa7c367b01fc80c103c0f86b5d343301be4e949  ./docs/SECURITY-ASSURANCE.md
 527ead55bb739305ba02c4094cd30f8b59eaaa2d9c8ddb8ad0bb88b131d5eda2  ./docs/SUPPLY-CHAIN.md
@@ -266,7 +267,7 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 abf97dd803bcf5ea7649dc66837e0863a3bcf9d55e5ed7474df6b077cfd974ec  ./release/governance.json
-90094b0a49a0d958264cb7cfb70242b1b68667d80e427effcc80012b79400562  ./release/public-files.manifest
+7f17ee12bc3a7ca3a6005adb0480fa64abf498e90ca8779348f06ce3f98bf54c  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -328,7 +329,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
-03390f3923aaa11905a00a143f400c3d94b98c33c0f742bb588ccb87d6694e22  ./tests/release-governance.test.mjs
+a288e551b5e7637397175984a2a3f740aa5164a1c702ec7aae220590eec5d9fe  ./tests/release-governance.test.mjs
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
 1c38239f4676952f45aae15f2b3f0fa01e22cf68661922251e023cf9826745f4  ./tests/supply-chain-verifier.test.mjs
 df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update-doctor-compose-adapter.test.ts
