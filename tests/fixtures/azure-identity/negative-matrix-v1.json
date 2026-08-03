@@ -1,0 +1,14 @@
+[
+  {"caseId":"unknown-field","operation":"add","path":"/unexpected","value":true,"expectedReason":"AZURE_IDENTITY_SCHEMA_DENIED"},
+  {"caseId":"client-credentials-flow","operation":"replace","path":"/flow/kind","value":"CLIENT_CREDENTIALS","expectedReason":"AZURE_IDENTITY_FLOW_DENIED"},
+  {"caseId":"common-authority","operation":"replace","path":"/tenantBoundary/issuerTemplate","value":"https://login.microsoftonline.com/common/v2.0","expectedReason":"AZURE_IDENTITY_TENANT_DENIED"},
+  {"caseId":"request-tenant","operation":"replace","path":"/tenantBoundary/requestTenantAccepted","value":true,"expectedReason":"AZURE_IDENTITY_TENANT_DENIED"},
+  {"caseId":"cross-tenant","operation":"replace","path":"/tenantBoundary/crossTenantAllowed","value":true,"expectedReason":"AZURE_IDENTITY_TENANT_DENIED"},
+  {"caseId":"missing-scope-claim","operation":"replace","path":"/tokenValidation/requiredClaims","value":["iss","aud","tid","sub","exp","nbf","iat"],"expectedReason":"AZURE_IDENTITY_TOKEN_VALIDATION_DENIED"},
+  {"caseId":"provider-token-forwarding","operation":"replace","path":"/tokenValidation/providerTokenForwarding","value":true,"expectedReason":"AZURE_IDENTITY_TOKEN_VALIDATION_DENIED"},
+  {"caseId":"broad-scope","operation":"replace","path":"/apiPermissions/delegatedScopes","value":["user_impersonation"],"expectedReason":"AZURE_IDENTITY_SCOPE_DENIED"},
+  {"caseId":"application-role","operation":"replace","path":"/apiPermissions/applicationRoles","value":["CM.Admin"],"expectedReason":"AZURE_IDENTITY_SCOPE_DENIED"},
+  {"caseId":"authentication-as-authority","operation":"replace","path":"/capabilityBoundary/authenticationGrantsAuthority","value":true,"expectedReason":"AZURE_IDENTITY_AUTHORITY_DENIED"},
+  {"caseId":"execution-from-identity","operation":"replace","path":"/capabilityBoundary/executionAllowed","value":true,"expectedReason":"AZURE_IDENTITY_AUTHORITY_DENIED"},
+  {"caseId":"ambient-credential","operation":"replace","path":"/credentials/ambientAllowed","value":true,"expectedReason":"AZURE_IDENTITY_CREDENTIAL_DENIED"}
+]

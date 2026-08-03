@@ -1,0 +1,12 @@
+[
+  { "caseId": "unknown-field", "operation": "add", "path": "/manifest/unexpected", "value": true, "expectedReason": "HMI_SCHEMA_DENIED" },
+  { "caseId": "mutable-file", "operation": "replace", "path": "/manifest/files/0/mutable", "value": true, "expectedReason": "HMI_MUTABLE_FILE_DENIED" },
+  { "caseId": "symlink-file", "operation": "replace", "path": "/manifest/files/0/kind", "value": "SYMLINK", "expectedReason": "HMI_FILE_KIND_DENIED" },
+  { "caseId": "executable-file", "operation": "replace", "path": "/manifest/files/0/executable", "value": true, "expectedReason": "HMI_EXECUTABLE_FILE_DENIED" },
+  { "caseId": "traversal-path", "operation": "replace", "path": "/manifest/files/0/path", "value": "../index.json", "expectedReason": "HMI_PATH_DENIED" },
+  { "caseId": "undeclared-file", "operation": "append", "path": "/files", "value": { "path": "knowledge/undeclared.md", "encoding": "UTF8", "content": "undeclared" }, "expectedReason": "HMI_FILE_SET_DENIED" },
+  { "caseId": "requested-right", "operation": "append", "path": "/manifest/authority/requestedRights", "value": "cm:write", "expectedReason": "HMI_AUTHORITY_DENIED" },
+  { "caseId": "route", "operation": "append", "path": "/manifest/authority/routeIds", "value": "cm:route", "expectedReason": "HMI_AUTHORITY_DENIED" },
+  { "caseId": "write-target", "operation": "append", "path": "/manifest/authority/writeTargets", "value": "subject:state", "expectedReason": "HMI_AUTHORITY_DENIED" },
+  { "caseId": "content-drift", "operation": "replace", "path": "/files/0/content", "value": "{}", "expectedReason": "HMI_FILE_DIGEST_DENIED" }
+]

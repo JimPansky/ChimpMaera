@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "chimpmaera.hmi/discover-payload/v1",
+  "operation": "discover",
+  "requestDigest": "aa5a74fc7f27c8797a3c4e563aa0ba5e91c37371312c51ad41cfd445cc829322",
+  "generationDigest": "8c43b9686dcd4f3a3cbafff951f1e4ac5e30aeba5b083e214345c703bd3b09dd",
+  "filters": {
+    "capabilityIds": [],
+    "effectClasses": ["READ_ONLY_VALIDATE", "DESCRIBE_ONLY"],
+    "lifecycleStates": ["DESCRIBED_INACTIVE"],
+    "evidenceStatus": "LOCAL_SYNTHETIC"
+  },
+  "authority": {
+    "requestedRights": [],
+    "routeIds": [],
+    "writeTargets": []
+  }
+}

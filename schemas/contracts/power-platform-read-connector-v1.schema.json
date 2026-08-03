@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/power-platform-read-connector-v1.schema.json",
+  "title": "ChimpMaera authority-free Power Platform read connector v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "connectorId", "contractVersion", "platform", "evidenceClass", "openApi", "identityBinding", "verificationBinding", "operations", "authorityBoundary", "lifecycle", "credentials", "contractDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.connector/power-platform-read/v1" },
+    "connectorId": { "$ref": "#/$defs/id" },
+    "contractVersion": { "const": "1.0.0" },
+    "platform": { "const": "MICROSOFT_POWER_PLATFORM_CUSTOM_CONNECTOR" },
+    "evidenceClass": { "const": "LOCAL_SYNTHETIC" },
+    "openApi": {
+      "const": { "version": "2.0", "basePath": "/v1", "schemes": ["https"], "arbitraryServerSelectionAllowed": false }
+    },
+    "identityBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileId", "profileDigest", "delegatedScopes", "applicationRoles"],
+      "properties": {
+        "profileId": { "$ref": "#/$defs/id" },
+        "profileDigest": { "$ref": "#/$defs/digest" },
+        "delegatedScopes": { "const": ["cm.discovery.read", "cm.operator.read"] },
+        "applicationRoles": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "verificationBinding": {
+      "const": {
+        "bundleSchemaVersion": "chimpmaera.verification/fabric-bundle/v1",
+        "requiredTuple": ["subjectDigest", "planDigest", "evidenceBundleDigest", "verdictDigest", "readbackDigest"]
+      }
+    },
+    "operations": {
+      "const": [
+        { "operationKey": "LIST_CAPABILITIES", "operationId": "ListCapabilities", "method": "GET", "path": "/v1/capabilities", "semantic": "DISCOVERY", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
+        { "operationKey": "SUBMIT_GOVERNED_QUERY", "operationId": "SubmitGovernedQuery", "method": "POST", "path": "/v1/queries", "semantic": "LOGICAL_READ", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": true },
+        { "operationKey": "GET_OPERATION_STATUS", "operationId": "GetOperationStatus", "method": "GET", "path": "/v1/operations/{operationId}", "semantic": "STATUS", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
+        { "operationKey": "GET_READBACK", "operationId": "GetReadback", "method": "GET", "path": "/v1/operations/{operationId}/readback", "semantic": "AUTHORITATIVE_READBACK", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
+        { "operationKey": "GET_RECEIPT", "operationId": "GetReceipt", "method": "GET", "path": "/v1/operations/{operationId}/receipt", "semantic": "BOUND_RECEIPT", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false }
+      ]
+    },
+    "authorityBoundary": {
+      "const": {
+        "genericInvocationAllowed": false,
+        "arbitraryUrlAllowed": false,
+        "arbitraryHttpMethodAllowed": false,
+        "arbitraryCommandAllowed": false,
+        "arbitraryBodySchemaAllowed": false,
+        "callerTenantAllowed": false,
+        "callerCredentialAllowed": false,
+        "unknownOperationsDenied": true,
+        "requestedRights": [],
+        "writeTargets": [],
+        "proposalOperations": [],
+        "approvalOperations": [],
+        "executionOperations": [],
+        "cancellationOperations": []
+      }
+    },
+    "lifecycle": {
+      "const": {
+        "acceptanceSemantics": "OPERATION_REFERENCE_ONLY",
+        "businessSuccessRequires": "AUTHORITATIVE_READBACK_AND_BOUND_RECEIPT",
+        "terminalCommittedIsBusinessSuccess": false,
+        "authoritativeReadbackRequired": true,
+        "boundReceiptRequired": true
+      }
+    },
+    "credentials": {
+      "const": {
+        "storedByConnector": false,
+        "embeddedAllowed": false,
+        "ambientAllowed": false,
+        "dynamicSelectionAllowed": false,
+        "secretReferences": []
+      }
+    },
+    "contractDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

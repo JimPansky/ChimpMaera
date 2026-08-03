@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/hmi-generation-bundle-v1.schema.json",
+  "title": "ChimpMaera authority-free HMI generation bundle v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest", "files"],
+  "properties": {
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "generationId", "coreVersion", "contractVersion", "createdFrom", "provenance", "files", "capabilities", "validatorIds", "routes", "authority", "compatibility", "limits", "supersedes", "generationDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.hmi/generation/v1" },
+        "generationId": { "$ref": "#/$defs/id" },
+        "coreVersion": { "const": "1.0.0" },
+        "contractVersion": { "const": "1.0.0" },
+        "createdFrom": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceSetDigest", "generatorDigest", "schemaDigest"],
+          "properties": {
+            "sourceSetDigest": { "$ref": "#/$defs/digest" },
+            "generatorDigest": { "$ref": "#/$defs/digest" },
+            "schemaDigest": { "$ref": "#/$defs/digest" }
+          }
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceId", "relativeRef", "sourceDigest", "trustClass", "reviewStatus", "nonClaims"],
+            "properties": {
+              "sourceId": { "$ref": "#/$defs/id" },
+              "relativeRef": { "$ref": "#/$defs/path" },
+              "sourceDigest": { "$ref": "#/$defs/digest" },
+              "trustClass": { "const": "PUBLIC_SYNTHETIC" },
+              "reviewStatus": { "const": "REVIEWED_LOCAL_SYNTHETIC" },
+              "nonClaims": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+            }
+          }
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "mediaType", "byteCount", "sha256", "role", "kind", "executable", "mutable"],
+            "properties": {
+              "path": { "$ref": "#/$defs/path" },
+              "mediaType": { "enum": ["application/json", "text/markdown"] },
+              "byteCount": { "type": "integer", "minimum": 0 },
+              "sha256": { "$ref": "#/$defs/digest" },
+              "role": { "enum": ["INDEX", "KNOWLEDGE", "CAPABILITY", "VALIDATOR", "NORMALIZATION"] },
+              "kind": { "const": "REGULAR_FILE" },
+              "executable": { "const": false },
+              "mutable": { "const": false }
+            }
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["capabilityId", "descriptorDigest", "effectClass", "requestedRights", "routeId", "lifecycleState"],
+            "properties": {
+              "capabilityId": { "$ref": "#/$defs/id" },
+              "descriptorDigest": { "$ref": "#/$defs/digest" },
+              "effectClass": { "enum": ["DESCRIBE_ONLY", "PLAN_ONLY", "READ_ONLY_VALIDATE"] },
+              "requestedRights": { "type": "array", "maxItems": 0 },
+              "routeId": { "type": "null" },
+              "lifecycleState": { "const": "DESCRIBED_INACTIVE" }
+            }
+          }
+        },
+        "validatorIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "routes": { "type": "array", "maxItems": 0 },
+        "authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requestedRights", "routeIds", "writeTargets", "networkRoutes", "externalDependencies"],
+          "properties": {
+            "requestedRights": { "type": "array", "maxItems": 0 },
+            "routeIds": { "type": "array", "maxItems": 0 },
+            "writeTargets": { "type": "array", "maxItems": 0 },
+            "networkRoutes": { "type": "array", "maxItems": 0 },
+            "externalDependencies": { "type": "array", "maxItems": 0 }
+          }
+        },
+        "compatibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["coreVersion", "contractVersion", "evidenceStatus"],
+          "properties": {
+            "coreVersion": { "const": "1.0.0" },
+            "contractVersion": { "const": "1.0.0" },
+            "evidenceStatus": { "const": "LOCAL_SYNTHETIC" }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maxReferences", "maxSourceBytes", "maxFindings", "maxOutputBytes"],
+          "properties": {
+            "maxReferences": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "maxSourceBytes": { "type": "integer", "minimum": 1, "maximum": 65536 },
+            "maxFindings": { "type": "integer", "minimum": 1, "maximum": 200 },
+            "maxOutputBytes": { "type": "integer", "minimum": 1, "maximum": 16384 }
+          }
+        },
+        "supersedes": { "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "generationDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "encoding", "content"],
+        "properties": {
+          "path": { "$ref": "#/$defs/path" },
+          "encoding": { "const": "UTF8" },
+          "content": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "path": { "type": "string", "minLength": 1, "maxLength": 240, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?/)(?!.*\\\\)(?!.*//)[^\\u0000]+$" }
+  }
+}

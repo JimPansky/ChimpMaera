@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "chimpmaera.identity/azure-profile/v1",
+  "profileId": "identity:azure-power-apps-read-v1",
+  "contractVersion": "1.0.0",
+  "provider": "MICROSOFT_ENTRA_ID",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "flow": {
+    "kind": "OIDC_AUTHORIZATION_CODE_PKCE_S256",
+    "redirectBinding": "REGISTERED_EXACT",
+    "stateRequired": true,
+    "nonceRequired": true
+  },
+  "tenantBoundary": {
+    "mode": "SINGLE_TENANT",
+    "tenantSource": "VERIFIED_TOKEN",
+    "requestTenantAccepted": false,
+    "crossTenantAllowed": false,
+    "issuerTemplate": "https://login.microsoftonline.com/{tenant}/v2.0",
+    "blockedAuthorities": ["common", "consumers", "organizations"]
+  },
+  "tokenValidation": {
+    "audience": "api://chimpmaera.synthetic/read",
+    "signatureAlgorithms": ["RS256"],
+    "requiredClaims": ["iss", "aud", "tid", "sub", "exp", "nbf", "iat", "scp"],
+    "maximumClockSkewSeconds": 120,
+    "tokenUse": "API_ENTRY_AUTHENTICATION_ONLY",
+    "providerTokenForwarding": false
+  },
+  "apiPermissions": {
+    "mode": "DELEGATED",
+    "delegatedScopes": ["cm.discovery.read", "cm.operator.read"],
+    "applicationRoles": [],
+    "broadPermissionNamesRejected": true
+  },
+  "capabilityBoundary": {
+    "authenticationGrantsAuthority": false,
+    "requestedRights": [],
+    "routeIds": [],
+    "writeTargets": [],
+    "approvalDecisionAllowed": false,
+    "executionAllowed": false
+  },
+  "credentials": {
+    "ambientAllowed": false,
+    "embeddedAllowed": false,
+    "dynamicSelectionAllowed": false,
+    "secretReferences": []
+  },
+  "profileDigest": "50c4cac158e4250f97f78d8fe069ba4a1e04c7fc91f94d55170874a2bf287b60"
+}

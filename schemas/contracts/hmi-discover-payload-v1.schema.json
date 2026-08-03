@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.example/schemas/contracts/hmi-discover-payload-v1.schema.json",
+  "title": "ChimpMaera HMI Discover Payload V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "operation", "requestDigest", "generationDigest", "filters", "authority"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.hmi/discover-payload/v1" },
+    "operation": { "const": "discover" },
+    "requestDigest": { "$ref": "#/$defs/digest" },
+    "generationDigest": { "$ref": "#/$defs/digest" },
+    "filters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityIds", "effectClasses", "lifecycleStates", "evidenceStatus"],
+      "properties": {
+        "capabilityIds": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" }
+        },
+        "effectClasses": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["DESCRIBE_ONLY", "PLAN_ONLY", "READ_ONLY_VALIDATE"] }
+        },
+        "lifecycleStates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": { "const": "DESCRIBED_INACTIVE" }
+        },
+        "evidenceStatus": { "const": "LOCAL_SYNTHETIC" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requestedRights", "routeIds", "writeTargets"],
+      "properties": {
+        "requestedRights": { "type": "array", "maxItems": 0 },
+        "routeIds": { "type": "array", "maxItems": 0 },
+        "writeTargets": { "type": "array", "maxItems": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

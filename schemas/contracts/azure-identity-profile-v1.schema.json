@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/azure-identity-profile-v1.schema.json",
+  "title": "ChimpMaera authority-free Azure identity profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profileId", "contractVersion", "provider", "evidenceClass", "flow", "tenantBoundary", "tokenValidation", "apiPermissions", "capabilityBoundary", "credentials", "profileDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.identity/azure-profile/v1" },
+    "profileId": { "$ref": "#/$defs/id" },
+    "contractVersion": { "const": "1.0.0" },
+    "provider": { "const": "MICROSOFT_ENTRA_ID" },
+    "evidenceClass": { "const": "LOCAL_SYNTHETIC" },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "redirectBinding", "stateRequired", "nonceRequired"],
+      "properties": {
+        "kind": { "const": "OIDC_AUTHORIZATION_CODE_PKCE_S256" },
+        "redirectBinding": { "const": "REGISTERED_EXACT" },
+        "stateRequired": { "const": true },
+        "nonceRequired": { "const": true }
+      }
+    },
+    "tenantBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "tenantSource", "requestTenantAccepted", "crossTenantAllowed", "issuerTemplate", "blockedAuthorities"],
+      "properties": {
+        "mode": { "const": "SINGLE_TENANT" },
+        "tenantSource": { "const": "VERIFIED_TOKEN" },
+        "requestTenantAccepted": { "const": false },
+        "crossTenantAllowed": { "const": false },
+        "issuerTemplate": { "const": "https://login.microsoftonline.com/{tenant}/v2.0" },
+        "blockedAuthorities": { "const": ["common", "consumers", "organizations"] }
+      }
+    },
+    "tokenValidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audience", "signatureAlgorithms", "requiredClaims", "maximumClockSkewSeconds", "tokenUse", "providerTokenForwarding"],
+      "properties": {
+        "audience": { "const": "api://chimpmaera.synthetic/read" },
+        "signatureAlgorithms": { "const": ["RS256"] },
+        "requiredClaims": { "const": ["iss", "aud", "tid", "sub", "exp", "nbf", "iat", "scp"] },
+        "maximumClockSkewSeconds": { "type": "integer", "minimum": 0, "maximum": 300 },
+        "tokenUse": { "const": "API_ENTRY_AUTHENTICATION_ONLY" },
+        "providerTokenForwarding": { "const": false }
+      }
+    },
+    "apiPermissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "delegatedScopes", "applicationRoles", "broadPermissionNamesRejected"],
+      "properties": {
+        "mode": { "const": "DELEGATED" },
+        "delegatedScopes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["cm.discovery.read", "cm.operator.read"] }
+        },
+        "applicationRoles": { "type": "array", "maxItems": 0 },
+        "broadPermissionNamesRejected": { "const": true }
+      }
+    },
+    "capabilityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authenticationGrantsAuthority", "requestedRights", "routeIds", "writeTargets", "approvalDecisionAllowed", "executionAllowed"],
+      "properties": {
+        "authenticationGrantsAuthority": { "const": false },
+        "requestedRights": { "type": "array", "maxItems": 0 },
+        "routeIds": { "type": "array", "maxItems": 0 },
+        "writeTargets": { "type": "array", "maxItems": 0 },
+        "approvalDecisionAllowed": { "const": false },
+        "executionAllowed": { "const": false }
+      }
+    },
+    "credentials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ambientAllowed", "embeddedAllowed", "dynamicSelectionAllowed", "secretReferences"],
+      "properties": {
+        "ambientAllowed": { "const": false },
+        "embeddedAllowed": { "const": false },
+        "dynamicSelectionAllowed": { "const": false },
+        "secretReferences": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "profileDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

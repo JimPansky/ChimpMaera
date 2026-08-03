@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "chimpmaera.update/doctor-contract-bundle/v1",
+  "lockProfile": {
+    "schemaVersion": "chimpmaera.update/lock-profile/v1",
+    "releaseId": "0.2.0-poc.20260802.3",
+    "components": [
+      {
+        "componentId": "component:control-plane",
+        "version": "0.2.0-poc.20260802.3",
+        "digest": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "componentId": "component:data-model",
+        "version": "1.0.0",
+        "digest": "2222222222222222222222222222222222222222222222222222222222222222"
+      }
+    ],
+    "versionAxes": {
+      "controlPlane": "v1",
+      "dataModel": "v1",
+      "evidence": "v1"
+    },
+    "authorityProfile": {
+      "profileId": "authority:safe-guided",
+      "digest": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "lockDigest": "63c56c9abe8b2ca65c48f4ad8257bf37f2098469328fb45dbd62d6e62b35a6e9"
+  },
+  "operationPlan": {
+    "schemaVersion": "chimpmaera.update/operation-plan/v1",
+    "operationId": "operation:ud-001-fixture",
+    "mode": "CHECK_ONLY",
+    "fromLockDigest": "63c56c9abe8b2ca65c48f4ad8257bf37f2098469328fb45dbd62d6e62b35a6e9",
+    "targetLockDigest": "63c56c9abe8b2ca65c48f4ad8257bf37f2098469328fb45dbd62d6e62b35a6e9",
+    "requiredAuthorityProfileDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+    "authorityDelta": {
+      "added": [],
+      "removed": []
+    },
+    "issuedAtMs": 1785700800000,
+    "planDigest": "ca7b714af3682164338742ec026d3287758f95e7cd5d53287df19ff187f01e28"
+  },
+  "doctorReport": {
+    "schemaVersion": "chimpmaera.doctor/report/v1",
+    "reportId": "report:ud-001-fixture",
+    "profile": "QUICK",
+    "readOnly": true,
+    "observedLockDigest": "63c56c9abe8b2ca65c48f4ad8257bf37f2098469328fb45dbd62d6e62b35a6e9",
+    "checks": [
+      {
+        "checkId": "check:lock-profile",
+        "status": "PASS",
+        "reasonCode": "OBSERVATION_MATCHED"
+      }
+    ],
+    "generatedAtMs": 1785700801000,
+    "reportDigest": "a2a8d0cc964c0765a37b54138548d8502f967ac3973a972e828cca4fc35e7c5f"
+  },
+  "operationReceipt": {
+    "schemaVersion": "chimpmaera.update/operation-receipt/v1",
+    "operationId": "operation:ud-001-fixture",
+    "action": "VALIDATE_CONTRACTS",
+    "outcome": "ACCEPTED",
+    "reasonCodes": ["UPDATE_CONTRACT_ACCEPTED"],
+    "exitCode": 0,
+    "planDigest": "ca7b714af3682164338742ec026d3287758f95e7cd5d53287df19ff187f01e28",
+    "beforeLockDigest": "63c56c9abe8b2ca65c48f4ad8257bf37f2098469328fb45dbd62d6e62b35a6e9",
+    "afterLockDigest": "63c56c9abe8b2ca65c48f4ad8257bf37f2098469328fb45dbd62d6e62b35a6e9",
+    "mutationObserved": false,
+    "completedAtMs": 1785700802000,
+    "receiptDigest": "acbeb72c8324f48c0ea06dd466a986c850e5a46274cba4ee481856f04088d0b4"
+  }
+}

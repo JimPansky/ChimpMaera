@@ -1,0 +1,13 @@
+[
+  { "caseId": "unknown-top-level-field", "path": "/unexpected", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_SCHEMA_DENIED" },
+  { "caseId": "arbitrary-server-selection", "path": "/openApi/arbitraryServerSelectionAllowed", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_OPENAPI_DENIED" },
+  { "caseId": "broad-delegated-scope", "path": "/identityBinding/delegatedScopes", "value": ["cm.discovery.read", "Directory.Read.All"], "expectedReason": "POWER_PLATFORM_CONNECTOR_IDENTITY_DENIED" },
+  { "caseId": "mutation-operation", "path": "/operations/1/operationKey", "value": "EXECUTE_PROPOSAL", "expectedReason": "POWER_PLATFORM_CONNECTOR_OPERATION_DENIED" },
+  { "caseId": "method-escape", "path": "/operations/1/method", "value": "PUT", "expectedReason": "POWER_PLATFORM_CONNECTOR_OPERATION_DENIED" },
+  { "caseId": "generic-invocation", "path": "/authorityBoundary/genericInvocationAllowed", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_AUTHORITY_DENIED" },
+  { "caseId": "write-target", "path": "/authorityBoundary/writeTargets", "value": ["target:synthetic-write"], "expectedReason": "POWER_PLATFORM_CONNECTOR_AUTHORITY_DENIED" },
+  { "caseId": "acceptance-as-success", "path": "/lifecycle/acceptanceSemantics", "value": "BUSINESS_SUCCESS", "expectedReason": "POWER_PLATFORM_CONNECTOR_LIFECYCLE_DENIED" },
+  { "caseId": "readback-optional", "path": "/lifecycle/authoritativeReadbackRequired", "value": false, "expectedReason": "POWER_PLATFORM_CONNECTOR_LIFECYCLE_DENIED" },
+  { "caseId": "verification-tuple-drift", "path": "/verificationBinding/requiredTuple", "value": ["subjectDigest", "verdictDigest"], "expectedReason": "POWER_PLATFORM_CONNECTOR_LIFECYCLE_DENIED" },
+  { "caseId": "embedded-credential", "path": "/credentials/embeddedAllowed", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_CREDENTIAL_DENIED" }
+]

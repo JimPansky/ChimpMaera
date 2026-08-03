@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/update-operation-contract-v1.schema.json",
+  "title": "ChimpMaera check-only update operation contracts v1",
+  "oneOf": [
+    { "$ref": "#/$defs/plan" },
+    { "$ref": "#/$defs/receipt" }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "operationId", "mode", "fromLockDigest", "targetLockDigest", "requiredAuthorityProfileDigest", "authorityDelta", "issuedAtMs", "planDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/operation-plan/v1" },
+        "operationId": { "$ref": "#/$defs/id" },
+        "mode": { "const": "CHECK_ONLY" },
+        "fromLockDigest": { "$ref": "#/$defs/digest" },
+        "targetLockDigest": { "$ref": "#/$defs/digest" },
+        "requiredAuthorityProfileDigest": { "$ref": "#/$defs/digest" },
+        "authorityDelta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["added", "removed"],
+          "properties": {
+            "added": { "type": "array", "maxItems": 0 },
+            "removed": { "type": "array", "maxItems": 0 }
+          }
+        },
+        "issuedAtMs": { "type": "integer", "minimum": 0 },
+        "planDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "operationId", "action", "outcome", "reasonCodes", "exitCode", "planDigest", "beforeLockDigest", "afterLockDigest", "mutationObserved", "completedAtMs", "receiptDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/operation-receipt/v1" },
+        "operationId": { "$ref": "#/$defs/id" },
+        "action": { "const": "VALIDATE_CONTRACTS" },
+        "outcome": { "const": "ACCEPTED" },
+        "reasonCodes": { "type": "array", "prefixItems": [{ "const": "UPDATE_CONTRACT_ACCEPTED" }], "items": false, "minItems": 1 },
+        "exitCode": { "const": 0 },
+        "planDigest": { "$ref": "#/$defs/digest" },
+        "beforeLockDigest": { "$ref": "#/$defs/digest" },
+        "afterLockDigest": { "$ref": "#/$defs/digest" },
+        "mutationObserved": { "const": false },
+        "completedAtMs": { "type": "integer", "minimum": 0 },
+        "receiptDigest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}
