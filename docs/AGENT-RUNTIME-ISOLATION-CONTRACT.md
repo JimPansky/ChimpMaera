@@ -137,20 +137,32 @@ Adapter equivalence is evidence-based. A WASM sandbox may use closed host
 imports rather than container namespaces. A remote worker shifts the TCB to its
 host, network, identity, and broker endpoint; it does not eliminate it.
 
-## 7. Profiles and full control
+## 7. Governed profiles and dangerous lab full control
 
-Profiles are typed, versioned, and default-off. Owner-selected full control may
-activate the broadest declared catalogue for an exact workload, tenant,
-purpose, budget, time, and environment. It does not:
+Profiles are typed, versioned, and default-off. The broadest governed Owner
+Profile may activate the broadest declared catalogue for an exact workload,
+tenant, purpose, budget, time, and environment. It does not:
 
 - grant ambient host, provider, network, credential, or cross-tenant access;
 - bypass Gateway/Broker mediation, isolation, stop, Evidence, or Receipts;
 - activate unknown skills, routes, actions, or fields; or
 - turn Agent/model output into self-authorising instructions.
 
-An intentionally broad host/provider capability must itself be typed,
-separately risk-accepted, brokered, and reflected in the TCB. Full control is an
-Owner choice within the contract, not removal of the contract.
+An intentionally broad governed host/provider capability must itself be typed,
+separately risk-accepted, brokered, and reflected in the TCB. This governed
+choice remains inside the Untrusted Runtime Contract.
+
+`FULL_CONTROL_LAB`, `RAMPAGE`, and `RAMPAGE_FULL_CONTROL_LAB` instead name a
+deliberate dangerous lab/escape Profile in the released local setup contract.
+It may bypass ChimpMaera action and Approval gates and can exercise only what
+the host process's OS/host ceiling permits. It therefore does not inherit this
+contract's complete-mediation, isolation, stop or security claims for bypassed
+layers. Selection requires exact Owner risk acceptance, an isolated disposable
+or equivalently bounded environment, a visible list of bypassed controls,
+claim downgrade, and tested reset/rollback/recovery. The published lifecycle
+resets to `SAFE_GUIDED` on restart, revoke or cleanup. Audit and emergency-stop
+records are transparency/recovery mechanisms, not a security boundary against
+an actor able to alter them under the OS ceiling.
 
 ## 8. Model, skill, and Mind duties
 

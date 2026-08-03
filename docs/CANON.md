@@ -55,6 +55,15 @@ knowingly misrepresented or materially concealed.
 - **Profile / Policy:** A versioned maximum operating envelope. Effective
   rights are the intersection of the envelope, identity, scope, current Policy,
   budgets, and active stop state.
+- **Broadest governed Owner Profile:** The widest declared catalogue that still
+  preserves the Untrusted Runtime Contract, complete mediation of claimed
+  crossings, use-time checks, stop controls, Receipts, and Evidence. It is not
+  ambient host access and is not `FULL_CONTROL_LAB` or `RAMPAGE`.
+- **Dangerous lab / escape Profile:** `FULL_CONTROL_LAB`, `RAMPAGE`, and the
+  canonical `RAMPAGE_FULL_CONTROL_LAB` alias name an explicitly risk-accepted
+  profile that may bypass ChimpMaera action and Approval gates up to the host
+  process's OS/host ceiling. It is outside `SAFE_GUIDED` and outside Canon
+  security claims for every bypassed layer.
 - **Meaningful Boundary Crossing:** Any transfer from the Untrusted Runtime to
   or from a model, tool, network, process, filesystem or durable state, secret
   custodian, tenant, authoritative read source, or effect-capable system.
@@ -85,6 +94,18 @@ knowingly misrepresented or materially concealed.
   compensating action; **Cleanup** removes only demonstrably owned resources.
 - **Evidence:** Current, reproducible positive and negative observations that
   bind and limit a claim. Documentation or popularity alone is insufficient.
+- **Knowledge Record / Knowledge Contract:** A versioned, typed record of a
+  source, assumption, transformation, decision, output, test or outcome with
+  provenance and dependency bindings; a Contract makes the reusable semantics,
+  schema, invariants and evidence expectations explicit.
+- **Governed Template:** A promoted, immutable reusable pattern whose exact
+  version, provenance, evidence, applicability, invalidation, supersession and
+  rollback bindings have passed its declared gate. Promotion is not activation.
+- **Applicability / Invalidation:** Applicability states the exact contexts,
+  versions, assumptions and boundaries in which Evidence may support reuse.
+  Invalidation is the traceable state change triggered when a bound source,
+  assumption, outcome or applicability condition drifts; affected dependents
+  are withdrawn or downgraded until fresh Evidence supports them.
 
 ## Immutable Laws and Invariants
 
@@ -106,10 +127,21 @@ server-owned catalogue before normal Policy, Approval, and use-time checks.
 ### CM-CAN-02 — Authority Is Rooted in the Owner
 
 The Owner selects a visible, versioned root of authority or Profile. Delegated
-decisions remain within it. The Owner may deliberately select a broad or
-full-control Profile, but the selection is explicit, typed, revocable, and
-still subject to complete mediation, isolation, use-time checks, and Evidence.
-Requirements do not activate a Profile.
+decisions remain within it. The Owner may select the broadest governed Profile;
+that selection remains explicit, typed, revocable, completely mediated for the
+claimed crossings, isolated, use-time checked and evidenced. Requirements do
+not activate a Profile.
+
+An implementation may separately offer `FULL_CONTROL_LAB` / `RAMPAGE` as a
+deliberate dangerous lab or escape Profile. That choice preserves Owner agency
+but is not the broadest governed Profile: its exact contract may bypass
+ChimpMaera action and Approval gates and inherits the host process's OS/host
+ceiling. Selection requires exact risk acceptance, a disposable or otherwise
+explicitly bounded environment, visible reset/rollback and recovery duties,
+and an automatic claim downgrade for every bypassed layer. Restart, revoke or
+cleanup resets the published local contract to `SAFE_GUIDED`. A bypassed
+control must never be represented as mediated or covered by Canon security
+claims merely because the Owner chose it.
 
 ### CM-CAN-03 — New Runtime Authority Starts Inactive
 
@@ -299,6 +331,22 @@ proof, but is not the product principle. Maturity advances only for the exact
 contract surfaces and failure modes evidenced. No adapter proves resistance to
 unknown side channels, compromised kernels or hypervisors, undiscovered
 runtime flaws, or untested production environments.
+
+### CM-CAN-29 — Governed Knowledge Reuse Never Grants Authority
+
+Knowledge and template promotion, selection, reuse, installation or
+supersession never grants Authority, activates a capability or widens a
+Profile. Evidence supports a claim only inside the exact Applicability binding
+that produced it; resemblance, popularity and prior success do not transfer
+Evidence to a new provider, tenant, version, assumption or outcome.
+
+Every dependent Knowledge Record, Contract and Governed Template binds its
+sources, assumptions and outcomes. Drift in any bound source, assumption,
+result or applicability condition invalidates or downgrades dependents until
+fresh Evidence is recorded. Supersession is append-only and traceable: a new
+immutable revision points to the prior revision and reason, preserves negative
+and historical Evidence, and retains an authorised reversible path to a known
+safe revision when rollback is applicable.
 
 ## Administration
 

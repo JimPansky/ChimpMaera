@@ -21,6 +21,11 @@ function replace(root, path, before, after) {
   writeFileSync(file, readFileSync(file, "utf8").replace(before, after));
 }
 
+function replaceAll(root, path, before, after) {
+  const file = join(root, path);
+  writeFileSync(file, readFileSync(file, "utf8").replaceAll(before, after));
+}
+
 function append(root, path, value) {
   const file = join(root, path);
   writeFileSync(file, `${readFileSync(file, "utf8")}\n${value}\n`);
@@ -85,6 +90,10 @@ test("release governance negative probes fail closed", async (t) => {
     ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/tag/v9.9.9")],
     ["root Support product-version binding", "ROOT_SUPPORT_VERSION_BINDING_DENIED", (root) => replace(root, "SUPPORT.md", "ChimpMaera is provided", "ChimpMaera v9.9 is provided")],
     ["stale Security claim", "SECURITY_STALE_RELEASE_CLAIM_DENIED", (root) => replace(root, "docs/SECURITY-ASSURANCE.md", "## Claim maturity", "v0.1.0 remains the only tagged and published release.\n\n## Claim maturity")],
+    ["System Advisor stale pre-release status", "RELEASED_LOCAL_SYNTHETIC_STATUS_MISSING:System Advisor", (root) => replace(root, "docs/SYSTEM-ADVISOR-GUIDE.md", "Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**", "Status: **LOCALLY VALIDATED, NOT RELEASED**")],
+    ["Builder defaults stale pre-release status", "RELEASED_LOCAL_SYNTHETIC_STATUS_MISSING:Builder defaults", (root) => replace(root, "docs/BUILDER-CONFIGURATION-DEFAULTS.md", "Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**", "Status: **LOCALLY VALIDATED, NOT RELEASED**")],
+    ["Canon lab profile mislabeled as fully mediated", "FULL_CONTROL_LAB_BOUNDARY_MISSING:docs/CANON.md", (root) => replaceAll(root, "docs/CANON.md", "may bypass", "remains completely mediated by")],
+    ["HMI release evidence mapped to Azure", "CAPABILITY_MAPPING_INVALID:CM-REL-006", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-006` HMI/Harness release evidence]", "[`CM-REL-007` HMI/Harness release evidence]")],
     ["stale limitation version", "LIMITATIONS_STALE_V01_BINDING_DENIED", (root) => replace(root, "docs/KNOWN-LIMITATIONS.md", "The current local demo", "The v0.1 demo")],
     ["withdrawn video", "WITHDRAWN_ACTIVE_VIDEO_DENIED:8mB7O81Y2xA", (root) => append(root, "README.md", "https://youtu.be/8mB7O81Y2xA")],
     ["missing non-claim", "NON_CLAIMS_MISSING:CM-REL-001", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.claimEvidence[0].nonClaims = []; writeFileSync(p, JSON.stringify(j)); }],

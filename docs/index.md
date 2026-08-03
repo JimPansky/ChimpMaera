@@ -35,9 +35,11 @@ features:
 ChimpMaera currently provides a **released, locally validated proof of concept**.
 Its evidence comes from deterministic tests and fictional local fixtures. It
 does not establish production fitness, live-provider compatibility, universal
-security, or permission to use customer data. The vendor-neutral Knowledge
-Operating System remains a [planned direction](./capabilities.md), not current
-product maturity.
+security, or permission to use customer data. **Knowledge-driven Operating
+System** is the current product category; broad live-system realization remains
+a [planned direction](./capabilities.md), not current shipped maturity. Its
+current architecture is **Caged Agent → Gateway → Capability Constellation**,
+with only the declared local-synthetic paths evidenced.
 
 Start with the [governed agent-action use case](./use-cases/governed-agent-actions.md),
 follow the specific [CRM-to-ERP approval and readback path](./use-cases/crm-erp-approval-readback.md),

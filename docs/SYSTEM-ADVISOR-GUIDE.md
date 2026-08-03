@@ -1,8 +1,10 @@
 # System Advisor Guide contract
 
-Status: **LOCALLY VALIDATED, NOT RELEASED**. A System Advisor Guide is bounded
-knowledge for discovery and planning. It is data, not authority, executable
-code, a credential store or proof that a live system is supported.
+Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**. The Guide authoring and
+validation contract is present in the current regular release. A System Advisor
+Guide is bounded knowledge for discovery and planning. It is data, not
+authority, executable code, a credential store, live onboarding, tenant/provider
+activation or proof that a live system is supported.
 
 ## Required content
 

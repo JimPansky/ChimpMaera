@@ -10,10 +10,13 @@ connect a live system, production evidence or publication authority.
 1. Open one issue-style delivery contract with scope, non-scope, dependencies,
    numbered acceptance criteria, negative probes, evidence, recovery and honest
    non-claims.
-2. Keep `SAFE_GUIDED` as the intake default. An Owner may explicitly choose
-   `CUSTOM` or the canonical `RAMPAGE_FULL_CONTROL_LAB` profile in a disposable
-   lab. `RAMPAGE` and `FULL_CONTROL_LAB` are accepted input aliases, not a way
-   around Host/System constraints.
+2. Keep `SAFE_GUIDED` as the intake default. `CUSTOM` can widen only through
+   its declared governed routes. The canonical `RAMPAGE_FULL_CONTROL_LAB`
+   profile (`RAMPAGE` and `FULL_CONTROL_LAB` aliases) is a different, dangerous
+   lab/escape choice: after exact Owner risk acceptance it may bypass
+   ChimpMaera action and Approval gates, but never the host process's OS/host
+   ceiling. Use only in a disposable or explicitly bounded lab, downgrade
+   claims for bypassed layers, and bind reset/rollback/recovery before use.
 3. Supply a synthetic Machine Manifest, operation-scoped System Advisor Guide
    and bounded cause/effect context. Discovery selects only requested
    operations and covered context.
@@ -40,16 +43,20 @@ unresolved recovery, failed readback, rollback mismatch, cross-tenant request,
 credential-shaped content, private path, raw prompt/runtime receipt, customer
 data or absent Owner routing.
 
-`AUTO_EXECUTE` is a route selected within the Owner's effective rights. It does
-not override the Host/System ceiling, capability admission, use-time checks,
-tenant isolation or current constraints.
+In governed Profiles, `AUTO_EXECUTE` is a mediated route selected within the
+Owner's effective rights and does not override the Host/System ceiling,
+capability admission, use-time checks, tenant isolation or current constraints.
+The lab profile's separately declared bypass is not described as mediated and
+inherits no Builder/Canon security claim for the bypassed gates.
 
 ## Recovery
 
 Deactivate the isolated profile, revert the bounded implementation, restore
 only fixture-owned state, reconcile through readback, revoke the specific
 assignment and retain digest-only evidence. Reset, rollback, revoke and cleanup
-are separate operations. A failed recovery produces no success claim.
+are separate operations. Restart, revoke or cleanup returns the published lab
+profile lifecycle to `SAFE_GUIDED`. A failed recovery produces no success
+claim.
 
 ## Evidence and non-claims
 
