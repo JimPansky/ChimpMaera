@@ -87,3 +87,28 @@ check passed before the CI fix was pushed.
   released local synthetic proof. They do not establish live-provider
   compatibility, production fitness, adoption, search rank, customer use, or
   universal security.
+
+## Delivery completion
+
+- Content PR **#86** passed required CI and was squash-merged as
+  `67a4d44d69a686826afca0a8e47106ddd99db5b5`.
+- Release-identity PR **#87** passed required CI and was squash-merged as
+  `c82438953b8ab8d9f8d3b72157d09d9c4c61f844`.
+- Main CI and the main-only Pages deployment passed on the exact release
+  target.
+- Two isolated public-package builds from that commit were byte-identical.
+- Regular Latest `v0.2.0-poc.20260803.8` was published with exactly one archive
+  and one SHA-256 sidecar. Archive SHA-256 is
+  `83e9a3b1d814d64a261afaccb8a9afd87f060a1f00e1a9a443aa6157324ed070`;
+  sidecar SHA-256 is
+  `da5ca501ad9dfb5f05836ca229dc2047656c8025649b80efe92ccadcd90fbbf0`.
+- Anonymous, unauthenticated readback proved the Latest redirect, lightweight
+  tag target, byte-identical asset downloads, outer sidecar, internal package
+  checksums, package version, Atom entry, and twelve primary Pages/community
+  routes.
+- The anonymous REST endpoint was rate-limited with HTTP 403 during readback;
+  no authenticated substitute was counted as anonymous evidence. Direct
+  public GitHub/release/git/Pages surfaces supplied the successful fallback.
+- This post-publication binding updates canonical release truth to the
+  immutable tag, target, asset names, sizes, and hashes; it does not replace or
+  retarget the published release.
