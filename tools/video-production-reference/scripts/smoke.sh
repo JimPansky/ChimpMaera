@@ -100,13 +100,11 @@ phase_begin "image-build"
 build_args=(--build-arg "VCS_REF=$VCS_REF" -t "$IMAGE")
 if [ "${CM_VIDEO_NO_CACHE:-false}" = "true" ]; then
   build_args+=(--no-cache)
-else
-  if [ -n "${CM_VIDEO_CACHE_FROM:-}" ]; then
-    build_args+=(--cache-from "$CM_VIDEO_CACHE_FROM")
-  fi
-  if [ -n "${CM_VIDEO_CACHE_TO:-}" ]; then
-    build_args+=(--cache-to "$CM_VIDEO_CACHE_TO")
-  fi
+elif [ -n "${CM_VIDEO_CACHE_FROM:-}" ]; then
+  build_args+=(--cache-from "$CM_VIDEO_CACHE_FROM")
+fi
+if [ -n "${CM_VIDEO_CACHE_TO:-}" ]; then
+  build_args+=(--cache-to "$CM_VIDEO_CACHE_TO")
 fi
 case "${CM_VIDEO_BUILDER:-docker}" in
   docker)

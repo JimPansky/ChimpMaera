@@ -384,7 +384,7 @@ ce7c65a229efcf13074b13ab350574c93a85284ed1293f3e61e4f45ece2ce605  ./tools/video-
 e3ff821fb65c09b6fcb9ae9f885a51684df797a019ab2a86dc52ee3a15385d53  ./tools/video-production-reference/schemas/public-copy-policy.schema.json
 401036428cab1a0cc64993cd7b2a7582f2cc89b23cbe7c3b374a803febf61faa  ./tools/video-production-reference/schemas/scene.schema.json
 73794c0a337f3ce8a4434faec1be8d8a47bc9f0d4964761f192dcfeb727decd7  ./tools/video-production-reference/schemas/video-job.schema.json
-1b9df98b52507f82e08098e417be1e3b50033f3304d4e066c6c70b08f5d310b1  ./tools/video-production-reference/scripts/smoke.sh
+b0641460946c92c9f172f93e196d68751533e624dfbf76a03bb6c75e406159a3  ./tools/video-production-reference/scripts/smoke.sh
 8169b3f70d779189191cb4e07c3cbda26b998173f1907bb9c7e8d6004f6edc85  ./tools/video-production-reference/src/cm_video_ref/__init__.py
 2ab142712f5e9de133f7fcea6b7cf8ee03b6b66a26ebcd47be424bc11624ee33  ./tools/video-production-reference/src/cm_video_ref/audience_copy.py
 c763fdf543382b72dbc7a267366e42a78ab93e69c1b565423ae82d2cdd999319  ./tools/video-production-reference/src/cm_video_ref/cli.py
