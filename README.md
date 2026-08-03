@@ -1,151 +1,125 @@
 <p align="center">
-  <img
-    src="assets/brand/chimpmaera-negative.png"
-    width="420"
-    alt="ChimpMaera hybrid chimp-cyborg logo"
-  >
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/chimpmaera-negative.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/chimpmaera-master.svg">
+    <img src="assets/brand/chimpmaera-master.svg" width="260" alt="ChimpMaera hybrid chimp-cyborg logo">
+  </picture>
 </p>
 
 # ChimpMaera
 
-**Open knowledge. Governed agency. Verifiable outcomes.**
+**Governed, verifiable AI-agent actions across business systems.**
 
-ChimpMaera is an open-source proof of concept and direction for a Knowledge
-Operating System that turns scattered system knowledge into reusable guides,
-contracts and workflows—without turning an AI agent into an authority. Today
-you can run a local, synthetic
-CRM-to-ERP proof of concept and inspect how a proposed action is governed,
-executed, read back and proven.
+ChimpMaera is an open-source local proof of concept: a control plane for governed, verifiable AI-agent actions across
+business systems. Today it
+demonstrates how an agent can propose cross-system work while policy, approval,
+brokered execution, authoritative readback and receipts stay outside the
+model. The broader direction is a vendor-neutral **Knowledge Operating System**
+that turns scattered system knowledge into reusable guides, contracts and
+workflows. That direction is not a claim of current product maturity.
 
-[**Try the local POC**](#quickstart) ·
-[**See how it works**](#how-it-works) ·
-[**Verify security evidence**](docs/SECURITY-ASSURANCE.md) ·
-[**Join the Zoo**](#join-the-zoo)
+[**Run POC**](#quickstart) ·
+[**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
+[**How it works**](#how-it-works)
 
-**Security, without magic words:** models and agents are untrusted proposers.
-Inside the declared governed paths there is **no ambient authority, no master
-key and no unmediated effect path**. Typed, default-off capabilities, policy,
-approval, brokered execution, authoritative readback and receipts enforce that
-boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
-**not a security boundary**. Read the
-[exact claims, evidence, maturity and TCB limits](docs/SECURITY-ASSURANCE.md).
+[Security and limitations](docs/SECURITY-ASSURANCE.md) ·
+[Documentation hub](docs/README.md)
 
 ## Release status
 
 - **Current regular Latest release:** [`v0.2.0-poc.20260803.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.1) — **Authority-Bounded Integration Contracts Increment**.
-- **Historical predecessor:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release.
+- **Initial public baseline:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release or its direct predecessor.
 
-Releases are accepted functional increments, not calendar events. Editorial
-updates may describe progress, decisions, learnings or previews, but they do
-not gate or prove publication. The exact Latest/draft/prerelease and anonymous
-asset-readback rules are in [Release governance](docs/RELEASE-GOVERNANCE.md).
-This release is not a production release, security certification, hosted
-service, support promise or permission to connect real systems. Use only
-synthetic data on a disposable or development host.
+This is a local, synthetic PoC—not a production release, hosted service,
+security certification, support promise or permission to connect real systems.
+Use only synthetic data on a disposable or development host. See
+[release governance](docs/RELEASE-GOVERNANCE.md) for publication evidence and
+anonymous readback rules.
 
-## What you can do today
+## What works today
 
-- Run the loopback-only demo with fictional EspoCRM and Dolibarr data.
-- Watch a safe proposal reach approval, execution, readback and a receipt—and
-  watch denied, drifted or replayed actions fail closed.
-- Inspect portable knowledge artifacts, typed capability contracts, policies,
-  tests and evidence.
-- Use the working local path to
-  [design a governed connection](docs/CONNECT-YOUR-FIRST-SYSTEM.md) for another
-  system without claiming an integration that has not been evidenced.
+- **Governed CRM → ERP effects:** the released loopback demo proposes a
+  fictional order, applies policy and approval, executes through the bounded
+  broker, then requires provider readback and a receipt. Denial, drift and
+  replay probes fail closed. [Run the POC](docs/QUICKSTART.md).
+- **Reusable adaptation and interfaces:** released Builder and HMI/harness
+  contracts cover typed discovery, planning, synthetic reuse, and
+  authority-free discover/explain flows. There is no user-facing live-system
+  builder or production UI. [See maturity details](docs/README.md#extend).
+- **Verification and diagnostics:** released Verification Fabric contracts
+  bind checks to evidence and verdicts; Update/Doctor remains check-only and
+  read-only. [Review evidence boundaries](docs/SECURITY-ASSURANCE.md).
+- **Scoped identity and reads:** released Entra identity and Power Platform
+  read contracts are closed and authority-free; live tenant consent, import
+  and compatibility require external evidence. [Read the limitations](docs/KNOWN-LIMITATIONS.md).
+
+## How it works
+
+<p align="center">
+  <img src="assets/diagrams/safe-guided-flow.svg" width="720" alt="SAFE_GUIDED flow: Owner asks, Agent proposes, Gateway decides, approval is obtained if required, Broker executes, and authoritative readback plus a receipt prove the result.">
+</p>
+
+This diagram covers only the governed `SAFE_GUIDED` reference path. In that
+path the Agent is an untrusted proposer: it cannot approve itself, choose
+credentials or perform the effect. `FULL_CONTROL_LAB` / `RAMPAGE` can bypass
+ChimpMaera action and approval gates, inherits the host ceiling and is **not a
+security boundary**.
 
 ## Quickstart
 
-From the repository root on a supported Linux host with Docker and Compose:
+On a supported Linux host with Docker and Compose, run from the repository
+root:
 
 ```sh
 ./demo/install.sh
 ```
 
-Open the loopback URL printed by the installer. The demo needs no production
-credentials; it creates local random demo secrets in an ignored runtime
-directory. Follow the [full quickstart](docs/QUICKSTART.md) for prerequisites,
-verification and troubleshooting.
+Open the loopback URL printed by the installer. The demo creates only local
+random secrets and fictional fixtures. Use the [full quickstart](docs/QUICKSTART.md)
+for prerequisites and troubleshooting.
 
-Remove only installer-owned resources with:
+Remove only installer-owned resources:
 
 ```sh
 ./demo/uninstall.sh --purge
 ```
 
-The current release and its evidence policy are listed in
-[Release status](#release-status); `v0.1.0` is historical only.
+## Evidence and limitations
 
-## How it works
+- [Documentation and capability hub](docs/README.md): task-oriented routes,
+  maturity labels and document ownership.
+- [Security Assurance](docs/SECURITY-ASSURANCE.md): exact scoped claims,
+  evidence, TCB and non-claims.
+- [Known Limitations](docs/KNOWN-LIMITATIONS.md): production, identity,
+  provider, isolation and external-evidence gaps.
+- [Canon](docs/CANON.md) and [Architecture](docs/ARCHITECTURE.md): durable laws
+  and the current local reference design.
 
-> **Owner asks → Agent proposes → Gateway decides → Workbench if needed →
-> Broker executes → Readback / Receipt proves**
+Shared or untrusted knowledge grants no authority. ChimpMaera does not claim a
+central data lake, universal ontology, automatic publication of private data,
+generic live-system integration or quantified faster onboarding.
 
-The Agent can assemble a typed candidate, but it cannot approve itself, choose
-credentials or perform the effect. The trusted path evaluates authority and
-policy, obtains explicit approval when required, executes only the declared
-effect, then treats provider acceptance as incomplete until authoritative
-readback and a bound receipt agree.
+## Project and community
 
-## Knowledge that travels safely
+- [Contribute](CONTRIBUTING.md), [get support](SUPPORT.md), or report a
+  vulnerability through the [private security route](SECURITY.md).
+- Watch the verified public overviews: [Why ChimpMaera?](https://youtu.be/Dq_XLEzh5I8),
+  [How does it work?](https://youtu.be/w4fWgalD_WQ), and
+  [Security by Default](https://youtu.be/SEPbE-EVoNs). Videos are not release
+  evidence.
+- Follow regular product increments through the
+  [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom).
 
-ChimpMaera's broader direction is a vendor-neutral Knowledge Operating System:
-System Advisor Guides, manifests, capability catalogs, workflow recipes,
-cause/effect/context graphs and BI semantic contracts that different tools can
-understand consistently. Records can remain in their systems of record while
-sanitized, provenance-bound knowledge becomes reusable.
+Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference media follows
+[MEDIA-LICENSE.md](MEDIA-LICENSE.md); Apache-2.0 grants no trademark rights.
+[CITATION.cff](CITATION.cff) provides citation metadata. Community conduct and
+the Developer Certificate of Origin are defined in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Shared or untrusted knowledge grants no authority. Trust class, tenant scope,
-owner-controlled publication and redaction protect sensitive context.
-ChimpMaera does not claim a central data lake, universal ontology or automatic
-publication of private company data.
+Voluntary creator support:
 
-## Join the Zoo
-
-Pick the entry path that fits:
-
-- **Use locally:** run or study the POC without publishing anything.
-- **Report a gap:** open a focused issue; report vulnerabilities through the
-  [private security route](SECURITY.md), never a public issue.
-- **Solve an issue:** choose a bounded task and link evidence in the pull
-  request.
-- **Improve knowledge:** refine a Guide, contract, recipe, test or sanitized
-  example.
-- **Add an adapter or skill:** start with the
-  [connection guide](docs/CONNECT-YOUR-FIRST-SYSTEM.md) and preserve the
-  default-off, evidence-gated boundary.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow. Never contribute
-secrets, personal data, private prompts, host inventories, local paths or
-non-public security details. Joining the Zoo means participating in an open
-community—not company membership, employment or authority.
-
-## Go deeper
-
-- [The ChimpMaera Canon](docs/CANON.md): normative laws for agency, authority,
-  effects and evidence.
-- [Zoo Field Guide](docs/ZOO-FIELD-GUIDE.md): practical Profiles, adapters and
-  evidence procedures.
-- [Architecture](docs/ARCHITECTURE.md), [known limitations](docs/KNOWN-LIMITATIONS.md)
-  and [supply-chain verification](docs/SUPPLY-CHAIN.md).
-- [Security Assurance](docs/SECURITY-ASSURANCE.md): complete scoped claims,
-  maturity, evidence and non-claims.
-
-## Watch ChimpMaera
-
-Current overview videos are temporarily unavailable while their public naming
-and claims are re-verified. No video is release evidence.
-
-## Project details
-
-Use [SECURITY.md](SECURITY.md) for private vulnerability reporting and
-[SUPPORT.md](SUPPORT.md) for help. Code is Apache-2.0 under
-[LICENSE](LICENSE), [NOTICE](NOTICE) and
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); reference media follows
-[MEDIA-LICENSE.md](MEDIA-LICENSE.md), and Apache-2.0 grants no trademark
-rights. [CITATION.cff](CITATION.cff) provides citation metadata.
-[Community conduct](CODE_OF_CONDUCT.md), the
-[Developer Certificate of Origin](CONTRIBUTING.md) and the
-[contributor workflow](CONTRIBUTING.md) apply. Voluntary creator support is
-available through [Ko-fi](https://ko-fi.com/chimpmaera) and
-[Buy Me a Coffee](https://buymeacoffee.com/jimpansky).
+<p>
+  <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support ChimpMaera on Ko-fi" width="180" height="33"></a>
+  &nbsp;
+  <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support ChimpMaera on Buy Me a Coffee" width="180" height="33"></a>
+</p>

@@ -60,7 +60,14 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, releaseSection.includes(`**Current regular Latest release:** [\`${release.tag}\`]`), "README_CURRENT_RELEASE_MISMATCH");
   issue(issues, releaseSection.includes(release.increment ?? "__missing__"), "README_INCREMENT_MISMATCH");
   issue(issues, !/Today's Daily|Previous Daily|POC Daily|Daily snapshot/i.test(releaseSection), "README_ACTIVE_DAILY_IDENTITY_DENIED");
-  issue(issues, /open-source proof of concept and direction for a Knowledge\s+Operating System/i.test(readme), "README_POC_POSITIONING_MISSING");
+  issue(
+    issues,
+    /open-source local proof of concept/i.test(readme)
+      && /control plane for governed, verifiable AI-agent actions across\s+business systems/i.test(readme)
+      && /broader direction[^.]*Knowledge Operating System/i.test(readme)
+      && /direction is not a claim of current product maturity/i.test(readme),
+    "README_POC_POSITIONING_MISSING",
+  );
 
   for (const id of governance.videos?.withdrawnIds ?? []) {
     issue(issues, !readme.includes(id), `WITHDRAWN_ACTIVE_VIDEO_DENIED:${id}`);

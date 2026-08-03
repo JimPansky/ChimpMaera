@@ -1,8 +1,7 @@
 # Supply-chain declaration verification
 
-Current `main` includes an offline verifier for repository declarations. It is
-part of an unreleased v0.2 POC candidate; the latest tagged release remains
-`v0.1.0`:
+The current public release includes an offline verifier for repository
+declarations:
 
 ```sh
 npm run supply-chain:verify

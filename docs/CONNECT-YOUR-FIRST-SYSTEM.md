@@ -7,9 +7,10 @@ requests and evidence to that issue; keep unpatched security-sensitive details
 in the private path defined by [SECURITY.md](../SECURITY.md). `Locally
 validated` does not mean `released`.
 
-This guide distinguishes the runnable ChimpMaera v0.1 public snapshot from
-onboarding contracts that exist only as local validation or product plans. A
-roadmap or issue is not runtime evidence.
+This guide distinguishes the runnable current public release from released
+local-synthetic contracts, locally validated work and product plans. The
+historical `v0.1.0` tag is the initial public baseline, not the current release
+or its direct predecessor. A roadmap or issue is not runtime evidence.
 
 ## What you can run in the public snapshot
 
@@ -53,7 +54,8 @@ of real data.
 ## Governed onboarding blueprint
 
 Use this sequence to design a future connection. Steps marked **PLANNED** are
-requirements, not executable v0.1 instructions.
+requirements, not executable arbitrary-system instructions in the current
+release.
 
 ### 1. Choose the outcome and source
 
@@ -95,18 +97,19 @@ unless a separately reviewed design requires it.
   owner acknowledgement. It is not a production shortcut and must reset to
   `SAFE_GUIDED`.
 
-The public snapshot contains setup-planning contract code and tests for these
-fail-closed rules, but it does not ship a user-facing arbitrary-system builder
-or automatic adapter generator. That onboarding workflow is **LOCALLY
-VALIDATED, NOT RELEASED** at the contract-test level only.
+The current public release contains setup-planning and Builder contract code,
+tests and synthetic fixtures for these fail-closed rules. It does not ship a
+user-facing arbitrary-system builder or automatic adapter generator. The
+contract surface is **RELEASED WITH LOCAL-SYNTHETIC EVIDENCE**; live onboarding
+and production fitness remain unproven.
 
 ### 6. Preflight effective rights
 
 **PLANNED:** Run a dry-run/preflight before connectivity. Produce a Permission
 X-ray of the effective identity, tenant, scopes, capabilities, network access,
 policy constraints and requested effects. Missing, broader-than-declared or
-cross-tenant rights must fail closed. ChimpMaera v0.1 has no released command
-for this arbitrary-system preflight.
+cross-tenant rights must fail closed. The current release has no user-facing
+command for this arbitrary-system preflight.
 
 ### 7. Connect read-only first
 
@@ -130,10 +133,10 @@ authority Revoke and installer Cleanup separately; they are not synonyms.
 ### 9. Add BI and share deliberately
 
 **PLANNED, OPTIONAL:** Add a versioned BI Semantic Contract and Dashboard Pack
-only after the read-only mappings and lineage are verified. A locally validated
+only after the read-only mappings and lineage are verified. The released
 Builder contract can create a closed, synthetic, digest-only contribution
-bundle, but it remains opt-in, `NOT_RELEASED` and carries no publication
-authorization. Publication still requires a separate authorized Owner action.
+bundle, but it remains opt-in and carries no publication authorization.
+Publication still requires a separate authorized Owner action.
 Shared or untrusted knowledge never grants authority, and private company data
 is never published automatically.
 
@@ -141,8 +144,8 @@ is never published automatically.
 
 | Maturity | Scope |
 | --- | --- |
-| **Works in public snapshot** | Pinned synthetic CRM/ERP installation, `SAFE_GUIDED` local default, generated file-backed demo secrets, governed synthetic effect, provider readback, receipt and ownership-scoped cleanup. |
-| **Locally validated, not released** | Setup-planning and Builder contracts model Owner profiles, guided discovery, System Advisor Guides, generic inactive scaffolds, synthetic evidence, isolated read/reversible-write fixtures, second-system reuse and sanitized opt-in contribution packaging. There is no released onboarding UI or CLI for external systems. |
+| **Released local PoC** | Pinned synthetic CRM/ERP installation, `SAFE_GUIDED` local default, generated file-backed demo secrets, governed synthetic effect, provider readback, receipt and ownership-scoped cleanup. |
+| **Released local-synthetic contracts** | Setup-planning and Builder contracts model Owner profiles, guided discovery, System Advisor Guides, generic inactive scaffolds, synthetic evidence, isolated read/reversible-write fixtures, second-system reuse and sanitized opt-in contribution packaging. There is no user-facing onboarding UI or CLI for external systems. |
 | **Planned** | Live-system profiles, Workload Identity/tenant integrations, Permission X-ray UI, typed external connectors, production reversible-write onboarding and BI packs. |
 
 Keep planned work behind its own evidence gate. Promotion requires shipped

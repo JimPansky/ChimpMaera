@@ -1,8 +1,25 @@
 {
   "name": "chimpmaera",
-  "version": "0.1.0",
+  "version": "0.2.0-poc.20260803.1",
   "private": true,
-  "description": "Local synthetic proof of concept for governed AI workflows.",
+  "description": "Open-source local proof of concept for governed, verifiable AI-agent actions across business systems.",
+  "keywords": [
+    "ai-agents",
+    "agent-governance",
+    "ai-governance",
+    "policy-enforcement",
+    "human-in-the-loop",
+    "auditability",
+    "business-systems"
+  ],
+  "homepage": "https://github.com/JimPansky/ChimpMaera#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JimPansky/ChimpMaera.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JimPansky/ChimpMaera/issues"
+  },
   "license": "Apache-2.0",
   "type": "module",
   "engines": {

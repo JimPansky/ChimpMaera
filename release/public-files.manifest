@@ -4,6 +4,7 @@
 assets/brand/chimpmaera-master.svg	assets/brand/chimpmaera-master.svg	0644
 assets/brand/chimpmaera-negative.png	assets/brand/chimpmaera-negative.png	0644
 assets/brand/chimpmaera-negative.svg	assets/brand/chimpmaera-negative.svg	0644
+assets/diagrams/safe-guided-flow.svg	assets/diagrams/safe-guided-flow.svg	0644
 assets/support/buy-me-a-coffee.png	assets/support/buy-me-a-coffee.png	0644
 assets/support/buy-me-a-coffee.svg	assets/support/buy-me-a-coffee.svg	0644
 assets/support/ko-fi.png	assets/support/ko-fi.png	0644
@@ -146,6 +147,9 @@ docs/CANON.md	docs/CANON.md	0644
 docs/CONNECT-YOUR-FIRST-SYSTEM.md	docs/CONNECT-YOUR-FIRST-SYSTEM.md	0644
 docs/COMPANY-DATA-VALIDATION.md	docs/COMPANY-DATA-VALIDATION.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
+docs/README.md	docs/README.md	0644
+docs/DISCOVERABILITY-BASELINE.md	docs/DISCOVERABILITY-BASELINE.md	0644
+docs/VISIBILITY-CHANNEL-MATRIX.md	docs/VISIBILITY-CHANNEL-MATRIX.md	0644
 docs/RELEASE-GOVERNANCE.md	docs/RELEASE-GOVERNANCE.md	0644
 docs/SECURITY-ASSURANCE.md	docs/SECURITY-ASSURANCE.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644

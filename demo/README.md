@@ -1,4 +1,4 @@
-# ChimpMaera v0.1 local demo installer
+# ChimpMaera local demo installer
 
 The demo is the bounded implementation example for
 [The ChimpMaera Canon](../docs/CANON.md). Use
@@ -11,7 +11,7 @@ authenticated provider readiness, mapped fictional identities, a
 digest-bound catalog, one governed CRM-to-ERP order flow and the deterministic
 Admin-AI preview boundary.
 
-The v0.2 Wave 1 feature candidate adds a local Approval Workbench for the
+The released local Wave 1 surface adds an Approval Workbench for the
 existing synthetic order escalation. It derives the readable business diff
 from a bounded provider snapshot, binds its local version plus requester,
 purpose, impacts, rollback and Policy, then rechecks freshness at approval and
