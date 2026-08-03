@@ -7,7 +7,7 @@ b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2  ./.github/work
 3cb93d13f4a3ed8f4666fbd68d033aa5446d473ddd35a39b12fad8e57e29b00a  ./.github/workflows/daily-poc-candidate.yml
 4cc238f11f4b70566e80c2510cf2e37ba20f0cd4cc5c39aa387b0641a1495a93  ./.github/workflows/video-deep-audit.yml
 56690063fedd6a594cb37f26fdf1538fdd02802243886e9dcae43536f58c110a  ./.gitignore
-84837a2b9a6391379d91a54a1619629b4f50788c95dca0e328f87bb469866ade  ./CITATION.cff
+70530f089974e669d13325b9e157695ab6b3227d21ee80fc84d987af1bf964e4  ./CITATION.cff
 ba943be96394ec332cab2ce2f3ce06f122d9f224f304c765a74dc58cca809310  ./CODE_OF_CONDUCT.md
 9ae8a2e38ef93981b26e37ff70f84097a1809ae016bb0528cf7caf769466b337  ./CONTRIBUTING.md
 9ed8fd6143a87d489c618aaffcea5e5000fc372ae86ca9d3e45e7b7c32be658e  ./DCO
@@ -154,12 +154,12 @@ fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-P
 2b9696cc826d9d4f609ea8afee428328b5d5e8bdd0ae70ea45fe886773769ad8  ./docs/DAILY-POC-ITERATION.md
 679bae40f1a8858f6f1e618016eec9ba9697788bbb7d67dd06e2071e12f6d404  ./docs/DISCOVERABILITY-BASELINE.md
 8d2b0611139fd36ce0768dc131f0ce355d5959a3a2a2ea355658d5db1319b1d7  ./docs/KNOWLEDGE-HARVEST.md
-f251a6ca75d843de747a95643ebbbea5d0ee05057845498dd55b92193ac0b479  ./docs/KNOWN-LIMITATIONS.md
+691bf9625940be65cdefae6ba37736652383f8002369b7a14e630377eafd495e  ./docs/KNOWN-LIMITATIONS.md
 011c5b5fa061aa77394bd16376e4cec242c9d09a93e863494a4836e7e944799e  ./docs/QUICKSTART.md
 8e5336d42f7dced060309a1714171e8b93244dd531bfa35db306bc1abf3b06b8  ./docs/README.md
-0a540393f36f2d92dae44bf452a18daf12f816f3da6ea2ffda69e27ccdfa0e36  ./docs/RELEASE-GOVERNANCE.md
+41adaa6d3f3b6de47cbb4636672d5b13690c9ad975f08dc86d262e3e2bff66bd  ./docs/RELEASE-GOVERNANCE.md
 af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892  ./docs/SECURE-DEFAULT-PROOF.md
-80f03b0f20c838c2a048236092a97b98b8fff44388ac624cba87e8660c89957f  ./docs/SECURITY-ASSURANCE.md
+8a48f6675f1ecf280b4e8db096c7c642d2fafc8772356877c7d2f6be4e2c163d  ./docs/SECURITY-ASSURANCE.md
 527ead55bb739305ba02c4094cd30f8b59eaaa2d9c8ddb8ad0bb88b131d5eda2  ./docs/SUPPLY-CHAIN.md
 e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-ADVISOR-GUIDE.md
 c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f  ./docs/VERIFICATION-FABRIC-SHADOW.md
@@ -282,7 +282,7 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-dd3014a6bccad7b69162c67aa1bbbb0f17391fd955db443b4c2d30fbdae0694b  ./release/governance.json
+858a946993ddb863156007ac6bb80d1821e312dda885a7b2954066177fdf57ab  ./release/governance.json
 e58675ff29074feddc279af85d431a22a530a64dcf2df05bf3113c57f959329c  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
@@ -425,4 +425,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 090a475aa6ede5e5874cffbdc0e8410eb0e13cee7d7e289a69a3fe757ca5e3a1  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-131da4f855a8cd18199810fc118e45a1c728deb5117d0cc2e863f977016b6af7  ./verification/verification-dag-v2.json
+47e883db67311cbe29f063a6343cd59b237d94e19d7bd656429b3eb6a9cdc6e5  ./verification/verification-dag-v2.json
