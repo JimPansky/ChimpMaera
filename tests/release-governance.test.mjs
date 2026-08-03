@@ -32,8 +32,8 @@ test("repository release governance passes", () => {
 
 test("release governance negative probes fail closed", async (t) => {
   const probes = [
-    ["README stale tag", "README_CURRENT_RELEASE_MISMATCH", (root) => replace(root, "README.md", "v0.2.0-poc.20260803.2", "v0.1.0")],
-    ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Public Truth and Discoverability Increment", "Today's Daily snapshot")],
+    ["README stale tag", "README_CURRENT_RELEASE_MISMATCH", (root) => replace(root, "README.md", "v0.2.0-poc.20260803.3", "v0.1.0")],
+    ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Verification Planning and Contribution Preflight Increment", "Today's Daily snapshot")],
     ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "direction is not a claim of current product maturity", "direction is current product maturity")],
     ["stale Security claim", "SECURITY_STALE_RELEASE_CLAIM_DENIED", (root) => replace(root, "docs/SECURITY-ASSURANCE.md", "## Claim maturity", "v0.1.0 remains the only tagged and published release.\n\n## Claim maturity")],
     ["stale limitation version", "LIMITATIONS_STALE_V01_BINDING_DENIED", (root) => replace(root, "docs/KNOWN-LIMITATIONS.md", "The current local demo", "The v0.1 demo")],

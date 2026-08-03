@@ -27,7 +27,7 @@ workflows. That direction is not a claim of current product maturity.
 
 ## Release status
 
-- **Current regular Latest release:** [`v0.2.0-poc.20260803.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.2) — **Public Truth and Discoverability Increment**.
+- **Current regular Latest release:** [`v0.2.0-poc.20260803.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.3) — **Verification Planning and Contribution Preflight Increment**.
 - **Initial public baseline:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release or its direct predecessor.
 
 This is a local, synthetic PoC—not a production release, hosted service,
@@ -43,12 +43,15 @@ anonymous readback rules.
   broker, then requires provider readback and a receipt. Denial, drift and
   replay probes fail closed. [Run the POC](docs/QUICKSTART.md).
 - **Reusable adaptation and interfaces:** released Builder and HMI/harness
-  contracts cover typed discovery, planning, synthetic reuse, and
-  authority-free discover/explain flows. There is no user-facing live-system
-  builder or production UI. [See maturity details](docs/README.md#extend).
+  contracts cover typed discovery, planning, synthetic reuse, authority-free
+  discover/explain flows, and contribution preparation without publication
+  authority. There is no user-facing live-system builder or production UI.
+  [See maturity details](docs/README.md#extend).
 - **Verification and diagnostics:** released Verification Fabric contracts
-  bind checks to evidence and verdicts; Update/Doctor remains check-only and
-  read-only. [Review evidence boundaries](docs/SECURITY-ASSURANCE.md).
+  bind checks to evidence and verdicts; v2 adds Shadow-only Evidence-DAG impact
+  planning while the complete suite remains authoritative. Update/Doctor
+  remains check-only and read-only.
+  [Review evidence boundaries](docs/SECURITY-ASSURANCE.md).
 - **Scoped identity and reads:** released Entra identity and Power Platform
   read contracts are closed and authority-free; live tenant consent, import
   and compatibility require external evidence. [Read the limitations](docs/KNOWN-LIMITATIONS.md).

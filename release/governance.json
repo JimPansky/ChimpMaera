@@ -2,29 +2,29 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260803.2",
-    "title": "ChimpMaera — Public Truth and Discoverability Increment",
-    "increment": "Public Truth and Discoverability Increment",
-    "targetCommitish": "0c662257ce30f48ce6f5f3ab3b3cde718705e646",
-    "tagObjectSha": "0c662257ce30f48ce6f5f3ab3b3cde718705e646",
+    "tag": "v0.2.0-poc.20260803.3",
+    "title": "ChimpMaera — Verification Planning and Contribution Preflight Increment",
+    "increment": "Verification Planning and Contribution Preflight Increment",
+    "targetCommitish": "b30411555e451d2b3040a2c5d635f23cdcc293b5",
+    "tagObjectSha": "b30411555e451d2b3040a2c5d635f23cdcc293b5",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz",
-        "size": 1249172,
-        "sha256": "c1502e4aba797001648fba6f8283ca52f68aec8baee4c5dd23e7ecc46d96ea99"
+        "name": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz",
+        "size": 1266604,
+        "sha256": "c7405b735b12498bf595dc897ff8e7ba528f1389e8137db0f749d7c9a104dc8b"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz.sha256",
-        "size": 135,
-        "sha256": "d4896bde1b92b7d8ad799eb2528732b6e76ea2c328618269b7724e610a77c8ae"
+        "name": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz.sha256",
+        "size": 142,
+        "sha256": "73b58e520ba7aaf899974d121363d8343af0d5b0d029770cfef12214f7c35c7b"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz"
     }
   },
   "policy": {
@@ -62,7 +62,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260803.2 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260803.3 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -87,14 +87,14 @@
     {
       "claimId": "CM-REL-004",
       "component": "Verification Fabric",
-      "claim": "ChimpMaera ships a deterministic Verification Fabric contract that binds plans, checks, evidence, verdicts and last-known-good readback so users can audit why a local synthetic verification passed or failed.",
-      "userValue": "Users get one stable, digest-bound vocabulary for verification evidence instead of disconnected success assertions.",
-      "includedBytes": ["packages/contracts/src/verification-fabric.ts", "schemas/contracts/verification-fabric-bundle-v1.schema.json", "tests/fixtures/verification-fabric/positive-bundle-v1.json", "tests/fixtures/verification-fabric/negative-matrix-v1.json"],
-      "functionalProof": {"testPaths": ["tests/verification-fabric.test.ts"], "result": "PASS: valid contract bundles verify with canonical SHA-256 bindings."},
-      "safetyProof": {"testPaths": ["tests/verification-fabric.test.ts", "tests/fixtures/verification-fabric/negative-matrix-v1.json"], "result": "PASS: changed-surface stale, missing, mismatched, self-produced and corrupted evidence fails closed."},
-      "evidencePaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic proof only; no deployment, profile-specific runtime validation, production readiness or external authority is proven."],
-      "traceability": {"pdcaPaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "claim": "ChimpMaera ships digest-bound Verification Fabric contracts plus a Shadow-only Evidence-DAG impact planner that explains selected verification nodes while keeping the complete suite authoritative.",
+      "userValue": "Maintainers get an auditable verification vocabulary and deterministic impact plan; uncertainty falls back to full validation instead of silently omitting checks.",
+      "includedBytes": ["packages/contracts/src/verification-fabric.ts", "packages/contracts/src/verification-fabric-v2.ts", "schemas/contracts/verification-fabric-bundle-v1.schema.json", "schemas/contracts/verification-evidence-dag-v2.schema.json", "schemas/contracts/verification-attestation-v2.schema.json", "tests/fixtures/verification-fabric/positive-bundle-v1.json", "tests/fixtures/verification-fabric/negative-matrix-v1.json", "verification/verification-dag-v2.json", "scripts/verification-plan.mjs", "scripts/verification-shadow.mjs"],
+      "functionalProof": {"testPaths": ["tests/verification-fabric.test.ts", "tests/verification-fabric-v2.test.ts"], "result": "PASS 16/16: v1 contract bundles and v2 Evidence-DAG plans verify; a real release-branch Shadow run executed the authoritative 304/304 comparator."},
+      "safetyProof": {"testPaths": ["tests/verification-fabric.test.ts", "tests/verification-fabric-v2.test.ts", "tests/fixtures/verification-fabric/negative-matrix-v1.json"], "result": "PASS 13/13 v2 selector/mutation probes plus v1 negatives: central, unmapped, unsafe, ambiguous, invalid, cyclic, drifting and selector-failure inputs over-select or FULL_FALLBACK."},
+      "evidencePaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md", "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"],
+      "nonClaims": ["Shadow-only local deterministic proof with 0/24 activation samples; no authoritative incremental skipping, result reuse, latency SLO, production readiness, security certification or external authority is proven."],
+      "traceability": {"issues": [40, 69], "pullRequests": [70, 71], "sourceCommits": ["7f35f0033dfc6429ea7f8d2f67af16aeabcc0736", "b30411555e451d2b3040a2c5d635f23cdcc293b5"], "pdcaPaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md", "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
       "claimId": "CM-REL-005",
@@ -111,14 +111,14 @@
     {
       "claimId": "CM-REL-006",
       "component": "HMI/Harness Multitool",
-      "claim": "ChimpMaera ships an authority-free HMI/Harness multitool contract for bounded generation, disclosure-safe discovery and evidence-grounded explanation payloads.",
-      "userValue": "Users can inspect supported operations and explanations through stable payloads without the interface silently gaining execution rights.",
-      "includedBytes": ["packages/contracts/src/hmi-core.ts", "packages/contracts/src/hmi-harness-adapter.ts", "packages/contracts/src/hmi-disclosure-safety.ts", "packages/contracts/src/hmi-discover-payload.ts", "packages/contracts/src/hmi-explain-payload.ts", "schemas/contracts/hmi-generation-bundle-v1.schema.json", "schemas/contracts/hmi-discover-payload-v1.schema.json", "schemas/contracts/hmi-explain-payload-v1.schema.json", "tests/fixtures/hmi/positive-generation-v1.json", "tests/fixtures/hmi/adapter-golden-v1.json", "tests/fixtures/hmi/positive-discover-payload-v1.json", "tests/fixtures/hmi/positive-explain-payload-v1.json", "tests/fixtures/hmi/negative-matrix-v1.json"],
-      "functionalProof": {"testPaths": ["tests/hmi-core.test.ts", "tests/hmi-harness-adapter.test.ts", "tests/hmi-disclosure-safety.test.ts", "tests/hmi-discover-payload.test.ts", "tests/hmi-explain-payload.test.ts", "tests/hmi-post-explain-consistency.test.ts"], "result": "PASS 31/31: current focused HMI suites cover generation, adapter parity, disclosure, discovery, explanation and post-explain consistency."},
-      "safetyProof": {"testPaths": ["tests/hmi-disclosure-safety.test.ts", "tests/hmi-post-explain-consistency.test.ts", "tests/fixtures/hmi/negative-matrix-v1.json"], "result": "PASS: changed-surface disclosure, authority-delta and cross-contract inconsistency probes fail closed."},
-      "evidencePaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic proof only; no runtime execution authority, generic operation dispatcher, live provider integration or production UI is proven."],
-      "traceability": {"pdcaPaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "claim": "ChimpMaera ships an authority-free HMI/Harness multitool for bounded generation, disclosure-safe discover/explain payloads and digest-bound contribution preparation that cannot publish or write externally.",
+      "userValue": "Users can inspect supported operations, explanations and a canonical contribution preflight without the interface silently acquiring submission, publication or execution rights.",
+      "includedBytes": ["packages/contracts/src/hmi-core.ts", "packages/contracts/src/hmi-harness-adapter.ts", "packages/contracts/src/hmi-disclosure-safety.ts", "packages/contracts/src/hmi-discover-payload.ts", "packages/contracts/src/hmi-explain-payload.ts", "packages/contracts/src/hmi-contribute-preflight.ts", "schemas/contracts/hmi-generation-bundle-v1.schema.json", "schemas/contracts/hmi-discover-payload-v1.schema.json", "schemas/contracts/hmi-explain-payload-v1.schema.json", "schemas/contracts/hmi-contribute-preflight-v1.schema.json", "tests/fixtures/hmi/positive-generation-v1.json", "tests/fixtures/hmi/adapter-golden-v1.json", "tests/fixtures/hmi/positive-discover-payload-v1.json", "tests/fixtures/hmi/positive-explain-payload-v1.json", "tests/fixtures/hmi/positive-contribute-preflight-v1.json", "tests/fixtures/hmi/negative-matrix-v1.json"],
+      "functionalProof": {"testPaths": ["tests/hmi-core.test.ts", "tests/hmi-harness-adapter.test.ts", "tests/hmi-disclosure-safety.test.ts", "tests/hmi-discover-payload.test.ts", "tests/hmi-explain-payload.test.ts", "tests/hmi-contribute-preflight.test.ts", "tests/hmi-post-explain-consistency.test.ts", "tests/hmi-post-contribute-consistency.test.ts"], "result": "PASS 42/42: focused HMI suites include 7/7 contribution-preflight and 4/4 post-contribution cross-contract probes."},
+      "safetyProof": {"testPaths": ["tests/hmi-disclosure-safety.test.ts", "tests/hmi-contribute-preflight.test.ts", "tests/hmi-post-explain-consistency.test.ts", "tests/hmi-post-contribute-consistency.test.ts", "tests/fixtures/hmi/negative-matrix-v1.json"], "result": "PASS: stale bindings, invented provenance, selector/capability widening, authority fields and submission/publication effects deny deterministically."},
+      "evidencePaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md", "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md", "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md", "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"],
+      "nonClaims": ["Preparation/preflight over local deterministic synthetic data only; no issue submission, publication, external write, live harness, route, credential, planning, validation, handoff, runtime authority or production UI is proven."],
+      "traceability": {"issues": [42], "pullRequests": [71], "sourceCommits": ["499f04c99fe4edbe896c778eeffab3d47204ab81", "f7a66ce7a449f122bfbacc986d4c9ac6f99bd35a", "dccd2cf1f6b1dc4b49b9fb93d3f1cb4bec947697", "b68019917fe2773f9b87e93525c47a2bd249f4c5", "b30411555e451d2b3040a2c5d635f23cdcc293b5"], "pdcaPaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md", "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md", "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md", "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
       "claimId": "CM-REL-007",
