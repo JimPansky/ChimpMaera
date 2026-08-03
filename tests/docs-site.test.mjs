@@ -12,6 +12,7 @@ const curatedPages = [
   ["examples.html", `${baseUrl}examples`],
   ["KNOWN-LIMITATIONS.html", `${baseUrl}KNOWN-LIMITATIONS`],
   ["QUICKSTART.html", `${baseUrl}QUICKSTART`],
+  ["RESOURCE-PLANE-PROFILES.html", `${baseUrl}RESOURCE-PLANE-PROFILES`],
   ["roadmap.html", `${baseUrl}roadmap`],
   ["SECURE-DEFAULT-PROOF.html", `${baseUrl}SECURE-DEFAULT-PROOF`],
   ["use-cases/crm-erp-approval-readback.html", `${baseUrl}use-cases/crm-erp-approval-readback`],

@@ -7,7 +7,7 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The ChimpMaera Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260803.8` and its local synthetic evidence; a later documentation
+`v0.2.0-poc.20260804.1` and its local synthetic evidence; a later documentation
 change does not broaden the released asset claims.
 
 - This is a local synthetic proof of concept, not a production deployment or

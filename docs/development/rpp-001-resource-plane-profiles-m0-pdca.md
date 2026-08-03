@@ -1,7 +1,7 @@
 # RPP-001 Resource-Plane Profiles & Templates M0 PDCA
 
-Status: implemented and focused-verified locally; no runtime activation or
-host authority change.
+Status: released as regular Latest `v0.2.0-poc.20260804.1`; no runtime
+activation or host authority change.
 
 ## Plan
 
@@ -67,3 +67,19 @@ protected integration gate.
 Claim boundary: deterministic local plan evidence only; no host, container,
 secret, model/tool, device, tenant, provider, security-certification, or
 production behavior is proven.
+
+## Delivery evidence
+
+- Feature PR #94 merged as `8d5425b260fce6bcf04078643346e8e65000f7f4`
+  after required CI.
+- Release-identity PR #96 and security-closure PR #97 merged normally; exact
+  release target is `1f98310d4e1a3541adf2619fda5d0cd0efa2dded`.
+- The `fast-uri` transitive dependency was updated to 3.1.5 before publication;
+  `npm audit` reported zero known vulnerabilities.
+- Regular Latest `v0.2.0-poc.20260804.1` is non-draft/non-prerelease with two
+  assets. Archive: 1,373,817 bytes,
+  `87497985ace1ef7f17760be7e851c10d1065cc1fb2c33fcc6fbfd021b8c507f1`.
+  Manifest: 133 bytes,
+  `17da3b709f5679a38b96296e9c9627073d3f55aee7967b95cea55c4246d4b765`.
+- Two exact-source local archive builds were byte-identical. Anonymous Latest,
+  archive, manifest, checksum, and required-content readback all passed.
