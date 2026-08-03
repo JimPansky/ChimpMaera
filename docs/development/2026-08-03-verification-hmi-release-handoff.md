@@ -46,7 +46,7 @@ GitHub CI, exact merged-commit asset construction and anonymous readback.
 - Fail-closed proof: stale request/generation bindings, invented provenance,
   selector/capability widening, authority fields and submission/publication
   effects deny deterministically.
-- Binding: issue #42; source commits
+- Binding: issue #42, integration PR #71; source commits
   `499f04c99fe4edbe896c778eeffab3d47204ab81`,
   `f7a66ce7a449f122bfbacc986d4c9ac6f99bd35a`,
   `dccd2cf1f6b1dc4b49b9fb93d3f1cb4bec947697` and
