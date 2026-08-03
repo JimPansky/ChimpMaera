@@ -360,6 +360,7 @@ tools/video-production-reference/schemas/video-job.schema.json	tools/video-produ
 tools/video-production-reference/scripts/smoke.sh	tools/video-production-reference/scripts/smoke.sh	0755
 tools/video-production-reference/src/cm_video_ref/__init__.py	tools/video-production-reference/src/cm_video_ref/__init__.py	0644
 tools/video-production-reference/src/cm_video_ref/audience_copy.py	tools/video-production-reference/src/cm_video_ref/audience_copy.py	0644
+tools/video-production-reference/src/cm_video_ref/batch.py	tools/video-production-reference/src/cm_video_ref/batch.py	0644
 tools/video-production-reference/src/cm_video_ref/cli.py	tools/video-production-reference/src/cm_video_ref/cli.py	0644
 tools/video-production-reference/src/cm_video_ref/contract.py	tools/video-production-reference/src/cm_video_ref/contract.py	0644
 tools/video-production-reference/src/cm_video_ref/methodology.py	tools/video-production-reference/src/cm_video_ref/methodology.py	0644
@@ -372,6 +373,7 @@ tools/video-production-reference/templates/learning-record-v1.json	tools/video-p
 tools/video-production-reference/templates/privacy-safe-media-events-v1.json	tools/video-production-reference/templates/privacy-safe-media-events-v1.json	0644
 tools/video-production-reference/templates/script-package-v1.json	tools/video-production-reference/templates/script-package-v1.json	0644
 tools/video-production-reference/templates/visual-grammar-families-v1.json	tools/video-production-reference/templates/visual-grammar-families-v1.json	0644
+tools/video-production-reference/tests/test_batch.py	tools/video-production-reference/tests/test_batch.py	0644
 tools/video-production-reference/tests/test_cm_video.py	tools/video-production-reference/tests/test_cm_video.py	0644
 tools/video-production-reference/tests/test_visual_governance.py	tools/video-production-reference/tests/test_visual_governance.py	0644
 tsconfig.json	tsconfig.json	0644
