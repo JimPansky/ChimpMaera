@@ -184,6 +184,7 @@ packages/contracts/src/hmi-harness-adapter.ts	packages/contracts/src/hmi-harness
 packages/contracts/src/hmi-disclosure-safety.ts	packages/contracts/src/hmi-disclosure-safety.ts	0644
 packages/contracts/src/hmi-discover-payload.ts	packages/contracts/src/hmi-discover-payload.ts	0644
 packages/contracts/src/hmi-explain-payload.ts	packages/contracts/src/hmi-explain-payload.ts	0644
+packages/contracts/src/hmi-contribute-preflight.ts	packages/contracts/src/hmi-contribute-preflight.ts	0644
 packages/contracts/src/azure-identity-profile.ts	packages/contracts/src/azure-identity-profile.ts	0644
 packages/contracts/src/power-platform-read-connector.ts	packages/contracts/src/power-platform-read-connector.ts	0644
 packages/contracts/src/capability-catalogue.ts	packages/contracts/src/capability-catalogue.ts	0644
@@ -219,6 +220,7 @@ schemas/contracts/update-operation-contract-v1.schema.json	schemas/contracts/upd
 schemas/contracts/hmi-generation-bundle-v1.schema.json	schemas/contracts/hmi-generation-bundle-v1.schema.json	0644
 schemas/contracts/hmi-discover-payload-v1.schema.json	schemas/contracts/hmi-discover-payload-v1.schema.json	0644
 schemas/contracts/hmi-explain-payload-v1.schema.json	schemas/contracts/hmi-explain-payload-v1.schema.json	0644
+schemas/contracts/hmi-contribute-preflight-v1.schema.json	schemas/contracts/hmi-contribute-preflight-v1.schema.json	0644
 schemas/contracts/azure-identity-profile-v1.schema.json	schemas/contracts/azure-identity-profile-v1.schema.json	0644
 schemas/contracts/power-platform-read-connector-v1.schema.json	schemas/contracts/power-platform-read-connector-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
@@ -255,6 +257,7 @@ tests/fixtures/hmi/positive-generation-v1.json	tests/fixtures/hmi/positive-gener
 tests/fixtures/hmi/adapter-golden-v1.json	tests/fixtures/hmi/adapter-golden-v1.json	0644
 tests/fixtures/hmi/positive-discover-payload-v1.json	tests/fixtures/hmi/positive-discover-payload-v1.json	0644
 tests/fixtures/hmi/positive-explain-payload-v1.json	tests/fixtures/hmi/positive-explain-payload-v1.json	0644
+tests/fixtures/hmi/positive-contribute-preflight-v1.json	tests/fixtures/hmi/positive-contribute-preflight-v1.json	0644
 tests/fixtures/azure-identity/negative-matrix-v1.json	tests/fixtures/azure-identity/negative-matrix-v1.json	0644
 tests/fixtures/azure-identity/positive-profile-v1.json	tests/fixtures/azure-identity/positive-profile-v1.json	0644
 tests/fixtures/power-platform/negative-matrix-v1.json	tests/fixtures/power-platform/negative-matrix-v1.json	0644
@@ -268,7 +271,9 @@ tests/hmi-harness-adapter.test.ts	tests/hmi-harness-adapter.test.ts	0644
 tests/hmi-disclosure-safety.test.ts	tests/hmi-disclosure-safety.test.ts	0644
 tests/hmi-discover-payload.test.ts	tests/hmi-discover-payload.test.ts	0644
 tests/hmi-explain-payload.test.ts	tests/hmi-explain-payload.test.ts	0644
+tests/hmi-contribute-preflight.test.ts	tests/hmi-contribute-preflight.test.ts	0644
 tests/hmi-post-explain-consistency.test.ts	tests/hmi-post-explain-consistency.test.ts	0644
+tests/hmi-post-contribute-consistency.test.ts	tests/hmi-post-contribute-consistency.test.ts	0644
 tests/azure-identity-profile.test.ts	tests/azure-identity-profile.test.ts	0644
 tests/power-platform-read-connector.test.ts	tests/power-platform-read-connector.test.ts	0644
 tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-runtime.test.mjs	0644
