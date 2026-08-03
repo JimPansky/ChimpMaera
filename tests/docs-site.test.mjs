@@ -7,11 +7,14 @@ const output = join(process.cwd(), "dist", "docs-site");
 const baseUrl = "https://jimpansky.github.io/ChimpMaera/";
 const curatedPages = [
   ["index.html", baseUrl],
+  ["alternatives.html", `${baseUrl}alternatives`],
   ["capabilities.html", `${baseUrl}capabilities`],
   ["examples.html", `${baseUrl}examples`],
   ["KNOWN-LIMITATIONS.html", `${baseUrl}KNOWN-LIMITATIONS`],
   ["QUICKSTART.html", `${baseUrl}QUICKSTART`],
+  ["roadmap.html", `${baseUrl}roadmap`],
   ["SECURE-DEFAULT-PROOF.html", `${baseUrl}SECURE-DEFAULT-PROOF`],
+  ["use-cases/crm-erp-approval-readback.html", `${baseUrl}use-cases/crm-erp-approval-readback`],
   ["use-cases/governed-agent-actions.html", `${baseUrl}use-cases/governed-agent-actions`],
 ];
 
@@ -72,6 +75,58 @@ test("development evidence is excluded from the generated site", () => {
     .filter((entry) => entry.isFile())
     .map((entry) => join(entry.parentPath ?? entry.path, entry.name));
   assert.ok(generated.every((path) => !path.includes("/development/")));
+});
+
+test("intent content stays evidence-linked, honest, and reachable from the home page", () => {
+  const intentSources = [
+    "docs/alternatives.md",
+    "docs/roadmap.md",
+    "docs/use-cases/crm-erp-approval-readback.md",
+  ];
+  const governance = JSON.parse(readFileSync(join(process.cwd(), "release", "governance.json"), "utf8"));
+  const publicManifest = readFileSync(join(process.cwd(), "release", "public-files.manifest"), "utf8");
+  for (const source of intentSources) {
+    assert.ok(governance.activePublicFiles.includes(source), `${source} is outside public-truth drift coverage`);
+    assert.match(publicManifest, new RegExp(`^${source.replaceAll(".", "\\.")}\\t`, "m"));
+  }
+
+  const home = html("index.html");
+  for (const route of [
+    "/ChimpMaera/QUICKSTART",
+    "/ChimpMaera/SECURE-DEFAULT-PROOF",
+    "/ChimpMaera/KNOWN-LIMITATIONS",
+    "/ChimpMaera/use-cases/crm-erp-approval-readback",
+    "/ChimpMaera/alternatives",
+    "/ChimpMaera/roadmap",
+  ]) {
+    assert.match(home, new RegExp(`href="${route}"`));
+  }
+  assert.match(home, /github\.com\/JimPansky\/ChimpMaera\/discussions\/categories\/q-a/);
+  assert.match(home, /github\.com\/JimPansky\/ChimpMaera\/blob\/main\/CONTRIBUTING\.md/);
+
+  const crmErp = html("use-cases/crm-erp-approval-readback.html");
+  assert.match(crmErp, /CM-SEC-007/);
+  assert.match(crmErp, /Transport acceptance alone/);
+  assert.match(crmErp, /fictional/);
+  assert.match(crmErp, /does not prove live EspoCRM or Dolibarr compatibility/);
+
+  const alternatives = html("alternatives.html");
+  for (const category of ["workflow engine", "policy engine", "Agent framework", "sandbox", "observability platform"]) {
+    assert.match(alternatives, new RegExp(category, "i"));
+  }
+  assert.match(alternatives, /makes no measured speed, adoption, security, or superiority comparison/);
+
+  const roadmap = html("roadmap.html");
+  assert.match(roadmap, /not a second backlog/);
+  assert.match(roadmap, /not evidence that a capability is released/);
+  for (const issue of [3, 9, 32, 36, 41, 43, 45]) {
+    assert.match(roadmap, new RegExp(`github\\.com/JimPansky/ChimpMaera/issues/${issue}`));
+  }
+
+  for (const [path] of curatedPages) {
+    const source = html(path);
+    assert.doesNotMatch(source, /production[- ]ready|customer deployment|guaranteed security|universally secure|market-leading/i);
+  }
 });
 
 test("Pages delivery uses immutable actions and least-privilege job permissions", () => {

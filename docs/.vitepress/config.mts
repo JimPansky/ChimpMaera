@@ -13,11 +13,14 @@ const releaseMetadata = JSON.parse(
 
 const curatedSitemapPaths = new Set([
   "",
+  "alternatives",
   "capabilities",
   "examples",
   "KNOWN-LIMITATIONS",
   "QUICKSTART",
+  "roadmap",
   "SECURE-DEFAULT-PROOF",
+  "use-cases/crm-erp-approval-readback",
   "use-cases/governed-agent-actions",
 ]);
 
@@ -102,9 +105,17 @@ export default defineConfig({
   },
   themeConfig: {
     nav: [
-      { text: "Use case", link: "/use-cases/governed-agent-actions" },
+      {
+        text: "Use cases",
+        items: [
+          { text: "Governed agent actions", link: "/use-cases/governed-agent-actions" },
+          { text: "CRM → ERP approval and readback", link: "/use-cases/crm-erp-approval-readback" },
+        ],
+      },
       { text: "Capabilities", link: "/capabilities" },
       { text: "Examples", link: "/examples" },
+      { text: "Alternatives", link: "/alternatives" },
+      { text: "Roadmap", link: "/roadmap" },
       { text: "Evidence", link: "/SECURE-DEFAULT-PROOF" },
       { text: "GitHub", link: repositoryUrl },
     ],
@@ -115,6 +126,7 @@ export default defineConfig({
           { text: "Overview", link: "/" },
           { text: "Quickstart", link: "/QUICKSTART" },
           { text: "Governed agent actions", link: "/use-cases/governed-agent-actions" },
+          { text: "CRM → ERP approval and readback", link: "/use-cases/crm-erp-approval-readback" },
         ],
       },
       {
@@ -124,6 +136,13 @@ export default defineConfig({
           { text: "Reproducible examples", link: "/examples" },
           { text: "SAFE_GUIDED proof", link: "/SECURE-DEFAULT-PROOF" },
           { text: "Known limitations", link: "/KNOWN-LIMITATIONS" },
+        ],
+      },
+      {
+        text: "Choose and follow",
+        items: [
+          { text: "When to use an alternative", link: "/alternatives" },
+          { text: "Now / Next / Later", link: "/roadmap" },
         ],
       },
     ],

@@ -43,7 +43,31 @@ Clean up only the state owned by this demo:
 ```
 
 Cleanup is not provider Rollback or authority Revoke. The [Quickstart](QUICKSTART.md)
-and [known limitations](KNOWN-LIMITATIONS.md) define the complete boundary.
+and [CRM-to-ERP walkthrough](use-cases/crm-erp-approval-readback.md) define the
+complete path; [known limitations](KNOWN-LIMITATIONS.md) define its boundary.
+
+## Authority-free contract fixtures
+
+**Prerequisites:** Node.js 24, npm 11, and dependencies installed with the
+same `npm ci` command shown above.
+
+```sh
+npm run build
+node --test \
+  dist/tests/hmi-core.test.js \
+  dist/tests/hmi-harness-adapter.test.js \
+  dist/tests/azure-identity-profile.test.js \
+  dist/tests/power-platform-read-connector.test.js
+```
+
+**Expected result:** the typed positive and negative fixtures pass without
+issuing runtime execution authority. These tests establish deterministic local
+contract behavior only. They do not establish live tenant consent, Power
+Platform import, provider compatibility, or a production UI. The
+[capability matrix](capabilities.md) marks the external-evidence boundary.
+
+This example creates only build output under `dist/`; it starts no service and
+needs no runtime cleanup.
 
 ## Lightweight video-reference smoke
 

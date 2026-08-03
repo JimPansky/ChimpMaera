@@ -40,4 +40,16 @@ Operating System remains a [planned direction](./capabilities.md), not current
 product maturity.
 
 Start with the [governed agent-action use case](./use-cases/governed-agent-actions.md),
+follow the specific [CRM-to-ERP approval and readback path](./use-cases/crm-erp-approval-readback.md),
 then verify each capability against the [evidence matrix](./capabilities.md).
+
+## Choose, ask, or contribute
+
+Read [when ChimpMaera is not the right tool](./alternatives.md) before choosing
+an architecture. The curated [Now / Next / Later view](./roadmap.md) links to
+the live issue tracker without treating planned work as shipped scope.
+
+For non-sensitive help, use
+[GitHub Q&A](https://github.com/JimPansky/ChimpMaera/discussions/categories/q-a).
+For changes, start with the
+[contribution guide](https://github.com/JimPansky/ChimpMaera/blob/main/CONTRIBUTING.md).
