@@ -42,6 +42,10 @@
     "CONTRIBUTING.md",
     "docs/SECURITY-ASSURANCE.md",
     "docs/KNOWN-LIMITATIONS.md",
+    "docs/index.md",
+    "docs/capabilities.md",
+    "docs/examples.md",
+    "docs/use-cases/governed-agent-actions.md",
     "docs/RELEASE-GOVERNANCE.md",
     "release/governance.json"
   ],

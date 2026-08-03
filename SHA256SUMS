@@ -141,7 +141,7 @@ a509d9db5668cfe5e3bcd32b6a0f8140f248ccbc403dc465cc12751b70329d51  ./demo/runtime
 bd658b60138d44cbe499bdeb82d7f49f052fb5284c85866cc59b2e728f473600  ./demo/seed-and-flow.sh
 ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfig.runtime.json
 1ded2f51daf04d1eeaaf2af332d046f292bcd99970aa7b3dc927ac1c161f760d  ./demo/uninstall.sh
-2174f4ee679b791e2a39b047687631c0c11832ecb476674a4283758513ff5a61  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
+6bbd085abf21b2929520b2c34eb6870172b0cc6a770fb856d9f106aa1def836a  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
 a3cdbca794e113f4a0887ce6d1710ee730428de12fc96834307d88d77473089a  ./docs/ARCHITECTURE.md
 446e4dee4641b78e18b313c2035845de795790c6b5796056c052bff8c5470234  ./docs/BUILDER-AGENT-OPERATOR-GUIDE.md
 b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69  ./docs/BUILDER-CONFIGURATION-DEFAULTS.md
@@ -150,11 +150,11 @@ b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69  ./docs/BUILDER
 fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-POC-CANDIDATES.md
 2b9696cc826d9d4f609ea8afee428328b5d5e8bdd0ae70ea45fe886773769ad8  ./docs/DAILY-POC-ITERATION.md
 679bae40f1a8858f6f1e618016eec9ba9697788bbb7d67dd06e2071e12f6d404  ./docs/DISCOVERABILITY-BASELINE.md
-d6b63d05eccdc11f6cac21ba8dbe0eb97041a94318c2de6bb93c3089d99db59a  ./docs/KNOWN-LIMITATIONS.md
-ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
+f251a6ca75d843de747a95643ebbbea5d0ee05057845498dd55b92193ac0b479  ./docs/KNOWN-LIMITATIONS.md
+011c5b5fa061aa77394bd16376e4cec242c9d09a93e863494a4836e7e944799e  ./docs/QUICKSTART.md
 a42e47051ed0ed29e93fab2b8d38bca7124a2ffa3fa4916d208cb96d7c93f32a  ./docs/README.md
 0a540393f36f2d92dae44bf452a18daf12f816f3da6ea2ffda69e27ccdfa0e36  ./docs/RELEASE-GOVERNANCE.md
-c4e75729c1b29c9132efd80b348157bae2d3a07cb9ac7c72681dd9d770b86a54  ./docs/SECURE-DEFAULT-PROOF.md
+af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892  ./docs/SECURE-DEFAULT-PROOF.md
 80f03b0f20c838c2a048236092a97b98b8fff44388ac624cba87e8660c89957f  ./docs/SECURITY-ASSURANCE.md
 527ead55bb739305ba02c4094cd30f8b59eaaa2d9c8ddb8ad0bb88b131d5eda2  ./docs/SUPPLY-CHAIN.md
 e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-ADVISOR-GUIDE.md
@@ -241,8 +241,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-cee13fed47842596ec304ec8e71b1e21349956e8ac28a6d8faa9d39d5422c2dc  ./package-lock.json
-d5085f836be27c2fef260ff5da53c4b1933ff5393b0add6c8020de76dad87eae  ./package.json
+f954135503b7fc0eda0a5afd94c771af6ada315237819b588fca6cfc20020ea9  ./package-lock.json
+8bd96be91896c32edc5a7ccfdae003921b5714426e5feeb144d6a5fd8fcedd20  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
 974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts
@@ -270,8 +270,8 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-0d8e56279596ba55466d76d0a21ca82845c4387d62a602bffed3433c7eda147c  ./release/governance.json
-ac622303332c3400aa5ab7ccb1040eeb6d60f6449d88f4f1037bee13c8aba528  ./release/public-files.manifest
+c9bab2efe1c851df5a4ad1b1833f42ad0a05db7ff16937aec88076bd312bfaeb  ./release/governance.json
+572d93781d4fe379fda9c2344cfa393c7a4b8fe1d538b0b30885b70d418e831d  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -298,8 +298,8 @@ d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/veri
 277b0e83fd12ec3b3f0cdaf7bd4632c1c0fd65a41e3b5a5c9d4e2767a015b80a  ./scripts/verify-release-governance.mjs
 4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1  ./scripts/verify-secure-default-proof.mjs
 a3f80bddb9cd7c767db74a7fffc1a56009e3cf1a11eb14f927fef4521e1cb1ad  ./scripts/verify-supply-chain.mjs
-85e34a35a413ba2ee217201538d597c326c3878721dbfd4d5273bba4008a660d  ./security/secure-default-proof-evidence-v1.json
-9decfd2dff85f57647cf60d4dc23da513809521a93f65e706582de67185a629e  ./security/secure-default-proof-v1.json
+87075fbc76815ad2f53005661a78d255ae4565504578cf4a9bac9f2283bb40d2  ./security/secure-default-proof-evidence-v1.json
+130c08bf8894b0c927a3a1100be4644c7a25c02257200c24da502bcd1dd69613  ./security/secure-default-proof-v1.json
 c8f07f427e39d50ddc142c7f5d6ed0382e1058fd179eb178226a1a1b870f118c  ./tests/builder-agent-runtime.test.mjs
 a8479c98b9b211bb9ead59877b8ba0b4c1f9ff9cd0e5455ee52aaa103d34716a  ./tests/builder-authority.test.ts
 932dc4c32fc2963dfeba37514ccf94d37cf9350b9f05848d60ca98a3e497d05b  ./tests/builder-capability-resolution.test.ts
@@ -395,3 +395,10 @@ e11976d93648e6691e5ec698c97651912079f07d2c984bd338e52d03baa6565f  ./tools/video-
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 131da4f855a8cd18199810fc118e45a1c728deb5117d0cc2e863f977016b6af7  ./verification/verification-dag-v2.json
+fc837bede3a967971d23bfeaf4da19dc53676e1c3aee3cf54961d11bbacd80e9  ./docs/.vitepress/config.mts
+e5eea5cc6e21f3e68df640c72bfa71b61f5d5eeda3b59712147d94967f98b313  ./docs/capabilities.md
+d079d5fbcb91863b9133eeadfe277085bfcb2d9ce2193bd8a1f55025922b70f8  ./docs/examples.md
+d9d6f3c870e757bbeb0cfa64eb2739dd3b758984bcc3d60bfa6d343360433515  ./docs/index.md
+0776dba7e366dbed9a23459852782f7aaa1a109c4c332a981f9d2cb9dc313a3a  ./docs/public/robots.txt
+b9fbec8494d3b823a76f64d3a34dc93097d57258f405c1c6d340fc48c12d3432  ./docs/use-cases/governed-agent-actions.md
+83c2e9073bde66496a9ec1891b01ee310c08d1cce56d662a8aff8ac595707a61  ./tests/docs-site.test.mjs

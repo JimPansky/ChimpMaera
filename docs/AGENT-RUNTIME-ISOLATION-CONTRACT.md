@@ -4,7 +4,7 @@ Status: local architecture revision candidate
 
 Date: 2026-08-01
 
-Normative parent: [The ChimpMaera Canon](../CANON.md), especially CM-CAN-18
+Normative parent: [The ChimpMaera Canon](CANON.md), especially CM-CAN-18
 through CM-CAN-28
 
 ## 1. Product abstraction

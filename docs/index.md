@@ -1,0 +1,43 @@
+---
+layout: home
+title: Governed, verifiable AI-agent actions
+description: Explore ChimpMaera's released local synthetic proof, evidence boundaries, and reproducible CRM-to-ERP example.
+
+hero:
+  name: ChimpMaera
+  text: Governed, verifiable agent actions
+  tagline: An open-source local proof of concept for business-system actions with explicit authority, approval, execution, readback, and receipts.
+  actions:
+    - theme: brand
+      text: Run the local proof
+      link: /QUICKSTART
+    - theme: alt
+      text: Inspect capability evidence
+      link: /capabilities
+    - theme: alt
+      text: Read the limitations
+      link: /KNOWN-LIMITATIONS
+
+features:
+  - title: Govern before effects
+    details: The released SAFE_GUIDED path separates an Agent proposal from policy decisions, Owner approval, and brokered execution.
+    link: /use-cases/governed-agent-actions
+  - title: Verify after execution
+    details: Transport acceptance is not success. The bounded proof requires authoritative provider readback and a bound receipt.
+    link: /SECURE-DEFAULT-PROOF
+  - title: Reproduce locally
+    details: Run fictional CRM and ERP fixtures on loopback, check deterministic proofs, and clean up only owned state.
+    link: /examples
+---
+
+## Current evidence boundary
+
+ChimpMaera currently provides a **released, locally validated proof of concept**.
+Its evidence comes from deterministic tests and fictional local fixtures. It
+does not establish production fitness, live-provider compatibility, universal
+security, or permission to use customer data. The vendor-neutral Knowledge
+Operating System remains a [planned direction](./capabilities.md), not current
+product maturity.
+
+Start with the [governed agent-action use case](./use-cases/governed-agent-actions.md),
+then verify each capability against the [evidence matrix](./capabilities.md).
