@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.example/schemas/security/secure-default-proof-v1.schema.json",
+  "title": "ChimpMaera SAFE_GUIDED secure-default proof manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "proofId", "profile", "claimBoundary", "profileExclusions", "schemaBinding", "verifier", "commands", "artifacts", "claims"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.security/secure-default-proof-manifest/v1" },
+    "proofId": { "const": "secure-default-safe-guided-v1" },
+    "profile": { "const": "SAFE_GUIDED" },
+    "claimBoundary": { "type": "string", "minLength": 80, "maxLength": 1000 },
+    "profileExclusions": {
+      "type": "array",
+      "prefixItems": [{ "const": "FULL_CONTROL_LAB" }, { "const": "RAMPAGE" }],
+      "minItems": 2,
+      "maxItems": 2,
+      "items": false
+    },
+    "schemaBinding": { "$ref": "#/$defs/digestPath" },
+    "verifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "negativeTestPath", "negativeTestSha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "negativeTestPath": { "$ref": "#/$defs/path" },
+        "negativeTestSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proof", "focused", "authoritative"],
+      "properties": {
+        "proof": { "const": "npm run proof:secure-default" },
+        "focused": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 3 } },
+        "authoritative": { "const": "npm test" }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "role", "sha256"],
+        "properties": {
+          "path": { "$ref": "#/$defs/path" },
+          "role": { "enum": ["IMPLEMENTATION", "TEST", "EVIDENCE", "SCHEMA", "VERIFIER"] },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claimId", "kind", "statement", "verdict", "implementationPaths", "testPaths", "evidencePaths"],
+        "properties": {
+          "claimId": { "type": "string", "pattern": "^CM-SD-(?:00[1-9]|01[0-2]|NC-001)$" },
+          "kind": { "enum": ["PROPERTY", "NON_CLAIM"] },
+          "statement": { "type": "string", "minLength": 40, "maxLength": 800 },
+          "verdict": { "enum": ["PROVEN_LOCAL_SYNTHETIC", "EXPLICITLY_NOT_CLAIMED"] },
+          "implementationPaths": { "$ref": "#/$defs/pathSet" },
+          "testPaths": { "$ref": "#/$defs/pathSet" },
+          "evidencePaths": { "$ref": "#/$defs/pathSet" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "path": { "type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$" },
+    "pathSet": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/path" } },
+    "digestPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": { "path": { "$ref": "#/$defs/path" }, "sha256": { "$ref": "#/$defs/sha256" } }
+    }
+  }
+}

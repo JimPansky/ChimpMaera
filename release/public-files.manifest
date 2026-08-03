@@ -152,6 +152,7 @@ docs/DISCOVERABILITY-BASELINE.md	docs/DISCOVERABILITY-BASELINE.md	0644
 docs/VISIBILITY-CHANNEL-MATRIX.md	docs/VISIBILITY-CHANNEL-MATRIX.md	0644
 docs/RELEASE-GOVERNANCE.md	docs/RELEASE-GOVERNANCE.md	0644
 docs/SECURITY-ASSURANCE.md	docs/SECURITY-ASSURANCE.md	0644
+docs/SECURE-DEFAULT-PROOF.md	docs/SECURE-DEFAULT-PROOF.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
@@ -204,6 +205,8 @@ packages/contracts/src/poc-showcase.ts	packages/contracts/src/poc-showcase.ts	06
 packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	0644
 release/public-files.manifest	release/public-files.manifest	0644
 release/governance.json	release/governance.json	0644
+security/secure-default-proof-evidence-v1.json	security/secure-default-proof-evidence-v1.json	0644
+security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/builder-authority-v1.schema.json	schemas/contracts/builder-authority-v1.schema.json	0644
 schemas/contracts/builder-capability-resolution-v1.schema.json	schemas/contracts/builder-capability-resolution-v1.schema.json	0644
@@ -224,10 +227,12 @@ schemas/contracts/hmi-contribute-preflight-v1.schema.json	schemas/contracts/hmi-
 schemas/contracts/azure-identity-profile-v1.schema.json	schemas/contracts/azure-identity-profile-v1.schema.json	0644
 schemas/contracts/power-platform-read-connector-v1.schema.json	schemas/contracts/power-platform-read-connector-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
+schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 scripts/verification-plan.mjs	scripts/verification-plan.mjs	0755
 scripts/verification-shadow.mjs	scripts/verification-shadow.mjs	0755
 scripts/verify-release-governance.mjs	scripts/verify-release-governance.mjs	0755
+scripts/verify-secure-default-proof.mjs	scripts/verify-secure-default-proof.mjs	0755
 scripts/verify-supply-chain.mjs	scripts/verify-supply-chain.mjs	0755
 scripts/verify-openclaw-agent-runtime-lock.mjs	scripts/verify-openclaw-agent-runtime-lock.mjs	0755
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
@@ -266,6 +271,7 @@ tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	06
 tests/model-access-broker-runtime.test.mjs	tests/model-access-broker-runtime.test.mjs	0644
 tests/model-access-broker.test.ts	tests/model-access-broker.test.ts	0644
 tests/protected-audit-timeline.test.ts	tests/protected-audit-timeline.test.ts	0644
+tests/secure-default-proof.test.mjs	tests/secure-default-proof.test.mjs	0644
 tests/hmi-core.test.ts	tests/hmi-core.test.ts	0644
 tests/hmi-harness-adapter.test.ts	tests/hmi-harness-adapter.test.ts	0644
 tests/hmi-disclosure-safety.test.ts	tests/hmi-disclosure-safety.test.ts	0644

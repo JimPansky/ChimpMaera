@@ -98,6 +98,9 @@ Remove only installer-owned resources:
   maturity labels and document ownership.
 - [Security Assurance](docs/SECURITY-ASSURANCE.md): exact scoped claims,
   evidence, TCB and non-claims.
+- [Runnable SAFE_GUIDED proof](docs/SECURE-DEFAULT-PROOF.md): claim/evidence
+  matrix, closed manifest and the deterministic `npm run proof:secure-default`
+  command.
 - [Known Limitations](docs/KNOWN-LIMITATIONS.md): production, identity,
   provider, isolation and external-evidence gaps.
 - [Canon](docs/CANON.md) and [Architecture](docs/ARCHITECTURE.md): durable laws

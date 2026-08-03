@@ -1,0 +1,50 @@
+{
+
+  "schemaVersion": "chimpmaera.security/secure-default-proof-evidence/v1",
+  "proofId": "secure-default-safe-guided-v1",
+  "profile": "SAFE_GUIDED",
+  "evidenceState": "CURRENT",
+  "manifestDigest": "c856a3981dd99890ec5515083f1bde20ad9a45ed53cecca0190352f45c8a71d4",
+  "schemaDigest": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8",
+  "verifierDigest": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1",
+  "inputSetDigest": "8055cdf49a156308f9fed5f140871b2e1043b0def21ee2d452915c60da6a17c8",
+  "commands": [
+    {
+      "command": "npm run build --silent",
+      "category": "FOCUSED",
+      "outcome": "PASS"
+    },
+    {
+      "command": "node --test tests/secure-default-proof.test.mjs tests/demo-enforcement-gate.test.mjs tests/demo-admin-ai-poc.test.mjs tests/demo-approval-workbench.test.mjs tests/openclaw-agent-runtime.test.mjs tests/model-access-broker-runtime.test.mjs dist/tests/capability-catalogue.test.js dist/tests/poc-early-admin-ai-setup.test.js",
+      "category": "FOCUSED",
+      "outcome": "PASS"
+    },
+    {
+      "command": "npm test",
+      "category": "AUTHORITATIVE",
+      "outcome": "PASS"
+    }
+  ],
+  "comparison": {
+    "focusedSubsetOfAuthoritative": true,
+    "authoritativeCommand": "npm test",
+    "noSkipping": true
+  },
+  "claimVerdicts": [
+    { "claimId": "CM-SD-001", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-002", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-003", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-004", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-005", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-006", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-007", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-008", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-009", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-010", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-011", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-012", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
+    { "claimId": "CM-SD-NC-001", "verdict": "EXPLICITLY_NOT_CLAIMED" }
+  ],
+  "overallVerdict": "PASS",
+  "reportDigest": "0fc3fd600f423f6db0e8878a54350816177fecbd235464d7f0be4019527f2d07"
+}
