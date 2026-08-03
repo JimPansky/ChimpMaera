@@ -11,6 +11,11 @@ assets/support/buy-me-a-coffee.png	assets/support/buy-me-a-coffee.png	0644
 assets/support/buy-me-a-coffee.svg	assets/support/buy-me-a-coffee.svg	0644
 assets/support/ko-fi.png	assets/support/ko-fi.png	0644
 assets/support/ko-fi.svg	assets/support/ko-fi.svg	0644
+benchmarks/adaptability-m0/README.md	benchmarks/adaptability-m0/README.md	0644
+benchmarks/adaptability-m0/ai-blind/evaluate.mjs	benchmarks/adaptability-m0/ai-blind/evaluate.mjs	0644
+benchmarks/adaptability-m0/ai-blind/participant-input.json	benchmarks/adaptability-m0/ai-blind/participant-input.json	0644
+benchmarks/adaptability-m0/records/adb-001-m0-local-20260804.json	benchmarks/adaptability-m0/records/adb-001-m0-local-20260804.json	0644
+benchmarks/adaptability-m0/run.mjs	benchmarks/adaptability-m0/run.mjs	0755
 CITATION.cff	CITATION.cff	0644
 CODE_OF_CONDUCT.md	CODE_OF_CONDUCT.md	0644
 CONTRIBUTING.md	CONTRIBUTING.md	0644
@@ -242,6 +247,7 @@ schemas/contracts/azure-identity-profile-v1.schema.json	schemas/contracts/azure-
 schemas/contracts/power-platform-read-connector-v1.schema.json	schemas/contracts/power-platform-read-connector-v1.schema.json	0644
 schemas/contracts/resource-plane-profile-input-v1.schema.json	schemas/contracts/resource-plane-profile-input-v1.schema.json	0644
 schemas/contracts/resource-plane-plan-v1.schema.json	schemas/contracts/resource-plane-plan-v1.schema.json	0644
+schemas/adaptability-benchmark-result-v1.schema.json	schemas/adaptability-benchmark-result-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
@@ -260,6 +266,7 @@ tests/builder-discovery.test.ts	tests/builder-discovery.test.ts	0644
 tests/builder-integration-plan.test.ts	tests/builder-integration-plan.test.ts	0644
 tests/builder-quality-evidence.test.ts	tests/builder-quality-evidence.test.ts	0644
 tests/builder-reuse-conformance.test.mjs	tests/builder-reuse-conformance.test.mjs	0644
+tests/adaptability-benchmark-m0.test.mjs	tests/adaptability-benchmark-m0.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/docs-site.test.mjs	tests/docs-site.test.mjs	0644

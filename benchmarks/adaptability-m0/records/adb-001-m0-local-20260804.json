@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "chimpmaera.adaptability-benchmark-result/v1",
+  "benchmarkId": "ADB-001-M0",
+  "generatedAt": "2026-08-03T22:59:19.481Z",
+  "status": "PASS",
+  "evidenceClass": "LOCAL_SYNTHETIC_PROCESS_MEASUREMENT",
+  "claimBoundary": "LOCAL_SYNTHETIC_MEASURED_NO_SPEED_OR_PRODUCTION_CLAIM",
+  "source": {
+    "corePath": "demo/builder-agent/builder-core.mjs",
+    "coreSha256": "199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6",
+    "providerAPath": "demo/builder-agent/runtime-contract-v1.json",
+    "providerBPath": "demo/builder-agent/runtime-contract-second-system-v1.json",
+    "consumerSha256": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256"
+  },
+  "scenarios": {
+    "add": {
+      "status": "PASS",
+      "elapsedMs": 1.490106,
+      "providerCountBefore": 1,
+      "providerCountAfter": 2,
+      "observations": [
+        {
+          "fixtureId": "bld001-builder-agent-g6-v1",
+          "systemType": "unknown.habitat-controller",
+          "contractDigest": "8b58d976d4fe5fb1f70f87ddfda6b62dea01ae68e5c5a0da38228a68e28058da",
+          "consumerDigest": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256",
+          "firstExecution": {"read": "FIRST_EXECUTION", "write": "FIRST_EXECUTION"},
+          "retry": {"read": "REPLAY_SAME_RECEIPT", "write": "REPLAY_SAME_RECEIPT", "sameReceiptCount": 2},
+          "readbackCount": 2,
+          "rollbackVerified": true,
+          "ownedTargetDrift": 0,
+          "residueAfterReset": {"receiptCount": 0, "targetDrift": 0, "retainedReceiptDigestCount": 2, "externalResourceCount": 0}
+        },
+        {
+          "fixtureId": "bld001-builder-agent-g7-warehouse-lighting-v1",
+          "systemType": "unknown.warehouse-lighting",
+          "contractDigest": "df4f71475478d71d1554891e05e0231839af579d3616a7c74dc3b28d209b9f00",
+          "consumerDigest": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256",
+          "firstExecution": {"read": "FIRST_EXECUTION", "write": "FIRST_EXECUTION"},
+          "retry": {"read": "REPLAY_SAME_RECEIPT", "write": "REPLAY_SAME_RECEIPT", "sameReceiptCount": 2},
+          "readbackCount": 2,
+          "rollbackVerified": true,
+          "ownedTargetDrift": 0,
+          "residueAfterReset": {"receiptCount": 0, "targetDrift": 0, "retainedReceiptDigestCount": 2, "externalResourceCount": 0}
+        }
+      ]
+    },
+    "replace": {
+      "status": "PASS",
+      "elapsedMs": 0.67205,
+      "providerFrom": "unknown.habitat-controller",
+      "providerTo": "unknown.warehouse-lighting",
+      "unchangedConsumer": true,
+      "unchangedCore": true,
+      "observations": [
+        {
+          "fixtureId": "bld001-builder-agent-g6-v1",
+          "systemType": "unknown.habitat-controller",
+          "contractDigest": "8b58d976d4fe5fb1f70f87ddfda6b62dea01ae68e5c5a0da38228a68e28058da",
+          "consumerDigest": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256",
+          "firstExecution": {"read": "FIRST_EXECUTION", "write": "FIRST_EXECUTION"},
+          "retry": {"read": "REPLAY_SAME_RECEIPT", "write": "REPLAY_SAME_RECEIPT", "sameReceiptCount": 2},
+          "readbackCount": 2,
+          "rollbackVerified": true,
+          "ownedTargetDrift": 0,
+          "residueAfterReset": {"receiptCount": 0, "targetDrift": 0, "retainedReceiptDigestCount": 2, "externalResourceCount": 0}
+        },
+        {
+          "fixtureId": "bld001-builder-agent-g7-warehouse-lighting-v1",
+          "systemType": "unknown.warehouse-lighting",
+          "contractDigest": "df4f71475478d71d1554891e05e0231839af579d3616a7c74dc3b28d209b9f00",
+          "consumerDigest": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256",
+          "firstExecution": {"read": "FIRST_EXECUTION", "write": "FIRST_EXECUTION"},
+          "retry": {"read": "REPLAY_SAME_RECEIPT", "write": "REPLAY_SAME_RECEIPT", "sameReceiptCount": 2},
+          "readbackCount": 2,
+          "rollbackVerified": true,
+          "ownedTargetDrift": 0,
+          "residueAfterReset": {"receiptCount": 0, "targetDrift": 0, "retainedReceiptDigestCount": 2, "externalResourceCount": 0}
+        }
+      ]
+    }
+  },
+  "metrics": {
+    "timing": {
+      "unit": "milliseconds",
+      "interpretation": "OBSERVED_LOCAL_PROCESS_TIMINGS_NOT_A_SPEED_CLAIM",
+      "providerA": {
+        "cold": {"samples": 100, "minMs": 0.060294, "medianMs": 0.062959, "p95Ms": 0.147899, "maxMs": 0.197022},
+        "warm": {"samples": 100, "minMs": 0.014237, "medianMs": 0.015489, "p95Ms": 0.066024, "maxMs": 0.178217}
+      },
+      "providerB": {
+        "cold": {"samples": 100, "minMs": 0.060685, "medianMs": 0.061816, "p95Ms": 0.119205, "maxMs": 0.154392},
+        "warm": {"samples": 100, "minMs": 0.014157, "medianMs": 0.014487, "p95Ms": 0.015769, "maxMs": 0.070273}
+      }
+    },
+    "edits": {
+      "definition": "RECURSIVE_CONTRACT_PATH_DIFFERENCES_PROVIDER_A_TO_B",
+      "count": 26,
+      "changedPathDigest": "e7bb147a664d23a93518a6decbc3ae2e76225ef0da99832a192ebb49f4696891"
+    },
+    "loc": {
+      "definition": "NON_BLANK_PHYSICAL_LINES",
+      "core": 276,
+      "consumer": 8,
+      "providerAContract": 112,
+      "providerBContract": 99,
+      "targetSpecificCore": 0
+    },
+    "retry": {"attempts": 4, "sameReceiptCount": 4},
+    "reuse": {
+      "coreSha256": "199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6",
+      "consumerSha256": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256",
+      "providersUsingSameCore": 2,
+      "providersUsingSameConsumer": 2,
+      "providerSpecificCoreChanges": 0
+    },
+    "readback": {"verifiedCount": 4, "expectedCount": 4},
+    "rollback": {"verifiedCount": 2, "expectedCount": 2},
+    "residue": {"receiptCountAfterReset": 0, "targetDriftAfterReset": 0, "externalResourceCount": 0}
+  },
+  "negativeProbes": [
+    {
+      "name": "provider-a-request-against-provider-b-binding",
+      "expected": "BUILDER_REQUEST_BINDING_DENIED",
+      "observed": "BUILDER_REQUEST_BINDING_DENIED",
+      "status": "PASS",
+      "ownedTargetDrift": 0,
+      "receiptCount": 0
+    }
+  ],
+  "aiBlind": {
+    "status": "PREPARED_NOT_RUN",
+    "participantInput": "benchmarks/adaptability-m0/ai-blind/participant-input.json",
+    "evaluator": "benchmarks/adaptability-m0/ai-blind/evaluate.mjs",
+    "result": null
+  },
+  "nonClaims": [
+    "NO_LIVE_PROVIDER_TENANT_CREDENTIAL_NETWORK_OR_CUSTOMER_DATA_EVIDENCE",
+    "NO_PRODUCTION_OR_UNIVERSAL_ADAPTABILITY_CLAIM",
+    "NO_SPEED_CLAIM_OR_COMPARATIVE_PERFORMANCE_CONCLUSION",
+    "NO_AI_BLIND_RESULT_BEFORE_ISOLATED_EXECUTION",
+    "NO_RUNTIME_ACTIVATION_OR_AUTHORITY_CHANGE"
+  ]
+}
