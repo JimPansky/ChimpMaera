@@ -30,11 +30,23 @@ test("repository release governance passes", () => {
   assert.deepEqual(validateRepository(ROOT), []);
 });
 
+test("root security and support documents remain version-agnostic", () => {
+  const security = readFileSync(join(ROOT, "SECURITY.md"), "utf8");
+  const support = readFileSync(join(ROOT, "SUPPORT.md"), "utf8");
+  assert.match(security, /\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\/latest\)/);
+  assert.match(security, /\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\)/);
+  assert.doesNotMatch(`${security}\n${support}`, /\b(?:v(?:ersion)?\s*)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z.-]+)?\b/i);
+  assert.match(support, /without warranty, service-level objective or\s+production-support commitment/i);
+});
+
 test("release governance negative probes fail closed", async (t) => {
   const probes = [
     ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)", "[Version-bound release](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)")],
     ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages document included capabilities", "Today's Daily snapshot")],
     ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "direction is not a claim of current product maturity", "direction is current product maturity")],
+    ["root Security static Latest claim", "ROOT_SECURITY_VERSION_BINDING_DENIED", (root) => append(root, "SECURITY.md", "The latest tagged release is v9.9.9.")],
+    ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/tag/v9.9.9")],
+    ["root Support product-version binding", "ROOT_SUPPORT_VERSION_BINDING_DENIED", (root) => replace(root, "SUPPORT.md", "ChimpMaera is provided", "ChimpMaera v9.9 is provided")],
     ["stale Security claim", "SECURITY_STALE_RELEASE_CLAIM_DENIED", (root) => replace(root, "docs/SECURITY-ASSURANCE.md", "## Claim maturity", "v0.1.0 remains the only tagged and published release.\n\n## Claim maturity")],
     ["stale limitation version", "LIMITATIONS_STALE_V01_BINDING_DENIED", (root) => replace(root, "docs/KNOWN-LIMITATIONS.md", "The current local demo", "The v0.1 demo")],
     ["withdrawn video", "WITHDRAWN_ACTIVE_VIDEO_DENIED:8mB7O81Y2xA", (root) => append(root, "README.md", "https://youtu.be/8mB7O81Y2xA")],

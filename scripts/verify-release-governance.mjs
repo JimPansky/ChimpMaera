@@ -8,6 +8,7 @@ import { pathToFileURL } from "node:url";
 const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const read = (root, path) => readFileSync(resolve(root, path), "utf8");
 const issue = (issues, condition, code) => { if (!condition) issues.push(code); };
+const ROOT_DOC_VERSION_BINDING = /\b(?:v(?:ersion)?\s*)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z.-]+)?\b/i;
 
 function section(markdown, heading) {
   const start = markdown.indexOf(`## ${heading}`);
@@ -85,6 +86,31 @@ export function validateRepository(root = process.cwd()) {
     "README_POC_POSITIONING_MISSING",
   );
 
+  const rootSecurity = files.get("SECURITY.md") ?? "";
+  issue(
+    issues,
+    /\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\/latest\)/.test(rootSecurity)
+      && /\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\)/.test(rootSecurity),
+    "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING",
+  );
+  issue(issues, !ROOT_DOC_VERSION_BINDING.test(rootSecurity), "ROOT_SECURITY_VERSION_BINDING_DENIED");
+  issue(
+    issues,
+    /bounded local, synthetic proofs of concept/i.test(rootSecurity)
+      && /Production\s+operation[^.]*unsupported/i.test(rootSecurity),
+    "ROOT_SECURITY_POC_BOUNDARY_MISSING",
+  );
+
+  const rootSupport = files.get("SUPPORT.md") ?? "";
+  issue(issues, !ROOT_DOC_VERSION_BINDING.test(rootSupport), "ROOT_SUPPORT_VERSION_BINDING_DENIED");
+  issue(
+    issues,
+    /without warranty/i.test(rootSupport)
+      && /service-level objective/i.test(rootSupport)
+      && /production-support commitment/i.test(rootSupport),
+    "ROOT_SUPPORT_BOUNDARY_MISSING",
+  );
+
   for (const id of governance.videos?.withdrawnIds ?? []) {
     issue(issues, !readme.includes(id), `WITHDRAWN_ACTIVE_VIDEO_DENIED:${id}`);
   }
@@ -148,7 +174,7 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, assets.some((asset) => asset.name === release.assetManifest?.name), "ASSET_MANIFEST_MISSING");
   issue(issues, assets.some((asset) => asset.name === release.assetManifest?.declares), "ASSET_MANIFEST_TARGET_MISSING");
 
-  for (const required of ["README.md", "CONTRIBUTING.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"]) {
+  for (const required of ["README.md", "SECURITY.md", "SUPPORT.md", "CONTRIBUTING.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"]) {
     issue(issues, publicManifest.split("\n").some((line) => line.startsWith(`${required}\t${required}\t`)), `PUBLIC_MANIFEST_MISSING:${required}`);
   }
   for (const [path, text] of files) issues.push(...scanUnsafe(text, path));
@@ -204,7 +230,7 @@ export async function verifyPublicReadback(root = process.cwd()) {
   const declaredAsset = expectedAssets.find((asset) => asset.name === expected.assetManifest.declares);
   assert.equal(declaration, `${declaredAsset.sha256}  ${declaredAsset.name}`, "PUBLIC_ASSET_MANIFEST_CONTENT_MISMATCH");
 
-  for (const path of ["README.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md"]) {
+  for (const path of ["README.md", "SECURITY.md", "SUPPORT.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md"]) {
     const response = await fetch(`https://raw.githubusercontent.com/${governance.repository}/main/${path}`, { headers: { "User-Agent": "chimpmaera-release-governance" } });
     assert.equal(response.ok, true, `PUBLIC_SURFACE_HTTP_${response.status}:${path}`);
     assert.equal(await response.text(), read(root, path), `PUBLIC_SURFACE_MISMATCH:${path}`);

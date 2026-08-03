@@ -37,6 +37,8 @@
   },
   "activePublicFiles": [
     "README.md",
+    "SECURITY.md",
+    "SUPPORT.md",
     "CONTRIBUTING.md",
     "docs/SECURITY-ASSURANCE.md",
     "docs/KNOWN-LIMITATIONS.md",
