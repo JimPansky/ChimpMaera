@@ -2,29 +2,29 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260804.1",
-    "title": "ChimpMaera — Declarative Resource-Plane Profiles M0",
-    "increment": "Declarative Resource-Plane Profiles M0",
-    "targetCommitish": "1f98310d4e1a3541adf2619fda5d0cd0efa2dded",
-    "tagObjectSha": "1f98310d4e1a3541adf2619fda5d0cd0efa2dded",
+    "tag": "v0.2.0-poc.20260804.2",
+    "title": "ChimpMaera — ADD to REPLACE Adaptability Benchmark M0",
+    "increment": "ADD to REPLACE Adaptability Benchmark M0",
+    "targetCommitish": "1256868627f97d849e86e53adb16e6a8a33c7a71",
+    "tagObjectSha": "1256868627f97d849e86e53adb16e6a8a33c7a71",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz",
-        "size": 1373817,
-        "sha256": "87497985ace1ef7f17760be7e851c10d1065cc1fb2c33fcc6fbfd021b8c507f1"
+        "name": "chimpmaera-v0.2.0-poc.20260804.2-adaptability-benchmark-m0.tar.gz",
+        "size": 1385019,
+        "sha256": "b87d35cb4ec8fd991bc248cb6d572b791bb879607ba5c4fb5ad577c99fe82834"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz.sha256",
-        "size": 133,
-        "sha256": "17da3b709f5679a38b96296e9c9627073d3f55aee7967b95cea55c4246d4b765"
+        "name": "chimpmaera-v0.2.0-poc.20260804.2-adaptability-benchmark-m0.tar.gz.sha256",
+        "size": 132,
+        "sha256": "be29f71d862c39e7dea56e84c389323d09c8ea4bc688d11289176b8548370940"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260804.2-adaptability-benchmark-m0.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260804.2-adaptability-benchmark-m0.tar.gz"
     }
   },
   "policy": {
@@ -43,6 +43,7 @@
     "docs/SECURITY-ASSURANCE.md",
     "docs/KNOWN-LIMITATIONS.md",
     "docs/RESOURCE-PLANE-PROFILES.md",
+    "benchmarks/adaptability-m0/README.md",
     "docs/index.md",
     "docs/alternatives.md",
     "docs/capabilities.md",
@@ -72,7 +73,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260804.1 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260804.2 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -171,6 +172,18 @@
       "evidencePaths": ["docs/RESOURCE-PLANE-PROFILES.md", "docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"],
       "nonClaims": ["Declarative local deterministic plan only; no runtime activation, host permission change, command, credential, lease, provider binding or executable authority is included.", "No real filesystem, network, process, Docker, secret, model/tool, device, tenant, provider, security-certification or production fitness is proven.", "FULL_CONTROL maps to the dangerous FULL_CONTROL_LAB alias and does not inherit SAFE_GUIDED or broad governed-profile claims."],
       "traceability": {"issues": [], "pullRequests": [94, 96, 97], "sourceCommits": ["8d5425b260fce6bcf04078643346e8e65000f7f4", "ff8a2f5dff315b0591ae23bf3661edc862dd1654", "1f98310d4e1a3541adf2619fda5d0cd0efa2dded"], "pdcaPaths": ["docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-013",
+      "component": "ADD to REPLACE Adaptability Benchmark M0",
+      "claim": "ChimpMaera ships a reproducible local-synthetic benchmark for ADD and Provider A to Provider B replacement through an unchanged target-neutral Builder core and consumer, with rollback and zero-residue evidence.",
+      "userValue": "Operators can inspect exact measured adaptation mechanics, reuse, readback and cleanup evidence without treating process timings as provider or engineering-speed proof.",
+      "includedBytes": ["benchmarks/adaptability-m0/README.md", "benchmarks/adaptability-m0/run.mjs", "benchmarks/adaptability-m0/records/adb-001-m0-local-20260804.json", "benchmarks/adaptability-m0/ai-blind/participant-input.json", "benchmarks/adaptability-m0/ai-blind/evaluate.mjs", "schemas/adaptability-benchmark-result-v1.schema.json", "tests/adaptability-benchmark-m0.test.mjs"],
+      "functionalProof": {"testPaths": ["tests/adaptability-benchmark-m0.test.mjs"], "result": "PASS 5/5: ADD 1 to 2 providers and Provider A to B replacement preserve the frozen core and consumer while measuring cold/warm, edit, LOC, retry, reuse, readback, rollback and residue fields."},
+      "safetyProof": {"testPaths": ["tests/adaptability-benchmark-m0.test.mjs"], "result": "PASS: provider-binding mismatch denies with zero drift and zero receipt; rollback/reset leave zero target drift, receipt residue and external residue."},
+      "evidencePaths": ["benchmarks/adaptability-m0/README.md", "docs/development/adb-001-adaptability-benchmark-m0-pdca.md"],
+      "nonClaims": ["Local in-process synthetic observations only; no live provider, tenant, production compatibility, universal adaptability, engineering-time or comparative speed claim is included.", "The AI-blind bundle is prepared but has not been run; no blind result, participant performance or evaluator-isolation claim is included."],
+      "traceability": {"issues": [], "pullRequests": [99, 100], "sourceCommits": ["6ccd9100de386398c9b0208ee98bcd1b4c0ac972", "1256868627f97d849e86e53adb16e6a8a33c7a71"], "pdcaPaths": ["docs/development/adb-001-adaptability-benchmark-m0-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
       "claimId": "CM-REL-011",
