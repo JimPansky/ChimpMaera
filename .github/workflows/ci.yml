@@ -64,6 +64,15 @@ jobs:
             --use
           docker buildx inspect --bootstrap
 
+      - name: Restore content-addressed BuildKit cache
+        id: buildkit-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ runner.temp }}/chimpmaera-video-buildkit-cache
+          key: ${{ runner.os }}-video-buildkit-v1-${{ hashFiles('tools/video-production-reference/Dockerfile', 'tools/video-production-reference/compose.yaml', 'package.json', 'package-lock.json', 'demo/manifests/supply-chain/artifact-lock-v1.json') }}
+          restore-keys: |
+            ${{ runner.os }}-video-buildkit-v1-
+
       - name: Verify release-tree checksums
         run: sha256sum --check SHA256SUMS
 
@@ -131,13 +140,34 @@ jobs:
           printf 'no_cache=%s\n' "$no_cache" >> "$GITHUB_OUTPUT"
           printf 'Video smoke cache-free deep audit: %s\n' "$no_cache"
 
+      - name: Select available BuildKit cache input
+        id: buildkit-cache-input
+        shell: bash
+        run: |
+          set -euo pipefail
+          cache_root="$RUNNER_TEMP/chimpmaera-video-buildkit-cache"
+          if [ -f "$cache_root/index.json" ]; then
+            printf 'cache_from=type=local,src=%s\n' "$cache_root" >> "$GITHUB_OUTPUT"
+            printf 'BuildKit cache import available: true\n'
+          else
+            printf 'cache_from=\n' >> "$GITHUB_OUTPUT"
+            printf 'BuildKit cache import available: false\n'
+          fi
+
       - name: Run video tests and reference Docker smoke
         env:
           CM_VIDEO_BUILDER: buildx
           CM_VIDEO_NO_CACHE: ${{ steps.video-cache.outputs.no_cache }}
-          CM_VIDEO_CACHE_FROM: type=gha,scope=chimpmaera-video-reference-v1
-          CM_VIDEO_CACHE_TO: type=gha,mode=max,scope=chimpmaera-video-reference-v1,ignore-error=true
+          CM_VIDEO_CACHE_FROM: ${{ steps.buildkit-cache-input.outputs.cache_from }}
+          CM_VIDEO_CACHE_TO: type=local,dest=${{ runner.temp }}/chimpmaera-video-buildkit-cache-new,mode=max
         run: npm run video:smoke
+
+      - name: Save content-addressed BuildKit cache
+        if: ${{ success() && steps.buildkit-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ runner.temp }}/chimpmaera-video-buildkit-cache-new
+          key: ${{ steps.buildkit-cache.outputs.cache-primary-key }}
 
       - name: Confirm tests did not modify tracked files
         run: git diff --exit-code
