@@ -273,6 +273,7 @@ tests/hmi-discover-payload.test.ts	tests/hmi-discover-payload.test.ts	0644
 tests/hmi-explain-payload.test.ts	tests/hmi-explain-payload.test.ts	0644
 tests/hmi-contribute-preflight.test.ts	tests/hmi-contribute-preflight.test.ts	0644
 tests/hmi-post-explain-consistency.test.ts	tests/hmi-post-explain-consistency.test.ts	0644
+tests/hmi-post-contribute-consistency.test.ts	tests/hmi-post-contribute-consistency.test.ts	0644
 tests/azure-identity-profile.test.ts	tests/azure-identity-profile.test.ts	0644
 tests/power-platform-read-connector.test.ts	tests/power-platform-read-connector.test.ts	0644
 tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-runtime.test.mjs	0644
