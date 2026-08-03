@@ -19,6 +19,7 @@ export * from "./builder-integration-plan.js";
 export * from "./builder-quality-evidence.js";
 export * from "./builder-contribution-bundle.js";
 export * from "./verification-fabric.js";
+export * from "./verification-fabric-v2.js";
 export * from "./update-doctor.js";
 export * from "./hmi-core.js";
 export * from "./hmi-harness-adapter.js";

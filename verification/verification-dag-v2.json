@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
+  "graphId": "verification-fabric-shadow",
+  "graphVersion": 2,
+  "environment": {
+    "node": "24.14.1",
+    "os": "linux",
+    "architecture": "x86_64",
+    "packageManager": "npm@11.16.0"
+  },
+  "hardGates": [
+    "npm run lint",
+    "npm run release-governance:verify",
+    "npm run supply-chain:verify",
+    "sha256sum -c SHA256SUMS",
+    "./scripts/build-public-release.sh --output <isolated-absolute-path>"
+  ],
+  "nodes": [
+    {
+      "id": "vf-contract-v1",
+      "dependsOn": [],
+      "inputs": [
+        { "path": "packages/contracts/src/verification-fabric.ts", "role": "CONTRACT", "sha256": "2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1" },
+        { "path": "schemas/contracts/verification-fabric-bundle-v1.schema.json", "role": "SCHEMA", "sha256": "c5e9e5ff60901523bc6e4014213a9e80728c364204b5a084cc9f5c323db5ab1e" },
+        { "path": "tests/fixtures/verification-fabric/positive-bundle-v1.json", "role": "FIXTURE", "sha256": "ddcbad4141a13898e105ea4fb7e973341d44749e4c77b22af2bd3171dd10ecef" },
+        { "path": "tests/fixtures/verification-fabric/negative-matrix-v1.json", "role": "FIXTURE", "sha256": "81036747fea963b72624656b74166d2f9de5b15bfddb071fad717d307b888465" },
+        { "path": "tests/verification-fabric.test.ts", "role": "VALIDATOR", "sha256": "a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212" }
+      ],
+      "ownedTests": ["node --test dist/tests/verification-fabric.test.js"],
+      "invariants": [
+        "V1 evidence and LKG verification remains fail closed.",
+        "V2 planning cannot weaken or replace V1 verdict semantics."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
+      "id": "vf-shadow-v2",
+      "dependsOn": ["vf-contract-v1"],
+      "inputs": [
+        { "path": "packages/contracts/src/verification-fabric-v2.ts", "role": "CONTRACT", "sha256": "e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0" },
+        { "path": "schemas/contracts/verification-evidence-dag-v2.schema.json", "role": "SCHEMA", "sha256": "5286ece3ec3ef1b8619ffa4926a43ebd36b62b9f15169547d9c4a47e3c36f133" },
+        { "path": "schemas/contracts/verification-attestation-v2.schema.json", "role": "SCHEMA", "sha256": "e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2" },
+        { "path": "scripts/verification-plan.mjs", "role": "VALIDATOR", "sha256": "0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218" },
+        { "path": "scripts/verification-shadow.mjs", "role": "VALIDATOR", "sha256": "7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5" },
+        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "511c0f66e0abd5628fc6698f76481aeff54b3e118c612dcbe93bd65b2cee13be" },
+        { "path": "docs/VERIFICATION-FABRIC-SHADOW.md", "role": "DERIVED_EVIDENCE", "sha256": "c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f" }
+      ],
+      "ownedTests": ["node --test dist/tests/verification-fabric-v2.test.js"],
+      "invariants": [
+        "Any uncertainty produces FULL_FALLBACK rather than silent omission.",
+        "The existing npm test suite remains the authoritative Shadow comparator.",
+        "Prototype attestations are never authoritative in this slice."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
+      "id": "repository-integrity",
+      "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
+      "inputs": [
+        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "056a9963a1bdcbb242194acba638bb03d5c9772c817525bc48747b296663ab90" },
+        { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
+        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "8eb59b3dec25a3ac770e587cd061b555c9a37c060d2ac61fb5791abdb4999efa" },
+        { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "a3f80bddb9cd7c767db74a7fffc1a56009e3cf1a11eb14f927fef4521e1cb1ad" }
+      ],
+      "ownedTests": [
+        "npm run release-governance:test",
+        "node --test tests/supply-chain-verifier.test.mjs"
+      ],
+      "invariants": [
+        "Public staging is manifest closed and secret/privacy scanned.",
+        "Repository checksums and release governance fail closed."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
+      "id": "toolchain-central",
+      "dependsOn": [],
+      "inputs": [
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "1ddb87dfe5bdf33a0b40f78daf0383559862f8be430f199b1a14befbdca3149f" },
+        { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "a41cfc62ebe0079e1424c472bac565824bf700d5df61c9b54f58d4795c5fdcac" },
+        { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
+        { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b3c5e91b8ae9dee1d489380334e79f5647077d96b7078ac5779337feda263133" }
+      ],
+      "ownedTests": ["npm run lint", "npm test"],
+      "invariants": [
+        "Toolchain or CI-environment changes invalidate the complete verification closure."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": true
+    }
+  ]
+}
