@@ -198,8 +198,13 @@ and recovery structure without granting activation or runtime authority.
 The current release proves a finite local-synthetic subset: a typed capability
 catalogue, the CRM/ERP reference path, and Builder contracts that produce
 inactive target-neutral adapter or skill plans from synthetic manifests and
-guide context. Those bytes demonstrate separation and synthetic reuse. They do
-not prove live provider replacement, arbitrary-system onboarding or universal
+guide context. A separately locally validated M0 benchmark runs ADD and
+Provider A → B replacement across two synthetic in-process contracts while the
+Builder core and consumer digests remain unchanged. It measures local process
+timing, contract edits, LOC, retries, reuse, readback, rollback and residue;
+the AI-blind input remains prepared but unrun. Those bytes demonstrate
+separation and synthetic reuse. They do not prove live provider replacement,
+integration engineering speed, arbitrary-system onboarding or universal
 compatibility.
 
 The broader product direction lets AI assist with discovery, template

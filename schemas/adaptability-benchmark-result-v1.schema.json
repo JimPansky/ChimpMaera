@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.invalid/schemas/adaptability-benchmark-result-v1.schema.json",
+  "title": "ChimpMaera ADD to REPLACE adaptability benchmark result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "benchmarkId", "generatedAt", "status", "evidenceClass", "claimBoundary", "source", "scenarios", "metrics", "negativeProbes", "aiBlind", "nonClaims"],
+  "properties": {
+    "schemaVersion": {"const": "chimpmaera.adaptability-benchmark-result/v1"},
+    "benchmarkId": {"const": "ADB-001-M0"},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["PASS", "FAIL"]},
+    "evidenceClass": {"const": "LOCAL_SYNTHETIC_PROCESS_MEASUREMENT"},
+    "claimBoundary": {"const": "LOCAL_SYNTHETIC_MEASURED_NO_SPEED_OR_PRODUCTION_CLAIM"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["corePath", "coreSha256", "providerAPath", "providerBPath", "consumerSha256"],
+      "properties": {
+        "corePath": {"const": "demo/builder-agent/builder-core.mjs"},
+        "coreSha256": {"$ref": "#/$defs/sha256"},
+        "providerAPath": {"type": "string", "minLength": 1},
+        "providerBPath": {"type": "string", "minLength": 1},
+        "consumerSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "scenarios": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["add", "replace"],
+      "properties": {
+        "add": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "elapsedMs", "providerCountBefore", "providerCountAfter", "observations"],
+          "properties": {
+            "status": {"enum": ["PASS", "FAIL"]},
+            "elapsedMs": {"type": "number", "minimum": 0},
+            "providerCountBefore": {"const": 1},
+            "providerCountAfter": {"const": 2},
+            "observations": {"$ref": "#/$defs/twoObservations"}
+          }
+        },
+        "replace": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "elapsedMs", "providerFrom", "providerTo", "unchangedConsumer", "unchangedCore", "observations"],
+          "properties": {
+            "status": {"enum": ["PASS", "FAIL"]},
+            "elapsedMs": {"type": "number", "minimum": 0},
+            "providerFrom": {"type": "string", "minLength": 1},
+            "providerTo": {"type": "string", "minLength": 1},
+            "unchangedConsumer": {"type": "boolean"},
+            "unchangedCore": {"type": "boolean"},
+            "observations": {"$ref": "#/$defs/twoObservations"}
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timing", "edits", "loc", "retry", "reuse", "readback", "rollback", "residue"],
+      "properties": {
+        "timing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["unit", "interpretation", "providerA", "providerB"],
+          "properties": {
+            "unit": {"const": "milliseconds"},
+            "interpretation": {"const": "OBSERVED_LOCAL_PROCESS_TIMINGS_NOT_A_SPEED_CLAIM"},
+            "providerA": {"$ref": "#/$defs/timingPair"},
+            "providerB": {"$ref": "#/$defs/timingPair"}
+          }
+        },
+        "edits": {
+          "type": "object", "additionalProperties": false,
+          "required": ["definition", "count", "changedPathDigest"],
+          "properties": {
+            "definition": {"const": "RECURSIVE_CONTRACT_PATH_DIFFERENCES_PROVIDER_A_TO_B"},
+            "count": {"type": "integer", "minimum": 1},
+            "changedPathDigest": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "loc": {
+          "type": "object", "additionalProperties": false,
+          "required": ["definition", "core", "consumer", "providerAContract", "providerBContract", "targetSpecificCore"],
+          "properties": {
+            "definition": {"const": "NON_BLANK_PHYSICAL_LINES"},
+            "core": {"type": "integer", "minimum": 1},
+            "consumer": {"type": "integer", "minimum": 1},
+            "providerAContract": {"type": "integer", "minimum": 1},
+            "providerBContract": {"type": "integer", "minimum": 1},
+            "targetSpecificCore": {"type": "integer", "minimum": 0}
+          }
+        },
+        "retry": {"$ref": "#/$defs/countPair"},
+        "reuse": {
+          "type": "object", "additionalProperties": false,
+          "required": ["coreSha256", "consumerSha256", "providersUsingSameCore", "providersUsingSameConsumer", "providerSpecificCoreChanges"],
+          "properties": {
+            "coreSha256": {"$ref": "#/$defs/sha256"},
+            "consumerSha256": {"$ref": "#/$defs/sha256"},
+            "providersUsingSameCore": {"type": "integer", "minimum": 1},
+            "providersUsingSameConsumer": {"type": "integer", "minimum": 1},
+            "providerSpecificCoreChanges": {"type": "integer", "minimum": 0}
+          }
+        },
+        "readback": {"$ref": "#/$defs/verifiedPair"},
+        "rollback": {"$ref": "#/$defs/verifiedPair"},
+        "residue": {
+          "type": "object", "additionalProperties": false,
+          "required": ["receiptCountAfterReset", "targetDriftAfterReset", "externalResourceCount"],
+          "properties": {
+            "receiptCountAfterReset": {"type": "integer", "minimum": 0},
+            "targetDriftAfterReset": {"type": "integer", "minimum": 0},
+            "externalResourceCount": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "negativeProbes": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "expected", "observed", "status", "ownedTargetDrift", "receiptCount"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "expected": {"type": "string", "minLength": 1},
+          "observed": {"type": "string", "minLength": 1},
+          "status": {"enum": ["PASS", "FAIL"]},
+          "ownedTargetDrift": {"type": "integer", "minimum": 0},
+          "receiptCount": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "aiBlind": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "participantInput", "evaluator", "result"],
+      "properties": {
+        "status": {"const": "PREPARED_NOT_RUN"},
+        "participantInput": {"type": "string", "minLength": 1},
+        "evaluator": {"type": "string", "minLength": 1},
+        "result": {"type": "null"}
+      }
+    },
+    "nonClaims": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "timingSummary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["samples", "minMs", "medianMs", "p95Ms", "maxMs"],
+      "properties": {
+        "samples": {"type": "integer", "minimum": 5},
+        "minMs": {"type": "number", "minimum": 0},
+        "medianMs": {"type": "number", "minimum": 0},
+        "p95Ms": {"type": "number", "minimum": 0},
+        "maxMs": {"type": "number", "minimum": 0}
+      }
+    },
+    "timingPair": {
+      "type": "object", "additionalProperties": false, "required": ["cold", "warm"],
+      "properties": {"cold": {"$ref": "#/$defs/timingSummary"}, "warm": {"$ref": "#/$defs/timingSummary"}}
+    },
+    "countPair": {
+      "type": "object", "additionalProperties": false, "required": ["attempts", "sameReceiptCount"],
+      "properties": {"attempts": {"type": "integer", "minimum": 0}, "sameReceiptCount": {"type": "integer", "minimum": 0}}
+    },
+    "verifiedPair": {
+      "type": "object", "additionalProperties": false, "required": ["verifiedCount", "expectedCount"],
+      "properties": {"verifiedCount": {"type": "integer", "minimum": 0}, "expectedCount": {"type": "integer", "minimum": 0}}
+    },
+    "observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fixtureId", "systemType", "contractDigest", "consumerDigest", "firstExecution", "retry", "readbackCount", "rollbackVerified", "ownedTargetDrift", "residueAfterReset"],
+      "properties": {
+        "fixtureId": {"type": "string", "minLength": 1},
+        "systemType": {"type": "string", "minLength": 1},
+        "contractDigest": {"$ref": "#/$defs/sha256"},
+        "consumerDigest": {"$ref": "#/$defs/sha256"},
+        "firstExecution": {
+          "type": "object", "additionalProperties": false, "required": ["read", "write"],
+          "properties": {"read": {"enum": ["FIRST_EXECUTION", "REPLAY_SAME_RECEIPT"]}, "write": {"enum": ["FIRST_EXECUTION", "REPLAY_SAME_RECEIPT"]}}
+        },
+        "retry": {
+          "type": "object", "additionalProperties": false, "required": ["read", "write", "sameReceiptCount"],
+          "properties": {"read": {"const": "REPLAY_SAME_RECEIPT"}, "write": {"const": "REPLAY_SAME_RECEIPT"}, "sameReceiptCount": {"type": "integer", "minimum": 0}}
+        },
+        "readbackCount": {"type": "integer", "minimum": 0},
+        "rollbackVerified": {"type": "boolean"},
+        "ownedTargetDrift": {"type": "integer", "minimum": 0},
+        "residueAfterReset": {
+          "type": "object", "additionalProperties": false,
+          "required": ["receiptCount", "targetDrift", "retainedReceiptDigestCount", "externalResourceCount"],
+          "properties": {
+            "receiptCount": {"type": "integer", "minimum": 0},
+            "targetDrift": {"type": "integer", "minimum": 0},
+            "retainedReceiptDigestCount": {"type": "integer", "minimum": 0},
+            "externalResourceCount": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "twoObservations": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/observation"}}
+  }
+}

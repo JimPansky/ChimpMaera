@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "chimpmaera.adaptability-ai-blind-input/v1",
+  "taskId": "ADB-001-AI-BLIND-01",
+  "status": "PREPARED_NOT_RUN",
+  "task": "Create one closed synthetic Provider B runtime contract that the frozen target-neutral Builder core and frozen generic consumer can use without modification.",
+  "baseline": {
+    "corePath": "demo/builder-agent/builder-core.mjs",
+    "coreSha256": "199ff972ddd90a11377af6f7f6a3ccf9c8b3e63e141192abc2a25f1ffc9617f6",
+    "consumerPath": "benchmarks/adaptability-m0/run.mjs#genericConsumer",
+    "consumerSha256": "97f610f8e8f11924639fb33f1859fa5bb48d815c7c1d9380fae157767c081256",
+    "providerAPath": "demo/builder-agent/runtime-contract-v1.json"
+  },
+  "providerBDiscovery": {
+    "tenant": "synthetic-warehouse",
+    "systemId": "unknown-lighting-002",
+    "systemType": "unknown.warehouse-lighting",
+    "dataClassification": "SYNTHETIC",
+    "initialState": {"illuminanceLux": 410, "brightnessPct": 55},
+    "operations": [
+      {"capabilityId": "zone.illuminance.read", "effectClass": "READ_ONLY", "adapterKind": "READ_FIELD"},
+      {"capabilityId": "zone.brightness.update", "effectClass": "REVERSIBLE_WRITE", "adapterKind": "REVERSIBLE_WRITE_FIELD", "recovery": "RESTORE_PRIOR_VALUE"}
+    ]
+  },
+  "allowedParticipantEdit": "candidate/runtime-contract-provider-b.json",
+  "requiredEvidence": ["schema-validation", "unchanged-core-digest", "unchanged-consumer-digest", "readback", "retry-same-receipt", "rollback", "zero-drift", "zero-residue"],
+  "claimBoundary": "LOCAL_SYNTHETIC_AI_BLIND_INPUT_ONLY_NO_RESULT_OR_SPEED_CLAIM"
+}
