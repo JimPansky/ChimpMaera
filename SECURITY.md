@@ -2,8 +2,10 @@
 
 ## Supported scope
 
-The latest tagged release, v0.1.0, is a local synthetic proof of concept.
-Current `main` also contains an unreleased v0.2 POC candidate. Production
+Published releases are bounded local, synthetic proofs of concept. Use the
+[latest published release](https://github.com/JimPansky/ChimpMaera/releases/latest)
+or [all releases](https://github.com/JimPansky/ChimpMaera/releases) to identify
+the current published bytes and their release-specific evidence. Production
 operation, hostile tenancy, external identity infrastructure, high
 availability and independent immutable audit are unsupported.
 
