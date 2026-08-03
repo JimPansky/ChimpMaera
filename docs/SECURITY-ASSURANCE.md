@@ -7,8 +7,8 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260804.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260804.1),
-the **Declarative Resource-Plane Profiles M0** increment. `v0.1.0` is historical. Release state
+[`v0.2.0-poc.20260804.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260804.2),
+the **ADD to REPLACE Adaptability Benchmark M0** increment. `v0.1.0` is historical. Release state
 is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred
 from a local branch, a tag alone, a date or an editorial update. Documentation
 on `main` may postdate the released asset bytes and does not silently change

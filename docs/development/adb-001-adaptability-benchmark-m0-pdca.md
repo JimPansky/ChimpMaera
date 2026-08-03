@@ -1,7 +1,7 @@
 # ADB-001 ADD → REPLACE adaptability benchmark M0 PDCA
 
-Status: locally measured and release integration pending. The AI-blind bundle
-is prepared but has not been run.
+Status: released as regular Latest `v0.2.0-poc.20260804.2`. The AI-blind
+bundle is prepared but has not been run.
 
 ## Plan
 
@@ -76,3 +76,19 @@ readback.
 
 Claim boundary:
 `LOCAL_SYNTHETIC_MEASURED_NO_SPEED_OR_PRODUCTION_CLAIM`.
+
+## Delivery evidence
+
+- Feature PR #99 merged as
+  `6ccd9100de386398c9b0208ee98bcd1b4c0ac972` after required CI.
+- Release-identity PR #100 merged normally; exact release target is
+  `1256868627f97d849e86e53adb16e6a8a33c7a71`, whose main CI passed including
+  the Docker/video smoke.
+- Regular Latest `v0.2.0-poc.20260804.2` is non-draft/non-prerelease with two
+  assets. Archive: 1,385,019 bytes,
+  `b87d35cb4ec8fd991bc248cb6d572b791bb879607ba5c4fb5ad577c99fe82834`.
+  Manifest: 132 bytes,
+  `be29f71d862c39e7dea56e84c389323d09c8ea4bc688d11289176b8548370940`.
+- Two exact-source local archive builds were byte-identical. Anonymous Latest,
+  archive, manifest, checksum, and required-content readback passed after the
+  release-truth integration gate.
