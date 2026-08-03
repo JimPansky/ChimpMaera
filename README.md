@@ -32,7 +32,7 @@ boundary. The opt-in `FULL_CONTROL_LAB` profile deliberately leaves it and is
 
 ## Release status
 
-- **Current regular Latest release:** [`v0.2.0-poc.20260802.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260802.3) — **Governed Company Data Increment**.
+- **Current regular Latest release:** [`v0.2.0-poc.20260803.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.1) — **Authority-Bounded Integration Contracts Increment**.
 - **Historical predecessor:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release.
 
 Releases are accepted functional increments, not calendar events. Editorial
