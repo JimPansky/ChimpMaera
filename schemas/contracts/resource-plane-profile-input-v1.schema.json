@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/contracts/resource-plane-profile-input-v1.schema.json",
+  "title": "ChimpMaera resource-plane profile input v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tenant",
+    "actor",
+    "selectedProfile",
+    "planeTemplates",
+    "hostSystemCeiling",
+    "assignments",
+    "currentConstraints",
+    "customRules"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "chimpmaera.resource-plane/profile-input/v1"
+    },
+    "tenant": { "$ref": "#/$defs/identifier" },
+    "actor": { "$ref": "#/$defs/identifier" },
+    "selectedProfile": {
+      "enum": ["SAFE_GUIDED", "CUSTOM", "FULL_CONTROL"]
+    },
+    "planeTemplates": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["planeId", "templateId", "requestedRights"],
+        "properties": {
+          "planeId": {
+            "enum": [
+              "FILESYSTEM",
+              "NETWORK",
+              "PROCESS",
+              "DOCKER",
+              "SECRETS",
+              "MODELS_TOOLS",
+              "DEVICES"
+            ]
+          },
+          "templateId": {
+            "enum": [
+              "chimpmaera.resource-plane/filesystem-closed/v1",
+              "chimpmaera.resource-plane/network-closed/v1",
+              "chimpmaera.resource-plane/process-closed/v1",
+              "chimpmaera.resource-plane/docker-closed/v1",
+              "chimpmaera.resource-plane/secrets-closed/v1",
+              "chimpmaera.resource-plane/models-tools-closed/v1",
+              "chimpmaera.resource-plane/devices-closed/v1"
+            ]
+          },
+          "requestedRights": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/rightId" }
+          }
+        }
+      }
+    },
+    "hostSystemCeiling": { "$ref": "#/$defs/rightReferences" },
+    "assignments": { "$ref": "#/$defs/rightReferences" },
+    "currentConstraints": { "$ref": "#/$defs/rightReferences" },
+    "customRules": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rightId", "route"],
+        "properties": {
+          "rightId": { "$ref": "#/$defs/rightId" },
+          "route": { "enum": ["AUTO_EXECUTE", "OWNER_APPROVAL"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/-]{0,127}$"
+    },
+    "rightId": {
+      "enum": [
+        "filesystem.metadata.read",
+        "filesystem.content.read",
+        "filesystem.owned.write",
+        "filesystem.delete",
+        "network.resolve",
+        "network.https.read",
+        "network.https.write",
+        "network.listen",
+        "process.inspect",
+        "process.spawn",
+        "process.signal",
+        "docker.inspect",
+        "docker.image.pull",
+        "docker.container.run",
+        "docker.container.remove",
+        "secrets.metadata.read",
+        "secrets.value.read",
+        "secrets.value.write",
+        "models-tools.catalog.read",
+        "models-tools.model.invoke",
+        "models-tools.tool.invoke",
+        "models-tools.tool.install",
+        "devices.inspect",
+        "devices.sensor.read",
+        "devices.actuate"
+      ]
+    },
+    "rightReferences": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/rightId" }
+    }
+  }
+}

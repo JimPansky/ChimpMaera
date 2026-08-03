@@ -157,6 +157,7 @@ fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-P
 8d2b0611139fd36ce0768dc131f0ce355d5959a3a2a2ea355658d5db1319b1d7  ./docs/KNOWLEDGE-HARVEST.md
 691bf9625940be65cdefae6ba37736652383f8002369b7a14e630377eafd495e  ./docs/KNOWN-LIMITATIONS.md
 011c5b5fa061aa77394bd16376e4cec242c9d09a93e863494a4836e7e944799e  ./docs/QUICKSTART.md
+e71b4f4f67c41f1a843c998248eca45bfbf01b4e62f23603ed970d1f6b731ecd  ./docs/RESOURCE-PLANE-PROFILES.md
 33690c956d58cd3e8fa6c89607c8972d39c03ac42c3e56affaafe4b78268758a  ./docs/README.md
 41adaa6d3f3b6de47cbb4636672d5b13690c9ad975f08dc86d262e3e2bff66bd  ./docs/RELEASE-GOVERNANCE.md
 af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892  ./docs/SECURE-DEFAULT-PROOF.md
@@ -255,7 +256,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 8a10afbe213510df5172e84607006dce0b25b10cc512e0d4ca758ba394f302c0  ./package-lock.json
-bc465ca71da0f5b7f49b39caae1f11259f405e66b9ea6109a0adcf3ce54b5e06  ./package.json
+7617c1999f731664fa6d1d969cab9cc5901f5b511948d3606d9b3f37e202079d  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
 974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts
@@ -267,7 +268,7 @@ c9fbd0ad768470a0b4e5a9d6c8df6ede3ecf521a22c64dd2b305c40927312427  ./packages/con
 b0ae29b9bda430c16ff6091d09f411f87b55334e79f2482386f471f7da42cf11  ./packages/contracts/src/effective-rights.ts
 ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/contracts/src/hmi-contribute-preflight.ts
 0d9c6b054ea648a50217e6cc55ef8ed8bb0b444076a8a5ff081b0fb408f0ec45  ./packages/contracts/src/hmi-core.ts
-51e9d20172ea046dc1c14697e3aabf9d03527744e5ff7182d9ba9661b75c1dbb  ./packages/contracts/src/index.ts
+c961504cb1db479cecaa0e38ef814a8b67067da87a9154dc6dc97eee78464352  ./packages/contracts/src/index.ts
 1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50  ./packages/contracts/src/injection-trust-boundary.ts
 837e9b14dbab95fb4e3d9aa41eb1c71052048f9ae4f023fa8aa519bd11e0976b  ./packages/contracts/src/model-access-broker.ts
 c86b9fdf4bfffd88bb4062250dba043acff0047a45ed4d50d999f2f8d8cb262e  ./packages/contracts/src/paperless-zoo-adapter.ts
@@ -278,13 +279,14 @@ c86b9fdf4bfffd88bb4062250dba043acff0047a45ed4d50d999f2f8d8cb262e  ./packages/con
 61c8584058f2a2a8600ef49f87febf0c4d4205ee671fc2ef295b5f17f0d307af  ./packages/contracts/src/poc-showcase.ts
 772b95d5b92f18a247ef4e35a902b57044670f8a9f6da95d73c4ac6073a83351  ./packages/contracts/src/policy-evaluator.ts
 7393da7d63dfdfd3caa52b1cb3b806525d06554db06075d914c17fba39ad8155  ./packages/contracts/src/protected-audit-timeline.ts
+3ac701d95750f3fe3ae0b2472615f7cfff2b6f055fe13b1a806d49627945b326  ./packages/contracts/src/resource-plane-profiles.ts
 54b825da8d6a83e44b6d71daece98e1ceabed3da92fdde3751c7a8843d27156f  ./packages/contracts/src/skill-admission.ts
 f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/contracts/src/update-doctor.ts
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 48616f3eecac499538619cb72d93aa36317f4f73bd930c3a4ecb996d3585c8bb  ./release/governance.json
-6e710f2b9eb1293a4ab2a760f05f828c7a68a4e485f16cdb46ab47f4b80040be  ./release/public-files.manifest
+e9d4b901d8d386e0176bd2916b784acf74488e44a39f9f9b214de49c7eea87e5  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -295,6 +297,8 @@ e21faa449a9bf7de51bb3bdd55fb33825aeee05c1fa58d4733075f947b172e51  ./schemas/cont
 6757bb197499d6107906aa0cf77fcf915fd7f354d37a79940c9fe5b67d9f6d59  ./schemas/contracts/hmi-contribute-preflight-v1.schema.json
 c530db9e49e7ad4aed36476525684fb67e7389037b768873a183342bd0948dd9  ./schemas/contracts/hmi-generation-bundle-v1.schema.json
 d049a14ec5db349f96aca5dbef0377ce90a1a313562929c87292100e89a69f82  ./schemas/contracts/poc-admin-authority-profile-v1.schema.json
+b16e009281e65528c7c238a4cdea3423f0da083cf4a8fb3022faa659e27f963f  ./schemas/contracts/resource-plane-profile-input-v1.schema.json
+6721f79a72fbf9b8c598365c31bead3ae4ea539b8b50c4fed66b2657e362a7b8  ./schemas/contracts/resource-plane-plan-v1.schema.json
 982f19ffaafd2ed726be891a5f8ca3c552c266832e8598f86a4009107b76ea83  ./schemas/contracts/protected-audit-timeline-v1.schema.json
 fc3efb14bbe442cbaedfdb710780a28c0e7285dab6cb2c1712ae932669dcacfa  ./schemas/contracts/update-lock-profile-v1.schema.json
 841261a0c03495925a09547e5c014be93c4fa8f8d41ad6d68d985b01c83b361c  ./schemas/contracts/update-operation-contract-v1.schema.json
@@ -359,6 +363,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
+af0f2117460bf2fc8478d9a45c58b17ad1bc6c839a9a0654a325078354fb4990  ./tests/resource-plane-profiles.test.ts
 cc806a1710ca91539e450226924b6cf59614fd4e94dce452f954395885ef4b90  ./tests/release-governance.test.mjs
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
