@@ -284,7 +284,7 @@ e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/con
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 858a946993ddb863156007ac6bb80d1821e312dda885a7b2954066177fdf57ab  ./release/governance.json
-dfc3c208fa9befc6bc82b465462199377f8cdeecd14ddbbbcbc301c8675785a8  ./release/public-files.manifest
+6e710f2b9eb1293a4ab2a760f05f828c7a68a4e485f16cdb46ab47f4b80040be  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -371,7 +371,7 @@ a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verifi
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
 1b49391a2a113298baf13c5ec6a6f88d21bf4d54825ed4a9c172cb64aaa33c6a  ./tools/video-production-reference/Dockerfile
 7a173c3a11ebeae7d4d561cb5fc4afba1a9d25e585400e17c18304da459a77df  ./tools/video-production-reference/METHODOLOGY-CHANGELOG.md
-1a66dfa046fa6733a7778207b92c79b97a7c7b8aa8510fd09bf9837084c9c840  ./tools/video-production-reference/README.md
+1f33002a91f1d085e51de7b1b0ab9fcc3c48825d9e4c74dc1bb0e7032b3bb067  ./tools/video-production-reference/README.md
 2b1c520ff4ff3a2cad64b6eb0b98063fdcc7439add5312ea55f8288deb5af974  ./tools/video-production-reference/THIRD_PARTY_NOTICES.md
 d986a832ca2052d857f00f944184f95836ddd7780e5e582fd1a9ebb46dd3f0d2  ./tools/video-production-reference/assets/reference/chimpmaera-logo-negative.svg
 2ebbe40c39f72ffb284ec786384c53ab8f0aea2d578f39eb4582616f380925af  ./tools/video-production-reference/assets/reference/reference-assets.json
@@ -380,7 +380,7 @@ fe2bf3eb27c3fd7da98d115711db510c2cb83feb4bc847f4f2b2e37fa3c6c30d  ./tools/video-
 0be67548fa74204882edc637a99a4fbb9f2873fffd0ff98846077ac0d3aa8c15  ./tools/video-production-reference/assets/reference/voice-reference-de.wav
 2a547d7e8e31e534d9400c3017c1899de6e5bd0805aa475c91f1fab8ba68ff86  ./tools/video-production-reference/bin/cm-video
 f141f8dae6de0296527e70fe0d2e3b252aafbe77985d7cc6532e9dcfc222ec53  ./tools/video-production-reference/compose.yaml
-3833a770daf39782d8a8463223dae1ccaa028564293f85ae5d8978733c63f439  ./tools/video-production-reference/docs/ARCHITECTURE.md
+ac29074b7c5f283fc636570c75a62e3b603fe2f387a617629e02a8254fd2a3ee  ./tools/video-production-reference/docs/ARCHITECTURE.md
 d2ca1f7081d78b0b2cab4ba8c0ebacd23222c1286336f28fd7d2e0b7b1664e48  ./tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md
 d4c6448a3574ca763b82356bea970d5c803230c6c9c24a68842164bcfb386698  ./tools/video-production-reference/docs/CURRENT-LIMITS.md
 4c54eade1b7a9f2ec42a2eeb81a52eb915625670e388aee5882391ec9f86f690  ./tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md
@@ -411,6 +411,7 @@ e3ff821fb65c09b6fcb9ae9f885a51684df797a019ab2a86dc52ee3a15385d53  ./tools/video-
 b0641460946c92c9f172f93e196d68751533e624dfbf76a03bb6c75e406159a3  ./tools/video-production-reference/scripts/smoke.sh
 8169b3f70d779189191cb4e07c3cbda26b998173f1907bb9c7e8d6004f6edc85  ./tools/video-production-reference/src/cm_video_ref/__init__.py
 2ab142712f5e9de133f7fcea6b7cf8ee03b6b66a26ebcd47be424bc11624ee33  ./tools/video-production-reference/src/cm_video_ref/audience_copy.py
+d110c094c6a15329422c1d9d54fa250fd5e781a05c64a4b1f537dc23249a0eb3  ./tools/video-production-reference/src/cm_video_ref/batch.py
 1d5a2f5bbc99286facab1d1a68b0ada40924d8b2c047fcc594d2faf92fdbfab2  ./tools/video-production-reference/src/cm_video_ref/cli.py
 90d0f6a89bc8815fb1e92d92b694d82e17017399230c74797b996de7587fb149  ./tools/video-production-reference/src/cm_video_ref/contract.py
 f1191e0217049625ad151b6a27bb0f171e6588355daac714e278857fd9b85c5e  ./tools/video-production-reference/src/cm_video_ref/methodology.py
@@ -423,6 +424,7 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 2183e250f888d3b44406cba382567db8143379bbbf02fcd8b0d122c8dbc53e0d  ./tools/video-production-reference/templates/privacy-safe-media-events-v1.json
 5638e88bcafd0de4abe78b33c0b7927682cc5a5aeb9e24da63fdaf48267047fa  ./tools/video-production-reference/templates/script-package-v1.json
 2cb062afa24f49517e2d1a609e6abbd119a303b24db8c170515cec99564c282a  ./tools/video-production-reference/templates/visual-grammar-families-v1.json
+7ce561ca506e1fd3ab077d2e0032d086430c75cbf7a42015cc6ed696d2e910f1  ./tools/video-production-reference/tests/test_batch.py
 090a475aa6ede5e5874cffbdc0e8410eb0e13cee7d7e289a69a3fe757ca5e3a1  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json

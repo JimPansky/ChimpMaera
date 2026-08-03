@@ -49,6 +49,14 @@ Docker socket.
    the container and rejects stale policy hashes, channel coverage, or rule
    coverage.
 
+Independent segment renders may use `cm_video_ref.batch.run_independent` with
+the conservative WIP=2 ceiling. One module exception becomes only that
+module's `FAIL` outcome and never cancels siblings. GPU-backed adapters remain
+responsible for a separate WIP=1 TTS/ASR semaphore. `validate_exact_fan_in`
+keeps Daily assembly fail-closed until six exact storyboard digests each bind
+automated QA, a candidate hash, and the final human approval. Neither helper
+uploads or publishes.
+
 Editorial duration is content-driven. Scene and clip timing remains a technical
 assembly contract, but no total Daily runtime is a target, maximum, pass/fail
 goal, truncation trigger, or padding target.

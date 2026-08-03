@@ -85,6 +85,13 @@ Default mode is validate-only. Full rendering requires all of the following:
 
 The renderer refuses to overwrite an existing immutable output directory.
 
+For independent modular work, `cm_video_ref.batch.run_independent` provides a
+bounded WIP=2 fan-out that records `PASS`, `FAIL`, or `BLOCKED` per exact
+revision without global fail-fast. `validate_exact_fan_in` permits assembly
+only for six exact digest-bound revisions with automated QA, candidate hashes,
+and exact final human approvals. These contracts perform no assembly, upload,
+or publication action.
+
 ## Editorial duration boundary
 
 ChimpMaera Daily videos have no fixed target or maximum duration. The material
