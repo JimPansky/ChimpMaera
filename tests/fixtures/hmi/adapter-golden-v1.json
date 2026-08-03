@@ -1,0 +1,22 @@
+[
+  {"caseId":"HMI-A-P01","operation":"discover","query":"Find inactive integration capabilities","selectors":[],"selectedInput":null},
+  {"caseId":"HMI-A-P02","operation":"discover","query":"Find release explanation capabilities","selectors":["cm:describe-system"],"selectedInput":null},
+  {"caseId":"HMI-A-P03","operation":"discover","query":"Find graph validation capabilities","selectors":["cm:describe-system"],"selectedInput":{"topic":"graph"}},
+  {"caseId":"HMI-A-P04","operation":"discover","query":"List capabilities for governed local work","selectors":[],"selectedInput":{"effectClass":"DESCRIBE_ONLY"}},
+  {"caseId":"HMI-A-P05","operation":"explain","query":"Explain the authority-free core boundary","selectors":["cm:describe-system"],"selectedInput":null},
+  {"caseId":"HMI-A-P06","operation":"explain","query":"Explain immutable generation identity","selectors":["cm:describe-system"],"selectedInput":null},
+  {"caseId":"HMI-A-P07","operation":"explain","query":"Explain why discovery grants no rights","selectors":["cm:describe-system"],"selectedInput":null},
+  {"caseId":"HMI-A-P08","operation":"explain","query":"Explain local synthetic evidence limits","selectors":["cm:describe-system"],"selectedInput":{"audience":"operator"}},
+  {"caseId":"HMI-A-P09","operation":"plan","query":"Plan a bounded read-only integration review","selectors":["cm:describe-system"],"selectedInput":{"systemClass":"synthetic-records"}},
+  {"caseId":"HMI-A-P10","operation":"plan","query":"Plan an immutable generation verification","selectors":["cm:describe-system"],"selectedInput":{"goal":"verify-digests"}},
+  {"caseId":"HMI-A-P11","operation":"plan","query":"Plan a no-authority adapter comparison","selectors":["cm:describe-system"],"selectedInput":{"constraints":["no-network","no-write"]}},
+  {"caseId":"HMI-A-P12","operation":"validate","query":"Validate supplied synthetic graph metadata","selectors":["cm:describe-system"],"selectedInput":{"nodes":["a","b"],"edges":[["a","b"]]}},
+  {"caseId":"HMI-A-P13","operation":"validate","query":"Validate supplied generation metadata","selectors":["cm:describe-system"],"selectedInput":{"generation":"synthetic"}},
+  {"caseId":"HMI-A-P14","operation":"validate","query":"Validate deterministic finding order","selectors":["cm:describe-system"],"selectedInput":{"findings":["a","b"]}},
+  {"caseId":"HMI-A-P15","operation":"handoff","query":"Describe an unavailable Wave 0 handoff","selectors":["cm:describe-system"],"selectedInput":{"routeId":"none"}},
+  {"caseId":"HMI-A-P16","operation":"handoff","query":"Return the no-execution handoff boundary","selectors":["cm:describe-system"],"selectedInput":{"operation":"read"}},
+  {"caseId":"HMI-A-P17","operation":"contribute","query":"Describe an unresolved reporting intent","selectors":[],"selectedInput":{"goal":"synthetic-reporting"}},
+  {"caseId":"HMI-A-P18","operation":"contribute","query":"Describe a missing local validator","selectors":[],"selectedInput":{"gap":"validator"}},
+  {"caseId":"HMI-A-P19","operation":"explain","query":"Explain provenance completeness","selectors":["cm:describe-system"],"selectedInput":{"coverage":"bounded"}},
+  {"caseId":"HMI-A-P20","operation":"discover","query":"Find exact compatible descriptions","selectors":["cm:describe-system"],"selectedInput":{"compatibility":"exact"}}
+]

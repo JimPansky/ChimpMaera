@@ -1,0 +1,104 @@
+{
+  "manifest": {
+    "schemaVersion": "chimpmaera.hmi/generation/v1",
+    "generationId": "cm:hmi-generation-001",
+    "coreVersion": "1.0.0",
+    "contractVersion": "1.0.0",
+    "createdFrom": {
+      "sourceSetDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+      "generatorDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+      "schemaDigest": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "provenance": [
+      {
+        "sourceId": "cm:hmi-source-001",
+        "relativeRef": "sources/public-synthetic.md",
+        "sourceDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+        "trustClass": "PUBLIC_SYNTHETIC",
+        "reviewStatus": "REVIEWED_LOCAL_SYNTHETIC",
+        "nonClaims": ["Local synthetic contract fixture only", "No harness or runtime compatibility claim"]
+      }
+    ],
+    "files": [
+      {
+        "path": "index.json",
+        "mediaType": "application/json",
+        "byteCount": 73,
+        "sha256": "c493bd3a90743ec4b05774125099900bc6420802ff345d3233e80994fc8469d0",
+        "role": "INDEX",
+        "kind": "REGULAR_FILE",
+        "executable": false,
+        "mutable": false
+      },
+      {
+        "path": "capabilities/describe-system.json",
+        "mediaType": "application/json",
+        "byteCount": 195,
+        "sha256": "3568634b3b18724b9494f5626c764975e3ea616c3dd26cef71820342a361149c",
+        "role": "CAPABILITY",
+        "kind": "REGULAR_FILE",
+        "executable": false,
+        "mutable": false
+      },
+      {
+        "path": "normalization.json",
+        "mediaType": "application/json",
+        "byteCount": 87,
+        "sha256": "132c2738ae1540f76f040f1d2ec574612692a95a13cca7c8f16f471b4d6337b3",
+        "role": "NORMALIZATION",
+        "kind": "REGULAR_FILE",
+        "executable": false,
+        "mutable": false
+      }
+    ],
+    "capabilities": [
+      {
+        "capabilityId": "cm:describe-system",
+        "descriptorDigest": "3568634b3b18724b9494f5626c764975e3ea616c3dd26cef71820342a361149c",
+        "effectClass": "DESCRIBE_ONLY",
+        "requestedRights": [],
+        "routeId": null,
+        "lifecycleState": "DESCRIBED_INACTIVE"
+      }
+    ],
+    "validatorIds": [],
+    "routes": [],
+    "authority": {
+      "requestedRights": [],
+      "routeIds": [],
+      "writeTargets": [],
+      "networkRoutes": [],
+      "externalDependencies": []
+    },
+    "compatibility": {
+      "coreVersion": "1.0.0",
+      "contractVersion": "1.0.0",
+      "evidenceStatus": "LOCAL_SYNTHETIC"
+    },
+    "limits": {
+      "maxReferences": 4,
+      "maxSourceBytes": 65536,
+      "maxFindings": 200,
+      "maxOutputBytes": 16384
+    },
+    "supersedes": null,
+    "generationDigest": "8c43b9686dcd4f3a3cbafff951f1e4ac5e30aeba5b083e214345c703bd3b09dd"
+  },
+  "files": [
+    {
+      "path": "index.json",
+      "encoding": "UTF8",
+      "content": "{\"capabilityIds\":[\"cm:describe-system\"],\"topics\":[\"governed-local-core\"]}"
+    },
+    {
+      "path": "capabilities/describe-system.json",
+      "encoding": "UTF8",
+      "content": "{\"capabilityId\":\"cm:describe-system\",\"effectClass\":\"DESCRIBE_ONLY\",\"lifecycleState\":\"DESCRIBED_INACTIVE\",\"purpose\":\"Describe the bounded synthetic generation\",\"requestedRights\":[],\"routeId\":null}"
+    },
+    {
+      "path": "normalization.json",
+      "encoding": "UTF8",
+      "content": "{\"arraySemantics\":\"PRESERVE_UNLESS_DECLARED_SET\",\"objectKeys\":\"SORTED\",\"unicode\":\"NFC\"}"
+    }
+  ]
+}

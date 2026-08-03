@@ -1,0 +1,10 @@
+[
+  { "caseId": "unknown-field", "operation": "add", "path": "/doctorReport/privateDetails", "value": "redacted", "expectedReason": "SCHEMA_DENIED" },
+  { "caseId": "unsupported-v2", "operation": "replace", "path": "/schemaVersion", "value": "chimpmaera.update/doctor-contract-bundle/v2", "expectedReason": "UNSUPPORTED_CONTRACT_VERSION_DENIED" },
+  { "caseId": "mutable-latest", "operation": "replace", "path": "/lockProfile/components/0/version", "value": "latest", "expectedReason": "MUTABLE_TARGET_DENIED" },
+  { "caseId": "range-only", "operation": "replace", "path": "/lockProfile/components/0/version", "value": ">=0.2.0", "expectedReason": "MUTABLE_TARGET_DENIED" },
+  { "caseId": "digest-drift", "operation": "replace", "path": "/doctorReport/generatedAtMs", "value": 1785700801001, "expectedReason": "DIGEST_MISMATCH_DENIED" },
+  { "caseId": "hidden-authority", "operation": "add", "path": "/operationPlan/authorityDelta/added/0", "value": "capability:runtime-write", "expectedReason": "AUTHORITY_DELTA_DENIED" },
+  { "caseId": "mutation-claim", "operation": "replace", "path": "/operationReceipt/mutationObserved", "value": true, "expectedReason": "SCHEMA_DENIED" },
+  { "caseId": "public-export-leak", "operation": "add", "path": "/doctorReport/checks/0/exception", "value": "private diagnostic payload", "expectedReason": "SCHEMA_DENIED" }
+]

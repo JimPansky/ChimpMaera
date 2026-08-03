@@ -63,6 +63,16 @@ concept, evidence is local and synthetic. It does not establish production
 readiness, certification, universal containment, customer-data fitness,
 generic ETL/MDM capability or a production system of record.
 
+Each grouped functional component in a release additionally records its
+user-oriented claim and value, included public-manifest bytes, focused positive
+proof, relevant changed-surface fail-closed proof, explicit non-claims, and
+PDCA plus exact release-commit and asset-checksum bindings. The governance
+validator requires included bytes and focused proof paths to be present in the
+public manifest. Repository PDCA paths must exist but remain outside the public
+asset under the existing development-evidence hygiene rule. This is release
+evidence for included functionality, not a separate product scope or an
+invitation to add broad optional test matrices.
+
 ## Active videos and historical evidence
 
 Only video IDs listed under `videos.activeVerifiedIds` may appear on active

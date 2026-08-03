@@ -88,21 +88,43 @@ export function validateRepository(root = process.cwd()) {
     issue(issues, releaseDocs.includes(`## ${heading}`), `GOVERNANCE_SECTION_MISSING:${heading}`);
   }
 
+  const publicManifest = read(root, "release/public-files.manifest");
+  const publicPaths = new Set(publicManifest.trim().split("\n").map((line) => line.split("\t")[0]));
   issue(issues, Array.isArray(governance.claimEvidence) && governance.claimEvidence.length > 0, "CLAIM_EVIDENCE_MAPPING_MISSING");
+  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector"]);
+  const observedComponents = new Set();
   for (const mapping of governance.claimEvidence ?? []) {
     issue(issues, /^CM-REL-\d{3}$/.test(mapping.claimId ?? ""), `CLAIM_ID_INVALID:${mapping.claimId ?? "missing"}`);
     issue(issues, Array.isArray(mapping.nonClaims) && mapping.nonClaims.length > 0, `NON_CLAIMS_MISSING:${mapping.claimId}`);
     for (const path of mapping.evidencePaths ?? []) {
       try { readFileSync(resolve(root, path)); } catch { issues.push(`CLAIM_EVIDENCE_MISSING:${mapping.claimId}:${path}`); }
     }
+    if (mapping.component) {
+      observedComponents.add(mapping.component);
+      issue(issues, expectedComponents.has(mapping.component), `RELEASE_COMPONENT_UNKNOWN:${mapping.component}`);
+      issue(issues, typeof mapping.claim === "string" && typeof mapping.userValue === "string", `COMPONENT_CLAIM_VALUE_MISSING:${mapping.claimId}`);
+      issue(issues, Array.isArray(mapping.includedBytes) && mapping.includedBytes.length > 0, `COMPONENT_BYTES_MISSING:${mapping.claimId}`);
+      issue(issues, Array.isArray(mapping.functionalProof?.testPaths) && mapping.functionalProof.testPaths.length > 0 && typeof mapping.functionalProof.result === "string", `COMPONENT_FUNCTIONAL_PROOF_MISSING:${mapping.claimId}`);
+      issue(issues, Array.isArray(mapping.safetyProof?.testPaths) && mapping.safetyProof.testPaths.length > 0 && typeof mapping.safetyProof.result === "string", `COMPONENT_SAFETY_PROOF_MISSING:${mapping.claimId}`);
+      issue(issues, Array.isArray(mapping.traceability?.pdcaPaths) && mapping.traceability.pdcaPaths.length > 0 && mapping.traceability.publicManifest === "release/public-files.manifest" && mapping.traceability.releaseCommitBinding === "currentRelease.tagObjectSha" && mapping.traceability.assetChecksumBinding === "currentRelease.assets[].sha256", `COMPONENT_TRACEABILITY_MISSING:${mapping.claimId}`);
+      const publicComponentPaths = [...(mapping.includedBytes ?? []), ...(mapping.functionalProof?.testPaths ?? []), ...(mapping.safetyProof?.testPaths ?? [])];
+      for (const path of publicComponentPaths) {
+        try { readFileSync(resolve(root, path)); } catch { issues.push(`COMPONENT_PATH_MISSING:${mapping.claimId}:${path}`); }
+        issue(issues, publicPaths.has(path), `COMPONENT_PATH_UNMANIFESTED:${mapping.claimId}:${path}`);
+      }
+      for (const path of mapping.traceability?.pdcaPaths ?? []) {
+        try { readFileSync(resolve(root, path)); } catch { issues.push(`COMPONENT_PDCA_PATH_MISSING:${mapping.claimId}:${path}`); }
+      }
+    }
   }
+  for (const component of expectedComponents) issue(issues, observedComponents.has(component), `RELEASE_COMPONENT_EVIDENCE_MISSING:${component}`);
+  issue(issues, observedComponents.size === expectedComponents.size, "RELEASE_COMPONENT_EVIDENCE_COUNT_INVALID");
 
   const assets = release.assets ?? [];
   issue(issues, assets.length > 0 && assets.every((asset) => typeof asset.name === "string" && Number.isInteger(asset.size) && /^[a-f0-9]{64}$/.test(asset.sha256)), "ASSET_INVENTORY_INVALID");
   issue(issues, assets.some((asset) => asset.name === release.assetManifest?.name), "ASSET_MANIFEST_MISSING");
   issue(issues, assets.some((asset) => asset.name === release.assetManifest?.declares), "ASSET_MANIFEST_TARGET_MISSING");
 
-  const publicManifest = read(root, "release/public-files.manifest");
   for (const required of ["README.md", "CONTRIBUTING.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"]) {
     issue(issues, publicManifest.split("\n").some((line) => line.startsWith(`${required}\t${required}\t`)), `PUBLIC_MANIFEST_MISSING:${required}`);
   }

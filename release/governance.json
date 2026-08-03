@@ -73,6 +73,66 @@
       "claim": "Published release assets are bound to an explicit manifest, byte sizes and SHA-256 digests.",
       "evidencePaths": ["docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["Repository tests do not replace anonymous public asset readback.", "Release metadata edits do not authorize tag or asset replacement."]
+    },
+    {
+      "claimId": "CM-REL-004",
+      "component": "Verification Fabric",
+      "claim": "ChimpMaera ships a deterministic Verification Fabric contract that binds plans, checks, evidence, verdicts and last-known-good readback so users can audit why a local synthetic verification passed or failed.",
+      "userValue": "Users get one stable, digest-bound vocabulary for verification evidence instead of disconnected success assertions.",
+      "includedBytes": ["packages/contracts/src/verification-fabric.ts", "schemas/contracts/verification-fabric-bundle-v1.schema.json", "tests/fixtures/verification-fabric/positive-bundle-v1.json", "tests/fixtures/verification-fabric/negative-matrix-v1.json"],
+      "functionalProof": {"testPaths": ["tests/verification-fabric.test.ts"], "result": "PASS: valid contract bundles verify with canonical SHA-256 bindings."},
+      "safetyProof": {"testPaths": ["tests/verification-fabric.test.ts", "tests/fixtures/verification-fabric/negative-matrix-v1.json"], "result": "PASS: changed-surface stale, missing, mismatched, self-produced and corrupted evidence fails closed."},
+      "evidencePaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic proof only; no deployment, profile-specific runtime validation, production readiness or external authority is proven."],
+      "traceability": {"pdcaPaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-005",
+      "component": "Update/Doctor",
+      "claim": "ChimpMaera ships check-only Update/Doctor contracts and read-only diagnostics that make compatibility and repair readiness inspectable without applying an update.",
+      "userValue": "Operators can receive typed, reproducible diagnostics and receipts before any state-changing maintenance is considered.",
+      "includedBytes": ["packages/contracts/src/update-doctor.ts", "schemas/contracts/doctor-report-v1.schema.json", "schemas/contracts/update-lock-profile-v1.schema.json", "schemas/contracts/update-operation-contract-v1.schema.json", "tests/fixtures/update-doctor/positive-contract-bundle-v1.json", "tests/fixtures/update-doctor/negative-matrix-v1-v2.json"],
+      "functionalProof": {"testPaths": ["tests/update-doctor.test.ts", "tests/update-doctor-core.test.ts", "tests/update-doctor-compose-adapter.test.ts"], "result": "PASS: current focused Update/Doctor suites verify valid check-only bundles, core diagnostics and composed projections."},
+      "safetyProof": {"testPaths": ["tests/update-doctor.test.ts", "tests/fixtures/update-doctor/negative-matrix-v1-v2.json"], "result": "PASS: unsupported versions, mutable targets, digest drift and authority deltas are denied with typed fail-closed results."},
+      "evidencePaths": ["docs/development/ud-001-update-doctor-contracts-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic proof only; no update application, repair, migration, Docker/cloud observation, deployment or production readiness is proven."],
+      "traceability": {"pdcaPaths": ["docs/development/ud-001-update-doctor-contracts-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-006",
+      "component": "HMI/Harness Multitool",
+      "claim": "ChimpMaera ships an authority-free HMI/Harness multitool contract for bounded generation, disclosure-safe discovery and evidence-grounded explanation payloads.",
+      "userValue": "Users can inspect supported operations and explanations through stable payloads without the interface silently gaining execution rights.",
+      "includedBytes": ["packages/contracts/src/hmi-core.ts", "packages/contracts/src/hmi-harness-adapter.ts", "packages/contracts/src/hmi-disclosure-safety.ts", "packages/contracts/src/hmi-discover-payload.ts", "packages/contracts/src/hmi-explain-payload.ts", "schemas/contracts/hmi-generation-bundle-v1.schema.json", "schemas/contracts/hmi-discover-payload-v1.schema.json", "schemas/contracts/hmi-explain-payload-v1.schema.json", "tests/fixtures/hmi/positive-generation-v1.json", "tests/fixtures/hmi/adapter-golden-v1.json", "tests/fixtures/hmi/positive-discover-payload-v1.json", "tests/fixtures/hmi/positive-explain-payload-v1.json", "tests/fixtures/hmi/negative-matrix-v1.json"],
+      "functionalProof": {"testPaths": ["tests/hmi-core.test.ts", "tests/hmi-harness-adapter.test.ts", "tests/hmi-disclosure-safety.test.ts", "tests/hmi-discover-payload.test.ts", "tests/hmi-explain-payload.test.ts", "tests/hmi-post-explain-consistency.test.ts"], "result": "PASS 31/31: current focused HMI suites cover generation, adapter parity, disclosure, discovery, explanation and post-explain consistency."},
+      "safetyProof": {"testPaths": ["tests/hmi-disclosure-safety.test.ts", "tests/hmi-post-explain-consistency.test.ts", "tests/fixtures/hmi/negative-matrix-v1.json"], "result": "PASS: changed-surface disclosure, authority-delta and cross-contract inconsistency probes fail closed."},
+      "evidencePaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic proof only; no runtime execution authority, generic operation dispatcher, live provider integration or production UI is proven."],
+      "traceability": {"pdcaPaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-007",
+      "component": "Azure/Entra Identity Contract",
+      "claim": "ChimpMaera ships a closed Microsoft Entra delegated identity profile that describes single-tenant Authorization Code plus PKCE authentication without granting product authority.",
+      "userValue": "Integrators get an auditable identity boundary with fixed issuer, audience, tenant and delegated-scope expectations before any live tenant setup.",
+      "includedBytes": ["packages/contracts/src/azure-identity-profile.ts", "schemas/contracts/azure-identity-profile-v1.schema.json", "tests/fixtures/azure-identity/positive-profile-v1.json", "tests/fixtures/azure-identity/negative-matrix-v1.json"],
+      "functionalProof": {"testPaths": ["tests/azure-identity-profile.test.ts"], "result": "PASS 4/4: the synthetic delegated single-tenant profile verifies with canonical digest stability."},
+      "safetyProof": {"testPaths": ["tests/azure-identity-profile.test.ts", "tests/fixtures/azure-identity/negative-matrix-v1.json"], "result": "PASS: broad/application permissions, tenant substitution, unsafe credentials and authority-bearing variants are denied."},
+      "evidencePaths": ["docs/development/azid-001-authority-free-azure-identity-profile-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic proof only; no live Microsoft Entra tenant, registration, consent, OBO flow, token validation, Conditional Access, DLP or production compatibility is proven."],
+      "traceability": {"pdcaPaths": ["docs/development/azid-001-authority-free-azure-identity-profile-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-008",
+      "component": "Power Platform Read Connector",
+      "claim": "ChimpMaera ships a closed authority-free Power Platform read connector contract with five bounded operations, required readback and receipt binding.",
+      "userValue": "Integrators can evaluate a precise read-only connector surface without generic invocation, write targets or false-success shortcuts.",
+      "includedBytes": ["packages/contracts/src/power-platform-read-connector.ts", "schemas/contracts/power-platform-read-connector-v1.schema.json", "tests/fixtures/power-platform/positive-read-connector-v1.json", "tests/fixtures/power-platform/negative-matrix-v1.json"],
+      "functionalProof": {"testPaths": ["tests/power-platform-read-connector.test.ts"], "result": "PASS 4/4: the five-operation synthetic read connector verifies with identity and Verification Fabric bindings."},
+      "safetyProof": {"testPaths": ["tests/power-platform-read-connector.test.ts", "tests/fixtures/power-platform/negative-matrix-v1.json"], "result": "PASS: open targets, broad scopes, mutation escape, generic invocation, optional readback, false success and credentials are denied."},
+      "evidencePaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic proof only; no live Power Platform import, tenant compatibility, Entra consent, OBO, DLP, Gateway integration, certification or production behavior is proven."],
+      "traceability": {"pdcaPaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     }
   ]
 }

@@ -1,0 +1,8 @@
+[
+  { "caseId": "stale-evidence", "operation": "replace", "path": "/verdict/evaluatedAtMs", "value": 9000, "expectedReason": "EVIDENCE_STALE_DENIED" },
+  { "caseId": "missing-check-run", "operation": "remove", "path": "/checkRuns/1", "expectedReason": "EVIDENCE_MISSING_DENIED" },
+  { "caseId": "mismatched-subject", "operation": "replace", "path": "/evidenceBundle/subjectDigest", "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedReason": "EVIDENCE_MISMATCH_DENIED" },
+  { "caseId": "self-produced-evidence", "operation": "replace", "path": "/evidenceBundle/producerId", "value": "producer:subject-fixture", "expectedReason": "SELF_PRODUCED_EVIDENCE_DENIED" },
+  { "caseId": "corrupt-lkg-readback", "operation": "replace", "path": "/lkg/readback/observedVerdictDigest", "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedReason": "LKG_CORRUPT_DENIED" },
+  { "caseId": "unredacted-public-link", "operation": "replace", "path": "/evidenceBundle/artifactRefs/0", "value": "https://example.invalid/private/run/42", "expectedReason": "SCHEMA_DENIED" }
+]

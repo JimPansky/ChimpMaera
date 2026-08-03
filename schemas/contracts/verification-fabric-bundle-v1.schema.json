@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/verification-fabric-bundle-v1.schema.json",
+  "title": "ChimpMaera Verification Fabric contract set v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "plan", "selfTestIdentity", "checkRuns", "evidenceBundle", "verdict", "revalidationTrigger", "lkg"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.verification/fabric-bundle/v1" },
+    "plan": { "$ref": "#/$defs/verificationPlan" },
+    "selfTestIdentity": { "$ref": "#/$defs/selfTestIdentity" },
+    "checkRuns": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/checkRun" } },
+    "evidenceBundle": { "$ref": "#/$defs/evidenceBundle" },
+    "verdict": { "$ref": "#/$defs/verdict" },
+    "revalidationTrigger": { "$ref": "#/$defs/revalidationTrigger" },
+    "lkg": {
+      "type": "object", "additionalProperties": false,
+      "required": ["pointer", "readback"],
+      "properties": {
+        "pointer": { "$ref": "#/$defs/lkgPointer" },
+        "readback": { "$ref": "#/$defs/lkgReadback" }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "timestamp": { "type": "integer", "minimum": 0 },
+    "artifactRef": { "type": "string", "pattern": "^artifact:sha256:[a-f0-9]{64}$" },
+    "artifactRefs": { "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/artifactRef" } },
+    "verificationPlan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "planId", "subjectId", "subjectProducerId", "subjectDigest", "profileId", "issuedAtMs", "evidenceMaxAgeMs", "requiredCheckIds", "artifactRefs", "planDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/plan/v1" }, "planId": { "$ref": "#/$defs/id" },
+        "subjectId": { "$ref": "#/$defs/id" }, "subjectProducerId": { "$ref": "#/$defs/id" }, "subjectDigest": { "$ref": "#/$defs/digest" },
+        "profileId": { "$ref": "#/$defs/id" }, "issuedAtMs": { "$ref": "#/$defs/timestamp" }, "evidenceMaxAgeMs": { "type": "integer", "minimum": 1 },
+        "requiredCheckIds": { "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+        "artifactRefs": { "$ref": "#/$defs/artifactRefs" }, "planDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "selfTestIdentity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "verifierId", "producerId", "subjectProducerId", "independence", "issuedAtMs", "identityDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/self-test-identity/v1" }, "verifierId": { "$ref": "#/$defs/id" },
+        "producerId": { "$ref": "#/$defs/id" }, "subjectProducerId": { "$ref": "#/$defs/id" }, "independence": { "const": "INDEPENDENT" },
+        "issuedAtMs": { "$ref": "#/$defs/timestamp" }, "identityDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "checkRun": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "checkRunId", "checkId", "planDigest", "subjectDigest", "verifierId", "startedAtMs", "completedAtMs", "outcome", "runDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/check-run/v1" }, "checkRunId": { "$ref": "#/$defs/id" }, "checkId": { "$ref": "#/$defs/id" },
+        "planDigest": { "$ref": "#/$defs/digest" }, "subjectDigest": { "$ref": "#/$defs/digest" }, "verifierId": { "$ref": "#/$defs/id" },
+        "startedAtMs": { "$ref": "#/$defs/timestamp" }, "completedAtMs": { "$ref": "#/$defs/timestamp" }, "outcome": { "enum": ["PASS", "FAIL", "ERROR"] },
+        "runDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "evidenceBundle": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "bundleId", "planDigest", "subjectDigest", "producerId", "collectedAtMs", "expiresAtMs", "checkRunDigests", "artifactRefs", "bundleDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/evidence-bundle/v1" }, "bundleId": { "$ref": "#/$defs/id" }, "planDigest": { "$ref": "#/$defs/digest" },
+        "subjectDigest": { "$ref": "#/$defs/digest" }, "producerId": { "$ref": "#/$defs/id" }, "collectedAtMs": { "$ref": "#/$defs/timestamp" },
+        "expiresAtMs": { "$ref": "#/$defs/timestamp" }, "checkRunDigests": { "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": { "$ref": "#/$defs/digest" } },
+        "artifactRefs": { "$ref": "#/$defs/artifactRefs" }, "bundleDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "verdict": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "verdictId", "status", "reasonCodes", "planDigest", "subjectDigest", "evidenceBundleDigest", "evaluatedAtMs", "verdictDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/verdict/v1" }, "verdictId": { "$ref": "#/$defs/id" }, "status": { "enum": ["VERIFIED", "DENIED", "INCONCLUSIVE"] },
+        "reasonCodes": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "enum": ["VERIFICATION_COMPLETE", "SCHEMA_DENIED", "EVIDENCE_MISSING_DENIED", "EVIDENCE_STALE_DENIED", "EVIDENCE_MISMATCH_DENIED", "SELF_PRODUCED_EVIDENCE_DENIED", "CHECK_FAILED_DENIED", "LKG_CORRUPT_DENIED", "VERDICT_MISMATCH_DENIED"] } },
+        "planDigest": { "$ref": "#/$defs/digest" }, "subjectDigest": { "$ref": "#/$defs/digest" }, "evidenceBundleDigest": { "$ref": "#/$defs/digest" },
+        "evaluatedAtMs": { "$ref": "#/$defs/timestamp" }, "verdictDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "revalidationTrigger": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "triggerId", "state", "causes", "observedSubjectDigest", "observedPlanDigest", "observedEvidenceBundleDigest", "armedAtMs", "triggerDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/revalidation-trigger/v1" }, "triggerId": { "$ref": "#/$defs/id" }, "state": { "const": "ARMED" },
+        "causes": { "type": "array", "minItems": 1, "maxItems": 4, "uniqueItems": true, "items": { "enum": ["SUBJECT_CHANGED", "PLAN_CHANGED", "EVIDENCE_EXPIRED", "MANUAL"] } },
+        "observedSubjectDigest": { "$ref": "#/$defs/digest" }, "observedPlanDigest": { "$ref": "#/$defs/digest" }, "observedEvidenceBundleDigest": { "$ref": "#/$defs/digest" },
+        "armedAtMs": { "$ref": "#/$defs/timestamp" }, "triggerDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "lkgPointer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "pointerId", "targetVerdictDigest", "targetEvidenceBundleDigest", "generation", "pointerDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/lkg-pointer/v1" }, "pointerId": { "$ref": "#/$defs/id" }, "targetVerdictDigest": { "$ref": "#/$defs/digest" },
+        "targetEvidenceBundleDigest": { "$ref": "#/$defs/digest" }, "generation": { "type": "integer", "minimum": 1 }, "pointerDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "lkgReadback": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "pointerId", "pointerDigest", "observedVerdictDigest", "observedEvidenceBundleDigest", "observedGeneration", "status", "readAtMs", "readbackDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.verification/lkg-readback/v1" }, "pointerId": { "$ref": "#/$defs/id" }, "pointerDigest": { "$ref": "#/$defs/digest" },
+        "observedVerdictDigest": { "$ref": "#/$defs/digest" }, "observedEvidenceBundleDigest": { "$ref": "#/$defs/digest" }, "observedGeneration": { "type": "integer", "minimum": 1 },
+        "status": { "enum": ["MATCHED", "MISMATCH", "MISSING"] }, "readAtMs": { "$ref": "#/$defs/timestamp" }, "readbackDigest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

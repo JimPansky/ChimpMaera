@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "chimpmaera.verification/fabric-bundle/v1",
+  "plan": {
+    "schemaVersion": "chimpmaera.verification/plan/v1",
+    "planId": "plan:synthetic-vf001",
+    "subjectId": "subject:synthetic-adapter",
+    "subjectProducerId": "producer:subject-fixture",
+    "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "profileId": "profile:synthetic-contract",
+    "issuedAtMs": 1000,
+    "evidenceMaxAgeMs": 6000,
+    "requiredCheckIds": ["check:schema", "check:readback"],
+    "artifactRefs": ["artifact:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],
+    "planDigest": "1d41a51b9832213a0b6c68463c2d89ee6a42ed67c372df25bf8ced845291dde8"
+  },
+  "selfTestIdentity": {
+    "schemaVersion": "chimpmaera.verification/self-test-identity/v1",
+    "verifierId": "verifier:independent-fixture",
+    "producerId": "producer:verification-fixture",
+    "subjectProducerId": "producer:subject-fixture",
+    "independence": "INDEPENDENT",
+    "issuedAtMs": 1000,
+    "identityDigest": "ae2721a4d3b2d3afd5f76bf8f79d74bbbb1de25620df51e498fc0df0ac5131e7"
+  },
+  "checkRuns": [
+    {
+      "schemaVersion": "chimpmaera.verification/check-run/v1",
+      "checkRunId": "run:synthetic-schema",
+      "checkId": "check:schema",
+      "planDigest": "1d41a51b9832213a0b6c68463c2d89ee6a42ed67c372df25bf8ced845291dde8",
+      "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+      "verifierId": "verifier:independent-fixture",
+      "startedAtMs": 1500,
+      "completedAtMs": 1600,
+      "outcome": "PASS",
+      "runDigest": "4a8b6d960662948e40a243b46aecc7082062cd185addfa76012ee9955d4a2580"
+    },
+    {
+      "schemaVersion": "chimpmaera.verification/check-run/v1",
+      "checkRunId": "run:synthetic-readback",
+      "checkId": "check:readback",
+      "planDigest": "1d41a51b9832213a0b6c68463c2d89ee6a42ed67c372df25bf8ced845291dde8",
+      "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+      "verifierId": "verifier:independent-fixture",
+      "startedAtMs": 1600,
+      "completedAtMs": 1700,
+      "outcome": "PASS",
+      "runDigest": "3f89b1440f0524fb43e1278ba33ed096ec2c204898655ee34653838248e7d693"
+    }
+  ],
+  "evidenceBundle": {
+    "schemaVersion": "chimpmaera.verification/evidence-bundle/v1",
+    "bundleId": "bundle:synthetic-vf001",
+    "planDigest": "1d41a51b9832213a0b6c68463c2d89ee6a42ed67c372df25bf8ced845291dde8",
+    "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "producerId": "producer:verification-fixture",
+    "collectedAtMs": 1800,
+    "expiresAtMs": 7800,
+    "checkRunDigests": ["4a8b6d960662948e40a243b46aecc7082062cd185addfa76012ee9955d4a2580", "3f89b1440f0524fb43e1278ba33ed096ec2c204898655ee34653838248e7d693"],
+    "artifactRefs": ["artifact:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+    "bundleDigest": "6bb09599c1665b09730740aede9d9b6c529eaaf2da0807d65c7d2151e3fd5ebb"
+  },
+  "verdict": {
+    "schemaVersion": "chimpmaera.verification/verdict/v1",
+    "verdictId": "verdict:synthetic-vf001",
+    "status": "VERIFIED",
+    "reasonCodes": ["VERIFICATION_COMPLETE"],
+    "planDigest": "1d41a51b9832213a0b6c68463c2d89ee6a42ed67c372df25bf8ced845291dde8",
+    "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "evidenceBundleDigest": "6bb09599c1665b09730740aede9d9b6c529eaaf2da0807d65c7d2151e3fd5ebb",
+    "evaluatedAtMs": 2000,
+    "verdictDigest": "997bd3b69d1c6eeeb05208a1ae87e171be1f4f5d35a4d12ec166ee826cabd4bb"
+  },
+  "revalidationTrigger": {
+    "schemaVersion": "chimpmaera.verification/revalidation-trigger/v1",
+    "triggerId": "trigger:synthetic-vf001",
+    "state": "ARMED",
+    "causes": ["SUBJECT_CHANGED", "PLAN_CHANGED", "EVIDENCE_EXPIRED"],
+    "observedSubjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "observedPlanDigest": "1d41a51b9832213a0b6c68463c2d89ee6a42ed67c372df25bf8ced845291dde8",
+    "observedEvidenceBundleDigest": "6bb09599c1665b09730740aede9d9b6c529eaaf2da0807d65c7d2151e3fd5ebb",
+    "armedAtMs": 2100,
+    "triggerDigest": "d3de4f5a12aff6f98cfef6268d40dde93de73bb9dd61972f050a31f6a022b5f5"
+  },
+  "lkg": {
+    "pointer": {
+      "schemaVersion": "chimpmaera.verification/lkg-pointer/v1",
+      "pointerId": "lkg:synthetic-vf001",
+      "targetVerdictDigest": "997bd3b69d1c6eeeb05208a1ae87e171be1f4f5d35a4d12ec166ee826cabd4bb",
+      "targetEvidenceBundleDigest": "6bb09599c1665b09730740aede9d9b6c529eaaf2da0807d65c7d2151e3fd5ebb",
+      "generation": 1,
+      "pointerDigest": "8e944d4c15702f079df150a5f64dc8e9a72b72de33a1e11b67e22a7144812689"
+    },
+    "readback": {
+      "schemaVersion": "chimpmaera.verification/lkg-readback/v1",
+      "pointerId": "lkg:synthetic-vf001",
+      "pointerDigest": "8e944d4c15702f079df150a5f64dc8e9a72b72de33a1e11b67e22a7144812689",
+      "observedVerdictDigest": "997bd3b69d1c6eeeb05208a1ae87e171be1f4f5d35a4d12ec166ee826cabd4bb",
+      "observedEvidenceBundleDigest": "6bb09599c1665b09730740aede9d9b6c529eaaf2da0807d65c7d2151e3fd5ebb",
+      "observedGeneration": 1,
+      "status": "MATCHED",
+      "readAtMs": 2200,
+      "readbackDigest": "b9c2bc28e0a6b7dd59f8aabbca84dc7e9eeffe83ac81951a0268441b6eb1b4a8"
+    }
+  }
+}

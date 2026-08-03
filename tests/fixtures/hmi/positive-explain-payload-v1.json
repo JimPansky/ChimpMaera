@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "chimpmaera.hmi/explain-payload/v1",
+  "operation": "explain",
+  "requestDigest": "28772962fbba1e7aa6c61efac7908449c69fca71c482e861b8cc3f99f812acc7",
+  "generationDigest": "8c43b9686dcd4f3a3cbafff951f1e4ac5e30aeba5b083e214345c703bd3b09dd",
+  "subjectCapabilityIds": ["cm:describe-system"],
+  "citedSourceIds": ["cm:hmi-source-001"],
+  "citationPolicy": "CITATIONS_REQUIRED",
+  "evidenceStatus": "LOCAL_SYNTHETIC",
+  "authority": {
+    "requestedRights": [],
+    "routeIds": [],
+    "writeTargets": []
+  }
+}

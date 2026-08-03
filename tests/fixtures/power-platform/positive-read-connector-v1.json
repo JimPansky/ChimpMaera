@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "chimpmaera.connector/power-platform-read/v1",
+  "connectorId": "connector:power-platform-read-v1",
+  "contractVersion": "1.0.0",
+  "platform": "MICROSOFT_POWER_PLATFORM_CUSTOM_CONNECTOR",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "openApi": {
+    "version": "2.0",
+    "basePath": "/v1",
+    "schemes": ["https"],
+    "arbitraryServerSelectionAllowed": false
+  },
+  "identityBinding": {
+    "profileId": "identity:azure-power-apps-read-v1",
+    "profileDigest": "50c4cac158e4250f97f78d8fe069ba4a1e04c7fc91f94d55170874a2bf287b60",
+    "delegatedScopes": ["cm.discovery.read", "cm.operator.read"],
+    "applicationRoles": []
+  },
+  "verificationBinding": {
+    "bundleSchemaVersion": "chimpmaera.verification/fabric-bundle/v1",
+    "requiredTuple": ["subjectDigest", "planDigest", "evidenceBundleDigest", "verdictDigest", "readbackDigest"]
+  },
+  "operations": [
+    { "operationKey": "LIST_CAPABILITIES", "operationId": "ListCapabilities", "method": "GET", "path": "/v1/capabilities", "semantic": "DISCOVERY", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
+    { "operationKey": "SUBMIT_GOVERNED_QUERY", "operationId": "SubmitGovernedQuery", "method": "POST", "path": "/v1/queries", "semantic": "LOGICAL_READ", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": true },
+    { "operationKey": "GET_OPERATION_STATUS", "operationId": "GetOperationStatus", "method": "GET", "path": "/v1/operations/{operationId}", "semantic": "STATUS", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
+    { "operationKey": "GET_READBACK", "operationId": "GetReadback", "method": "GET", "path": "/v1/operations/{operationId}/readback", "semantic": "AUTHORITATIVE_READBACK", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
+    { "operationKey": "GET_RECEIPT", "operationId": "GetReceipt", "method": "GET", "path": "/v1/operations/{operationId}/receipt", "semantic": "BOUND_RECEIPT", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false }
+  ],
+  "authorityBoundary": {
+    "genericInvocationAllowed": false,
+    "arbitraryUrlAllowed": false,
+    "arbitraryHttpMethodAllowed": false,
+    "arbitraryCommandAllowed": false,
+    "arbitraryBodySchemaAllowed": false,
+    "callerTenantAllowed": false,
+    "callerCredentialAllowed": false,
+    "unknownOperationsDenied": true,
+    "requestedRights": [],
+    "writeTargets": [],
+    "proposalOperations": [],
+    "approvalOperations": [],
+    "executionOperations": [],
+    "cancellationOperations": []
+  },
+  "lifecycle": {
+    "acceptanceSemantics": "OPERATION_REFERENCE_ONLY",
+    "businessSuccessRequires": "AUTHORITATIVE_READBACK_AND_BOUND_RECEIPT",
+    "terminalCommittedIsBusinessSuccess": false,
+    "authoritativeReadbackRequired": true,
+    "boundReceiptRequired": true
+  },
+  "credentials": {
+    "storedByConnector": false,
+    "embeddedAllowed": false,
+    "ambientAllowed": false,
+    "dynamicSelectionAllowed": false,
+    "secretReferences": []
+  },
+  "contractDigest": "994fae0acbecc3068f611673eda9e11a9368ca7e19f53c467ea030875425f6fd"
+}
