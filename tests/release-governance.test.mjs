@@ -46,12 +46,17 @@ test("README presents governed adaptability and evidence-driven improvement with
   const words = readme.replace(/<[^>]+>/g, " ").trim().split(/\s+/);
   const h2s = readme.match(/^## /gm) ?? [];
 
+  assert.match(readme, /An open, knowledge-driven operating system for governed, adaptable AI\s+ecosystems\./);
   assert.match(readme, /Governed by default\. Adaptable by design\. Improved through evidence\./);
-  assert.ok(readme.indexOf("## How it works") < readme.indexOf("## Proof today"));
+  assert.ok(readme.indexOf("## How it works") < readme.indexOf("## Adaptive Knowledge Engineering"));
+  assert.ok(readme.indexOf("## Adaptive Knowledge Engineering") < readme.indexOf("## Proof today"));
   assert.ok(readme.indexOf("## Proof today") < readme.indexOf("## Quickstart"));
   assert.ok(readme.indexOf("## Evidence and scope") < readme.indexOf("## Releases"));
   assert.match(readme, /\*\*Adaptive Knowledge Engineering\*\*/);
-  assert.match(readme, /Every integration can teach the system how to\s+adapt the next one—without silently expanding authority/);
+  assert.match(readme, /Adapt once\. Validate it\. Reuse it everywhere it fits\./);
+  assert.match(readme, /Solve → Validate → Package as Knowledge → Share → Reuse → Improve/);
+  assert.match(readme, /Share what you know\. Expand what everyone can build\./);
+  assert.match(readme, /Every integration can teach the system how to\s+adapt the next one—without\s+silently expanding authority/);
   assert.match(readme, /open-ended,\s+user-need-driven option space/);
   assert.match(readme, /unverified knowledge may\s+exist without becoming an authoritative default/);
   assert.doesNotMatch(readme, /\b(?:infinite|one-click|minutes?|hours?|production-ready)\b/i);

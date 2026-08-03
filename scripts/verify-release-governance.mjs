@@ -79,10 +79,10 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, !/Today's Daily|Previous Daily|POC Daily|Daily snapshot/i.test(releaseSection), "README_ACTIVE_DAILY_IDENTITY_DENIED");
   issue(
     issues,
-    /open-source local proof of concept/i.test(readme)
-      && /control plane for governed, verifiable AI-agent actions across\s+business systems/i.test(readme)
-      && /broader direction[^.]*Knowledge Operating System/i.test(readme)
-      && /direction is not a claim of current product maturity/i.test(readme),
+    /An open, knowledge-driven operating system for governed, adaptable AI\s+ecosystems\./i.test(readme)
+      && /current runnable release is an open-source local synthetic proof of concept/i.test(readme)
+      && /control plane for governed,\s+verifiable\s+AI-agent actions across\s+business systems/i.test(readme)
+      && /direction is not a claim of current product maturity or universal\s+live compatibility/i.test(readme),
     "README_POC_POSITIONING_MISSING",
   );
 
