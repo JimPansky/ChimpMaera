@@ -339,12 +339,15 @@ function semanticIssues(manifest, sourceRepo, facts) {
     const readme = readFileSync(resolveRepoPath(sourceRepo, "README.md"), "utf8");
     const heading = readme.match(/^# (.+)$/m)?.[1] ?? null;
     if (heading !== "ChimpMaera") issues.push("README_CURRENT_IDENTITY_MUST_BE_TIMELESS");
-    const lines = readme.split("\n");
-    const publicLine = lines.find((line) => line.includes("**Current regular Latest release:**"));
-    if (!publicLine || !/\bLatest\b/i.test(publicLine) || /\bnot published\b/i.test(publicLine)) {
+    const activeReleaseSection = readme.split(/^## /m).find((value) => value.startsWith("Releases")) ?? "";
+    const stableReleaseLinks = [
+      "](https://github.com/JimPansky/ChimpMaera/releases/latest)",
+      "](https://github.com/JimPansky/ChimpMaera/releases)",
+      "](https://github.com/JimPansky/ChimpMaera/releases.atom)",
+    ];
+    if (!stableReleaseLinks.every((link) => activeReleaseSection.includes(link)) || /\breleases\/tag\//i.test(activeReleaseSection)) {
       issues.push("README_PUBLIC_RELEASE_STATUS_MISSING_OR_INVALID");
     }
-    const activeReleaseSection = readme.split(/^## /m).find((value) => value.startsWith("Release status")) ?? "";
     if (/Today's Daily|Previous Daily|POC Daily|Daily snapshot/i.test(activeReleaseSection)) {
       issues.push("README_CALENDAR_RELEASE_IDENTITY_DENIED");
     }

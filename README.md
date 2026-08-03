@@ -25,10 +25,15 @@ workflows. That direction is not a claim of current product maturity.
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
 [Documentation hub](docs/README.md)
 
-## Release status
+## Releases
 
-- **Current regular Latest release:** [`v0.2.0-poc.20260803.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.3) — **Verification Planning and Contribution Preflight Increment**.
-- **Initial public baseline:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release or its direct predecessor.
+- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
+- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)
+- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)
+
+Release pages document included capabilities and evidence boundaries. Recent
+governed increments also identify related issues/PRs and publish downloadable
+assets with SHA-256 checksum information.
 
 This is a local, synthetic PoC—not a production release, hosted service,
 security certification, support promise or permission to connect real systems.
@@ -110,8 +115,6 @@ generic live-system integration or quantified faster onboarding.
   [How does it work?](https://youtu.be/w4fWgalD_WQ), and
   [Security by Default](https://youtu.be/SEPbE-EVoNs). Videos are not release
   evidence.
-- Follow regular product increments through the
-  [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom).
 
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference media follows
