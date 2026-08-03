@@ -2,29 +2,29 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260803.3",
-    "title": "ChimpMaera — Verification Planning and Contribution Preflight Increment",
-    "increment": "Verification Planning and Contribution Preflight Increment",
-    "targetCommitish": "b30411555e451d2b3040a2c5d635f23cdcc293b5",
-    "tagObjectSha": "b30411555e451d2b3040a2c5d635f23cdcc293b5",
+    "tag": "v0.2.0-poc.20260803.4",
+    "title": "ChimpMaera — Audience-Safe, Content-Driven Video Governance Increment",
+    "increment": "Audience-Safe, Content-Driven Video Governance Increment",
+    "targetCommitish": "c6e520f0f844ad5e63a7aa0d5b28556e68c1e8bd",
+    "tagObjectSha": "c6e520f0f844ad5e63a7aa0d5b28556e68c1e8bd",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz",
-        "size": 1266604,
-        "sha256": "c7405b735b12498bf595dc897ff8e7ba528f1389e8137db0f749d7c9a104dc8b"
+        "name": "chimpmaera-v0.2.0-poc.20260803.4-video-governance-duration-policy.tar.gz",
+        "size": 1273759,
+        "sha256": "c57c33ac8f170e1695edc87df0fed912b7576bf6ab00659694bdc7433361998c"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz.sha256",
-        "size": 142,
-        "sha256": "73b58e520ba7aaf899974d121363d8343af0d5b0d029770cfef12214f7c35c7b"
+        "name": "chimpmaera-v0.2.0-poc.20260803.4-video-governance-duration-policy.tar.gz.sha256",
+        "size": 139,
+        "sha256": "0e7141d834797e53ebe53239942295104eb8e2a5284d87504eadc3dfe2f34fb0"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260803.3-verification-contribution-preflight.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260803.4-video-governance-duration-policy.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260803.4-video-governance-duration-policy.tar.gz"
     }
   },
   "policy": {
@@ -62,7 +62,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260803.3 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260803.4 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -77,6 +77,12 @@
       "claim": "Published release assets are bound to an explicit manifest, byte sizes and SHA-256 digests.",
       "evidencePaths": ["docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["Repository tests do not replace anonymous public asset readback.", "Release metadata edits do not authorize tag or asset replacement."]
+    },
+    {
+      "claimId": "CM-REL-010",
+      "claim": "The local video-production reference enforces governed audience copy across publication surfaces and requires content-driven Daily duration with exact scene/audio parity.",
+      "evidencePaths": ["tools/video-production-reference/README.md", "tools/video-production-reference/docs/ARCHITECTURE.md", "tools/video-production-reference/qa-gates.yaml", "tools/video-production-reference/tests/test_cm_video.py"],
+      "nonClaims": ["No upload, publication, watcher/worker activation or production video behavior is included.", "This is not a universal media studio and does not remove editorial review.", "VIDEO-M2 M0-M4 remain governed separately in issue #64."]
     },
     {
       "claimId": "CM-REL-009",

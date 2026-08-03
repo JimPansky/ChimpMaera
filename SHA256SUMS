@@ -6,7 +6,7 @@ deec68918022452012f00abeb2d6b5578a3763a02320139ce074bf124b61c608  ./.github/PULL
 b3c5e91b8ae9dee1d489380334e79f5647077d96b7078ac5779337feda263133  ./.github/workflows/ci.yml
 3cb93d13f4a3ed8f4666fbd68d033aa5446d473ddd35a39b12fad8e57e29b00a  ./.github/workflows/daily-poc-candidate.yml
 56690063fedd6a594cb37f26fdf1538fdd02802243886e9dcae43536f58c110a  ./.gitignore
-a2134eec936ed950608130027129e964dd7580af30b279797214ea7643014987  ./CITATION.cff
+84837a2b9a6391379d91a54a1619629b4f50788c95dca0e328f87bb469866ade  ./CITATION.cff
 ba943be96394ec332cab2ce2f3ce06f122d9f224f304c765a74dc58cca809310  ./CODE_OF_CONDUCT.md
 9ae8a2e38ef93981b26e37ff70f84097a1809ae016bb0528cf7caf769466b337  ./CONTRIBUTING.md
 9ed8fd6143a87d489c618aaffcea5e5000fc372ae86ca9d3e45e7b7c32be658e  ./DCO
@@ -150,11 +150,11 @@ b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69  ./docs/BUILDER
 fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-POC-CANDIDATES.md
 2b9696cc826d9d4f609ea8afee428328b5d5e8bdd0ae70ea45fe886773769ad8  ./docs/DAILY-POC-ITERATION.md
 679bae40f1a8858f6f1e618016eec9ba9697788bbb7d67dd06e2071e12f6d404  ./docs/DISCOVERABILITY-BASELINE.md
-3fd3ce48d51d8bd67464da74f8bc56733780e3153aed1345d92b40dd47c47688  ./docs/KNOWN-LIMITATIONS.md
+6a8c7e3f0e489f3a9ee6d1ac314db59bb024905c6442bd66904123e18fa7975a  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
 5039245ee276a08ccd813228e9e06b835176bb2a59c53378d4a4e6b9b6b1b2c2  ./docs/README.md
-eff0c7b2d792ce4582bb31c8027664ec97ec9004220b71c9b36e5bf18cf3b1b0  ./docs/RELEASE-GOVERNANCE.md
-812939d415a616a86533dcfee29208fa9550668b2bbf2074d5128ded4346bcad  ./docs/SECURITY-ASSURANCE.md
+7a7cb1bd02402c5191e7192288d49a5d8f259d403df7b25db8dfb42ac560562f  ./docs/RELEASE-GOVERNANCE.md
+5b8047503db165fe6a81279868cbcf99b6e4b19ac15439beb3cda3216429c649  ./docs/SECURITY-ASSURANCE.md
 527ead55bb739305ba02c4094cd30f8b59eaaa2d9c8ddb8ad0bb88b131d5eda2  ./docs/SUPPLY-CHAIN.md
 e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-ADVISOR-GUIDE.md
 c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f  ./docs/VERIFICATION-FABRIC-SHADOW.md
@@ -240,8 +240,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-58f20771f9c1c60429a68508a7d01fafe88ad300a3f44f728de4b4ecda254052  ./package-lock.json
-48478363a60f04d7c4f4ae712a8c7e093e4dd56e6ab499ba9e75d93e6b15cf46  ./package.json
+b28a5173636097c7eb626080a353bcad57780e6b12a407176705e33aad0fec17  ./package-lock.json
+d30e72b67891a69e9e2596600001c73c61ee71e549aac7172a376ab69c6332cb  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
 974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts
@@ -269,7 +269,7 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-b6a7237138bff64dacfff65892df0edc74459fb16741a68f9d6c4ae7b3f2b55f  ./release/governance.json
+b73f2fa897743fa1da11319ebdf985a8b5f2d79e42f9761bab5db4b4950674f6  ./release/governance.json
 fe040b2294c5956965d02472d056cfa58f5fba169af5f89e1816b42d389a7544  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
