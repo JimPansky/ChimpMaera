@@ -17,7 +17,9 @@
   declared non-silent policy.
 - Subtitle syntax and safe-area geometry are executed locally. ASR and OCR are
   evidence-receipt contracts because their models are not included. Fixture
-  receipts cannot satisfy a `publication-candidate` manifest.
+  receipts cannot satisfy a `publication-candidate` manifest. The validator
+  checks the receipts' hash-bound `audienceText`; it does not independently
+  transcribe or OCR the media.
 - Reference media is never a required identity choice. Jobs may use, replace,
   modify, or omit the bundled examples.
 - When a job declares `spec.referenceAssets`, the validator requires an

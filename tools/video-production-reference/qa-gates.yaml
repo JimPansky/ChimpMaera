@@ -25,6 +25,10 @@ rules:
   literalTranslationForbidden: true
   publicCopyFailClosed: true
   negativeFixturesRequired: true
+  publicationReadyAudienceCopyRequired: true
+  operationalStatusSidecarOnly: true
+  finalAsrOcrAudienceCopyRequired: true
+  positiveMaturityAndReleaseTruthFixturesRequired: true
   claimEvidenceAndVisualRefsRequired: true
   explicitNonClaimsRequired: true
   englishCopyReviewNamedAndHashBound: true

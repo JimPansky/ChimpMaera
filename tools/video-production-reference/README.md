@@ -14,6 +14,10 @@ explicitly authorized, and emits QA evidence.
 The inspectable methodology version is `2026.08.02-v2`. See
 `METHODOLOGY-CHANGELOG.md`, `methodology/consumed-deltas.json`, and
 `schemas/process-delta.schema.json` for the evidence-backed evolution record.
+The image also exposes publication-ready audience-copy gate
+`2026.08.03-v1`, which keeps production/review workflow status out of public
+media while preserving factual product-maturity boundaries and verified public
+release descriptions.
 
 ## Community Invitation
 
@@ -109,11 +113,17 @@ The v2 contract is renderer-neutral and adds:
 - a deliberately designed ten-second outro with four timing probes; and
 - a post-render evidence manifest covering full decode, stream parity,
   loudness, subtitles, safe area, ASR, and OCR.
+- a publication-ready audience-copy gate for voice-over, subtitles, on-screen
+  text, thumbnails, title/description copy, and final ASR/OCR observations.
 
 The CPU image does not bundle ASR/OCR models. It validates their hash-bound
 receipts. A `smoke-fixture` may use clearly labelled fixture receipts, while a
 `publication-candidate` requires every gate to use `executionMode: executed`.
 This prevents fixture evidence from being promoted as publication evidence.
+ASR/OCR receipts also carry a hash-bound `audienceText` observation. The
+validator applies the same public-copy policy to that final observed text; QA
+status and other operational details may remain in the receipt sidecar but not
+inside `audienceText`.
 
 ## Output Evidence
 
@@ -129,7 +139,9 @@ A successful render creates `/output/<immutableOutputVersion>/` with:
 Validate-only writes no MP4. Rendering and QA use `ffprobe`, full decode, EBU
 R128 loudness/true-peak, black-frame detection, and SHA-256 checksums. The
 smoke also validates the consumed-delta chain, negative probes, four outro
-frames, the methodology evidence manifest, and the OCI methodology label.
+frames, the methodology evidence manifest, the positive/negative audience-copy
+matrix, and the OCI methodology and copy-gate labels. Fixture validation fails
+when the policy checksum, required channel coverage, or rule coverage is stale.
 
 Inspect a built image:
 

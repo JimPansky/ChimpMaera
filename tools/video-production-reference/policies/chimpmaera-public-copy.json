@@ -8,5 +8,20 @@
   "immutableNumberExceptions": ["version", "date", "timestamp", "hash", "id", "url", "filename", "machine-identifier"],
   "forbiddenTerms": ["Chimp Maera", "Chimp Myra", "Chimp Mera", "ChimpMera", "CentipApe", "Centipape", "evergreen"],
   "forbiddenLanguageTokens": ["eins", "zwei", "drei", "vier", "fünf", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "prozent", "sekunden", "und", "oder", "nicht", "mit", "für", "fuer"],
-  "scope": ["narration", "subtitles", "on-screen-copy", "title", "description", "thumbnail", "alt-text", "metadata", "hashtags"]
+  "scope": ["narration", "subtitles", "on-screen-copy", "title", "description", "thumbnail", "alt-text", "metadata", "hashtags", "final-asr", "final-ocr"],
+  "publicationReadyAudienceCopy": {
+    "gateVersion": "2026.08.03-v1",
+    "requiredChannels": ["voice-over", "subtitles", "on-screen-text", "thumbnail", "public-title", "public-description", "final-asr", "final-ocr"],
+    "rules": [
+      {"id": "operational-publication-status", "pattern": "\\b(?:not|never)\\s+(?:yet\\s+)?(?:uploaded|published)\\b|\\b(?:upload|publication)\\s+(?:pending|blocked|failed)\\b", "message": "upload or publication workflow status belongs only in sidecar evidence or delivery messages"},
+      {"id": "review-candidate-status", "pattern": "\\b(?:review|publication|publishable|render)\\s+candidate\\b", "message": "candidate or review status is not audience copy"},
+      {"id": "internal-readiness-status", "pattern": "(?<!production[- ])\\bnot\\s+ready\\b|\\breadiness\\s*[:= -]+(?:ready|not ready|blocked|pending)\\b", "message": "internal readiness status is not audience copy"},
+      {"id": "qa-gate-status", "pattern": "\\b(?:qa|quality assurance|text gate|shot gate|copy gate|asr gate|ocr gate)\\s*(?:(?:gate|check|status)\\s*)?[:= -]+(?:pass(?:ed)?|fail(?:ed)?|pending|blocked|not ready|ready)\\b", "message": "QA pass, fail, or gate status belongs in sidecar evidence"},
+      {"id": "human-review-status", "pattern": "\\b(?:human|editorial|owner|qa)\\s+review\\s+(?:pending|required|requested|passed|failed|blocked)\\b", "message": "human-review workflow status belongs in sidecar evidence"},
+      {"id": "render-build-instruction", "pattern": "\\b(?:docker\\s+(?:build|compose)|cm-video\\s+(?:render|validate|qa)|npm\\s+run|run\\s+(?:the\\s+)?(?:render|build)|execute\\s+(?:the\\s+)?(?:render|build)|render\\s+with\\s+ffmpeg|build\\s+the\\s+(?:image|container))\\b", "message": "render or build instructions are not audience copy"},
+      {"id": "artifact-hash", "pattern": "\\b(?:sha-?256\\s*[:=]?\\s*)?[a-f0-9]{32,64}\\b", "message": "artifact hashes belong only in sidecar evidence"},
+      {"id": "internal-artifact-path", "pattern": "(?<![:A-Za-z0-9])/(?:home|mnt|tmp|job|assets|output|workspace|app|build|dist|artifacts|evidence)/[^\\s]+|\\b(?:artifacts|evidence|output)/[^\\s]+", "message": "internal artifact paths belong only in sidecar evidence"},
+      {"id": "internal-workflow-identifier", "pattern": "\\b(?:REL-DAILY(?:-[A-Z0-9]+)*|CM-SCR-\\d+|PUBLISHABLE_CANDIDATE|REVIEWABLE_NOT_PUBLISHABLE|REVIEW_FAILED|RENDERABLE)\\b", "message": "internal workflow identifiers are not audience copy"}
+    ]
+  }
 }

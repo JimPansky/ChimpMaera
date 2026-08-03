@@ -9,6 +9,7 @@ LABEL org.opencontainers.image.revision="$VCS_REF"
 LABEL org.opencontainers.image.source="https://github.com/JimPansky/ChimpMaera/tree/main/tools/video-production-reference"
 LABEL org.chimpmaera.video.methodology.version="2026.08.02-v2"
 LABEL org.chimpmaera.video.methodology.consumed-deltas="/app/methodology/consumed-deltas.json"
+LABEL org.chimpmaera.video.audience-copy-gate.version="2026.08.03-v1"
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
@@ -25,6 +26,7 @@ COPY bin/ /app/bin/
 COPY src/ /app/src/
 COPY schemas/ /app/schemas/
 COPY policies/ /app/policies/
+COPY fixtures/ /app/fixtures/
 COPY methodology/ /app/methodology/
 COPY qa-gates.yaml /app/qa-gates.yaml
 ENV PYTHONPATH=/app/src

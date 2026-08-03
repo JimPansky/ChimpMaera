@@ -25,7 +25,9 @@ Docker socket.
    is valid, while declarations are checked exactly. V2 also validates
    public-copy policy digests, English narration-number rules,
    claim/evidence/non-claim integrity, timed visual bindings, safe areas,
-   subtitles, named hash-bound reviews, and the ten-second outro probes.
+   subtitles, named hash-bound reviews, the ten-second outro probes, and the
+   publication-ready audience-copy boundary for narration, visible copy, and
+   optional title/description/thumbnail fields.
 2. `render` repeats validation, refuses an existing immutable output directory,
    assembles static PNG shots with direct dissolves, pads/trims locked WAV audio,
    writes `candidate.mp4`, and records the exact render command.
@@ -35,9 +37,15 @@ Docker socket.
 4. `validate-methodology-evidence` verifies artifact hashes, seven portable QA
    families, named revision-bound reviews, and four outro probes. Fixture
    evidence is accepted only for a manifest explicitly marked
-   `smoke-fixture`; publication candidates require executed evidence.
+   `smoke-fixture`; publication candidates require executed evidence. The
+   hash-bound ASR/OCR receipts must expose `audienceText`, which is checked by
+   the same publication-ready copy policy while sidecar status remains outside
+   the audience field.
 5. `validate-consumed-deltas` verifies the public process-delta chain and its
    assumption/risk/fallback/review/rollback record.
+6. `validate-audience-copy-fixtures` replays positive and negative fixtures in
+   the container and rejects stale policy hashes, channel coverage, or rule
+   coverage.
 
 ## Evidence Files
 

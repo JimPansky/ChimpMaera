@@ -4,6 +4,7 @@ import sys
 
 from .contract import ContractError, load_job, validate_job
 from .methodology import MethodologyError, validate_consumed_manifest, validate_evidence_manifest
+from .audience_copy import AudienceCopyError, validate_audience_copy_fixtures
 from .qa import qa_output
 from .render import render_job
 
@@ -24,6 +25,9 @@ def main(argv=None):
     evidence = sub.add_parser("validate-methodology-evidence")
     evidence.add_argument("--manifest", required=True)
     evidence.add_argument("--artifacts-root")
+    audience_fixtures = sub.add_parser("validate-audience-copy-fixtures")
+    audience_fixtures.add_argument("--policy", required=True)
+    audience_fixtures.add_argument("--fixtures", required=True)
     args = parser.parse_args(argv)
 
     try:
@@ -31,6 +35,8 @@ def main(argv=None):
             result = validate_consumed_manifest(args.manifest)
         elif args.command == "validate-methodology-evidence":
             result = validate_evidence_manifest(args.manifest, args.artifacts_root)
+        elif args.command == "validate-audience-copy-fixtures":
+            result = validate_audience_copy_fixtures(args.policy, args.fixtures)
         else:
             job = load_job(args.job)
         if args.command == "validate":
@@ -49,7 +55,7 @@ def main(argv=None):
                 result = render_job(job, args.job, args.output, require_full=True)
         _print(result)
         return 0
-    except (ContractError, MethodologyError) as exc:
+    except (ContractError, MethodologyError, AudienceCopyError) as exc:
         _print({"status": "FAIL", "error": str(exc)})
         return 2
     except Exception as exc:

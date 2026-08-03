@@ -4,7 +4,7 @@
   "title": "Video methodology evidence manifest",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "methodologyVersion", "purpose", "jobRevisionSha256", "artifacts", "automatedGates", "reviews", "outro", "publicationBoundary"],
+  "required": ["schemaVersion", "methodologyVersion", "purpose", "jobRevisionSha256", "artifacts", "publicCopyPolicy", "automatedGates", "reviews", "outro", "publicationBoundary"],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "artifact": {
@@ -35,6 +35,12 @@
     "purpose": {"enum": ["smoke-fixture", "publication-candidate"]},
     "jobRevisionSha256": {"$ref": "#/$defs/sha256"},
     "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}},
+    "publicCopyPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactRef"],
+      "properties": {"artifactRef": {"type": "string", "minLength": 1}}
+    },
     "automatedGates": {
       "type": "array",
       "minItems": 7,

@@ -3,6 +3,8 @@ import json
 import re
 from pathlib import Path
 
+from .audience_copy import AudienceCopyError, validate_audience_copy, validate_audience_policy
+
 
 METHODOLOGY_VERSION = "2026.08.02-v2"
 REQUIRED_GATE_FAMILIES = {
@@ -130,7 +132,7 @@ def validate_subtitles(path, duration_seconds):
     return cue_count
 
 
-def _scan_public_copy(text, policy, narration=False):
+def _scan_public_copy(text, policy, narration=False, channel=None):
     canonical = policy.get("canonicalName")
     _require(isinstance(canonical, str) and canonical, "public-copy policy canonicalName is required")
     folded = text.casefold()
@@ -160,6 +162,11 @@ def _scan_public_copy(text, policy, narration=False):
             flags=re.IGNORECASE,
         )
         _require(re.search(r"\d", without_units) is None, "visible public-copy numbers need English units or a structured exception")
+    if channel:
+        try:
+            validate_audience_copy(text, policy, channel)
+        except AudienceCopyError as exc:
+            raise MethodologyError(str(exc)) from exc
 
 
 def validate_methodology_job(job, job_path, assets_root, expected_duration):
@@ -174,6 +181,10 @@ def validate_methodology_job(job, job_path, assets_root, expected_duration):
     policy = _load_json(policy_path)
     _require(policy.get("schemaVersion") == "cm.public-copy-policy/v1", "public-copy policy schemaVersion is unsupported")
     _require(policy.get("language") == "en", "public-copy policy must require English")
+    try:
+        validate_audience_policy(policy)
+    except AudienceCopyError as exc:
+        raise MethodologyError(str(exc)) from exc
 
     reviews = methodology.get("reviews") or {}
     for review_name in ("englishCopy", "semanticCorrelation"):
@@ -203,7 +214,7 @@ def validate_methodology_job(job, job_path, assets_root, expected_duration):
         claim_id = item.get("id")
         _require(isinstance(claim_id, str) and claim_id and claim_id not in claim_ids, "claim binding id is missing or duplicated")
         claim_ids.add(claim_id)
-        _scan_public_copy(item.get("text", ""), policy)
+        _scan_public_copy(item.get("text", ""), policy, channel="on-screen-text")
         classification = item.get("classification")
         _require(classification in {"claim", "non-claim"}, f"invalid classification for {claim_id}")
         if classification == "claim":
@@ -220,7 +231,21 @@ def validate_methodology_job(job, job_path, assets_root, expected_duration):
     narration = locks.get("narration") or {}
     if narration.get("path"):
         narration_path = _resolve_job_asset(narration["path"], job_path, assets_root)
-        _scan_public_copy(narration_path.read_text(encoding="utf-8"), policy, narration=True)
+        _scan_public_copy(narration_path.read_text(encoding="utf-8"), policy, narration=True, channel="voice-over")
+
+    publication_copy = spec.get("publicationCopy")
+    _require(isinstance(publication_copy, dict), "publicationCopy is required for governed video jobs")
+    for field, channel in (
+        ("title", "public-title"),
+        ("description", "public-description"),
+        ("thumbnailText", "thumbnail"),
+    ):
+        _require(field in publication_copy, f"publicationCopy.{field} is required")
+        value = publication_copy[field]
+        _require(isinstance(value, str), f"publicationCopy.{field} must be text")
+        if field != "thumbnailText":
+            _require(value.strip(), f"publicationCopy.{field} must be non-empty text")
+        _scan_public_copy(value, policy, channel=channel)
 
     scene_claims = set()
     scene_non_claims = set()
@@ -233,7 +258,7 @@ def validate_methodology_job(job, job_path, assets_root, expected_duration):
         for box in shot.get("textBoxes", []):
             _require(box["x"] >= safe["x"] and box["y"] >= safe["y"], f"text box starts outside safe area for {shot.get('sceneId')}")
             _require(box["x"] + box["width"] <= safe["x"] + safe["width"] and box["y"] + box["height"] <= safe["y"] + safe["height"], f"text box exceeds safe area for {shot.get('sceneId')}")
-            _scan_public_copy(box.get("text", ""), policy)
+            _scan_public_copy(box.get("text", ""), policy, channel="on-screen-text")
         refs = set(shot.get("claimRefs") or [])
         non_refs = set(shot.get("nonClaimRefs") or [])
         _require(refs <= visual_claims, f"scene {shot.get('sceneId')} has unknown claimRefs")
@@ -263,7 +288,7 @@ def validate_methodology_job(job, job_path, assets_root, expected_duration):
     _require(_is_sha256(subtitles.get("sha256")) and _sha256(subtitle_path) == subtitles["sha256"], "subtitle checksum mismatch")
     _require(subtitles.get("language") == "en", "subtitle language must be English")
     cue_count = validate_subtitles(subtitle_path, expected_duration)
-    _scan_public_copy(subtitle_path.read_text(encoding="utf-8"), policy)
+    _scan_public_copy(subtitle_path.read_text(encoding="utf-8"), policy, channel="subtitles")
     return {
         "methodologyVersion": METHODOLOGY_VERSION,
         "claimBindings": len(visual_claims),
@@ -298,6 +323,7 @@ def validate_evidence_manifest(manifest_path, artifacts_root=None):
     _require(purpose in {"smoke-fixture", "publication-candidate"}, "evidence manifest purpose is invalid")
     root = Path(artifacts_root).resolve() if artifacts_root else manifest_path.parent
     verified_artifacts = set()
+    artifact_paths = {}
     for artifact in data.get("artifacts") or []:
         artifact_id = artifact.get("id")
         _require(isinstance(artifact_id, str) and artifact_id and artifact_id not in verified_artifacts, "artifact id is missing or duplicated")
@@ -307,6 +333,16 @@ def validate_evidence_manifest(manifest_path, artifacts_root=None):
         _require(path.is_file(), f"evidence artifact missing: {rel}")
         _require(_is_sha256(artifact.get("sha256")) and _sha256(path) == artifact["sha256"], f"evidence artifact checksum mismatch: {rel}")
         verified_artifacts.add(artifact_id)
+        artifact_paths[artifact_id] = path
+    public_copy_policy = data.get("publicCopyPolicy") or {}
+    policy_ref = public_copy_policy.get("artifactRef")
+    _require(policy_ref in verified_artifacts, "evidence manifest publicCopyPolicy lacks a verified artifactRef")
+    policy = _load_json(artifact_paths[policy_ref])
+    _require(policy.get("schemaVersion") == "cm.public-copy-policy/v1", "evidence public-copy policy schemaVersion is unsupported")
+    try:
+        validate_audience_policy(policy)
+    except AudienceCopyError as exc:
+        raise MethodologyError(str(exc)) from exc
     gates = data.get("automatedGates") or []
     gate_ids = {gate.get("family") for gate in gates if gate.get("status") == "PASS"}
     _require(REQUIRED_GATE_FAMILIES <= gate_ids, f"missing PASS gate families: {sorted(REQUIRED_GATE_FAMILIES - gate_ids)}")
@@ -315,6 +351,15 @@ def validate_evidence_manifest(manifest_path, artifacts_root=None):
         _require(gate.get("executionMode") in {"executed", "fixture"}, f"gate {gate.get('family')} executionMode is invalid")
         if purpose == "publication-candidate":
             _require(gate.get("executionMode") == "executed", f"publication gate {gate.get('family')} cannot use fixture evidence")
+        if gate.get("family") in {"asr", "ocr"}:
+            receipt = _load_json(artifact_paths[gate["evidenceRef"]])
+            audience_text = receipt.get("audienceText")
+            _require(isinstance(audience_text, str), f"final {gate.get('family').upper()} receipt must contain audienceText")
+            channel = f"final-{gate.get('family')}"
+            try:
+                validate_audience_copy(audience_text, policy, channel)
+            except AudienceCopyError as exc:
+                raise MethodologyError(str(exc)) from exc
     for review_name in ("englishCopy", "semanticCorrelation"):
         review = (data.get("reviews") or {}).get(review_name) or {}
         _require(review.get("status") == "PASS", f"evidence review {review_name} must PASS")

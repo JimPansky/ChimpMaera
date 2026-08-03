@@ -2,6 +2,28 @@
 
 The methodology version describes validated production contracts in this reference image. It is independent of product releases and does not assert production maturity, certification, or universal quality.
 
+## 2026.08.03 audience-copy gate v1 (v2 hardening)
+
+This Docker increment keeps methodology `2026.08.02-v2` and adds a separately
+labelled publication-ready audience-copy gate.
+
+- Rejects self-referential upload/publication state, review-candidate and
+  readiness state, QA pass/fail, human-review state, build/render instructions,
+  artifact hashes/paths, and internal workflow identifiers from audience copy.
+- Applies before synthesis to voice-over, public metadata, thumbnail text, and
+  on-screen copy; after subtitle generation; and to hash-bound final ASR/OCR
+  `audienceText` observations.
+- Keeps operational detail valid in sidecar evidence and delivery messages.
+- Preserves legitimate statements such as local synthetic proof-of-concept and
+  not-production-ready boundaries, plus factual descriptions of a verified
+  public release.
+- Adds eight positive and nine negative fixtures across all eight required
+  channels. The in-container fixture validator fails closed on a stale policy
+  digest, missing channel coverage, or missing rule coverage.
+
+Why: v2 already governed English copy and ASR/OCR receipt provenance, but it
+did not distinguish public audience copy from internal production status.
+
 ## 2026.08.02-v2
 
 This increment closes a measured gap between the public reference and a public-safe process delta from a governed video run.

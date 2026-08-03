@@ -28,7 +28,8 @@ def main():
         "note": "Contract smoke only; no ASR model or production accuracy is claimed.",
         "sourceAudioSha256": sha(artifacts / "locked-tone.wav"),
         "expected": "synthetic fixture",
-        "observed": "synthetic fixture"
+        "observed": "synthetic fixture",
+        "audienceText": "ChimpMaera is a local synthetic proof of concept, not a production deployment."
     })
     ocr = evidence / "ocr-fixture-receipt.json"
     write_json(ocr, {
@@ -36,7 +37,8 @@ def main():
         "executionMode": "fixture",
         "note": "Contract smoke only; no OCR model or production accuracy is claimed.",
         "expectedTokens": ["ChimpMaera", "evidence"],
-        "observedTokens": ["ChimpMaera", "evidence"]
+        "observedTokens": ["ChimpMaera", "evidence"],
+        "audienceText": "Local synthetic proof of concept"
     })
     review = evidence / "named-review-fixture.json"
     write_json(review, {
@@ -54,6 +56,7 @@ def main():
         ("asr-receipt", asr),
         ("ocr-receipt", ocr),
         ("named-review", review),
+        ("public-copy-policy", artifacts / "chimpmaera-public-copy.json"),
     ]
     probe_ids = []
     for name in ("outro-start.png", "outro-quarter.png", "outro-midpoint.png", "outro-end.png"):
@@ -70,6 +73,7 @@ def main():
             {"id": artifact_id, "path": path.relative_to(root).as_posix(), "sha256": sha(path)}
             for artifact_id, path in artifact_rows
         ],
+        "publicCopyPolicy": {"artifactRef": "public-copy-policy"},
         "automatedGates": [
             {"family": "full-decode", "status": "PASS", "executionMode": "executed", "evidenceRef": "qa-report"},
             {"family": "stream-parity", "status": "PASS", "executionMode": "executed", "evidenceRef": "qa-report"},
