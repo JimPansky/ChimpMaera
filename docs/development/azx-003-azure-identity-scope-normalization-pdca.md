@@ -61,6 +61,7 @@ any compatibility or production claim.
 | TypeScript lint | pass |
 | Supply-chain declaration verification | pass |
 | Release-governance verification | pass |
+| Repository release-tree checksums | 391/391 pass |
 | Isolated public-stage build | pass |
 | Requested rights / routes / write targets | 0/0/0 |
 
