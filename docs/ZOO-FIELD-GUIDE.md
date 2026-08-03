@@ -59,14 +59,25 @@ Use typed, versioned, default-off Profiles. A practical family is:
    Readback, and Receipt.
 3. **Delegated:** selected typed actions may proceed inside tighter budgets,
    time windows, tenant and purpose scopes, with escalation for material risk.
-4. **Owner-selected full control:** the broadest declared typed catalogue may
-   be active by explicit Owner decision. Complete mediation, runtime isolation,
-   stop controls, Evidence, and claim limits still apply; this is not ambient
-   host, credential, or bypass authority.
+4. **Broadest governed Owner Profile:** the broadest declared typed catalogue
+   may be active by explicit Owner decision. Complete mediation, runtime
+   isolation, stop controls, Evidence, and claim limits still apply; this is
+   not ambient host, credential, or bypass authority.
 
 Effective rights are always the intersection of Profile, identity, active
 Policy, catalogue state, tenant/purpose, budget, time, and stop generation.
 Unknown or conflicting state denies.
+
+`FULL_CONTROL_LAB`, `RAMPAGE`, and `RAMPAGE_FULL_CONTROL_LAB` are aliases for a
+separate dangerous lab/escape Profile, not another name for the broadest
+governed Profile. The released local contract deliberately permits that lab
+Profile to bypass ChimpMaera action and Approval gates up to the host process's
+OS/host ceiling. Use it only after exact Owner risk acceptance in a disposable
+or explicitly bounded environment. Record which layers are bypassed, downgrade
+their mediation/security claims, preserve reset/rollback and recovery steps,
+and reset to `SAFE_GUIDED` on restart, revoke or cleanup. Audit and emergency
+controls improve transparency and recovery; they do not protect those controls
+from an actor that the OS ceiling allows to alter or destroy them.
 
 ## 4. Mediate meaningful crossings
 
@@ -122,6 +133,46 @@ data flows, dependencies, schemas, tests, limitations, and compatibility.
 Admission never activates. Unknown provenance, capability drift, schema drift,
 revocation, or suspicious output quarantines the skill and preserves the last
 known safe generation.
+
+### Current adaptation operating lifecycle
+
+The published local-synthetic contract sequence is:
+
+`Capability Contract → Governed Template → typed Adapter → Provider Binding`
+
+- The Capability Contract fixes the user-facing semantic operation, closed
+  inputs/outputs, identity and tenant context, invariants and expected Evidence.
+- A Governed Template supplies versioned adapter, fixture, validation and
+  recovery structure. Promotion or reuse grants no Authority.
+- A typed Adapter binds provider fields and routes without widening the
+  Capability Contract.
+- A Provider Binding joins the exact contract/template/adapter versions,
+  tenant and opaque credential reference. It remains inactive until its own
+  governed activation route succeeds.
+
+A System Advisor Guide supplies operation-scoped planning knowledge and a
+Machine Manifest supplies stable system/object/operation identifiers. Both are
+untrusted, authority-free inputs. AI may propose discovery, mapping, template,
+adapter, configuration and test candidates; deterministic validation, Policy,
+Approval and provider Readback remain authoritative.
+
+Knowledge promotion records provenance, applicability, positive and negative
+Evidence, invalidation and supersession. Source, assumption or outcome drift
+invalidates or downgrades dependents. Supersession adds a traceable immutable
+revision and retains a reversible path; it never rewrites history or activates
+a capability.
+
+Published maturity boundaries remain binding:
+
+- Verification Fabric v2 remains **Shadow**; it explains an impact plan but the
+  complete suite remains authoritative and no incremental skipping is active.
+- HMI contribution preflight prepares canonical, digest-bound local-synthetic
+  bytes only. It performs no submission, publication, external write,
+  credential use or runtime activation.
+- The released Entra profile and Power Platform read connector use exactly
+  `cm.discovery.read` for all five closed operations. `cm.operator.read` is
+  reserved for a future separate administrative-read Profile and is invalid on
+  this connector.
 
 ## 7. Design for failure and recovery
 

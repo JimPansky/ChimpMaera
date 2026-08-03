@@ -97,7 +97,7 @@
       "claimId": "CM-REL-009",
       "claim": "The public first screen identifies the current local proof of concept, separates broader direction from shipped maturity, and routes readers to capabilities, evidence and limitations.",
       "evidencePaths": ["README.md", "docs/README.md", "docs/DISCOVERABILITY-BASELINE.md", "docs/VISIBILITY-CHANNEL-MATRIX.md"],
-      "nonClaims": ["No search-ranking or adoption improvement is claimed.", "Knowledge Operating System remains direction, not current product maturity.", "Documentation does not prove production readiness or live-system compatibility."]
+      "nonClaims": ["No search-ranking or adoption improvement is claimed.", "Knowledge-driven Operating System is the current product category; broad live-system realization remains direction, not current shipped maturity.", "Documentation does not prove production readiness or live-system compatibility."]
     },
     {
       "claimId": "CM-REL-004",

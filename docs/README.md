@@ -1,9 +1,17 @@
 # ChimpMaera documentation
 
 Use this hub to find the right public document without treating roadmap text
-as shipped evidence. ChimpMaera's current proof is a released, open-source
-local PoC for governed and verifiable AI-agent actions across business systems.
-The vendor-neutral Knowledge Operating System is the broader direction.
+as shipped evidence. ChimpMaera's current product category is an open,
+knowledge-driven operating system for governed, adaptable AI ecosystems. Its
+current shipped maturity is a released, open-source local PoC for governed and
+verifiable AI-agent actions across business systems; broad live-system and
+production realization remains planned and unproven.
+
+The current architecture is **Caged Agent → Gateway → Capability
+Constellation**. The Agent is an untrusted proposer; the Gateway mediates typed
+context, capability, Policy and Approval; stable capability contracts,
+Governed Templates, typed Adapters and Provider Bindings form the constellation.
+Only the declared local-synthetic paths are currently evidenced.
 
 Status labels used here:
 
@@ -40,6 +48,8 @@ Status labels used here:
 - [Agent runtime isolation contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md):
   engineering contract for untrusted runtime crossings.
 - [System Advisor Guide](SYSTEM-ADVISOR-GUIDE.md): reusable knowledge format.
+- [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md): provenance,
+  applicability, promotion, invalidation and supersession lifecycle.
 
 ## Verify
 
@@ -65,10 +75,16 @@ Status labels used here:
   governed blueprint beyond the bundled demo; steps marked planned are not
   current executable instructions.
 - **Released / locally validated:** HMI/harness contracts provide authority-free
-  generation, discovery and explanation surfaces; runtime execution authority
-  and a production UI are absent.
-- **External evidence required:** live Entra consent, Power Platform import,
-  tenant policy, provider compatibility and production identity behavior.
+  generation, discovery and explanation surfaces. The published
+  [contribution preflight](../docs/development/hmi-010-authority-free-contribute-preflight-pdca.md)
+  prepares canonical, digest-bound local-synthetic bytes; it performs no
+  submission, publication, external write, credential use or runtime
+  activation. A production UI is absent.
+- **Released contract / external evidence required:** the Entra profile and all
+  five Power Platform read operations use exactly `cm.discovery.read`.
+  `cm.operator.read` remains reserved for a future separate administrative-read
+  profile. Live consent, import, tenant policy, provider compatibility and
+  production identity behavior remain unproven.
 - **Planned:** generic live connectors, production reversible-write onboarding,
   BI packs and broader resource-plane profiles.
 
@@ -79,10 +95,12 @@ Status labels used here:
 | Governed synthetic CRM → ERP effect | **Released / locally validated** | One pinned loopback demo with fictional data, brokered execution, readback and receipt |
 | Verification Fabric | **Released / locally validated** | Deterministic contract and negative fixtures; no production deployment proof |
 | Update/Doctor | **Released / locally validated** | Check-only contracts and read-only diagnostics; no repair or update application |
-| Builder and HMI/harness | **Released / locally validated** | Typed synthetic reuse and authority-free interface contracts; no live-system builder or production UI |
-| Entra identity and Power Platform reads | **Released / external evidence required** | Closed authority-free contracts; no live tenant, consent, import or certification proof |
+| Builder contracts | **Released / locally validated** | Typed synthetic reuse and inactive target-neutral planning; no live-system builder or production UI |
+| HMI/harness and contribution preflight | **Released / locally validated** | Authority-free interface and preparation contracts; no submission, publication or external write |
+| Entra identity | **Released / external evidence required** | Closed `cm.discovery.read` identity contract; no live tenant, registration, consent or production identity proof |
+| Power Platform five-read connector | **Released / external evidence required** | Five closed `cm.discovery.read` operations; no import, live Gateway/tenant, DLP or certification proof; `cm.operator.read` is future separate admin scope |
 | Arbitrary-system onboarding and writes | **Planned** | Blueprint only beyond the bundled synthetic path |
-| Vendor-neutral Knowledge Operating System | **Planned direction** | Product direction, not current shipped maturity |
+| Knowledge-driven Operating System | **Current product category; broad live realization planned** | Released local-synthetic foundation only; arbitrary live adaptation and production maturity remain unproven |
 
 The root README owns orientation. Release Notes own increment detail, issues,
 pull requests, assets and test summaries. Security Assurance owns security

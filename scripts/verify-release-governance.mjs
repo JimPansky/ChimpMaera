@@ -124,6 +124,68 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /local, synthetic|local and synthetic/i.test(security), "SECURITY_SYNTHETIC_BOUNDARY_MISSING");
   issue(issues, /no production security|No production security/i.test(security), "SECURITY_PRODUCTION_NONCLAIM_MISSING");
 
+  const consistencyPaths = [
+    "docs/CANON.md",
+    "docs/ZOO-FIELD-GUIDE.md",
+    "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md",
+    "docs/SECURITY-ASSURANCE.md",
+    "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
+    "docs/BUILDER-CONFIGURATION-DEFAULTS.md",
+  ];
+  const consistencyDocs = new Map(consistencyPaths.map((path) => [path, read(root, path)]));
+  for (const [path, text] of consistencyDocs) {
+    issue(
+      issues,
+      /FULL_CONTROL_LAB/.test(text)
+        && /bypass(?:es|ed)?\s+ChimpMaera action(?:\s+and\s+|\/)Approval gates/i.test(text)
+        && /OS\/host\s+ceiling/i.test(text)
+        && /SAFE_GUIDED/.test(text),
+      `FULL_CONTROL_LAB_BOUNDARY_MISSING:${path}`,
+    );
+  }
+  for (const path of ["docs/CANON.md", "docs/ZOO-FIELD-GUIDE.md", "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md", "docs/SECURITY-ASSURANCE.md"]) {
+    issue(issues, /broadest governed\s+(?:Owner\s+)?Profile/i.test(consistencyDocs.get(path)), `GOVERNED_FULL_PROFILE_DISTINCTION_MISSING:${path}`);
+  }
+
+  const canon = consistencyDocs.get("docs/CANON.md");
+  for (const invariant of [
+    "Knowledge Record / Knowledge Contract",
+    "Governed Template",
+    "Applicability / Invalidation",
+    "Governed Knowledge Reuse Never Grants Authority",
+    "Supersession is append-only and traceable",
+  ]) issue(issues, canon.includes(invariant), `CANON_KNOWLEDGE_INVARIANT_MISSING:${invariant}`);
+
+  const zoo = consistencyDocs.get("docs/ZOO-FIELD-GUIDE.md");
+  issue(issues, /Capability Contract → Governed Template → typed Adapter → Provider Binding/.test(zoo), "ADAPTATION_LIFECYCLE_MISSING");
+  issue(issues, /Verification Fabric v2 remains \*\*Shadow\*\*/.test(zoo), "VERIFICATION_SHADOW_BOUNDARY_MISSING");
+  issue(issues, /all five closed operations[\s\S]{0,160}`cm\.operator\.read` is\s+reserved for a future separate administrative-read Profile/i.test(zoo), "AZURE_POWER_SCOPE_BOUNDARY_MISSING");
+
+  const systemAdvisor = read(root, "docs/SYSTEM-ADVISOR-GUIDE.md");
+  const builderDefaults = consistencyDocs.get("docs/BUILDER-CONFIGURATION-DEFAULTS.md");
+  for (const [name, text] of [["System Advisor", systemAdvisor], ["Builder defaults", builderDefaults]]) {
+    issue(issues, /Status: \*\*RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE\*\*/.test(text) && !/LOCALLY VALIDATED, NOT RELEASED/.test(text), `RELEASED_LOCAL_SYNTHETIC_STATUS_MISSING:${name}`);
+  }
+
+  const capabilities = read(root, "docs/capabilities.md");
+  const capabilityRows = capabilities.split("\n").filter((line) => line.startsWith("|"));
+  const capabilityRow = (label) => capabilityRows.find((line) => line.includes(label)) ?? "";
+  issue(issues, /BLD-001 local PDCA source/.test(capabilityRow("Builder contracts")) && !/CM-REL-00[678]/.test(capabilityRow("Builder contracts")), "BUILDER_EVIDENCE_MAPPING_INVALID");
+  issue(issues, /CM-REL-006/.test(capabilityRow("HMI/Harness multitool")), "CAPABILITY_MAPPING_INVALID:CM-REL-006");
+  issue(issues, /CM-REL-007/.test(capabilityRow("Microsoft Entra identity profile")), "CAPABILITY_MAPPING_INVALID:CM-REL-007");
+  issue(issues, /CM-REL-008/.test(capabilityRow("Power Platform five-read connector")), "CAPABILITY_MAPPING_INVALID:CM-REL-008");
+
+  const docsHub = read(root, "docs/README.md");
+  issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub) && /Caged Agent → Gateway → Capability\s+Constellation/.test(docsHub), "DOCS_HUB_PRODUCT_ARCHITECTURE_MISSING");
+  issue(issues, /contribution preflight[\s\S]{0,260}no\s+submission, publication, external write/i.test(docsHub), "HMI_PREFLIGHT_HUB_BOUNDARY_MISSING");
+
+  const connectionGuide = read(root, "docs/CONNECT-YOUR-FIRST-SYSTEM.md");
+  issue(issues, /RELEASED LOCAL-SYNTHETIC AUTHORING\/VALIDATION CONTRACT/.test(connectionGuide) && /PLANNED LIVE REALIZATION/.test(connectionGuide), "CONNECTION_MATURITY_BOUNDARY_MISSING");
+  issue(issues, /five-operation Power\s+Platform read connector bind exactly `cm\.discovery\.read`/.test(connectionGuide) && /`cm\.operator\.read` is reserved for a future separate administrative-read\s+Profile/.test(connectionGuide), "CONNECTION_AZURE_SCOPE_BOUNDARY_MISSING");
+
+  const processHardening = read(root, "tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md");
+  issue(issues, /Historical pre-approval snapshot/.test(processHardening) && /No later canonical\s+exact-revision production approval outcome is recorded/.test(processHardening), "PROCESS_HARDENING_HISTORY_STATUS_MISSING");
+
   const limitations = files.get("docs/KNOWN-LIMITATIONS.md") ?? "";
   issue(issues, limitations.includes(release.tag), "LIMITATIONS_CURRENT_RELEASE_MISSING");
   issue(issues, !/The v0\.1 demo/i.test(limitations), "LIMITATIONS_STALE_V01_BINDING_DENIED");

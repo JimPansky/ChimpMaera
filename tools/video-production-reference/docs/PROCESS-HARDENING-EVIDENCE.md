@@ -1,5 +1,14 @@
 # Visual-language hardening evidence — 2026-08-03
 
+**Historical pre-approval snapshot.** This record preserves the state before
+exact-revision human visual/editorial approval and must not be read as current
+approval, publication or production outcome evidence. No later canonical
+exact-revision production approval outcome is recorded in this repository
+snapshot. Synthetic test/example `APPROVED` values prove gate behavior only;
+they are not a later human review result. Keep this history unchanged apart
+from explicit status annotations, and link a future immutable outcome record
+here only after it actually exists.
+
 ## Negative evidence
 
 All six release modules `.1`–`.6` are `HUMAN_REJECTED` and at most L0. Representative frames were extracted at start/mid/end-minus-two-seconds from the canonical MP4s. Every module shows the same three static compositions with a paragraph as the focal point and a lower text strip that describes, rather than performs, the supposed visual. Exact revision refs, MP4 digests, timestamps and defect classes are in `../fixtures/rejected-slide-decks-2026-08-03.json`. They are append-only fixtures and may never seed a positive template.
