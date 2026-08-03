@@ -1,0 +1,60 @@
+name: Video Docker deep audit
+
+on:
+  schedule:
+    - cron: "17 4 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: video-docker-deep-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deep-audit:
+    name: Cache-free video Docker smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.14.1
+
+      - name: Set up supported npm version
+        run: npm install --global npm@11.16.0
+
+      - name: Set up supported Docker Compose
+        env:
+          CM_COMPOSE_URL: https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-x86_64
+          CM_COMPOSE_SHA256: dba9d98e1ba5bfe11d88c99b9bd32fc4a0624a30fafe68eea34d61a3e42fd372
+        run: |
+          compose_root="$RUNNER_TEMP/chimpmaera-docker-config"
+          plugin_dir="$compose_root/cli-plugins"
+          compose_binary="$plugin_dir/docker-compose"
+          mkdir -p "$plugin_dir"
+          curl --fail --location --silent --show-error \
+            --output "$compose_binary" "$CM_COMPOSE_URL"
+          printf '%s  %s\n' "$CM_COMPOSE_SHA256" "$compose_binary" \
+            | sha256sum --check -
+          chmod 0755 "$compose_binary"
+          printf 'DOCKER_CONFIG=%s\n' "$compose_root" >> "$GITHUB_ENV"
+          DOCKER_CONFIG="$compose_root" docker compose version
+
+      - name: Set up BuildKit builder
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Run cache-free full video smoke
+        env:
+          CM_VIDEO_BUILDER: buildx
+          CM_VIDEO_NO_CACHE: "true"
+        run: npm run video:smoke
+
+      - name: Confirm audit did not modify tracked files
+        run: git diff --exit-code

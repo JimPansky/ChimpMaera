@@ -182,31 +182,41 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   }
   checks.push("NPM_LOCK_INTEGRITY_DECLARED");
 
-  const workflow = await read(lock.ci.workflowPath);
-  const actions = [...workflow.matchAll(/^\s*uses:\s*\S+@([^\s#]+)/gm)];
+  const workflowPaths = [
+    lock.ci.workflowPath,
+    ...(lock.ci.additionalWorkflowPaths ?? []),
+  ];
   assert(
-    actions.length > 0
-    && actions.every((match) => /^[a-f0-9]{40}$/.test(match[1])),
-    "SUPPLY_CHAIN_CI_ACTION_NOT_COMMIT_PINNED_DENIED",
+    workflowPaths.length === new Set(workflowPaths).size,
+    "SUPPLY_CHAIN_CI_WORKFLOW_DUPLICATE_DENIED",
   );
   const npmVersion = lock.npm.packageManager.replace(/^npm@/, "");
-  assert(
-    workflow.includes(`npm install --global npm@${npmVersion}`),
-    "SUPPLY_CHAIN_CI_NPM_VERSION_DRIFT_DENIED",
-  );
   const composeTool = lock.ci.dockerCompose;
-  assert(
-    /^v\d+\.\d+\.\d+$/.test(composeTool?.version)
-    && composeTool.platform === "linux-x86_64"
-    && composeTool.url === `https://github.com/docker/compose/releases/download/${composeTool.version}/docker-compose-${composeTool.platform}`
-    && /^[a-f0-9]{64}$/.test(composeTool.sha256)
-    && composeTool.verification === "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
-    && workflow.split(composeTool.url).length - 1 === 1
-    && workflow.split(composeTool.sha256).length - 1 === 1
-    && workflow.includes("sha256sum --check -")
-    && workflow.includes("DOCKER_CONFIG="),
-    "SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED",
-  );
+  for (const workflowPath of workflowPaths) {
+    const workflow = await read(workflowPath);
+    const actions = [...workflow.matchAll(/^\s*uses:\s*\S+@([^\s#]+)/gm)];
+    assert(
+      actions.length > 0
+      && actions.every((match) => /^[a-f0-9]{40}$/.test(match[1])),
+      "SUPPLY_CHAIN_CI_ACTION_NOT_COMMIT_PINNED_DENIED",
+    );
+    assert(
+      workflow.includes(`npm install --global npm@${npmVersion}`),
+      "SUPPLY_CHAIN_CI_NPM_VERSION_DRIFT_DENIED",
+    );
+    assert(
+      /^v\d+\.\d+\.\d+$/.test(composeTool?.version)
+      && composeTool.platform === "linux-x86_64"
+      && composeTool.url === `https://github.com/docker/compose/releases/download/${composeTool.version}/docker-compose-${composeTool.platform}`
+      && /^[a-f0-9]{64}$/.test(composeTool.sha256)
+      && composeTool.verification === "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
+      && workflow.split(composeTool.url).length - 1 === 1
+      && workflow.split(composeTool.sha256).length - 1 === 1
+      && workflow.includes("sha256sum --check -")
+      && workflow.includes("DOCKER_CONFIG="),
+      "SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED",
+    );
+  }
   checks.push("CI_ACTIONS_NPM_AND_COMPOSE_PINNED");
 
   const runtimeDirectory = await safeRootEntry(

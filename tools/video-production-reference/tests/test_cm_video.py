@@ -30,14 +30,56 @@ def generate(tmp):
     return job_path, Path(tmp) / "output"
 
 
+def fixture_hashes(root):
+    base = Path(root)
+    return {
+        path.relative_to(base).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sorted(base.rglob("*"))
+        if path.is_file()
+    }
+
+
+def clone_fixture(source, destination):
+    source = Path(source)
+    destination = Path(destination)
+    copied = subprocess.run(
+        ["cp", "-a", "--reflink=auto", f"{source}/.", str(destination)],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    if copied.returncode != 0:
+        shutil.copytree(source, destination, dirs_exist_ok=True)
+    job_path = destination / "job" / "video-job.yaml"
+    text = job_path.read_text(encoding="utf-8")
+    text = text.replace(str(source / "assets"), str(destination / "assets"))
+    text = text.replace(str(source / "job"), str(destination / "job"))
+    job_path.write_text(text, encoding="utf-8")
+    return job_path, destination / "output"
+
+
 class ContractNegativeProbes(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.base_tmp = tempfile.TemporaryDirectory()
+        generate(cls.base_tmp.name)
+        cls.base_hashes = fixture_hashes(cls.base_tmp.name)
+
+    @classmethod
+    def tearDownClass(cls):
+        if fixture_hashes(cls.base_tmp.name) != cls.base_hashes:
+            raise AssertionError("shared base fixture was mutated")
+        cls.base_tmp.cleanup()
+
     def setUp(self):
+        self.assertEqual(fixture_hashes(self.base_tmp.name), self.base_hashes)
         self.tmp = tempfile.TemporaryDirectory()
-        self.job_path, self.output = generate(self.tmp.name)
+        self.job_path, self.output = clone_fixture(self.base_tmp.name, self.tmp.name)
         self.job = load_job(str(self.job_path))
 
     def tearDown(self):
         self.tmp.cleanup()
+        self.assertEqual(fixture_hashes(self.base_tmp.name), self.base_hashes)
 
     def assert_rejects(self, message):
         with self.assertRaises(ContractError) as ctx:

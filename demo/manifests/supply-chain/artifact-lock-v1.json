@@ -133,6 +133,9 @@
   },
   "ci": {
     "workflowPath": ".github/workflows/ci.yml",
+    "additionalWorkflowPaths": [
+      ".github/workflows/video-deep-audit.yml"
+    ],
     "actionsRequireFullCommitSha": true,
     "dockerCompose": {
       "version": "v2.40.3",

@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -52,6 +54,9 @@ jobs:
           printf 'DOCKER_CONFIG=%s\n' "$compose_root" >> "$GITHUB_ENV"
           DOCKER_CONFIG="$compose_root" docker compose version
 
+      - name: Set up BuildKit builder
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
       - name: Verify release-tree checksums
         run: sha256sum --check SHA256SUMS
 
@@ -75,10 +80,56 @@ jobs:
       - name: Run project tests
         run: npm test
 
-      - name: Run video-tooling tests
-        run: npm run video:test
+      - name: Select video cache mode
+        id: video-cache
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          no_cache=false
+          case "$EVENT_NAME" in
+            workflow_dispatch)
+              no_cache=true
+              ;;
+            pull_request)
+              compare_from="$BASE_SHA"
+              ;;
+            push)
+              compare_from="$BEFORE_SHA"
+              if [[ -z "$compare_from" || "$compare_from" =~ ^0+$ ]]; then
+                no_cache=true
+              fi
+              ;;
+            *)
+              no_cache=true
+              ;;
+          esac
+          if [ "$no_cache" = false ]; then
+            if ! git cat-file -e "$compare_from^{commit}" 2>/dev/null; then
+              no_cache=true
+            elif ! git diff --quiet "$compare_from" "$HEAD_SHA" -- \
+              tools/video-production-reference/Dockerfile \
+              tools/video-production-reference/compose.yaml \
+              .github/workflows/ci.yml \
+              package.json \
+              package-lock.json \
+              demo/manifests/supply-chain/artifact-lock-v1.json; then
+              no_cache=true
+            fi
+          fi
+          printf 'no_cache=%s\n' "$no_cache" >> "$GITHUB_OUTPUT"
+          printf 'Video smoke cache-free deep audit: %s\n' "$no_cache"
 
-      - name: Run video-reference Docker smoke
+      - name: Run video tests and reference Docker smoke
+        env:
+          CM_VIDEO_BUILDER: buildx
+          CM_VIDEO_NO_CACHE: ${{ steps.video-cache.outputs.no_cache }}
+          CM_VIDEO_CACHE_FROM: type=gha,scope=chimpmaera-video-reference-v1
+          CM_VIDEO_CACHE_TO: type=gha,mode=max,scope=chimpmaera-video-reference-v1,ignore-error=true
         run: npm run video:smoke
 
       - name: Confirm tests did not modify tracked files

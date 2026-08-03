@@ -35,6 +35,7 @@ async function fixture() {
     "package.json",
     "package-lock.json",
     lock.ci.workflowPath,
+    ...(lock.ci.additionalWorkflowPaths ?? []),
     lock.publicClosure.manifestPath,
     ...lock.publicClosure.requiredPaths,
     ...lock.ociDeclarations.flatMap(({ locations }) =>
