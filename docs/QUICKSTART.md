@@ -1,3 +1,8 @@
+---
+title: Quickstart
+description: Install, verify, run, and ownership-scope cleanup for ChimpMaera's fictional local CRM-to-ERP proof of concept.
+---
+
 # Quickstart
 
 Before running the demo, read [The ChimpMaera Canon](CANON.md),

@@ -1,3 +1,8 @@
+---
+title: Known limitations
+description: Review the explicit production, security, identity, integration, runtime, and evidence limits of ChimpMaera's current local synthetic release.
+---
+
 # Known limitations
 
 These limits are part of the claim discipline required by

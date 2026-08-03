@@ -1,6 +1,6 @@
 {
   "name": "chimpmaera",
-  "version": "0.2.0-poc.20260803.6",
+  "version": "0.2.0-poc.20260803.7",
   "private": true,
   "description": "Open-source local proof of concept for governed, verifiable AI-agent actions across business systems.",
   "keywords": [
@@ -27,6 +27,9 @@
     "npm": ">=11.11.0 <12"
   },
   "packageManager": "npm@11.16.0",
+  "overrides": {
+    "vite": "6.4.3"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "tsc -p tsconfig.json --noEmit",
@@ -39,6 +42,8 @@
     "demo:install": "./demo/install.sh",
     "demo:uninstall": "./demo/uninstall.sh --purge",
     "video:smoke": "./tools/video-production-reference/scripts/smoke.sh",
+    "docs:build": "vitepress build docs",
+    "docs:test": "npm run docs:build && node --test tests/docs-site.test.mjs",
     "release-governance:test": "node --test tests/release-governance.test.mjs",
     "release-governance:verify": "node scripts/verify-release-governance.mjs",
     "release-governance:public-readback": "node scripts/verify-release-governance.mjs --public-readback",
@@ -52,6 +57,7 @@
   },
   "devDependencies": {
     "@types/node": "24.10.1",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitepress": "1.6.4"
   }
 }

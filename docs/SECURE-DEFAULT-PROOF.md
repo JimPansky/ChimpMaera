@@ -1,3 +1,8 @@
+---
+title: SAFE_GUIDED secure-default proof
+description: Verify ChimpMaera's closed local SAFE_GUIDED claim manifest, deterministic positive checks, and fail-closed negative probes.
+---
+
 # SAFE_GUIDED secure-default proof
 
 `npm run proof:secure-default` is the one repository command for the bounded

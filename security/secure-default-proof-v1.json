@@ -26,7 +26,7 @@
     { "path": "schemas/security/secure-default-proof-v1.schema.json", "role": "SCHEMA", "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8" },
     { "path": "scripts/verify-secure-default-proof.mjs", "role": "VERIFIER", "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1" },
     { "path": "tests/secure-default-proof.test.mjs", "role": "TEST", "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0" },
-    { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "EVIDENCE", "sha256": "c4e75729c1b29c9132efd80b348157bae2d3a07cb9ac7c72681dd9d770b86a54" },
+    { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "EVIDENCE", "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892" },
     { "path": "demo/manifests/authority/SAFE_GUIDED-v1.json", "role": "IMPLEMENTATION", "sha256": "5fff550dd498c81b160f100606d34157bcd9bafedc08f2bed1c64b28536559d3" },
     { "path": "demo/manifests/authority/RAMPAGE-v1.json", "role": "IMPLEMENTATION", "sha256": "2ca8b68ae00d0c8f6752b6c7e4ae81dbae9747ac59b24776b89d0284d26636e4" },
     { "path": "demo/runtime/admin-ai-poc.mjs", "role": "IMPLEMENTATION", "sha256": "a6957fd1a1388cd6ba77e2627492ca6c1a329a3e216678e21845fbfb65edd3da" },

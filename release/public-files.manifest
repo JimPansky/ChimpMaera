@@ -140,6 +140,7 @@ demo/seed-and-flow.sh	demo/seed-and-flow.sh	0755
 demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
 docs/ARCHITECTURE.md	docs/ARCHITECTURE.md	0644
+docs/.vitepress/config.mts	docs/.vitepress/config.mts	0644
 docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	0644
 docs/BUILDER-AGENT-OPERATOR-GUIDE.md	docs/BUILDER-AGENT-OPERATOR-GUIDE.md	0644
 docs/BUILDER-CONFIGURATION-DEFAULTS.md	docs/BUILDER-CONFIGURATION-DEFAULTS.md	0644
@@ -147,6 +148,10 @@ docs/CANON.md	docs/CANON.md	0644
 docs/CONNECT-YOUR-FIRST-SYSTEM.md	docs/CONNECT-YOUR-FIRST-SYSTEM.md	0644
 docs/COMPANY-DATA-VALIDATION.md	docs/COMPANY-DATA-VALIDATION.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
+docs/capabilities.md	docs/capabilities.md	0644
+docs/examples.md	docs/examples.md	0644
+docs/index.md	docs/index.md	0644
+docs/public/robots.txt	docs/public/robots.txt	0644
 docs/README.md	docs/README.md	0644
 docs/DISCOVERABILITY-BASELINE.md	docs/DISCOVERABILITY-BASELINE.md	0644
 docs/VISIBILITY-CHANNEL-MATRIX.md	docs/VISIBILITY-CHANNEL-MATRIX.md	0644
@@ -158,6 +163,7 @@ docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
 docs/VERIFICATION-FABRIC-SHADOW.md	docs/VERIFICATION-FABRIC-SHADOW.md	0644
 docs/ZOO-FIELD-GUIDE.md	docs/ZOO-FIELD-GUIDE.md	0644
+docs/use-cases/governed-agent-actions.md	docs/use-cases/governed-agent-actions.md	0644
 examples/builder-agent/contribution-bundle-v1.json	examples/builder-agent/contribution-bundle-v1.json	0644
 examples/builder-agent/contribution-input-v1.json	examples/builder-agent/contribution-input-v1.json	0644
 examples/company-data/erp-crm-canonical-company-data-pack.example.json	examples/company-data/erp-crm-canonical-company-data-pack.example.json	0644
@@ -246,6 +252,7 @@ tests/builder-quality-evidence.test.ts	tests/builder-quality-evidence.test.ts	06
 tests/builder-reuse-conformance.test.mjs	tests/builder-reuse-conformance.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
+tests/docs-site.test.mjs	tests/docs-site.test.mjs	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/company-data-pack.test.mjs	tests/company-data-pack.test.mjs	0644
 tests/company-data-graph.test.mjs	tests/company-data-graph.test.mjs	0644
