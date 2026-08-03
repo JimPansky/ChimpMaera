@@ -15,7 +15,7 @@ bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.m
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
 c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-2bd76b3a6944785308453fa3e04549c70c6688d9b93715f0d05a394a3dd80f1e  ./README.md
+b3cd6dac5456bbecc7600422890380b4b490c022bed421c055544b08b463cf81  ./README.md
 1716b4107cf86cf29991b74d343bc55918c4c72ecb8e76519319d0764a1f8bbc  ./SECURITY.md
 bd8e9554b632abc49f1f2356d08dd775c504c3d01615a1c120e360f1c26af57b  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
@@ -308,7 +308,7 @@ da2109476338820e2ae5b2b42f720cf2d7c3b359122ee28bcea6fea65e1b1818  ./scripts/dail
 0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218  ./scripts/verification-plan.mjs
 7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5  ./scripts/verification-shadow.mjs
 d281c32b55a5adf43622abe53c4c73e674e9230c05c676adc1dec623eb4dead2  ./scripts/verify-openclaw-agent-runtime-lock.mjs
-277b0e83fd12ec3b3f0cdaf7bd4632c1c0fd65a41e3b5a5c9d4e2767a015b80a  ./scripts/verify-release-governance.mjs
+ff8e404329bbcddefc969dc91d2a6e041196f7aa45e27c71c1c461dc90e60228  ./scripts/verify-release-governance.mjs
 4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1  ./scripts/verify-secure-default-proof.mjs
 51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f  ./scripts/verify-supply-chain.mjs
 87075fbc76815ad2f53005661a78d255ae4565504578cf4a9bac9f2283bb40d2  ./security/secure-default-proof-evidence-v1.json
@@ -359,7 +359,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
-91cbecbda34eea352a60369a61fee191100764f00151eb653d25db39397d8486  ./tests/release-governance.test.mjs
+485ae6d3993cdaa5dfc874fa28967ca43e48497e43f685ca95574ffed770875f  ./tests/release-governance.test.mjs
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
 876eb010ebb109fa8ffa246f1b5179aa92a67bdd15aec0543746a3cd95c07ec7  ./tests/supply-chain-verifier.test.mjs

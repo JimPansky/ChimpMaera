@@ -8,15 +8,18 @@
 
 # ChimpMaera
 
+**An open, knowledge-driven operating system for governed, adaptable AI
+ecosystems.**
+
 **Governed by default. Adaptable by design. Improved through evidence.**
 
-ChimpMaera is an open-source local proof of concept: a control plane for governed, verifiable AI-agent actions across business systems.
-An agent may propose work;
-the control plane keeps policy, approval, credentials, execution, authoritative readback
-and receipts outside the model. Stable capability contracts and governed
-knowledge make the same intent reusable without treating a new provider as new
-authority. The broader direction is a vendor-neutral **Knowledge Operating System**;
-that direction is not a claim of current product maturity.
+The current runnable release is an open-source local synthetic proof of concept;
+the broader direction is not a claim of current product maturity or universal
+live compatibility. It demonstrates a control plane for governed, verifiable
+AI-agent actions across business systems. An agent may propose work; policy,
+approval, credentials, execution, authoritative readback and receipts remain
+outside the model. Stable capability and knowledge contracts make the same
+intent reusable without treating a new provider as new authority.
 
 [**Run the POC**](#quickstart) ·
 [**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
@@ -39,12 +42,9 @@ that direction is not a claim of current product maturity.
   AI may assist discovery, mapping, template selection, adapter/configuration
   proposals and test generation, but deterministic validators and provider
   readback decide activation truth.
-- **Improved through evidence.** **Adaptive Knowledge Engineering** is
-  ChimpMaera's discipline for turning observations, domain knowledge,
-  integration behavior, tests and outcomes into versioned, provenance-bound
-  knowledge that can be validated, improved, superseded and reused across
-  agents, tools and systems. Every integration can teach the system how to
-  adapt the next one—without silently expanding authority.
+- **Improved through evidence.** Governed knowledge carries provenance,
+  evidence, applicability and supersession instead of becoming an
+  authoritative default merely because it was observed or shared.
 
 <p align="center">
   <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="Combined ChimpMaera architecture: a contained AI agent sends typed proposals through a mediating Gateway to stable capability contracts and provider adapters; solid routes show locally evidenced reference paths, dashed routes show prepared add or replace direction, and a provenance-bound knowledge and evidence loop improves later adaptations without adding authority.">
@@ -65,6 +65,22 @@ Containment plus mediated execution is the security boundary. The diagram is
 not proof of generic filesystem/process/Docker mediation or universal provider
 addition. See the
 [combined technical architecture](docs/ARCHITECTURE.md#combined-architecture-containment-mediation-and-adaptation).
+
+## Adaptive Knowledge Engineering
+
+**Adaptive Knowledge Engineering** turns observations, domain knowledge,
+integration behavior, tests and outcomes into versioned knowledge bound to
+provenance and evidence. Candidates are validated, improved, superseded and
+reused across agents, tools and systems only where their applicability and
+authority boundaries fit.
+
+**Adapt once. Validate it. Reuse it everywhere it fits.**
+
+**Solve → Validate → Package as Knowledge → Share → Reuse → Improve**
+
+Every integration can teach the system how to adapt the next one—without
+silently expanding authority. [Governed Knowledge Harvest](docs/KNOWLEDGE-HARVEST.md)
+defines the detailed lineage, maturity and promotion model.
 
 ## Proof today
 
@@ -136,6 +152,8 @@ related issues/PRs, tests, assets and SHA-256 information;
 and anonymous readback.
 
 ## Project and community
+
+**Share what you know. Expand what everyone can build.**
 
 - [Contribute](CONTRIBUTING.md), [get support](SUPPORT.md), or report a
   vulnerability through the [private security route](SECURITY.md).
