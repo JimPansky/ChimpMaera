@@ -15,7 +15,7 @@ bcec87ef2e5ff488cb365d556afdebc48e63f10868055f78fba065c4f5fbaac1  ./GOVERNANCE.m
 835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07  ./LICENSE
 c015f5850be178d40e5edb05f4df5f9d79cf594edab3324dfa9d156930bfb248  ./MEDIA-LICENSE.md
 d450ed03544412c411173e098a89976228d98f9a76634b0ec09e19134382ef74  ./NOTICE
-984f761a4248af8f0c143daa34a85ab72b195483fa4b38105cf3036cadb268a1  ./README.md
+59b3954d491acf78e1798e98de1f3861735ae457d02c9a520fea2da005669bc1  ./README.md
 1716b4107cf86cf29991b74d343bc55918c4c72ecb8e76519319d0764a1f8bbc  ./SECURITY.md
 bd8e9554b632abc49f1f2356d08dd775c504c3d01615a1c120e360f1c26af57b  ./SUPPORT.md
 2498f9ce43eff1ace2d7f27f2661a1dc99bdd020bc723ebe5327e3222660a4a3  ./THIRD_PARTY_NOTICES.md
@@ -23,6 +23,7 @@ b4bee53218ad05edba3d866f715d8519e683802224c14a5f41cdd74a16d4fb88  ./WITHDRAWAL.m
 0f39dbb1f8c41281e5a18aa22359ec16d6e3313d36d265fe14adb41826d0b638  ./assets/brand/chimpmaera-master.svg
 e6acb8b2086483172a8df5adf6372adbc1eff0bd964c0ba6533780c8ebff4f8d  ./assets/brand/chimpmaera-negative.png
 b50fe4214a2f153f4db678ff12d3f3366c964c259cf3c0682f52ff791bc423bd  ./assets/brand/chimpmaera-negative.svg
+67c3493bae957a1bcab012e4dc7506d51d9a8b3e2ee8791d694fb492b577a328  ./assets/diagrams/capability-provider-bindings.svg
 44219d57e33a98bddd5e8d2420570c93989e5fa6e8ac244a48b8d424376ab916  ./assets/diagrams/safe-guided-flow.svg
 a4c17e1554ed12b0db34566e6d568eaf10cd47bd6786a4818fd51bc4f5dc85c4  ./assets/support/buy-me-a-coffee.png
 5fd4875c3c79a68998bf7e4cd14e4c1f00ce0be2cb32562105291f87001af578  ./assets/support/buy-me-a-coffee.svg
@@ -144,7 +145,7 @@ ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfi
 1ded2f51daf04d1eeaaf2af332d046f292bcd99970aa7b3dc927ac1c161f760d  ./demo/uninstall.sh
 fc837bede3a967971d23bfeaf4da19dc53676e1c3aee3cf54961d11bbacd80e9  ./docs/.vitepress/config.mts
 6bbd085abf21b2929520b2c34eb6870172b0cc6a770fb856d9f106aa1def836a  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
-ed75f38464cc2a91bf08ed6285019a514b743202544dd06c203b2006fa645362  ./docs/ARCHITECTURE.md
+946a6b68e24724d7d0a7e542ff3febaffca1bc45dd1f971af8b17441579a5db3  ./docs/ARCHITECTURE.md
 446e4dee4641b78e18b313c2035845de795790c6b5796056c052bff8c5470234  ./docs/BUILDER-AGENT-OPERATOR-GUIDE.md
 b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69  ./docs/BUILDER-CONFIGURATION-DEFAULTS.md
 27053d81ffe191bc5a0dfad5bec41930de13d88f29a2264d7664e4e7ee7bda9f  ./docs/CANON.md
@@ -279,7 +280,7 @@ e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/con
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 c9bab2efe1c851df5a4ad1b1833f42ad0a05db7ff16937aec88076bd312bfaeb  ./release/governance.json
-76fb51455566413bf7a6615faa83f196d0226e5980fb828746cd34404dafcb29  ./release/public-files.manifest
+900ab6f78c47d06860b8fda4ebd3d02a2e93f74c8109df042d46fd3d3b00fede  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -354,7 +355,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 045a4dc0ca671a8ddc4e7d4dbbb922ad3827d49123ebb58e665a82caca68f5f0  ./tests/poc-showcase-e2e.test.ts
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
-0561bd69a9ca882ada61eab88d64b7966bceda55f3dc89a60744b218960ff3a4  ./tests/release-governance.test.mjs
+81c99092487c636ce61ca7f82a348359226f41a56af1d09cb12332c0bcbdeb1c  ./tests/release-governance.test.mjs
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
 876eb010ebb109fa8ffa246f1b5179aa92a67bdd15aec0543746a3cd95c07ec7  ./tests/supply-chain-verifier.test.mjs

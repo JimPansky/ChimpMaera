@@ -39,6 +39,35 @@ test("root security and support documents remain version-agnostic", () => {
   assert.match(support, /without warranty, service-level objective or\s+production-support commitment/i);
 });
 
+test("README presents governed adaptability without overstating provider compatibility", () => {
+  const readme = readFileSync(join(ROOT, "README.md"), "utf8");
+  const diagram = readFileSync(join(ROOT, "assets", "diagrams", "capability-provider-bindings.svg"), "utf8");
+  const manifest = readFileSync(join(ROOT, "release", "public-files.manifest"), "utf8");
+  const adaptabilityStart = readme.indexOf("## Adaptable by design");
+  const adaptabilityEnd = readme.indexOf("\n## ", adaptabilityStart + 4);
+  const adaptabilitySection = readme.slice(adaptabilityStart, adaptabilityEnd);
+
+  assert.match(readme, /Governed by default\. Adaptable by design\./);
+  assert.ok(readme.indexOf("## What works today") < readme.indexOf("## Governed by default"));
+  assert.ok(readme.indexOf("## Governed by default") < adaptabilityStart);
+  assert.ok(adaptabilityStart < readme.indexOf("## Releases"));
+  assert.match(adaptabilitySection, /open-ended, user-need-driven configuration\s+space/);
+  assert.match(adaptabilitySection, /not universal live\s+compatibility/);
+  assert.match(adaptabilitySection, /Provider selection never silently widens authority/);
+  assert.doesNotMatch(adaptabilitySection, /\b(?:infinite|one-click|minutes?|hours?)\b/i);
+
+  assert.match(diagram, /role="img" aria-labelledby="title desc"/);
+  assert.match(diagram, /<title id="title">/);
+  assert.match(diagram, /<desc id="desc">/);
+  assert.match(diagram, /@media \(prefers-color-scheme: dark\)/);
+  assert.equal((diagram.match(/<rect class="node /g) ?? []).length, 7);
+  assert.ok(diagram.indexOf("<!-- Connectors are behind nodes.") < diagram.indexOf("<rect class=\"node "));
+  assert.match(diagram, /RELEASED · SYNTHETIC/);
+  assert.match(diagram, /PRODUCT DIRECTION/);
+  assert.doesNotMatch(diagram, /<(?:image|script)\b|(?:href|src)="https?:\/\//i);
+  assert.match(manifest, /^assets\/diagrams\/capability-provider-bindings\.svg\tassets\/diagrams\/capability-provider-bindings\.svg\t0644$/m);
+});
+
 test("release governance negative probes fail closed", async (t) => {
   const probes = [
     ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)", "[Version-bound release](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)")],
