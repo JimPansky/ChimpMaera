@@ -47,5 +47,6 @@ before reproducing the example.
 
 ## Next action
 
-Use the [Quickstart](../QUICKSTART.md) for the complete local demo or choose a
+Inspect the specific [CRM-to-ERP approval and readback path](./crm-erp-approval-readback.md),
+use the [Quickstart](../QUICKSTART.md) for the complete local demo, or choose a
 smaller deterministic command from the [examples gallery](../examples.md).

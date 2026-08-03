@@ -18,12 +18,16 @@ Status labels used here:
 ## Start
 
 - **Released:** [Quickstart](QUICKSTART.md) for the synthetic CRM → ERP PoC.
+- **Released:** [CRM → ERP approval and readback](use-cases/crm-erp-approval-readback.md)
+  for the bounded intent-to-receipt walkthrough.
 - **Released:** [Root README](../README.md) for product orientation and the
   `SAFE_GUIDED` ten-second flow.
 - **Released:** [Release governance](RELEASE-GOVERNANCE.md) for Latest,
   manifests, hashes and anonymous readback.
 - [Contributing](../CONTRIBUTING.md), [support](../SUPPORT.md), and the
   [private vulnerability route](../SECURITY.md).
+- [When to use an alternative](alternatives.md) and the curated
+  [Now / Next / Later view](roadmap.md).
 
 ## Understand
 

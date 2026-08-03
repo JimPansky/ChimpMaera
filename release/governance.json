@@ -43,8 +43,11 @@
     "docs/SECURITY-ASSURANCE.md",
     "docs/KNOWN-LIMITATIONS.md",
     "docs/index.md",
+    "docs/alternatives.md",
     "docs/capabilities.md",
     "docs/examples.md",
+    "docs/roadmap.md",
+    "docs/use-cases/crm-erp-approval-readback.md",
     "docs/use-cases/governed-agent-actions.md",
     "docs/RELEASE-GOVERNANCE.md",
     "release/governance.json"

@@ -1,0 +1,80 @@
+# Intent and evidence content set — PDCA
+
+## Plan
+
+- **Metric:** `intent_evidence_content_completion`, target `1/1`.
+- **Locally reachable:** the current Pages foundation, canonical evidence,
+  runnable local fixtures, and deterministic docs/release tests already exist.
+  The missing work is a bounded static content and navigation set; it requires
+  no tenant, live provider, customer record, or production claim.
+- **Locally implementable:** one CRM-to-ERP approval/readback intent route, an
+  honest alternatives route, a curated Now/Next/Later route, integration with
+  the existing capability/examples/use-case set, and drift/sitemap/navigation
+  gates.
+- **Preparable:** a later recurring public-truth audit can sample route health,
+  issue drift, Latest, and anonymous readback after this content is delivered.
+- **Externally effective:** PR delivery, Pages deployment, and anonymous route
+  readback remain governed by required CI and the normal GitHub delivery path.
+- **Rejected action:** additional CodeMeta, `llms.txt`, social artwork, and
+  broad keyword pages were not bundled. They add drift surface without the
+  integrated user value of the missing intent, choice, and roadmap routes.
+
+## Do
+
+- Added a CRM-to-ERP page that follows proposal, policy, bound approval,
+  one-use execution authority, authoritative readback, and receipt while
+  linking the scoped `CM-SEC-007` proof and explicit non-claims.
+- Added an alternatives page that distinguishes workflow, policy, Agent,
+  isolation, observability, and conventional application-service problem
+  classes without competitor or superiority claims.
+- Added a curated Now/Next/Later route. Live GitHub issues and labels remain
+  authoritative; the page does not become a second backlog or release source.
+- Integrated all six intent/evidence routes into site navigation, the docs
+  hub, home-page actions, sitemap, and cross-links.
+- Added an exact authority-free fixture command to the examples gallery and
+  executed the same four compiled test files locally.
+- Added the three public files to both the release manifest and
+  `activePublicFiles`, binding them to package inclusion and public-truth drift
+  coverage.
+- Extended the generated-site test to require canonical metadata, curated
+  sitemap inclusion, direct Run/Evidence/Limitations/Q&A/Contribute reachability,
+  issue links, alternatives categories, evidence/non-claim wording, claim
+  hygiene, public manifest inclusion, and governance coverage.
+
+## Check
+
+- Generated site, metadata, sitemap, route reachability, public-truth coverage,
+  claim hygiene, and Pages workflow checks: **5/5 PASS**.
+- Documented authority-free contract fixtures: **19/19 PASS**.
+- SAFE_GUIDED proof and negative probes: **12/12 PASS**.
+- Release governance and negative mutations: **20/20 PASS**.
+- Authoritative repository suite after the final source changes:
+  **304/304 PASS**.
+- TypeScript build/lint: **PASS**.
+- Supply-chain declaration families: **6/6 PASS**.
+- npm audit including documentation build tooling: **0 vulnerabilities**.
+- `git diff --check`: **PASS**.
+
+The first authoritative run correctly failed **303/304** with
+`UNMANIFESTED_SOURCE_FILE:docs/roadmap.md`. The release manifest was corrected,
+the isolated staging regression passed **1/1**, and the complete authoritative
+suite then passed **304/304** twice, including after adding active public-truth
+coverage.
+
+## Act
+
+- **Decision:** accept the content set as one coherent, release-worthy public
+  increment. It closes the ordered intent/evidence frontier instead of adding
+  another assessment-only artifact.
+- **Conservative assumption:** a small curated Now/Next/Later selection is
+  safer than mirroring every issue. GitHub issue state remains authoritative.
+- **Risk:** selected roadmap links can become stale when issue state changes.
+- **Fallback:** revert this single bounded content commit. Existing Pages home,
+  capability matrix, examples, Quickstart, evidence, and limitations remain
+  valid public routes.
+- **Review marker:** verify issue links and maturity wording during the next
+  recurring public-truth audit or whenever a linked issue/release transitions.
+- **Claim boundary:** these pages improve public navigation and explain the
+  released local synthetic proof. They do not establish live-provider
+  compatibility, production fitness, adoption, search rank, customer use, or
+  universal security.

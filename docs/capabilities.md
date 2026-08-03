@@ -28,4 +28,6 @@ These status labels are intentionally narrow:
 The machine-readable release record is
 [`release/governance.json`](../release/governance.json). The root README owns
 orientation; [Security Assurance](SECURITY-ASSURANCE.md) owns scoped security
-claims; [Known Limitations](KNOWN-LIMITATIONS.md) owns current non-claims.
+claims; [Known Limitations](KNOWN-LIMITATIONS.md) owns current non-claims. The
+[curated roadmap](roadmap.md) links planned work to live issues without making
+it a second maturity source.
