@@ -27,7 +27,7 @@ workflows. That direction is not a claim of current product maturity.
 
 ## Release status
 
-- **Current regular Latest release:** [`v0.2.0-poc.20260803.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.1) — **Authority-Bounded Integration Contracts Increment**.
+- **Current regular Latest release:** [`v0.2.0-poc.20260803.2`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.2) — **Public Truth and Discoverability Increment**.
 - **Initial public baseline:** [`v0.1.0`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0) — historical only; it is not the current release or its direct predecessor.
 
 This is a local, synthetic PoC—not a production release, hosted service,

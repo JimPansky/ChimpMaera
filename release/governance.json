@@ -2,29 +2,29 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260803.1",
-    "title": "ChimpMaera — Authority-Bounded Integration Contracts Increment",
-    "increment": "Authority-Bounded Integration Contracts Increment",
+    "tag": "v0.2.0-poc.20260803.2",
+    "title": "ChimpMaera — Public Truth and Discoverability Increment",
+    "increment": "Public Truth and Discoverability Increment",
     "targetCommitish": "main",
-    "tagObjectSha": "507de5d3d00bd3393bff64cfd6a0fece1c465f29",
+    "tagObjectSha": "0c662257ce30f48ce6f5f3ab3b3cde718705e646",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.1-authority-bounded-integration-contracts.tar.gz",
-        "size": 1235740,
-        "sha256": "50b428d0999dc937a0e3c9c24018275163558bf15634f3949901b7126a541bf7"
+        "name": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz",
+        "size": 1249172,
+        "sha256": "c1502e4aba797001648fba6f8283ca52f68aec8baee4c5dd23e7ecc46d96ea99"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.1-authority-bounded-integration-contracts.tar.gz.sha256",
-        "size": 146,
-        "sha256": "bfd582027912b4109dac8c1734354dc127b0e1a015fae07079130b11759c6435"
+        "name": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz.sha256",
+        "size": 135,
+        "sha256": "d4896bde1b92b7d8ad799eb2528732b6e76ea2c328618269b7724e610a77c8ae"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260803.1-authority-bounded-integration-contracts.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260803.1-authority-bounded-integration-contracts.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260803.2-public-truth-discoverability.tar.gz"
     }
   },
   "policy": {
@@ -62,7 +62,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260803.1 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260803.2 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -77,6 +77,12 @@
       "claim": "Published release assets are bound to an explicit manifest, byte sizes and SHA-256 digests.",
       "evidencePaths": ["docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["Repository tests do not replace anonymous public asset readback.", "Release metadata edits do not authorize tag or asset replacement."]
+    },
+    {
+      "claimId": "CM-REL-009",
+      "claim": "The public first screen identifies the current local proof of concept, separates broader direction from shipped maturity, and routes readers to capabilities, evidence and limitations.",
+      "evidencePaths": ["README.md", "docs/README.md", "docs/DISCOVERABILITY-BASELINE.md", "docs/VISIBILITY-CHANNEL-MATRIX.md"],
+      "nonClaims": ["No search-ranking or adoption improvement is claimed.", "Knowledge Operating System remains direction, not current product maturity.", "Documentation does not prove production readiness or live-system compatibility."]
     },
     {
       "claimId": "CM-REL-004",
