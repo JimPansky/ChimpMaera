@@ -54,12 +54,21 @@
 - Supply-chain declaration families: **6/6 PASS**.
 - npm audit including documentation build tooling: **0 vulnerabilities**.
 - `git diff --check`: **PASS**.
+- Repository-tree `SHA256SUMS` after deterministic regeneration: **PASS**.
 
 The first authoritative run correctly failed **303/304** with
 `UNMANIFESTED_SOURCE_FILE:docs/roadmap.md`. The release manifest was corrected,
 the isolated staging regression passed **1/1**, and the complete authoritative
 suite then passed **304/304** twice, including after adding active public-truth
 coverage.
+
+The first PR CI run then correctly rejected the source commit at the
+repository-tree checksum step. The content, governance, manifest, and test
+bytes had changed while `SHA256SUMS` still described the prior
+checksum-governed tree. The hashes for changed bound files were refreshed and
+the three new public routes were added without widening the established
+closure to repository-only development evidence. The complete local checksum
+check passed before the CI fix was pushed.
 
 ## Act
 

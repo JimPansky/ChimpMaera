@@ -143,7 +143,7 @@ a509d9db5668cfe5e3bcd32b6a0f8140f248ccbc403dc465cc12751b70329d51  ./demo/runtime
 bd658b60138d44cbe499bdeb82d7f49f052fb5284c85866cc59b2e728f473600  ./demo/seed-and-flow.sh
 ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfig.runtime.json
 1ded2f51daf04d1eeaaf2af332d046f292bcd99970aa7b3dc927ac1c161f760d  ./demo/uninstall.sh
-fc837bede3a967971d23bfeaf4da19dc53676e1c3aee3cf54961d11bbacd80e9  ./docs/.vitepress/config.mts
+3a05935e480d4168792f86b14090be7af49e4bb86f4e8f592869e5aa5b61ff67  ./docs/.vitepress/config.mts
 6bbd085abf21b2929520b2c34eb6870172b0cc6a770fb856d9f106aa1def836a  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
 946a6b68e24724d7d0a7e542ff3febaffca1bc45dd1f971af8b17441579a5db3  ./docs/ARCHITECTURE.md
 446e4dee4641b78e18b313c2035845de795790c6b5796056c052bff8c5470234  ./docs/BUILDER-AGENT-OPERATOR-GUIDE.md
@@ -156,7 +156,7 @@ fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-P
 8d2b0611139fd36ce0768dc131f0ce355d5959a3a2a2ea355658d5db1319b1d7  ./docs/KNOWLEDGE-HARVEST.md
 f251a6ca75d843de747a95643ebbbea5d0ee05057845498dd55b92193ac0b479  ./docs/KNOWN-LIMITATIONS.md
 011c5b5fa061aa77394bd16376e4cec242c9d09a93e863494a4836e7e944799e  ./docs/QUICKSTART.md
-a42e47051ed0ed29e93fab2b8d38bca7124a2ffa3fa4916d208cb96d7c93f32a  ./docs/README.md
+8e5336d42f7dced060309a1714171e8b93244dd531bfa35db306bc1abf3b06b8  ./docs/README.md
 0a540393f36f2d92dae44bf452a18daf12f816f3da6ea2ffda69e27ccdfa0e36  ./docs/RELEASE-GOVERNANCE.md
 af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892  ./docs/SECURE-DEFAULT-PROOF.md
 80f03b0f20c838c2a048236092a97b98b8fff44388ac624cba87e8660c89957f  ./docs/SECURITY-ASSURANCE.md
@@ -165,11 +165,14 @@ e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-
 c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f  ./docs/VERIFICATION-FABRIC-SHADOW.md
 e7b64b1de504a574c8a2c53f848b169cb6c50966b4892705494f1130bd5cc41b  ./docs/VISIBILITY-CHANNEL-MATRIX.md
 4eabfdd9292dc68df07998a83a91af3a189a5deb74fe05bc2eb9b28567b756de  ./docs/ZOO-FIELD-GUIDE.md
-e5eea5cc6e21f3e68df640c72bfa71b61f5d5eeda3b59712147d94967f98b313  ./docs/capabilities.md
-d079d5fbcb91863b9133eeadfe277085bfcb2d9ce2193bd8a1f55025922b70f8  ./docs/examples.md
-d9d6f3c870e757bbeb0cfa64eb2739dd3b758984bcc3d60bfa6d343360433515  ./docs/index.md
+dca1a885043f0cdda8e738db25dd4bba404dbb78e909f45340689a15f61c86dc  ./docs/alternatives.md
+d19f480cc7458f403c0d49e8393910cf1198fd6287ac04b28655b62e20428488  ./docs/capabilities.md
+1a1f64a091f6cb38bfe5d387aed4f63c1063589b3df40151f2cc78e2cb3a1ac3  ./docs/examples.md
+2ddc7ccf7050cec25a38c0d0cddafa9cca613adf63d0f57e30c8e3c607aa73d6  ./docs/index.md
 0776dba7e366dbed9a23459852782f7aaa1a109c4c332a981f9d2cb9dc313a3a  ./docs/public/robots.txt
-b9fbec8494d3b823a76f64d3a34dc93097d57258f405c1c6d340fc48c12d3432  ./docs/use-cases/governed-agent-actions.md
+c65838d7273b1872c47d27170c204acdf688c71ab482fa91949f63f11e194e61  ./docs/roadmap.md
+f40746d77837bd61257965a649c89eaedd61a263ca5ec0ef09c93b8feaad8d4b  ./docs/use-cases/crm-erp-approval-readback.md
+1d45cb448b4d2256db9c0e5059998b1b2954c7607d895be7ff56e049958866b0  ./docs/use-cases/governed-agent-actions.md
 b355b719dba55d0928bb7fac1a825d9c174b74d126ece1b09850006309c84bc6  ./examples/builder-agent/contribution-bundle-v1.json
 bed17ca192ea01731aa77ca10c7d60672d6bd6b437a26e7165e20bd473e03ee2  ./examples/builder-agent/contribution-input-v1.json
 40f542f73fb3ca0f18067014ee13cc5f39c8dee9bef00777559e6d6cd78e2df3  ./examples/daily-poc/v0.2.0-poc.20260801.1/generated/.daily-poc-state.json
@@ -279,8 +282,8 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-c9bab2efe1c851df5a4ad1b1833f42ad0a05db7ff16937aec88076bd312bfaeb  ./release/governance.json
-900ab6f78c47d06860b8fda4ebd3d02a2e93f74c8109df042d46fd3d3b00fede  ./release/public-files.manifest
+dd3014a6bccad7b69162c67aa1bbbb0f17391fd955db443b4c2d30fbdae0694b  ./release/governance.json
+e58675ff29074feddc279af85d431a22a530a64dcf2df05bf3113c57f959329c  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -328,7 +331,7 @@ a2cecb00593c2e3d4cfc770b880dc1f3287a6c8de37573dce9748ea9536509ea  ./tests/demo-l
 ba12408a713468d0cf116c19cd29506f6fe9eb48107859102790fd975753f271  ./tests/demo-policy-evaluator.test.mjs
 e6d7cc6236ddfbf35ac8e971140643f3b9b0a68c401558a6144b8c63a45b3cd7  ./tests/demo-policy-generation-fence.test.mjs
 6e8012075dc47f8354e4d18e98b7e14090abcdc335615849c320d6c710fdff01  ./tests/demo-policy-lifecycle.test.mjs
-83c2e9073bde66496a9ec1891b01ee310c08d1cce56d662a8aff8ac595707a61  ./tests/docs-site.test.mjs
+9baf9f19eebd4ad713df933faef5d26a917806f4c742a2a5f8cfff23cbae5291  ./tests/docs-site.test.mjs
 7d98acfa30bc054954fa1c8268794164662128515b0324244695c5dc5b9bb347  ./tests/effective-rights.test.ts
 c7e372d7eb0d701f7cde55147bdeadf73d0c8e7202b2f3be49e83e78172db429  ./tests/fixtures/builder/g2-zoo-system.json
 73bfa0d3ebf0de709f80f0449b7fa26ef76e1885be4d89fb418bc8a087ec8b1b  ./tests/fixtures/builder/g3-capability-registry.json
