@@ -18,6 +18,7 @@ const curatedSitemapPaths = new Set([
   "examples",
   "KNOWN-LIMITATIONS",
   "QUICKSTART",
+  "RESOURCE-PLANE-PROFILES",
   "roadmap",
   "SECURE-DEFAULT-PROOF",
   "use-cases/crm-erp-approval-readback",
@@ -133,6 +134,7 @@ export default defineConfig({
         text: "Verify",
         items: [
           { text: "Capability evidence", link: "/capabilities" },
+          { text: "Resource-plane profiles", link: "/RESOURCE-PLANE-PROFILES" },
           { text: "Reproducible examples", link: "/examples" },
           { text: "SAFE_GUIDED proof", link: "/SECURE-DEFAULT-PROOF" },
           { text: "Known limitations", link: "/KNOWN-LIMITATIONS" },

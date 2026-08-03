@@ -2,29 +2,29 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260803.8",
-    "title": "ChimpMaera — Intent and Evidence Content Set",
-    "increment": "Intent and Evidence Content Set",
-    "targetCommitish": "c82438953b8ab8d9f8d3b72157d09d9c4c61f844",
-    "tagObjectSha": "c82438953b8ab8d9f8d3b72157d09d9c4c61f844",
+    "tag": "v0.2.0-poc.20260804.1",
+    "title": "ChimpMaera — Declarative Resource-Plane Profiles M0",
+    "increment": "Declarative Resource-Plane Profiles M0",
+    "targetCommitish": "1f98310d4e1a3541adf2619fda5d0cd0efa2dded",
+    "tagObjectSha": "1f98310d4e1a3541adf2619fda5d0cd0efa2dded",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.8-intent-evidence-content.tar.gz",
-        "size": 1344590,
-        "sha256": "83e9a3b1d814d64a261afaccb8a9afd87f060a1f00e1a9a443aa6157324ed070"
+        "name": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz",
+        "size": 1373817,
+        "sha256": "87497985ace1ef7f17760be7e851c10d1065cc1fb2c33fcc6fbfd021b8c507f1"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260803.8-intent-evidence-content.tar.gz.sha256",
-        "size": 130,
-        "sha256": "da5ca501ad9dfb5f05836ca229dc2047656c8025649b80efe92ccadcd90fbbf0"
+        "name": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz.sha256",
+        "size": 133,
+        "sha256": "17da3b709f5679a38b96296e9c9627073d3f55aee7967b95cea55c4246d4b765"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260803.8-intent-evidence-content.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260803.8-intent-evidence-content.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260804.1-resource-plane-profiles-m0.tar.gz"
     }
   },
   "policy": {
@@ -42,6 +42,7 @@
     "CONTRIBUTING.md",
     "docs/SECURITY-ASSURANCE.md",
     "docs/KNOWN-LIMITATIONS.md",
+    "docs/RESOURCE-PLANE-PROFILES.md",
     "docs/index.md",
     "docs/alternatives.md",
     "docs/capabilities.md",
@@ -71,7 +72,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260803.8 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260804.1 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -158,6 +159,18 @@
       "evidencePaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"],
       "nonClaims": ["Local deterministic synthetic proof only; no live Power Platform import, tenant compatibility, Entra consent, OBO, DLP, Gateway integration, certification or production behavior is proven."],
       "traceability": {"pdcaPaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-012",
+      "component": "Resource-Plane Profiles M0",
+      "claim": "ChimpMaera ships an authority-free compiler for exactly seven closed resource planes with SAFE_GUIDED, CUSTOM and explicit dangerous FULL_CONTROL planning views plus a digest-bound Effective-Rights-Diff.",
+      "userValue": "Operators can compare a requested resource profile against the SAFE_GUIDED baseline before any runtime activation, while host, assignment and current-constraint ceilings remain explicit and binding.",
+      "includedBytes": ["packages/contracts/src/resource-plane-profiles.ts", "schemas/contracts/resource-plane-profile-input-v1.schema.json", "schemas/contracts/resource-plane-plan-v1.schema.json", "tests/resource-plane-profiles.test.ts", "docs/RESOURCE-PLANE-PROFILES.md"],
+      "functionalProof": {"testPaths": ["tests/resource-plane-profiles.test.ts"], "result": "PASS 7/7: all seven planes, three profiles, both schemas, canonical ordering, ceiling behavior and Effective-Rights-Diff verify."},
+      "safetyProof": {"testPaths": ["tests/resource-plane-profiles.test.ts"], "result": "PASS: 11 malformed input cases plus rehashed hidden-field and inconsistent-diff forgeries deny; output exposes zero runtime activation or authority-bearing material."},
+      "evidencePaths": ["docs/RESOURCE-PLANE-PROFILES.md", "docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"],
+      "nonClaims": ["Declarative local deterministic plan only; no runtime activation, host permission change, command, credential, lease, provider binding or executable authority is included.", "No real filesystem, network, process, Docker, secret, model/tool, device, tenant, provider, security-certification or production fitness is proven.", "FULL_CONTROL maps to the dangerous FULL_CONTROL_LAB alias and does not inherit SAFE_GUIDED or broad governed-profile claims."],
+      "traceability": {"issues": [], "pullRequests": [94, 96, 97], "sourceCommits": ["8d5425b260fce6bcf04078643346e8e65000f7f4", "ff8a2f5dff315b0591ae23bf3661edc862dd1654", "1f98310d4e1a3541adf2619fda5d0cd0efa2dded"], "pdcaPaths": ["docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
       "claimId": "CM-REL-011",
