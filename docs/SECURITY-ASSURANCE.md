@@ -7,8 +7,8 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260803.4`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.4),
-the **Audience-Safe, Content-Driven Video Governance Increment**. `v0.1.0` is historical. Release state
+[`v0.2.0-poc.20260803.6`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260803.6),
+the **Runnable SAFE_GUIDED Secure-Default Proof** increment. `v0.1.0` is historical. Release state
 is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred
 from a local branch, a tag alone, a date or an editorial update. Documentation
 on `main` may postdate the released asset bytes and does not silently change
