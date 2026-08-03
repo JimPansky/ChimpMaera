@@ -147,3 +147,35 @@ generation. The isolated OpenClaw fixture receives the managed skill volume
 read-only and has only an internal path to the manager. This is not arbitrary
 skill-code safety, a production registry/trust root/store or universal agent
 format compatibility.
+
+## Capability contracts and provider bindings
+
+Consumers should depend on a stable capability contract, not a provider's API
+shape. A contract declares the semantic operation, closed inputs and outputs,
+identity and tenant context, invariants, and expected evidence. A typed adapter
+then binds that contract to provider-specific fields, routes and an opaque
+credential handle. Reusable templates define the adapter, fixtures, validation
+and recovery structure without granting activation or runtime authority.
+
+The current release proves a finite local-synthetic subset: a typed capability
+catalogue, the CRM/ERP reference path, and Builder contracts that produce
+inactive target-neutral adapter or skill plans from synthetic manifests and
+guide context. Those bytes demonstrate separation and synthetic reuse. They do
+not prove live provider replacement, arbitrary-system onboarding or universal
+compatibility.
+
+The broader product direction lets AI assist with proposing mappings,
+configuration and validation plans. Such output remains an untrusted proposal.
+Trusted code must validate the closed schema, compatibility and mapping;
+intersect the Host/System ceiling, Owner rights profile, assignments and
+current constraints; and require the configured approval route before any
+effect. Changing an adapter cannot inherit evidence or silently widen rights.
+
+A binding becomes usable only through an explicit sequence: resolve the
+capability and template, select an adapter, compute effective rights, validate
+the binding, activate it through the governed route, perform any authorized
+effect, read the provider back, and bind the result to a receipt. Recovery and
+rollback semantics remain binding-specific and declared. This supports an
+open-ended configuration space driven by user needs and many possible system,
+tool and provider combinations, but each combination requires its own evidence
+and applicability boundary.

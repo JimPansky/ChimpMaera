@@ -8,7 +8,7 @@
 
 # ChimpMaera
 
-**Governed, verifiable AI-agent actions across business systems.**
+**Governed by default. Adaptable by design.**
 
 ChimpMaera is an open-source local proof of concept: a control plane for governed, verifiable AI-agent actions across
 business systems. Today it
@@ -24,22 +24,6 @@ workflows. That direction is not a claim of current product maturity.
 
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
 [Documentation hub](docs/README.md)
-
-## Releases
-
-- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
-- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)
-- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)
-
-Release pages document included capabilities and evidence boundaries. Recent
-governed increments also identify related issues/PRs and publish downloadable
-assets with SHA-256 checksum information.
-
-This is a local, synthetic PoC—not a production release, hosted service,
-security certification, support promise or permission to connect real systems.
-Use only synthetic data on a disposable or development host. See
-[release governance](docs/RELEASE-GOVERNANCE.md) for publication evidence and
-anonymous readback rules.
 
 ## What works today
 
@@ -61,7 +45,7 @@ anonymous readback rules.
   read contracts are closed and authority-free; live tenant consent, import
   and compatibility require external evidence. [Read the limitations](docs/KNOWN-LIMITATIONS.md).
 
-## How it works
+## Governed by default
 
 <p align="center">
   <img src="assets/diagrams/safe-guided-flow.svg" width="720" alt="SAFE_GUIDED flow: Owner asks, Agent proposes, Gateway decides, approval is obtained if required, Broker executes, and authoritative readback plus a receipt prove the result.">
@@ -72,6 +56,44 @@ path the Agent is an untrusted proposer: it cannot approve itself, choose
 credentials or perform the effect. `FULL_CONTROL_LAB` / `RAMPAGE` can bypass
 ChimpMaera action and approval gates, inherits the host ceiling and is **not a
 security boundary**.
+
+## Adaptable by design
+
+<p align="center">
+  <img src="assets/diagrams/capability-provider-bindings.svg" width="720" alt="Adaptability architecture: consumers bind to stable capability contracts, which connect by solid paths to released local-synthetic CRM and ERP adapters and by dashed paths to a prepared alternative provider adapter; every binding remains under explicit rights, validation, readback, receipts and rollback controls.">
+</p>
+
+Stable capability contracts separate user needs from provider implementation.
+Templates and typed adapters reuse governed intent across systems. In the
+broader product direction, AI can propose mappings, configuration and
+validation plans; trusted code validates every binding.
+
+Their composition creates an open-ended, user-need-driven configuration space
+across many system, tool and provider combinations. Released proof is narrower:
+local synthetic contracts and selected bindings—not universal live
+compatibility.
+
+Provider selection never silently widens authority. Rights profiles,
+validation, readback, receipts and recovery/rollback stay explicit per binding.
+Solid paths above are released local-synthetic evidence; dashed paths are
+prepared product direction. See the
+[technical architecture](docs/ARCHITECTURE.md#capability-contracts-and-provider-bindings).
+
+## Releases
+
+- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
+- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)
+- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)
+
+Release pages document included capabilities and evidence boundaries. Recent
+governed increments also identify related issues/PRs and publish downloadable
+assets with SHA-256 checksum information.
+
+This is a local, synthetic PoC—not a production release, hosted service,
+security certification, support promise or permission to connect real systems.
+Use only synthetic data on a disposable or development host. See
+[release governance](docs/RELEASE-GOVERNANCE.md) for publication evidence and
+anonymous readback rules.
 
 ## Quickstart
 
