@@ -150,12 +150,12 @@ b42b156d29c8e110cd922675b2f134b7b3b31b57f78a05853527b70627db8e69  ./docs/BUILDER
 fc7b66eddb1cbdb07151e3bf8aa7aee0937d265b21c4f4a2f481a1c5f44776e9  ./docs/DAILY-POC-CANDIDATES.md
 2b9696cc826d9d4f609ea8afee428328b5d5e8bdd0ae70ea45fe886773769ad8  ./docs/DAILY-POC-ITERATION.md
 679bae40f1a8858f6f1e618016eec9ba9697788bbb7d67dd06e2071e12f6d404  ./docs/DISCOVERABILITY-BASELINE.md
-6a8c7e3f0e489f3a9ee6d1ac314db59bb024905c6442bd66904123e18fa7975a  ./docs/KNOWN-LIMITATIONS.md
+d6b63d05eccdc11f6cac21ba8dbe0eb97041a94318c2de6bb93c3089d99db59a  ./docs/KNOWN-LIMITATIONS.md
 ff2897b3b60b9785b1a74ac329614622a4d52df9dd010fd6411416baf2a927e4  ./docs/QUICKSTART.md
 a42e47051ed0ed29e93fab2b8d38bca7124a2ffa3fa4916d208cb96d7c93f32a  ./docs/README.md
-7a7cb1bd02402c5191e7192288d49a5d8f259d403df7b25db8dfb42ac560562f  ./docs/RELEASE-GOVERNANCE.md
+0a540393f36f2d92dae44bf452a18daf12f816f3da6ea2ffda69e27ccdfa0e36  ./docs/RELEASE-GOVERNANCE.md
 c4e75729c1b29c9132efd80b348157bae2d3a07cb9ac7c72681dd9d770b86a54  ./docs/SECURE-DEFAULT-PROOF.md
-1b686849085d839229e24fbb7855b2c84213d4226f3b1aecb95671223767d652  ./docs/SECURITY-ASSURANCE.md
+80f03b0f20c838c2a048236092a97b98b8fff44388ac624cba87e8660c89957f  ./docs/SECURITY-ASSURANCE.md
 527ead55bb739305ba02c4094cd30f8b59eaaa2d9c8ddb8ad0bb88b131d5eda2  ./docs/SUPPLY-CHAIN.md
 e5ddc733d4ea3b7f982873d30f18e4590c445f1381ad4da9a00cdd5d2048c5b9  ./docs/SYSTEM-ADVISOR-GUIDE.md
 c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f  ./docs/VERIFICATION-FABRIC-SHADOW.md
@@ -241,8 +241,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-7c7b876ad988c80b79648ffaa6adf34ca3aa2aa92ed01ae0dfab441cb18bf1bf  ./package-lock.json
-1a0e18d4f6033d9ddf9771b66b9c60c1b13609ed8c862e455eca67d36273fe94  ./package.json
+cee13fed47842596ec304ec8e71b1e21349956e8ac28a6d8faa9d39d5422c2dc  ./package-lock.json
+d5085f836be27c2fef260ff5da53c4b1933ff5393b0add6c8020de76dad87eae  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
 974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts
@@ -270,7 +270,7 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-70af6ec38bfa2dffc37757ff95e6c5dce5470fc458e8a3081120bfb28a4b8084  ./release/governance.json
+0d8e56279596ba55466d76d0a21ca82845c4387d62a602bffed3433c7eda147c  ./release/governance.json
 ac622303332c3400aa5ab7ccb1040eeb6d60f6449d88f4f1037bee13c8aba528  ./release/public-files.manifest
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
@@ -394,4 +394,4 @@ e11976d93648e6691e5ec698c97651912079f07d2c984bd338e52d03baa6565f  ./tools/video-
 8eadb522497c147d4246712c9b97c22cf0611faed67a68b6d079145c29398f29  ./tools/video-production-reference/tests/test_cm_video.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
-e2315f226ba517755a2085b56253a207a78032139342d147557dd9214a7d5ba5  ./verification/verification-dag-v2.json
+131da4f855a8cd18199810fc118e45a1c728deb5117d0cc2e863f977016b6af7  ./verification/verification-dag-v2.json
