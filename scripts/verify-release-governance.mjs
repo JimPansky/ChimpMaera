@@ -161,7 +161,7 @@ export async function verifyPublicReadback(root = process.cwd()) {
   assert.equal(latest.tag_name, expected.tag, "PUBLIC_LATEST_MISMATCH");
   assert.equal(tagRef.object.sha, expected.tagObjectSha, "PUBLIC_TAG_OBJECT_MUTATED");
   assert.equal(tagRef.object.type, "commit", "PUBLIC_TAG_TYPE_MUTATED");
-  assert.match(release.body ?? "", /Governed Company Data Increment/, "PUBLIC_BODY_INCREMENT_MISSING");
+  assert.ok((release.body ?? "").includes(expected.increment), "PUBLIC_BODY_INCREMENT_MISSING");
   assert.doesNotMatch(release.body ?? "", /POC Daily|Today's Daily|Previous Daily/i, "PUBLIC_BODY_DAILY_IDENTITY_DENIED");
 
   const actualAssets = [...release.assets].sort((a, b) => a.name.localeCompare(b.name));
