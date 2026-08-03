@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1100" role="img" aria-labelledby="caged-title caged-desc">
+  <title id="caged-title">Caged Agent to Gateway Zoom-through to Capability Constellation</title>
+  <desc id="caged-desc">A contained, untrusted AI agent sends typed proposals through a narrow API to a control portal. The portal binds context, resolves a capability, decides policy and approval at use time, brokers the exact allowed effect, and verifies provider readback. Stable capability contracts connect to locally evidenced CRM, ERP, and document or API adapters, while a dashed new-provider route shows prepared direction. A provenance-bound knowledge and evidence loop improves later adaptations without adding implicit authority.</desc>
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .title { fill: #f8fafc; font-size: 36px; font-weight: 760; }
+    .subtitle { fill: #94a3b8; font-size: 18px; }
+    .head { fill: #e2e8f0; font-size: 18px; font-weight: 730; }
+    .label { fill: #e2e8f0; font-size: 15px; font-weight: 650; }
+    .small { fill: #94a3b8; font-size: 13px; }
+    .micro { fill: #cbd5e1; font-size: 12px; }
+    .edge { fill: none; stroke: #64748b; stroke-width: 2; }
+    .proposal { fill: none; stroke: #38bdf8; stroke-width: 5; }
+    .return { fill: none; stroke: #2dd4bf; stroke-width: 3; }
+    .future { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 9 7; }
+    .box { fill: #0f2034; stroke: #365069; stroke-width: 1.5; }
+    .agent { fill: #251a2c; stroke: #f472b6; stroke-width: 2.5; }
+    .gateway { fill: #173832; stroke: #2dd4bf; stroke-width: 2.5; }
+    .system { fill: #2e2917; stroke: #fbbf24; stroke-width: 1.7; }
+    .proof { fill: #0d2d38; stroke: #22d3ee; stroke-width: 1.7; }
+    .zone { fill: none; stroke: #475569; stroke-width: 1.4; stroke-dasharray: 10 8; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#64748b"/></marker>
+    <marker id="proposal-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#38bdf8"/></marker>
+    <marker id="return-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2dd4bf"/></marker>
+  </defs>
+
+  <rect width="1800" height="1100" fill="#07111f"/>
+  <text x="78" y="72" class="title">Caged Agent → Gateway Zoom-through → Capability Constellation</text>
+  <text x="78" y="106" class="subtitle">The model can propose. The control plane decides. Adaptation expands providers without silently expanding authority.</text>
+
+  <!-- Connectors are behind nodes. Solid routes are locally evidenced; dashed routes are prepared direction. -->
+  <path d="M410 480 C520 480 568 480 660 480" class="proposal" marker-end="url(#proposal-arrow)"/>
+  <path d="M970 480 C1070 480 1098 480 1172 480" class="proposal" marker-end="url(#proposal-arrow)"/>
+  <path d="M1286 480 C1370 380 1442 300 1532 270" class="edge" marker-end="url(#arrow)"/>
+  <path d="M1286 480 C1400 480 1464 480 1532 480" class="edge" marker-end="url(#arrow)"/>
+  <path d="M1286 480 C1370 580 1442 660 1532 690" class="edge" marker-end="url(#arrow)"/>
+  <path d="M1286 480 C1340 695 1410 822 1510 850" class="future" marker-end="url(#arrow)"/>
+  <path d="M1570 750 C1490 920 1260 960 1040 960 L420 960 C260 960 190 835 190 706" class="return" marker-end="url(#return-arrow)"/>
+  <path d="M218 250 C440 210 660 220 776 346" class="future" marker-end="url(#arrow)"/>
+
+  <!-- Left containment -->
+  <rect x="70" y="164" width="430" height="654" rx="34" class="zone"/>
+  <text x="96" y="202" class="head">CONTAINMENT PLANE</text>
+  <text x="96" y="228" class="small">The agent cannot route around the boundary.</text>
+  <circle cx="285" cy="475" r="154" class="agent"/>
+  <circle cx="285" cy="475" r="119" fill="none" stroke="#71345d" stroke-width="2" stroke-dasharray="8 7"/>
+  <text x="285" y="421" text-anchor="middle" class="head">CAGED AGENT</text>
+  <text x="285" y="455" text-anchor="middle" class="small">untrusted planning</text>
+  <text x="285" y="480" text-anchor="middle" class="small">typed proposals only</text>
+  <line x1="212" y1="508" x2="358" y2="508" stroke="#71345d"/>
+  <text x="285" y="540" text-anchor="middle" class="micro">NO RAW CREDENTIALS</text>
+  <text x="285" y="564" text-anchor="middle" class="micro">NO DIRECT EFFECT ROUTE</text>
+  <text x="285" y="588" text-anchor="middle" class="micro">NO SELF-APPROVAL</text>
+  <rect x="122" y="684" width="326" height="90" rx="18" class="box"/>
+  <text x="285" y="717" text-anchor="middle" class="label">Possible impulses</text>
+  <text x="285" y="742" text-anchor="middle" class="small">API · memory · tool · workflow request</text>
+  <text x="285" y="765" text-anchor="middle" class="micro">privileged/external effects remain mediated</text>
+
+  <!-- Proposal aperture -->
+  <rect x="505" y="430" width="156" height="100" rx="48" fill="#0c273e" stroke="#38bdf8" stroke-width="2"/>
+  <text x="583" y="469" text-anchor="middle" class="label">NARROW</text>
+  <text x="583" y="493" text-anchor="middle" class="label">PROPOSAL API</text>
+  <text x="583" y="515" text-anchor="middle" class="micro">schema-bound</text>
+
+  <!-- Gateway portal -->
+  <rect x="662" y="164" width="330" height="654" rx="34" class="gateway"/>
+  <text x="687" y="202" class="head">CONTROL PORTAL</text>
+  <text x="687" y="228" class="small">Every rule dimension is re-evaluated.</text>
+  <rect x="704" y="278" width="246" height="66" rx="16" class="box"/><text x="827" y="307" text-anchor="middle" class="label">1 · Bind context</text><text x="827" y="329" text-anchor="middle" class="micro">identity · tenant · purpose</text>
+  <rect x="704" y="362" width="246" height="66" rx="16" class="box"/><text x="827" y="391" text-anchor="middle" class="label">2 · Resolve capability</text><text x="827" y="413" text-anchor="middle" class="micro">closed action + operands</text>
+  <rect x="704" y="446" width="246" height="66" rx="16" fill="#123450" stroke="#38bdf8" stroke-width="2"/><text x="827" y="475" text-anchor="middle" class="label">3 · Decide at use time</text><text x="827" y="497" text-anchor="middle" class="micro">policy · approval · digests</text>
+  <rect x="704" y="530" width="246" height="66" rx="16" class="box"/><text x="827" y="559" text-anchor="middle" class="label">4 · Broker effect</text><text x="827" y="581" text-anchor="middle" class="micro">credential handle · route</text>
+  <rect x="704" y="614" width="246" height="66" rx="16" class="proof"/><text x="827" y="643" text-anchor="middle" class="label">5 · Verify result</text><text x="827" y="665" text-anchor="middle" class="micro">readback · receipt · rollback</text>
+  <rect x="704" y="718" width="246" height="62" rx="16" fill="#102b28" stroke="#2dd4bf"/>
+  <text x="827" y="745" text-anchor="middle" class="label">Allowed atom</text>
+  <text x="827" y="767" text-anchor="middle" class="micro">exact action, exact scope, exact route</text>
+
+  <!-- Right constellation -->
+  <rect x="1064" y="164" width="666" height="654" rx="34" class="zone"/>
+  <text x="1090" y="202" class="head">CAPABILITY CONSTELLATION</text>
+  <text x="1090" y="228" class="small">Providers can change. The capability contract remains the consumer-facing center.</text>
+  <circle cx="1235" cy="480" r="118" fill="#123450" stroke="#38bdf8" stroke-width="2.5"/>
+  <text x="1235" y="449" text-anchor="middle" class="head">CAPABILITY</text>
+  <text x="1235" y="476" text-anchor="middle" class="head">CONTRACT</text>
+  <text x="1235" y="507" text-anchor="middle" class="small">intent · invariants</text>
+  <text x="1235" y="531" text-anchor="middle" class="small">rights · evidence</text>
+  <rect x="1532" y="224" width="164" height="92" rx="18" class="system"/><text x="1614" y="260" text-anchor="middle" class="label">CRM</text><text x="1614" y="284" text-anchor="middle" class="micro">Adapter A</text>
+  <rect x="1532" y="434" width="164" height="92" rx="18" class="system"/><text x="1614" y="470" text-anchor="middle" class="label">ERP</text><text x="1614" y="494" text-anchor="middle" class="micro">Adapter B</text>
+  <rect x="1532" y="644" width="164" height="92" rx="18" class="system"/><text x="1614" y="680" text-anchor="middle" class="label">DOCS / API</text><text x="1614" y="704" text-anchor="middle" class="micro">Adapter C</text>
+  <rect x="1500" y="824" width="196" height="76" rx="18" fill="#142538" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="9 7"/><text x="1598" y="855" text-anchor="middle" class="label">NEW PROVIDER</text><text x="1598" y="879" text-anchor="middle" class="micro">knowledge + adapter + proof</text>
+
+  <!-- Governed knowledge and adaptation loop -->
+  <rect x="540" y="852" width="770" height="134" rx="24" class="proof"/>
+  <text x="572" y="889" class="head">ADAPTIVE KNOWLEDGE ENGINEERING</text>
+  <text x="572" y="919" class="small">knowledge + feedback → typed records → provenance + evidence → contracts · templates · adapters</text>
+  <text x="572" y="946" class="small">application → tests + readback → outcome → improved knowledge revision</text>
+  <text x="572" y="973" class="micro">Deterministic gates select revisions. More knowledge never adds implicit permission.</text>
+
+  <rect x="78" y="1012" width="1644" height="50" rx="16" fill="#0b1b2b" stroke="#263d55"/>
+  <text x="106" y="1043" class="small">Solid routes = locally evidenced reference paths</text>
+  <text x="560" y="1043" class="small">Dashed routes = prepared add/replace direction</text>
+  <text x="1050" y="1043" class="small">Security boundary = containment + mediated execution</text>
+</svg>

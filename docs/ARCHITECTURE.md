@@ -1,6 +1,8 @@
 # Architecture
 
-The cross-cutting knowledge lineage and promotion model is specified in [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md). Media production is its first explicit negative-evidence-to-governed-template example.
+The cross-cutting knowledge lineage and promotion model is specified in
+[Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md). Media production is its
+first explicit negative-evidence-to-governed-template example.
 
 This architecture preserves the initial `v0.1.0` subset identified in
 [The ChimpMaera Canon](CANON.md) and describes the current released local PoC,
@@ -148,6 +150,42 @@ read-only and has only an internal path to the manager. This is not arbitrary
 skill-code safety, a production registry/trust root/store or universal agent
 format compatibility.
 
+## Combined architecture: containment, mediation and adaptation
+
+The [combined architecture diagram](../assets/diagrams/caged-agent-gateway-constellation.svg)
+joins three previously separate views. First, containment treats the Agent as
+an untrusted proposer with no raw credentials, direct effect route or
+self-approval. Second, mediated execution narrows proposals through a typed API
+and re-evaluates context, capability, rights, Policy and Approval at use time
+before a broker may perform an exact effect. Third, stable capability contracts
+fan out through typed adapters so provider implementation can vary without
+changing the consumer-facing need or inheriting authority.
+
+Solid diagram routes denote the released `SAFE_GUIDED` reference path or
+selected local-synthetic capability paths. Dashed routes denote prepared
+add/replace direction; the solid evidence return informs a later proposal.
+The security boundary is containment plus mediated execution. The current
+release does not prove complete mediation of generic filesystem, process,
+Docker, model, skill, memory or read crossings, and a prepared provider node
+does not prove universal provider onboarding.
+
+Two focused assets remain available without repeating them in the root README:
+the [SAFE_GUIDED flow](../assets/diagrams/safe-guided-flow.svg) isolates one
+governed execution sequence, while
+[capability/provider bindings](../assets/diagrams/capability-provider-bindings.svg)
+isolates the consumer-contract-to-adapter relationship.
+
+The adaptation loop is
+`knowledge and feedback → typed records → provenance and evidence →
+contracts/templates/adapters → application → tests/readback → outcome →
+improved knowledge revision`. This is **Adaptive Knowledge Engineering**:
+integration material is executable, testable, versioned and reusable rather
+than only stored or searched. Positive evidence, negative probes, Owner
+corrections and rejected variants can improve later candidates. Ingestion,
+verification/confidence, default selection and execution authority remain
+separate transitions; an unverified record can exist without becoming a
+default or receiving authority.
+
 ## Capability contracts and provider bindings
 
 Consumers should depend on a stable capability contract, not a provider's API
@@ -164,8 +202,9 @@ guide context. Those bytes demonstrate separation and synthetic reuse. They do
 not prove live provider replacement, arbitrary-system onboarding or universal
 compatibility.
 
-The broader product direction lets AI assist with proposing mappings,
-configuration and validation plans. Such output remains an untrusted proposal.
+The broader product direction lets AI assist with discovery, template
+selection, mappings, adapter/configuration proposals and contract-test
+generation. Such output remains an untrusted proposal.
 Trusted code must validate the closed schema, compatibility and mapping;
 intersect the Host/System ceiling, Owner rights profile, assignments and
 current constraints; and require the configured approval route before any
