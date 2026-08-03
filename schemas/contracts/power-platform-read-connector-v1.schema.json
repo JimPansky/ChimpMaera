@@ -21,7 +21,7 @@
       "properties": {
         "profileId": { "$ref": "#/$defs/id" },
         "profileDigest": { "$ref": "#/$defs/digest" },
-        "delegatedScopes": { "const": ["cm.discovery.read", "cm.operator.read"] },
+        "delegatedScopes": { "const": ["cm.discovery.read"] },
         "applicationRoles": { "type": "array", "maxItems": 0 }
       }
     },
@@ -34,10 +34,10 @@
     "operations": {
       "const": [
         { "operationKey": "LIST_CAPABILITIES", "operationId": "ListCapabilities", "method": "GET", "path": "/v1/capabilities", "semantic": "DISCOVERY", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
-        { "operationKey": "SUBMIT_GOVERNED_QUERY", "operationId": "SubmitGovernedQuery", "method": "POST", "path": "/v1/queries", "semantic": "LOGICAL_READ", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": true },
-        { "operationKey": "GET_OPERATION_STATUS", "operationId": "GetOperationStatus", "method": "GET", "path": "/v1/operations/{operationId}", "semantic": "STATUS", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
-        { "operationKey": "GET_READBACK", "operationId": "GetReadback", "method": "GET", "path": "/v1/operations/{operationId}/readback", "semantic": "AUTHORITATIVE_READBACK", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
-        { "operationKey": "GET_RECEIPT", "operationId": "GetReceipt", "method": "GET", "path": "/v1/operations/{operationId}/receipt", "semantic": "BOUND_RECEIPT", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false }
+        { "operationKey": "SUBMIT_GOVERNED_QUERY", "operationId": "SubmitGovernedQuery", "method": "POST", "path": "/v1/queries", "semantic": "LOGICAL_READ", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": true },
+        { "operationKey": "GET_OPERATION_STATUS", "operationId": "GetOperationStatus", "method": "GET", "path": "/v1/operations/{operationId}", "semantic": "STATUS", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
+        { "operationKey": "GET_READBACK", "operationId": "GetReadback", "method": "GET", "path": "/v1/operations/{operationId}/readback", "semantic": "AUTHORITATIVE_READBACK", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
+        { "operationKey": "GET_RECEIPT", "operationId": "GetReceipt", "method": "GET", "path": "/v1/operations/{operationId}/receipt", "semantic": "BOUND_RECEIPT", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false }
       ]
     },
     "authorityBoundary": {

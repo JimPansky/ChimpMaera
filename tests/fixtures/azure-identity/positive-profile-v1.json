@@ -28,7 +28,7 @@
   },
   "apiPermissions": {
     "mode": "DELEGATED",
-    "delegatedScopes": ["cm.discovery.read", "cm.operator.read"],
+    "delegatedScopes": ["cm.discovery.read"],
     "applicationRoles": [],
     "broadPermissionNamesRejected": true
   },
@@ -46,5 +46,5 @@
     "dynamicSelectionAllowed": false,
     "secretReferences": []
   },
-  "profileDigest": "50c4cac158e4250f97f78d8fe069ba4a1e04c7fc91f94d55170874a2bf287b60"
+  "profileDigest": "e46d524fc32e550db3c94d848c78737bbcef1ca0ddc1ddfb3cc349ed2bc66fae"
 }

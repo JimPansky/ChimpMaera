@@ -54,12 +54,7 @@
       "required": ["mode", "delegatedScopes", "applicationRoles", "broadPermissionNamesRejected"],
       "properties": {
         "mode": { "const": "DELEGATED" },
-        "delegatedScopes": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": { "enum": ["cm.discovery.read", "cm.operator.read"] }
-        },
+        "delegatedScopes": { "const": ["cm.discovery.read"] },
         "applicationRoles": { "type": "array", "maxItems": 0 },
         "broadPermissionNamesRejected": { "const": true }
       }

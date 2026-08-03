@@ -53,7 +53,7 @@ test("AZID-M1 accepts a closed authority-free delegated identity profile", () =>
     outcome: "VERIFIED",
     reasonCodes: ["AZURE_IDENTITY_PROFILE_VERIFIED"],
     profileDigest: input.profileDigest,
-    delegatedScopeCount: 2,
+    delegatedScopeCount: 1,
     requestedRightsCount: 0,
     routeCount: 0,
     writeTargetCount: 0,
@@ -71,7 +71,7 @@ test("AZID-M1 canonical profile digest is stable across 100 object-key reorderin
 
 test("AZID-M1 denies all declared flow, tenant, scope, authority, and credential drift", () => {
   const cases = JSON.parse(readFileSync("tests/fixtures/azure-identity/negative-matrix-v1.json", "utf8")) as NegativeFixture[];
-  assert.equal(cases.length, 12);
+  assert.equal(cases.length, 13);
   for (const negative of cases) {
     const result = verifyAzureIdentityProfileV1(mutate(fixture(), negative));
     assert.equal(result.outcome, "DENIED", negative.caseId);

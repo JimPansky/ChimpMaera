@@ -12,8 +12,8 @@
   },
   "identityBinding": {
     "profileId": "identity:azure-power-apps-read-v1",
-    "profileDigest": "50c4cac158e4250f97f78d8fe069ba4a1e04c7fc91f94d55170874a2bf287b60",
-    "delegatedScopes": ["cm.discovery.read", "cm.operator.read"],
+    "profileDigest": "e46d524fc32e550db3c94d848c78737bbcef1ca0ddc1ddfb3cc349ed2bc66fae",
+    "delegatedScopes": ["cm.discovery.read"],
     "applicationRoles": []
   },
   "verificationBinding": {
@@ -22,10 +22,10 @@
   },
   "operations": [
     { "operationKey": "LIST_CAPABILITIES", "operationId": "ListCapabilities", "method": "GET", "path": "/v1/capabilities", "semantic": "DISCOVERY", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
-    { "operationKey": "SUBMIT_GOVERNED_QUERY", "operationId": "SubmitGovernedQuery", "method": "POST", "path": "/v1/queries", "semantic": "LOGICAL_READ", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": true },
-    { "operationKey": "GET_OPERATION_STATUS", "operationId": "GetOperationStatus", "method": "GET", "path": "/v1/operations/{operationId}", "semantic": "STATUS", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
-    { "operationKey": "GET_READBACK", "operationId": "GetReadback", "method": "GET", "path": "/v1/operations/{operationId}/readback", "semantic": "AUTHORITATIVE_READBACK", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false },
-    { "operationKey": "GET_RECEIPT", "operationId": "GetReceipt", "method": "GET", "path": "/v1/operations/{operationId}/receipt", "semantic": "BOUND_RECEIPT", "delegatedScope": "cm.operator.read", "idempotencyKeyRequired": false }
+    { "operationKey": "SUBMIT_GOVERNED_QUERY", "operationId": "SubmitGovernedQuery", "method": "POST", "path": "/v1/queries", "semantic": "LOGICAL_READ", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": true },
+    { "operationKey": "GET_OPERATION_STATUS", "operationId": "GetOperationStatus", "method": "GET", "path": "/v1/operations/{operationId}", "semantic": "STATUS", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
+    { "operationKey": "GET_READBACK", "operationId": "GetReadback", "method": "GET", "path": "/v1/operations/{operationId}/readback", "semantic": "AUTHORITATIVE_READBACK", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false },
+    { "operationKey": "GET_RECEIPT", "operationId": "GetReceipt", "method": "GET", "path": "/v1/operations/{operationId}/receipt", "semantic": "BOUND_RECEIPT", "delegatedScope": "cm.discovery.read", "idempotencyKeyRequired": false }
   ],
   "authorityBoundary": {
     "genericInvocationAllowed": false,
@@ -57,5 +57,5 @@
     "dynamicSelectionAllowed": false,
     "secretReferences": []
   },
-  "contractDigest": "994fae0acbecc3068f611673eda9e11a9368ca7e19f53c467ea030875425f6fd"
+  "contractDigest": "71805da9cf453748dbde0917bcf5477a90fa5aca828fe9d8c30d88de6c758830"
 }
