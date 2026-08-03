@@ -313,9 +313,9 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertNotIn("# ChimpMaera v0.1", root_readme)
         self.assertNotIn("ChimpMaera v0.1 is", root_readme)
         self.assertIn(
-            "**Current regular Latest release:** [`v0.2.0-poc.20260803.1`]"
+            "**Current regular Latest release:** [`v0.2.0-poc.20260803.2`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260803.1) — **Authority-Bounded Integration Contracts Increment**.",
+            "v0.2.0-poc.20260803.2) — **Public Truth and Discoverability Increment**.",
             root_readme,
         )
         self.assertNotIn("**Today's Daily:**", root_readme)
