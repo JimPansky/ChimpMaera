@@ -312,20 +312,16 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertIn("\n# ChimpMaera\n", root_readme)
         self.assertNotIn("# ChimpMaera v0.1", root_readme)
         self.assertNotIn("ChimpMaera v0.1 is", root_readme)
-        self.assertIn(
-            "**Current regular Latest release:** [`v0.2.0-poc.20260803.3`]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/"
-            "v0.2.0-poc.20260803.3) — **Verification Planning and Contribution Preflight Increment**.",
-            root_readme,
-        )
+        self.assertIn("## Releases", root_readme)
+        for stable_release_url in (
+            "https://github.com/JimPansky/ChimpMaera/releases/latest",
+            "https://github.com/JimPansky/ChimpMaera/releases",
+            "https://github.com/JimPansky/ChimpMaera/releases.atom",
+        ):
+            self.assertIn(stable_release_url, root_readme)
+        self.assertNotIn("/releases/tag/", root_readme)
         self.assertNotIn("**Today's Daily:**", root_readme)
         self.assertNotIn("**Previous Daily provenance:**", root_readme)
-        self.assertIn(
-            "**Initial public baseline:** [`v0.1.0`]"
-            "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)"
-            " — historical only; it is not the current release or its direct predecessor.",
-            root_readme,
-        )
         video_heading = "## Project and community"
         self.assertIn(video_heading, root_readme)
         narrow_section = root_readme.split(video_heading, 1)[1].split("\n## ", 1)[0]

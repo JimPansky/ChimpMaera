@@ -56,9 +56,25 @@ export function validateRepository(root = process.cwd()) {
     try { files.set(path, read(root, path)); } catch { issues.push(`ACTIVE_PUBLIC_FILE_MISSING:${path}`); }
   }
   const readme = files.get("README.md") ?? "";
-  const releaseSection = section(readme, "Release status");
-  issue(issues, releaseSection.includes(`**Current regular Latest release:** [\`${release.tag}\`]`), "README_CURRENT_RELEASE_MISMATCH");
-  issue(issues, releaseSection.includes(release.increment ?? "__missing__"), "README_INCREMENT_MISMATCH");
+  const releaseSection = section(readme, "Releases");
+  issue(
+    issues,
+    [
+      "](https://github.com/JimPansky/ChimpMaera/releases/latest)",
+      "](https://github.com/JimPansky/ChimpMaera/releases)",
+      "](https://github.com/JimPansky/ChimpMaera/releases.atom)",
+    ].every((link) => releaseSection.includes(link)),
+    "README_STABLE_RELEASE_NAVIGATION_MISSING",
+  );
+  issue(
+    issues,
+    /included capabilities/i.test(releaseSection)
+      && /evidence boundaries/i.test(releaseSection)
+      && /issues\/PRs/i.test(releaseSection)
+      && /SHA-256/i.test(releaseSection),
+    "README_RELEASE_NOTE_SCOPE_MISSING",
+  );
+  issue(issues, !/\/releases\/tag\//.test(releaseSection) && !/\bv\d+\.\d+\.\d+\b/.test(readme), "README_VERSION_BOUND_RELEASE_NAVIGATION_DENIED");
   issue(issues, !/Today's Daily|Previous Daily|POC Daily|Daily snapshot/i.test(releaseSection), "README_ACTIVE_DAILY_IDENTITY_DENIED");
   issue(
     issues,

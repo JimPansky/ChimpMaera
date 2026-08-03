@@ -52,7 +52,6 @@ function fixture() {
   const root = mkdtempSync(join(tmpdir(), "cm-daily-poc-test-"));
   const source = join(root, "source");
   const manifest = JSON.parse(readFileSync(EXAMPLE, "utf8"));
-  const predecessorVersion = manifest.history.at(-1)?.version ?? "v0.2.0-poc.20260802.1";
   mkdirSync(join(source, "tools", "video-production-reference", "schemas"), { recursive: true });
   mkdirSync(join(source, "tools", "video-production-reference", "tests"), { recursive: true });
   writeFileSync(join(source, "README.md"), "# ChimpMaera\n\nBase.\n", "utf8");
@@ -77,7 +76,7 @@ function fixture() {
   writeFileSync(join(source, "package.json"), "{\"name\":\"chimpmaera-fixture\",\"private\":true,\"description\":\"current\"}\n", "utf8");
   writeFileSync(
     join(source, "README.md"),
-    `# ChimpMaera\n\nBase.\n\n## Release status\n\n- **Current regular Latest release:** [\`${TARGET_VERSION}\`](https://github.com/JimPansky/ChimpMaera/releases/tag/${TARGET_VERSION}) — Governed Company Data Increment.\n- **Historical predecessor:** \`${predecessorVersion}\` — provenance only.\n\n## Videos\n\nCurrent overview.\n`,
+    `# ChimpMaera\n\nBase.\n\n## Releases\n\n- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)\n- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)\n- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)\n\nRelease pages document included capabilities and evidence boundaries. Recent governed increments also identify related issues/PRs and publish downloadable assets with SHA-256 checksum information.\n\n## Videos\n\nCurrent overview.\n`,
     "utf8",
   );
   git(source, "add", "README.md", "package.json");
@@ -222,7 +221,7 @@ function mutate(fx, kind) {
     case "MISSING_LATEST_RELEASE_FIELD":
       writeFileSync(
         join(fx.source, "README.md"),
-        readFileSync(join(fx.source, "README.md"), "utf8").replace("**Current regular Latest release:**", "**Current public release:**"),
+        readFileSync(join(fx.source, "README.md"), "utf8").replace("https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/missing"),
         "utf8",
       );
       break;
