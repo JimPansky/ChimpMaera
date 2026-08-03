@@ -44,7 +44,7 @@ def _ffmpeg_command(job, validation, output_mp4):
             last = out
     total = float(video["durationSeconds"])
     filters.append(f"{last}format=yuv420p[vout]")
-    filters.append(f"[{len(shots)}:a]apad,atrim=duration={total:.6f},aformat=sample_rates=48000:channel_layouts=mono[aout]")
+    filters.append(f"[{len(shots)}:a]aformat=sample_rates=48000:channel_layouts=mono[aout]")
 
     cmd.extend([
         "-filter_complex",

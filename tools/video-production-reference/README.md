@@ -77,6 +77,21 @@ Default mode is validate-only. Full rendering requires all of the following:
 
 The renderer refuses to overwrite an existing immutable output directory.
 
+## Editorial duration boundary
+
+ChimpMaera Daily videos have no fixed target or maximum duration. The material
+determines the useful length: explain the essential user value and relevant
+context clearly and enjoyably, without unnecessary technical depth,
+repetition, or filler. The former `75–90 seconds` guidance is superseded.
+
+Timing fields in this reference describe locked production assets and media
+assembly only. `spec.video.durationSeconds` must equal both the ordered scene
+total and the accepted WAV measurement. The renderer rejects a mismatch and
+does not trim narration or pad audio to hit that number. Target/max duration,
+duration-gate, cut-to-fit, and pad-to-fit controls are rejected. Legitimate
+clip/outro timing, subtitle readability, encoding, safe-area, and platform
+limits remain technical constraints rather than editorial runtime goals.
+
 ## Docker
 
 Build the CPU-first core image:

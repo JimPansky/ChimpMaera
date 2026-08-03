@@ -50,6 +50,7 @@ class ContractNegativeProbes(unittest.TestCase):
         self.assertEqual(result["methodology"]["methodologyVersion"], "2026.08.02-v2")
         self.assertEqual(result["methodology"]["outroDurationSeconds"], 10.0)
         self.assertEqual(result["methodology"]["namedHashBoundReviews"], 2)
+        self.assertEqual(result["durationRole"], "LOCKED_ASSET_MEASUREMENT_NOT_EDITORIAL_TARGET")
 
     def test_bundled_assets_are_optional_and_omitted_by_minimal_job(self):
         self.assertNotIn("referenceAssets", self.job["spec"])
@@ -128,6 +129,29 @@ class ContractNegativeProbes(unittest.TestCase):
     def test_malformed_scene_timing_rejected(self):
         self.job["spec"]["assets"]["shots"][1]["startSeconds"] = 3.0
         self.assert_rejects("scene timing")
+
+    def test_fixed_daily_duration_controls_rejected(self):
+        for key in ("targetDurationSeconds", "maximumDurationSeconds", "durationGate", "paddingToFit"):
+            with self.subTest(key=key):
+                candidate = json.loads(json.dumps(self.job))
+                candidate["spec"][key] = 90 if key != "paddingToFit" else True
+                with self.assertRaisesRegex(ContractError, "fixed Daily duration control forbidden"):
+                    validate_job(candidate, str(self.job_path), str(self.output), render_requested=True)
+
+    def test_audio_duration_mismatch_rejected_instead_of_cut_or_pad(self):
+        audio = Path(self.job["spec"]["assets"]["audio"]["path"])
+        with wave.open(str(audio), "wb") as stream:
+            stream.setnchannels(1)
+            stream.setsampwidth(2)
+            stream.setframerate(48000)
+            stream.writeframes(b"\0\0" * (19 * 48000))
+        self.job["spec"]["assets"]["audio"]["sha256"] = hashlib.sha256(audio.read_bytes()).hexdigest()
+        self.assert_rejects("truncation or padding to fit is forbidden")
+
+    def test_renderer_has_no_audio_cut_or_pad_to_preset_filter(self):
+        source = (ROOT / "src/cm_video_ref/render.py").read_text(encoding="utf-8")
+        self.assertNotIn("apad", source)
+        self.assertNotIn("atrim", source)
 
     def test_rejected_asset_rejected(self):
         self.job["spec"]["assets"]["shots"][0]["status"] = "rejected"
@@ -317,6 +341,13 @@ class MethodologyMetadataTests(unittest.TestCase):
     def test_schema_files_are_valid_json(self):
         for path in (ROOT / "schemas").glob("*.json"):
             json.loads(path.read_text(encoding="utf-8"))
+
+    def test_duration_policy_is_documented_as_content_driven(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        gates = (ROOT / "qa-gates.yaml").read_text(encoding="utf-8")
+        self.assertIn("no fixed target or maximum duration", readme)
+        self.assertIn("75–90 seconds", readme)
+        self.assertIn("noFixedDailyTargetOrMaximum: true", gates)
 
     def test_oci_methodology_labels_are_inspectable(self):
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")

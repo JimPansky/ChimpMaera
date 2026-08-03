@@ -50,6 +50,14 @@
             "thumbnailText": {"type": "string"}
           }
         },
+        "video": {
+          "type": "object",
+          "required": ["width", "height", "fps", "pixelFormat", "durationSeconds", "transition"],
+          "description": "Locked media assembly facts. durationSeconds is the measured scene/audio result, never an editorial target or maximum.",
+          "properties": {
+            "durationSeconds": {"type": "number", "exclusiveMinimum": 0, "description": "Must equal scene total and accepted WAV duration; mismatch fails instead of truncating or padding."}
+          }
+        },
         "render": {
           "type": "object",
           "required": ["full", "overwrite", "publicActions"],

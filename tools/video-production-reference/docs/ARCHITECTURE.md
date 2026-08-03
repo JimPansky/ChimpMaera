@@ -27,10 +27,12 @@ Docker socket.
    claim/evidence/non-claim integrity, timed visual bindings, safe areas,
    subtitles, named hash-bound reviews, the ten-second outro probes, and the
    publication-ready audience-copy boundary for narration, visible copy, and
-   optional title/description/thumbnail fields.
+   optional title/description/thumbnail fields. It also rejects fixed Daily
+   target/max/gate and cut/pad-to-fit controls.
 2. `render` repeats validation, refuses an existing immutable output directory,
-   assembles static PNG shots with direct dissolves, pads/trims locked WAV audio,
-   writes `candidate.mp4`, and records the exact render command.
+   assembles static PNG shots with direct dissolves, preserves the already
+   duration-matched locked WAV without trim/pad-to-fit filters, writes
+   `candidate.mp4`, and records the exact render command.
 3. `qa` runs `ffprobe`, full-decodes the MP4, checks dimensions, fps, pixel
    format, duration and audio sample rate, measures EBU R128 loudness and true
    peak, rejects black-frame events, and writes QA evidence plus checksums.
@@ -46,6 +48,10 @@ Docker socket.
 6. `validate-audience-copy-fixtures` replays positive and negative fixtures in
    the container and rejects stale policy hashes, channel coverage, or rule
    coverage.
+
+Editorial duration is content-driven. Scene and clip timing remains a technical
+assembly contract, but no total Daily runtime is a target, maximum, pass/fail
+goal, truncation trigger, or padding target.
 
 ## Evidence Files
 
