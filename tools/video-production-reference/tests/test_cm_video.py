@@ -321,18 +321,17 @@ class BundledReferenceAssets(unittest.TestCase):
         self.assertNotIn("**Today's Daily:**", root_readme)
         self.assertNotIn("**Previous Daily provenance:**", root_readme)
         self.assertIn(
-            "**Historical predecessor:** [`v0.1.0`]"
+            "**Initial public baseline:** [`v0.1.0`]"
             "(https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)"
-            " — historical only; it is not the current release.",
+            " — historical only; it is not the current release or its direct predecessor.",
             root_readme,
         )
-        video_heading = "## Watch ChimpMaera"
+        video_heading = "## Project and community"
         self.assertIn(video_heading, root_readme)
         narrow_section = root_readme.split(video_heading, 1)[1].split("\n## ", 1)[0]
-        observed_lines = [line for line in narrow_section.splitlines() if line.startswith("- [")]
-        self.assertEqual(observed_lines, [])
-        self.assertIn("temporarily unavailable", narrow_section)
-        for stale_id in ("Dq_XLEzh5I8", "w4fWgalD_WQ", "SEPbE-EVoNs", "8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0"):
+        for active_id in ("Dq_XLEzh5I8", "w4fWgalD_WQ", "SEPbE-EVoNs"):
+            self.assertEqual(root_readme.count(active_id), 1)
+        for stale_id in ("8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0"):
             self.assertNotIn(stale_id, root_readme)
         for needle in needles:
             self.assertNotIn(needle, narrow_section.lower())

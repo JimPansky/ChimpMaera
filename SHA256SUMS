@@ -371,5 +371,5 @@ d52021c870735b6d613e97b9f8256a77779340e182c3bedbed3b2a79b4bed593  ./tools/video-
 c1fb0f32a5bf7df853abfc357b7323aae915011010214de035e7c01b9d855104  ./tools/video-production-reference/src/cm_video_ref/methodology.py
 e11976d93648e6691e5ec698c97651912079f07d2c984bd338e52d03baa6565f  ./tools/video-production-reference/src/cm_video_ref/qa.py
 d6fd76b3dcb70d8f542fc74b05b03390b46e4b6813f0deb78fd874f9896d02f8  ./tools/video-production-reference/src/cm_video_ref/render.py
-41a847dc7add0a197c0530dad9174d8f31be88696d1069c1c54a1e9da76ba864  ./tools/video-production-reference/tests/test_cm_video.py
+c6c713128e5aad73bf33a2b947835e3ee2b25abea2a610664b159702ee84014c  ./tools/video-production-reference/tests/test_cm_video.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
