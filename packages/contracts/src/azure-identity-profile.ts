@@ -46,7 +46,7 @@ export interface AzureIdentityProfileV1 {
   };
   readonly apiPermissions: {
     readonly mode: "DELEGATED";
-    readonly delegatedScopes: readonly ("cm.discovery.read" | "cm.operator.read")[];
+    readonly delegatedScopes: readonly ["cm.discovery.read"];
     readonly applicationRoles: readonly [];
     readonly broadPermissionNamesRejected: true;
   };
@@ -154,10 +154,8 @@ export function verifyAzureIdentityProfileV1(value: unknown): AzureIdentityProfi
   }
   if (!exactKeys(value.apiPermissions, [
     "mode", "delegatedScopes", "applicationRoles", "broadPermissionNamesRejected",
-  ]) || value.apiPermissions.mode !== "DELEGATED" || !Array.isArray(value.apiPermissions.delegatedScopes)
-    || value.apiPermissions.delegatedScopes.length === 0
-    || new Set(value.apiPermissions.delegatedScopes).size !== value.apiPermissions.delegatedScopes.length
-    || !value.apiPermissions.delegatedScopes.every((scope) => ["cm.discovery.read", "cm.operator.read"].includes(scope as string))
+  ]) || value.apiPermissions.mode !== "DELEGATED"
+    || !exactStringArray(value.apiPermissions.delegatedScopes, ["cm.discovery.read"])
     || !Array.isArray(value.apiPermissions.applicationRoles) || value.apiPermissions.applicationRoles.length !== 0
     || value.apiPermissions.broadPermissionNamesRejected !== true) {
     return denied("AZURE_IDENTITY_SCOPE_DENIED");

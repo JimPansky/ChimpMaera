@@ -2,6 +2,8 @@
   { "caseId": "unknown-top-level-field", "path": "/unexpected", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_SCHEMA_DENIED" },
   { "caseId": "arbitrary-server-selection", "path": "/openApi/arbitraryServerSelectionAllowed", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_OPENAPI_DENIED" },
   { "caseId": "broad-delegated-scope", "path": "/identityBinding/delegatedScopes", "value": ["cm.discovery.read", "Directory.Read.All"], "expectedReason": "POWER_PLATFORM_CONNECTOR_IDENTITY_DENIED" },
+  { "caseId": "operator-identity-scope", "path": "/identityBinding/delegatedScopes", "value": ["cm.discovery.read", "cm.operator.read"], "expectedReason": "POWER_PLATFORM_CONNECTOR_IDENTITY_DENIED" },
+  { "caseId": "operator-operation-scope", "path": "/operations/1/delegatedScope", "value": "cm.operator.read", "expectedReason": "POWER_PLATFORM_CONNECTOR_OPERATION_DENIED" },
   { "caseId": "mutation-operation", "path": "/operations/1/operationKey", "value": "EXECUTE_PROPOSAL", "expectedReason": "POWER_PLATFORM_CONNECTOR_OPERATION_DENIED" },
   { "caseId": "method-escape", "path": "/operations/1/method", "value": "PUT", "expectedReason": "POWER_PLATFORM_CONNECTOR_OPERATION_DENIED" },
   { "caseId": "generic-invocation", "path": "/authorityBoundary/genericInvocationAllowed", "value": true, "expectedReason": "POWER_PLATFORM_CONNECTOR_AUTHORITY_DENIED" },

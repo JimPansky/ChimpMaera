@@ -7,6 +7,7 @@
   {"caseId":"missing-scope-claim","operation":"replace","path":"/tokenValidation/requiredClaims","value":["iss","aud","tid","sub","exp","nbf","iat"],"expectedReason":"AZURE_IDENTITY_TOKEN_VALIDATION_DENIED"},
   {"caseId":"provider-token-forwarding","operation":"replace","path":"/tokenValidation/providerTokenForwarding","value":true,"expectedReason":"AZURE_IDENTITY_TOKEN_VALIDATION_DENIED"},
   {"caseId":"broad-scope","operation":"replace","path":"/apiPermissions/delegatedScopes","value":["user_impersonation"],"expectedReason":"AZURE_IDENTITY_SCOPE_DENIED"},
+  {"caseId":"operator-scope","operation":"replace","path":"/apiPermissions/delegatedScopes","value":["cm.discovery.read","cm.operator.read"],"expectedReason":"AZURE_IDENTITY_SCOPE_DENIED"},
   {"caseId":"application-role","operation":"replace","path":"/apiPermissions/applicationRoles","value":["CM.Admin"],"expectedReason":"AZURE_IDENTITY_SCOPE_DENIED"},
   {"caseId":"authentication-as-authority","operation":"replace","path":"/capabilityBoundary/authenticationGrantsAuthority","value":true,"expectedReason":"AZURE_IDENTITY_AUTHORITY_DENIED"},
   {"caseId":"execution-from-identity","operation":"replace","path":"/capabilityBoundary/executionAllowed","value":true,"expectedReason":"AZURE_IDENTITY_AUTHORITY_DENIED"},

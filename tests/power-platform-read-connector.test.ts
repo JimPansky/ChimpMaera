@@ -63,6 +63,9 @@ test("PPREAD-M1 accepts the five-operation authority-free read connector", () =>
     writeTargetCount: 0,
   });
   assert.deepEqual(contract, before, "verification must not mutate the contract");
+  assert.deepEqual(contract.identityBinding.delegatedScopes, ["cm.discovery.read"]);
+  assert.deepEqual(new Set(contract.operations.map((operation) => operation.delegatedScope)),
+    new Set(["cm.discovery.read"]));
 });
 
 test("PPREAD-M1 canonical contract digest is stable across 100 object-key reorderings", () => {
@@ -75,7 +78,7 @@ test("PPREAD-M1 canonical contract digest is stable across 100 object-key reorde
 
 test("PPREAD-M1 denies declared operation, authority, lifecycle, and credential drift", () => {
   const cases = JSON.parse(readFileSync("tests/fixtures/power-platform/negative-matrix-v1.json", "utf8")) as NegativeFixture[];
-  assert.equal(cases.length, 11);
+  assert.equal(cases.length, 13);
   for (const negative of cases) {
     const result = verifyPowerPlatformReadConnectorV1(mutate(contractFixture(), negative), identityFixture());
     assert.equal(result.outcome, "DENIED", negative.caseId);

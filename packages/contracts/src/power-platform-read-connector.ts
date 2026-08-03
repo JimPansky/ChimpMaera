@@ -27,7 +27,7 @@ export interface PowerPlatformReadOperationV1 {
   readonly method: "GET" | "POST";
   readonly path: string;
   readonly semantic: "DISCOVERY" | "LOGICAL_READ" | "STATUS" | "AUTHORITATIVE_READBACK" | "BOUND_RECEIPT";
-  readonly delegatedScope: "cm.discovery.read" | "cm.operator.read";
+  readonly delegatedScope: "cm.discovery.read";
   readonly idempotencyKeyRequired: boolean;
 }
 
@@ -46,7 +46,7 @@ export interface PowerPlatformReadConnectorV1 {
   readonly identityBinding: {
     readonly profileId: string;
     readonly profileDigest: string;
-    readonly delegatedScopes: readonly ["cm.discovery.read", "cm.operator.read"];
+    readonly delegatedScopes: readonly ["cm.discovery.read"];
     readonly applicationRoles: readonly [];
   };
   readonly verificationBinding: {
@@ -107,23 +107,23 @@ const EXPECTED_OPERATIONS: readonly PowerPlatformReadOperationV1[] = [
   },
   {
     operationKey: "SUBMIT_GOVERNED_QUERY", operationId: "SubmitGovernedQuery", method: "POST",
-    path: "/v1/queries", semantic: "LOGICAL_READ", delegatedScope: "cm.operator.read",
+    path: "/v1/queries", semantic: "LOGICAL_READ", delegatedScope: "cm.discovery.read",
     idempotencyKeyRequired: true,
   },
   {
     operationKey: "GET_OPERATION_STATUS", operationId: "GetOperationStatus", method: "GET",
-    path: "/v1/operations/{operationId}", semantic: "STATUS", delegatedScope: "cm.operator.read",
+    path: "/v1/operations/{operationId}", semantic: "STATUS", delegatedScope: "cm.discovery.read",
     idempotencyKeyRequired: false,
   },
   {
     operationKey: "GET_READBACK", operationId: "GetReadback", method: "GET",
     path: "/v1/operations/{operationId}/readback", semantic: "AUTHORITATIVE_READBACK",
-    delegatedScope: "cm.operator.read", idempotencyKeyRequired: false,
+    delegatedScope: "cm.discovery.read", idempotencyKeyRequired: false,
   },
   {
     operationKey: "GET_RECEIPT", operationId: "GetReceipt", method: "GET",
     path: "/v1/operations/{operationId}/receipt", semantic: "BOUND_RECEIPT",
-    delegatedScope: "cm.operator.read", idempotencyKeyRequired: false,
+    delegatedScope: "cm.discovery.read", idempotencyKeyRequired: false,
   },
 ];
 
@@ -178,7 +178,7 @@ export function verifyPowerPlatformReadConnectorV1(
   if (!exactKeys(value.identityBinding, ["profileId", "profileDigest", "delegatedScopes", "applicationRoles"])
     || identityResult.outcome !== "VERIFIED" || value.identityBinding.profileId !== identityProfile.profileId
     || value.identityBinding.profileDigest !== identityProfile.profileDigest
-    || !exact(value.identityBinding.delegatedScopes, ["cm.discovery.read", "cm.operator.read"])
+    || !exact(value.identityBinding.delegatedScopes, ["cm.discovery.read"])
     || !exact(value.identityBinding.delegatedScopes, identityProfile.apiPermissions.delegatedScopes)
     || !exact(value.identityBinding.applicationRoles, [])) return denied("POWER_PLATFORM_CONNECTOR_IDENTITY_DENIED");
   if (!exact(value.operations, EXPECTED_OPERATIONS)) return denied("POWER_PLATFORM_CONNECTOR_OPERATION_DENIED");
