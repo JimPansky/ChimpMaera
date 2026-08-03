@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import hashlib
+import json
 import math
 from pathlib import Path
 import struct
@@ -134,6 +135,78 @@ def main():
         policy_source = ROOT.parents[1] / "policies" / "chimpmaera-public-copy.json"
     policy = ASSETS / "chimpmaera-public-copy.json"
     shutil.copy2(policy_source, policy)
+    revision = hashlib.sha256(b"minimal-synthetic-visual-governance-v1").hexdigest()
+    storyboard = {
+        "schemaVersion": "cm.video-storyboard/v1",
+        "visualContractVersion": "cm.visual-language-contract/2026-08-03-v1",
+        "immutableRevisionSha256": revision,
+        "durationPolicy": "CONTENT_DRIVEN",
+        "audienceLock": {"canvasSha256": hashlib.sha256(b"synthetic-audience-canvas").hexdigest(), "primary": "TECHNICAL_EXPERT"},
+        "storyArchitecture": {
+            "audience": "Technical experts evaluating a governed media contract",
+            "intendedDecision": "Inspect the evidence binding before reuse",
+            "centralTension": "Can a rendered claim be traced to proof?",
+            "transformation": "Unbound media becomes an inspectable evidence path",
+            "proof": "Digest-bound assets and timed semantic scenes",
+            "implication": "Reuse only within the declared local synthetic boundary",
+            "oneNarrativeSpine": True,
+        },
+        "claims": [{
+            "id": "C1", "statement": "The local fixture binds claims to timed evidence.",
+            "evidenceRefs": ["E1"], "nonClaimBoundary": "It is not production evidence.",
+            "allowedVisualTypes": ["AUTHORITY_FLOW", "MEASURED_EVIDENCE"],
+        }],
+        "evidence": [{"id": "E1", "source": "SCENE-OBJECT-MATRIX.csv", "sha256": sha(facts)}],
+        "scenes": [
+            {
+                "id": "S01", "narrativeJob": "MECHANISM", "objective": "Make the claim-to-evidence route visible",
+                "semanticAction": "Connect claim node to digest-bound evidence", "visualType": "AUTHORITY_FLOW",
+                "claimRefs": ["C1"], "evidenceRefs": ["E1"],
+                "beforeState": {"claim": "unbound"}, "afterState": {"claim": "evidence-bound"},
+                "narrationPurpose": "Explain why ChimpMaera makes the binding inspectable.",
+                "narration": "ChimpMaera makes the path from a claim to its evidence inspectable.",
+                "onScreenLabels": ["Assertion", "Source", "Linked"], "compositionId": "authority-flow-left-to-right",
+                "visualDeltaScore": 0.65,
+                "keyframes": [
+                    {"at": 0.0, "stateDigest": hashlib.sha256(b"claim-unbound").hexdigest()},
+                    {"at": 9.5, "stateDigest": hashlib.sha256(b"claim-bound").hexdigest()},
+                ],
+                "transitionPurpose": "Follow the newly created binding into verification",
+                "accessibilityNote": "Labels and connector shape remain distinguishable without color.",
+            },
+            {
+                "id": "S02", "narrativeJob": "PROOF", "objective": "Show the evidence receipt and boundary",
+                "semanticAction": "Reveal digest receipt and local-synthetic limit", "visualType": "MEASURED_EVIDENCE",
+                "claimRefs": ["C1"], "evidenceRefs": ["E1"],
+                "beforeState": {"receipt": "hidden"}, "afterState": {"receipt": "verified", "boundary": "visible"},
+                "narrationPurpose": "State the proof and its non-claim boundary.",
+                "narration": "The receipt proves the local binding, while the boundary excludes production outcomes.",
+                "onScreenLabels": ["Digest verified", "Local synthetic"], "compositionId": "receipt-with-boundary",
+                "visualDeltaScore": 0.72,
+                "keyframes": [
+                    {"at": 10.0, "stateDigest": hashlib.sha256(b"receipt-hidden").hexdigest()},
+                    {"at": 19.9, "stateDigest": hashlib.sha256(b"receipt-visible").hexdigest()},
+                ],
+                "transitionPurpose": "Close on the applicability boundary",
+                "accessibilityNote": "Receipt icon includes a text status; boundary uses line style plus label.",
+            },
+        ],
+        "tail": {"staticSeconds": 0.4, "silentSeconds": 0.0, "purpose": "NARRATIVE_CLOSE"},
+        "criticalTerms": [{"spelling": "ChimpMaera", "pronunciation": "Chimp-MARE-ah", "requiredInNarration": True}],
+        "contactSheet": {"path": "../assets/s01.png", "sha256": rendered[0][2], "representativeMoments": ["S01:start", "S02:end"]},
+        "reviews": {
+            "HUMAN_VISUAL_REVIEW": {"status": "APPROVED", "revisionSha256": revision, "reviewer": "synthetic-fixture-reviewer", "reviewedAt": "2026-08-03T00:00:00Z"},
+            "HUMAN_EDITORIAL_REVIEW": {"status": "APPROVED", "revisionSha256": revision, "reviewer": "synthetic-fixture-reviewer", "reviewedAt": "2026-08-03T00:00:00Z"},
+            "HUMAN_FINAL_REVIEW": {"status": "PENDING", "revisionSha256": None, "reviewer": None, "reviewedAt": None},
+        },
+        "automatedPreflight": {"status": "PASS", "revisionSha256": revision},
+        "automatedFinalQa": {"status": "PENDING", "revisionSha256": revision},
+        "readyForAssembly": False,
+        "publicationPermission": "FORBIDDEN",
+        "maturity": "L4_ROUGH_CUT_APPROVED",
+    }
+    storyboard_path = JOB / "STORYBOARD.json"
+    storyboard_path.write_text(json.dumps(storyboard, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     job = f"""apiVersion: cm.video/v2
 kind: VideoJob
 metadata:
@@ -218,6 +291,10 @@ spec:
     full: true
     overwrite: false
     publicActions: forbidden
+  preRenderGate:
+    status: PASS_AUTOMATED
+    storyboardPath: /job/STORYBOARD.json
+    storyboardSha256: {sha(storyboard_path)}
   gates:
     textGate: PASS
     shotGate: PASS

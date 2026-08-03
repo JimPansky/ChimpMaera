@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "cm.video-negative-evidence-fixtures/v1",
+  "decision": "HUMAN_REJECTED",
+  "reusePolicy": "NEVER_POSITIVE_TEMPLATE",
+  "sharedFindings": [
+    "Three static text slides substitute paragraph copy for visual explanation.",
+    "Narration and the dominant on-screen paragraph are near-duplicates.",
+    "The same composition repeats across every module.",
+    "The lower visual strip describes a visual instead of performing a semantic visual action.",
+    "Representative moments show no progressive evidence-bearing state change."
+  ],
+  "modules": [
+    {"tag": "v0.2.0-poc.20260803.1", "revisionRef": "seg-822b3cbf41324db52dde.r5", "mp4Sha256": "88458aeae837efc5714682f2629c0eacebd525d9a9bb148d8406bc194cd89359", "representativeSeconds": [2.0, 28.75, 55.5], "defects": ["paragraph-slide", "missing-authority-flow", "no-progressive-five-surface-map"]},
+    {"tag": "v0.2.0-poc.20260803.2", "revisionRef": "seg-bc8450282f40f75f2027.r6", "mp4Sha256": "82e89616b03e000dd37d6d9ddba04fc27ff2d433883eead8f8199dbf48831a59", "representativeSeconds": [2.0, 25.217, 48.433], "defects": ["paragraph-slide", "missing-before-after-user-path", "discoverability-described-not-shown"]},
+    {"tag": "v0.2.0-poc.20260803.3", "revisionRef": "seg-cb4c94403fd835dee7fc.r3", "mp4Sha256": "ee144753179c0f353196b711868fe2c27e2248554f02fae8ff5278754499bdc1", "representativeSeconds": [2.0, 25.567, 49.133], "defects": ["paragraph-slide", "missing-verification-dag", "preflight-submit-boundary-not-visualized"]},
+    {"tag": "v0.2.0-poc.20260803.4", "revisionRef": "seg-1b411ee47e0deb929677.r3", "mp4Sha256": "870678a20b57bbffb8f96e97f15d5f4f15fea96ebba93f5e764ec0c9d5d6c033", "representativeSeconds": [2.0, 23.367, 44.733], "defects": ["paragraph-slide", "governance-asserted-not-demonstrated", "same-template-monotony"]},
+    {"tag": "v0.2.0-poc.20260803.5", "revisionRef": "seg-5bd093e9320d0b9b1507.r3", "mp4Sha256": "061e68a5249a776c92f88c155a087b2ec23bc32ca83cf126bc423cff8e04ba84", "representativeSeconds": [2.0, 22.517, 43.033], "defects": ["paragraph-slide", "five-reads-one-scope-zero-writes-is-only-text", "missing-convergence-and-denied-write-paths"]},
+    {"tag": "v0.2.0-poc.20260803.6", "revisionRef": "seg-e4bab7fedcc228047a24.r4", "mp4Sha256": "8b98ae6c27c0bbca45bbbeb282ce1a3d8b72dcdda8cdc3fb34e54a9e7db0f202", "representativeSeconds": [2.0, 29.833, 57.667], "defects": ["paragraph-slide", "measured-proof-results-not-visualized", "boundary-is-copy-not-evidence-structure"]}
+  ]
+}

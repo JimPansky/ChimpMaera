@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/learning-record-v1.json",
+  "title": "ChimpMaera governed learning record",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "id", "stage", "assertionClass", "provenance", "sourceDigests", "confidence", "scope", "applicabilityBoundary", "evidence", "dependencies", "derivedFrom", "reviewerGate", "reviewDate", "expiryOrReviewDate", "supersession", "rollback"],
+  "properties": {
+    "schemaVersion": {"const": "cm.learning-record/v1"},
+    "stage": {"enum": ["L0_RAW_OBSERVATION", "L1_NORMALIZED_FINDING", "L2_VALIDATED_PATTERN", "L3_TEMPLATE_CANDIDATE", "L4_GOVERNED_TEMPLATE", "L5_CROSS_CONTEXT_REUSED", "L6_OUTCOME_VALIDATED"]},
+    "assertionClass": {"enum": ["FACT", "HYPOTHESIS", "EDITORIAL_DECISION"]},
+    "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]},
+    "sourceDigests": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}
+  }
+}

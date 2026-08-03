@@ -1,0 +1,14 @@
+[
+  {
+    "schemaVersion": "cm.learning-record/v1", "id": "LR-VIDEO-20260803-01", "stage": "L4_GOVERNED_TEMPLATE", "assertionClass": "FACT",
+    "provenance": [{"input": "six human-rejected release modules", "transformation": "blind visual review plus representative-frame comparison", "decision": "reject narrated slide-deck composition", "output": "visual-language contract and negative probes", "testEvidence": "visual-governance-negative-probes.json", "outcome": "pre-TTS fail-closed gate"}],
+    "sourceDigests": ["88458aeae837efc5714682f2629c0eacebd525d9a9bb148d8406bc194cd89359", "82e89616b03e000dd37d6d9ddba04fc27ff2d433883eead8f8199dbf48831a59", "ee144753179c0f353196b711868fe2c27e2248554f02fae8ff5278754499bdc1", "870678a20b57bbffb8f96e97f15d5f4f15fea96ebba93f5e764ec0c9d5d6c033", "061e68a5249a776c92f88c155a087b2ec23bc32ca83cf126bc423cff8e04ba84", "8b98ae6c27c0bbca45bbbeb282ce1a3d8b72dcdda8cdc3fb34e54a9e7db0f202"],
+    "confidence": "HIGH", "scope": {"audience": ["TECHNICAL_EXPERT", "TECHNICAL_DECISION_MAKER"], "contentFamilies": ["authority", "verification", "public-truth", "scope", "measured-proof"], "toolchainVersion": "2026-08-03-v1"},
+    "applicabilityBoundary": "Technical explainer storyboards using the declared visual grammar; not a universal film-style prescription.",
+    "evidence": {"positive": ["five deliberately constructed visual-grammar references"], "negative": ["six rejected modules", "eleven negative probes"], "rejectedVariants": ["three-card narrated slide deck"], "unresolvedHypotheses": ["post-release comprehension improvement"]},
+    "dependencies": [], "derivedFrom": ["LR-VIDEO-OBS-01", "LR-VIDEO-OBS-02"], "strongJustification": "Six independent module failures share the same composition-level cause.",
+    "reviewerGate": {"status": "APPROVED", "reviewer": "owner-decision-2026-08-03"}, "reviewDate": "2026-08-03", "expiryOrReviewDate": "2026-11-03",
+    "supersession": {"supersedes": "narrated-slide-deck/v1", "supersededBy": null}, "rollback": {"target": "contract version preceding 2026-08-03-v1", "trigger": "validator rejects an evidence-backed legitimate storyboard"},
+    "crossAudienceReuse": true, "declaredAdaptation": "Keep facts fixed; change framing, evidence depth, vocabulary and CTA through the selected audience template."
+  }
+]

@@ -168,6 +168,20 @@ class ContractNegativeProbes(unittest.TestCase):
         self.job["spec"]["gates"]["textGate"] = "HOLD"
         self.assert_rejects("textGate PASS")
 
+    def test_full_render_without_storyboard_gate_rejected(self):
+        del self.job["spec"]["preRenderGate"]
+        self.assert_rejects("storyboard pre-render gate")
+
+    def test_full_render_with_pending_visual_review_rejected(self):
+        gate = self.job["spec"]["preRenderGate"]
+        storyboard = Path(gate["storyboardPath"])
+        payload = json.loads(storyboard.read_text(encoding="utf-8"))
+        payload["reviews"]["HUMAN_VISUAL_REVIEW"] = {"status": "PENDING", "revisionSha256": None, "reviewer": None, "reviewedAt": None}
+        payload["maturity"] = "L2_STORYBOARD_VALIDATED"
+        storyboard.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        gate["storyboardSha256"] = hashlib.sha256(storyboard.read_bytes()).hexdigest()
+        self.assert_rejects("HUMAN_VISUAL_REVIEW blocks TTS/full render")
+
     def test_malformed_scene_timing_rejected(self):
         self.job["spec"]["assets"]["shots"][1]["startSeconds"] = 3.0
         self.assert_rejects("scene timing")

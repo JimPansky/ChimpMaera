@@ -1,5 +1,7 @@
 # Architecture
 
+The cross-cutting knowledge lineage and promotion model is specified in [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md). Media production is its first explicit negative-evidence-to-governed-template example.
+
 This architecture preserves the initial `v0.1.0` subset identified in
 [The ChimpMaera Canon](CANON.md) and describes the current released local PoC,
 including the Approval Workbench and later local-synthetic security surfaces.

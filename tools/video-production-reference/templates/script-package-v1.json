@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "cm.video-script-package/v1",
+  "immutableRevisionSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "audienceProfile": {"template": "TECHNICAL_EXPERT", "priorKnowledge": [], "canvasSha256": ""},
+  "audienceNeed": "",
+  "skepticism": "",
+  "desiredTakeaway": "",
+  "premise": "",
+  "coreQuestion": "",
+  "promise": "",
+  "proofBoundary": "",
+  "beatSheet": [{"narrativeJob": "HOOK", "claimRef": "", "change": ""}, {"narrativeJob": "PROOF", "claimRef": "", "change": ""}],
+  "tracks": [{"orderEstimate": 1, "narration": "", "visualAction": "", "onScreenCopy": [], "evidenceSource": [], "audioCue": "", "transition": "", "accessibilityNote": ""}],
+  "criticalTerms": [{"spelling": "ChimpMaera", "pronunciation": "Chimp-MARE-ah"}],
+  "claimRegistry": [{"id": "C1", "statement": "", "evidenceRefs": [], "nonClaimBoundary": ""}],
+  "hookVariants": ["", ""],
+  "endingVariants": ["", ""],
+  "storyboardRef": "",
+  "approvalRevision": {"status": "PENDING", "revisionSha256": null}
+}

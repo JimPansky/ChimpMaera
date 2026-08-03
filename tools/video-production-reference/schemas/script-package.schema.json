@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/video-script-package-v1.json",
+  "title": "ChimpMaera professional script package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "immutableRevisionSha256", "audienceProfile", "audienceNeed", "skepticism", "desiredTakeaway", "premise", "coreQuestion", "promise", "proofBoundary", "beatSheet", "tracks", "criticalTerms", "claimRegistry", "hookVariants", "endingVariants", "storyboardRef", "approvalRevision"],
+  "properties": {
+    "schemaVersion": {"const": "cm.video-script-package/v1"},
+    "immutableRevisionSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "beatSheet": {"type": "array", "minItems": 2},
+    "tracks": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["orderEstimate", "narration", "visualAction", "onScreenCopy", "evidenceSource", "audioCue", "transition", "accessibilityNote"]
+      }
+    },
+    "criticalTerms": {"type": "array", "items": {"type": "object", "required": ["spelling", "pronunciation"]}},
+    "claimRegistry": {"type": "array", "minItems": 1},
+    "hookVariants": {"type": "array", "minItems": 2},
+    "endingVariants": {"type": "array", "minItems": 2}
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "cm.media-learning-events/v1",
+  "privacyRule": "Store only governed event facts needed for learning; no raw identities, private chat logs or unnecessary personal data.",
+  "events": [
+    "AUDIENCE_HYPOTHESIS_RECORDED", "AUDIENCE_EVIDENCE_BOUND", "AUDIENCE_LOCKED",
+    "STORY_TEMPLATE_SELECTED", "AUDIENCE_TEMPLATE_SELECTED", "SCRIPT_REVISED",
+    "STORYBOARD_REVISED", "REVISION_REJECTED", "AUTOMATED_GATE_RECORDED",
+    "HUMAN_GATE_RECORDED", "PRODUCTION_EFFORT_RECORDED", "REWORK_RECORDED",
+    "COMPREHENSION_PROBE_RECORDED", "PUBLIC_REACTION_CLASSIFIED", "FEEDBACK_ROUTED",
+    "LEARNING_PROMOTED", "LEARNING_INVALIDATED", "OUTCOME_RECORDED"
+  ],
+  "reactionClasses": ["QUESTION", "AGREEMENT", "DISAGREEMENT", "CONFUSION", "COUNTEREXAMPLE", "FEATURE_REQUEST", "IRRELEVANT"],
+  "requiredCommonFields": ["eventId", "eventType", "occurredAt", "artifactRevisionSha256", "sourceClass", "scope", "outcome", "residualUncertainty"],
+  "identityPolicy": {"rawIdentity": "FORBIDDEN", "aggregatePreferred": true, "pseudonymousReference": "ONLY_IF_JUSTIFIED_AND_SALTED_OUTSIDE_PUBLIC_ARTIFACT"},
+  "feedbackReceipt": {"required": ["learned", "changed", "notChanged", "why", "evidenceRefs", "owner", "reviewDate"]},
+  "routes": [
+    {"signal": "repeated confusion", "destination": "docs or script template", "receiptRequired": true},
+    {"signal": "reproducible security counterexample", "destination": "negative fixture, test and claim revision", "receiptRequired": true},
+    {"signal": "audience vocabulary failure", "destination": "audience template", "receiptRequired": true},
+    {"signal": "visual comprehension failure", "destination": "visual grammar or validator", "receiptRequired": true},
+    {"signal": "repeated integration request", "destination": "capability or adapter backlog evidence", "receiptRequired": true},
+    {"signal": "successful cross-audience reuse", "destination": "template maturity promotion", "receiptRequired": true}
+  ]
+}

@@ -1,5 +1,7 @@
 # The ChimpMaera Canon
 
+General governed learning and template promotion follows [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md). It preserves typed provenance, evidence, applicability boundaries, invalidation, supersession and rollback instead of treating raw conversations as portable knowledge.
+
 ## The Laws of Agency, Authority, and Evolution
 
 **Version:** 0.2 local revision
