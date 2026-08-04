@@ -59,7 +59,7 @@
       "id": "repository-integrity",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "de101514f5b8e01eca98c1edc6fc0fe01e3a17e484872b8cfe08526d3750e306" },
+        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "0c0fe86d744d5f6b3a0dd0a234f4414093b216b36b591ec7eb271b57981f66c2" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
         { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "fe563f1ce429bf11162d78a33119462dba81964090fb141c36a98903e911dc57" },
         { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f" }

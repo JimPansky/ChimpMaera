@@ -290,7 +290,7 @@ f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/con
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-de101514f5b8e01eca98c1edc6fc0fe01e3a17e484872b8cfe08526d3750e306  ./release/governance.json
+0c0fe86d744d5f6b3a0dd0a234f4414093b216b36b591ec7eb271b57981f66c2  ./release/governance.json
 f10a7461ed62549f0862f93020b36b43abc4cf43928f400d1780d29fd4ac2965  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
@@ -371,7 +371,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
 af0f2117460bf2fc8478d9a45c58b17ad1bc6c839a9a0654a325078354fb4990  ./tests/resource-plane-profiles.test.ts
-cc806a1710ca91539e450226924b6cf59614fd4e94dce452f954395885ef4b90  ./tests/release-governance.test.mjs
+350bf85b22c54e6d39fe9d7300dff593298bee6995eb131f30114d251adb7051  ./tests/release-governance.test.mjs
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-admission.test.ts
 876eb010ebb109fa8ffa246f1b5179aa92a67bdd15aec0543746a3cd95c07ec7  ./tests/supply-chain-verifier.test.mjs
@@ -440,4 +440,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 090a475aa6ede5e5874cffbdc0e8410eb0e13cee7d7e289a69a3fe757ca5e3a1  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-fdc0c191d714a724ec69d210e6b648dfd3d1035e39176c90c099d8e896317b30  ./verification/verification-dag-v2.json
+04724e4d32eeb952e337e8d9abfcf65070c9e2596b92c8cb62c8f4be002d6a5c  ./verification/verification-dag-v2.json
