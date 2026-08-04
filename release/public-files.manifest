@@ -342,6 +342,11 @@ tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-run
 tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
 tests/skill-admission.test.ts	tests/skill-admission.test.ts	0644
+packages/contracts/src/analytics-projection.ts	packages/contracts/src/analytics-projection.ts	0644
+schemas/contracts/chimpmaera-analytics-v1.schema.json	schemas/contracts/chimpmaera-analytics-v1.schema.json	0644
+tests/analytics-projection.test.ts	tests/analytics-projection.test.ts	0644
+tests/fixtures/analytics/negative-matrix-v1.json	tests/fixtures/analytics/negative-matrix-v1.json	0644
+tests/fixtures/analytics/positive-projection-v1.json	tests/fixtures/analytics/positive-projection-v1.json	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644
