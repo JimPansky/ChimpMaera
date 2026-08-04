@@ -1,6 +1,7 @@
 # AWI-01 minimized event, consent and retention contract PDCA
 
-Status: locally validated; protected integration and release evidence pending.
+Status: released as regular Latest `v0.2.0-poc.20260804.4`; no collection,
+telemetry, training, ingestion or runtime authority was added.
 
 ## Plan
 
@@ -38,8 +39,28 @@ Initial focused evidence: 6/6 tests pass; 29/29 classifications are unique;
 deny; 11/11 negative cases fail closed; 7/7 lifecycle cases match; five seeded
 sensitive values emit zero matching bytes.
 
-Protected CI, exact merged-Main CI, release assets/hashes, anonymous readback,
-issue truth and the single organic Shadow sample remain pending.
+Final delivery evidence:
+
+- authoritative suite: 328/328 plus 12/12 secure-default pretests;
+- documentation site: 5/5;
+- release governance: 27/27 before the new component binding;
+- supply chain: 6/6; root SHA-256 closure and npm audit: pass/zero;
+- feature PR #109 merged as `5b041534b73dd6230e0279804fea5381e7941dad`;
+- release-identity PR #110 merged as release target
+  `214b58d87ebfe91178f416ee26b8e89aa0447b76`;
+- exact release-target Main CI `30878008319`, including Docker/video smoke:
+  pass;
+- two exact-source archive builds: byte-identical;
+- regular Latest `v0.2.0-poc.20260804.4`: non-draft/non-prerelease, with an
+  archive of 1,396,293 bytes at
+  `03d4eecf66ae2b2380d2f7fc95d21c7cf9cf4465b71848205e91d510772094a9`
+  and a 135-byte checksum manifest at
+  `81d855e87d7ee2c19ef79405f58b1ec3b8ca0e82b912cb3c4f4ad4547dff98be`;
+- anonymous Latest redirect, metadata, both asset bytes/hashes, raw-Main
+  version and the AWI guide route: pass.
+
+Issue closure, canonical raw-Main release binding and the single organic
+Shadow sample remain pending until this release-truth integration merges.
 
 ## Act
 

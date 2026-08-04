@@ -7,7 +7,7 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The ChimpMaera Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260804.3` and its local synthetic evidence; a later documentation
+`v0.2.0-poc.20260804.4` and its local synthetic evidence; a later documentation
 change does not broaden the released asset claims.
 
 - This is a local synthetic proof of concept, not a production deployment or
@@ -85,6 +85,11 @@ change does not broaden the released asset claims.
   They do not run third-party scans, establish that code is safe, accept or
   install an extension, issue a trust badge, disclose vulnerabilities, activate
   a binding, grant authority, certify security, or prove production fitness.
+- The minimized agent-work event contract validates synthetic pseudonymous
+  records and deletion/readback decisions only. It does not collect events,
+  establish a legal basis, operate telemetry, monitor workers, train a model,
+  run a dashboard, ingest production data, prove erasure in an external store,
+  certify privacy compliance, or activate runtime behavior.
 - No DMS/compliance suitability or universal AI capability is claimed.
 - Optional video assets are replaceable examples. Users remain responsible for
   their own output rights, configuration and safety.
