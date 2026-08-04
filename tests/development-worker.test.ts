@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -572,4 +572,86 @@ test("DEV-WORKER-M1B-4 local isolation probes prove fail-closed denial before pr
     ],
   );
   assert.equal(JSON.stringify(results).includes("supersecretvalue123"), false);
+});
+
+test("DEV-WORKER-PILOT-01 admits one new file from a separately bound minimal readable projection", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cm-dev-worker-pilot-source-"));
+  const outputPath = "docs/DEV-WORKER-RECEIPT-REVIEW-CHECKLIST.md";
+  const inputs = {
+    "packages/contracts/src/development-worker.ts": "export interface WorkReceiptV1 { readonly outcome: 'SUCCEEDED' | 'DENIED' | 'FAILED' }\n",
+    "docs/DEV-WORKER-M0-OPERATOR-GUIDE.md": "# Operator guide\n",
+  };
+  for (const [path, content] of Object.entries(inputs)) {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    writeFileSync(join(root, path), content, "utf8");
+  }
+  const issueSnapshot = { number: 121, title: "Receipt checklist", body: "Create exactly one checklist file.", updatedAt: "2026-08-04T13:54:48Z" };
+  const orderTemplate = structuredClone(syntheticWorkOrder());
+  const unsigned = {
+    ...orderTemplate,
+    orderId: "order:chimpmaera-121-first-shot",
+    issue: { iid: 121, snapshotDigest: sha256(issueSnapshot) },
+    paths: { allowed: [outputPath], denied: orderTemplate.paths.denied },
+    acceptanceCriteria: ["Create one concise receipt review checklist."],
+    testProfile: { commands: ["trusted:receipt-review-checklist"] },
+  } as Record<string, any>;
+  delete unsigned.workOrderDigest;
+  const trustedOrder = { ...unsigned, workOrderDigest: sha256(unsigned) } as WorkOrderV1;
+  const sourceBase = {
+    root,
+    projectId: trustedOrder.project.id,
+    repository: trustedOrder.project.repository,
+    sourceKind: "PUBLIC_GITHUB" as const,
+    sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git" as const,
+    issueIid: 121,
+    issueSnapshotDigest: sha256(issueSnapshot),
+    baseRef: trustedOrder.base.ref,
+    baseCommit: trustedOrder.base.commit,
+    allowedPaths: [outputPath],
+    readablePaths: Object.keys(inputs),
+    deniedPaths: trustedOrder.paths.denied,
+    files: Object.fromEntries(Object.entries(inputs).map(([path, content]) => [path, sha256(content)])),
+  };
+  const source = { ...sourceBase, manifestDigest: materializedManifestDigest(sourceBase) };
+  const candidate: PatchCandidateV1 = {
+    schemaVersion: "chimpmaera.dev/patch-candidate/v1",
+    baseCommit: trustedOrder.base.commit,
+    changes: [{ path: outputPath, kind: "file", beforeSha256: sha256(""), after: "# Receipt review checklist\n\n- Verify the receipt.\n" }],
+  };
+  const provider = await withFakeProvider((_request, response, body) => {
+    assert.match(body, /Receipt checklist/);
+    assert.match(body, /WorkReceiptV1/);
+    assert.doesNotMatch(body, /\.git\/config|chat history|credential/i);
+    response.end(JSON.stringify(completion(candidate)));
+  });
+  try {
+    const counter = { calls: 0 };
+    const receipt = await runM1aBootstrap({
+      broker: broker(provider.url), source, trustedOrder, trustedIssueSnapshot: issueSnapshot,
+      now: SYNTHETIC_NOW, providerCallCounter: counter, credentialResolver: () => "fixture-provider-token",
+      candidateTest: (workspace) => ({
+        command: "trusted:receipt-review-checklist",
+        output: readFileSync(join(workspace, outputPath), "utf8").startsWith("# Receipt review checklist") ? "PASS:receipt-review-checklist" : "FAIL:receipt-review-checklist",
+      }),
+    });
+    assert.equal(counter.calls, 1);
+    assert.deepEqual(receipt.changedPaths, [outputPath]);
+    assert.equal(receipt.outcome, "SUCCEEDED");
+    assert.equal(existsSync(join(root, outputPath)), false);
+  } finally {
+    await provider.close();
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("DEV-WORKER-PILOT-01 integrated receipt checklist stays contract-complete and authority-free", () => {
+  const text = readFileSync("docs/DEV-WORKER-RECEIPT-REVIEW-CHECKLIST.md", "utf8");
+  for (const field of ["workOrderDigest", "baseCommit", "candidateCommit", "changedPaths", "changedPathsDigest", "patchDigest", "tests", "modelUsage", "capabilityUsage", "publication.performed", "publication.identifiers", "readback.synthetic", "readback.digest", "cleanup.outcome", "cleanup.writableStateRemaining", "nonClaims"]) {
+    assert.match(text, new RegExp(`\\b${field.replaceAll(".", "\\.")}\\b`), field);
+  }
+  for (const disposition of ["ACCEPT_AS_IS", "ACCEPT_WITH_MECHANICAL_FIXES", "USEFUL_DRAFT_NEEDS_STRONGER_FINALIZER", "REJECT"]) assert.match(text, new RegExp(disposition));
+  assert.match(text, /SUCCEEDED.*not.*evidence/is);
+  assert.match(text, /deterministic evidence/i);
+  assert.match(text, /reviewer judgment/i);
+  assert.doesNotMatch(text, /automatic (?:merge|release)|production[- ]ready guarantee|credential\s*[:=]/i);
 });
