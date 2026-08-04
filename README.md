@@ -23,6 +23,7 @@ intent reusable without treating a new provider as new authority.
 
 [**Run the POC**](#quickstart) ·
 [**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
+[**Watch the overview**](https://youtu.be/NZbSaHdbW1s) ·
 [**How it works**](#how-it-works)
 
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
@@ -160,10 +161,9 @@ and anonymous readback.
 - Watch the verified public overviews: [Why ChimpMaera?](https://youtu.be/Dq_XLEzh5I8),
   [How does it work?](https://youtu.be/w4fWgalD_WQ), and
   [Security by Default](https://youtu.be/SEPbE-EVoNs).
-- Watch the standalone explainer:
-  [ChimpMaera — Governed Adaptability for AI Ecosystems](https://youtu.be/NZbSaHdbW1s).
-  Videos illustrate the approach; release evidence remains in the repository
-  and release pages.
+
+Videos illustrate the approach; release evidence remains in the repository
+and release pages.
 
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference media follows
