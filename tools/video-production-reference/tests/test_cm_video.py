@@ -480,7 +480,7 @@ class BundledReferenceAssets(unittest.TestCase):
         video_heading = "## Project and community"
         self.assertIn(video_heading, root_readme)
         narrow_section = root_readme.split(video_heading, 1)[1].split("\n## ", 1)[0]
-        for active_id in ("Dq_XLEzh5I8", "w4fWgalD_WQ", "SEPbE-EVoNs"):
+        for active_id in ("Dq_XLEzh5I8", "w4fWgalD_WQ", "SEPbE-EVoNs", "NZbSaHdbW1s"):
             self.assertEqual(root_readme.count(active_id), 1)
         for stale_id in ("8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0"):
             self.assertNotIn(stale_id, root_readme)
