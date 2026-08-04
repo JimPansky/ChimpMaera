@@ -35,6 +35,15 @@ test("repository release governance passes", () => {
   assert.deepEqual(validateRepository(ROOT), []);
 });
 
+test("Verification Fabric release truth delegates volatile Shadow progress to its issue", () => {
+  const governance = JSON.parse(readFileSync(join(ROOT, "release", "governance.json"), "utf8"));
+  const verification = governance.claimEvidence.find(({ claimId }) => claimId === "CM-REL-004");
+  assert.ok(verification);
+  const nonClaims = verification.nonClaims.join(" ");
+  assert.match(nonClaims, /issue #34/);
+  assert.doesNotMatch(nonClaims, /\b\d+\/24\b/);
+});
+
 test("root security and support documents remain version-agnostic", () => {
   const security = readFileSync(join(ROOT, "SECURITY.md"), "utf8");
   const support = readFileSync(join(ROOT, "SUPPORT.md"), "utf8");
