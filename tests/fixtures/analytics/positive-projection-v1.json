@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "chimpmaera.analytics/v1",
+  "projectionId": "projection:analytics-read-only-v1",
+  "contractVersion": "1.0.0",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "laneSelection": {
+    "defaultLane": "SQL_ADLS_FABRIC_IMPORT",
+    "fallbackLane": "DATAVERSE_IMPORT",
+    "directQueryAllowed": false,
+    "directQueryJustificationRequired": true,
+    "directQueryEvidenceMeasurements": []
+  },
+  "lineage": {
+    "sourceSystem": "CHIMPMAERA_VERIFICATION_FABRIC",
+    "sourceContractSchemaVersion": "chimpmaera.verification/fabric-bundle/v1",
+    "sourceContractDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "lineageComplete": true
+  },
+  "receiptReference": {
+    "receiptSchemaVersion": "chimpmaera.connector/power-platform-read/v1",
+    "receiptOperationKey": "GET_RECEIPT",
+    "receiptDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "timestamps": {
+    "projectedAt": "2026-08-04T00:00:00Z",
+    "sourceValidatedAt": "2026-08-04T00:00:00Z",
+    "schemaFrozenAt": "2026-08-04T00:00:00Z"
+  },
+  "fieldClassification": [
+    { "fieldName": "projectionId", "classification": "PUBLIC", "redaction": "NONE" },
+    { "fieldName": "schemaVersion", "classification": "PUBLIC", "redaction": "NONE" },
+    { "fieldName": "contractVersion", "classification": "PUBLIC", "redaction": "NONE" },
+    { "fieldName": "evidenceClass", "classification": "PUBLIC", "redaction": "NONE" },
+    { "fieldName": "laneSelection", "classification": "INTERNAL", "redaction": "NONE" },
+    { "fieldName": "lineage", "classification": "INTERNAL", "redaction": "HASHED" },
+    { "fieldName": "receiptReference", "classification": "INTERNAL", "redaction": "HASHED" },
+    { "fieldName": "timestamps", "classification": "INTERNAL", "redaction": "NONE" }
+  ],
+  "redactionPolicy": {
+    "excludedFields": ["rawEvidence", "secrets", "credentials", "policyState", "mutablePolicy"],
+    "hashedFields": ["sourceContractDigest", "receiptDigest"],
+    "rawEvidenceIncluded": false
+  },
+  "authorityBoundary": {
+    "authoritativePlane": false,
+    "policyPlane": false,
+    "approvalPlane": false,
+    "actionPlane": false,
+    "systemOfRecord": false,
+    "credentialPlane": false,
+    "secretPlane": false,
+    "rawEvidencePlane": false,
+    "mutablePolicyPlane": false,
+    "arbitraryHostAllowed": false,
+    "arbitraryPathAllowed": false,
+    "writeSemanticsAllowed": false
+  },
+  "compatibilityClaims": {
+    "desktopCompatibilityProven": false,
+    "gatewayCompatibilityProven": false,
+    "serviceCompatibilityProven": false,
+    "tenantCompatibilityProven": false,
+    "performanceProven": false,
+    "costProven": false
+  },
+  "projectionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+}
