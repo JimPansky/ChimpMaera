@@ -262,8 +262,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-99c3e35665ce8786561a7ca8ec07faebb6892213b7b608b2dab9af213f85249d  ./package-lock.json
-68062c6930d27c47cf8f0a247c30edccb58cfd22690e32bec228016c98ee2dd4  ./package.json
+b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf  ./package-lock.json
+af78117b7e00a372002cbc9d1cfd84e33792b5f4dc844227c807a119f6efaef8  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
@@ -453,7 +453,7 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 8fb54c44ba8761fed83015eb98e49daabef634f138cf66551c01b700946128bc  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-04859f00a9bc8767d739ce9d908c5cb444a53c22e8935dc8ff0b9299fff2dfc3  ./verification/verification-dag-v2.json
+8c9e3cd2181a0cada34ea487f2400cedd27aa6bba3008d6fb7102c841babc904  ./verification/verification-dag-v2.json
 ce49bd91c5e611db908f4d5d25f529c859a1d5712eb7a5e2bcd0e04e14024bef  ./docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md
 28098a7eae050aac622e6dc3d8d7fb14173939ddf513e24c2f0ab39b0ff6d1a1  ./packages/contracts/src/maintenance-contract-freeze.ts
 3f99986a9dcdf3970d445869cc8f35c9dd66350743d8c0ddf2d4ef6f1c7738fd  ./schemas/contracts/maintenance-compatibility-profile-v1.schema.json
