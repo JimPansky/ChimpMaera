@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/extension-assurance-profile-v1.schema.json",
+  "title": "ChimpMaera Extension Trust Lab assurance profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profileId", "profileVersion", "subject", "riskClass", "evaluatedAtMs", "evidence", "checks", "retestTriggers", "falseResultTracking", "securityRouting", "publicClaim", "claimBoundary", "profileDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.extension-trust/assurance-profile/v1" },
+    "profileId": { "$ref": "#/$defs/id" },
+    "profileVersion": { "$ref": "#/$defs/version" },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "subjectId", "subjectVersion", "subjectDigest"],
+      "properties": {
+        "kind": { "enum": ["EXTENSION", "CONNECTOR"] },
+        "subjectId": { "$ref": "#/$defs/id" },
+        "subjectVersion": { "$ref": "#/$defs/version" },
+        "subjectDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "riskClass": { "enum": ["LOW", "MODERATE", "HIGH", "CRITICAL"] },
+    "evaluatedAtMs": { "$ref": "#/$defs/timestamp" },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collectedAtMs", "expiresAtMs", "subjectDigest", "artifactRefs"],
+      "properties": {
+        "collectedAtMs": { "$ref": "#/$defs/timestamp" },
+        "expiresAtMs": { "$ref": "#/$defs/timestamp" },
+        "subjectDigest": { "$ref": "#/$defs/digest" },
+        "artifactRefs": { "$ref": "#/$defs/artifactRefs" }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "retestTriggers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": { "enum": ["SUBJECT_CHANGED", "PROFILE_CHANGED", "EVIDENCE_EXPIRED", "POLICY_CHANGED", "FALSE_NEGATIVE_CONFIRMED", "MANUAL"] }
+    },
+    "falseResultTracking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confirmedFalsePositiveCount", "confirmedFalseNegativeCount", "openReviewCount", "reviewedAtMs", "evidenceRefs"],
+      "properties": {
+        "confirmedFalsePositiveCount": { "$ref": "#/$defs/count" },
+        "confirmedFalseNegativeCount": { "$ref": "#/$defs/count" },
+        "openReviewCount": { "$ref": "#/$defs/count" },
+        "reviewedAtMs": { "$ref": "#/$defs/timestamp" },
+        "evidenceRefs": { "$ref": "#/$defs/optionalArtifactRefs" }
+      }
+    },
+    "securityRouting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "route", "publicDetail"],
+      "properties": {
+        "classification": { "enum": ["PUBLIC_SAFE", "SECURITY_SENSITIVE"] },
+        "route": { "enum": ["PUBLIC_EVIDENCE", "SECURITY_POLICY_PRIVATE"] },
+        "publicDetail": { "enum": ["FIXED_REASON_CODES_ONLY", "NONE"] }
+      }
+    },
+    "publicClaim": { "enum": ["LOCALLY_EVALUATED_SYNTHETIC", "ASSURANCE_DENIED", "EVIDENCE_EXPIRED_RETEST_REQUIRED", "INCONCLUSIVE"] },
+    "claimBoundary": { "const": "LOCAL_SYNTHETIC_PROFILE_ONLY_NO_TRUST_BADGE_NO_ACCEPTANCE_NO_ACTIVATION_NO_EXECUTION" },
+    "profileDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "timestamp": { "type": "integer", "minimum": 0 },
+    "count": { "type": "integer", "minimum": 0 },
+    "artifactRef": { "type": "string", "pattern": "^artifact:sha256:[a-f0-9]{64}$" },
+    "artifactRefs": { "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/artifactRef" } },
+    "optionalArtifactRefs": { "type": "array", "maxItems": 32, "uniqueItems": true, "items": { "$ref": "#/$defs/artifactRef" } },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkId", "ruleId", "runDecision", "outcome", "notRunReason", "evidenceRefs"],
+      "properties": {
+        "checkId": { "$ref": "#/$defs/id" },
+        "ruleId": { "enum": ["MALWARE_SIGNAL", "CREDENTIAL_ACCESS", "AUTHORITY_EXPANSION", "UNBOUNDED_NETWORK_EGRESS", "UNVERIFIED_EXECUTABLE", "PROHIBITED_DATA_DISCLOSURE", "SIGNATURE_OR_DIGEST_MISMATCH", "EVIDENCE_TAMPER", "OPTIONAL_MANUAL_REVIEW"] },
+        "runDecision": { "enum": ["RUN", "NOT_RUN"] },
+        "outcome": { "enum": ["PASS", "FAIL", "NOT_RUN"] },
+        "notRunReason": { "enum": ["NONE", "NOT_APPLICABLE", "PRIVATE_LAB_REQUIRED"] },
+        "evidenceRefs": { "$ref": "#/$defs/optionalArtifactRefs" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "runDecision": { "const": "RUN" } }, "required": ["runDecision"] },
+          "then": {
+            "properties": {
+              "outcome": { "enum": ["PASS", "FAIL"] },
+              "notRunReason": { "const": "NONE" },
+              "evidenceRefs": { "$ref": "#/$defs/artifactRefs" }
+            }
+          },
+          "else": {
+            "properties": {
+              "outcome": { "const": "NOT_RUN" },
+              "notRunReason": { "enum": ["NOT_APPLICABLE", "PRIVATE_LAB_REQUIRED"] },
+              "evidenceRefs": { "type": "array", "maxItems": 0 }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

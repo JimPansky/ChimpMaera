@@ -1,0 +1,16 @@
+[
+  { "caseId": "malware-hard-fail", "operation": "replace", "path": "/checks/0/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "credential-hard-fail", "operation": "replace", "path": "/checks/1/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "authority-hard-fail", "operation": "replace", "path": "/checks/2/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "egress-hard-fail", "operation": "replace", "path": "/checks/3/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "executable-hard-fail", "operation": "replace", "path": "/checks/4/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "disclosure-hard-fail", "operation": "replace", "path": "/checks/5/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "signature-hard-fail", "operation": "replace", "path": "/checks/6/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "evidence-tamper-hard-fail", "operation": "replace", "path": "/checks/7/outcome", "value": "FAIL", "expectedReason": "HARD_FAIL_DENIED" },
+  { "caseId": "required-gate-not-run", "operation": "replace", "path": "/checks/0", "value": { "checkId": "check:malware-signal", "ruleId": "MALWARE_SIGNAL", "runDecision": "NOT_RUN", "outcome": "NOT_RUN", "notRunReason": "PRIVATE_LAB_REQUIRED", "evidenceRefs": [] }, "expectedReason": "REQUIRED_CHECK_NOT_RUN_DENIED" },
+  { "caseId": "stale-evidence", "operation": "replace", "path": "/evaluatedAtMs", "value": 6000, "expectedReason": "EVIDENCE_STALE_RETEST_REQUIRED" },
+  { "caseId": "changed-subject", "operation": "replace", "path": "/evidence/subjectDigest", "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "expectedReason": "EVIDENCE_MISMATCH_RETEST_REQUIRED" },
+  { "caseId": "false-negative-confirmed", "operation": "replace", "path": "/falseResultTracking/confirmedFalseNegativeCount", "value": 1, "expectedReason": "FALSE_NEGATIVE_RETEST_REQUIRED" },
+  { "caseId": "public-route-for-sensitive-finding", "operation": "replace", "path": "/securityRouting/classification", "value": "SECURITY_SENSITIVE", "expectedReason": "SECURITY_ROUTING_DENIED" },
+  { "caseId": "missing-expiry-retest-trigger", "operation": "remove", "path": "/retestTriggers/2", "expectedReason": "RETEST_CONTRACT_DENIED" }
+]

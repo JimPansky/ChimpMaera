@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "chimpmaera.extension-trust/assurance-profile/v1",
+  "profileId": "profile:etl-assurance-v1",
+  "profileVersion": "1.0.0",
+  "subject": {
+    "kind": "EXTENSION",
+    "subjectId": "extension:synthetic-calendar",
+    "subjectVersion": "1.2.3",
+    "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "riskClass": "HIGH",
+  "evaluatedAtMs": 2000,
+  "evidence": {
+    "collectedAtMs": 1000,
+    "expiresAtMs": 5000,
+    "subjectDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "artifactRefs": ["artifact:sha256:2222222222222222222222222222222222222222222222222222222222222222"]
+  },
+  "checks": [
+    { "checkId": "check:malware-signal", "ruleId": "MALWARE_SIGNAL", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:3333333333333333333333333333333333333333333333333333333333333333"] },
+    { "checkId": "check:credential-access", "ruleId": "CREDENTIAL_ACCESS", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:4444444444444444444444444444444444444444444444444444444444444444"] },
+    { "checkId": "check:authority-expansion", "ruleId": "AUTHORITY_EXPANSION", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:5555555555555555555555555555555555555555555555555555555555555555"] },
+    { "checkId": "check:unbounded-network-egress", "ruleId": "UNBOUNDED_NETWORK_EGRESS", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:6666666666666666666666666666666666666666666666666666666666666666"] },
+    { "checkId": "check:unverified-executable", "ruleId": "UNVERIFIED_EXECUTABLE", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:7777777777777777777777777777777777777777777777777777777777777777"] },
+    { "checkId": "check:prohibited-data-disclosure", "ruleId": "PROHIBITED_DATA_DISCLOSURE", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:8888888888888888888888888888888888888888888888888888888888888888"] },
+    { "checkId": "check:signature-digest-mismatch", "ruleId": "SIGNATURE_OR_DIGEST_MISMATCH", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:9999999999999999999999999999999999999999999999999999999999999999"] },
+    { "checkId": "check:evidence-tamper", "ruleId": "EVIDENCE_TAMPER", "runDecision": "RUN", "outcome": "PASS", "notRunReason": "NONE", "evidenceRefs": ["artifact:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"] },
+    { "checkId": "check:optional-manual-review", "ruleId": "OPTIONAL_MANUAL_REVIEW", "runDecision": "NOT_RUN", "outcome": "NOT_RUN", "notRunReason": "NOT_APPLICABLE", "evidenceRefs": [] }
+  ],
+  "retestTriggers": ["SUBJECT_CHANGED", "PROFILE_CHANGED", "EVIDENCE_EXPIRED", "POLICY_CHANGED", "FALSE_NEGATIVE_CONFIRMED", "MANUAL"],
+  "falseResultTracking": {
+    "confirmedFalsePositiveCount": 0,
+    "confirmedFalseNegativeCount": 0,
+    "openReviewCount": 0,
+    "reviewedAtMs": 1900,
+    "evidenceRefs": []
+  },
+  "securityRouting": {
+    "classification": "PUBLIC_SAFE",
+    "route": "PUBLIC_EVIDENCE",
+    "publicDetail": "FIXED_REASON_CODES_ONLY"
+  },
+  "publicClaim": "LOCALLY_EVALUATED_SYNTHETIC",
+  "claimBoundary": "LOCAL_SYNTHETIC_PROFILE_ONLY_NO_TRUST_BADGE_NO_ACCEPTANCE_NO_ACTIVATION_NO_EXECUTION",
+  "profileDigest": "1666a15e0c4533cb341838391cb45aca0f4f068d28d654071b063620d5680e03"
+}
