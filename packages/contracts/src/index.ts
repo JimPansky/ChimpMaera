@@ -10,6 +10,7 @@ export * from "./effective-rights.js";
 export * from "./injection-trust-boundary.js";
 export * from "./capability-catalogue.js";
 export * from "./model-access-broker.js";
+export * from "./development-worker.js";
 export * from "./skill-admission.js";
 export * from "./protected-audit-timeline.js";
 export * from "./builder-authority.js";
