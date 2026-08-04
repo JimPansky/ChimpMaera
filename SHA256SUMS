@@ -446,4 +446,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 090a475aa6ede5e5874cffbdc0e8410eb0e13cee7d7e289a69a3fe757ca5e3a1  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-b50372c1690a2215d10ed56e1843142622d702154ca739dbda6fb1766b2281f5  ./verification/verification-dag-v2.json
+0090158dde4307667b52ef1f899f8fef71f7220adc7ecdae9d7f75e666550e05  ./verification/verification-dag-v2.json
