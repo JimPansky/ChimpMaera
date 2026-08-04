@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/maintenance-compatibility-profile-v1.schema.json",
+  "title": "ChimpMaera closed compatibility profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profileId", "subjectLockDigest", "requiredAxisVersions", "unresolvedInputs", "mutableInputs", "authorityDelta", "verdict", "profileDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.maintenance/compatibility-profile/v1" },
+    "profileId": { "$ref": "#/$defs/id" },
+    "subjectLockDigest": { "$ref": "#/$defs/digest" },
+    "requiredAxisVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["core", "packs", "adapters", "policies", "schemas", "generations"],
+      "properties": {
+        "core": { "$ref": "#/$defs/version" },
+        "packs": { "$ref": "#/$defs/version" },
+        "adapters": { "$ref": "#/$defs/version" },
+        "policies": { "$ref": "#/$defs/version" },
+        "schemas": { "$ref": "#/$defs/version" },
+        "generations": { "$ref": "#/$defs/version" }
+      }
+    },
+    "unresolvedInputs": { "type": "array", "maxItems": 0 },
+    "mutableInputs": { "type": "array", "maxItems": 0 },
+    "authorityDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["added", "removed"],
+      "properties": {
+        "added": { "type": "array", "maxItems": 0 },
+        "removed": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "verdict": { "const": "COMPATIBLE" },
+    "profileDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

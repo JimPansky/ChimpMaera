@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/maintenance-operation-contract-v1.schema.json",
+  "title": "ChimpMaera immutable non-executing maintenance plan and receipt v1",
+  "oneOf": [{ "$ref": "#/$defs/plan" }, { "$ref": "#/$defs/receipt" }],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "emptyDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["added", "removed"],
+      "properties": { "added": { "type": "array", "maxItems": 0 }, "removed": { "type": "array", "maxItems": 0 } }
+    },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "operationId", "intent", "fromLockDigest", "targetLockDigest", "compatibilityProfileDigest", "authorityDelta", "executionAuthorized", "issuedAtMs", "planDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.maintenance/operation-plan/v1" },
+        "operationId": { "$ref": "#/$defs/id" },
+        "intent": { "enum": ["CHECK_UPDATE", "PREVIEW_MIGRATION", "DOCTOR"] },
+        "fromLockDigest": { "$ref": "#/$defs/digest" },
+        "targetLockDigest": { "$ref": "#/$defs/digest" },
+        "compatibilityProfileDigest": { "$ref": "#/$defs/digest" },
+        "authorityDelta": { "$ref": "#/$defs/emptyDelta" },
+        "executionAuthorized": { "const": false },
+        "issuedAtMs": { "type": "integer", "minimum": 0 },
+        "planDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "operationId", "outcome", "reasonCodes", "exitCode", "planDigest", "beforeLockDigest", "afterLockDigest", "mutationObserved", "completedAtMs", "receiptDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.maintenance/operation-receipt/v1" },
+        "operationId": { "$ref": "#/$defs/id" },
+        "outcome": { "const": "VALIDATED" },
+        "reasonCodes": { "type": "array", "prefixItems": [{ "const": "MAINTENANCE_CONTRACT_ACCEPTED" }], "items": false, "minItems": 1 },
+        "exitCode": { "const": 0 },
+        "planDigest": { "$ref": "#/$defs/digest" },
+        "beforeLockDigest": { "$ref": "#/$defs/digest" },
+        "afterLockDigest": { "$ref": "#/$defs/digest" },
+        "mutationObserved": { "const": false },
+        "completedAtMs": { "type": "integer", "minimum": 0 },
+        "receiptDigest": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

@@ -22,6 +22,7 @@ export * from "./builder-contribution-bundle.js";
 export * from "./verification-fabric.js";
 export * from "./verification-fabric-v2.js";
 export * from "./update-doctor.js";
+export * from "./maintenance-contract-freeze.js";
 export * from "./hmi-core.js";
 export * from "./hmi-harness-adapter.js";
 export * from "./hmi-disclosure-safety.js";

@@ -103,7 +103,7 @@ Status labels used here:
 | --- | --- | --- |
 | Governed synthetic CRM → ERP effect | **Released / locally validated** | One pinned loopback demo with fictional data, brokered execution, readback and receipt |
 | Verification Fabric | **Released / locally validated** | Deterministic contract and negative fixtures; no production deployment proof |
-| Update/Doctor | **Released / locally validated** | Check-only contracts and read-only diagnostics; no repair or update application |
+| Update/Migration/Doctor | **Released / locally validated** | Immutable six-axis locks, compatibility and read-only preview contracts; no discovery, repair, migration or update application |
 | Builder contracts | **Released / locally validated** | Typed synthetic reuse and inactive target-neutral planning; no live-system builder or production UI |
 | HMI/harness and contribution preflight | **Released / locally validated** | Authority-free interface and preparation contracts; no submission, publication or external write |
 | Entra identity | **Released / external evidence required** | Closed `cm.discovery.read` identity contract; no live tenant, registration, consent or production identity proof |

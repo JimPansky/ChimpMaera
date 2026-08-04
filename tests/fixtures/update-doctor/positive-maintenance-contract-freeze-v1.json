@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "chimpmaera.maintenance/contract-freeze/v1",
+  "installationLock": {
+    "schemaVersion": "chimpmaera.maintenance/installation-lock/v1",
+    "lockId": "maintenance:installation-lock-001",
+    "releaseId": "0.2.0-poc.20260804.4",
+    "versionAxes": {
+      "core": [{ "componentId": "core:control-plane", "version": "1.0.0", "digest": "1111111111111111111111111111111111111111111111111111111111111111" }],
+      "packs": [{ "componentId": "pack:company-data", "version": "1.0.0", "digest": "2222222222222222222222222222222222222222222222222222222222222222" }],
+      "adapters": [{ "componentId": "adapter:synthetic-read", "version": "1.0.0", "digest": "3333333333333333333333333333333333333333333333333333333333333333" }],
+      "policies": [{ "componentId": "policy:safe-guided", "version": "1.0.0", "digest": "4444444444444444444444444444444444444444444444444444444444444444" }],
+      "schemas": [{ "componentId": "schema:canonical-company", "version": "1.0.0", "digest": "5555555555555555555555555555555555555555555555555555555555555555" }],
+      "generations": [{ "componentId": "generation:fixture-001", "version": "1.0.0", "digest": "6666666666666666666666666666666666666666666666666666666666666666" }]
+    },
+    "authorityProfileDigest": "7777777777777777777777777777777777777777777777777777777777777777",
+    "lockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21"
+  },
+  "compatibilityProfile": {
+    "schemaVersion": "chimpmaera.maintenance/compatibility-profile/v1",
+    "profileId": "maintenance:compatibility-001",
+    "subjectLockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21",
+    "requiredAxisVersions": {
+      "core": "1.0.0",
+      "packs": "1.0.0",
+      "adapters": "1.0.0",
+      "policies": "1.0.0",
+      "schemas": "1.0.0",
+      "generations": "1.0.0"
+    },
+    "unresolvedInputs": [],
+    "mutableInputs": [],
+    "authorityDelta": { "added": [], "removed": [] },
+    "verdict": "COMPATIBLE",
+    "profileDigest": "539b9549a560687b51233148d7c694cc70f826162a71304d85cc2bd3b2d77c87"
+  },
+  "operationPlan": {
+    "schemaVersion": "chimpmaera.maintenance/operation-plan/v1",
+    "operationId": "maintenance:preview-001",
+    "intent": "PREVIEW_MIGRATION",
+    "fromLockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21",
+    "targetLockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21",
+    "compatibilityProfileDigest": "539b9549a560687b51233148d7c694cc70f826162a71304d85cc2bd3b2d77c87",
+    "authorityDelta": { "added": [], "removed": [] },
+    "executionAuthorized": false,
+    "issuedAtMs": 1785819600000,
+    "planDigest": "bcbabf9e8412941051d9dfa8f90b7d926272be203926cd865497c430ac7620ad"
+  },
+  "doctorReport": {
+    "schemaVersion": "chimpmaera.maintenance/doctor-report/v1",
+    "reportId": "maintenance:doctor-001",
+    "readOnly": true,
+    "observedLockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21",
+    "compatibilityProfileDigest": "539b9549a560687b51233148d7c694cc70f826162a71304d85cc2bd3b2d77c87",
+    "checks": [
+      { "checkId": "maintenance:lock-integrity", "status": "PASS", "reasonCode": "OBSERVATION_MATCHED" },
+      { "checkId": "maintenance:compatibility", "status": "PASS", "reasonCode": "OBSERVATION_MATCHED" }
+    ],
+    "publicProjection": {
+      "releaseId": "0.2.0-poc.20260804.4",
+      "overallStatus": "READY_FOR_REVIEW",
+      "reasonCodes": ["CONTRACTS_VALID"]
+    },
+    "generatedAtMs": 1785819601000,
+    "reportDigest": "9765ff3cf425e041f580241b33e56ab86ef02f670be7a1773c58840c53d111dd"
+  },
+  "operationReceipt": {
+    "schemaVersion": "chimpmaera.maintenance/operation-receipt/v1",
+    "operationId": "maintenance:preview-001",
+    "outcome": "VALIDATED",
+    "reasonCodes": ["MAINTENANCE_CONTRACT_ACCEPTED"],
+    "exitCode": 0,
+    "planDigest": "bcbabf9e8412941051d9dfa8f90b7d926272be203926cd865497c430ac7620ad",
+    "beforeLockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21",
+    "afterLockDigest": "d2e0f597faa850e034e49ef12a74cd8dc44dd974f4b83b4af18562de124ccd21",
+    "mutationObserved": false,
+    "completedAtMs": 1785819602000,
+    "receiptDigest": "567ee802480dc52b1c077df631e0e81e03651467b09169dc2904320db615d2be"
+  }
+}

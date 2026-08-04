@@ -170,6 +170,7 @@ docs/SECURITY-ASSURANCE.md	docs/SECURITY-ASSURANCE.md	0644
 docs/SECURE-DEFAULT-PROOF.md	docs/SECURE-DEFAULT-PROOF.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/RESOURCE-PLANE-PROFILES.md	docs/RESOURCE-PLANE-PROFILES.md	0644
+docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	0644
 docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
 docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
@@ -200,6 +201,7 @@ packages/contracts/src/builder-quality-evidence.ts	packages/contracts/src/builde
 packages/contracts/src/verification-fabric-v2.ts	packages/contracts/src/verification-fabric-v2.ts	0644
 packages/contracts/src/verification-fabric.ts	packages/contracts/src/verification-fabric.ts	0644
 packages/contracts/src/update-doctor.ts	packages/contracts/src/update-doctor.ts	0644
+packages/contracts/src/maintenance-contract-freeze.ts	packages/contracts/src/maintenance-contract-freeze.ts	0644
 packages/contracts/src/hmi-core.ts	packages/contracts/src/hmi-core.ts	0644
 packages/contracts/src/hmi-harness-adapter.ts	packages/contracts/src/hmi-harness-adapter.ts	0644
 packages/contracts/src/hmi-disclosure-safety.ts	packages/contracts/src/hmi-disclosure-safety.ts	0644
@@ -241,6 +243,10 @@ schemas/contracts/verification-attestation-v2.schema.json	schemas/contracts/veri
 schemas/contracts/verification-evidence-dag-v2.schema.json	schemas/contracts/verification-evidence-dag-v2.schema.json	0644
 schemas/contracts/verification-fabric-bundle-v1.schema.json	schemas/contracts/verification-fabric-bundle-v1.schema.json	0644
 schemas/contracts/doctor-report-v1.schema.json	schemas/contracts/doctor-report-v1.schema.json	0644
+schemas/contracts/maintenance-compatibility-profile-v1.schema.json	schemas/contracts/maintenance-compatibility-profile-v1.schema.json	0644
+schemas/contracts/maintenance-doctor-report-v1.schema.json	schemas/contracts/maintenance-doctor-report-v1.schema.json	0644
+schemas/contracts/maintenance-installation-lock-v1.schema.json	schemas/contracts/maintenance-installation-lock-v1.schema.json	0644
+schemas/contracts/maintenance-operation-contract-v1.schema.json	schemas/contracts/maintenance-operation-contract-v1.schema.json	0644
 schemas/contracts/update-lock-profile-v1.schema.json	schemas/contracts/update-lock-profile-v1.schema.json	0644
 schemas/contracts/update-operation-contract-v1.schema.json	schemas/contracts/update-operation-contract-v1.schema.json	0644
 schemas/contracts/hmi-generation-bundle-v1.schema.json	schemas/contracts/hmi-generation-bundle-v1.schema.json	0644
@@ -286,6 +292,8 @@ tests/fixtures/builder/g3-capability-registry.json	tests/fixtures/builder/g3-cap
 tests/fixtures/verification-fabric/negative-matrix-v1.json	tests/fixtures/verification-fabric/negative-matrix-v1.json	0644
 tests/fixtures/verification-fabric/positive-bundle-v1.json	tests/fixtures/verification-fabric/positive-bundle-v1.json	0644
 tests/fixtures/update-doctor/negative-matrix-v1-v2.json	tests/fixtures/update-doctor/negative-matrix-v1-v2.json	0644
+tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json	tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json	0644
+tests/fixtures/update-doctor/positive-maintenance-contract-freeze-v1.json	tests/fixtures/update-doctor/positive-maintenance-contract-freeze-v1.json	0644
 tests/fixtures/update-doctor/positive-contract-bundle-v1.json	tests/fixtures/update-doctor/positive-contract-bundle-v1.json	0644
 tests/fixtures/hmi/negative-matrix-v1.json	tests/fixtures/hmi/negative-matrix-v1.json	0644
 tests/fixtures/hmi/positive-generation-v1.json	tests/fixtures/hmi/positive-generation-v1.json	0644
@@ -342,6 +350,7 @@ tests/verification-fabric.test.ts	tests/verification-fabric.test.ts	0644
 tests/update-doctor-compose-adapter.test.ts	tests/update-doctor-compose-adapter.test.ts	0644
 tests/update-doctor-core.test.ts	tests/update-doctor-core.test.ts	0644
 tests/update-doctor.test.ts	tests/update-doctor.test.ts	0644
+tests/maintenance-contract-freeze.test.ts	tests/maintenance-contract-freeze.test.ts	0644
 tools/video-production-reference/ASSET-USAGE.md	tools/video-production-reference/ASSET-USAGE.md	0644
 tools/video-production-reference/Dockerfile	tools/video-production-reference/Dockerfile	0644
 tools/video-production-reference/METHODOLOGY-CHANGELOG.md	tools/video-production-reference/METHODOLOGY-CHANGELOG.md	0644

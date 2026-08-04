@@ -1,0 +1,12 @@
+[
+  { "caseId": "unsupported-bundle-v2", "operation": "replace", "path": "/schemaVersion", "value": "chimpmaera.maintenance/contract-freeze/v2", "expectedReason": "UNSUPPORTED_VERSION_DENIED" },
+  { "caseId": "unknown-private-field", "operation": "add", "path": "/doctorReport/privateDetails", "value": "redacted", "expectedReason": "SCHEMA_DENIED" },
+  { "caseId": "mutable-core-version", "operation": "replace", "path": "/installationLock/versionAxes/core/0/version", "value": "latest", "expectedReason": "MUTABLE_TARGET_DENIED" },
+  { "caseId": "ranged-pack-version", "operation": "replace", "path": "/installationLock/versionAxes/packs/0/version", "value": ">=1.0.0", "expectedReason": "MUTABLE_TARGET_DENIED" },
+  { "caseId": "digest-mismatch", "operation": "replace", "path": "/doctorReport/generatedAtMs", "value": 1785819601001, "expectedReason": "DIGEST_MISMATCH_DENIED" },
+  { "caseId": "hidden-plan-authority", "operation": "add", "path": "/operationPlan/authorityDelta/added/0", "value": "capability:runtime-write", "expectedReason": "AUTHORITY_DELTA_DENIED" },
+  { "caseId": "unresolved-compatibility", "operation": "add", "path": "/compatibilityProfile/unresolvedInputs/0", "value": "adapter:unknown", "expectedReason": "COMPATIBILITY_DENIED" },
+  { "caseId": "execution-authorized", "operation": "replace", "path": "/operationPlan/executionAuthorized", "value": true, "expectedReason": "MUTATION_CLAIM_DENIED" },
+  { "caseId": "mutation-claimed", "operation": "replace", "path": "/operationReceipt/mutationObserved", "value": true, "expectedReason": "MUTATION_CLAIM_DENIED" },
+  { "caseId": "public-secret-channel", "operation": "add", "path": "/doctorReport/publicProjection/token", "value": "seeded", "expectedReason": "SCHEMA_DENIED" }
+]
