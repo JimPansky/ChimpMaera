@@ -22,6 +22,46 @@ Running `node dist/packages/dev-worker/src/cli.js` without
 repository path, provider/model name, shell command, publication target, or
 arbitrary issue selector from the CLI.
 
+## M1A bootstrap mode
+
+M1A adds a default-off bootstrap command for a trusted controller-owned,
+OpenAI-compatible model frontdoor and a pre-materialized read-only repository
+projection:
+
+```sh
+node dist/packages/dev-worker/src/cli.js --m1a-bootstrap-config demo/dev-worker/m1a-bootstrap.example.json
+```
+
+The example config is intentionally disabled and contains no secret. A trusted
+operator must materialize the repository projection and structured issue
+snapshot first, compute the file and manifest digests, bind the allowed and
+denied paths, and only then flip the private controller config to `enabled:
+true`. The worker cannot provide or override a base URL, model ID, provider
+kind, headers, key, provider-policy digest, or budget. Those values are
+server-side broker configuration only.
+
+Credential values are resolved only from handles inside the trusted
+controller. For the OpenRouter profile, provide `OPENROUTER_API_KEY` to the
+trusted broker process and use only the handle
+`credential-handle:openrouter-api-key` in config. For a generic
+OpenAI-compatible endpoint, provide `OPENAI_COMPATIBLE_API_KEY` to the broker
+process and use `credential-handle:openai-compatible-api-key`. Do not place the
+credential in a work order, child environment, prompt, repository projection,
+log, error text, or receipt. Missing credentials fail closed.
+
+The model may return only strict
+`chimpmaera.dev/patch-candidate/v1` JSON with one bounded file change against
+the bound base commit and file digest. The trusted controller applies that
+candidate only in an ephemeral copy, runs the existing allowlisted verifier,
+emits a normalized patch/test/cleanup receipt, and removes the workspace. The
+authoritative checkout or projection root must remain unchanged.
+
+Self-development remains without self-authority: the worker may propose
+changes to ChimpMaera as a reviewable patch/test/receipt bundle, but it cannot
+activate its own controller changes, widen protected paths, write CI or GitHub
+workflow files, publish a branch, create or update a review, merge, tag,
+release, deploy, or change provider policy.
+
 ## Trust and authority boundary
 
 The trusted controller validates the strict schemas, work-order digest,
@@ -74,6 +114,7 @@ cannot prove network isolation or real provider accounting. Fallback: retain
 the default-off CLI and require separate M1 evidence. Review marker: validate
 the pinned image, GitLab broker split, and network enforcement before M1.
 
-Known non-claims remain real GitLab interoperability, real model-provider
-behavior, production isolation, quality parity, publication, merge, release,
-and deployment. Issue #117 keeps M1-M3 open.
+Known non-claims remain real GitLab interoperability, live OpenRouter evidence,
+production isolation, quality parity, publication, merge, release, and
+deployment. M1A uses local fake-provider tests only; Issue #117 keeps M1B-M3
+open.

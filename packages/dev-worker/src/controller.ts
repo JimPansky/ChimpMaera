@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, posix, resolve, sep } from "node:path";
 import Ajv2020, { type ValidateFunction } from "ajv/dist/2020.js";
@@ -59,6 +59,7 @@ const allowedCapabilities: readonly DevCapabilityV1[] = [
 const forbiddenAuthority = ["MERGE", "MARK_READY", "FORCE_PUSH", "BRANCH_DELETE", "PROJECT_ADMIN", "TOKEN_CREATE", "TAG", "RELEASE", "DEPLOY"] as const;
 const credentialPattern = /(?:sk-[A-Za-z0-9_-]{12,}|glpat-[A-Za-z0-9_-]{12,}|github_pat_[A-Za-z0-9_]{12,}|AKIA[A-Z0-9]{16}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|(?:password|api[_-]?key|access[_-]?token|authorization)\s*[:=]\s*\S{8,})/i;
 const wideningPattern = /(?:ignore (?:all )?(?:previous|system) instructions|widen (?:the )?scope|enable (?:network|web|search)|merge (?:this|the)|create (?:a )?(?:tag|release)|access (?:another|other) (?:project|repository))/i;
+const forbiddenOverridePattern = /(?:base_?url|url|model|header|authorization|api[_-]?key|provider|providerpolicy|budget|maxcost|maxtokens|openrouter|openai)/i;
 
 export class DevWorkerDenied extends Error {
   constructor(readonly code: string) {
@@ -78,6 +79,55 @@ export interface SyntheticModelResponse {
   readonly outputTokens: number;
   readonly costMicros: number;
   readonly changes: readonly CandidateChange[];
+}
+
+export interface TrustedModelBrokerConfig {
+  readonly enabled: boolean;
+  readonly alias: "cm.dev.fast";
+  readonly providerPolicyDigest: string;
+  readonly profile:
+    | { readonly kind: "openrouter"; readonly credentialHandle: string }
+    | { readonly kind: "openai-compatible"; readonly credentialHandle: string };
+  readonly baseUrl: string;
+  readonly model: string;
+  readonly headers?: Record<string, string>;
+  readonly budget: DevBudgetV1;
+  readonly priceMicrosPerInputToken?: number;
+  readonly priceMicrosPerOutputToken?: number;
+}
+
+export interface MaterializedSourceProjection {
+  readonly root: string;
+  readonly manifestDigest: string;
+  readonly issueSnapshotDigest: string;
+  readonly projectId: string;
+  readonly repository: string;
+  readonly issueIid: number;
+  readonly baseRef: string;
+  readonly baseCommit: string;
+  readonly allowedPaths: readonly string[];
+  readonly deniedPaths: readonly string[];
+  readonly files: Readonly<Record<string, string>>;
+}
+
+export interface PatchCandidateV1 {
+  readonly schemaVersion: "chimpmaera.dev/patch-candidate/v1";
+  readonly baseCommit: string;
+  readonly changes: readonly {
+    readonly path: string;
+    readonly kind: "file";
+    readonly beforeSha256: string;
+    readonly after: string;
+  }[];
+}
+
+export interface M1aBootstrapOptions {
+  readonly broker: TrustedModelBrokerConfig;
+  readonly source: MaterializedSourceProjection;
+  readonly credentialResolver: (handle: string) => string | undefined;
+  readonly now?: string;
+  readonly workerOverrides?: unknown;
+  readonly fetchImpl?: typeof fetch;
 }
 
 export class SyntheticGitLabAdapter {
@@ -218,6 +268,90 @@ function assertSafePath(path: string, order: WorkOrderV1): void {
   if (!order.paths.allowed.some((entry) => pathMatches(entry, path))) throw new DevWorkerDenied("UNEXPECTED_PATH_DENIED");
 }
 
+function assertPlainKeys(value: unknown, keys: readonly string[], code: string): asserts value is Record<string, unknown> {
+  if (value === null || typeof value !== "object" || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype) throw new DevWorkerDenied(code);
+  if (canonicalJson(Object.keys(value).sort()) !== canonicalJson([...keys].sort())) throw new DevWorkerDenied(code);
+}
+
+function assertNoWorkerOverrides(value: unknown): void {
+  if (value !== undefined && forbiddenOverridePattern.test(canonicalJson(value))) throw new DevWorkerDenied("WORKER_MODEL_OVERRIDE_DENIED");
+}
+
+export function materializedManifestDigest(source: Omit<MaterializedSourceProjection, "manifestDigest" | "root">): string {
+  return sha256({
+    projectId: source.projectId,
+    repository: source.repository,
+    issueIid: source.issueIid,
+    issueSnapshotDigest: source.issueSnapshotDigest,
+    baseRef: source.baseRef,
+    baseCommit: source.baseCommit,
+    allowedPaths: source.allowedPaths,
+    deniedPaths: source.deniedPaths,
+    files: source.files,
+  });
+}
+
+function assertSourceProjection(source: MaterializedSourceProjection, order: WorkOrderV1): void {
+  assertNoCredentials(source);
+  if (source.projectId !== order.project.id || source.repository !== order.project.repository) throw new DevWorkerDenied("CROSS_PROJECT_DENIED");
+  if (source.issueIid !== order.issue.iid || source.issueSnapshotDigest !== order.issue.snapshotDigest) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
+  if (source.baseRef !== order.base.ref || source.baseCommit !== order.base.commit) throw new DevWorkerDenied("STALE_BASE_DENIED");
+  if (source.manifestDigest !== materializedManifestDigest(source)) throw new DevWorkerDenied("MANIFEST_DIGEST_MISMATCH");
+  if (canonicalJson(source.allowedPaths) !== canonicalJson(order.paths.allowed) || canonicalJson(source.deniedPaths) !== canonicalJson(order.paths.denied)) throw new DevWorkerDenied("SOURCE_SCOPE_WIDENING_DENIED");
+  const root = resolve(source.root);
+  for (const [path, expectedDigest] of Object.entries(source.files)) {
+    assertSafePath(path, order);
+    const absolute = resolve(root, path);
+    if (!absolute.startsWith(`${root}${sep}`)) throw new DevWorkerDenied("PATH_TRAVERSAL_DENIED");
+    const stat = lstatSync(absolute);
+    if (stat.isSymbolicLink()) throw new DevWorkerDenied("SYMLINK_DENIED");
+    if (!stat.isFile()) throw new DevWorkerDenied("SOURCE_FILE_DENIED");
+    const content = readFileSync(absolute, "utf8");
+    if (content.includes("\0")) throw new DevWorkerDenied("BINARY_PATCH_DENIED");
+    if (sha256(content) !== expectedDigest) throw new DevWorkerDenied("MANIFEST_DIGEST_MISMATCH");
+  }
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const absolute = join(dir, entry.name);
+      if (entry.isSymbolicLink()) throw new DevWorkerDenied("SYMLINK_DENIED");
+      if (entry.isDirectory()) walk(absolute);
+      if (entry.isFile()) {
+        const relative = absolute.slice(root.length + 1).split(sep).join("/");
+        if (!Object.hasOwn(source.files, relative)) throw new DevWorkerDenied("MANIFEST_DIGEST_MISMATCH");
+      }
+    }
+  };
+  walk(root);
+}
+
+function assertBrokerConfig(config: TrustedModelBrokerConfig, order: WorkOrderV1): void {
+  assertNoCredentials(config);
+  if (!config.enabled) throw new DevWorkerDenied("M1A_BOOTSTRAP_DISABLED");
+  if (config.alias !== "cm.dev.fast" || config.providerPolicyDigest !== order.model.providerPolicyDigest) throw new DevWorkerDenied("MODEL_ROUTE_NOT_SERVER_BOUND");
+  if (config.profile.kind !== "openrouter" && config.profile.kind !== "openai-compatible") throw new DevWorkerDenied("MODEL_PROVIDER_PROFILE_DENIED");
+  if (!config.profile.credentialHandle.startsWith("credential-handle:")) throw new DevWorkerDenied("CREDENTIAL_HANDLE_DENIED");
+  if (!/^https?:\/\/(?:127\.0\.0\.1|localhost|[A-Za-z0-9.-]+)(?::\d+)?(?:\/[A-Za-z0-9._~:/?#[\]@!$&'()*+,;=%-]*)?$/.test(config.baseUrl)) throw new DevWorkerDenied("MODEL_ROUTE_NOT_SERVER_BOUND");
+  if (canonicalJson(config.budget) !== canonicalJson(order.budget)) throw new DevWorkerDenied("BUDGET_NOT_SERVER_BOUND");
+  if (typeof config.priceMicrosPerInputToken !== "number" || typeof config.priceMicrosPerOutputToken !== "number") throw new DevWorkerDenied("MODEL_COST_BINDING_MISSING");
+  if (Object.keys(config.headers ?? {}).some((key) => /authorization|api[_-]?key|token/i.test(key))) throw new DevWorkerDenied("WORKER_MODEL_OVERRIDE_DENIED");
+}
+
+function assertPatchCandidate(candidate: unknown, order: WorkOrderV1, before: Readonly<Record<string, string>>): asserts candidate is PatchCandidateV1 {
+  assertPlainKeys(candidate, ["baseCommit", "changes", "schemaVersion"], "PATCH_CANDIDATE_SCHEMA_DENIED");
+  if (candidate.schemaVersion !== "chimpmaera.dev/patch-candidate/v1" || candidate.baseCommit !== order.base.commit || !Array.isArray(candidate.changes)) throw new DevWorkerDenied("PATCH_CANDIDATE_SCHEMA_DENIED");
+  if (candidate.changes.length !== 1) throw new DevWorkerDenied("MODEL_RESPONSE_SCOPE_DENIED");
+  assertNoCredentials(candidate);
+  for (const change of candidate.changes as unknown[]) {
+    assertPlainKeys(change, ["after", "beforeSha256", "kind", "path"], "PATCH_CANDIDATE_SCHEMA_DENIED");
+    if (change.kind !== "file" || typeof change.path !== "string" || typeof change.after !== "string" || typeof change.beforeSha256 !== "string") throw new DevWorkerDenied("PATCH_CANDIDATE_SCHEMA_DENIED");
+    assertSafePath(change.path, order);
+    if (!Object.hasOwn(before, change.path) || before[change.path] !== change.beforeSha256) throw new DevWorkerDenied("STALE_BASE_DENIED");
+    if (change.after.includes("\0")) throw new DevWorkerDenied("BINARY_PATCH_DENIED");
+    if (Buffer.byteLength(change.after) > order.budget.maxPatchBytes) throw new DevWorkerDenied("PATCH_BUDGET_EXCEEDED");
+    if (wideningPattern.test(change.after)) throw new DevWorkerDenied("PROMPT_INJECTION_SCOPE_WIDENING_DENIED");
+  }
+}
+
 function assertBindings(profile: unknown, order: unknown, now: string): asserts order is WorkOrderV1 {
   const checked = schemas();
   if (!checked.profile(profile)) throw new DevWorkerDenied("PROFILE_SCHEMA_DENIED");
@@ -307,6 +441,120 @@ export function runSyntheticDevelopmentWorker(options: RunOptions = {}): WorkRec
     const receipt: WorkReceiptV1 = { ...unsigned, receiptDigest: sha256(unsigned) };
     if (!schemas().receipt(receipt)) throw new DevWorkerDenied("WORK_RECEIPT_SCHEMA_DENIED");
     return receipt;
+  } finally {
+    rmSync(workspace, { recursive: true, force: true });
+    if (existsSync(workspace)) throw new DevWorkerDenied("CLEANUP_FAILED");
+  }
+}
+
+export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<WorkReceiptV1> {
+  assertNoWorkerOverrides(options.workerOverrides);
+  const profile = syntheticProfile();
+  const order = syntheticWorkOrder();
+  assertBindings(profile, order, options.now ?? SYNTHETIC_NOW);
+  assertBrokerConfig(options.broker, order);
+  assertSourceProjection(options.source, order);
+  const credential = options.credentialResolver(options.broker.profile.credentialHandle);
+  if (!credential) throw new DevWorkerDenied("MODEL_CREDENTIAL_MISSING");
+  if (credentialPattern.test(credential)) throw new DevWorkerDenied("MODEL_CREDENTIAL_VALUE_DENIED");
+
+  const root = resolve(options.source.root);
+  const before: Record<string, string> = {};
+  const workspace = mkdtempSync(join(tmpdir(), "cm-dev-worker-m1a-"));
+  const started = Date.now();
+  try {
+    for (const path of Object.keys(options.source.files).sort()) {
+      const content = readFileSync(resolve(root, path), "utf8");
+      before[path] = sha256(content);
+      const target = resolve(workspace, path);
+      if (!target.startsWith(`${workspace}${sep}`)) throw new DevWorkerDenied("PATH_TRAVERSAL_DENIED");
+      mkdirSync(dirname(target), { recursive: true });
+      writeFileSync(target, content, { encoding: "utf8", mode: 0o600 });
+    }
+
+    const requestBody = {
+      model: options.broker.model,
+      messages: [{
+        role: "user",
+        content: canonicalJson({
+          schemaVersion: "chimpmaera.dev/m1a-bootstrap-prompt/v1",
+          orderDigest: order.workOrderDigest,
+          issueSnapshotDigest: options.source.issueSnapshotDigest,
+          baseCommit: order.base.commit,
+          allowedPaths: order.paths.allowed,
+          deniedPaths: order.paths.denied,
+          files: before,
+          protocol: "Return only chimpmaera.dev/patch-candidate/v1 JSON. No shell, network, merge, release, or extra files.",
+        }),
+      }],
+      temperature: 0,
+    };
+    if (canonicalJson(requestBody).includes(credential)) throw new DevWorkerDenied("CREDENTIAL_EXFIL_DENIED");
+    const invoke = options.fetchImpl ?? fetch;
+    const response = await invoke(`${options.broker.baseUrl.replace(/\/$/, "")}/chat/completions`, {
+      method: "POST",
+      headers: { "content-type": "application/json", ...options.broker.headers, authorization: `Bearer ${credential}` },
+      body: JSON.stringify(requestBody),
+      signal: AbortSignal.timeout(options.broker.budget.timeoutMs),
+    });
+    if (Date.now() - started > options.broker.budget.timeoutMs) throw new DevWorkerDenied("MODEL_TIMEOUT_EXCEEDED");
+    if (!response.ok) {
+      const text = await response.text();
+      if (credentialPattern.test(text) || text.includes(credential)) throw new DevWorkerDenied("PROVIDER_ERROR_REDACTED");
+      throw new DevWorkerDenied("PROVIDER_ERROR_QUARANTINED");
+    }
+    const completion = await response.json() as Record<string, unknown>;
+    if (credentialPattern.test(canonicalJson(completion)) || canonicalJson(completion).includes(credential)) throw new DevWorkerDenied("CREDENTIAL_EXFIL_DENIED");
+    const usage = completion.usage as Record<string, unknown> | undefined;
+    if (!usage || typeof usage.prompt_tokens !== "number" || typeof usage.completion_tokens !== "number" || usage.total_tokens !== usage.prompt_tokens + usage.completion_tokens) throw new DevWorkerDenied("MODEL_USAGE_MISSING");
+    const costMicros = Math.ceil((usage.prompt_tokens * options.broker.priceMicrosPerInputToken!) + (usage.completion_tokens * options.broker.priceMicrosPerOutputToken!));
+    if (usage.prompt_tokens > order.budget.maxInputTokens || usage.completion_tokens > order.budget.maxOutputTokens || costMicros > order.budget.maxCostMicros || order.budget.maxRequests < 1) throw new DevWorkerDenied("MODEL_BUDGET_EXCEEDED");
+    const choices = completion.choices as unknown[] | undefined;
+    const message = (choices?.[0] as Record<string, unknown> | undefined)?.message as Record<string, unknown> | undefined;
+    if (!message || typeof message.content !== "string") throw new DevWorkerDenied("PATCH_CANDIDATE_SCHEMA_DENIED");
+    let candidate: unknown;
+    try {
+      candidate = JSON.parse(message.content);
+    } catch {
+      throw new DevWorkerDenied("PATCH_CANDIDATE_SCHEMA_DENIED");
+    }
+    assertPatchCandidate(candidate, order, before);
+    for (const change of candidate.changes) writeFileSync(resolve(workspace, change.path), change.after, { encoding: "utf8", mode: 0o600 });
+    const changedPaths = candidate.changes.map((item) => item.path).sort();
+    const finalContent = readFileSync(join(workspace, "docs/fixture-status.md"), "utf8");
+    const testOutput = finalContent === "Synthetic fixture status: verified.\n" ? "PASS:fixture-status" : "FAIL:fixture-status";
+    if (!testOutput.startsWith("PASS:")) throw new DevWorkerDenied("ALLOWLISTED_TEST_FAILED");
+    for (const [path, digest] of Object.entries(options.source.files)) {
+      if (sha256(readFileSync(resolve(root, path), "utf8")) !== digest) throw new DevWorkerDenied("AUTHORITATIVE_SOURCE_CHANGED");
+    }
+    const patch = canonicalJson(candidate.changes.map(({ path, beforeSha256, after }) => ({ path, beforeSha256, afterSha256: sha256(after) })));
+    const unsigned = {
+      schemaVersion: WORK_RECEIPT_SCHEMA_V1,
+      workOrderDigest: order.workOrderDigest,
+      outcome: "SUCCEEDED" as const,
+      baseCommit: order.base.commit,
+      candidateCommit: null,
+      changedPaths,
+      changedPathsDigest: sha256(changedPaths),
+      patchDigest: sha256(patch),
+      tests: [{ command: "synthetic:test:fixture-status", outcome: "PASS" as const, outputDigest: sha256(testOutput) }],
+      review: { outcome: "PASS" as const, findings: [] },
+      modelUsage: { alias: options.broker.alias, providerPolicyDigest: order.model.providerPolicyDigest, requests: 1, inputTokens: usage.prompt_tokens, outputTokens: usage.completion_tokens, costMicros },
+      capabilityUsage: allowedCapabilities,
+      publication: { performed: false as const, identifiers: [] },
+      readback: { synthetic: true as const, digest: sha256({ manifestDigest: options.source.manifestDigest, changedPaths, patchDigest: sha256(patch) }) },
+      cleanup: { outcome: "PASS" as const, writableStateRemaining: false as const },
+      nonClaims: ["M1A bootstrap only: no live OpenRouter/GitLab write, publication, merge, release, deployment, or worker self-authority claim."],
+    };
+    const receipt: WorkReceiptV1 = { ...unsigned, receiptDigest: sha256(unsigned) };
+    if (!schemas().receipt(receipt)) throw new DevWorkerDenied("WORK_RECEIPT_SCHEMA_DENIED");
+    return receipt;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "TimeoutError") throw new DevWorkerDenied("MODEL_TIMEOUT_EXCEEDED");
+    if (error instanceof DevWorkerDenied) throw error;
+    const message = error instanceof Error ? error.message : String(error);
+    if (credentialPattern.test(message) || message.includes(credential)) throw new DevWorkerDenied("PROVIDER_ERROR_REDACTED");
+    throw new DevWorkerDenied("PROVIDER_ERROR_QUARANTINED");
   } finally {
     rmSync(workspace, { recursive: true, force: true });
     if (existsSync(workspace)) throw new DevWorkerDenied("CLEANUP_FAILED");

@@ -51,6 +51,7 @@
     "verification:shadow": "npm run build --silent && node scripts/verification-shadow.mjs",
     "proof:secure-default": "node scripts/verify-secure-default-proof.mjs",
     "dev-worker:synthetic": "node dist/packages/dev-worker/src/cli.js --synthetic-fixture",
+    "dev-worker:m1a-bootstrap": "node dist/packages/dev-worker/src/cli.js --m1a-bootstrap-config demo/dev-worker/m1a-bootstrap.example.json",
     "dev-worker:test": "npm run build --silent && node --test dist/tests/development-worker.test.js"
   },
   "dependencies": {
