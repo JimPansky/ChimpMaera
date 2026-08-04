@@ -59,7 +59,7 @@
       "id": "repository-integrity",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "075e352dc5215ca67d73a3778db0418eff9cb2d99dde3d9f54bde149625dd5c3" },
+        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "3b3c569d657b88bd28b2e6eaa78262342a4c0caf6acf3e2527406af221337843" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
         { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "f2c7d958464ab9839f0fcb28a629a1fe8ae37971666f0415ac5aa2d004732d3d" },
         { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f" }
@@ -99,7 +99,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "5f517d7cbb41285d7b0bd522d8367109e7cfac5bd4dc3ebef2042e26972b18db" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "68062c6930d27c47cf8f0a247c30edccb58cfd22690e32bec228016c98ee2dd4" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "99c3e35665ce8786561a7ca8ec07faebb6892213b7b608b2dab9af213f85249d" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }
