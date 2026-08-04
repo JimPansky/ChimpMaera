@@ -98,6 +98,31 @@ activate its own controller changes, widen protected paths, write CI or GitHub
 workflow files, publish a branch, create or update a review, merge, tag,
 release, deploy, or change provider policy.
 
+## M1B ChimpMaera-only isolation
+
+M1B keeps the live path default-off and narrows the first public pilot to a
+trusted-controller materialized projection from `JimPansky/ChimpMaera` only.
+The controller binds the public repository identity, Issue #117 snapshot
+digest, base commit, projection manifest digest, `PUBLIC_OSS` data class,
+server-side `cm.dev.fast` alias, DeepInfra model ID, budget, lease, allowed
+paths, denied protected paths, and no-publication boundary before any provider
+call is possible.
+
+The worker still receives no source-host credential, model credential, home or
+workspace root, other repository mount, Git remote, Docker socket, unrestricted
+network, repository listing/search surface, merge authority, release authority,
+or publish authority. Private or foreign source identities, arbitrary
+repositories, project identifiers, repository URLs, path traversal, symlink
+escapes, mixed provenance, stale issue/base bindings, credential-shaped
+material, protected paths, expired leases, model/provider/budget widening, and
+prompt attempts to widen scope must deny locally with provider-call count `0`.
+
+Live provider output remains untrusted. The trusted controller may retain a
+DeepInfra result only as a bounded patch/test/receipt candidate after schema,
+path, digest, budget, and cleanup validation. Low-quality, empty, ambiguous,
+or scope-widening candidates are negative evidence, not a reason to widen the
+route or retry outside the configured call cap.
+
 ## Trust and authority boundary
 
 The trusted controller validates the strict schemas, work-order digest,
