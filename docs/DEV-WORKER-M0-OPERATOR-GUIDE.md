@@ -74,6 +74,13 @@ it does not confirm whether the requested source exists and does not reproduce
 foreign identifiers in model payloads or receipts. A provider-call counter is
 part of the trusted test boundary and must remain zero for all such denials.
 
+For an issue-bound new-file pilot, the trusted projection separates readable
+input paths from the single writable output path. The controller digest-binds
+the minimal public issue snapshot and each admitted input file, while the
+candidate must use the SHA-256 of empty bytes as `beforeSha256` for the one new
+file. Readable inputs never become writable merely because they are visible to
+the model.
+
 ### Default-off post-M1B model candidates
 
 The following provider IDs are trusted-controller candidates only. They are

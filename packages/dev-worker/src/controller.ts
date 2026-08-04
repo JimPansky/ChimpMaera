@@ -145,6 +145,7 @@ export interface MaterializedSourceProjection {
   readonly baseRef: string;
   readonly baseCommit: string;
   readonly allowedPaths: readonly string[];
+  readonly readablePaths?: readonly string[];
   readonly deniedPaths: readonly string[];
   readonly files: Readonly<Record<string, string>>;
 }
@@ -170,6 +171,7 @@ export interface M1aBootstrapOptions {
   readonly providerCallCounter?: { calls: number };
   readonly trustedOrder?: WorkOrderV1;
   readonly candidateTest?: (workspace: string, candidate: PatchCandidateV1) => { readonly command: string; readonly output: string };
+  readonly trustedIssueSnapshot?: unknown;
 }
 
 export interface ChimpMaeraIssueSnapshotV1 {
@@ -466,6 +468,7 @@ export function materializedManifestDigest(source: Omit<MaterializedSourceProjec
     baseRef: source.baseRef,
     baseCommit: source.baseCommit,
     allowedPaths: source.allowedPaths,
+    readablePaths: source.readablePaths ?? source.allowedPaths,
     deniedPaths: source.deniedPaths,
     files: source.files,
   });
@@ -484,8 +487,9 @@ function assertSourceProjection(source: MaterializedSourceProjection, order: Wor
   if (source.manifestDigest !== materializedManifestDigest(source)) throw new DevWorkerDenied("MANIFEST_DIGEST_MISMATCH");
   if (canonicalJson(source.allowedPaths) !== canonicalJson(order.paths.allowed) || canonicalJson(source.deniedPaths) !== canonicalJson(order.paths.denied)) throw new DevWorkerDenied("SOURCE_SCOPE_WIDENING_DENIED");
   const root = resolve(source.root);
+  const readablePaths = source.readablePaths ?? source.allowedPaths;
   for (const [path, expectedDigest] of Object.entries(source.files)) {
-    assertSafePath(path, order);
+    assertProjectionReadPath(path, readablePaths, order.paths.denied);
     const absolute = resolve(root, path);
     if (!absolute.startsWith(`${root}${sep}`)) throw new DevWorkerDenied("PATH_TRAVERSAL_DENIED");
     const stat = lstatSync(absolute);
@@ -511,6 +515,14 @@ function assertSourceProjection(source: MaterializedSourceProjection, order: Wor
   walk(root);
 }
 
+function assertProjectionReadPath(path: string, readablePaths: readonly string[], deniedPaths: readonly string[]): void {
+  if (path.length === 0 || path.length > 240 || path.startsWith("/") || path.includes("\\") || path.includes("\0") || posix.normalize(path) !== path || path.split("/").includes("..")) {
+    throw new DevWorkerDenied("PATH_TRAVERSAL_DENIED");
+  }
+  if (deniedPaths.some((entry) => pathMatches(entry, path))) throw new DevWorkerDenied("PROTECTED_PATH_DENIED");
+  if (!readablePaths.some((entry) => pathMatches(entry, path))) throw new DevWorkerDenied("UNEXPECTED_PATH_DENIED");
+}
+
 function assertBrokerConfig(config: TrustedModelBrokerConfig, order: WorkOrderV1, serverModel?: string): void {
   assertNoCredentials(config);
   if (!config.enabled) throw new DevWorkerDenied("M1A_BOOTSTRAP_DISABLED");
@@ -533,7 +545,8 @@ function assertPatchCandidate(candidate: unknown, order: WorkOrderV1, before: Re
     assertPlainKeys(change, ["after", "beforeSha256", "kind", "path"], "PATCH_CANDIDATE_SCHEMA_DENIED");
     if (change.kind !== "file" || typeof change.path !== "string" || typeof change.after !== "string" || typeof change.beforeSha256 !== "string") throw new DevWorkerDenied("PATCH_CANDIDATE_SCHEMA_DENIED");
     assertSafePath(change.path, order);
-    if (!Object.hasOwn(before, change.path) || before[change.path] !== change.beforeSha256) throw new DevWorkerDenied("STALE_BASE_DENIED");
+    const expectedBefore = Object.hasOwn(before, change.path) ? before[change.path] : sha256("");
+    if (expectedBefore !== change.beforeSha256) throw new DevWorkerDenied("STALE_BASE_DENIED");
     if (change.after.includes("\0")) throw new DevWorkerDenied("BINARY_PATCH_DENIED");
     if (Buffer.byteLength(change.after) > order.budget.maxPatchBytes) throw new DevWorkerDenied("PATCH_BUDGET_EXCEEDED");
     if (wideningPattern.test(change.after)) throw new DevWorkerDenied("PROMPT_INJECTION_SCOPE_WIDENING_DENIED");
@@ -567,7 +580,7 @@ function assertTrustedPublicBindings(profile: DevelopmentWorkerProfileV1, order:
   if (order.project.id !== SYNTHETIC_PROJECT.id || order.project.repository !== SYNTHETIC_PROJECT.repository) throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
   if (order.workloadIdentity !== profile.workloadIdentity || order.dataClass !== "PUBLIC_OSS") throw new DevWorkerDenied("WRONG_WORKLOAD_DENIED");
   if (Date.parse(now) >= Date.parse(order.expiresAt) || Date.parse(now) >= Date.parse(order.lease.expiresAt)) throw new DevWorkerDenied("EXPIRED_LEASE_DENIED");
-  if (order.issue.iid !== 117 || order.issue.snapshotDigest !== source.issueSnapshotDigest) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
+  if (order.issue.iid !== source.issueIid || order.issue.snapshotDigest !== source.issueSnapshotDigest) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
   if (order.base.ref !== "main" || order.base.commit !== source.baseCommit) throw new DevWorkerDenied("STALE_BASE_DENIED");
   if (order.model.aliases.length !== 1 || order.model.aliases[0] !== broker.alias || order.model.providerPolicyDigest !== broker.providerPolicyDigest) throw new DevWorkerDenied("MODEL_ROUTE_NOT_SERVER_BOUND");
   if (canonicalJson(order.budget) !== canonicalJson(broker.budget) || order.budget.maxRequests !== 1 || order.budget.maxCostMicros > 100_000) throw new DevWorkerDenied("BUDGET_NOT_SERVER_BOUND");
@@ -680,6 +693,10 @@ export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<Wor
   else assertBindings(profile, order, options.now ?? SYNTHETIC_NOW);
   assertBrokerConfig(options.broker, order);
   assertSourceProjection(options.source, order);
+  if (options.trustedOrder) {
+    if (options.trustedIssueSnapshot === undefined || sha256(options.trustedIssueSnapshot) !== options.source.issueSnapshotDigest) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
+    assertNoCredentials(options.trustedIssueSnapshot);
+  }
   const credential = options.credentialResolver(options.broker.profile.credentialHandle);
   if (!credential) throw new DevWorkerDenied("MODEL_CREDENTIAL_MISSING");
   if (credentialPattern.test(credential)) throw new DevWorkerDenied("MODEL_CREDENTIAL_VALUE_DENIED");
@@ -698,22 +715,34 @@ export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<Wor
       writeFileSync(target, content, { encoding: "utf8", mode: 0o600 });
     }
 
+    const prompt: Record<string, unknown> = {
+      schemaVersion: "chimpmaera.dev/m1a-bootstrap-prompt/v1",
+      orderDigest: order.workOrderDigest,
+      issueSnapshotDigest: options.source.issueSnapshotDigest,
+      baseCommit: order.base.commit,
+      allowedPaths: order.paths.allowed,
+      deniedPaths: order.paths.denied,
+      acceptanceCriteria: order.acceptanceCriteria,
+      nonScope: order.nonScope,
+      files: Object.fromEntries(Object.keys(before).sort().map((path) => [path, { sha256: before[path], content: readFileSync(resolve(root, path), "utf8") }])),
+      outputContract: {
+        schemaVersion: "chimpmaera.dev/patch-candidate/v1",
+        baseCommit: order.base.commit,
+        changes: [{
+          path: order.paths.allowed.length === 1 ? order.paths.allowed[0] : "one admitted path",
+          kind: "file",
+          beforeSha256: Object.hasOwn(before, order.paths.allowed[0] ?? "") ? "sha256 of admitted source file" : sha256(""),
+          after: "complete UTF-8 file content",
+        }],
+      },
+      protocol: "Return only chimpmaera.dev/patch-candidate/v1 JSON. No shell, network, merge, release, or extra files.",
+    };
+    if (options.trustedIssueSnapshot !== undefined) prompt.issueSnapshot = options.trustedIssueSnapshot;
     const requestBody = {
       model: options.broker.model,
       messages: [{
         role: "user",
-        content: canonicalJson({
-          schemaVersion: "chimpmaera.dev/m1a-bootstrap-prompt/v1",
-          orderDigest: order.workOrderDigest,
-          issueSnapshotDigest: options.source.issueSnapshotDigest,
-          baseCommit: order.base.commit,
-          allowedPaths: order.paths.allowed,
-          deniedPaths: order.paths.denied,
-          acceptanceCriteria: order.acceptanceCriteria,
-          nonScope: order.nonScope,
-          files: Object.fromEntries(Object.keys(before).sort().map((path) => [path, { sha256: before[path], content: readFileSync(resolve(root, path), "utf8") }])),
-          protocol: "Return only chimpmaera.dev/patch-candidate/v1 JSON. No shell, network, merge, release, or extra files.",
-        }),
+        content: canonicalJson(prompt),
       }],
       temperature: 0,
       max_tokens: options.broker.budget.maxOutputTokens,
@@ -749,7 +778,11 @@ export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<Wor
       throw new DevWorkerDenied("PATCH_CANDIDATE_SCHEMA_DENIED");
     }
     assertPatchCandidate(candidate, order, before);
-    for (const change of candidate.changes) writeFileSync(resolve(workspace, change.path), change.after, { encoding: "utf8", mode: 0o600 });
+    for (const change of candidate.changes) {
+      const target = resolve(workspace, change.path);
+      mkdirSync(dirname(target), { recursive: true });
+      writeFileSync(target, change.after, { encoding: "utf8", mode: 0o600 });
+    }
     const changedPaths = candidate.changes.map((item) => item.path).sort();
     const candidateTest = options.candidateTest?.(workspace, candidate);
     const testCommand = candidateTest?.command ?? "synthetic:test:fixture-status";
