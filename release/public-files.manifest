@@ -36,6 +36,7 @@ demo/app/index.html	demo/app/index.html	0644
 demo/catalog-bootstrap.sh	demo/catalog-bootstrap.sh	0755
 demo/chimpmaera.Dockerfile	demo/chimpmaera.Dockerfile	0644
 demo/compose.yaml	demo/compose.yaml	0644
+demo/dev-worker/m1a-bootstrap.example.json	demo/dev-worker/m1a-bootstrap.example.json	0644
 demo/dev-worker/opencode-adapter-v1.json	demo/dev-worker/opencode-adapter-v1.json	0644
 demo/managed-skill-lifecycle/compose.yaml	demo/managed-skill-lifecycle/compose.yaml	0644
 demo/managed-skill-lifecycle/fixture-probe.mjs	demo/managed-skill-lifecycle/fixture-probe.mjs	0644

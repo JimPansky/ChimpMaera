@@ -1,0 +1,42 @@
+{
+  "broker": {
+    "enabled": false,
+    "alias": "cm.dev.fast",
+    "providerPolicyDigest": "replace-with-trusted-controller-policy-digest",
+    "profile": {
+      "kind": "openrouter",
+      "credentialHandle": "credential-handle:openrouter-api-key"
+    },
+    "baseUrl": "https://openrouter.ai/api/v1",
+    "model": "replace-with-server-owned-model-id",
+    "headers": {
+      "HTTP-Referer": "https://github.com/JimPansky/ChimpMaera",
+      "X-Title": "ChimpMaera CM Dev Worker M1A"
+    },
+    "budget": {
+      "maxInputTokens": 256,
+      "maxOutputTokens": 128,
+      "maxCostMicros": 1000,
+      "maxRequests": 1,
+      "timeoutMs": 2000,
+      "maxPatchBytes": 2048
+    },
+    "priceMicrosPerInputToken": 2,
+    "priceMicrosPerOutputToken": 3
+  },
+  "source": {
+    "root": "/path/to/trusted/materialized/projection",
+    "manifestDigest": "replace-with-trusted-controller-manifest-digest",
+    "issueSnapshotDigest": "replace-with-trusted-controller-issue-snapshot-digest",
+    "projectId": "gitlab-project:chimpmaera-fixture",
+    "repository": "JimPansky/ChimpMaera-fixture",
+    "issueIid": 117,
+    "baseRef": "main",
+    "baseCommit": "1171171171171171171171171171171171171171",
+    "allowedPaths": ["docs/fixture-status.md"],
+    "deniedPaths": [".github/**", ".gitlab/**", "security/**", "release/**", "gateway/**", "scripts/**"],
+    "files": {
+      "docs/fixture-status.md": "replace-with-sha256-of-projected-file"
+    }
+  }
+}
