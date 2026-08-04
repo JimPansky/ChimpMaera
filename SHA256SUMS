@@ -465,11 +465,11 @@ ce49bd91c5e611db908f4d5d25f529c859a1d5712eb7a5e2bcd0e04e14024bef  ./docs/UPDATE-
 45d041c92472d1e0117d8a814267645be53d1c4b73f568bfb3d616796a920c3c  ./tests/maintenance-contract-freeze.test.ts
 e715e0544aec519f05f941c545dddcde194a9f747d925bee920d05ef8590f2b2  ./demo/dev-worker/m1a-bootstrap.example.json
 e77c0709f53cbfea1f17a4ebe7f8828e948ea3574ebcc68f381e81515e092266  ./demo/dev-worker/opencode-adapter-v1.json
-ae654c5d5c7c04836a4bc3595df0c1fd55576285ff005f04da3dc69ffe97e279  ./docs/DEV-WORKER-M0-OPERATOR-GUIDE.md
+9ecb175c4d3db31e67d72253241997bd561036303270e1bf8cc0a81437524f26  ./docs/DEV-WORKER-M0-OPERATOR-GUIDE.md
 2c4b731b2cd49e3ee3b7dbd8e2223a1effaf95fc52b69675fb1697fd59b74177  ./packages/contracts/src/development-worker.ts
 1509f7722dcefb6fd75e27dfc3d9a50116a53b11f804d77458195174520cde2e  ./packages/dev-worker/src/cli.ts
-06de5f84e613391df8cdc707cc805b799319ce0be5403a4415f3a0f648efb66e  ./packages/dev-worker/src/controller.ts
+6bd1175c5fbb18f549b41be558fd38264abcdffc8dbbe1b83c883d6e2de98499  ./packages/dev-worker/src/controller.ts
 10243b4fa7d25dcde5464f0e0077d29632cef8c145f9a4925829126745f03166  ./schemas/development-worker-profile-v1.schema.json
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
-a83fde8d357c6489acf113bb008df78539856506f1719e45d32919f578d6cbdb  ./tests/development-worker.test.ts
+52c07c2b5d1a26fd0487ec41c5cd7d21412131fa057ae30a4508c568c8752dc2  ./tests/development-worker.test.ts

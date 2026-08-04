@@ -7,12 +7,20 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 import type { WorkOrderV1 } from "../packages/contracts/src/development-worker.js";
 import {
+  CHIMPMAERA_M1B_ALLOWED_PATHS,
+  DEEPINFRA_M1B_MODEL,
+  DEEPINFRA_M1B_PROVIDER_POLICY_DIGEST,
   DevWorkerDenied,
+  M1B_SERVER_BUDGET,
   PROVIDER_POLICY_DIGEST,
   SERVER_BUDGET,
   SYNTHETIC_NOW,
+  chimpMaeraIssueSnapshotDigestV1,
+  materializeM1bChimpMaeraProjection,
   materializedManifestDigest,
   runM1aBootstrap,
+  runM1bIsolationProbes,
+  runM1bTrustedPilot,
   runSyntheticDevelopmentWorker,
   sha256,
   syntheticModelRoute,
@@ -94,6 +102,39 @@ function broker(baseUrl: string, change: Partial<TrustedModelBrokerConfig> = {})
     ...change,
   };
 }
+
+function m1bBroker(baseUrl: string, change: Partial<TrustedModelBrokerConfig> = {}): TrustedModelBrokerConfig {
+  return {
+    enabled: true,
+    alias: "cm.dev.fast",
+    providerPolicyDigest: DEEPINFRA_M1B_PROVIDER_POLICY_DIGEST,
+    profile: { kind: "openai-compatible", credentialHandle: "credential-handle:deepinfra-api-key" },
+    baseUrl,
+    model: DEEPINFRA_M1B_MODEL,
+    budget: M1B_SERVER_BUDGET,
+    priceMicrosPerInputToken: 1,
+    priceMicrosPerOutputToken: 1,
+    ...change,
+  };
+}
+
+const m1bIssueDigest = (): string => chimpMaeraIssueSnapshotDigestV1({
+  number: 117,
+  title: "[DEV-WORKER-01] Governed Development Cell for issue-bound GitLab workers via OpenRouter",
+  body: "Public issue snapshot fixture for M1B ChimpMaera-only isolation tests.",
+  updatedAt: "2026-08-04T11:31:26.000Z",
+});
+
+const m1bPatchCandidate = (baseCommit: string, before: string, after: string): PatchCandidateV1 => ({
+  schemaVersion: "chimpmaera.dev/patch-candidate/v1",
+  baseCommit,
+  changes: [{
+    path: CHIMPMAERA_M1B_ALLOWED_PATHS[0],
+    kind: "file",
+    beforeSha256: sha256(before),
+    after,
+  }],
+});
 
 async function withFakeProvider(
   handler: (request: IncomingMessage, response: ServerResponse, body: string) => void,
@@ -462,4 +503,73 @@ test("DEV-WORKER-M1B-2 stale, mixed, credential, protected, expired and injected
   } finally {
     for (const fixture of fixtures) fixture.cleanup();
   }
+});
+
+test("DEV-WORKER-M1B-3 ChimpMaera-only trusted pilot accepts one bounded PUBLIC_OSS documentation candidate", async () => {
+  const baseCommit = "e".repeat(40);
+  const issueSnapshotDigest = m1bIssueDigest();
+  const source = materializeM1bChimpMaeraProjection({ repositoryRoot: process.cwd(), issueSnapshotDigest, baseCommit });
+  const path = CHIMPMAERA_M1B_ALLOWED_PATHS[0];
+  const before = readFileSync(join(source.root, path), "utf8");
+  const after = `${before.trimEnd()}\n\nM1B isolation pilot: live candidates remain documentation-only proposals until the trusted controller independently validates their receipt.\n`;
+  const provider = await withFakeProvider((_request, response, body) => {
+    assert.doesNotMatch(body, /deepinfra-fixture-token/);
+    assert.match(body, /JimPansky\\\/ChimpMaera|JimPansky\/ChimpMaera/);
+    assert.doesNotMatch(body, /PrivateDenied|repositorySearch|github_pat_/i);
+    response.setHeader("content-type", "application/json");
+    response.end(JSON.stringify(completion(m1bPatchCandidate(baseCommit, before, after), { prompt_tokens: 250, completion_tokens: 90, total_tokens: 340 })));
+  });
+  try {
+    const receipt = await runM1bTrustedPilot({
+      broker: m1bBroker(provider.url),
+      source,
+      issueSnapshotDigest,
+      baseCommit,
+      credentialResolver: (handle) => handle === "credential-handle:deepinfra-api-key" ? "deepinfra-fixture-token" : undefined,
+    });
+    assert.equal(receipt.outcome, "SUCCEEDED");
+    assert.deepEqual(receipt.changedPaths, [path]);
+    assert.equal(receipt.modelUsage.requests, 1);
+    assert.equal(receipt.modelUsage.inputTokens, 250);
+    assert.equal(receipt.modelUsage.outputTokens, 90);
+    assert.equal(receipt.modelUsage.costMicros, 340);
+    assert.equal(receipt.publication.performed, false);
+    assert.equal(validateReceiptDigest(receipt), true);
+    assert.equal(readFileSync(join(source.root, path), "utf8"), before);
+    assert.equal(provider.seen().length, 1);
+  } finally {
+    await provider.close();
+    rmSync(source.root, { recursive: true, force: true });
+  }
+});
+
+test("DEV-WORKER-M1B-4 local isolation probes prove fail-closed denial before provider invocation", async () => {
+  const results = await runM1bIsolationProbes({
+    repositoryRoot: process.cwd(),
+    issueSnapshotDigest: m1bIssueDigest(),
+    baseCommit: "e".repeat(40),
+  });
+  assert.equal(results.length, 15);
+  assert.ok(results.every((result) => result.providerCalls === 0));
+  assert.deepEqual(
+    results.map((result) => result.name),
+    [
+      "explicit-denied-private-identity",
+      "explicit-denied-private-url",
+      "arbitrary-other-repo",
+      "repository-list-search",
+      "path-traversal",
+      "symlink-escape",
+      "mixed-provenance-foreign-file",
+      "stale-base",
+      "stale-issue",
+      "credential-shaped-material",
+      "protected-path",
+      "expired-lease",
+      "scope-budget-widening",
+      "model-provider-widening",
+      "prompt-repo-instruction-attempt",
+    ],
+  );
+  assert.equal(JSON.stringify(results).includes("supersecretvalue123"), false);
 });
