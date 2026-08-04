@@ -26,6 +26,10 @@ own shipped scope.
   and its consent, retention, tombstone and disclosure-safe readback gates.
   Issue [#43](https://github.com/JimPansky/ChimpMaera/issues/43) retains
   delivery history, while release governance owns shipped status.
+- Reproduce the released [update, migration, and Doctor contract freeze](./UPDATE-MIGRATION-DOCTOR-CONTRACTS.md)
+  and its six-axis lock, canonical digest and fail-closed preview gates. Issue
+  [#59](https://github.com/JimPansky/ChimpMaera/issues/59) retains delivery
+  history, while release governance owns shipped status.
 - Keep release truth, anonymous asset/hash readback, secure-default probes,
   public navigation, and known limitations synchronized with every bounded
   increment.

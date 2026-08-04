@@ -1,5 +1,8 @@
 # UD-001 additive contract freeze — protected-delivery PDCA
 
+Status: released as regular Latest `v0.2.0-poc.20260804.5`; no discovery,
+apply, migration, repair or owner-state authority was added.
+
 ## Claim boundary
 
 This record supports an authority-free, local-synthetic update, migration and
@@ -45,6 +48,24 @@ runtime activation.
   **zero vulnerabilities**.
 - Protected CI, release assets/hashes and anonymous readback are recorded in
   the autonomous checkpoint after delivery.
+- Product PR #112 merged as `6278650170661f1518fbe5fefa94dfe0f4364632`;
+  release-identity PR #113 merged as release target
+  `cbc81c8da4cf2d995f386854e8def29dbad61c77`.
+- Exact release-target Main CI `30880506776`, including Docker/video smoke:
+  **PASS**.
+- Two exact-source archive builds were byte-identical.
+- Regular Latest `v0.2.0-poc.20260804.5`: non-draft/non-prerelease, with a
+  1,407,067-byte archive at
+  `98151b4bf50533d7de2cecdb05f9119c25705151ec6c32890524ec86b7cd880e`
+  and a 137-byte checksum manifest at
+  `54f750d6a6aee8cdeede1ceae067df481fa7ad23970226d1ddc41253525ddf27`.
+- Anonymous Latest redirect and both asset bytes/hashes: **PASS**.
+
+Issue closure, canonical raw-Main release binding and the single organic
+Shadow sample comment remain pending until this release-truth integration
+merges. The local sample itself already passed with `FULL_FALLBACK`,
+`GRAPH_CHANGED`, authoritative 333/333 and plan digest
+`faa023de552802d1fc67b6f70e7a7238dc814b1f710cd94a84c4f99778c6d9d5`.
 - The fixture is synthetic and the implementation contains no executor,
   collector, network call, Docker operation or owner-state writer.
 
