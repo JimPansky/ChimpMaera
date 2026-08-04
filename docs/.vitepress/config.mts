@@ -16,6 +16,7 @@ const curatedSitemapPaths = new Set([
   "alternatives",
   "capabilities",
   "examples",
+  "EXTENSION-ASSURANCE-PROFILES",
   "KNOWN-LIMITATIONS",
   "QUICKSTART",
   "RESOURCE-PLANE-PROFILES",
@@ -134,6 +135,7 @@ export default defineConfig({
         text: "Verify",
         items: [
           { text: "Capability evidence", link: "/capabilities" },
+          { text: "Extension assurance profiles", link: "/EXTENSION-ASSURANCE-PROFILES" },
           { text: "Resource-plane profiles", link: "/RESOURCE-PLANE-PROFILES" },
           { text: "Reproducible examples", link: "/examples" },
           { text: "SAFE_GUIDED proof", link: "/SECURE-DEFAULT-PROOF" },

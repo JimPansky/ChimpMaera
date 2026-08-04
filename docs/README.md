@@ -85,6 +85,11 @@ Status labels used here:
   `cm.operator.read` remains reserved for a future separate administrative-read
   profile. Live consent, import, tenant policy, provider compatibility and
   production identity behavior remain unproven.
+- **Locally validated:** [Extension assurance profiles](EXTENSION-ASSURANCE-PROFILES.md)
+  compare closed synthetic evidence, require eight universal hard-fail gates,
+  expire stale evidence, and route security-shaped findings privately. They do
+  not scan, accept, install, activate, certify, or grant authority to an
+  extension or connector.
 - **Planned:** generic live connectors, production reversible-write onboarding,
   BI packs and broader resource-plane profiles.
 
@@ -99,6 +104,7 @@ Status labels used here:
 | HMI/harness and contribution preflight | **Released / locally validated** | Authority-free interface and preparation contracts; no submission, publication or external write |
 | Entra identity | **Released / external evidence required** | Closed `cm.discovery.read` identity contract; no live tenant, registration, consent or production identity proof |
 | Power Platform five-read connector | **Released / external evidence required** | Five closed `cm.discovery.read` operations; no import, live Gateway/tenant, DLP or certification proof; `cm.operator.read` is future separate admin scope |
+| Extension assurance profiles | **Locally validated** | Closed synthetic contract and eight hard-fail gates; no third-party scan, badge, acceptance, activation, authority, certification or production proof |
 | Arbitrary-system onboarding and writes | **Planned** | Blueprint only beyond the bundled synthetic path |
 | Knowledge-driven Operating System | **Current product category; broad live realization planned** | Released local-synthetic foundation only; arbitrary live adaptation and production maturity remain unproven |
 

@@ -215,6 +215,14 @@ intersect the Host/System ceiling, Owner rights profile, assignments and
 current constraints; and require the configured approval route before any
 effect. Changing an adapter cannot inherit evidence or silently widen rights.
 
+The locally validated Extension Trust Lab assurance profile is a separate,
+authority-free evidence contract. It binds an exact extension or connector
+digest to risk class, run/not-run decisions, eight universal hard-fail gates,
+expiry/retest conditions, false-result tracking, and disclosure-safe routing.
+It evaluates synthetic records only: it does not run a scanner, accept or
+install an extension, issue a trust badge, publish a vulnerability, activate a
+binding, or grant execution authority.
+
 A binding becomes usable only through an explicit sequence: resolve the
 capability and template, select an adapter, compute effective rights, validate
 the binding, activate it through the governed route, perform any authorized

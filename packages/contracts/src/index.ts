@@ -30,3 +30,4 @@ export * from "./hmi-explain-payload.js";
 export * from "./hmi-contribute-preflight.js";
 export * from "./azure-identity-profile.js";
 export * from "./power-platform-read-connector.js";
+export * from "./extension-assurance-profile.js";
