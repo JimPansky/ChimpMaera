@@ -18,6 +18,10 @@ own shipped scope.
 - Continue the finite inactive capability/action catalogue in
   [issue #3](https://github.com/JimPansky/ChimpMaera/issues/3). Its live labels
   and issue history own the work state.
+- Reproduce the released [Extension Assurance Profile](./EXTENSION-ASSURANCE-PROFILES.md)
+  and its eight universal fail-closed gates. Issue
+  [#45](https://github.com/JimPansky/ChimpMaera/issues/45) retains delivery
+  history, while release governance owns shipped status.
 - Keep release truth, anonymous asset/hash readback, secure-default probes,
   public navigation, and known limitations synchronized with every bounded
   increment.
@@ -28,9 +32,6 @@ own shipped scope.
   [issue #41](https://github.com/JimPansky/ChimpMaera/issues/41).
 - Freeze minimized Agent-work events, consent, and retention contracts in
   [issue #43](https://github.com/JimPansky/ChimpMaera/issues/43).
-- Define Assurance Profiles and universal hard-fail gates in
-  [issue #45](https://github.com/JimPansky/ChimpMaera/issues/45).
-
 “Ready” is an issue-planning label, not a release or validation claim. Each
 increment still needs its own implementation, tests, evidence, review, and
 release decision.

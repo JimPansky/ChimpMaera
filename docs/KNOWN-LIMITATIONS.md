@@ -7,7 +7,7 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The ChimpMaera Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260804.2` and its local synthetic evidence; a later documentation
+`v0.2.0-poc.20260804.3` and its local synthetic evidence; a later documentation
 change does not broaden the released asset claims.
 
 - This is a local synthetic proof of concept, not a production deployment or
@@ -81,6 +81,10 @@ change does not broaden the released asset claims.
   fixture format is locally materialised; Hermes and Claude Code formats and
   runtimes remain unproven. Installation, capability grant and activation are
   intentionally separate.
+- Extension assurance profiles evaluate closed synthetic evidence records only.
+  They do not run third-party scans, establish that code is safe, accept or
+  install an extension, issue a trust badge, disclose vulnerabilities, activate
+  a binding, grant authority, certify security, or prove production fitness.
 - No DMS/compliance suitability or universal AI capability is claimed.
 - Optional video assets are replaceable examples. Users remain responsible for
   their own output rights, configuration and safety.
