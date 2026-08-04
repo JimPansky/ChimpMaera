@@ -1,0 +1,9 @@
+[
+  {"caseId":"active-public-readback","state":"ACTIVE","operation":"PUBLIC_READBACK","evaluatedAtMs":2000,"expectedOutcome":"ACCEPTED","expectedReason":"RECORD_CONFORMANT"},
+  {"caseId":"active-delete-not-requested","state":"ACTIVE","operation":"DELETE_PREVIEW","evaluatedAtMs":2000,"expectedOutcome":"DENIED","expectedReason":"DELETE_NOT_REQUESTED_DENIED"},
+  {"caseId":"retention-expired","state":"ACTIVE","operation":"OWNER_READBACK","evaluatedAtMs":86401001,"expectedOutcome":"DELETE_REQUIRED","expectedReason":"RETENTION_EXPIRED_DELETE_REQUIRED"},
+  {"caseId":"consent-withdrawn","state":"ACTIVE","consentStatus":"WITHDRAWN","operation":"OWNER_READBACK","evaluatedAtMs":2000,"expectedOutcome":"DELETE_REQUIRED","expectedReason":"CONSENT_WITHDRAWN_DELETE_REQUIRED"},
+  {"caseId":"deletion-requested","state":"DELETION_REQUESTED","operation":"DELETE_PREVIEW","evaluatedAtMs":3000,"expectedOutcome":"DELETE_REQUIRED","expectedReason":"DELETION_REQUESTED"},
+  {"caseId":"deleted-tombstone","state":"DELETED_TOMBSTONE","operation":"DELETE_PREVIEW","evaluatedAtMs":4000,"expectedOutcome":"TOMBSTONE_CONFIRMED","expectedReason":"TOMBSTONE_CONFIRMED"},
+  {"caseId":"deleted-readback-denied","state":"DELETED_TOMBSTONE","operation":"PUBLIC_READBACK","evaluatedAtMs":4000,"expectedOutcome":"DENIED","expectedReason":"DELETED_RECORD_DENIED"}
+]

@@ -31,3 +31,4 @@ export * from "./hmi-contribute-preflight.js";
 export * from "./azure-identity-profile.js";
 export * from "./power-platform-read-connector.js";
 export * from "./extension-assurance-profile.js";
+export * from "./agent-work-event.js";

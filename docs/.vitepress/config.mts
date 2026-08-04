@@ -14,6 +14,7 @@ const releaseMetadata = JSON.parse(
 const curatedSitemapPaths = new Set([
   "",
   "alternatives",
+  "AGENT-WORK-EVENT-CONTRACT",
   "capabilities",
   "examples",
   "EXTENSION-ASSURANCE-PROFILES",
@@ -135,6 +136,7 @@ export default defineConfig({
         text: "Verify",
         items: [
           { text: "Capability evidence", link: "/capabilities" },
+          { text: "Agent-work event contract", link: "/AGENT-WORK-EVENT-CONTRACT" },
           { text: "Extension assurance profiles", link: "/EXTENSION-ASSURANCE-PROFILES" },
           { text: "Resource-plane profiles", link: "/RESOURCE-PLANE-PROFILES" },
           { text: "Reproducible examples", link: "/examples" },

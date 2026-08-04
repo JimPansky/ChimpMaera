@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/agent-work-event-record-v1.schema.json",
+  "title": "ChimpMaera minimized agent-work event record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordId", "lifecycle", "payload", "tombstone", "claimBoundary", "recordDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.agent-work-intelligence/event-record/v1" },
+    "recordId": { "type": "string", "pattern": "^awi-record:[a-z0-9][a-z0-9-]{7,63}$" },
+    "lifecycle": { "$ref": "#/$defs/lifecycle" },
+    "payload": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/payload" }] },
+    "tombstone": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/tombstone" }] },
+    "claimBoundary": { "const": "DECLARATIVE_AGENT_WORK_EVENT_CONTRACT_ONLY_NO_COLLECTION_NO_TELEMETRY_NO_TRAINING_NO_PRODUCTION_INGESTION" },
+    "recordDigest": { "$ref": "#/$defs/digest" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "lifecycle": { "type": "object", "properties": { "state": { "const": "ACTIVE" } }, "required": ["state"] } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "payload": { "$ref": "#/$defs/payload" },
+          "tombstone": { "type": "null" },
+          "lifecycle": {
+            "type": "object",
+            "properties": {
+              "deletionRequestedAtMs": { "type": "null" },
+              "deleteByMs": { "type": "null" },
+              "deletedAtMs": { "type": "null" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "type": "object", "properties": { "state": { "const": "DELETION_REQUESTED" } }, "required": ["state"] } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "payload": { "$ref": "#/$defs/payload" },
+          "tombstone": { "type": "null" },
+          "lifecycle": {
+            "type": "object",
+            "properties": {
+              "deletionRequestedAtMs": { "$ref": "#/$defs/timestamp" },
+              "deleteByMs": { "$ref": "#/$defs/timestamp" },
+              "deletedAtMs": { "type": "null" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "type": "object", "properties": { "state": { "const": "DELETED_TOMBSTONE" } }, "required": ["state"] } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "payload": { "type": "null" },
+          "tombstone": { "$ref": "#/$defs/tombstone" },
+          "lifecycle": {
+            "type": "object",
+            "properties": {
+              "deletionRequestedAtMs": { "$ref": "#/$defs/timestamp" },
+              "deleteByMs": { "$ref": "#/$defs/timestamp" },
+              "deletedAtMs": { "$ref": "#/$defs/timestamp" }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "pseudonym": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "timestamp": { "type": "integer", "minimum": 0 },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "policy", "retainUntilMs", "deletionRequestedAtMs", "deleteByMs", "deletedAtMs"],
+      "properties": {
+        "state": { "enum": ["ACTIVE", "DELETION_REQUESTED", "DELETED_TOMBSTONE"] },
+        "policy": { "enum": ["EPHEMERAL_24H", "BOUNDED_30D", "BOUNDED_90D"] },
+        "retainUntilMs": { "$ref": "#/$defs/timestamp" },
+        "deletionRequestedAtMs": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/timestamp" }] },
+        "deleteByMs": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/timestamp" }] },
+        "deletedAtMs": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/timestamp" }] }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "classification", "digest"],
+      "properties": {
+        "kind": { "enum": ["SYNTHETIC_FIXTURE", "REPOSITORY_DERIVATION", "TOOL_RECEIPT"] },
+        "classification": { "enum": ["PUBLIC_SYNTHETIC", "OWNER_PRIVATE_DERIVED"] },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "occurredAtMs", "outcome", "reasonCodes", "evidenceDigests"],
+      "properties": {
+        "kind": { "enum": ["PLAN", "CHANGE", "TEST", "REVIEW", "RELEASE", "ROLLBACK"] },
+        "occurredAtMs": { "$ref": "#/$defs/timestamp" },
+        "outcome": { "enum": ["SUCCEEDED", "FAILED", "DENIED"] },
+        "reasonCodes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["CHANGE_ACCEPTED", "TEST_PASSED", "POLICY_DENIED", "ROLLBACK_CONFIRMED"] }
+        },
+        "evidenceDigests": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/digest" }
+        }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "status", "purposes", "grantedAtMs", "expiresAtMs", "proofDigest"],
+      "properties": {
+        "basis": { "enum": ["SYNTHETIC_FIXTURE", "EXPLICIT_OPT_IN", "OWNER_AUTHORIZED_OPERATION"] },
+        "status": { "enum": ["GRANTED", "WITHDRAWN"] },
+        "purposes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["PROCESS_IMPROVEMENT", "KNOWLEDGE_REUSE", "ASSURANCE", "PUBLIC_REPRODUCIBILITY"] }
+        },
+        "grantedAtMs": { "$ref": "#/$defs/timestamp" },
+        "expiresAtMs": { "$ref": "#/$defs/timestamp" },
+        "proofDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actorPseudonym", "harnessPseudonym", "source", "event", "consent", "readback"],
+      "properties": {
+        "actorPseudonym": { "$ref": "#/$defs/pseudonym" },
+        "harnessPseudonym": { "$ref": "#/$defs/pseudonym" },
+        "source": { "$ref": "#/$defs/source" },
+        "event": { "$ref": "#/$defs/event" },
+        "consent": { "$ref": "#/$defs/consent" },
+        "readback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["visibility"],
+          "properties": { "visibility": { "enum": ["OWNER_ONLY", "PUBLIC_SYNTHETIC"] } }
+        }
+      }
+    },
+    "tombstone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["erasureDigest", "reason"],
+      "properties": {
+        "erasureDigest": { "$ref": "#/$defs/digest" },
+        "reason": { "enum": ["RETENTION_EXPIRED", "CONSENT_WITHDRAWN", "OWNER_REQUEST"] }
+      }
+    }
+  }
+}

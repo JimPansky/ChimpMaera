@@ -90,6 +90,10 @@ Status labels used here:
   expire stale evidence, and route security-shaped findings privately. They do
   not scan, accept, install, activate, certify, or grant authority to an
   extension or connector.
+- **Locally validated:** the [minimized agent-work event contract](AGENT-WORK-EVENT-CONTRACT.md)
+  classifies pseudonymous, consented, digest-bound synthetic records and their
+  finite retention/deletion lifecycle. It adds no collector, telemetry,
+  training feed, dashboard, ingestion path or runtime authority.
 - **Planned:** generic live connectors, production reversible-write onboarding,
   BI packs and broader resource-plane profiles.
 
@@ -105,6 +109,7 @@ Status labels used here:
 | Entra identity | **Released / external evidence required** | Closed `cm.discovery.read` identity contract; no live tenant, registration, consent or production identity proof |
 | Power Platform five-read connector | **Released / external evidence required** | Five closed `cm.discovery.read` operations; no import, live Gateway/tenant, DLP or certification proof; `cm.operator.read` is future separate admin scope |
 | Extension assurance profiles | **Released / locally validated** | Closed synthetic contract and eight hard-fail gates; no third-party scan, badge, acceptance, activation, authority, certification or production proof |
+| Minimized agent-work event contract | **Locally validated** | Closed synthetic consent/retention/deletion record only; no collection, telemetry, training, ingestion or production proof |
 | Arbitrary-system onboarding and writes | **Planned** | Blueprint only beyond the bundled synthetic path |
 | Knowledge-driven Operating System | **Current product category; broad live realization planned** | Released local-synthetic foundation only; arbitrary live adaptation and production maturity remain unproven |
 
