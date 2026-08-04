@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.chimpmaera.dev/work-order-v1.schema.json",
+  "title": "ChimpMaera Development Work Order v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "orderId", "workloadIdentity", "project", "issue", "base", "paths", "acceptanceCriteria", "nonScope", "risk", "dataClass", "artifacts", "model", "budget", "testProfile", "lease", "publication", "expiresAt", "workOrderDigest"],
+  "properties": {
+    "schemaVersion": {"const": "chimpmaera.dev/work-order/v1"},
+    "orderId": {"type": "string", "pattern": "^order:[a-z0-9][a-z0-9._-]{2,63}$"},
+    "workloadIdentity": {"type": "string", "pattern": "^workload:[a-z0-9][a-z0-9._-]{2,63}$"},
+    "project": {"type": "object", "additionalProperties": false, "required": ["id", "repository"], "properties": {"id": {"type": "string", "minLength": 1}, "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"}}},
+    "issue": {"type": "object", "additionalProperties": false, "required": ["iid", "snapshotDigest"], "properties": {"iid": {"type": "integer", "minimum": 1}, "snapshotDigest": {"$ref": "#/$defs/sha256"}}},
+    "base": {"type": "object", "additionalProperties": false, "required": ["ref", "commit"], "properties": {"ref": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}, "commit": {"$ref": "#/$defs/sha1"}}},
+    "paths": {"type": "object", "additionalProperties": false, "required": ["allowed", "denied"], "properties": {"allowed": {"$ref": "#/$defs/paths"}, "denied": {"$ref": "#/$defs/paths"}}},
+    "acceptanceCriteria": {"$ref": "#/$defs/nonEmptyStrings"}, "nonScope": {"$ref": "#/$defs/nonEmptyStrings"},
+    "risk": {"const": "LOW"}, "dataClass": {"const": "PUBLIC_OSS"},
+    "artifacts": {"type": "object", "additionalProperties": false, "required": ["toolchainDigest", "harnessDigest", "workerDigest"], "properties": {"toolchainDigest": {"$ref": "#/$defs/sha256"}, "harnessDigest": {"$ref": "#/$defs/sha256"}, "workerDigest": {"$ref": "#/$defs/sha256"}}},
+    "model": {"type": "object", "additionalProperties": false, "required": ["aliases", "providerPolicyDigest"], "properties": {"aliases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/modelAlias"}, "uniqueItems": true}, "providerPolicyDigest": {"$ref": "#/$defs/sha256"}}},
+    "budget": {"type": "object", "additionalProperties": false, "required": ["maxInputTokens", "maxOutputTokens", "maxCostMicros", "maxRequests", "timeoutMs", "maxPatchBytes"], "properties": {"maxInputTokens": {"$ref": "#/$defs/positiveInt"}, "maxOutputTokens": {"$ref": "#/$defs/positiveInt"}, "maxCostMicros": {"$ref": "#/$defs/positiveInt"}, "maxRequests": {"$ref": "#/$defs/positiveInt"}, "timeoutMs": {"$ref": "#/$defs/positiveInt"}, "maxPatchBytes": {"$ref": "#/$defs/positiveInt"}}},
+    "testProfile": {"type": "object", "additionalProperties": false, "required": ["commands"], "properties": {"commands": {"$ref": "#/$defs/nonEmptyStrings"}}},
+    "lease": {"type": "object", "additionalProperties": false, "required": ["id", "capabilities", "expiresAt"], "properties": {"id": {"type": "string", "pattern": "^lease:[a-z0-9][a-z0-9._-]{2,63}$"}, "capabilities": {"type": "array", "items": {"$ref": "#/$defs/capability"}, "uniqueItems": true}, "expiresAt": {"$ref": "#/$defs/dateTime"}}},
+    "publication": {"type": "object", "additionalProperties": false, "required": ["mode", "allowed", "denied"], "properties": {"mode": {"const": "NONE"}, "allowed": {"type": "array", "maxItems": 0}, "denied": {"type": "array", "minItems": 6, "items": {"enum": ["MERGE", "MARK_READY", "FORCE_PUSH", "BRANCH_DELETE", "PROJECT_ADMIN", "TOKEN_CREATE", "TAG", "RELEASE", "DEPLOY"]}, "uniqueItems": true}}},
+    "expiresAt": {"$ref": "#/$defs/dateTime"}, "workOrderDigest": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "sha1": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "dateTime": {"type": "string", "format": "date-time"}, "positiveInt": {"type": "integer", "minimum": 1},
+    "repoPath": {"type": "string", "minLength": 1, "maxLength": 240, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[^\\u0000]+$"},
+    "paths": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/repoPath"}, "uniqueItems": true},
+    "nonEmptyStrings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "modelAlias": {"enum": ["cm.dev.fast", "cm.dev.primary", "cm.dev.review", "cm.dev.escalate"]},
+    "capability": {"enum": ["cm.dev.issue.read", "cm.dev.repository.snapshot.read", "cm.dev.model.invoke", "cm.dev.test.run", "cm.dev.ci.read", "cm.dev.ci.log.read-sanitized", "cm.dev.change.publish", "cm.dev.merge-request.create-draft", "cm.dev.merge-request.update-owned", "cm.dev.evidence.read"]}
+  }
+}
