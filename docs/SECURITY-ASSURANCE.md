@@ -7,8 +7,8 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260804.3`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260804.3),
-the **Extension Assurance Profile V1** increment. `v0.1.0` is historical. Release state
+[`v0.2.0-poc.20260804.4`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260804.4),
+the **Minimized Agent-Work Event Contract V1** increment. `v0.1.0` is historical. Release state
 is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred
 from a local branch, a tag alone, a date or an editorial update. Documentation
 on `main` may postdate the released asset bytes and does not silently change

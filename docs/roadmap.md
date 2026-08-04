@@ -22,6 +22,10 @@ own shipped scope.
   and its eight universal fail-closed gates. Issue
   [#45](https://github.com/JimPansky/ChimpMaera/issues/45) retains delivery
   history, while release governance owns shipped status.
+- Reproduce the released [minimized agent-work event contract](./AGENT-WORK-EVENT-CONTRACT.md)
+  and its consent, retention, tombstone and disclosure-safe readback gates.
+  Issue [#43](https://github.com/JimPansky/ChimpMaera/issues/43) retains
+  delivery history, while release governance owns shipped status.
 - Keep release truth, anonymous asset/hash readback, secure-default probes,
   public navigation, and known limitations synchronized with every bounded
   increment.
@@ -30,8 +34,6 @@ own shipped scope.
 
 - Freeze the governed immutable skill bundle and compatibility contracts in
   [issue #41](https://github.com/JimPansky/ChimpMaera/issues/41).
-- Freeze minimized Agent-work events, consent, and retention contracts in
-  [issue #43](https://github.com/JimPansky/ChimpMaera/issues/43).
 “Ready” is an issue-planning label, not a release or validation claim. Each
 increment still needs its own implementation, tests, evidence, review, and
 release decision.
