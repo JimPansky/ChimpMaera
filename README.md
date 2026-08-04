@@ -159,8 +159,11 @@ and anonymous readback.
   vulnerability through the [private security route](SECURITY.md).
 - Watch the verified public overviews: [Why ChimpMaera?](https://youtu.be/Dq_XLEzh5I8),
   [How does it work?](https://youtu.be/w4fWgalD_WQ), and
-  [Security by Default](https://youtu.be/SEPbE-EVoNs). Videos illustrate the
-  approach; release evidence remains in the repository and release pages.
+  [Security by Default](https://youtu.be/SEPbE-EVoNs).
+- Watch the standalone explainer:
+  [ChimpMaera — Governed Adaptability for AI Ecosystems](https://youtu.be/NZbSaHdbW1s).
+  Videos illustrate the approach; release evidence remains in the repository
+  and release pages.
 
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference media follows
