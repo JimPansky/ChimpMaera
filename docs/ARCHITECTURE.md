@@ -223,6 +223,13 @@ It evaluates synthetic records only: it does not run a scanner, accept or
 install an extension, issue a trust badge, publish a vulnerability, activate a
 binding, or grant execution authority.
 
+The locally validated AWI-01 record is another authority-free contract. It
+keeps only pseudonymous actor/harness identifiers, closed event facts, source
+and evidence digests, consent, finite retention and deletion state. Public
+readback is restricted to explicit synthetic fixtures and emits only a fixed
+decision vocabulary. The repository includes no event collector, telemetry
+route, training feed, dashboard or production ingestion path.
+
 A binding becomes usable only through an explicit sequence: resolve the
 capability and template, select an adapter, compute effective rights, validate
 the binding, activate it through the governed route, perform any authorized

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "chimpmaera.agent-work-intelligence/event-record/v1",
+  "recordId": "awi-record:synthetic-001",
+  "lifecycle": {
+    "state": "ACTIVE",
+    "policy": "EPHEMERAL_24H",
+    "retainUntilMs": 86401000,
+    "deletionRequestedAtMs": null,
+    "deleteByMs": null,
+    "deletedAtMs": null
+  },
+  "payload": {
+    "actorPseudonym": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "harnessPseudonym": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "source": {
+      "kind": "SYNTHETIC_FIXTURE",
+      "classification": "PUBLIC_SYNTHETIC",
+      "digest": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "event": {
+      "kind": "TEST",
+      "occurredAtMs": 1000,
+      "outcome": "SUCCEEDED",
+      "reasonCodes": ["TEST_PASSED"],
+      "evidenceDigests": ["4444444444444444444444444444444444444444444444444444444444444444"]
+    },
+    "consent": {
+      "basis": "SYNTHETIC_FIXTURE",
+      "status": "GRANTED",
+      "purposes": ["ASSURANCE", "PUBLIC_REPRODUCIBILITY"],
+      "grantedAtMs": 0,
+      "expiresAtMs": 86401000,
+      "proofDigest": "5555555555555555555555555555555555555555555555555555555555555555"
+    },
+    "readback": { "visibility": "PUBLIC_SYNTHETIC" }
+  },
+  "tombstone": null,
+  "claimBoundary": "DECLARATIVE_AGENT_WORK_EVENT_CONTRACT_ONLY_NO_COLLECTION_NO_TELEMETRY_NO_TRAINING_NO_PRODUCTION_INGESTION",
+  "recordDigest": "fc3d68bdacd19afb37f9fc9dc7a92e796f9c5cb27164cce9fcf35edb639961f2"
+}

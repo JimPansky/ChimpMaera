@@ -1,0 +1,13 @@
+[
+  {"caseId":"raw-actor-identity","operation":"replace","path":"/payload/actorPseudonym","value":"operator-alice","expectedReason":"SCHEMA_DENIED"},
+  {"caseId":"public-nonsynthetic-source","operation":"replace","path":"/payload/source/kind","value":"REPOSITORY_DERIVATION","expectedReason":"PUBLIC_FIXTURE_POLICY_DENIED"},
+  {"caseId":"public-nonsynthetic-consent","operation":"replace","path":"/payload/consent/basis","value":"EXPLICIT_OPT_IN","expectedReason":"PUBLIC_FIXTURE_POLICY_DENIED"},
+  {"caseId":"public-missing-purpose","operation":"replace","path":"/payload/consent/purposes","value":["ASSURANCE"],"expectedReason":"PUBLIC_FIXTURE_POLICY_DENIED"},
+  {"caseId":"public-private-readback","operation":"replace","path":"/payload/readback/visibility","value":"OWNER_ONLY","expectedReason":"PUBLIC_FIXTURE_POLICY_DENIED"},
+  {"caseId":"retention-beyond-consent","operation":"replace","path":"/lifecycle/retainUntilMs","value":86401001,"expectedReason":"RETENTION_POLICY_DENIED"},
+  {"caseId":"retention-beyond-policy","operation":"replace","path":"/lifecycle/retainUntilMs","value":86401000,"secondaryPath":"/payload/event/occurredAtMs","secondaryValue":0,"expectedReason":"RETENTION_POLICY_DENIED"},
+  {"caseId":"expired-consent","operation":"replace","path":"/payload/consent/expiresAtMs","value":86401000,"evaluatedAtMs":86401001,"expectedReason":"CONSENT_EXPIRED_DENIED"},
+  {"caseId":"unknown-lifecycle","operation":"replace","path":"/lifecycle/state","value":"ARCHIVED","expectedReason":"SCHEMA_DENIED"},
+  {"caseId":"unsupported-purpose","operation":"replace","path":"/payload/consent/purposes","value":["PUBLIC_REPRODUCIBILITY","MODEL_TRAINING"],"expectedReason":"SCHEMA_DENIED"},
+  {"caseId":"digest-drift","operation":"replace-no-rehash","path":"/payload/event/outcome","value":"FAILED","expectedReason":"DIGEST_MISMATCH_DENIED"}
+]

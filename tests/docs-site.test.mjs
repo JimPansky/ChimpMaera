@@ -8,6 +8,7 @@ const baseUrl = "https://jimpansky.github.io/ChimpMaera/";
 const curatedPages = [
   ["index.html", baseUrl],
   ["alternatives.html", `${baseUrl}alternatives`],
+  ["AGENT-WORK-EVENT-CONTRACT.html", `${baseUrl}AGENT-WORK-EVENT-CONTRACT`],
   ["capabilities.html", `${baseUrl}capabilities`],
   ["examples.html", `${baseUrl}examples`],
   ["EXTENSION-ASSURANCE-PROFILES.html", `${baseUrl}EXTENSION-ASSURANCE-PROFILES`],

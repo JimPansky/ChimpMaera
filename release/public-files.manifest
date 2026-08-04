@@ -171,6 +171,7 @@ docs/SECURE-DEFAULT-PROOF.md	docs/SECURE-DEFAULT-PROOF.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/RESOURCE-PLANE-PROFILES.md	docs/RESOURCE-PLANE-PROFILES.md	0644
 docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
+docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
 docs/VERIFICATION-FABRIC-SHADOW.md	docs/VERIFICATION-FABRIC-SHADOW.md	0644
@@ -215,6 +216,7 @@ packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-acces
 packages/contracts/src/protected-audit-timeline.ts	packages/contracts/src/protected-audit-timeline.ts	0644
 packages/contracts/src/resource-plane-profiles.ts	packages/contracts/src/resource-plane-profiles.ts	0644
 packages/contracts/src/extension-assurance-profile.ts	packages/contracts/src/extension-assurance-profile.ts	0644
+packages/contracts/src/agent-work-event.ts	packages/contracts/src/agent-work-event.ts	0644
 packages/contracts/src/skill-admission.ts	packages/contracts/src/skill-admission.ts	0644
 packages/contracts/src/paperless-zoo-adapter.ts	packages/contracts/src/paperless-zoo-adapter.ts	0644
 packages/contracts/src/policy-evaluator.ts	packages/contracts/src/policy-evaluator.ts	0644
@@ -250,6 +252,7 @@ schemas/contracts/power-platform-read-connector-v1.schema.json	schemas/contracts
 schemas/contracts/resource-plane-profile-input-v1.schema.json	schemas/contracts/resource-plane-profile-input-v1.schema.json	0644
 schemas/contracts/resource-plane-plan-v1.schema.json	schemas/contracts/resource-plane-plan-v1.schema.json	0644
 schemas/contracts/extension-assurance-profile-v1.schema.json	schemas/contracts/extension-assurance-profile-v1.schema.json	0644
+schemas/contracts/agent-work-event-record-v1.schema.json	schemas/contracts/agent-work-event-record-v1.schema.json	0644
 schemas/adaptability-benchmark-result-v1.schema.json	schemas/adaptability-benchmark-result-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
@@ -296,12 +299,16 @@ tests/fixtures/power-platform/negative-matrix-v1.json	tests/fixtures/power-platf
 tests/fixtures/power-platform/positive-read-connector-v1.json	tests/fixtures/power-platform/positive-read-connector-v1.json	0644
 tests/fixtures/extension-assurance/negative-matrix-v1.json	tests/fixtures/extension-assurance/negative-matrix-v1.json	0644
 tests/fixtures/extension-assurance/positive-profile-v1.json	tests/fixtures/extension-assurance/positive-profile-v1.json	0644
+tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	0644
+tests/fixtures/agent-work-intelligence/negative-matrix-v1.json	tests/fixtures/agent-work-intelligence/negative-matrix-v1.json	0644
+tests/fixtures/agent-work-intelligence/positive-public-event-v1.json	tests/fixtures/agent-work-intelligence/positive-public-event-v1.json	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
 tests/model-access-broker-runtime.test.mjs	tests/model-access-broker-runtime.test.mjs	0644
 tests/model-access-broker.test.ts	tests/model-access-broker.test.ts	0644
 tests/protected-audit-timeline.test.ts	tests/protected-audit-timeline.test.ts	0644
 tests/resource-plane-profiles.test.ts	tests/resource-plane-profiles.test.ts	0644
 tests/extension-assurance-profile.test.ts	tests/extension-assurance-profile.test.ts	0644
+tests/agent-work-event.test.ts	tests/agent-work-event.test.ts	0644
 tests/secure-default-proof.test.mjs	tests/secure-default-proof.test.mjs	0644
 tests/hmi-core.test.ts	tests/hmi-core.test.ts	0644
 tests/hmi-harness-adapter.test.ts	tests/hmi-harness-adapter.test.ts	0644
