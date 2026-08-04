@@ -378,7 +378,7 @@ b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-
 df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update-doctor-compose-adapter.test.ts
 2857f96b93fe7c076130c82cce24c30bd0c2e5c144e5843c9b7fe4f6850134fa  ./tests/update-doctor-core.test.ts
 911255ea325e6dbc02bad39566be2714693d7f3a9a6d3d82b0ca1563491e009d  ./tests/update-doctor.test.ts
-dec30c70727c1d8469e64bbb364ab98edf62e33d93f351d8a9038410509e6b02  ./tests/verification-fabric-v2.test.ts
+9b0de4a58c4a9e22c68886d7da1bc58d9e789b80783da0c1ce9fe4704e914f36  ./tests/verification-fabric-v2.test.ts
 a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verification-fabric.test.ts
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
 1b49391a2a113298baf13c5ec6a6f88d21bf4d54825ed4a9c172cb64aaa33c6a  ./tools/video-production-reference/Dockerfile
@@ -440,4 +440,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 090a475aa6ede5e5874cffbdc0e8410eb0e13cee7d7e289a69a3fe757ca5e3a1  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-47e883db67311cbe29f063a6343cd59b237d94e19d7bd656429b3eb6a9cdc6e5  ./verification/verification-dag-v2.json
+fdc0c191d714a724ec69d210e6b648dfd3d1035e39176c90c099d8e896317b30  ./verification/verification-dag-v2.json

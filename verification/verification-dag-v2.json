@@ -43,7 +43,7 @@
         { "path": "schemas/contracts/verification-attestation-v2.schema.json", "role": "SCHEMA", "sha256": "e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2" },
         { "path": "scripts/verification-plan.mjs", "role": "VALIDATOR", "sha256": "0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218" },
         { "path": "scripts/verification-shadow.mjs", "role": "VALIDATOR", "sha256": "7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5" },
-        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "dec30c70727c1d8469e64bbb364ab98edf62e33d93f351d8a9038410509e6b02" },
+        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "9b0de4a58c4a9e22c68886d7da1bc58d9e789b80783da0c1ce9fe4704e914f36" },
         { "path": "docs/VERIFICATION-FABRIC-SHADOW.md", "role": "DERIVED_EVIDENCE", "sha256": "c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f" }
       ],
       "ownedTests": ["node --test dist/tests/verification-fabric-v2.test.js"],
@@ -59,10 +59,10 @@
       "id": "repository-integrity",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "858a946993ddb863156007ac6bb80d1821e312dda885a7b2954066177fdf57ab" },
+        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "de101514f5b8e01eca98c1edc6fc0fe01e3a17e484872b8cfe08526d3750e306" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
-        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "8eb59b3dec25a3ac770e587cd061b555c9a37c060d2ac61fb5791abdb4999efa" },
-        { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "a3f80bddb9cd7c767db74a7fffc1a56009e3cf1a11eb14f927fef4521e1cb1ad" }
+        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "fe563f1ce429bf11162d78a33119462dba81964090fb141c36a98903e911dc57" },
+        { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f" }
       ],
       "ownedTests": [
         "npm run release-governance:test",
@@ -79,12 +79,12 @@
       "id": "secure-default-proof",
       "dependsOn": ["repository-integrity"],
       "inputs": [
-        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "9decfd2dff85f57647cf60d4dc23da513809521a93f65e706582de67185a629e" },
+        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "130c08bf8894b0c927a3a1100be4644c7a25c02257200c24da502bcd1dd69613" },
         { "path": "schemas/security/secure-default-proof-v1.schema.json", "role": "SCHEMA", "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8" },
-        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "85e34a35a413ba2ee217201538d597c326c3878721dbfd4d5273bba4008a660d" },
+        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "87075fbc76815ad2f53005661a78d255ae4565504578cf4a9bac9f2283bb40d2" },
         { "path": "scripts/verify-secure-default-proof.mjs", "role": "SECURITY", "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1" },
         { "path": "tests/secure-default-proof.test.mjs", "role": "VALIDATOR", "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0" },
-        { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "DERIVED_EVIDENCE", "sha256": "c4e75729c1b29c9132efd80b348157bae2d3a07cb9ac7c72681dd9d770b86a54" }
+        { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "DERIVED_EVIDENCE", "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892" }
       ],
       "ownedTests": ["npm run proof:secure-default"],
       "invariants": [
@@ -99,10 +99,10 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "bc465ca71da0f5b7f49b39caae1f11259f405e66b9ea6109a0adcf3ce54b5e06" },
-        { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "8a10afbe213510df5172e84607006dce0b25b10cc512e0d4ca758ba394f302c0" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "a15219dbd2259aa42eef0501eb6cf13d5db535f047a1f59fd40d15c1adbd9f05" },
+        { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "b6be466f5f9335d2021a24a8e3105149c3eeb471ca0d10cfa094b25536ce2306" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
-        { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "738a754b59fcfe473c4299ea53d97898c184aafb664b851212ba5755fbb7d90a" }
+        { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }
       ],
       "ownedTests": ["npm run lint", "npm test"],
       "invariants": [

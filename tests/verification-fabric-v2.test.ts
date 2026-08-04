@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import Ajv2020 from "ajv/dist/2020.js";
@@ -47,6 +48,15 @@ test("VF-002 freezes a closed versioned Evidence DAG schema and canonical manife
   assert.equal(validate(graph()), true, JSON.stringify(validate.errors));
   assert.equal(validateVerificationDagV2(graph()), true);
   assert.match(verificationDagDigestV2(graph()), /^[a-f0-9]{64}$/);
+});
+
+test("canonical Evidence DAG input digests match the current repository bytes", () => {
+  for (const node of graph().nodes) {
+    for (const input of node.inputs) {
+      const actual = createHash("sha256").update(readFileSync(input.path)).digest("hex");
+      assert.equal(actual, input.sha256, `${node.id}:${input.path}`);
+    }
+  }
 });
 
 test("single-node changes select the owner, downstream integrity and mandatory hard gates", () => {
