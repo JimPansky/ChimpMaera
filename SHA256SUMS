@@ -261,8 +261,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-b6be466f5f9335d2021a24a8e3105149c3eeb471ca0d10cfa094b25536ce2306  ./package-lock.json
-3c7cd5fc5b299fb9b94cc21a95abcfd43499a8d3f8b3e4c97f4a9f08f95d3781  ./package.json
+6bb1d829b5f05299f57a5d2085bc08052406667f5e17a2bbfa8a3a048fcf5212  ./package-lock.json
+d8e4521de1d8551290d9dbe0428342b59835f0fbc01968ce460e471e080d4c25  ./package.json
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
 f5232b9e77d879c1c0bf102245f2d87b784e98255c2b966b43c2acc8e6da95c0  ./packages/contracts/src/builder-capability-resolution.ts
 974247dc757b2d27e6762024dec406e84a000ad45c682d49bf740b69c8141aae  ./packages/contracts/src/builder-contribution-bundle.ts
@@ -446,4 +446,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 090a475aa6ede5e5874cffbdc0e8410eb0e13cee7d7e289a69a3fe757ca5e3a1  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-3b3a4d48626eb889fd00d67b7bb04ea286ba12ab7617e9fc72f09bf09a9faebb  ./verification/verification-dag-v2.json
+b50372c1690a2215d10ed56e1843142622d702154ca739dbda6fb1766b2281f5  ./verification/verification-dag-v2.json
