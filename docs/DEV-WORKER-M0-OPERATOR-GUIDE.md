@@ -74,6 +74,24 @@ it does not confirm whether the requested source exists and does not reproduce
 foreign identifiers in model payloads or receipts. A provider-call counter is
 part of the trusted test boundary and must remain zero for all such denials.
 
+### Default-off post-M1B model candidates
+
+The following provider IDs are trusted-controller candidates only. They are
+not worker inputs, active routes, benchmark winners, or production defaults:
+
+- `cm.dev.fast` → `deepseek-ai/DeepSeek-V4-Flash-0731`
+- `cm.dev.code` → `moonshotai/Kimi-K2.7-Code`
+- `cm.dev.long` → `zai-org/GLM-5.2`
+- `cm.dev.escalate` → `deepseek-ai/DeepSeek-V4-Pro`
+
+All four mappings remain default-off. The worker sees only an admitted alias;
+the trusted controller owns the provider ID, route, credential, policy digest,
+and budget. `cm.dev.primary` remains deliberately unassigned until a later
+controlled ChimpMaera benchmark uses identical tasks and hidden gates to prove
+the quality, cost, and latency choice. No Kimi, GLM, or Pro call is M1B
+evidence. A pilot against any superseded preview ID is also not evidence for
+the `DeepSeek-V4-Flash-0731` candidate.
+
 Self-development remains without self-authority: the worker may propose
 changes to ChimpMaera as a reviewable patch/test/receipt bundle, but it cannot
 activate its own controller changes, widen protected paths, write CI or GitHub

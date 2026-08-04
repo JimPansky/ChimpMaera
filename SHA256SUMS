@@ -465,7 +465,7 @@ ce49bd91c5e611db908f4d5d25f529c859a1d5712eb7a5e2bcd0e04e14024bef  ./docs/UPDATE-
 45d041c92472d1e0117d8a814267645be53d1c4b73f568bfb3d616796a920c3c  ./tests/maintenance-contract-freeze.test.ts
 e715e0544aec519f05f941c545dddcde194a9f747d925bee920d05ef8590f2b2  ./demo/dev-worker/m1a-bootstrap.example.json
 e77c0709f53cbfea1f17a4ebe7f8828e948ea3574ebcc68f381e81515e092266  ./demo/dev-worker/opencode-adapter-v1.json
-e9a27b1fdd6abd1d5df0caf0e56ad12362531229be29acce4d30aaf4c28f8dec  ./docs/DEV-WORKER-M0-OPERATOR-GUIDE.md
+ae654c5d5c7c04836a4bc3595df0c1fd55576285ff005f04da3dc69ffe97e279  ./docs/DEV-WORKER-M0-OPERATOR-GUIDE.md
 2c4b731b2cd49e3ee3b7dbd8e2223a1effaf95fc52b69675fb1697fd59b74177  ./packages/contracts/src/development-worker.ts
 1509f7722dcefb6fd75e27dfc3d9a50116a53b11f804d77458195174520cde2e  ./packages/dev-worker/src/cli.ts
 06de5f84e613391df8cdc707cc805b799319ce0be5403a4415f3a0f648efb66e  ./packages/dev-worker/src/controller.ts
