@@ -59,9 +59,9 @@
       "id": "repository-integrity",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "3b3c569d657b88bd28b2e6eaa78262342a4c0caf6acf3e2527406af221337843" },
+        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
-        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "f2c7d958464ab9839f0fcb28a629a1fe8ae37971666f0415ac5aa2d004732d3d" },
+        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "a7734fbb94687d442e3571249f7fa40de44c18679ad6f71fb57de30fb11c5d86" },
         { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f" }
       ],
       "ownedTests": [

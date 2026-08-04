@@ -7,7 +7,7 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The ChimpMaera Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260804.4` and its local synthetic evidence; a later documentation
+`v0.2.0-poc.20260804.5` and its local synthetic evidence; a later documentation
 change does not broaden the released asset claims.
 
 - This is a local synthetic proof of concept, not a production deployment or
@@ -90,6 +90,11 @@ change does not broaden the released asset claims.
   establish a legal basis, operate telemetry, monitor workers, train a model,
   run a dashboard, ingest production data, prove erasure in an external store,
   certify privacy compliance, or activate runtime behavior.
+- The maintenance contract freeze validates exact synthetic locks,
+  compatibility, preview plans, receipts and read-only Doctor projections. It
+  does not discover systems, access a network or Docker, install packages,
+  apply updates, execute migrations or repairs, write pointers, mutate owner
+  state, provide production support, or prove production readiness.
 - No DMS/compliance suitability or universal AI capability is claimed.
 - Optional video assets are replaceable examples. Users remain responsible for
   their own output rights, configuration and safety.

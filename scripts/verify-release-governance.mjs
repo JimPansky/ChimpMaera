@@ -187,6 +187,7 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /CM-REL-013/.test(capabilityRow("ADD → REPLACE adaptability benchmark M0")), "CAPABILITY_MAPPING_INVALID:CM-REL-013");
   issue(issues, /CM-REL-014/.test(capabilityRow("Extension assurance profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-014");
   issue(issues, /CM-REL-015/.test(capabilityRow("Minimized agent-work event contract")), "CAPABILITY_MAPPING_INVALID:CM-REL-015");
+  issue(issues, /CM-REL-005/.test(capabilityRow("Update, migration, and Doctor contracts")), "CAPABILITY_MAPPING_INVALID:CM-REL-005");
 
   const docsHub = read(root, "docs/README.md");
   issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub) && /Caged Agent → Gateway → Capability\s+Constellation/.test(docsHub), "DOCS_HUB_PRODUCT_ARCHITECTURE_MISSING");

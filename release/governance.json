@@ -2,29 +2,29 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260804.4",
-    "title": "ChimpMaera — Minimized Agent-Work Event Contract V1",
-    "increment": "Minimized Agent-Work Event Contract V1",
-    "targetCommitish": "214b58d87ebfe91178f416ee26b8e89aa0447b76",
-    "tagObjectSha": "214b58d87ebfe91178f416ee26b8e89aa0447b76",
+    "tag": "v0.2.0-poc.20260804.5",
+    "title": "ChimpMaera — Maintenance Contract Freeze V1",
+    "increment": "Maintenance Contract Freeze V1",
+    "targetCommitish": "cbc81c8da4cf2d995f386854e8def29dbad61c77",
+    "tagObjectSha": "cbc81c8da4cf2d995f386854e8def29dbad61c77",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260804.4-agent-work-event-contract-v1.tar.gz",
-        "size": 1396293,
-        "sha256": "03d4eecf66ae2b2380d2f7fc95d21c7cf9cf4465b71848205e91d510772094a9"
+        "name": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz",
+        "size": 1407067,
+        "sha256": "98151b4bf50533d7de2cecdb05f9119c25705151ec6c32890524ec86b7cd880e"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260804.4-agent-work-event-contract-v1.tar.gz.sha256",
-        "size": 135,
-        "sha256": "81d855e87d7ee2c19ef79405f58b1ec3b8ca0e82b912cb3c4f4ad4547dff98be"
+        "name": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz.sha256",
+        "size": 137,
+        "sha256": "54f750d6a6aee8cdeede1ceae067df481fa7ad23970226d1ddc41253525ddf27"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260804.4-agent-work-event-contract-v1.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260804.4-agent-work-event-contract-v1.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz"
     }
   },
   "policy": {
@@ -76,7 +76,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260804.4 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260804.5 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -126,7 +126,7 @@
       "safetyProof": {"testPaths": ["tests/update-doctor.test.ts", "tests/maintenance-contract-freeze.test.ts", "tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json"], "result": "PASS 10/10 additive negatives: unsupported versions, unknown fields, mutable targets, digest drift, hidden authority, unresolved compatibility, execution/mutation claims and disclosure channels deny deterministically."},
       "evidencePaths": ["docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md", "docs/development/ud-001-update-doctor-contracts-pdca.md", "docs/development/ud-001-contract-freeze-20260804-pdca.md"],
       "nonClaims": ["Local deterministic synthetic contract proof only; no discovery, network or Docker access, update apply, repair, migration execution, owner-state mutation, deployment or production readiness is proven."],
-      "traceability": {"issues": [59], "pdcaPaths": ["docs/development/ud-001-update-doctor-contracts-pdca.md", "docs/development/ud-001-contract-freeze-20260804-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "traceability": {"issues": [59], "pullRequests": [112, 113], "sourceCommits": ["6278650170661f1518fbe5fefa94dfe0f4364632", "cbc81c8da4cf2d995f386854e8def29dbad61c77"], "pdcaPaths": ["docs/development/ud-001-update-doctor-contracts-pdca.md", "docs/development/ud-001-contract-freeze-20260804-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
       "claimId": "CM-REL-006",
