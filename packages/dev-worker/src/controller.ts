@@ -18,8 +18,10 @@ import {
 
 export const SYNTHETIC_NOW = "2026-08-04T08:00:00.000Z";
 export const SYNTHETIC_PROJECT = Object.freeze({
-  id: "gitlab-project:chimpmaera-fixture",
-  repository: "JimPansky/ChimpMaera-fixture",
+  id: "github-repository:JimPansky/ChimpMaera",
+  repository: "JimPansky/ChimpMaera",
+  sourceKind: "PUBLIC_GITHUB",
+  sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git",
   issueIid: 117,
   baseRef: "main",
   baseCommit: "1171171171171171171171171171171171171171",
@@ -59,7 +61,7 @@ const allowedCapabilities: readonly DevCapabilityV1[] = [
 const forbiddenAuthority = ["MERGE", "MARK_READY", "FORCE_PUSH", "BRANCH_DELETE", "PROJECT_ADMIN", "TOKEN_CREATE", "TAG", "RELEASE", "DEPLOY"] as const;
 const credentialPattern = /(?:sk-[A-Za-z0-9_-]{12,}|glpat-[A-Za-z0-9_-]{12,}|github_pat_[A-Za-z0-9_]{12,}|AKIA[A-Z0-9]{16}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|(?:password|api[_-]?key|access[_-]?token|authorization)\s*[:=]\s*\S{8,})/i;
 const wideningPattern = /(?:ignore (?:all )?(?:previous|system) instructions|widen (?:the )?scope|enable (?:network|web|search)|merge (?:this|the)|create (?:a )?(?:tag|release)|access (?:another|other) (?:project|repository))/i;
-const forbiddenOverridePattern = /(?:base_?url|url|model|header|authorization|api[_-]?key|provider|providerpolicy|budget|maxcost|maxtokens|openrouter|openai)/i;
+const forbiddenOverridePattern = /(?:base_?url|url|model|header|authorization|api[_-]?key|provider|providerpolicy|budget|maxcost|maxtokens|openrouter|openai|source|repository|project|search|list|gitlab)/i;
 
 export class DevWorkerDenied extends Error {
   constructor(readonly code: string) {
@@ -102,6 +104,8 @@ export interface MaterializedSourceProjection {
   readonly issueSnapshotDigest: string;
   readonly projectId: string;
   readonly repository: string;
+  readonly sourceKind: "PUBLIC_GITHUB";
+  readonly sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git";
   readonly issueIid: number;
   readonly baseRef: string;
   readonly baseCommit: string;
@@ -128,9 +132,12 @@ export interface M1aBootstrapOptions {
   readonly now?: string;
   readonly workerOverrides?: unknown;
   readonly fetchImpl?: typeof fetch;
+  readonly providerCallCounter?: { calls: number };
+  readonly trustedOrder?: WorkOrderV1;
+  readonly candidateTest?: (workspace: string, candidate: PatchCandidateV1) => { readonly command: string; readonly output: string };
 }
 
-export class SyntheticGitLabAdapter {
+export class SyntheticPublicSourceAdapter {
   readIssue(projectId: string, issueIid: number): typeof SYNTHETIC_PROJECT.issue {
     if (projectId !== SYNTHETIC_PROJECT.id) throw new DevWorkerDenied("CROSS_PROJECT_DENIED");
     if (issueIid !== SYNTHETIC_PROJECT.issueIid) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
@@ -274,13 +281,18 @@ function assertPlainKeys(value: unknown, keys: readonly string[], code: string):
 }
 
 function assertNoWorkerOverrides(value: unknown): void {
-  if (value !== undefined && forbiddenOverridePattern.test(canonicalJson(value))) throw new DevWorkerDenied("WORKER_MODEL_OVERRIDE_DENIED");
+  if (value === undefined) return;
+  const serialized = canonicalJson(value);
+  if (/(?:gitlab|repository|project|source|repo(?:sitory)?_?url|search|list)/i.test(serialized)) throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
+  if (forbiddenOverridePattern.test(serialized)) throw new DevWorkerDenied("WORKER_MODEL_OVERRIDE_DENIED");
 }
 
 export function materializedManifestDigest(source: Omit<MaterializedSourceProjection, "manifestDigest" | "root">): string {
   return sha256({
     projectId: source.projectId,
     repository: source.repository,
+    sourceKind: source.sourceKind,
+    sourceOrigin: source.sourceOrigin,
     issueIid: source.issueIid,
     issueSnapshotDigest: source.issueSnapshotDigest,
     baseRef: source.baseRef,
@@ -292,8 +304,13 @@ export function materializedManifestDigest(source: Omit<MaterializedSourceProjec
 }
 
 function assertSourceProjection(source: MaterializedSourceProjection, order: WorkOrderV1): void {
+  const identity = canonicalJson({ projectId: source.projectId, repository: source.repository, sourceKind: source.sourceKind, sourceOrigin: source.sourceOrigin });
+  if (/gitlab/i.test(identity)) throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
+  if (source.sourceKind !== "PUBLIC_GITHUB" || source.sourceOrigin !== SYNTHETIC_PROJECT.sourceOrigin || source.projectId !== SYNTHETIC_PROJECT.id || source.repository !== SYNTHETIC_PROJECT.repository) {
+    throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
+  }
   assertNoCredentials(source);
-  if (source.projectId !== order.project.id || source.repository !== order.project.repository) throw new DevWorkerDenied("CROSS_PROJECT_DENIED");
+  if (source.projectId !== order.project.id || source.repository !== order.project.repository) throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
   if (source.issueIid !== order.issue.iid || source.issueSnapshotDigest !== order.issue.snapshotDigest) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
   if (source.baseRef !== order.base.ref || source.baseCommit !== order.base.commit) throw new DevWorkerDenied("STALE_BASE_DENIED");
   if (source.manifestDigest !== materializedManifestDigest(source)) throw new DevWorkerDenied("MANIFEST_DIGEST_MISMATCH");
@@ -308,6 +325,8 @@ function assertSourceProjection(source: MaterializedSourceProjection, order: Wor
     if (!stat.isFile()) throw new DevWorkerDenied("SOURCE_FILE_DENIED");
     const content = readFileSync(absolute, "utf8");
     if (content.includes("\0")) throw new DevWorkerDenied("BINARY_PATCH_DENIED");
+    if (credentialPattern.test(content)) throw new DevWorkerDenied("CREDENTIAL_SHAPED_INPUT_DENIED");
+    if (wideningPattern.test(content)) throw new DevWorkerDenied("UNTRUSTED_SOURCE_INSTRUCTION_DENIED");
     if (sha256(content) !== expectedDigest) throw new DevWorkerDenied("MANIFEST_DIGEST_MISMATCH");
   }
   const walk = (dir: string): void => {
@@ -357,18 +376,35 @@ function assertBindings(profile: unknown, order: unknown, now: string): asserts 
   if (!checked.profile(profile)) throw new DevWorkerDenied("PROFILE_SCHEMA_DENIED");
   if (!checked.order(order)) throw new DevWorkerDenied("WORK_ORDER_SCHEMA_DENIED");
   const bound = order as WorkOrderV1;
-  const gitlab = new SyntheticGitLabAdapter();
+  const source = new SyntheticPublicSourceAdapter();
   if (digestBound(bound as unknown as Record<string, unknown>, "workOrderDigest") !== bound.workOrderDigest) throw new DevWorkerDenied("WORK_ORDER_DIGEST_MISMATCH");
   if (bound.workloadIdentity !== (profile as DevelopmentWorkerProfileV1).workloadIdentity) throw new DevWorkerDenied("WRONG_WORKLOAD_DENIED");
-  if (bound.project.id !== SYNTHETIC_PROJECT.id || bound.project.repository !== SYNTHETIC_PROJECT.repository) throw new DevWorkerDenied("CROSS_PROJECT_DENIED");
-  if (bound.issue.snapshotDigest !== sha256(gitlab.readIssue(bound.project.id, bound.issue.iid))) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
+  if (bound.project.id !== SYNTHETIC_PROJECT.id || bound.project.repository !== SYNTHETIC_PROJECT.repository) throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
+  if (bound.issue.snapshotDigest !== sha256(source.readIssue(bound.project.id, bound.issue.iid))) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
   if (bound.base.ref !== SYNTHETIC_PROJECT.baseRef) throw new DevWorkerDenied("STALE_BASE_DENIED");
-  gitlab.readRepositorySnapshot(bound.project.id, bound.base.commit);
+  source.readRepositorySnapshot(bound.project.id, bound.base.commit);
   if (Date.parse(now) >= Date.parse(bound.expiresAt) || Date.parse(now) >= Date.parse(bound.lease.expiresAt)) throw new DevWorkerDenied("EXPIRED_LEASE_DENIED");
   if (canonicalJson(bound.budget) !== canonicalJson(SERVER_BUDGET)) throw new DevWorkerDenied("BUDGET_NOT_SERVER_BOUND");
   if (canonicalJson(bound.lease.capabilities) !== canonicalJson(allowedCapabilities)) throw new DevWorkerDenied("CAPABILITY_SCOPE_DENIED");
   if (bound.publication.mode !== "NONE" || bound.publication.allowed.length !== 0 || !forbiddenAuthority.every((item) => bound.publication.denied.includes(item))) throw new DevWorkerDenied("PUBLICATION_AUTHORITY_DENIED");
   assertNoCredentials(bound);
+}
+
+function assertTrustedPublicBindings(profile: DevelopmentWorkerProfileV1, order: WorkOrderV1, source: MaterializedSourceProjection, broker: TrustedModelBrokerConfig, now: string): void {
+  const checked = schemas();
+  if (!checked.profile(profile)) throw new DevWorkerDenied("PROFILE_SCHEMA_DENIED");
+  if (!checked.order(order)) throw new DevWorkerDenied("WORK_ORDER_SCHEMA_DENIED");
+  if (digestBound(order as unknown as Record<string, unknown>, "workOrderDigest") !== order.workOrderDigest) throw new DevWorkerDenied("WORK_ORDER_DIGEST_MISMATCH");
+  if (order.project.id !== SYNTHETIC_PROJECT.id || order.project.repository !== SYNTHETIC_PROJECT.repository) throw new DevWorkerDenied("FOREIGN_SOURCE_DENIED");
+  if (order.workloadIdentity !== profile.workloadIdentity || order.dataClass !== "PUBLIC_OSS") throw new DevWorkerDenied("WRONG_WORKLOAD_DENIED");
+  if (Date.parse(now) >= Date.parse(order.expiresAt) || Date.parse(now) >= Date.parse(order.lease.expiresAt)) throw new DevWorkerDenied("EXPIRED_LEASE_DENIED");
+  if (order.issue.iid !== 117 || order.issue.snapshotDigest !== source.issueSnapshotDigest) throw new DevWorkerDenied("STALE_ISSUE_DENIED");
+  if (order.base.ref !== "main" || order.base.commit !== source.baseCommit) throw new DevWorkerDenied("STALE_BASE_DENIED");
+  if (order.model.aliases.length !== 1 || order.model.aliases[0] !== broker.alias || order.model.providerPolicyDigest !== broker.providerPolicyDigest) throw new DevWorkerDenied("MODEL_ROUTE_NOT_SERVER_BOUND");
+  if (canonicalJson(order.budget) !== canonicalJson(broker.budget) || order.budget.maxRequests !== 1 || order.budget.maxCostMicros > 100_000) throw new DevWorkerDenied("BUDGET_NOT_SERVER_BOUND");
+  if (canonicalJson(order.lease.capabilities) !== canonicalJson(allowedCapabilities)) throw new DevWorkerDenied("CAPABILITY_SCOPE_DENIED");
+  if (order.publication.mode !== "NONE" || order.publication.allowed.length !== 0 || !forbiddenAuthority.every((item) => order.publication.denied.includes(item))) throw new DevWorkerDenied("PUBLICATION_AUTHORITY_DENIED");
+  assertNoCredentials(order);
 }
 
 function assertModelResponse(response: SyntheticModelResponse, order: WorkOrderV1): void {
@@ -401,7 +437,7 @@ export function runSyntheticDevelopmentWorker(options: RunOptions = {}): WorkRec
   const order = orderValue;
   const workspace = mkdtempSync(join(tmpdir(), "cm-dev-worker-"));
   try {
-    const projection = new SyntheticGitLabAdapter().readRepositorySnapshot(order.project.id, order.base.commit);
+    const projection = new SyntheticPublicSourceAdapter().readRepositorySnapshot(order.project.id, order.base.commit);
     for (const [path, content] of Object.entries(projection)) {
       assertSafePath(path, order);
       const target = resolve(workspace, path);
@@ -436,7 +472,7 @@ export function runSyntheticDevelopmentWorker(options: RunOptions = {}): WorkRec
       publication: { performed: false as const, identifiers: [] },
       readback: { synthetic: true as const, digest: sha256({ changedPaths, finalContent }) },
       cleanup: { outcome: "PASS" as const, writableStateRemaining: false as const },
-      nonClaims: ["No real GitLab, model-provider, network, publication, merge, release, deployment, or production-isolation claim."],
+      nonClaims: ["No live source-host, model-provider, network, publication, merge, release, deployment, or production-isolation claim."],
     };
     const receipt: WorkReceiptV1 = { ...unsigned, receiptDigest: sha256(unsigned) };
     if (!schemas().receipt(receipt)) throw new DevWorkerDenied("WORK_RECEIPT_SCHEMA_DENIED");
@@ -450,8 +486,9 @@ export function runSyntheticDevelopmentWorker(options: RunOptions = {}): WorkRec
 export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<WorkReceiptV1> {
   assertNoWorkerOverrides(options.workerOverrides);
   const profile = syntheticProfile();
-  const order = syntheticWorkOrder();
-  assertBindings(profile, order, options.now ?? SYNTHETIC_NOW);
+  const order = options.trustedOrder ?? syntheticWorkOrder();
+  if (options.trustedOrder) assertTrustedPublicBindings(profile, order, options.source, options.broker, options.now ?? new Date().toISOString());
+  else assertBindings(profile, order, options.now ?? SYNTHETIC_NOW);
   assertBrokerConfig(options.broker, order);
   assertSourceProjection(options.source, order);
   const credential = options.credentialResolver(options.broker.profile.credentialHandle);
@@ -483,14 +520,18 @@ export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<Wor
           baseCommit: order.base.commit,
           allowedPaths: order.paths.allowed,
           deniedPaths: order.paths.denied,
-          files: before,
+          acceptanceCriteria: order.acceptanceCriteria,
+          nonScope: order.nonScope,
+          files: Object.fromEntries(Object.keys(before).sort().map((path) => [path, { sha256: before[path], content: readFileSync(resolve(root, path), "utf8") }])),
           protocol: "Return only chimpmaera.dev/patch-candidate/v1 JSON. No shell, network, merge, release, or extra files.",
         }),
       }],
       temperature: 0,
+      max_tokens: options.broker.budget.maxOutputTokens,
     };
     if (canonicalJson(requestBody).includes(credential)) throw new DevWorkerDenied("CREDENTIAL_EXFIL_DENIED");
     const invoke = options.fetchImpl ?? fetch;
+    if (options.providerCallCounter) options.providerCallCounter.calls += 1;
     const response = await invoke(`${options.broker.baseUrl.replace(/\/$/, "")}/chat/completions`, {
       method: "POST",
       headers: { "content-type": "application/json", ...options.broker.headers, authorization: `Bearer ${credential}` },
@@ -521,8 +562,9 @@ export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<Wor
     assertPatchCandidate(candidate, order, before);
     for (const change of candidate.changes) writeFileSync(resolve(workspace, change.path), change.after, { encoding: "utf8", mode: 0o600 });
     const changedPaths = candidate.changes.map((item) => item.path).sort();
-    const finalContent = readFileSync(join(workspace, "docs/fixture-status.md"), "utf8");
-    const testOutput = finalContent === "Synthetic fixture status: verified.\n" ? "PASS:fixture-status" : "FAIL:fixture-status";
+    const candidateTest = options.candidateTest?.(workspace, candidate);
+    const testCommand = candidateTest?.command ?? "synthetic:test:fixture-status";
+    const testOutput = candidateTest?.output ?? (readFileSync(join(workspace, "docs/fixture-status.md"), "utf8") === "Synthetic fixture status: verified.\n" ? "PASS:fixture-status" : "FAIL:fixture-status");
     if (!testOutput.startsWith("PASS:")) throw new DevWorkerDenied("ALLOWLISTED_TEST_FAILED");
     for (const [path, digest] of Object.entries(options.source.files)) {
       if (sha256(readFileSync(resolve(root, path), "utf8")) !== digest) throw new DevWorkerDenied("AUTHORITATIVE_SOURCE_CHANGED");
@@ -537,14 +579,14 @@ export async function runM1aBootstrap(options: M1aBootstrapOptions): Promise<Wor
       changedPaths,
       changedPathsDigest: sha256(changedPaths),
       patchDigest: sha256(patch),
-      tests: [{ command: "synthetic:test:fixture-status", outcome: "PASS" as const, outputDigest: sha256(testOutput) }],
+      tests: [{ command: testCommand, outcome: "PASS" as const, outputDigest: sha256(testOutput) }],
       review: { outcome: "PASS" as const, findings: [] },
       modelUsage: { alias: options.broker.alias, providerPolicyDigest: order.model.providerPolicyDigest, requests: 1, inputTokens: usage.prompt_tokens, outputTokens: usage.completion_tokens, costMicros },
       capabilityUsage: allowedCapabilities,
       publication: { performed: false as const, identifiers: [] },
       readback: { synthetic: true as const, digest: sha256({ manifestDigest: options.source.manifestDigest, changedPaths, patchDigest: sha256(patch) }) },
       cleanup: { outcome: "PASS" as const, writableStateRemaining: false as const },
-      nonClaims: ["M1A bootstrap only: no live OpenRouter/GitLab write, publication, merge, release, deployment, or worker self-authority claim."],
+      nonClaims: ["Bootstrap only: no source-host write, publication, merge, release, deployment, or worker self-authority claim."],
     };
     const receipt: WorkReceiptV1 = { ...unsigned, receiptDigest: sha256(unsigned) };
     if (!schemas().receipt(receipt)) throw new DevWorkerDenied("WORK_RECEIPT_SCHEMA_DENIED");
