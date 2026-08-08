@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/routing-attempt-v1.schema.json",
+  "title": "ChimpMaera local-synthetic routing attempt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "attemptPseudonym", "episodePseudonym", "decisionDigest", "parentAttemptDigest", "action", "route", "routeProfileDigest", "idempotencyKeyDigest", "leaseDigest", "startedAtMs", "endedAtMs", "terminalTransportState", "usage", "candidateDigest", "evidenceDigests", "attemptOutcome", "reasonCodes", "claimBoundary", "nonClaims", "attemptDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.dev/routing-attempt/v1" },
+    "attemptPseudonym": { "type": "string", "pattern": "^att_[a-f0-9]{32}$" },
+    "episodePseudonym": { "type": "string", "pattern": "^ep_[a-f0-9]{32}$" },
+    "decisionDigest": { "$ref": "#/$defs/digest" },
+    "parentAttemptDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "action": { "enum": ["INITIAL", "REFLECT", "REPLAN", "SCOUT", "REPRODUCE", "ESCALATE", "HUMAN_REVIEW"] },
+    "route": { "$ref": "#/$defs/route" },
+    "routeProfileDigest": { "$ref": "#/$defs/digest" },
+    "idempotencyKeyDigest": { "$ref": "#/$defs/digest" },
+    "leaseDigest": { "$ref": "#/$defs/digest" },
+    "startedAtMs": { "$ref": "#/$defs/nonNegativeInteger" },
+    "endedAtMs": { "$ref": "#/$defs/nonNegativeInteger" },
+    "terminalTransportState": { "enum": ["NOT_SENT", "CONFIRMED", "FAILED", "UNKNOWN"] },
+    "usage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["inputTokens", "outputTokens", "costMicros", "requests", "elapsedMs"],
+      "properties": {
+        "inputTokens": { "$ref": "#/$defs/nonNegativeInteger" },
+        "outputTokens": { "$ref": "#/$defs/nonNegativeInteger" },
+        "costMicros": { "$ref": "#/$defs/nonNegativeInteger" },
+        "requests": { "$ref": "#/$defs/nonNegativeInteger" },
+        "elapsedMs": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "candidateDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+    "evidenceDigests": { "$ref": "#/$defs/digests" },
+    "attemptOutcome": { "enum": ["CANDIDATE_PRODUCED", "NO_CANDIDATE", "DENIED", "ABORTED", "UNKNOWN"] },
+    "reasonCodes": { "$ref": "#/$defs/reasonCodes" },
+    "claimBoundary": { "const": "LOCAL_SYNTHETIC_NO_ROUTING_ACTIVATION" },
+    "nonClaims": { "$ref": "#/$defs/nonClaims" },
+    "attemptDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "digests": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/digest" } },
+    "route": {
+      "type": "object", "additionalProperties": false,
+      "required": ["workflow", "modelAlias", "thinkingProfile", "contextProfile", "verifierProfile"],
+      "properties": {
+        "workflow": { "enum": ["DIRECT", "PLAN_FIRST", "SCOUT_FIRST", "REPRODUCE_FIRST", "DECOMPOSE", "SECURITY_REVIEW"] },
+        "modelAlias": { "enum": ["cm.dev.fast", "cm.dev.primary", "cm.dev.review", "cm.dev.escalate"] },
+        "thinkingProfile": { "enum": ["MINIMAL", "STANDARD", "DEEP"] },
+        "contextProfile": { "enum": ["ISSUE_ONLY", "ISSUE_AND_BASE", "TARGETED_REPOSITORY"] },
+        "verifierProfile": { "enum": ["CONTRACT_ONLY", "STANDARD", "SECURITY"] }
+      }
+    },
+    "reasonCode": { "enum": ["MODEL_CAPABILITY_LIMIT", "THINKING_OR_OUTPUT_PROFILE_MISMATCH", "WORKFLOW_STRATEGY_MISMATCH", "LOCAL_IMPLEMENTATION_DEFECT", "CONTEXT_DEFICIT_OR_BAD_PROJECTION", "ISSUE_SPECIFICATION_GAP", "TOOL_OR_ENVIRONMENT_FAILURE", "VERIFICATION_GAP_OR_FALSE_POSITIVE", "POLICY_OR_AUTHORITY_DENIAL", "TRANSPORT_OUTCOME_UNKNOWN", "CONTROLLER_CONCURRENCY_OR_REPLAY", "EVIDENCE_INTEGRITY_OR_DRIFT", "PRIVACY_OR_SECRET_HANDLING_FAILURE", "OWNER_CANCELLED"] },
+    "reasonCodes": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/reasonCode" } },
+    "nonClaims": { "type": "array", "prefixItems": [{ "const": "NO_ROUTE_EXECUTION" }, { "const": "NO_AUTHORITY_GRANT" }, { "const": "NO_PROVIDER_CALL" }, { "const": "NO_PRODUCTION_ACTIVATION" }, { "const": "NO_TRAINING_INGESTION" }], "minItems": 5, "maxItems": 5 }
+  }
+}
