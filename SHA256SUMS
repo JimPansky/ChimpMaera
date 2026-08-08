@@ -312,7 +312,7 @@ e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/con
 70ed27a5ae3663d92a2cc0bf9db1554293e1d969abbfaa2f21257b6769885865  ./packages/dev-worker/src/controller.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5  ./release/governance.json
-2664a4bffbfa86dc1b175397fd5a64ae3b74b88dd1887075dd79464270028dc4  ./release/public-files.manifest
+54eea01cdd2ad2e6e6853599acb767f44d70a6027f6901b0d6c2168061803010  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 23221cf6752ed549d2b3e10c3d3afa900603441a5e55d53de0775ab057297f5c  ./schemas/contracts/routing-attempt-v1.schema.json
@@ -441,7 +441,7 @@ a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verifi
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
 1b49391a2a113298baf13c5ec6a6f88d21bf4d54825ed4a9c172cb64aaa33c6a  ./tools/video-production-reference/Dockerfile
 7a173c3a11ebeae7d4d561cb5fc4afba1a9d25e585400e17c18304da459a77df  ./tools/video-production-reference/METHODOLOGY-CHANGELOG.md
-1f33002a91f1d085e51de7b1b0ab9fcc3c48825d9e4c74dc1bb0e7032b3bb067  ./tools/video-production-reference/README.md
+32a8ab8d2249a0bb88093515365d9b8150b4e192e23b1ef8098e9d87f49701b8  ./tools/video-production-reference/README.md
 2b1c520ff4ff3a2cad64b6eb0b98063fdcc7439add5312ea55f8288deb5af974  ./tools/video-production-reference/THIRD_PARTY_NOTICES.md
 d986a832ca2052d857f00f944184f95836ddd7780e5e582fd1a9ebb46dd3f0d2  ./tools/video-production-reference/assets/reference/chimpmaera-logo-negative.svg
 2ebbe40c39f72ffb284ec786384c53ab8f0aea2d578f39eb4582616f380925af  ./tools/video-production-reference/assets/reference/reference-assets.json
@@ -479,6 +479,7 @@ e3ff821fb65c09b6fcb9ae9f885a51684df797a019ab2a86dc52ee3a15385d53  ./tools/video-
 12af286dc48d331b138d996792500532d60254a433ec16464427955fcc466a22  ./tools/video-production-reference/schemas/storyboard.schema.json
 6c11e82c99314e7d4e2fca0252fb6d8f331ec7fba75322cb979490953758de4d  ./tools/video-production-reference/schemas/video-job.schema.json
 b0641460946c92c9f172f93e196d68751533e624dfbf76a03bb6c75e406159a3  ./tools/video-production-reference/scripts/smoke.sh
+fcd23af1c5880e1764958e3c729cf471c86d0004ec2551bbc60f9f8bf9bbe6a7  ./tools/video-production-reference/scripts/verify_reference_closure.py
 8169b3f70d779189191cb4e07c3cbda26b998173f1907bb9c7e8d6004f6edc85  ./tools/video-production-reference/src/cm_video_ref/__init__.py
 2ab142712f5e9de133f7fcea6b7cf8ee03b6b66a26ebcd47be424bc11624ee33  ./tools/video-production-reference/src/cm_video_ref/audience_copy.py
 d110c094c6a15329422c1d9d54fa250fd5e781a05c64a4b1f537dc23249a0eb3  ./tools/video-production-reference/src/cm_video_ref/batch.py
@@ -496,6 +497,7 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 2cb062afa24f49517e2d1a609e6abbd119a303b24db8c170515cec99564c282a  ./tools/video-production-reference/templates/visual-grammar-families-v1.json
 7ce561ca506e1fd3ab077d2e0032d086430c75cbf7a42015cc6ed696d2e910f1  ./tools/video-production-reference/tests/test_batch.py
 8fb54c44ba8761fed83015eb98e49daabef634f138cf66551c01b700946128bc  ./tools/video-production-reference/tests/test_cm_video.py
+aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
 3979d5c22e1c89979544b90808197f93a10837ee33b31c18f2f597e2a52061dc  ./verification/verification-dag-v2.json
