@@ -154,7 +154,7 @@ ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfi
 3d9a539c27a1859606ca673898d4530f06be0d77640b586c7a799a6e61238775  ./docs/.vitepress/config.mts
 69e2007aff254c4ee506d608390d2e4e9fd9ade45ea931c1402471917269a63b  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
 70c593e838de55aee2711772a70f05026af5c7690184e43ad19b2f98afe35d11  ./docs/AGENT-WORK-EVENT-CONTRACT.md
-bf71d45e84dfac244f3c4993579fc13ed2f2535d7975acf95b9d91f3e9120567  ./docs/LEARNING-ROUTING-CONTRACTS.md
+888aaf40d1725284f093295ef09eea58f7163254fe5e14ff23bc57dc956a1ce9  ./docs/LEARNING-ROUTING-CONTRACTS.md
 d8b2a7cfe4a063723360b9859c1c8a3ef8fdf250fdd2a33d3bbc6ccf0e7ebf07  ./docs/ARCHITECTURE.md
 f9e1327fa37b9eea02d6437d6e2a5694c0168d306f5af95f32460aff736db4cc  ./docs/BUILDER-AGENT-OPERATOR-GUIDE.md
 be80a96a24af224b5010c3698363dc6d9a400fba8a2d6529c8b1193dfc628df2  ./docs/BUILDER-CONFIGURATION-DEFAULTS.md
@@ -270,7 +270,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf  ./package-lock.json
-a0077b427c397a8925fa9dd61eff046ea9c2f6afd588ef9bb999311ccdeb47b7  ./package.json
+fd09cc52b27574308aa4df8b8b07f4a60c6d7d607287cce8abf35551c0cebc02  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
@@ -286,7 +286,7 @@ b0ae29b9bda430c16ff6091d09f411f87b55334e79f2482386f471f7da42cf11  ./packages/con
 272e33e9ee1ec0ca4fce26ca9593712746ee358d039b700938ee8ef68772f828  ./packages/contracts/src/extension-assurance-profile.ts
 ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/contracts/src/hmi-contribute-preflight.ts
 0d9c6b054ea648a50217e6cc55ef8ed8bb0b444076a8a5ff081b0fb408f0ec45  ./packages/contracts/src/hmi-core.ts
-9b87e1b21cfdb81e18d001e00e1444abc28b51c6a417d25bd5e831c042fe3278  ./packages/contracts/src/index.ts
+9730f6eee524d6cfa2da0de218b5890ef1998006f93d6d8c0f65fe4f701c2d8a  ./packages/contracts/src/index.ts
 7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b  ./packages/contracts/src/learning-routing.ts
 1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50  ./packages/contracts/src/injection-trust-boundary.ts
 28098a7eae050aac622e6dc3d8d7fb14173939ddf513e24c2f0ab39b0ff6d1a1  ./packages/contracts/src/maintenance-contract-freeze.ts
