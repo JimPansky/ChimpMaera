@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/routing-decision-v1.schema.json",
+  "title": "ChimpMaera local-synthetic routing decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionPseudonym", "episodePseudonym", "sequence", "contextDigest", "versions", "proposer", "rankedOptions", "policyEvaluation", "selection", "confidence", "exploration", "claimBoundary", "nonClaims", "decisionDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.dev/routing-decision/v1" },
+    "decisionPseudonym": { "type": "string", "pattern": "^dec_[a-f0-9]{32}$" },
+    "episodePseudonym": { "type": "string", "pattern": "^ep_[a-f0-9]{32}$" },
+    "sequence": { "$ref": "#/$defs/nonNegativeInteger" },
+    "contextDigest": { "$ref": "#/$defs/digest" },
+    "versions": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policy", "featureSpec", "modelCatalog", "priceBook", "routerArtifact", "calibration", "verificationGraph"],
+      "properties": {
+        "policy": { "$ref": "#/$defs/digest" }, "featureSpec": { "$ref": "#/$defs/digest" },
+        "modelCatalog": { "$ref": "#/$defs/digest" }, "priceBook": { "$ref": "#/$defs/digest" },
+        "routerArtifact": { "$ref": "#/$defs/digest" }, "calibration": { "$ref": "#/$defs/digest" },
+        "verificationGraph": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "proposer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "artifactDigest", "trust"],
+      "properties": {
+        "kind": { "enum": ["STATIC_POLICY", "RULE_BASED_CANDIDATE", "LEARNED_CANDIDATE"] },
+        "artifactDigest": { "$ref": "#/$defs/digest" },
+        "trust": { "const": "UNTRUSTED_PROPOSER" }
+      }
+    },
+    "rankedOptions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/rankedOption" } },
+    "policyEvaluation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["allowedOptionRanks", "deniedOptionRanks", "reasonCodes"],
+      "properties": {
+        "allowedOptionRanks": { "$ref": "#/$defs/ranks" },
+        "deniedOptionRanks": { "$ref": "#/$defs/ranks" },
+        "reasonCodes": { "$ref": "#/$defs/reasonCodes" }
+      }
+    },
+    "selection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mode", "selectedOptionRank"],
+      "properties": {
+        "mode": { "enum": ["SELECTED", "STATIC_FALLBACK", "HUMAN_REVIEW"] },
+        "selectedOptionRank": { "type": ["integer", "null"], "minimum": 0 }
+      }
+    },
+    "confidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["band", "supportingSampleCount"],
+      "properties": {
+        "band": { "enum": ["LOW", "MEDIUM", "HIGH"] },
+        "supportingSampleCount": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "exploration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mode", "propensityPpm", "budgetDigest", "reasonCode"],
+      "properties": {
+        "mode": { "enum": ["OFF", "SHADOW", "CANARY"] },
+        "propensityPpm": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "budgetDigest": { "$ref": "#/$defs/digest" },
+        "reasonCode": { "$ref": "#/$defs/reasonCode" }
+      }
+    },
+    "claimBoundary": { "const": "LOCAL_SYNTHETIC_NO_ROUTING_ACTIVATION" },
+    "nonClaims": { "$ref": "#/$defs/nonClaims" },
+    "decisionDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "route": {
+      "type": "object", "additionalProperties": false,
+      "required": ["workflow", "modelAlias", "thinkingProfile", "contextProfile", "verifierProfile"],
+      "properties": {
+        "workflow": { "enum": ["DIRECT", "PLAN_FIRST", "SCOUT_FIRST", "REPRODUCE_FIRST", "DECOMPOSE", "SECURITY_REVIEW"] },
+        "modelAlias": { "enum": ["cm.dev.fast", "cm.dev.primary", "cm.dev.review", "cm.dev.escalate"] },
+        "thinkingProfile": { "enum": ["MINIMAL", "STANDARD", "DEEP"] },
+        "contextProfile": { "enum": ["ISSUE_ONLY", "ISSUE_AND_BASE", "TARGETED_REPOSITORY"] },
+        "verifierProfile": { "enum": ["CONTRACT_ONLY", "STANDARD", "SECURITY"] }
+      }
+    },
+    "rankedOption": {
+      "type": "object", "additionalProperties": false,
+      "required": ["rank", "route", "predictedSuccessPpm", "predictedCostMicros", "predictedElapsedMs", "uncertaintyPpm"],
+      "properties": {
+        "rank": { "$ref": "#/$defs/nonNegativeInteger" }, "route": { "$ref": "#/$defs/route" },
+        "predictedSuccessPpm": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "predictedCostMicros": { "$ref": "#/$defs/nonNegativeInteger" },
+        "predictedElapsedMs": { "$ref": "#/$defs/nonNegativeInteger" },
+        "uncertaintyPpm": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+      }
+    },
+    "ranks": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/nonNegativeInteger" } },
+    "reasonCode": { "enum": ["MODEL_CAPABILITY_LIMIT", "THINKING_OR_OUTPUT_PROFILE_MISMATCH", "WORKFLOW_STRATEGY_MISMATCH", "LOCAL_IMPLEMENTATION_DEFECT", "CONTEXT_DEFICIT_OR_BAD_PROJECTION", "ISSUE_SPECIFICATION_GAP", "TOOL_OR_ENVIRONMENT_FAILURE", "VERIFICATION_GAP_OR_FALSE_POSITIVE", "POLICY_OR_AUTHORITY_DENIAL", "TRANSPORT_OUTCOME_UNKNOWN", "CONTROLLER_CONCURRENCY_OR_REPLAY", "EVIDENCE_INTEGRITY_OR_DRIFT", "PRIVACY_OR_SECRET_HANDLING_FAILURE", "OWNER_CANCELLED"] },
+    "reasonCodes": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/reasonCode" } },
+    "nonClaims": { "type": "array", "prefixItems": [{ "const": "NO_ROUTE_EXECUTION" }, { "const": "NO_AUTHORITY_GRANT" }, { "const": "NO_PROVIDER_CALL" }, { "const": "NO_PRODUCTION_ACTIVATION" }, { "const": "NO_TRAINING_INGESTION" }], "minItems": 5, "maxItems": 5 }
+  }
+}

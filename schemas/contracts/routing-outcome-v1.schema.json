@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/routing-outcome-v1.schema.json",
+  "title": "ChimpMaera local-synthetic routing outcome v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "episodePseudonym", "contextDigest", "decisionDigests", "attemptDigests", "terminalState", "acceptanceSnapshotDigest", "evidenceSet", "hardGates", "externalReview", "totals", "attribution", "claimBoundary", "nonClaims", "outcomeDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.dev/routing-outcome/v1" },
+    "episodePseudonym": { "type": "string", "pattern": "^ep_[a-f0-9]{32}$" },
+    "contextDigest": { "$ref": "#/$defs/digest" },
+    "decisionDigests": { "$ref": "#/$defs/nonEmptyDigests" },
+    "attemptDigests": { "$ref": "#/$defs/digests" },
+    "terminalState": { "enum": ["VERIFIED_RESOLVED", "NOT_RESOLVED", "ABORTED", "INSUFFICIENT_EVIDENCE", "UNKNOWN"] },
+    "acceptanceSnapshotDigest": { "$ref": "#/$defs/digest" },
+    "evidenceSet": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+    "hardGates": { "type": "array", "items": { "$ref": "#/$defs/hardGate" } },
+    "externalReview": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required", "outcome", "evidenceDigest"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "outcome": { "enum": ["PASS", "FAIL", "NOT_REQUIRED", "NOT_RUN"] },
+        "evidenceDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] }
+      }
+    },
+    "totals": {
+      "type": "object", "additionalProperties": false,
+      "required": ["calls", "scoutCalls", "testRuns", "ciRuns", "humanReviewMinutes", "inputTokens", "outputTokens", "costMicros", "elapsedMs"],
+      "properties": {
+        "calls": { "$ref": "#/$defs/nonNegativeInteger" }, "scoutCalls": { "$ref": "#/$defs/nonNegativeInteger" },
+        "testRuns": { "$ref": "#/$defs/nonNegativeInteger" }, "ciRuns": { "$ref": "#/$defs/nonNegativeInteger" },
+        "humanReviewMinutes": { "$ref": "#/$defs/nonNegativeInteger" }, "inputTokens": { "$ref": "#/$defs/nonNegativeInteger" },
+        "outputTokens": { "$ref": "#/$defs/nonNegativeInteger" }, "costMicros": { "$ref": "#/$defs/nonNegativeInteger" },
+        "elapsedMs": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "attribution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["primary", "contributing", "confidence", "evidenceDigests"],
+      "properties": {
+        "primary": { "$ref": "#/$defs/reasonCode" },
+        "contributing": { "$ref": "#/$defs/reasonCodes" },
+        "confidence": { "enum": ["LOW", "MEDIUM", "HIGH"] },
+        "evidenceDigests": { "$ref": "#/$defs/digests" }
+      }
+    },
+    "claimBoundary": { "const": "LOCAL_SYNTHETIC_NO_ROUTING_ACTIVATION" },
+    "nonClaims": { "$ref": "#/$defs/nonClaims" },
+    "outcomeDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "digests": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/digest" } },
+    "nonEmptyDigests": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/digest" } },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidenceType", "origin", "digest", "verifierVersionDigest", "trust", "authoritative", "observedAtMs", "expiresAtMs"],
+      "properties": {
+        "evidenceType": { "enum": ["TEST", "POLICY", "SCOPE", "SECRET_SCAN", "CHECKSUM", "SUPPLY_CHAIN", "REVIEW"] },
+        "origin": { "enum": ["DETERMINISTIC_VERIFIER", "INDEPENDENT_REVIEWER", "HUMAN_REVIEWER", "UNTRUSTED_CLAIM"] },
+        "digest": { "$ref": "#/$defs/digest" }, "verifierVersionDigest": { "$ref": "#/$defs/digest" },
+        "trust": { "enum": ["AUTHORITATIVE", "NON_AUTHORITATIVE"] }, "authoritative": { "type": "boolean" },
+        "observedAtMs": { "$ref": "#/$defs/nonNegativeInteger" }, "expiresAtMs": { "$ref": "#/$defs/nonNegativeInteger" }
+      }
+    },
+    "hardGate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["gate", "required", "executed", "outcome", "evidenceDigest"],
+      "properties": {
+        "gate": { "enum": ["ACCEPTANCE", "TESTS", "POLICY", "SCOPE", "SECRETS", "READBACK", "CLEANUP"] },
+        "required": { "type": "boolean" }, "executed": { "type": "boolean" },
+        "outcome": { "enum": ["PASS", "FAIL", "NOT_RUN", "UNKNOWN"] },
+        "evidenceDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] }
+      }
+    },
+    "reasonCode": { "enum": ["MODEL_CAPABILITY_LIMIT", "THINKING_OR_OUTPUT_PROFILE_MISMATCH", "WORKFLOW_STRATEGY_MISMATCH", "LOCAL_IMPLEMENTATION_DEFECT", "CONTEXT_DEFICIT_OR_BAD_PROJECTION", "ISSUE_SPECIFICATION_GAP", "TOOL_OR_ENVIRONMENT_FAILURE", "VERIFICATION_GAP_OR_FALSE_POSITIVE", "POLICY_OR_AUTHORITY_DENIAL", "TRANSPORT_OUTCOME_UNKNOWN", "CONTROLLER_CONCURRENCY_OR_REPLAY", "EVIDENCE_INTEGRITY_OR_DRIFT", "PRIVACY_OR_SECRET_HANDLING_FAILURE", "OWNER_CANCELLED"] },
+    "reasonCodes": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/reasonCode" } },
+    "nonClaims": { "type": "array", "prefixItems": [{ "const": "NO_ROUTE_EXECUTION" }, { "const": "NO_AUTHORITY_GRANT" }, { "const": "NO_PROVIDER_CALL" }, { "const": "NO_PRODUCTION_ACTIVATION" }, { "const": "NO_TRAINING_INGESTION" }], "minItems": 5, "maxItems": 5 }
+  }
+}
