@@ -155,6 +155,7 @@ ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfi
 69e2007aff254c4ee506d608390d2e4e9fd9ade45ea931c1402471917269a63b  ./docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md
 70c593e838de55aee2711772a70f05026af5c7690184e43ad19b2f98afe35d11  ./docs/AGENT-WORK-EVENT-CONTRACT.md
 bf71d45e84dfac244f3c4993579fc13ed2f2535d7975acf95b9d91f3e9120567  ./docs/LEARNING-ROUTING-CONTRACTS.md
+04f9d5acebc3c22a1da925b7b90ae7c643783c8ed49e35ce0c8195c0f4830a3f  ./docs/OPERATION-EVENT-QUALITY-CONTRACT.md
 d8b2a7cfe4a063723360b9859c1c8a3ef8fdf250fdd2a33d3bbc6ccf0e7ebf07  ./docs/ARCHITECTURE.md
 f9e1327fa37b9eea02d6437d6e2a5694c0168d306f5af95f32460aff736db4cc  ./docs/BUILDER-AGENT-OPERATOR-GUIDE.md
 be80a96a24af224b5010c3698363dc6d9a400fba8a2d6529c8b1193dfc628df2  ./docs/BUILDER-CONFIGURATION-DEFAULTS.md
@@ -270,7 +271,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf  ./package-lock.json
-a0077b427c397a8925fa9dd61eff046ea9c2f6afd588ef9bb999311ccdeb47b7  ./package.json
+8e28a79e868ee0df4528dc36b676e703dd65d42138db90534638d53181b64790  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
@@ -286,8 +287,9 @@ b0ae29b9bda430c16ff6091d09f411f87b55334e79f2482386f471f7da42cf11  ./packages/con
 272e33e9ee1ec0ca4fce26ca9593712746ee358d039b700938ee8ef68772f828  ./packages/contracts/src/extension-assurance-profile.ts
 ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/contracts/src/hmi-contribute-preflight.ts
 0d9c6b054ea648a50217e6cc55ef8ed8bb0b444076a8a5ff081b0fb408f0ec45  ./packages/contracts/src/hmi-core.ts
-9b87e1b21cfdb81e18d001e00e1444abc28b51c6a417d25bd5e831c042fe3278  ./packages/contracts/src/index.ts
+d07e59460646c08b90cc693d9bf24c33c9d15bfe46dc84e3dcdb14dad320d738  ./packages/contracts/src/index.ts
 7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b  ./packages/contracts/src/learning-routing.ts
+4a59886d9b9b79c6c32de244727373326c241c2c456845b26bc6d12511cdb2c3  ./packages/contracts/src/operation-event-quality.ts
 1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50  ./packages/contracts/src/injection-trust-boundary.ts
 28098a7eae050aac622e6dc3d8d7fb14173939ddf513e24c2f0ab39b0ff6d1a1  ./packages/contracts/src/maintenance-contract-freeze.ts
 837e9b14dbab95fb4e3d9aa41eb1c71052048f9ae4f023fa8aa519bd11e0976b  ./packages/contracts/src/model-access-broker.ts
@@ -308,13 +310,14 @@ e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/con
 70ed27a5ae3663d92a2cc0bf9db1554293e1d969abbfaa2f21257b6769885865  ./packages/dev-worker/src/controller.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5  ./release/governance.json
-0daa55716d4904aa23dff30a395a513190b8b926d3b4a540c57f696a1f250cba  ./release/public-files.manifest
+8d783dfc226638d05e4cccadb6d39ca311e46387b919477a09e3f6d367e5538d  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 23221cf6752ed549d2b3e10c3d3afa900603441a5e55d53de0775ab057297f5c  ./schemas/contracts/routing-attempt-v1.schema.json
 d54733b1ad1b37591157da29ca20ba67471480c55647a8dc482b624e90489563  ./schemas/contracts/routing-context-v1.schema.json
 becc81b2d478b5267524330fd6811eb562f1dc3e7c940dc793e2d8095d89bbf5  ./schemas/contracts/routing-decision-v1.schema.json
 503cf2155c5629a6b89e4c03d4a929192f90b13320759fd06c16df15fceef4d7  ./schemas/contracts/routing-outcome-v1.schema.json
+ab5f3bdea3a2715850b0de5206a61b618753b2d9d159386ff3940e47ec4bf921  ./schemas/contracts/operation-event-quality-v1.schema.json
 f3100bad1b29b1056b7d5b1fe2567785ffe127ed737ca70efb0add56afdfa1b0  ./schemas/contracts/builder-authority-v1.schema.json
 721ceaa027bdf8e4db985e480442e33b59febe40f7d093f32a5f88ed88578047  ./schemas/contracts/builder-capability-resolution-v1.schema.json
 02741677e6020575cc4bf7704318f22c73200ce003784194e0b61a4550dce9a0  ./schemas/contracts/builder-contribution-bundle-v1.schema.json
@@ -356,6 +359,7 @@ a7734fbb94687d442e3571249f7fa40de44c18679ad6f71fb57de30fb11c5d86  ./scripts/veri
 130c08bf8894b0c927a3a1100be4644c7a25c02257200c24da502bcd1dd69613  ./security/secure-default-proof-v1.json
 9c8e23f22b503c9aa8dbe776068cac478c381cf80528b5ef2d4a07c4da4b4382  ./tests/adaptability-benchmark-m0.test.mjs
 209cb49cd67c0474e2f2cef1fed912fecad376e52b1bb2251b169f64b5c61fa9  ./tests/agent-work-event.test.ts
+a8e3dadc492beaa0ffae11f8c2146826de6493d1c523b0c320f6dcdb0d801094  ./tests/operation-event-quality.test.ts
 f541ca878a2f47476c4a68f72658c7c4116596b10a969e46566e0ea48a8c3782  ./tests/learning-routing.test.ts
 013b162484f6041701b39c653e7481af70ade9e22e8ea88d4319104862678b53  ./tests/analytics-projection.test.ts
 c8f07f427e39d50ddc142c7f5d6ed0382e1058fd179eb178226a1a1b870f118c  ./tests/builder-agent-runtime.test.mjs
@@ -384,6 +388,8 @@ e6d7cc6236ddfbf35ac8e971140643f3b9b0a68c401558a6144b8c63a45b3cd7  ./tests/demo-p
 08ccaf4b418a36248652d50639128f6cbecc800ee45992487555aeca874e9cb7  ./tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json
 81f98b7a9d8acee0c67697d147629bb1ec6881a2d9ecf108cf928bad25123a87  ./tests/fixtures/agent-work-intelligence/negative-matrix-v1.json
 2cc4eb063fd7b96213a07a22df274e2bd9f3cae4b2e64dc9e42b32824c5fc2f5  ./tests/fixtures/agent-work-intelligence/positive-public-event-v1.json
+8b8909c8c8a37d40c7f4cba785d84bfd778de413fa0aa93c5046e612b552c7c3  ./tests/fixtures/operation-event-quality/negative-matrix-v1.json
+e1bc4e33c8420f3423c34f09a97daa9404bc09516aa6a4b562ee897b08f13721  ./tests/fixtures/operation-event-quality/positive-public-v1.json
 7b200ae407406dbcaaa3192f034e9803744eb7cae34374601184cd2280c004cc  ./tests/fixtures/analytics/negative-matrix-v1.json
 a0bde8d5c7749536d6839f1a6197e5e1b3cab2367cab90868010100ca75db890  ./tests/fixtures/analytics/positive-projection-v1.json
 c7e372d7eb0d701f7cde55147bdeadf73d0c8e7202b2f3be49e83e78172db429  ./tests/fixtures/builder/g2-zoo-system.json
@@ -486,4 +492,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 8fb54c44ba8761fed83015eb98e49daabef634f138cf66551c01b700946128bc  ./tools/video-production-reference/tests/test_cm_video.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-5c09fcb138a50b44935dcca8a57b7c733d422ec2e1f59fa1a2b06eac8566d7ba  ./verification/verification-dag-v2.json
+2097e1eae7bdc12c778d13de4ebcdf29f5f3ee8691539af54ad880020b9ca2de  ./verification/verification-dag-v2.json
