@@ -222,6 +222,8 @@ packages/contracts/src/capability-catalogue.ts	packages/contracts/src/capability
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
 packages/contracts/src/learning-routing.ts	packages/contracts/src/learning-routing.ts	0644
+packages/contracts/src/learning-routing-outcome.ts	packages/contracts/src/learning-routing-outcome.ts	0644
+packages/contracts/src/learning-routing-threats.ts	packages/contracts/src/learning-routing-threats.ts	0644
 packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
 packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-access-broker.ts	0644
 packages/contracts/src/protected-audit-timeline.ts	packages/contracts/src/protected-audit-timeline.ts	0644
@@ -334,6 +336,9 @@ tests/resource-plane-profiles.test.ts	tests/resource-plane-profiles.test.ts	0644
 tests/extension-assurance-profile.test.ts	tests/extension-assurance-profile.test.ts	0644
 tests/agent-work-event.test.ts	tests/agent-work-event.test.ts	0644
 tests/learning-routing.test.ts	tests/learning-routing.test.ts	0644
+tests/learning-routing-outcome.test.ts	tests/learning-routing-outcome.test.ts	0644
+tests/learning-routing-threats.test.ts	tests/learning-routing-threats.test.ts	0644
+tests/fixtures/learning-routing/threat-replay-manifest-v1.json	tests/fixtures/learning-routing/threat-replay-manifest-v1.json	0644
 tests/secure-default-proof.test.mjs	tests/secure-default-proof.test.mjs	0644
 tests/hmi-core.test.ts	tests/hmi-core.test.ts	0644
 tests/hmi-harness-adapter.test.ts	tests/hmi-harness-adapter.test.ts	0644

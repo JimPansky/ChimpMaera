@@ -36,3 +36,5 @@ export * from "./extension-assurance-profile.js";
 export * from "./agent-work-event.js";
 export * from "./analytics-projection.js";
 export * from "./learning-routing.js";
+export * from "./learning-routing-outcome.js";
+export * from "./learning-routing-threats.js";
