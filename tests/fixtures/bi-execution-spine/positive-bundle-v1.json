@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "chimpmaera.cm-bi-exec/governed-bi-execution-spine/v1",
+  "spineId": "cm-bi-exec-001-synthetic-contract-v1",
+  "contractVersion": "1.0.0",
+  "evidenceClass": "PUBLIC_SYNTHETIC",
+  "questions": [
+    {
+      "questionId": "crm-risk-exposure",
+      "intent": {
+        "actor": "CM_AGENT_SYNTHETIC",
+        "purpose": "READ_ONLY_BUSINESS_ANSWER",
+        "naturalLanguage": "Which synthetic customer segment carries the largest unpaid invoice exposure this month?",
+        "tenantBoundary": "PUBLIC_SYNTHETIC_ONLY"
+      },
+      "sources": [
+        {
+          "system": "CRM_FIXTURE",
+          "sourceDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "operationQualityDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "freshnessMs": 3600000,
+          "missingnessReasons": ["NONE"]
+        },
+        {
+          "system": "ERP_FIXTURE",
+          "sourceDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "operationQualityDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "freshnessMs": 3600000,
+          "missingnessReasons": ["NONE"]
+        }
+      ],
+      "semanticModel": {
+        "modelId": "cm-bi-semantic-synthetic-v1",
+        "version": "1.0.0",
+        "entities": ["account", "invoice"],
+        "metric": "risk_exposure_eur",
+        "unit": "EUR",
+        "grain": "account_month",
+        "formulaDigest": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "queryPlan": {
+        "planId": "plan:crm-risk-exposure-v1",
+        "kind": "DECLARATIVE_AGGREGATE_PLAN",
+        "allowedFields": ["account_id", "customer_segment", "invoice_amount_eur", "invoice_status"],
+        "capabilitiesDenied": ["ARBITRARY_SQL", "PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
+        "planDigest": "2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "executionReceipt": {
+        "receiptId": "receipt:crm-risk-exposure-v1",
+        "status": "SIMULATED_VERIFIED",
+        "executedAtMs": 1786200000000,
+        "rowCount": 3,
+        "resultDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+        "receiptDigest": "4444444444444444444444444444444444444444444444444444444444444444"
+      },
+      "verificationReport": {
+        "outcome": "VERIFIED",
+        "sourceLineageComplete": true,
+        "formulaVerified": true,
+        "freshness": "FRESH",
+        "privacyVerified": true,
+        "qualityStates": ["PASS"],
+        "missingnessReasons": [],
+        "denialReasons": []
+      },
+      "claim": {
+        "outcome": "ANSWERED",
+        "statement": "Synthetic enterprise accounts carry the largest bounded exposure at 42000 EUR.",
+        "confidence": "BOUNDED_SYNTHETIC",
+        "nonAuthority": "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD",
+        "claimDigest": "5555555555555555555555555555555555555555555555555555555555555555"
+      },
+      "visualization": {
+        "kind": "BAR",
+        "fields": ["customer_segment", "invoice_amount_eur"],
+        "unsupportedReason": null,
+        "visualizationDigest": "6666666666666666666666666666666666666666666666666666666666666666"
+      },
+      "questionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "questionId": "erp-margin-drift",
+      "intent": {
+        "actor": "CM_AGENT_SYNTHETIC",
+        "purpose": "READ_ONLY_BUSINESS_ANSWER",
+        "naturalLanguage": "Which synthetic product family shows the strongest margin drift?",
+        "tenantBoundary": "PUBLIC_SYNTHETIC_ONLY"
+      },
+      "sources": [
+        {
+          "system": "ERP_FIXTURE",
+          "sourceDigest": "7777777777777777777777777777777777777777777777777777777777777777",
+          "operationQualityDigest": "8888888888888888888888888888888888888888888888888888888888888888",
+          "freshnessMs": 7200000,
+          "missingnessReasons": ["NONE"]
+        }
+      ],
+      "semanticModel": {
+        "modelId": "cm-bi-semantic-synthetic-v1",
+        "version": "1.0.0",
+        "entities": ["order"],
+        "metric": "margin_drift_pct",
+        "unit": "PERCENT",
+        "grain": "product_month",
+        "formulaDigest": "9999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "queryPlan": {
+        "planId": "plan:erp-margin-drift-v1",
+        "kind": "DECLARATIVE_AGGREGATE_PLAN",
+        "allowedFields": ["product_family", "order_margin_pct"],
+        "capabilitiesDenied": ["ARBITRARY_SQL", "PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
+        "planDigest": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+      },
+      "executionReceipt": {
+        "receiptId": "receipt:erp-margin-drift-v1",
+        "status": "SIMULATED_VERIFIED",
+        "executedAtMs": 1786200000000,
+        "rowCount": 4,
+        "resultDigest": "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+        "receiptDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "verificationReport": {
+        "outcome": "VERIFIED",
+        "sourceLineageComplete": true,
+        "formulaVerified": true,
+        "freshness": "FRESH",
+        "privacyVerified": true,
+        "qualityStates": ["PASS"],
+        "missingnessReasons": [],
+        "denialReasons": []
+      },
+      "claim": {
+        "outcome": "ANSWERED",
+        "statement": "Synthetic spare-parts orders show the largest bounded margin drift at 3.6 percent.",
+        "confidence": "BOUNDED_SYNTHETIC",
+        "nonAuthority": "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD",
+        "claimDigest": "1357913579135791357913579135791357913579135791357913579135791357"
+      },
+      "visualization": {
+        "kind": "KPI",
+        "fields": ["product_family", "order_margin_pct"],
+        "unsupportedReason": null,
+        "visualizationDigest": "2468024680246802468024680246802468024680246802468024680246802468"
+      },
+      "questionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "questionId": "operation-quality-exception-rate",
+      "intent": {
+        "actor": "CM_AGENT_SYNTHETIC",
+        "purpose": "READ_ONLY_BUSINESS_ANSWER",
+        "naturalLanguage": "How many synthetic operation events are not pass-fit for BI projection today?",
+        "tenantBoundary": "PUBLIC_SYNTHETIC_ONLY"
+      },
+      "sources": [
+        {
+          "system": "CM_OBS_FIXTURE",
+          "sourceDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+          "operationQualityDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc",
+          "freshnessMs": 1800000,
+          "missingnessReasons": ["NONE"]
+        }
+      ],
+      "semanticModel": {
+        "modelId": "cm-bi-semantic-synthetic-v1",
+        "version": "1.0.0",
+        "entities": ["operation_event"],
+        "metric": "quality_exception_rate",
+        "unit": "PERCENT",
+        "grain": "operation_day",
+        "formulaDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccd"
+      },
+      "queryPlan": {
+        "planId": "plan:operation-quality-exception-v1",
+        "kind": "DECLARATIVE_AGGREGATE_PLAN",
+        "allowedFields": ["operation_quality_state", "operation_event_day"],
+        "capabilitiesDenied": ["ARBITRARY_SQL", "PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
+        "planDigest": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddde"
+      },
+      "executionReceipt": {
+        "receiptId": "receipt:operation-quality-exception-v1",
+        "status": "SIMULATED_VERIFIED",
+        "executedAtMs": 1786200000000,
+        "rowCount": 5,
+        "resultDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef",
+        "receiptDigest": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa"
+      },
+      "verificationReport": {
+        "outcome": "VERIFIED",
+        "sourceLineageComplete": true,
+        "formulaVerified": true,
+        "freshness": "FRESH",
+        "privacyVerified": true,
+        "qualityStates": ["PASS", "WARN"],
+        "missingnessReasons": [],
+        "denialReasons": []
+      },
+      "claim": {
+        "outcome": "ANSWERED",
+        "statement": "Synthetic operation exceptions remain bounded at 20 percent with one warn-state input.",
+        "confidence": "BOUNDED_SYNTHETIC",
+        "nonAuthority": "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD",
+        "claimDigest": "abababababababababababababababababababababababababababababababab"
+      },
+      "visualization": {
+        "kind": "TABLE",
+        "fields": ["operation_quality_state", "operation_event_day"],
+        "unsupportedReason": null,
+        "visualizationDigest": "bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc"
+      },
+      "questionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "claimBoundary": "DECLARATIVE_BI_EXECUTION_SPINE_CONTRACT_ONLY_NO_RUNTIME_NO_SQL_ENGINE_NO_DASHBOARD_AUTHORITY_NO_PRODUCTION_DATA",
+  "bundleDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+}

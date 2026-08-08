@@ -38,3 +38,4 @@ export * from "./analytics-projection.js";
 export * from "./learning-routing.js";
 export * from "./learning-routing-outcome.js";
 export * from "./operation-event-quality.js";
+export * from "./bi-execution-spine.js";
