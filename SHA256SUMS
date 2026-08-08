@@ -312,7 +312,7 @@ e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/con
 70ed27a5ae3663d92a2cc0bf9db1554293e1d969abbfaa2f21257b6769885865  ./packages/dev-worker/src/controller.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5  ./release/governance.json
-54eea01cdd2ad2e6e6853599acb767f44d70a6027f6901b0d6c2168061803010  ./release/public-files.manifest
+b225782770efc5c74dfea57bee2fd1711ec992c4be3b5759f3252fa54f29ff4a  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 23221cf6752ed549d2b3e10c3d3afa900603441a5e55d53de0775ab057297f5c  ./schemas/contracts/routing-attempt-v1.schema.json
@@ -451,6 +451,7 @@ fe2bf3eb27c3fd7da98d115711db510c2cb83feb4bc847f4f2b2e37fa3c6c30d  ./tools/video-
 2a547d7e8e31e534d9400c3017c1899de6e5bd0805aa475c91f1fab8ba68ff86  ./tools/video-production-reference/bin/cm-video
 f141f8dae6de0296527e70fe0d2e3b252aafbe77985d7cc6532e9dcfc222ec53  ./tools/video-production-reference/compose.yaml
 ac29074b7c5f283fc636570c75a62e3b603fe2f387a617629e02a8254fd2a3ee  ./tools/video-production-reference/docs/ARCHITECTURE.md
+e5f104d006444a9489c45f11de6c95dd5e7b7e508dde3078dee8bc2707283b3c  ./tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md
 d2ca1f7081d78b0b2cab4ba8c0ebacd23222c1286336f28fd7d2e0b7b1664e48  ./tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md
 d4c6448a3574ca763b82356bea970d5c803230c6c9c24a68842164bcfb386698  ./tools/video-production-reference/docs/CURRENT-LIMITS.md
 1d9c8f9b01c8f06fb62c77f5586570dd0e7460d0e878a13c599075a07961c0ca  ./tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md

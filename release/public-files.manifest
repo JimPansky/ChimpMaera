@@ -399,6 +399,7 @@ tools/video-production-reference/assets/reference/voice-reference-de.wav	tools/v
 tools/video-production-reference/bin/cm-video	tools/video-production-reference/bin/cm-video	0755
 tools/video-production-reference/compose.yaml	tools/video-production-reference/compose.yaml	0644
 tools/video-production-reference/docs/ARCHITECTURE.md	tools/video-production-reference/docs/ARCHITECTURE.md	0644
+tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md	tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md	0644
 tools/video-production-reference/docs/CURRENT-LIMITS.md	tools/video-production-reference/docs/CURRENT-LIMITS.md	0644
 tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md	tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md	0644
 tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md	tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md	0644
