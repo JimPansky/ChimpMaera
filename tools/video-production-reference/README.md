@@ -127,6 +127,13 @@ Generate synthetic examples and run the smoke:
 ./scripts/smoke.sh
 ```
 
+Verify that documented local paths, Docker/Compose build inputs, commands,
+schemas, and declared reference assets remain present and digest-consistent:
+
+```bash
+python3 tools/video-production-reference/scripts/verify_reference_closure.py
+```
+
 The runtime profile is network-disabled, non-root, read-only root filesystem,
 drops all capabilities, sets `no-new-privileges`, mounts `/job` and `/assets`
 read-only, mounts `/output` writable, and does not mount the Docker socket.
