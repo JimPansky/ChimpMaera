@@ -38,3 +38,9 @@ Rollback is a normal revert of the additive TypeScript module, four schemas, tes
 ## Promotion gate
 
 This slice may advance only after focused tests, TypeScript build/lint, full repository tests, canonical reordering tests, digest/lineage negatives, unknown-field denials, and seeded-secret/prohibited-field probes are green. Passing LR-001 authorizes only the next local foundation slice; it does not authorize shadowing, advisory routing, or execution against real issues.
+
+## LR-002 terminal outcome adapter
+
+`adaptRoutingOutcomeV1` is a pure, deterministic Work Receipt plus Verification Fabric v2 Shadow adapter. It aggregates every attempt and bound receipt without executing work. `VERIFIED_RESOLVED` requires one digest-bound candidate, valid context/decision/attempt lineage, exact receipt digests and usage, successful cleanup/readback, all seven terminal hard gates, fresh authoritative subject- and acceptance-bound evidence, and at least one successful authoritative full-suite comparator report. Impacted and full-fallback Shadow plans are treated identically because the complete comparator remains authoritative; prototype attestations and model self-reports are never sufficient.
+
+Missing, stale, tampered, mismatched, non-authoritative, or unrun evidence remains `INSUFFICIENT_EVIDENCE`. A failed gate remains `NOT_RESOLVED`; an entirely aborted attempt chain remains `ABORTED`; unknown transport remains `UNKNOWN` and is never inferred to be a retry or model failure. Multi-cause attribution uses a finite precedence with reduced confidence for integrity gaps and unknown transport. Rollback is removal of the additive adapter, export, tests, and this section; no state or migration exists.
