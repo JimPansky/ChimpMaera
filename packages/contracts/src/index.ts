@@ -39,3 +39,4 @@ export * from "./learning-routing.js";
 export * from "./learning-routing-outcome.js";
 export * from "./learning-routing-threats.js";
 export * from "./learning-routing-baseline.js";
+export * from "./learning-routing-recommender.js";
