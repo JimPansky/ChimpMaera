@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 2,
+  "graphVersion": 3,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -43,7 +43,7 @@
         { "path": "schemas/contracts/verification-attestation-v2.schema.json", "role": "SCHEMA", "sha256": "e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2" },
         { "path": "scripts/verification-plan.mjs", "role": "VALIDATOR", "sha256": "0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218" },
         { "path": "scripts/verification-shadow.mjs", "role": "VALIDATOR", "sha256": "7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5" },
-        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "9b0de4a58c4a9e22c68886d7da1bc58d9e789b80783da0c1ce9fe4704e914f36" },
+        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "84993a7c2f063adb66a2b5732ece3d5feb22a5efb12297339550dea25b3b2eff" },
         { "path": "docs/VERIFICATION-FABRIC-SHADOW.md", "role": "DERIVED_EVIDENCE", "sha256": "c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f" }
       ],
       "ownedTests": ["node --test dist/tests/verification-fabric-v2.test.js"],
@@ -56,8 +56,40 @@
       "globalInvalidation": false
     },
     {
-      "id": "repository-integrity",
+      "id": "learning-routing-foundation",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
+      "inputs": [
+        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "b6a712768b0839579144768d0519a50ec09dd5cd0138ad1f5ba85f4d287be27b" },
+        { "path": "packages/contracts/src/learning-routing.ts", "role": "CONTRACT", "sha256": "7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b" },
+        { "path": "packages/contracts/src/learning-routing-outcome.ts", "role": "CONTRACT", "sha256": "06716b26f31318ac2055de1646ac163944e869c79494d127139228633eea83da" },
+        { "path": "packages/contracts/src/learning-routing-threats.ts", "role": "CONTRACT", "sha256": "d76afa3d611cd76f2bbbee39a3de542a250862e20267021796c09fa9ba3e171d" },
+        { "path": "packages/contracts/src/learning-routing-baseline.ts", "role": "CONTRACT", "sha256": "83e85b6a287efbd8aa10ca1cf222d8801f2d8f7acc2cacb301fbc14d362eb5bc" },
+        { "path": "schemas/contracts/routing-context-v1.schema.json", "role": "SCHEMA", "sha256": "d54733b1ad1b37591157da29ca20ba67471480c55647a8dc482b624e90489563" },
+        { "path": "schemas/contracts/routing-decision-v1.schema.json", "role": "SCHEMA", "sha256": "becc81b2d478b5267524330fd6811eb562f1dc3e7c940dc793e2d8095d89bbf5" },
+        { "path": "schemas/contracts/routing-attempt-v1.schema.json", "role": "SCHEMA", "sha256": "23221cf6752ed549d2b3e10c3d3afa900603441a5e55d53de0775ab057297f5c" },
+        { "path": "schemas/contracts/routing-outcome-v1.schema.json", "role": "SCHEMA", "sha256": "503cf2155c5629a6b89e4c03d4a929192f90b13320759fd06c16df15fceef4d7" },
+        { "path": "scripts/learning-routing-baseline.mjs", "role": "VALIDATOR", "sha256": "abab50a97cf7113e2cad4125992fb3178a67877f573e974b128f2494ef1883b8" },
+        { "path": "tests/learning-routing.test.ts", "role": "VALIDATOR", "sha256": "f541ca878a2f47476c4a68f72658c7c4116596b10a969e46566e0ea48a8c3782" },
+        { "path": "tests/learning-routing-outcome.test.ts", "role": "VALIDATOR", "sha256": "9530801dd2ee2735e4028a499f7c673752395d428838f0d842bf06071f2992f0" },
+        { "path": "tests/learning-routing-threats.test.ts", "role": "VALIDATOR", "sha256": "52c8d00ed1ad5ed37500e9ea48c93222751652288265ceac86cb498a77334fc3" },
+        { "path": "tests/learning-routing-baseline.test.ts", "role": "VALIDATOR", "sha256": "ea4438843130640f8aebd594a181735ca2fbaec7f3891cba542e9118eb58e4e0" },
+        { "path": "tests/fixtures/learning-routing/threat-replay-manifest-v1.json", "role": "FIXTURE", "sha256": "dfcacec5d9b982b964eb4cb90721c465ac9d9fa06c010a4d789b20c6f5159397" },
+        { "path": "tests/fixtures/learning-routing/historical-episodes-august-v1.json", "role": "FIXTURE", "sha256": "e2d0f523942250cf1d999bfaaf0b914cbf783e636d93b708ac03fd30d1fa0d06" },
+        { "path": "tests/fixtures/learning-routing/baseline-golden-v1.json", "role": "FIXTURE", "sha256": "0d98b481b7cd6f61cb78e8a67b0c251e6bd857162f3c9c281dab8b06d6eded51" },
+        { "path": "docs/LEARNING-ROUTING-CONTRACTS.md", "role": "DERIVED_EVIDENCE", "sha256": "a3292b825db9322cd39524eed108edcc7f1d55dc340f4a00ceed10f3b386a698" }
+      ],
+      "ownedTests": ["npm run learning-routing:test"],
+      "invariants": [
+        "Only complete fresh digest-bound authoritative evidence can yield verified resolution.",
+        "Threat replay and offline baselines remain deterministic, public-safe, and runtime inert.",
+        "Incomplete and unknown evidence remains in fail-closed outcome and metric denominators."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
+      "id": "repository-integrity",
+      "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "learning-routing-foundation"],
       "inputs": [
         { "path": "release/governance.json", "role": "CONTRACT", "sha256": "9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
@@ -99,7 +131,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "bff645ec4d49d3407ac22aa9558a7d7c222f3ff06cf4d51d752bcdd87d2d955a" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "4dc4c171ce3b54d67f8fbe72b4ac1895ed2c406673e78bbbe46f05663a3171d8" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }
