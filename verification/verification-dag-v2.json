@@ -59,7 +59,8 @@
       "id": "learning-routing-foundation",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "943b6edc6efbdf158c4d90b9db2f2b06b9332fbce2a4155cf94137cd1e9d4ed5" },
+        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "37c3dcb517c78304990255bbd41dfbaf0bd081949c76e8c923b4a63b390f5e02" },
+        { "path": "packages/contracts/src/signal-release-intake.ts", "role": "CONTRACT", "sha256": "d2326a6b1af62ed4e8f3a65c30b1978bd285691bdc7f2e4b872b6091c68f8977" },
         { "path": "packages/contracts/src/learning-routing.ts", "role": "CONTRACT", "sha256": "7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b" },
         { "path": "packages/contracts/src/learning-routing-outcome.ts", "role": "CONTRACT", "sha256": "06716b26f31318ac2055de1646ac163944e869c79494d127139228633eea83da" },
         { "path": "packages/contracts/src/learning-routing-threats.ts", "role": "CONTRACT", "sha256": "d76afa3d611cd76f2bbbee39a3de542a250862e20267021796c09fa9ba3e171d" },
@@ -75,9 +76,12 @@
         { "path": "tests/learning-routing-threats.test.ts", "role": "VALIDATOR", "sha256": "52c8d00ed1ad5ed37500e9ea48c93222751652288265ceac86cb498a77334fc3" },
         { "path": "tests/learning-routing-baseline.test.ts", "role": "VALIDATOR", "sha256": "ea4438843130640f8aebd594a181735ca2fbaec7f3891cba542e9118eb58e4e0" },
         { "path": "tests/learning-routing-recommender.test.ts", "role": "VALIDATOR", "sha256": "8c674e183fef9e6c141cf2770a4d450ec3a7d5816e35790fd97bc892421ee603" },
+        { "path": "tests/signal-release-intake.test.ts", "role": "VALIDATOR", "sha256": "74d7c28fbe12bfeab992ed4c108a29ea49fdd1b07d5e8552bed550c3b2002783" },
         { "path": "tests/fixtures/learning-routing/threat-replay-manifest-v1.json", "role": "FIXTURE", "sha256": "dfcacec5d9b982b964eb4cb90721c465ac9d9fa06c010a4d789b20c6f5159397" },
         { "path": "tests/fixtures/learning-routing/historical-episodes-august-v1.json", "role": "FIXTURE", "sha256": "e2d0f523942250cf1d999bfaaf0b914cbf783e636d93b708ac03fd30d1fa0d06" },
         { "path": "tests/fixtures/learning-routing/baseline-golden-v1.json", "role": "FIXTURE", "sha256": "0d98b481b7cd6f61cb78e8a67b0c251e6bd857162f3c9c281dab8b06d6eded51" },
+        { "path": "tests/fixtures/signal-release-intake/positive-v1.json", "role": "FIXTURE", "sha256": "8832f93742bd4d6ab7327dfdc98e18eeb23fb015e16151f6b45f8cf377376693" },
+        { "path": "tests/fixtures/signal-release-intake/rejections-v1.json", "role": "FIXTURE", "sha256": "523295d10818aaf9509573b42e0555713e348172544037f7d20e2ef02648a7de" },
         { "path": "docs/LEARNING-ROUTING-CONTRACTS.md", "role": "DERIVED_EVIDENCE", "sha256": "c26fc3b2689d7cf600a5481ad626d7e8c38b04ddbf98eefbff8193191ad29d89" }
       ],
       "ownedTests": ["npm run learning-routing:test"],
