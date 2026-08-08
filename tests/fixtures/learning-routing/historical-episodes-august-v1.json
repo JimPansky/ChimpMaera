@@ -1,0 +1,110 @@
+[
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000001",
+    "sourceEvidence": "AUGUST_CANARY",
+    "routeClass": "STATIC",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "1111111111111111111111111111111111111111111111111111111111111111", "routerArtifact": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "VERIFIED_RESOLVED", "evidenceComplete": true, "transportState": "CONFIRMED",
+    "usage": { "calls": 1, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 2, "ciRuns": 1, "reviewMinutes": 1, "elapsedMs": 1000, "actualReceiptCostMicros": 100, "priceAssumptionCostMicros": 120, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000002",
+    "sourceEvidence": "PUBLIC_ISSUE_41",
+    "routeClass": "STATIC",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "1111111111111111111111111111111111111111111111111111111111111111", "routerArtifact": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "NOT_RESOLVED", "evidenceComplete": true, "transportState": "FAILED",
+    "usage": { "calls": 1, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 1, "ciRuns": 0, "reviewMinutes": 0, "elapsedMs": 500, "actualReceiptCostMicros": 50, "priceAssumptionCostMicros": 70, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000003",
+    "sourceEvidence": "PUBLIC_ISSUE_58",
+    "routeClass": "STATIC",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "1111111111111111111111111111111111111111111111111111111111111111", "routerArtifact": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "CENSORED", "evidenceComplete": true, "transportState": "NOT_SENT",
+    "usage": { "calls": 0, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 0, "ciRuns": 0, "reviewMinutes": 0, "elapsedMs": 100, "actualReceiptCostMicros": null, "priceAssumptionCostMicros": 40, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000004",
+    "sourceEvidence": "AUGUST_CANARY",
+    "routeClass": "CURRENT",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "2222222222222222222222222222222222222222222222222222222222222222", "routerArtifact": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "VERIFIED_RESOLVED", "evidenceComplete": true, "transportState": "CONFIRMED",
+    "usage": { "calls": 2, "repairs": 1, "retries": 1, "scoutCalls": 0, "testRuns": 2, "ciRuns": 1, "reviewMinutes": 2, "elapsedMs": 800, "actualReceiptCostMicros": 200, "priceAssumptionCostMicros": 250, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000005",
+    "sourceEvidence": "PUBLIC_ISSUE_41",
+    "routeClass": "CURRENT",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "2222222222222222222222222222222222222222222222222222222222222222", "routerArtifact": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "ABORTED", "evidenceComplete": true, "transportState": "NOT_SENT",
+    "usage": { "calls": 1, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 0, "ciRuns": 0, "reviewMinutes": 0, "elapsedMs": 300, "actualReceiptCostMicros": 30, "priceAssumptionCostMicros": 40, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000006",
+    "sourceEvidence": "PUBLIC_ISSUE_58",
+    "routeClass": "CURRENT",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "2222222222222222222222222222222222222222222222222222222222222222", "routerArtifact": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "INSUFFICIENT_EVIDENCE", "evidenceComplete": false, "transportState": "CONFIRMED",
+    "usage": { "calls": 1, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 1, "ciRuns": 0, "reviewMinutes": 1, "elapsedMs": 500, "actualReceiptCostMicros": 80, "priceAssumptionCostMicros": 90, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000007",
+    "sourceEvidence": "AUGUST_CANARY",
+    "routeClass": "CHEAP",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "3333333333333333333333333333333333333333333333333333333333333333", "routerArtifact": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "VERIFIED_RESOLVED", "evidenceComplete": true, "transportState": "CONFIRMED",
+    "usage": { "calls": 1, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 1, "ciRuns": 0, "reviewMinutes": 0, "elapsedMs": 600, "actualReceiptCostMicros": 60, "priceAssumptionCostMicros": 90, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000008",
+    "sourceEvidence": "PUBLIC_ISSUE_41",
+    "routeClass": "CHEAP",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "3333333333333333333333333333333333333333333333333333333333333333", "routerArtifact": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "UNKNOWN", "evidenceComplete": false, "transportState": "UNKNOWN",
+    "usage": { "calls": 1, "repairs": 0, "retries": 1, "scoutCalls": 0, "testRuns": 0, "ciRuns": 0, "reviewMinutes": 0, "elapsedMs": 400, "actualReceiptCostMicros": null, "priceAssumptionCostMicros": 20, "unknownTransportReserveMicros": 100 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_00000000000000000000000000000009",
+    "sourceEvidence": "PUBLIC_ISSUE_58",
+    "routeClass": "CHEAP",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "3333333333333333333333333333333333333333333333333333333333333333", "routerArtifact": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "DENIED", "evidenceComplete": true, "transportState": "NOT_SENT",
+    "usage": { "calls": 0, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 0, "ciRuns": 0, "reviewMinutes": 0, "elapsedMs": 50, "actualReceiptCostMicros": 0, "priceAssumptionCostMicros": 0, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_0000000000000000000000000000000a",
+    "sourceEvidence": "AUGUST_CANARY",
+    "routeClass": "STRONG",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "4444444444444444444444444444444444444444444444444444444444444444", "routerArtifact": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "VERIFIED_RESOLVED", "evidenceComplete": true, "transportState": "CONFIRMED",
+    "usage": { "calls": 2, "repairs": 0, "retries": 0, "scoutCalls": 1, "testRuns": 3, "ciRuns": 1, "reviewMinutes": 5, "elapsedMs": 700, "actualReceiptCostMicros": 300, "priceAssumptionCostMicros": 350, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_0000000000000000000000000000000b",
+    "sourceEvidence": "PUBLIC_ISSUE_41",
+    "routeClass": "STRONG",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "4444444444444444444444444444444444444444444444444444444444444444", "routerArtifact": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "NOT_RESOLVED", "evidenceComplete": true, "transportState": "FAILED",
+    "usage": { "calls": 2, "repairs": 1, "retries": 1, "scoutCalls": 0, "testRuns": 2, "ciRuns": 1, "reviewMinutes": 3, "elapsedMs": 600, "actualReceiptCostMicros": 150, "priceAssumptionCostMicros": 180, "unknownTransportReserveMicros": 0 }
+  },
+  {
+    "schemaVersion": "chimpmaera.dev/historical-routing-episode/v1",
+    "episodePseudonym": "ep_0000000000000000000000000000000c",
+    "sourceEvidence": "PUBLIC_ISSUE_58",
+    "routeClass": "STRONG",
+    "versions": { "featureSpec": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "modelCatalog": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "priceBook": "4444444444444444444444444444444444444444444444444444444444444444", "routerArtifact": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "verificationGraph": "5555555555555555555555555555555555555555555555555555555555555555" },
+    "disposition": "VERIFIED_RESOLVED", "evidenceComplete": false, "transportState": "CONFIRMED",
+    "usage": { "calls": 2, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 2, "ciRuns": 1, "reviewMinutes": 2, "elapsedMs": 700, "actualReceiptCostMicros": 200, "priceAssumptionCostMicros": 240, "unknownTransportReserveMicros": 0 }
+  }
+]
