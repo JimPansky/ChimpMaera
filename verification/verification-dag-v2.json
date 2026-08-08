@@ -59,11 +59,12 @@
       "id": "learning-routing-foundation",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "b6a712768b0839579144768d0519a50ec09dd5cd0138ad1f5ba85f4d287be27b" },
+        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "943b6edc6efbdf158c4d90b9db2f2b06b9332fbce2a4155cf94137cd1e9d4ed5" },
         { "path": "packages/contracts/src/learning-routing.ts", "role": "CONTRACT", "sha256": "7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b" },
         { "path": "packages/contracts/src/learning-routing-outcome.ts", "role": "CONTRACT", "sha256": "06716b26f31318ac2055de1646ac163944e869c79494d127139228633eea83da" },
         { "path": "packages/contracts/src/learning-routing-threats.ts", "role": "CONTRACT", "sha256": "d76afa3d611cd76f2bbbee39a3de542a250862e20267021796c09fa9ba3e171d" },
         { "path": "packages/contracts/src/learning-routing-baseline.ts", "role": "CONTRACT", "sha256": "83e85b6a287efbd8aa10ca1cf222d8801f2d8f7acc2cacb301fbc14d362eb5bc" },
+        { "path": "packages/contracts/src/learning-routing-recommender.ts", "role": "CONTRACT", "sha256": "fb5a4a211f3bb8809225f19ca98e0a7d21fd57cb53ec724762b6bc6c98b1d252" },
         { "path": "schemas/contracts/routing-context-v1.schema.json", "role": "SCHEMA", "sha256": "d54733b1ad1b37591157da29ca20ba67471480c55647a8dc482b624e90489563" },
         { "path": "schemas/contracts/routing-decision-v1.schema.json", "role": "SCHEMA", "sha256": "becc81b2d478b5267524330fd6811eb562f1dc3e7c940dc793e2d8095d89bbf5" },
         { "path": "schemas/contracts/routing-attempt-v1.schema.json", "role": "SCHEMA", "sha256": "23221cf6752ed549d2b3e10c3d3afa900603441a5e55d53de0775ab057297f5c" },
@@ -73,10 +74,11 @@
         { "path": "tests/learning-routing-outcome.test.ts", "role": "VALIDATOR", "sha256": "9530801dd2ee2735e4028a499f7c673752395d428838f0d842bf06071f2992f0" },
         { "path": "tests/learning-routing-threats.test.ts", "role": "VALIDATOR", "sha256": "52c8d00ed1ad5ed37500e9ea48c93222751652288265ceac86cb498a77334fc3" },
         { "path": "tests/learning-routing-baseline.test.ts", "role": "VALIDATOR", "sha256": "ea4438843130640f8aebd594a181735ca2fbaec7f3891cba542e9118eb58e4e0" },
+        { "path": "tests/learning-routing-recommender.test.ts", "role": "VALIDATOR", "sha256": "8c674e183fef9e6c141cf2770a4d450ec3a7d5816e35790fd97bc892421ee603" },
         { "path": "tests/fixtures/learning-routing/threat-replay-manifest-v1.json", "role": "FIXTURE", "sha256": "dfcacec5d9b982b964eb4cb90721c465ac9d9fa06c010a4d789b20c6f5159397" },
         { "path": "tests/fixtures/learning-routing/historical-episodes-august-v1.json", "role": "FIXTURE", "sha256": "e2d0f523942250cf1d999bfaaf0b914cbf783e636d93b708ac03fd30d1fa0d06" },
         { "path": "tests/fixtures/learning-routing/baseline-golden-v1.json", "role": "FIXTURE", "sha256": "0d98b481b7cd6f61cb78e8a67b0c251e6bd857162f3c9c281dab8b06d6eded51" },
-        { "path": "docs/LEARNING-ROUTING-CONTRACTS.md", "role": "DERIVED_EVIDENCE", "sha256": "a3292b825db9322cd39524eed108edcc7f1d55dc340f4a00ceed10f3b386a698" }
+        { "path": "docs/LEARNING-ROUTING-CONTRACTS.md", "role": "DERIVED_EVIDENCE", "sha256": "c26fc3b2689d7cf600a5481ad626d7e8c38b04ddbf98eefbff8193191ad29d89" }
       ],
       "ownedTests": ["npm run learning-routing:test"],
       "invariants": [
@@ -131,7 +133,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "4dc4c171ce3b54d67f8fbe72b4ac1895ed2c406673e78bbbe46f05663a3171d8" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "dbd6b7f74c8a31c7a89e60fd07621a3d71763096415508521e26de63209019cc" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }
