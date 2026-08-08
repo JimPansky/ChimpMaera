@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "chimpmaera.cm-obs/operation-event-quality/v1",
+  "operation": {
+    "operationId": "op:cm-obs-positive",
+    "runId": "run:cm-obs-positive",
+    "attemptId": "attempt:cm-obs-positive",
+    "traceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "correlationId": "corr:cm-obs-positive"
+  },
+  "times": {
+    "eventTimeMs": 1000,
+    "observedTimeMs": 1100,
+    "ingestTimeMs": 1200
+  },
+  "source": {
+    "producer": "CM_OBS_FIXTURE",
+    "sequence": 1,
+    "replayWindowMs": 60000,
+    "eventDigest": "0104e4b2604d43b2e50db0acda873f1d5d7ec6e8732dcf13321ddb9a977bc882",
+    "previousEventDigest": null,
+    "rawEvidenceDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+    "rawEvidenceRef": "obs-fixture:positive-public-v1",
+    "rawEvidenceClass": "PUBLIC_SYNTHETIC"
+  },
+  "missingness": {
+    "status": "PRESENT",
+    "reasons": [],
+    "expectedAtMs": null
+  },
+  "quality": {
+    "state": "PASS",
+    "purpose": "AWI_JOIN",
+    "purposeFit": true,
+    "assessmentKind": "APPEND_ONLY_ASSESSMENT",
+    "assessmentDigest": "2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "retention": {
+    "classification": "PUBLIC_SYNTHETIC",
+    "retainUntilMs": 86400000,
+    "minimization": "DIGESTS_AND_REASON_CODES_ONLY_NO_RAW_CONTENT",
+    "rollbackProfile": "DISABLE_OBS_PROJECTION_FAIL_CLOSED"
+  },
+  "claimBoundary": "DECLARATIVE_CM_OBS_CONTRACT_ONLY_NO_COLLECTOR_NO_DASHBOARD_AUTHORITY_NO_RUNTIME_ACTIVATION_NO_PRODUCTION_TELEMETRY",
+  "recordDigest": "3850881a3aa35eafc8727f553da905c396c3b24e9f83670c043f0379dbc6d30f"
+}
