@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/routing-context-v1.schema.json",
+  "title": "ChimpMaera local-synthetic routing context v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "episodePseudonym", "snapshotDigests", "cohort", "assessments", "observedAtMs", "featureCutoffMs", "featureSpecDigest", "claimBoundary", "nonClaims", "contextDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.dev/routing-context/v1" },
+    "episodePseudonym": { "$ref": "#/$defs/episodePseudonym" },
+    "snapshotDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue", "base", "projection", "acceptance", "toolchain"],
+      "properties": {
+        "issue": { "$ref": "#/$defs/digest" },
+        "base": { "$ref": "#/$defs/digest" },
+        "projection": { "$ref": "#/$defs/digest" },
+        "acceptance": { "$ref": "#/$defs/digest" },
+        "toolchain": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "cohort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issueKind", "languageFamily", "packageFamily", "allowedFileCountBin", "projectionBytesBin", "pathClasses", "hasReproduction", "acceptanceCriteriaPresent", "testProfileKnown", "dependencyRelevant", "schemaRelevant", "contractRelevant", "publicManifestRelevant"],
+      "properties": {
+        "issueKind": { "enum": ["BUG", "FEATURE", "DOCS", "TEST", "REFACTOR", "SECURITY", "EPIC_OR_UNFROZEN"] },
+        "languageFamily": { "enum": ["TYPESCRIPT", "JAVASCRIPT", "PYTHON", "SHELL", "MARKDOWN", "MIXED", "OTHER"] },
+        "packageFamily": { "enum": ["CONTRACTS", "CONTROLLER", "WORKER", "VERIFICATION", "DEMO", "DOCS", "OTHER"] },
+        "allowedFileCountBin": { "enum": ["ONE", "TWO_TO_FIVE", "SIX_TO_TWENTY", "OVER_TWENTY"] },
+        "projectionBytesBin": { "enum": ["UP_TO_32K", "UP_TO_128K", "UP_TO_512K", "OVER_512K"] },
+        "pathClasses": { "type": "array", "uniqueItems": true, "items": { "enum": ["DOCS", "TEST", "RUNTIME", "POLICY", "SECURITY", "RELEASE"] } },
+        "hasReproduction": { "type": "boolean" },
+        "acceptanceCriteriaPresent": { "type": "boolean" },
+        "testProfileKnown": { "type": "boolean" },
+        "dependencyRelevant": { "type": "boolean" },
+        "schemaRelevant": { "type": "boolean" },
+        "contractRelevant": { "type": "boolean" },
+        "publicManifestRelevant": { "type": "boolean" }
+      }
+    },
+    "assessments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["complexity", "confidence", "risk", "dataClass", "explorationAllowed"],
+      "properties": {
+        "complexity": { "enum": ["LOW", "MEDIUM", "HIGH", "UNFROZEN"] },
+        "confidence": { "enum": ["LOW", "MEDIUM", "HIGH"] },
+        "risk": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "dataClass": { "enum": ["PUBLIC_OSS", "INTERNAL", "RESTRICTED"] },
+        "explorationAllowed": { "type": "boolean" }
+      }
+    },
+    "observedAtMs": { "$ref": "#/$defs/nonNegativeInteger" },
+    "featureCutoffMs": { "$ref": "#/$defs/nonNegativeInteger" },
+    "featureSpecDigest": { "$ref": "#/$defs/digest" },
+    "claimBoundary": { "const": "LOCAL_SYNTHETIC_NO_ROUTING_ACTIVATION" },
+    "nonClaims": { "$ref": "#/$defs/nonClaims" },
+    "contextDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "episodePseudonym": { "type": "string", "pattern": "^ep_[a-f0-9]{32}$" },
+    "nonNegativeInteger": { "type": "integer", "minimum": 0 },
+    "nonClaims": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "NO_ROUTE_EXECUTION" },
+        { "const": "NO_AUTHORITY_GRANT" },
+        { "const": "NO_PROVIDER_CALL" },
+        { "const": "NO_PRODUCTION_ACTIVATION" },
+        { "const": "NO_TRAINING_INGESTION" }
+      ],
+      "minItems": 5,
+      "maxItems": 5
+    }
+  }
+}

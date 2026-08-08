@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "chimpmaera.dev/learning-routing-baseline/v1",
+  "baselineVersion": "lr-004.1",
+  "cohortDigest": "f8aa6af34d96830e5a87eadb791ec78d0b73a84732779484b8507e6bb0946d77",
+  "versionDigest": "14802e63f98314bc0852dac36ff8ffb1e4afcc421b9e473d2bb53bfa9eec1ec0",
+  "baselineDigest": "788af04073e91fde7f47c046578eabb84d07b4fce2e05c5e01feacc79f001191",
+  "sourceCoverage": { "AUGUST_CANARY": 4, "PUBLIC_ISSUE_41": 4, "PUBLIC_ISSUE_58": 4, "SANITIZED_SYNTHETIC": 0 },
+  "overall": {
+    "episodeCount": 12, "verifiedSuccesses": 4, "vsrPpm": 333333,
+    "vsrWilson95Ppm": { "lower": 138120, "upper": 609378 },
+    "ecvrMicros": 333, "etvrMs": 1563,
+    "effortPerVerifiedSuccessMilli": { "calls": 3500, "repairs": 500, "retries": 750, "scoutCalls": 250, "testRuns": 3500, "ciRuns": 1250, "reviewMinutes": 3500 },
+    "totals": { "billedCostMicros": 1230, "reservedCostMicros": 100, "totalCostMicros": 1330, "elapsedMs": 6250, "calls": 14, "repairs": 2, "retries": 3, "scoutCalls": 1, "testRuns": 14, "ciRuns": 5, "reviewMinutes": 14 },
+    "missingness": { "incompleteEvidence": 3, "unknownTransport": 1, "missingActualReceiptCost": 2, "censored": 1 },
+    "confidence": "LOW"
+  },
+  "byRouteClass": {
+    "STATIC": {
+      "episodeCount": 3, "verifiedSuccesses": 1, "vsrPpm": 333333,
+      "vsrWilson95Ppm": { "lower": 61492, "upper": 792340 }, "ecvrMicros": 190, "etvrMs": 1600,
+      "effortPerVerifiedSuccessMilli": { "calls": 2000, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 3000, "ciRuns": 1000, "reviewMinutes": 1000 },
+      "totals": { "billedCostMicros": 190, "reservedCostMicros": 0, "totalCostMicros": 190, "elapsedMs": 1600, "calls": 2, "repairs": 0, "retries": 0, "scoutCalls": 0, "testRuns": 3, "ciRuns": 1, "reviewMinutes": 1 },
+      "missingness": { "incompleteEvidence": 0, "unknownTransport": 0, "missingActualReceiptCost": 1, "censored": 1 }, "confidence": "LOW"
+    },
+    "CURRENT": {
+      "episodeCount": 3, "verifiedSuccesses": 1, "vsrPpm": 333333,
+      "vsrWilson95Ppm": { "lower": 61492, "upper": 792340 }, "ecvrMicros": 310, "etvrMs": 1600,
+      "effortPerVerifiedSuccessMilli": { "calls": 4000, "repairs": 1000, "retries": 1000, "scoutCalls": 0, "testRuns": 3000, "ciRuns": 1000, "reviewMinutes": 3000 },
+      "totals": { "billedCostMicros": 310, "reservedCostMicros": 0, "totalCostMicros": 310, "elapsedMs": 1600, "calls": 4, "repairs": 1, "retries": 1, "scoutCalls": 0, "testRuns": 3, "ciRuns": 1, "reviewMinutes": 3 },
+      "missingness": { "incompleteEvidence": 1, "unknownTransport": 0, "missingActualReceiptCost": 0, "censored": 0 }, "confidence": "LOW"
+    },
+    "CHEAP": {
+      "episodeCount": 3, "verifiedSuccesses": 1, "vsrPpm": 333333,
+      "vsrWilson95Ppm": { "lower": 61492, "upper": 792340 }, "ecvrMicros": 180, "etvrMs": 1050,
+      "effortPerVerifiedSuccessMilli": { "calls": 2000, "repairs": 0, "retries": 1000, "scoutCalls": 0, "testRuns": 1000, "ciRuns": 0, "reviewMinutes": 0 },
+      "totals": { "billedCostMicros": 80, "reservedCostMicros": 100, "totalCostMicros": 180, "elapsedMs": 1050, "calls": 2, "repairs": 0, "retries": 1, "scoutCalls": 0, "testRuns": 1, "ciRuns": 0, "reviewMinutes": 0 },
+      "missingness": { "incompleteEvidence": 1, "unknownTransport": 1, "missingActualReceiptCost": 1, "censored": 0 }, "confidence": "LOW"
+    },
+    "STRONG": {
+      "episodeCount": 3, "verifiedSuccesses": 1, "vsrPpm": 333333,
+      "vsrWilson95Ppm": { "lower": 61492, "upper": 792340 }, "ecvrMicros": 650, "etvrMs": 2000,
+      "effortPerVerifiedSuccessMilli": { "calls": 6000, "repairs": 1000, "retries": 1000, "scoutCalls": 1000, "testRuns": 7000, "ciRuns": 3000, "reviewMinutes": 10000 },
+      "totals": { "billedCostMicros": 650, "reservedCostMicros": 0, "totalCostMicros": 650, "elapsedMs": 2000, "calls": 6, "repairs": 1, "retries": 1, "scoutCalls": 1, "testRuns": 7, "ciRuns": 3, "reviewMinutes": 10 },
+      "missingness": { "incompleteEvidence": 1, "unknownTransport": 0, "missingActualReceiptCost": 0, "censored": 0 }, "confidence": "LOW"
+    }
+  }
+}
