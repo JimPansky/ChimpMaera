@@ -62,7 +62,7 @@ test("canonical Evidence DAG input digests match the current repository bytes", 
 test("single-node changes select the owner, downstream integrity and mandatory hard gates", () => {
   const result = plan(["scripts/verification-plan.mjs"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["repository-integrity", "secure-default-proof", "vf-shadow-v2"]);
+  assert.deepEqual(result.selectedNodes, ["learning-routing-foundation", "repository-integrity", "secure-default-proof", "vf-shadow-v2"]);
   assert.ok(result.selectedTests.includes("node --test dist/tests/verification-fabric-v2.test.js"));
   assert.deepEqual(result.hardGates, [...graph().hardGates].sort((a, b) => a.localeCompare(b, "en")));
 });
@@ -74,8 +74,29 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["bi-execution-spine-v1", "integration-profile-v1", "learning-routing-foundation", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
+});
+
+test("learning-routing changes select the complete foundation and downstream integrity gates", () => {
+  const result = plan(["packages/contracts/src/learning-routing-baseline.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["learning-routing-foundation", "repository-integrity", "secure-default-proof"]);
+  assert.ok(result.selectedTests.includes("npm run learning-routing:test"));
+});
+
+test("integration profile changes select the bounded owner and downstream integrity gates", () => {
+  const result = plan(["packages/contracts/src/integration-profile.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["integration-profile-v1", "repository-integrity", "secure-default-proof"]);
+  assert.ok(result.selectedTests.includes("npm run integration-profile:test"));
+});
+
+test("BI execution spine changes select the bounded owner and downstream integrity gates", () => {
+  const result = plan(["packages/contracts/src/bi-execution-spine.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["bi-execution-spine-v1", "repository-integrity", "secure-default-proof"]);
+  assert.ok(result.selectedTests.includes("npm run bi-execution-spine:test"));
 });
 
 test("central toolchain and security changes invalidate the global closure", () => {

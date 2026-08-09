@@ -11,7 +11,7 @@ A public release is named for the functional, evidence-backed increment it
 delivers. A date or editorial cadence may appear as provenance, but labels such
 as “Daily”, “today's release” or “previous Daily” must not be the identity of an
 active public release. The current regular release is
-`v0.2.0-poc.20260804.5`, **ChimpMaera — Maintenance Contract Freeze V1**.
+`v0.2.0-poc.20260809.1`, **ChimpMaera — Governed Integration Foundations V1**.
 `v0.1.0` is historical only.
 
 Editorial Daily content is independent. It may describe progress, decisions,
@@ -33,8 +33,9 @@ insufficient by itself. After publication, run:
 env -u GH_TOKEN npm run release-governance:public-readback
 ```
 
-The verifier sends no authorization header. It checks the tag reference,
-release title/body, target, Latest/draft/prerelease state, raw `main` public
+The verifier sends no authorization header. It checks the release ID,
+publication timestamp and URL, tag reference, release title/body, target,
+Latest/draft/prerelease state, raw `main` public
 surfaces, exact asset-name set, sizes, asset-manifest content and SHA-256 bytes.
 Unknown, missing or extra evidence fails closed.
 

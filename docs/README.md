@@ -94,8 +94,13 @@ Status labels used here:
   classifies pseudonymous, consented, digest-bound synthetic records and their
   finite retention/deletion lifecycle. It adds no collector, telemetry,
   training feed, dashboard, ingestion path or runtime authority.
+- **Locally validated / not in the current regular release:** the
+  [governed BI execution spine candidate](BI-EXECUTION-SPINE-CONTRACT.md)
+  validates a closed public-synthetic contract and simulated receipts. It does
+  not independently prove formula/result bytes, run a query engine or dashboard,
+  contact a provider, or grant authority.
 - **Planned:** generic live connectors, production reversible-write onboarding,
-  BI packs and broader resource-plane profiles.
+  executable BI packs/runtimes and broader resource-plane profiles.
 
 ## Limitations and status
 

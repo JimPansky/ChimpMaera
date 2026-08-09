@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "chimpmaera.dev/signal-release-intake/v1",
+  "signalDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "gates": {
+    "THREAD_LIVE": true,
+    "NOT_DUPLICATE": true,
+    "CHIMPMAERA_FIT": true,
+    "PROBLEM_EVIDENCED": true,
+    "ACTIONABLE": true,
+    "PUBLIC_ONLY": true,
+    "CONTENT_SAFE": true,
+    "IP_CLEAR": true,
+    "LOCAL_DECISION_ONLY": true
+  }
+}

@@ -1,0 +1,11 @@
+[
+  { "caseId": "unknown-action", "path": "/integration/allowedActions", "value": ["READ_RECORD", "READ_UNDECLARED"], "expectedReason": "UNKNOWN_ACTION_DENIED" },
+  { "caseId": "hidden-write", "path": "/integration/allowedActions", "value": ["READ_RECORD", "UPDATE_RECORD"], "expectedReason": "HIDDEN_WRITE_DENIED" },
+  { "caseId": "private-path", "path": "/data/privatePath", "value": "/private/worktree/profile.json", "expectedReason": "PRIVATE_PATH_DENIED" },
+  { "caseId": "unpinned-upstream", "path": "/upstream/pinned", "value": false, "expectedReason": "UNPINNED_UPSTREAM_DENIED" },
+  { "caseId": "cross-tenant-reference", "path": "/identityProfile/tenantReference", "value": "tenant:external", "expectedReason": "CROSS_TENANT_REFERENCE_DENIED" },
+  { "caseId": "stale-evidence", "path": "/verification/freshUntilMs", "value": 1785542400000, "expectedReason": "STALE_EVIDENCE_DENIED" },
+  { "caseId": "incompatible-version", "path": "/identity/contractVersion", "value": "2.0.0", "expectedReason": "INCOMPATIBLE_VERSION_DENIED" },
+  { "caseId": "missing-rollback-target", "path": "/lifecycle/rollbackTarget", "value": "", "expectedReason": "MISSING_ROLLBACK_TARGET_DENIED" },
+  { "caseId": "generic-proxy-override", "path": "/overrides/genericProxy", "value": "proxy:arbitrary", "expectedReason": "GENERIC_PROXY_OVERRIDE_DENIED" }
+]

@@ -10,7 +10,11 @@ import {
   BI_EXECUTION_SPINE_PROHIBITED_FIELDS_V1,
   BI_EXECUTION_SPINE_REQUIRED_QUESTIONS_V1,
   biExecutionSpineBundleDigestV1,
+  biExecutionSpineClaimDigestV1,
+  biExecutionSpinePlanDigestV1,
   biExecutionSpineQuestionDigestV1,
+  biExecutionSpineReceiptDigestV1,
+  biExecutionSpineVisualizationDigestV1,
   evaluateBiExecutionSpineV1,
   renderPublicBiExecutionSpineDecisionV1,
   type BiExecutionSpineBundleV1,
@@ -31,10 +35,25 @@ function fixture(): BiExecutionSpineBundleV1 {
     "tests/fixtures/bi-execution-spine/positive-bundle-v1.json",
     "utf8",
   )) as BiExecutionSpineBundleV1;
-  return rehash(raw);
+  return raw;
 }
 
 function rehash(source: BiExecutionSpineBundleV1): BiExecutionSpineBundleV1 {
+  const result = structuredClone(source) as unknown as Record<string, any>;
+  result.questions = result.questions.map((question: BiExecutionSpineQuestionV1) => {
+    const updated = structuredClone(question) as unknown as Record<string, any>;
+    updated.queryPlan.planDigest = biExecutionSpinePlanDigestV1(updated.queryPlan);
+    updated.executionReceipt.receiptDigest = biExecutionSpineReceiptDigestV1(updated.executionReceipt);
+    updated.claim.claimDigest = biExecutionSpineClaimDigestV1(updated.claim);
+    updated.visualization.visualizationDigest = biExecutionSpineVisualizationDigestV1(updated.visualization);
+    updated.questionDigest = biExecutionSpineQuestionDigestV1(updated as BiExecutionSpineQuestionV1);
+    return updated;
+  });
+  result.bundleDigest = biExecutionSpineBundleDigestV1(result as BiExecutionSpineBundleV1);
+  return result as BiExecutionSpineBundleV1;
+}
+
+function rehashEnvelope(source: BiExecutionSpineBundleV1): BiExecutionSpineBundleV1 {
   const result = structuredClone(source) as unknown as Record<string, any>;
   result.questions = result.questions.map((question: BiExecutionSpineQuestionV1) => ({
     ...question,
@@ -104,6 +123,10 @@ test("CM-BI-EXEC-001 binds deterministic receipts verification reports claims an
   const input = fixture();
   assert.equal(input.questions.length, 3);
   for (const question of input.questions) {
+    assert.equal(biExecutionSpinePlanDigestV1(question.queryPlan), question.queryPlan.planDigest);
+    assert.equal(biExecutionSpineReceiptDigestV1(question.executionReceipt), question.executionReceipt.receiptDigest);
+    assert.equal(biExecutionSpineClaimDigestV1(question.claim), question.claim.claimDigest);
+    assert.equal(biExecutionSpineVisualizationDigestV1(question.visualization), question.visualization.visualizationDigest);
     assert.equal(biExecutionSpineQuestionDigestV1(question), question.questionDigest);
     assert.equal(question.executionReceipt.status, "SIMULATED_VERIFIED");
     assert.equal(question.verificationReport.outcome, "VERIFIED");
@@ -126,12 +149,43 @@ test("CM-BI-EXEC-001 negative matrix denies unsafe BI execution expansion", () =
     "tests/fixtures/bi-execution-spine/negative-matrix-v1.json",
     "utf8",
   )) as MutationFixture[];
-  assert.equal(cases.length, 11);
+  assert.equal(cases.length, 12);
   for (const negative of cases) {
     const result = evaluateBiExecutionSpineV1(mutate(fixture(), negative));
     assert.equal(result.outcome, "DENIED", negative.caseId);
     assert.ok(result.reasonCodes.includes(negative.expectedReason), `${negative.caseId}:${result.reasonCodes.join(",")}`);
   }
+});
+
+test("CM-BI-EXEC-001 denies stale nested digests after an envelope rehash", () => {
+  const input = structuredClone(fixture()) as unknown as Record<string, any>;
+  input.questions[0].queryPlan.planDigest = "f".repeat(64);
+  assert.deepEqual(evaluateBiExecutionSpineV1(rehashEnvelope(input as BiExecutionSpineBundleV1)), {
+    schemaVersion: "chimpmaera.cm-bi-exec/governed-bi-execution-spine-decision/v1",
+    outcome: "DENIED",
+    reasonCodes: ["BI_EXECUTION_SPINE_ARTIFACT_DIGEST_DENIED"],
+    claimBoundary: BI_EXECUTION_SPINE_CLAIM_BOUNDARY_V1,
+  });
+});
+
+test("CM-BI-EXEC-001 denies sensitive values and contradictory authority claims in allowed fields", () => {
+  const sensitive = structuredClone(fixture()) as unknown as Record<string, any>;
+  sensitive.questions[0].intent.naturalLanguage = `Read ${["", "home", "operator", "private", "cm-bi.json"].join("/")}`;
+  assert.deepEqual(evaluateBiExecutionSpineV1(rehash(sensitive as BiExecutionSpineBundleV1)), {
+    schemaVersion: "chimpmaera.cm-bi-exec/governed-bi-execution-spine-decision/v1",
+    outcome: "DENIED",
+    reasonCodes: ["BI_EXECUTION_SPINE_SENSITIVE_VALUE_DENIED"],
+    claimBoundary: BI_EXECUTION_SPINE_CLAIM_BOUNDARY_V1,
+  });
+
+  const authority = structuredClone(fixture()) as unknown as Record<string, any>;
+  authority.questions[0].claim.statement = "This is the authoritative production answer.";
+  assert.deepEqual(evaluateBiExecutionSpineV1(rehash(authority as BiExecutionSpineBundleV1)), {
+    schemaVersion: "chimpmaera.cm-bi-exec/governed-bi-execution-spine-decision/v1",
+    outcome: "DENIED",
+    reasonCodes: ["BI_EXECUTION_SPINE_CLAIM_DENIED"],
+    claimBoundary: BI_EXECUTION_SPINE_CLAIM_BOUNDARY_V1,
+  });
 });
 
 test("CM-BI-EXEC-001 denies digest forgery and seeded public leakage", () => {

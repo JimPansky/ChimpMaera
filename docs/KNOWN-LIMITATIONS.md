@@ -7,7 +7,7 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The ChimpMaera Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260804.5` and its local synthetic evidence; a later documentation
+`v0.2.0-poc.20260809.1` and its local synthetic evidence; a later documentation
 change does not broaden the released asset claims.
 
 - This is a local synthetic proof of concept, not a production deployment or
@@ -85,11 +85,27 @@ change does not broaden the released asset claims.
   They do not run third-party scans, establish that code is safe, accept or
   install an extension, issue a trust badge, disclose vulnerabilities, activate
   a binding, grant authority, certify security, or prove production fitness.
+- Integration profiles validate five closed synthetic manifest variants only.
+  They do not contact or import a connector, prove Power Platform or mailbox
+  compatibility, handle a real tenant or credential, create an issue, grant
+  authority, activate a route, permit generic proxying or prove production
+  readiness.
+- Signal-to-release intake evaluates nine local synthetic gates only. It does
+  not monitor or collect signals, read an external source, post content, create
+  an issue or pull request, merge code, publish a release, deploy or activate a
+  runtime.
 - The minimized agent-work event contract validates synthetic pseudonymous
   records and deletion/readback decisions only. It does not collect events,
   establish a legal basis, operate telemetry, monitor workers, train a model,
   run a dashboard, ingest production data, prove erasure in an external store,
   certify privacy compliance, or activate runtime behavior.
+- The CM-BI-EXEC-001 Draft candidate is not part of the current regular
+  release. It validates a closed local-synthetic contract, internally
+  computable digests and simulated receipt declarations only. Its opaque
+  source, operation-quality, formula and result references are not
+  independently recomputed; it does not prove an answer, run SQL or another
+  query engine, operate a dashboard, contact a provider, use production data or
+  grant authority.
 - The maintenance contract freeze validates exact synthetic locks,
   compatibility, preview plans, receipts and read-only Doctor projections. It
   does not discover systems, access a network or Docker, install packages,
@@ -98,6 +114,10 @@ change does not broaden the released asset claims.
 - No DMS/compliance suitability or universal AI capability is claimed.
 - Optional video assets are replaceable examples. Users remain responsible for
   their own output rights, configuration and safety.
+- VIDEO-M2 template authoring is documentation plus deterministic local
+  reference-closure checking. It does not select, render, assemble, upload or
+  publish media, activate a watcher or worker, provide a universal media studio
+  or remove human editorial review.
 - The German voice WAV and transcript are an explicit localized reproduction
   exception. Public repository prose remains English-first.
 - Apache-2.0 grants no trademark rights or permission to imply endorsement.

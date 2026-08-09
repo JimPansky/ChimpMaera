@@ -2,29 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/ChimpMaera",
   "currentRelease": {
-    "tag": "v0.2.0-poc.20260804.5",
-    "title": "ChimpMaera — Maintenance Contract Freeze V1",
-    "increment": "Maintenance Contract Freeze V1",
-    "targetCommitish": "cbc81c8da4cf2d995f386854e8def29dbad61c77",
-    "tagObjectSha": "cbc81c8da4cf2d995f386854e8def29dbad61c77",
+    "releaseId": 367393050,
+    "tag": "v0.2.0-poc.20260809.1",
+    "title": "ChimpMaera — Governed Integration Foundations V1",
+    "increment": "Governed Integration Foundations V1",
+    "targetCommitish": "a931a10a56039b51ac7120ee507c8dc9c7c045eb",
+    "tagObjectSha": "a931a10a56039b51ac7120ee507c8dc9c7c045eb",
+    "publishedAt": "2026-08-09T06:07:58Z",
+    "url": "https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260809.1",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz",
-        "size": 1407067,
-        "sha256": "98151b4bf50533d7de2cecdb05f9119c25705151ec6c32890524ec86b7cd880e"
+        "name": "chimpmaera-v0.2.0-poc.20260809.1-governed-integration-foundations-v1.tar.gz",
+        "size": 1517951,
+        "sha256": "b3286c71b90222d9e65adb47cf95b7fc19e94552c4836b8ba1c9e92d9ef7af7a"
       },
       {
-        "name": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz.sha256",
-        "size": 137,
-        "sha256": "54f750d6a6aee8cdeede1ceae067df481fa7ad23970226d1ddc41253525ddf27"
+        "name": "chimpmaera-v0.2.0-poc.20260809.1-governed-integration-foundations-v1.tar.gz.sha256",
+        "size": 142,
+        "sha256": "2d454268bf2a2bd37aa496c4865938a8160db2cae2c28e52892a55a23c0a98e1"
       }
     ],
     "assetManifest": {
-      "name": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz.sha256",
-      "declares": "chimpmaera-v0.2.0-poc.20260804.5-maintenance-contract-freeze-v1.tar.gz"
+      "name": "chimpmaera-v0.2.0-poc.20260809.1-governed-integration-foundations-v1.tar.gz.sha256",
+      "declares": "chimpmaera-v0.2.0-poc.20260809.1-governed-integration-foundations-v1.tar.gz"
     }
   },
   "policy": {
@@ -45,6 +48,7 @@
     "docs/RESOURCE-PLANE-PROFILES.md",
     "docs/EXTENSION-ASSURANCE-PROFILES.md",
     "docs/AGENT-WORK-EVENT-CONTRACT.md",
+    "docs/INTEGRATION-PROFILES.md",
     "benchmarks/adaptability-m0/README.md",
     "docs/index.md",
     "docs/alternatives.md",
@@ -76,7 +80,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260804.5 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260809.1 is the current regular Latest release.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
     },
@@ -211,6 +215,42 @@
       "evidencePaths": ["docs/AGENT-WORK-EVENT-CONTRACT.md", "docs/development/awi-01-minimized-event-contract-pdca.md"],
       "nonClaims": ["Local deterministic synthetic contract evidence only; no event collection, telemetry, external monitoring, dashboard, model training, production ingestion, runtime activation, privacy certification, legal basis determination or production fitness is proven."],
       "traceability": {"issues": [43], "pullRequests": [109, 110], "sourceCommits": ["5b041534b73dd6230e0279804fea5381e7941dad", "214b58d87ebfe91178f416ee26b8e89aa0447b76"], "pdcaPaths": ["docs/development/awi-01-minimized-event-contract-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-016",
+      "component": "VIDEO-M2 Template Authoring",
+      "claim": "ChimpMaera ships a governed M0 guide for immutable video templates and release-specific segments plus deterministic closure checks for documented local references and declared asset digests.",
+      "userValue": "Editors can version, validate, supersede and roll back bounded template or segment changes without editing generated evidence or silently widening claims.",
+      "includedBytes": ["tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md", "tools/video-production-reference/scripts/verify_reference_closure.py", "tools/video-production-reference/tests/test_reference_closure.py"],
+      "functionalProof": {"testPaths": ["tools/video-production-reference/tests/test_reference_closure.py"], "result": "PASS 2/2 focused closure tests: the documented reference tree resolves deterministically and a missing referenced runtime file fails closed."},
+      "safetyProof": {"testPaths": ["tools/video-production-reference/tests/test_reference_closure.py"], "result": "PASS: path escape, symlink, missing-reference and declared asset-digest checks remain fail closed; authoring guidance keeps rendering and public actions separately gated."},
+      "evidencePaths": ["tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md", "tools/video-production-reference/README.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"],
+      "nonClaims": ["Documentation and local deterministic reference closure only; no template selection, rendering, assembly, upload, publication, watcher or worker activation, production video behavior, universal media-studio capability or removal of human editorial review is proven."],
+      "traceability": {"issues": [64], "pullRequests": [142, 145], "sourceCommits": ["2e66f124f24ae40d58287c541434bea289192cff", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-017",
+      "component": "ASF-INTAKE-2 Signal Release Intake",
+      "claim": "ChimpMaera ships a pure closed signal-to-release intake contract that yields a pre-candidate only when all nine gates pass and otherwise returns stable ordered rejection reasons.",
+      "userValue": "Maintainers can make a deterministic local pre-candidate decision without the intake contract monitoring sources, posting content, merging code or creating a release.",
+      "includedBytes": ["packages/contracts/src/signal-release-intake.ts", "tests/fixtures/signal-release-intake/positive-v1.json", "tests/fixtures/signal-release-intake/rejections-v1.json", "tests/signal-release-intake.test.ts"],
+      "functionalProof": {"testPaths": ["tests/signal-release-intake.test.ts"], "result": "PASS 4/4: all nine gates produce a pre-candidate, each single-gate rejection is exact, combined denials retain canonical order and 100 replays are deterministic."},
+      "safetyProof": {"testPaths": ["tests/signal-release-intake.test.ts", "tests/fixtures/signal-release-intake/rejections-v1.json"], "result": "PASS: missing, extra and malformed fields deny; the returned authority boundary explicitly excludes monitoring, posting and release authority."},
+      "evidencePaths": ["packages/contracts/src/signal-release-intake.ts", "tests/signal-release-intake.test.ts", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic decision only; no monitoring, collection, telemetry, external read, content moderation service, posting, issue or PR creation, merge, tag, release publication, deployment or runtime activation is included or authorized."],
+      "traceability": {"issues": [56], "pullRequests": [143, 145], "sourceCommits": ["9e5f9ec6d83448b196e45443ae88e08c90c910b7", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
+      "claimId": "CM-REL-018",
+      "component": "INT-PROFILE-001 Integration Profiles",
+      "claim": "ChimpMaera ships a closed local-synthetic integration-profile description contract for five bounded variants with digest-stable evaluation, exact existing-contract references, lifecycle fallback and typed override denial.",
+      "userValue": "Integrators can evaluate narrow Power Apps, Power BI, mailbox-style, local-knowledge and issue-candidate reference profiles without granting authority or activating a connector route.",
+      "includedBytes": ["packages/contracts/src/integration-profile.ts", "schemas/contracts/integration-profile-v1.schema.json", "tests/fixtures/integration-profile/positive-variants-v1.json", "tests/fixtures/integration-profile/negative-probes-v1.json", "tests/integration-profile.test.ts", "docs/INTEGRATION-PROFILES.md"],
+      "functionalProof": {"testPaths": ["tests/integration-profile.test.ts"], "result": "PASS 6/6: five strict synthetic variants conform and their canonical digests survive 100 object-key reorderings per variant."},
+      "safetyProof": {"testPaths": ["tests/integration-profile.test.ts", "tests/fixtures/integration-profile/negative-probes-v1.json"], "result": "PASS: nine named fail-closed probes plus unknown fields, route drift, digest forgery, malformed primitives and variant/class crossover deny without exposing credential, provider or real-tenant material."},
+      "evidencePaths": ["docs/INTEGRATION-PROFILES.md", "docs/development/int-profile-001-contract-slice-pdca.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic description evidence only; no real tenant, provider, credential, connector import, live mailbox or Power Platform compatibility, tenant isolation, external write, issue creation, generic proxy, deployment, production readiness, runtime activation or universal compatibility is proven."],
+      "traceability": {"issues": [60], "pullRequests": [144, 145], "sourceCommits": ["cd832fe6337b7e6023aab3a274e231855f0b0d0b", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/int-profile-001-contract-slice-pdca.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
       "claimId": "CM-REL-011",

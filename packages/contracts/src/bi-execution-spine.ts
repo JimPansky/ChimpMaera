@@ -36,8 +36,11 @@ export type BiExecutionSpineReasonCodeV1 =
   | "BI_EXECUTION_SPINE_VERIFIED"
   | "BI_EXECUTION_SPINE_SCHEMA_DENIED"
   | "BI_EXECUTION_SPINE_PROHIBITED_FIELD_DENIED"
+  | "BI_EXECUTION_SPINE_SENSITIVE_VALUE_DENIED"
   | "BI_EXECUTION_SPINE_DIGEST_DENIED"
+  | "BI_EXECUTION_SPINE_ARTIFACT_DIGEST_DENIED"
   | "BI_EXECUTION_SPINE_QUESTION_SET_DENIED"
+  | "BI_EXECUTION_SPINE_QUESTION_SEMANTICS_DENIED"
   | "BI_EXECUTION_SPINE_SOURCE_DENIED"
   | "BI_EXECUTION_SPINE_QUERY_SAFETY_DENIED"
   | "BI_EXECUTION_SPINE_RECEIPT_DENIED"
@@ -185,6 +188,20 @@ function containsProhibitedField(value: unknown): boolean {
   return Object.entries(value).some(([key, nested]) => prohibited.has(normalizedKey(key)) || containsProhibitedField(nested));
 }
 
+function containsSensitiveValue(value: unknown): boolean {
+  if (Array.isArray(value)) return value.some(containsSensitiveValue);
+  if (isRecord(value)) return Object.values(value).some(containsSensitiveValue);
+  if (typeof value !== "string") return false;
+  return /-----BEGIN [A-Z ]*PRIVATE KEY-----/i.test(value)
+    || /\bgh[pousr]_[A-Za-z0-9]{20,}\b/.test(value)
+    || /(?:^|\s)(?:\/home\/|\/Users\/)[^\s]+/.test(value)
+    || /\btenant-[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\b/i.test(value);
+}
+
+function contentWithoutKey(value: Record<string, unknown>, omittedKey: string): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(value).filter(([key]) => key !== omittedKey));
+}
+
 function validSources(value: unknown): value is BiExecutionSpineQuestionV1["sources"] {
   const systems = ["CRM_FIXTURE", "ERP_FIXTURE", "CM_OBS_FIXTURE"];
   const reasons = ["NONE", "EVIDENCE_NOT_PRODUCED", "SOURCE_REDACTED", "LATE_OBSERVED_EVENT", "SEQUENCE_GAP"];
@@ -273,7 +290,23 @@ function denied(reason: BiExecutionSpineReasonCodeV1): BiExecutionSpineDecisionV
 }
 
 function questionContent(value: BiExecutionSpineQuestionV1): Record<string, unknown> {
-  return Object.fromEntries(Object.entries(value).filter(([key]) => key !== "questionDigest"));
+  return contentWithoutKey(value as unknown as Record<string, unknown>, "questionDigest");
+}
+
+export function biExecutionSpinePlanDigestV1(value: BiExecutionSpineQuestionV1["queryPlan"]): string {
+  return digest(contentWithoutKey(value as unknown as Record<string, unknown>, "planDigest"));
+}
+
+export function biExecutionSpineReceiptDigestV1(value: BiExecutionSpineQuestionV1["executionReceipt"]): string {
+  return digest(contentWithoutKey(value as unknown as Record<string, unknown>, "receiptDigest"));
+}
+
+export function biExecutionSpineClaimDigestV1(value: BiExecutionSpineQuestionV1["claim"]): string {
+  return digest(contentWithoutKey(value as unknown as Record<string, unknown>, "claimDigest"));
+}
+
+export function biExecutionSpineVisualizationDigestV1(value: BiExecutionSpineQuestionV1["visualization"]): string {
+  return digest(contentWithoutKey(value as unknown as Record<string, unknown>, "visualizationDigest"));
 }
 
 export function biExecutionSpineQuestionDigestV1(value: BiExecutionSpineQuestionV1): string {
@@ -287,6 +320,7 @@ export function biExecutionSpineBundleDigestV1(value: BiExecutionSpineBundleV1):
 
 export function evaluateBiExecutionSpineV1(value: unknown): BiExecutionSpineDecisionV1 {
   if (containsProhibitedField(value)) return denied("BI_EXECUTION_SPINE_PROHIBITED_FIELD_DENIED");
+  if (containsSensitiveValue(value)) return denied("BI_EXECUTION_SPINE_SENSITIVE_VALUE_DENIED");
   if (!exactKeys(value, [
     "schemaVersion", "spineId", "contractVersion", "evidenceClass", "questions",
     "claimBoundary", "bundleDigest",
@@ -307,6 +341,58 @@ export function evaluateBiExecutionSpineV1(value: unknown): BiExecutionSpineDeci
   const ids = bundle.questions.map((question) => question.questionId).sort();
   if (canonicalJson(ids) !== canonicalJson([...BI_EXECUTION_SPINE_REQUIRED_QUESTIONS_V1].sort())) {
     return denied("BI_EXECUTION_SPINE_QUESTION_SET_DENIED");
+  }
+  const expectedSemantics: Record<BiExecutionSpineQuestionV1["questionId"], {
+    systems: readonly string[];
+    entities: readonly string[];
+    metric: string;
+    unit: string;
+    grain: string;
+    allowedFields: readonly string[];
+  }> = {
+    "crm-risk-exposure": {
+      systems: ["CRM_FIXTURE", "ERP_FIXTURE"],
+      entities: ["account", "invoice"],
+      metric: "risk_exposure_eur",
+      unit: "EUR",
+      grain: "account_month",
+      allowedFields: ["account_id", "customer_segment", "invoice_amount_eur", "invoice_status"],
+    },
+    "erp-margin-drift": {
+      systems: ["ERP_FIXTURE"],
+      entities: ["order"],
+      metric: "margin_drift_pct",
+      unit: "PERCENT",
+      grain: "product_month",
+      allowedFields: ["product_family", "order_margin_pct"],
+    },
+    "operation-quality-exception-rate": {
+      systems: ["CM_OBS_FIXTURE"],
+      entities: ["operation_event"],
+      metric: "quality_exception_rate",
+      unit: "PERCENT",
+      grain: "operation_day",
+      allowedFields: ["operation_quality_state", "operation_event_day"],
+    },
+  };
+  if (bundle.questions.some((question) => {
+    const expected = expectedSemantics[question.questionId];
+    return canonicalJson([...question.sources.map((source) => source.system)].sort()) !== canonicalJson([...expected.systems].sort())
+      || canonicalJson([...question.semanticModel.entities].sort()) !== canonicalJson([...expected.entities].sort())
+      || question.semanticModel.metric !== expected.metric
+      || question.semanticModel.unit !== expected.unit
+      || question.semanticModel.grain !== expected.grain
+      || canonicalJson([...question.queryPlan.allowedFields].sort()) !== canonicalJson([...expected.allowedFields].sort());
+  })) {
+    return denied("BI_EXECUTION_SPINE_QUESTION_SEMANTICS_DENIED");
+  }
+  if (bundle.questions.some((question) =>
+    biExecutionSpinePlanDigestV1(question.queryPlan) !== question.queryPlan.planDigest
+    || biExecutionSpineReceiptDigestV1(question.executionReceipt) !== question.executionReceipt.receiptDigest
+    || biExecutionSpineClaimDigestV1(question.claim) !== question.claim.claimDigest
+    || biExecutionSpineVisualizationDigestV1(question.visualization) !== question.visualization.visualizationDigest
+  )) {
+    return denied("BI_EXECUTION_SPINE_ARTIFACT_DIGEST_DENIED");
   }
   if (biExecutionSpineBundleDigestV1(bundle) !== bundle.bundleDigest
     || bundle.questions.some((question) => biExecutionSpineQuestionDigestV1(question) !== question.questionDigest)) {
@@ -348,6 +434,7 @@ export function evaluateBiExecutionSpineV1(value: unknown): BiExecutionSpineDeci
     question.claim.outcome !== "ANSWERED"
     || question.claim.nonAuthority !== "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD"
     || question.claim.confidence !== "BOUNDED_SYNTHETIC"
+    || /\b(?:authoritative|system of record|production(?:-ready)?|official dashboard)\b/i.test(question.claim.statement)
   )) {
     return denied("BI_EXECUTION_SPINE_CLAIM_DENIED");
   }

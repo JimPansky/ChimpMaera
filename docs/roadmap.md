@@ -30,6 +30,18 @@ own shipped scope.
   and its six-axis lock, canonical digest and fail-closed preview gates. Issue
   [#59](https://github.com/JimPansky/ChimpMaera/issues/59) retains delivery
   history, while release governance owns shipped status.
+- Reproduce the released [VIDEO-M2 template and segment authoring guide](../tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md)
+  and its deterministic local reference-closure checks. Issue
+  [#64](https://github.com/JimPansky/ChimpMaera/issues/64) retains delivery
+  history, while release governance owns shipped status.
+- Reproduce the released ASF-INTAKE-2 closed nine-gate pre-candidate decision
+  through [`CM-REL-017`](../release/governance.json). Issue
+  [#56](https://github.com/JimPansky/ChimpMaera/issues/56) retains delivery
+  history, while release governance owns shipped status.
+- Reproduce the released [INT-PROFILE-001 integration profiles](./INTEGRATION-PROFILES.md)
+  and their five local-synthetic variants plus nine fail-closed probes. Issue
+  [#60](https://github.com/JimPansky/ChimpMaera/issues/60) retains delivery
+  history, while release governance owns shipped status.
 - Keep release truth, anonymous asset/hash readback, secure-default probes,
   public navigation, and known limitations synchronized with every bounded
   increment.

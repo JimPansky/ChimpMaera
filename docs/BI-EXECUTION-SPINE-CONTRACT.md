@@ -11,6 +11,10 @@ contract and fixture layer only: no Superset, SQL Lab, DuckDB, Arrow, Pandera,
 Vega-Lite, live connector, dashboard authority, provider call, production data
 or customer/employee telemetry is introduced.
 
+Delivery traceability: Draft PR
+[#141](https://github.com/JimPansky/ChimpMaera/pull/141) declares `Closes #140`
+for owning issue [#140](https://github.com/JimPansky/ChimpMaera/issues/140).
+
 ## Frozen semantics
 
 The bundle binds exactly three synthetic PoC questions:
@@ -37,18 +41,29 @@ Each question carries the same authority-free spine:
 ## Fail-closed rules
 
 Unknown fields and seeded sensitive field names fail closed. All questions must
-be public synthetic, fresh, lineage-complete, formula-verified, privacy-verified
-and receipt-bound. Missing lineage, stale sources, unsafe query capabilities,
-empty receipts, unsupported visualization and authority claims are denied.
+be public synthetic, fresh, declaration-complete, privacy-verified and
+receipt-bound. The verifier rejects stale nested artifact digests, a changed
+question-to-source/metric/field mapping, sensitive values in otherwise allowed
+text fields, and authority claims that contradict the explicit non-authority
+enum. Missing lineage, stale sources, unsafe query capabilities, empty
+receipts, unsupported visualization and authority claims are denied.
+
+The source, operation-quality, formula and result digests are opaque references
+in this contract fixture. Because their referenced source bytes, formula bytes
+and result rows are intentionally absent, this verifier does not independently
+recompute them or prove the declared formula, result or answer. It verifies the
+closed contract shape, internally computable artifact/envelope digests and
+declared synthetic boundary only.
 
 ## Reproduce the local evidence
 
 ```bash
-npm run build
-node --test dist/tests/bi-execution-spine.test.js
+npm run bi-execution-spine:test
 ```
 
 Rollback/fallback: remove the additive BI execution spine files and fail closed
 to the existing BI-M1 planning issues, the read-only analytics projection and
-the CM-OBS evidence substrate. This contract is not proof of production
-readiness, runtime performance, dashboard correctness or active authority.
+the CM-OBS evidence substrate. This pre-release contract candidate is not part
+of the current regular release and is not proof of formula correctness, answer
+correctness, production readiness, runtime performance, dashboard correctness
+or active authority.

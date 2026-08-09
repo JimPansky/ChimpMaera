@@ -75,5 +75,12 @@
     "path": "/questions/2/claim/nonAuthority",
     "value": "AUTHORITATIVE_DASHBOARD",
     "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "question-semantic-swap-denied",
+    "operation": "replace",
+    "path": "/questions/0/semanticModel/metric",
+    "value": "margin_drift_pct",
+    "expectedReason": "BI_EXECUTION_SPINE_QUESTION_SEMANTICS_DENIED"
   }
 ]

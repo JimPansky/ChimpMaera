@@ -42,7 +42,7 @@
         "kind": "DECLARATIVE_AGGREGATE_PLAN",
         "allowedFields": ["account_id", "customer_segment", "invoice_amount_eur", "invoice_status"],
         "capabilitiesDenied": ["ARBITRARY_SQL", "PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
-        "planDigest": "2222222222222222222222222222222222222222222222222222222222222222"
+        "planDigest": "05ad79c8f311bbf991c2b55a5be0969e67f757d75294431ef18421acac23b9fc"
       },
       "executionReceipt": {
         "receiptId": "receipt:crm-risk-exposure-v1",
@@ -50,7 +50,7 @@
         "executedAtMs": 1786200000000,
         "rowCount": 3,
         "resultDigest": "3333333333333333333333333333333333333333333333333333333333333333",
-        "receiptDigest": "4444444444444444444444444444444444444444444444444444444444444444"
+        "receiptDigest": "75f11bfec78cb84e0e2af7894941eb35b6d96e68d5e8e8cca610287199272a06"
       },
       "verificationReport": {
         "outcome": "VERIFIED",
@@ -67,15 +67,15 @@
         "statement": "Synthetic enterprise accounts carry the largest bounded exposure at 42000 EUR.",
         "confidence": "BOUNDED_SYNTHETIC",
         "nonAuthority": "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD",
-        "claimDigest": "5555555555555555555555555555555555555555555555555555555555555555"
+        "claimDigest": "fad88e15f3423065c0ab5447995b3b0d737eaadb6b00af12744c99376fa66520"
       },
       "visualization": {
         "kind": "BAR",
         "fields": ["customer_segment", "invoice_amount_eur"],
         "unsupportedReason": null,
-        "visualizationDigest": "6666666666666666666666666666666666666666666666666666666666666666"
+        "visualizationDigest": "0659cc294fd6082b41d8eebd5ba4656857ae7353c872ef631cc8a98842908902"
       },
-      "questionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+      "questionDigest": "bcf14d9d571dbdc0c8e866b7910cf1ddc0b48308dca6c092dcdc8e51f2dbe8cf"
     },
     {
       "questionId": "erp-margin-drift",
@@ -108,7 +108,7 @@
         "kind": "DECLARATIVE_AGGREGATE_PLAN",
         "allowedFields": ["product_family", "order_margin_pct"],
         "capabilitiesDenied": ["ARBITRARY_SQL", "PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
-        "planDigest": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+        "planDigest": "9d9f67febd4f3dc4ba3eac832e511b7e90a063531cfead964dd0605a44f26bb4"
       },
       "executionReceipt": {
         "receiptId": "receipt:erp-margin-drift-v1",
@@ -116,7 +116,7 @@
         "executedAtMs": 1786200000000,
         "rowCount": 4,
         "resultDigest": "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd",
-        "receiptDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        "receiptDigest": "9c48da22baa6095819878ccd9660630002b706ca4fdf3a336c803029dde68089"
       },
       "verificationReport": {
         "outcome": "VERIFIED",
@@ -133,15 +133,15 @@
         "statement": "Synthetic spare-parts orders show the largest bounded margin drift at 3.6 percent.",
         "confidence": "BOUNDED_SYNTHETIC",
         "nonAuthority": "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD",
-        "claimDigest": "1357913579135791357913579135791357913579135791357913579135791357"
+        "claimDigest": "5076d3c698c660c0b5ea2b01ee32f28678433c826b10b04b5ff3a065a32c716b"
       },
       "visualization": {
         "kind": "KPI",
         "fields": ["product_family", "order_margin_pct"],
         "unsupportedReason": null,
-        "visualizationDigest": "2468024680246802468024680246802468024680246802468024680246802468"
+        "visualizationDigest": "5cb60f53c2b024c13ce0cdbd36e1e3031568ecc319e7a004247294a7628d4078"
       },
-      "questionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+      "questionDigest": "d0800af5e1b19f0dbe17668b768f9a64aa48bbdab3c03eca311024092d186af0"
     },
     {
       "questionId": "operation-quality-exception-rate",
@@ -174,7 +174,7 @@
         "kind": "DECLARATIVE_AGGREGATE_PLAN",
         "allowedFields": ["operation_quality_state", "operation_event_day"],
         "capabilitiesDenied": ["ARBITRARY_SQL", "PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
-        "planDigest": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddde"
+        "planDigest": "ea61da148843cdea1332645768470ad86600d6a4d373ed7ed44778004f2a6df1"
       },
       "executionReceipt": {
         "receiptId": "receipt:operation-quality-exception-v1",
@@ -182,7 +182,7 @@
         "executedAtMs": 1786200000000,
         "rowCount": 5,
         "resultDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef",
-        "receiptDigest": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa"
+        "receiptDigest": "70a40352a7e31c04263963f371d08066ae29718a994fb73880a6d894adaba74d"
       },
       "verificationReport": {
         "outcome": "VERIFIED",
@@ -199,17 +199,17 @@
         "statement": "Synthetic operation exceptions remain bounded at 20 percent with one warn-state input.",
         "confidence": "BOUNDED_SYNTHETIC",
         "nonAuthority": "NOT_A_DASHBOARD_NOT_PRODUCTION_NOT_SYSTEM_OF_RECORD",
-        "claimDigest": "abababababababababababababababababababababababababababababababab"
+        "claimDigest": "a572742c2130720b4c9ed896d1a107b4d2eaf8476217dea0f4057baa3070eb97"
       },
       "visualization": {
         "kind": "TABLE",
         "fields": ["operation_quality_state", "operation_event_day"],
         "unsupportedReason": null,
-        "visualizationDigest": "bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc"
+        "visualizationDigest": "72f6b22eb928ae5496a09f3835f7d65558795c4ddfdeb1975917bda832bbaea1"
       },
-      "questionDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+      "questionDigest": "04fd8413a6844b860feabd74e30c6dc9ee64f6f18856a66420ee9cf026995c03"
     }
   ],
   "claimBoundary": "DECLARATIVE_BI_EXECUTION_SPINE_CONTRACT_ONLY_NO_RUNTIME_NO_SQL_ENGINE_NO_DASHBOARD_AUTHORITY_NO_PRODUCTION_DATA",
-  "bundleDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+  "bundleDigest": "ae1265db33867afa62bb8240adb54fd817ab99612eb4eba655a02f6771fc2fd8"
 }
