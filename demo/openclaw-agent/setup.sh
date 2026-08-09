@@ -1,13 +1,40 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# shellcheck source=demo/openclaw-agent/lib.sh
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
-command -v node >/dev/null || cm_aas035_fail "Node.js is required for offline provenance verification"
+cm_aas035_setup_source="${BASH_SOURCE[0]}"
+case "$cm_aas035_setup_source" in
+  /*) ;;
+  *)
+    cm_aas035_invocation_dir="$(pwd)" || {
+      printf >&2 'AAS-035 ERROR: invocation path resolution failed\n'
+      exit 1
+    }
+    cm_aas035_setup_source="$cm_aas035_invocation_dir/$cm_aas035_setup_source"
+    ;;
+esac
+cm_aas035_setup_dir="$(cd -- "${cm_aas035_setup_source%/*}" && pwd)" || {
+  printf >&2 'AAS-035 ERROR: setup path resolution failed\n'
+  exit 1
+}
+cm_aas035_verified_root="$(cd -- "$cm_aas035_setup_dir/../.." && pwd)" || {
+  printf >&2 'AAS-035 ERROR: repository root resolution failed\n'
+  exit 1
+}
+
+command -v node >/dev/null || {
+  printf >&2 'AAS-035 ERROR: Node.js is required for offline provenance verification\n'
+  exit 1
+}
 host_os="$(uname -s)"
 host_arch="$(uname -m)"
-node "$cm_aas035_root/scripts/verify-openclaw-agent-runtime-lock.mjs" \
+node "$cm_aas035_verified_root/scripts/verify-openclaw-agent-runtime-lock.mjs" \
   --host-os "$host_os" --host-arch "$host_arch"
+
+# shellcheck source=demo/openclaw-agent/lib.sh
+source "$cm_aas035_setup_dir/lib.sh"
+[ "$cm_aas035_root" = "$cm_aas035_verified_root" ] ||
+  cm_aas035_fail "verified repository root changed while loading fixture helper"
+
 command -v docker >/dev/null || cm_aas035_fail "Docker is required"
 docker info >/dev/null 2>&1 || cm_aas035_fail "Docker daemon is unavailable"
 docker compose version >/dev/null 2>&1 || cm_aas035_fail "Docker Compose v2 is required"

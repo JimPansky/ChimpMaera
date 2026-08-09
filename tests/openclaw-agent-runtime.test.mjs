@@ -80,6 +80,12 @@ test("AAS-035 setup and rollback stay ownership-scoped", () => {
     setup.indexOf("verify-openclaw-agent-runtime-lock.mjs") < setup.indexOf("docker info"),
     "offline provenance verification must precede Docker runtime access",
   );
+  assert.ok(
+    setup.indexOf("verify-openclaw-agent-runtime-lock.mjs") < setup.indexOf('source "$cm_aas035_setup_dir/lib.sh"'),
+    "offline provenance verification must precede executable fixture helper loading",
+  );
+  assert.match(setup, /cm_aas035_verified_root="\$\(cd -- "\$cm_aas035_setup_dir\/\.\.\/\.\." && pwd\)"/);
+  assert.match(setup, /verified repository root changed while loading fixture helper/);
   assert.match(setup, /--provenance=false/);
   assert.match(setup, /io\.chimpmaera\.fixture\.source-sha256/);
   assert.match(setup, /io\.chimpmaera\.upstream\.index-digest/);

@@ -19,7 +19,7 @@
     "platform": "linux/amd64",
     "platformManifestDigest": "sha256:165b4992f1b4b74ffdd7a02c887ba006f9f5dc951eca420eef573a8b233b543f",
     "gatewayBaseReference": "docker.io/library/node:24.14.1-bookworm-slim@sha256:e484ae3f1e3c378021c967fd42254f343c302a9263e412280eac32bf5bca7008",
-    "localArtifactCount": 17
+    "localArtifactCount": 18
   },
   "provenanceVerification": {
     "command": "npm run openclaw-runtime-lock:verify",
@@ -28,7 +28,7 @@
   },
   "focusedVerification": {
     "command": "npm run openclaw-m1.1:test",
-    "passed": 10,
+    "passed": 11,
     "failed": 0,
     "runtimeInvocationByNegativeSpies": 0
   },
@@ -38,6 +38,7 @@
     "MISSING_LOCK_DENIED_BEFORE_DOCKER",
     "PROVENANCE_MISMATCH_DENIED_BEFORE_DOCKER",
     "ALTERED_LOCAL_INPUT_DENIED_BEFORE_DOCKER",
+    "DRIFTED_EXECUTABLE_HELPER_DENIED_BEFORE_SOURCE_OR_DOCKER",
     "UNSUPPORTED_ARCHITECTURE_DENIED_BEFORE_DOCKER",
     "INTERRUPTED_SETUP_RESET_IDEMPOTENT_WITH_NO_START"
   ],
@@ -47,7 +48,7 @@
       "command": "npm test",
       "secureDefaultPretest": { "passed": 12, "failed": 0 },
       "learningRoutingPretest": { "passed": 26, "failed": 0 },
-      "main": { "passed": 386, "failed": 0 }
+      "main": { "passed": 387, "failed": 0 }
     },
     "commands": [
       { "command": "npm run lint", "result": "PASS" },

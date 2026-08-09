@@ -4,10 +4,10 @@
   "proofId": "secure-default-safe-guided-v1",
   "profile": "SAFE_GUIDED",
   "evidenceState": "CURRENT",
-  "manifestDigest": "3fe6f8537094ef54f1fdabb54366b5002e82cb4429368139d8db68f7b9425fea",
+  "manifestDigest": "11fbb78ea755dcec01ec2a09a8324fb3a65c69d1ce2c9f03cb4d9e8974a2503d",
   "schemaDigest": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8",
   "verifierDigest": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1",
-  "inputSetDigest": "3abf145d8c9bb9556446e269bb7ea764929f712c4a6a7dfe1a32b195ed02675c",
+  "inputSetDigest": "88805bebfa5f87ab2626be6571a6c8e7e7967cc4e14461bd3bfbce87ca56f26b",
   "commands": [
     {
       "command": "npm run build --silent",
@@ -46,5 +46,5 @@
     { "claimId": "CM-SD-NC-001", "verdict": "EXPLICITLY_NOT_CLAIMED" }
   ],
   "overallVerdict": "PASS",
-  "reportDigest": "993088a2780f9b4a36b969381cee08879885cd447306d66bdeaa9691d09ebe2a"
+  "reportDigest": "41fc9cdc4173b69501de5c033dc5dc1f7761425da27043e21a89c2b9d25a9d9d"
 }

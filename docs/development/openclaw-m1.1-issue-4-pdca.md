@@ -66,3 +66,16 @@ linux/amd64 Reference Adapter. Non-claims remain registry signatures, current
 CVE status, complete SBOM/licence clearance, upstream rebuild reproducibility,
 image publication, other architectures, production fitness, and hostile-host
 isolation.
+
+## Independent L3 repair
+
+Review found that the first completion commit sourced executable `lib.sh`
+before offline verification and omitted it from the locked input set. The
+repair resolves the worktree root with shell built-ins, verifies the lock,
+platform, helper, and all other inputs before sourcing any fixture helper, and
+then requires the helper-derived root to equal the independently verified root.
+The helper is the eighteenth locked artifact. A synthetic replacement helper
+would write a marker and invoke the Docker spy if sourced; setup instead denies
+its digest mismatch with neither marker nor Docker log created. This closes the
+pre-verification helper execution gap without changing runtime authority or
+starting the fixture.

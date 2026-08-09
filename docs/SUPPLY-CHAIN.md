@@ -25,7 +25,7 @@ evidence.
 
 GitHub issue #4 completes the public traceability pass over the existing
 AAS-035 OpenClaw Docker Reference Adapter. The exact offline identity and its
-17 local build/runtime inputs are verified with:
+18 local build/runtime and executable-helper inputs are verified with:
 
 ```sh
 npm run openclaw-runtime-lock:verify
@@ -42,7 +42,7 @@ positive/negative/lifecycle map is:
 
 | OPENCLAW-M1.1 acceptance | Command | Exact primary artifacts |
 | --- | --- | --- |
-| Every runtime/build input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; both Dockerfiles; Compose; plugin package; 17 locked local inputs |
+| Every runtime/build input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; both Dockerfiles; Compose; executable helper; plugin package; 18 locked local inputs |
 | Provenance result records exact tested identity | `npm run openclaw-runtime-lock:verify` | verifier JSON report and `security/openclaw-m1.1-evidence-v1.json` |
 | Fresh checkout is off; explicit lifecycle is deterministic | `npm run openclaw-m1.1:test` | profiled Compose, `setup.sh`, `reset.sh`, focused tests |
 | Unsupported or mismatched inputs deny before runtime | `npm run openclaw-m1.1:test` | offline verifier, setup preflight, Docker command spies |
@@ -59,10 +59,12 @@ service to enable or start. To opt into the isolated local fixture, run:
 ./demo/openclaw-agent/setup.sh
 ```
 
-Setup verifies the checked-in provenance lock, selected host platform, and all
-locked local inputs before the first Docker command. It then builds only the
-two labelled local derivative images and starts only the explicitly profiled,
-project-scoped services. Stop/remove is deterministic and ownership-scoped:
+Setup resolves its worktree root without loading fixture helpers, then verifies
+the checked-in provenance lock, selected host platform, executable `lib.sh`,
+and all other locked local inputs. Only after that passes does it source the
+helper or permit the first Docker command. It then builds only the two labelled
+local derivative images and starts only the explicitly profiled, project-scoped
+services. Stop/remove is deterministic and ownership-scoped:
 
 ```sh
 ./demo/openclaw-agent/reset.sh

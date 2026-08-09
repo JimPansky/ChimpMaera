@@ -52,7 +52,7 @@ test("AAS-035 prerequisite lock binds official Docker, source, image and licence
   );
   assert.equal(report.platform, "linux/amd64");
   assert.equal(report.host, "Linux/x86_64");
-  assert.equal(report.artifactCount, 17);
+  assert.equal(report.artifactCount, 18);
   assert.equal(report.checks.length, 5);
 });
 
@@ -112,6 +112,34 @@ test("OPENCLAW-M1.1 missing/altered material and unsupported architecture fail b
     } finally {
       await rm(target, { recursive: true, force: true });
     }
+  }
+});
+
+test("OPENCLAW-M1.1 drifted executable helper denies before source or Docker side effects", async () => {
+  const target = await materializeFixtureRoot();
+  try {
+    const helperSideEffect = path.join(target, "helper-sourced");
+    await writeFile(
+      path.join(target, "demo/openclaw-agent/lib.sh"),
+      "#!/usr/bin/env bash\nprintf sourced > \"$CM_OPENCLAW_HELPER_SIDE_EFFECT\"\ndocker info\n",
+      { mode: 0o755 },
+    );
+    const spy = await installSpies(target);
+    const result = spawnSync("bash", [path.join(target, "demo/openclaw-agent/setup.sh")], {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PATH: `${spy.bin}:${process.env.PATH}`,
+        CM_OPENCLAW_HELPER_SIDE_EFFECT: helperSideEffect,
+        CM_OPENCLAW_SPY_LOG: spy.log,
+      },
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /OPENCLAW_RUNTIME_ARTIFACT_MISMATCH_DENIED/);
+    await assert.rejects(readFile(helperSideEffect, "utf8"), /ENOENT/, "drifted helper was sourced");
+    await assert.rejects(readFile(spy.log, "utf8"), /ENOENT/, "Docker was invoked");
+  } finally {
+    await rm(target, { recursive: true, force: true });
   }
 });
 

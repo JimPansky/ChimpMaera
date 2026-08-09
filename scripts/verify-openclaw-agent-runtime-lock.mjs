@@ -20,6 +20,7 @@ const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/fixture-probe.mjs",
   "demo/openclaw-agent/gateway.Dockerfile",
   "demo/openclaw-agent/gateway.mjs",
+  "demo/openclaw-agent/lib.sh",
   "demo/openclaw-agent/openclaw.Dockerfile",
   "demo/openclaw-agent/openclaw.json",
   "demo/openclaw-agent/plugin/index.mjs",
