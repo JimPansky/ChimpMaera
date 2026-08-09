@@ -42,7 +42,7 @@ positive/negative/lifecycle map is:
 
 | OPENCLAW-M1.1 acceptance | Command | Exact primary artifacts |
 | --- | --- | --- |
-| Every runtime/build/lifecycle input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; verifier; setup/reset/smoke/helper; both Dockerfiles; Compose; plugin package; V2 workload/network contract; 24 locked local inputs |
+| Every runtime/build/lifecycle input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; verifier; setup/reset/smoke/helper; both Dockerfiles; Compose; mind store; plugin package; V2 workload/network contract; 25 locked local inputs |
 | Provenance result records exact tested identity | `npm run openclaw-runtime-lock:verify` | verifier JSON report and `security/openclaw-m1.1-evidence-v1.json` |
 | Fresh checkout is off; explicit lifecycle is deterministic | `npm run openclaw-m1.1:test` | profiled Compose, `setup.sh`, `reset.sh`, focused tests |
 | Unsupported or mismatched inputs deny before runtime | `npm run openclaw-m1.1:test` | offline verifier, setup preflight, Docker command spies |
@@ -100,6 +100,21 @@ production identity assurance, production IdP/tenant/credential distribution,
 service-mesh rollout, live provider or application-database access,
 infrastructure activation, or evidence about untested container/runtime
 escapes.
+
+## OPENCLAW-M1.3 bounded state extension
+
+Issue #6 keeps the same pinned image, platform, provenance gate, default-off
+profile, V2 workload boundary, and ownership label. The lock now also covers
+the managed mind-store implementation and the changed Compose, state contract,
+Gateway, probes, lifecycle, and Dockerfile bytes. `npm run openclaw-m1.3:test`
+combines the M1.2 identity/network/replay matrix with Compose effective-
+configuration checks and deterministic synthetic state tests. The supported-
+host live readback remains `./demo/openclaw-agent/smoke.sh`; see the
+[bounded state operator guide](OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md).
+
+The extension proves only bounded local synthetic behavior for this Reference
+Adapter. It adds no hostile-host containment, production-data protection,
+durable backup, privacy/compliance certification, or disaster-recovery claim.
 
 ### Default-off local lifecycle
 

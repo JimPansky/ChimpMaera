@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.invalid/schemas/runtime/openclaw-state-contract-v1.schema.json",
+  "title": "ChimpMaera OpenClaw bounded state contract v1",
+  "type": "object",
+  "required": ["schemaVersion", "workload", "mindStore", "scratch", "nonClaims"],
+  "properties": {
+    "schemaVersion": {"const": "chimpmaera.aas035/runtime-contract/v1"},
+    "workload": {
+      "type": "object",
+      "required": ["identity", "tenant", "purpose"],
+      "properties": {
+        "identity": {"type": "string", "pattern": "^workload:[a-z0-9-]+$"},
+        "tenant": {"type": "string", "pattern": "^tenant:[a-z0-9-]+$"},
+        "purpose": {"type": "string", "pattern": "^purpose:[a-z0-9-]+$"}
+      }
+    },
+    "mindStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trust", "binding", "allowedDataClasses", "deniedDataClasses", "retention", "quota", "reset", "recovery", "syntheticIsolationCanary"],
+      "properties": {
+        "trust": {"const": "SYNTHETIC_UNTRUSTED_AGENT_MEMORY"},
+        "binding": {"const": ["workloadIdentity", "tenant", "purpose", "generation"]},
+        "allowedDataClasses": {"const": ["SYNTHETIC_PREFERENCE", "SYNTHETIC_WORKING_NOTE"]},
+        "deniedDataClasses": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string"}},
+        "retention": {
+          "type": "object", "additionalProperties": false,
+          "required": ["seconds", "expiryBehavior", "durability"],
+          "properties": {
+            "seconds": {"const": 86400},
+            "expiryBehavior": {"const": "DENY_AND_PURGE_ON_ACCESS"},
+            "durability": {"const": "LOCAL_FIXTURE_VOLUME_ONLY_NOT_BACKUP"}
+          }
+        },
+        "quota": {
+          "type": "object", "additionalProperties": false,
+          "required": ["maxEntries", "maxValueBytes", "maxTotalBytes"],
+          "properties": {"maxEntries": {"const": 16}, "maxValueBytes": {"const": 2048}, "maxTotalBytes": {"const": 16384}}
+        },
+        "reset": {
+          "type": "object", "additionalProperties": false, "required": ["behavior", "preserves", "interruptionBehavior"],
+          "properties": {
+            "behavior": {"type": "string"}, "preserves": {"type": "array", "items": {"type": "string"}}, "interruptionBehavior": {"type": "string"}
+          }
+        },
+        "recovery": {
+          "type": "object", "additionalProperties": false, "required": ["behavior", "staleReplayBehavior", "invalidJournalBehavior"],
+          "properties": {
+            "behavior": {"type": "string"}, "staleReplayBehavior": {"type": "string"}, "invalidJournalBehavior": {"type": "string"}
+          }
+        },
+        "syntheticIsolationCanary": {
+          "type": "object", "additionalProperties": false, "required": ["scope"],
+          "properties": {"scope": {"type": "object"}}
+        }
+      }
+    },
+    "scratch": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "capacityBytes", "lifetime", "mountOptions"],
+      "properties": {
+        "path": {"const": "/scratch"},
+        "capacityBytes": {"const": 1048576},
+        "lifetime": {"const": "CONTAINER_INSTANCE_ONLY_PURGED_ON_RESTART"},
+        "mountOptions": {"const": ["rw", "noexec", "nosuid", "nodev"]}
+      }
+    },
+    "nonClaims": {"type": "array", "contains": {"const": "NO_DURABLE_BACKUP_PRIVACY_COMPLIANCE_OR_DISASTER_RECOVERY_GUARANTEE"}}
+  }
+}

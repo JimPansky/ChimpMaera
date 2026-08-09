@@ -157,9 +157,9 @@
       "id": "secure-default-proof",
       "dependsOn": ["repository-integrity"],
       "inputs": [
-        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "a7bd2099de9f163321dae08abdf36fe3c9c5eeecebbd0be6fd6054d257c55a32" },
+        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "b2fa9c43a9b54d69a2607c5faedd0e74ce613d9c9da2549adcb993c7e126163b" },
         { "path": "schemas/security/secure-default-proof-v1.schema.json", "role": "SCHEMA", "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8" },
-        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "d40c69d534871614dad0b30b0924fc0928af5c5263ec0b916505e631956670e5" },
+        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "fa8b9a9dce5ae2d5e7cbdb4e64e7a7b39b5de310a096726c7ba087e321eb1f9b" },
         { "path": "scripts/verify-secure-default-proof.mjs", "role": "SECURITY", "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1" },
         { "path": "tests/secure-default-proof.test.mjs", "role": "VALIDATOR", "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0" },
         { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "DERIVED_EVIDENCE", "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892" }
@@ -177,7 +177,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "771f443469b82628d584e1b8bae8aa9cefde3d678b3b3f0e998b1117bf73ef8e" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "1a2a1f2a5759ad6365b10c8049b8b0a422c01c818ddf035dafd627d9f5032a93" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "5f8eadeb40a8aabda0a249485a7f1e2d199ec1678163c6901a61661e43c8bb00" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }

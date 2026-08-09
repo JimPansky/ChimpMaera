@@ -4,6 +4,16 @@ import { createServer } from "node:http";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { authorizeGatewayRequest, sanitizedDenial } from "./plugin/identity-v2.mjs";
+import {
+  digest as mindDigest,
+  initialMindState,
+  mindStatus,
+  readMind as managedReadMind,
+  recoverMindState,
+  resetMind,
+  scopeId,
+  writeMind as managedWriteMind,
+} from "./mind-store.mjs";
 
 const contract = JSON.parse(readFileSync(new URL("./runtime-contract-v1.json", import.meta.url), "utf8"));
 const workloadContract = JSON.parse(readFileSync(new URL("./gateway-workload-contract-v2.json", import.meta.url), "utf8"));
@@ -63,9 +73,9 @@ function digest(value) {
 
 function initialState() {
   return {
-    schemaVersion: "chimpmaera.aas035/gateway-state/v1",
+    schemaVersion: "chimpmaera.aas035/gateway-state/v2",
     effects: {},
-    mind: {},
+    mind: initialMindState(contract),
     identityReplay: [],
     counters: { modelCalls: 0, effectAttempts: 0, effects: 0, denials: 0 },
   };
@@ -75,7 +85,7 @@ function loadState() {
   try {
     const value = JSON.parse(readFileSync(statePath, "utf8"));
     if (
-      value?.schemaVersion !== "chimpmaera.aas035/gateway-state/v1"
+      value?.schemaVersion !== "chimpmaera.aas035/gateway-state/v2"
       || typeof value.effects !== "object"
       || typeof value.mind !== "object"
       || !Array.isArray(value.identityReplay ?? [])
@@ -97,6 +107,7 @@ function persist(value) {
 }
 
 let state = loadState();
+const recovery = recoverMindState(state.mind, contract, () => persist(state));
 
 function persistAcceptedReplayIds(replayIds) {
   const merged = new Set(state.identityReplay ?? []);
@@ -204,45 +215,26 @@ function executeCapability(value) {
   return { status: "PASS", replayState: "FIRST_EXECUTION", ...record };
 }
 
-function mindKey(value) {
-  if (
-    !exactObject(value, ["key", "purpose", "tenant", "trust", "value"])
-    || value.tenant !== contract.workload.tenant
-    || value.purpose !== contract.workload.purpose
-    || value.trust !== contract.mindStore.trust
-    || !/^[a-z][a-z0-9.-]{2,48}$/.test(value.key)
-    || typeof value.value !== "string"
-    || Buffer.byteLength(value.value) > contract.mindStore.maxValueBytes
-  ) throw new Error("MIND_CONTRACT_DENIED");
-  return `${value.tenant}\n${value.purpose}\n${value.key}`;
-}
-
 function writeMind(value) {
-  const key = mindKey(value);
-  const next = { ...state.mind, [key]: { ...value, valueDigest: digest(value.value) } };
-  if (Object.keys(next).length > contract.mindStore.maxEntries) {
-    throw new Error("MIND_ENTRY_QUOTA_DENIED");
-  }
-  const total = Object.values(next).reduce((sum, entry) => sum + Buffer.byteLength(entry.value), 0);
-  if (total > contract.mindStore.maxTotalBytes) throw new Error("MIND_TOTAL_QUOTA_DENIED");
-  state.mind = next;
-  persist(state);
-  return { status: "PASS", entry: state.mind[key], contract: contract.mindStore };
+  return {
+    ...managedWriteMind(state.mind, contract, value, { nowMs: Date.now(), persist: () => persist(state) }),
+    contract: contract.mindStore,
+  };
 }
 
 function readMind(url) {
   const query = new URL(url, "http://capability-gateway").searchParams;
   const value = {
+    workloadIdentity: query.get("workloadIdentity"),
     tenant: query.get("tenant"),
     purpose: query.get("purpose"),
-    trust: query.get("trust"),
+    generation: Number(query.get("generation")),
     key: query.get("key"),
-    value: "",
   };
-  const key = mindKey(value);
-  const entry = state.mind[key];
-  if (entry === undefined) throw new Error("MIND_ENTRY_NOT_FOUND_DENIED");
-  return { status: "PASS", entry, contract: contract.mindStore };
+  return {
+    ...managedReadMind(state.mind, contract, value, { nowMs: Date.now(), persist: () => persist(state) }),
+    contract: contract.mindStore,
+  };
 }
 
 function toolCallResponse(messages) {
@@ -313,12 +305,14 @@ function sendCompletion(response, request, result) {
 export function gatewayHandler(request, response) {
   const run = async () => {
     if (request.method === "GET" && request.url === "/healthz") {
-      json(response, 200, { status: "PASS", role: "capability-gateway" });
+      json(response, 200, { status: "PASS", role: "capability-gateway", lifecycle: "LIVE" });
       return;
     }
     if (request.method === "GET" && request.url === "/readyz") {
+      const status = mindStatus(state.mind, contract);
+      if (status.phase !== "READY") throw new Error("MIND_NOT_READY_DENIED");
       persist(state);
-      json(response, 200, { status: "PASS", policyDigest: digest(policy) });
+      json(response, 200, { status: "PASS", lifecycle: "READY", generation: status.generation, policyDigest: digest(policy) });
       return;
     }
     if (request.method === "GET" && request.url === "/v1/models") {
@@ -386,22 +380,20 @@ export function gatewayHandler(request, response) {
         policyDigest: digest(policy),
         authorityDigest: digest(authority),
         stateDigest: digest(state),
+        lifecycle: { health: "LIVE", readiness: mindStatus(state.mind, contract), startupRecovery: recovery.status },
         counters: state.counters,
         effectReceiptDigests: Object.values(state.effects).map((entry) => entry.receipt.receiptDigest).sort(),
-        mindEntryDigests: Object.values(state.mind).map((entry) => entry.valueDigest).sort(),
+        mindEntryDigests: Object.values(state.mind.scopes).flatMap((scope) => Object.values(scope.entries).map((entry) => entry.valueDigest)).sort(),
+        foreignScopeDigest: mindDigest(Object.fromEntries(Object.entries(state.mind.scopes).filter(([key]) => key !== scopeId({ workloadIdentity: contract.workload.identity, tenant: contract.workload.tenant, purpose: contract.workload.purpose })))),
       });
       return;
     }
     if (request.method === "POST" && request.url === "/v1/reset") {
       workload(request);
       const value = await body(request);
-      if (!exactObject(value, ["purpose", "tenant"]) || value.tenant !== contract.workload.tenant || value.purpose !== contract.workload.purpose) {
-        throw new Error("RESET_SCOPE_DENIED");
-      }
       const receipts = Object.values(state.effects).map((entry) => entry.receipt.receiptDigest).sort();
-      state = initialState();
-      persist(state);
-      json(response, 200, { status: "PASS", reset: contract.mindStore.reset, retainedReceiptDigests: receipts });
+      const result = resetMind(state.mind, contract, value, { persist: () => persist(state) });
+      json(response, 200, { ...result, retainedReceiptDigests: receipts });
       return;
     }
     throw new Error("ROUTE_DENIED");

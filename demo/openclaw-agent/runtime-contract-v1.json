@@ -21,16 +21,44 @@
   },
   "mindStore": {
     "trust": "SYNTHETIC_UNTRUSTED_AGENT_MEMORY",
-    "retentionSeconds": 86400,
-    "maxEntries": 16,
-    "maxValueBytes": 2048,
-    "maxTotalBytes": 16384,
-    "reset": "PURGE_TENANT_PURPOSE_ONLY"
+    "binding": ["workloadIdentity", "tenant", "purpose", "generation"],
+    "allowedDataClasses": ["SYNTHETIC_PREFERENCE", "SYNTHETIC_WORKING_NOTE"],
+    "deniedDataClasses": ["CREDENTIAL", "CUSTOMER_DATA", "PERSONAL_DATA", "PRODUCTION_SECRET"],
+    "retention": {
+      "seconds": 86400,
+      "expiryBehavior": "DENY_AND_PURGE_ON_ACCESS",
+      "durability": "LOCAL_FIXTURE_VOLUME_ONLY_NOT_BACKUP"
+    },
+    "quota": {"maxEntries": 16, "maxValueBytes": 2048, "maxTotalBytes": 16384},
+    "reset": {
+      "behavior": "TWO_PHASE_PURGE_BOUND_SCOPE_MUTABLE_ENTRIES_ONLY",
+      "preserves": ["FOREIGN_SCOPES", "EFFECT_REPLAY_RECEIPTS", "SANITIZED_RUN_EVIDENCE"],
+      "interruptionBehavior": "READ_WRITE_DENIED_UNTIL_RECOVERY_COMPLETES"
+    },
+    "recovery": {
+      "behavior": "COMPLETE_PREPARED_RESET_THEN_ADVANCE_GENERATION",
+      "staleReplayBehavior": "DENY",
+      "invalidJournalBehavior": "FAIL_NOT_READY"
+    },
+    "syntheticIsolationCanary": {
+      "scope": {
+        "workloadIdentity": "workload:synthetic-foreign-v1",
+        "tenant": "tenant:synthetic-foreign",
+        "purpose": "purpose:isolation-canary"
+      }
+    }
+  },
+  "scratch": {
+    "path": "/scratch",
+    "capacityBytes": 1048576,
+    "lifetime": "CONTAINER_INSTANCE_ONLY_PURGED_ON_RESTART",
+    "mountOptions": ["rw", "noexec", "nosuid", "nodev"]
   },
   "nonClaims": [
     "NO_PRODUCTION_SANDBOX_OR_HOST_KERNEL_BOUNDARY",
     "NO_LIVE_PROVIDER_OR_PRODUCTION_IAM_NETWORK_POLICY",
     "NO_REGISTRY_SIGNATURE_COMPLETE_SBOM_CVE_OR_LICENCE_AUDIT",
-    "NO_MULTI_TENANT_DEPLOYMENT_OR_SECURITY_COMPLETENESS"
+    "NO_MULTI_TENANT_DEPLOYMENT_OR_SECURITY_COMPLETENESS",
+    "NO_DURABLE_BACKUP_PRIVACY_COMPLIANCE_OR_DISASTER_RECOVERY_GUARANTEE"
   ]
 }

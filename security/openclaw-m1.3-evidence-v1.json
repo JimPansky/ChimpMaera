@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "chimpmaera.openclaw-m1.3/evidence/v1",
+  "workItem": {"stableId": "OPENCLAW-M1.3", "githubIssue": 6, "title": "Bounded scratch and managed mind-store contract"},
+  "baseline": "0dd0b67483e75de03acab9a3448b645172aeeb68",
+  "commitBinding": {
+    "method": "CONTAINING_GIT_COMMIT",
+    "path": "security/openclaw-m1.3-evidence-v1.json",
+    "reason": "The containing commit identifies the exact tested bytes without a circular embedded commit hash."
+  },
+  "testedIdentity": {
+    "lockId": "openclaw-agent-runtime-2026.7.1-linux-amd64",
+    "upstreamVersion": "2026.7.1",
+    "upstreamCommit": "2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4",
+    "indexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "platform": "linux/amd64",
+    "lockedLocalArtifacts": 25,
+    "fixture": "SYNTHETIC_ONLY"
+  },
+  "focusedVerification": {
+    "command": "npm run openclaw-m1.3:test",
+    "result": "PASS",
+    "subtests": {"runtimeLock": 9, "runtimeContract": 5, "gatewayWorkloadBoundary": 9, "mindStoreLifecycle": 6, "passed": 29, "failed": 0}
+  },
+  "deterministicBoundaries": {
+    "scratch": {"capacityBytes": 1048576, "verification": "COMPOSE_RENDER_AND_LIVE_PROBE_DEFINITION_VALIDATED", "liveBoundaryResult": "NOT_EXECUTED_MISSING_PINNED_IMAGES"},
+    "mind": {"maxEntries": 16, "maxValueBytes": 2048, "maxTotalBytes": 16384, "retentionSeconds": 86400},
+    "healthReadiness": ["UNIT_START_READY", "UNIT_QUOTA_EXHAUSTION_READY", "UNIT_RESET_RECOVERY_NOT_READY", "UNIT_RESET_COMPLETE_READY", "UNIT_RESTART_RECOVERY_PATH_READY"]
+  },
+  "deterministicNegativeProbesPassed": [
+    "CROSS_TENANT_READ_WRITE_DENIED", "DENIED_DATA_CLASS_REJECTED",
+    "STALE_GENERATION_DENIED", "VALUE_ENTRY_AND_TOTAL_QUOTA_EXHAUSTION_DENIED", "INTERRUPTED_RESET_READ_WRITE_DENIED",
+    "INVALID_RECOVERY_JOURNAL_REPLAY_DENIED", "PERSISTED_ENTRY_DIGEST_AND_GENERATION_TAMPER_DENIED",
+    "FOREIGN_SCOPE_UNCHANGED_BY_RESET", "EFFECT_REPLAY_RECEIPT_RETAINED_BY_RESET"
+  ],
+  "liveProbeMatrixAvailableNotExecuted": [
+    "ROOT_AND_OUTSIDE_STATE_WRITE_DENIED", "PRIVILEGE_CHANGE_DENIED", "DOCKER_SOCKET_AND_HOST_DEVICE_ACCESS_DENIED",
+    "BIND_HOST_DEVICE_AND_UNEXPECTED_MOUNT_ABSENT", "EXACT_SCRATCH_BOUNDARY_AND_RESTART_LIFETIME"
+  ],
+  "repositoryVerification": [
+    {"command": "npm run lint", "result": "PASS"},
+    {"command": "npm test", "result": "PASS_399_OF_399"},
+    {"command": "npm run supply-chain:verify", "result": "PASS_7_CHECKS"},
+    {"command": "npm run release-governance:test", "result": "PASS"},
+    {"command": "npm run release-governance:verify", "result": "PASS"},
+    {"command": "npm run docs:test", "result": "PASS"},
+    {"command": "npm run video:test", "result": "PASS_75_OF_75"},
+    {"command": "npm run proof:secure-default", "result": "PASS"},
+    {"command": "./scripts/build-public-release.sh --output /tmp/cm-product-increment-rc-20260809-issue6-verified", "result": "PASS"}
+  ],
+  "environmentBoundary": {
+    "dockerDaemonAccessible": true,
+    "liveSmokeExecuted": false,
+    "liveSmokeCommand": "./demo/openclaw-agent/smoke.sh",
+    "evidenceUsed": "COMPOSE_RENDERING_SYNTHETIC_COMMAND_SPIES_AND_DETERMINISTIC_STATE_MACHINE",
+    "broadSuiteNote": "The Docker daemon reported version 29.1.3, but neither exact digest-pinned OpenClaw nor Gateway base image was present locally. Policy forbade pulling or starting an unverified image, so the live smoke remained unexecuted; every other safe gate passed."
+  },
+  "supportedClaim": "The exact default-off local synthetic Reference Adapter declares and validates the effective Compose configuration for non-root read-only bounded compute and container-instance scratch, and deterministically tests a generation-bound managed synthetic mind store with scoped reset and fail-closed recovery.",
+  "rollback": "Stop and purge only the labelled candidate runtime and scoped synthetic state with demo/openclaw-agent/reset.sh --purge, then revert the containing commit to restore the prior default-off baseline.",
+  "nonClaims": [
+    "NO_HOSTILE_HOST_CONTAINMENT", "NO_PRODUCTION_DATA_PROTECTION", "NO_DURABLE_BACKUP_GUARANTEE",
+    "NO_PRIVACY_OR_COMPLIANCE_CERTIFICATION", "NO_DISASTER_RECOVERY_GUARANTEE", "NO_LIVE_RUNTIME_EVIDENCE_IN_THIS_SANDBOX"
+  ]
+}

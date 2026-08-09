@@ -47,6 +47,8 @@ Status labels used here:
   procedures.
 - [Agent runtime isolation contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md):
   engineering contract for untrusted runtime crossings.
+- [OpenClaw bounded runtime and state contract](OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md):
+  default-off scratch, managed mind-store, reset/recovery and rollback semantics.
 - [System Advisor Guide](SYSTEM-ADVISOR-GUIDE.md): reusable knowledge format.
 - [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md): provenance,
   applicability, promotion, invalidation and supersession lifecycle.

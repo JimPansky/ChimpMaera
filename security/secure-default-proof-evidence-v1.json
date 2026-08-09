@@ -1,13 +1,12 @@
 {
-
   "schemaVersion": "chimpmaera.security/secure-default-proof-evidence/v1",
   "proofId": "secure-default-safe-guided-v1",
   "profile": "SAFE_GUIDED",
   "evidenceState": "CURRENT",
-  "manifestDigest": "e301947e1154ab9abd7a0a2a39598704d05197fefca862d8182f5903b49ff032",
+  "manifestDigest": "ccb0318b90307ac237e615867d7e6639639818b684e202f648e0e8a38d3c8cd3",
   "schemaDigest": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8",
   "verifierDigest": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1",
-  "inputSetDigest": "4dfb41e087b5b657795437b3fad6e9985059eacdea55c48c597d720346c5774a",
+  "inputSetDigest": "7ff688f617234e39c2795976599f4f1c9edb9aa8b201052e0adca3bb5162ff10",
   "commands": [
     {
       "command": "npm run build --silent",
@@ -31,20 +30,59 @@
     "noSkipping": true
   },
   "claimVerdicts": [
-    { "claimId": "CM-SD-001", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-002", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-003", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-004", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-005", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-006", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-007", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-008", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-009", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-010", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-011", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-012", "verdict": "PROVEN_LOCAL_SYNTHETIC" },
-    { "claimId": "CM-SD-NC-001", "verdict": "EXPLICITLY_NOT_CLAIMED" }
+    {
+      "claimId": "CM-SD-001",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-002",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-003",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-004",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-005",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-006",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-007",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-008",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-009",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-010",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-011",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-012",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC"
+    },
+    {
+      "claimId": "CM-SD-NC-001",
+      "verdict": "EXPLICITLY_NOT_CLAIMED"
+    }
   ],
   "overallVerdict": "PASS",
-  "reportDigest": "f81705ed38de308659795b31f4e2917774381253f017b57e0f15b273261b6e84"
+  "reportDigest": "c8181b57bf0a7700c94b20ebe3f9c29002e05a133acae499bc5518fef34a549f"
 }

@@ -47,10 +47,14 @@ test("AAS-035 non-root read-only bounded posture has one closed network", () => 
     assert.equal(service.devices, undefined, name);
     assert.equal(service.pid, undefined, name);
     assert.equal(service.ipc, undefined, name);
-    assert.ok(service.volumes.every((mount) => mount.type === "volume"), name);
+    assert.ok((service.volumes ?? []).every((mount) => mount.type === "volume"), name);
   }
   assert.equal(rendered.services["openclaw-agent"].user, "1000:1000");
   assert.equal(rendered.services["capability-gateway"].user, "10001:10001");
+  assert.equal(rendered.services["openclaw-agent"].volumes, undefined);
+  assert.deepEqual(rendered.services["capability-gateway"].volumes.map((mount) => mount.target), ["/var/lib/chimpmaera"]);
+  assert.ok(rendered.services["openclaw-agent"].tmpfs.includes("/scratch:rw,noexec,nosuid,nodev,size=1m,mode=700,uid=1000,gid=1000"));
+  assert.ok(rendered.services["openclaw-agent"].tmpfs.includes("/var/lib/openclaw:rw,noexec,nosuid,nodev,size=64m,mode=700,uid=1000,gid=1000"));
   assert.equal(rendered.networks.aas035_gateway_only.internal, true);
 });
 
@@ -58,10 +62,11 @@ test("AAS-035 identity, managed mind and typed tool surfaces are finite", () => 
   const contract = JSON.parse(readFileSync(path.join(fixture, "runtime-contract-v1.json"), "utf8"));
   assert.equal(contract.workload.identity, "workload:aas035-openclaw-agent-v1");
   assert.equal(contract.runtime.network, "aas035_gateway_only");
-  assert.equal(contract.mindStore.maxEntries, 16);
-  assert.equal(contract.mindStore.maxValueBytes, 2048);
-  assert.equal(contract.mindStore.maxTotalBytes, 16384);
-  assert.equal(contract.nonClaims.length, 4);
+  assert.equal(contract.mindStore.quota.maxEntries, 16);
+  assert.equal(contract.mindStore.quota.maxValueBytes, 2048);
+  assert.equal(contract.mindStore.quota.maxTotalBytes, 16384);
+  assert.equal(contract.scratch.capacityBytes, 1048576);
+  assert.equal(contract.nonClaims.length, 5);
   const workloadContract = JSON.parse(readFileSync(path.join(fixture, "gateway-workload-contract-v2.json"), "utf8"));
   assert.equal(workloadContract.schemaVersion, "chimpmaera.openclaw/gateway-workload-contract/v2");
   assert.equal(workloadContract.clock.maxTtlSeconds, 60);
@@ -117,7 +122,8 @@ test("AAS-035 smoke records the complete denial and lifecycle matrix", () => {
   const probe = readFileSync(path.join(fixture, "fixture-probe.mjs"), "utf8");
   for (const marker of [
     "wrong-identity", "unknown-action", "replay-conflict", "route-bypass", "cross-tenant",
-    "oversize", "filesystem", "egress", "replay", "mind-write", "mind-read",
+    "oversize", "mind-quota", "filesystem", "privilege", "mounts", "scratch-limit",
+    "egress", "replay", "mind-write", "mind-read",
     "gateway-v2", "identity-missing", "identity-expired", "identity-wrong-audience",
     "identity-wrong-tenant", "identity-replay", "semantic-reset-idempotent",
     "legacy-capability-bypass", "owner_fingerprint", "ownedRuntimeResidue",
