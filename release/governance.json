@@ -253,6 +253,18 @@
       "traceability": {"issues": [60], "pullRequests": [144, 145], "sourceCommits": ["cd832fe6337b7e6023aab3a274e231855f0b0d0b", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/int-profile-001-contract-slice-pdca.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
+      "claimId": "CM-REL-019",
+      "component": "VOICE-M0 Local PTT",
+      "claim": "ChimpMaera ships a removable default-off local push-to-talk contract with bounded whisper.cpp and llama.cpp/Qwen3-TTS adapters, exact schemas, ephemeral media handling and authority-free governed-input proposals.",
+      "userValue": "Operators can add locally controlled German or English voice input/output without giving transcripts approval, tool, effect or Gateway-bypass authority.",
+      "includedBytes": ["packages/contracts/src/voice-local-ptt.ts", "schemas/contracts/voice-config-v1.schema.json", "schemas/contracts/voice-stt-v1.schema.json", "schemas/contracts/voice-tts-v1.schema.json", "schemas/contracts/voice-turn-v1.schema.json", "schemas/contracts/voice-receipt-v1.schema.json", "tests/voice-local-ptt.test.ts", "docs/VOICE-LOCAL-PTT.md"],
+      "functionalProof": {"testPaths": ["tests/voice-local-ptt.test.ts"], "result": "PASS 5/5: exact contracts, local adapter execution, STT/TTS composition, receipts and cleanup verify deterministically."},
+      "safetyProof": {"testPaths": ["tests/voice-local-ptt.test.ts"], "result": "PASS: default-off, config/artifact validation, unsupported input, authority smuggling, timeout, output overflow, malformed WAV, correlation and digest drift fail closed."},
+      "evidencePaths": ["docs/VOICE-LOCAL-PTT.md", "docs/development/voice-m0-issue-157-pdca.md"],
+      "nonClaims": ["Local deterministic synthetic tests and one separately operated German probe only; no generated media or model bytes, production readiness, universal accuracy/latency, speaker identity, consent enforcement, hostile-host sandboxing or other-language/model compatibility is proven."],
+      "traceability": {"issues": [157], "pullRequests": [], "sourceCommits": [], "pdcaPaths": ["docs/development/voice-m0-issue-157-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
       "claimId": "CM-REL-011",
       "claim": "ChimpMaera ships a directly runnable, closed and digest-bound repository proof for the local synthetic SAFE_GUIDED secure-default path.",
       "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md", "security/secure-default-proof-v1.json", "security/secure-default-proof-evidence-v1.json"],

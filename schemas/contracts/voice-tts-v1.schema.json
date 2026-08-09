@@ -1,0 +1,7 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"chimpmaera.voice/tts-contract/v1",
+  "$defs":{
+    "request":{"type":"object","additionalProperties":false,"required":["schemaVersion","sessionId","turnId","correlationId","language","text","codec"],"properties":{"schemaVersion":{"const":"chimpmaera.voice/tts-request/v1"},"sessionId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"turnId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"correlationId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"language":{"enum":["de","en"]},"text":{"type":"string","minLength":1},"codec":{"const":"wav"}}},
+    "result":{"type":"object","additionalProperties":false,"required":["schemaVersion","sessionId","turnId","correlationId","language","codec","audioBytes"],"properties":{"schemaVersion":{"const":"chimpmaera.voice/tts-result/v1"},"sessionId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"turnId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"correlationId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"language":{"enum":["de","en"]},"codec":{"const":"wav"},"audioBytes":{"type":"integer","minimum":1}}}
+  },"oneOf":[{"$ref":"#/$defs/request"},{"$ref":"#/$defs/result"}]
+}

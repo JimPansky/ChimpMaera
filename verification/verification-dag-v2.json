@@ -215,7 +215,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "c2cfff276469fee456d89c69d10ac35814faef6275ffe6d561b190705f0fbca1"
+          "sha256": "8d3c683d14d4f1ec9a999396ff86463804ccf2a6ce6f102737a6a4d5c9c7cd40"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -357,7 +357,7 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "fd48a9efcfc13926c5573c4e7a6f3e3afa31f87dd8253e0c0354b01df7712965"
+          "sha256": "6861b56208ebf07fef77f962050520a5f861e7ba2354b5a8e0470c262ce1b486"
         },
         {
           "path": "scripts/build-public-release.sh",
@@ -367,7 +367,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "68abd8dbf2e6c3d506c86252813df686ad028d8ce1aec89e817d6c36f17625c6"
+          "sha256": "35fb4d206e0f6e014557c500933f92715d336ccfe16c99c850b0eb8dc1a82744"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -441,7 +441,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "dbf8546d6915d65a69ec482cfd5cab61629a82bb8532271b377304ecede80672"
+          "sha256": "b19cc7383cb12bc24f0546f4ccdaac2f7e356f5307668d50900e47816f86e8e0"
         },
         {
           "path": "package-lock.json",
