@@ -28,7 +28,7 @@
   },
   "focusedVerification": {
     "command": "npm run openclaw-m1.1:test",
-    "passed": 11,
+    "passed": 13,
     "failed": 0,
     "runtimeInvocationByNegativeSpies": 0
   },
@@ -39,6 +39,8 @@
     "PROVENANCE_MISMATCH_DENIED_BEFORE_DOCKER",
     "ALTERED_LOCAL_INPUT_DENIED_BEFORE_DOCKER",
     "DRIFTED_EXECUTABLE_HELPER_DENIED_BEFORE_SOURCE_OR_DOCKER",
+    "CONFLICTING_DOCKER_DEFAULT_PLATFORM_DENIED_BEFORE_DOCKER",
+    "EXPLICIT_AMD64_BUILD_AND_COMPOSE_PLATFORM_BOUND",
     "UNSUPPORTED_ARCHITECTURE_DENIED_BEFORE_DOCKER",
     "INTERRUPTED_SETUP_RESET_IDEMPOTENT_WITH_NO_START"
   ],
@@ -48,7 +50,7 @@
       "command": "npm test",
       "secureDefaultPretest": { "passed": 12, "failed": 0 },
       "learningRoutingPretest": { "passed": 26, "failed": 0 },
-      "main": { "passed": 387, "failed": 0 }
+      "main": { "passed": 389, "failed": 0 }
     },
     "commands": [
       { "command": "npm run lint", "result": "PASS" },
@@ -68,7 +70,7 @@
     "ownerStackTouched": false,
     "evidenceType": "STATIC_AND_SYNTHETIC_COMMAND_SPY"
   },
-  "supportedClaim": "Exact offline provenance and local-input verification precedes Docker; the linux/amd64 fixture remains default-off and its explicit setup/reset lifecycle is deterministic and ownership-scoped.",
+  "supportedClaim": "Exact offline provenance and local-input verification precedes Docker; every build and Compose lifecycle path is explicitly bound to linux/amd64; the fixture remains default-off and its setup/reset lifecycle is deterministic and ownership-scoped.",
   "nonClaims": [
     "NO_REGISTRY_SIGNATURE_VERIFICATION",
     "NO_CURRENT_CVE_COMPLETE_SBOM_OR_THIRD_PARTY_LICENCE_CLEARANCE",

@@ -79,3 +79,15 @@ would write a marker and invoke the Docker spy if sourced; setup instead denies
 its digest mismatch with neither marker nor Docker log created. This closes the
 pre-verification helper execution gap without changing runtime authority or
 starting the fixture.
+
+## Independent platform-binding repair
+
+Review found that amd64 provenance was verified without forcing Docker build
+and Compose resolution to amd64. The repair adds `platform: linux/amd64` to
+both services, `--platform linux/amd64` to both direct derivative builds, and a
+fixed linux/amd64 environment to every shared Compose lifecycle command. Setup
+rejects a conflicting ambient `DOCKER_DEFAULT_PLATFORM` before Docker access.
+Synthetic execution proves the conflict produces zero Docker calls, the
+accepted path issues two amd64-only build requests, and Compose rendering stays
+amd64 even under a hostile arm64 ambient default. No image was pulled, built,
+or started while collecting this evidence.

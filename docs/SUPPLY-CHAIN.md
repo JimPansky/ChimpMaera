@@ -66,6 +66,12 @@ helper or permit the first Docker command. It then builds only the two labelled
 local derivative images and starts only the explicitly profiled, project-scoped
 services. Stop/remove is deterministic and ownership-scoped:
 
+Both service declarations and both direct build commands explicitly request
+`linux/amd64`; every shared Compose lifecycle command also receives that fixed
+default. A conflicting ambient `DOCKER_DEFAULT_PLATFORM` denies after offline
+verification and before any Docker command. This binds local or remote-daemon
+resolution to the platform manifest identity recorded by the lock.
+
 ```sh
 ./demo/openclaw-agent/reset.sh
 ./demo/openclaw-agent/reset.sh --purge

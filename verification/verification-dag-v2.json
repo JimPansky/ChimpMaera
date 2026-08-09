@@ -157,9 +157,9 @@
       "id": "secure-default-proof",
       "dependsOn": ["repository-integrity"],
       "inputs": [
-        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "f1928493f4620a37a7b094b2d0bbb715f0b7eb672f7cf3a154230ae740cfc788" },
+        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "86e5850e5cad1db1cba5fef4be3dbae97927504d380ac82dd7cc3923b5d798aa" },
         { "path": "schemas/security/secure-default-proof-v1.schema.json", "role": "SCHEMA", "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8" },
-        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "16d34a80f9ef27f48fabb0990b4bddc3360e148cc95547422b34a190aa1cbe52" },
+        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "b652cae6c6574ebd1be88fb6e1826e2463f7d13848ae9d647e4973081ad603ca" },
         { "path": "scripts/verify-secure-default-proof.mjs", "role": "SECURITY", "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1" },
         { "path": "tests/secure-default-proof.test.mjs", "role": "VALIDATOR", "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0" },
         { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "DERIVED_EVIDENCE", "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892" }

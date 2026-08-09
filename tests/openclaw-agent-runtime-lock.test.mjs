@@ -41,6 +41,29 @@ async function installSpies(target, architecture = "x86_64") {
   return { bin, log };
 }
 
+async function installSuccessfulDockerSpy(target) {
+  const spy = await installSpies(target);
+  await writeFile(
+    path.join(spy.bin, "docker"),
+    `#!/usr/bin/env bash
+printf 'platform=%s args=%s\\n' "$DOCKER_DEFAULT_PLATFORM" "$*" >> "$CM_OPENCLAW_SPY_LOG"
+case "$*" in
+  "info"|"compose version") exit 0 ;;
+  *" config --services") exit 0 ;;
+  "image inspect chimpmaera/aas035-capability-gateway:local"*|"image inspect chimpmaera/aas035-openclaw-agent:local"*) exit 1 ;;
+  "build --platform linux/amd64 "*) exit 0 ;;
+  *" up --detach --wait --remove-orphans") exit 0 ;;
+  *" images --quiet openclaw-agent") printf 'synthetic-agent-image\\n'; exit 0 ;;
+  "image inspect synthetic-agent-image --format "*"io.chimpmaera.fixture"*) printf 'aas035-openclaw-agent-v1\\n'; exit 0 ;;
+  "image inspect synthetic-agent-image --format "*"io.chimpmaera.upstream.index-digest"*) printf 'sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c\\n'; exit 0 ;;
+esac
+exit 90
+`,
+    { mode: 0o755 },
+  );
+  return spy;
+}
+
 test("AAS-035 prerequisite lock binds official Docker, source, image and licence evidence", async () => {
   const report = await verifyOpenClawAgentRuntimeLock({ root });
   assert.equal(report.status, "PASS");
@@ -138,6 +161,53 @@ test("OPENCLAW-M1.1 drifted executable helper denies before source or Docker sid
     assert.match(result.stderr, /OPENCLAW_RUNTIME_ARTIFACT_MISMATCH_DENIED/);
     await assert.rejects(readFile(helperSideEffect, "utf8"), /ENOENT/, "drifted helper was sourced");
     await assert.rejects(readFile(spy.log, "utf8"), /ENOENT/, "Docker was invoked");
+  } finally {
+    await rm(target, { recursive: true, force: true });
+  }
+});
+
+test("OPENCLAW-M1.1 conflicting ambient platform denies before Docker", async () => {
+  const target = await materializeFixtureRoot();
+  try {
+    const spy = await installSpies(target);
+    const result = spawnSync("bash", [path.join(target, "demo/openclaw-agent/setup.sh")], {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PATH: `${spy.bin}:${process.env.PATH}`,
+        DOCKER_DEFAULT_PLATFORM: "linux/arm64",
+        CM_OPENCLAW_SPY_LOG: spy.log,
+      },
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /conflicting DOCKER_DEFAULT_PLATFORM denied \(required=linux\/amd64\)/);
+    await assert.rejects(readFile(spy.log, "utf8"), /ENOENT/, "Docker was invoked");
+  } finally {
+    await rm(target, { recursive: true, force: true });
+  }
+});
+
+test("OPENCLAW-M1.1 accepted setup sends only explicit linux/amd64 build and run requests", async () => {
+  const target = await materializeFixtureRoot();
+  try {
+    const spy = await installSuccessfulDockerSpy(target);
+    const result = spawnSync("bash", [path.join(target, "demo/openclaw-agent/setup.sh")], {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PATH: `${spy.bin}:${process.env.PATH}`,
+        DOCKER_DEFAULT_PLATFORM: "",
+        CM_OPENCLAW_SPY_LOG: spy.log,
+      },
+    });
+    assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+    const calls = await readFile(spy.log, "utf8");
+    assert.equal((calls.match(/^platform= args=build --platform linux\/amd64 /gm) ?? []).length, 2);
+    assert.equal(
+      (calls.match(/^platform=linux\/amd64 args=.* up --detach --wait --remove-orphans$/gm) ?? []).length,
+      1,
+    );
+    assert.doesNotMatch(calls, /linux\/arm64|linux\/386/);
   } finally {
     await rm(target, { recursive: true, force: true });
   }

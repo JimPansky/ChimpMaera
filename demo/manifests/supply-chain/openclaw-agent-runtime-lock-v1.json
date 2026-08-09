@@ -77,11 +77,11 @@
     "openclawBaseReference": "ghcr.io/openclaw/openclaw@sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
     "pluginPeerVersion": "2026.7.1",
     "artifactSha256": {
-      "demo/openclaw-agent/compose.yaml": "3fe6fb5c56374dda6e36953d70fc16e65a14f6d0571796a09b79f5390b6ace5d",
+      "demo/openclaw-agent/compose.yaml": "681e50dfeade6a1a08fe00752748369fd2d4268b83399a50fd3c896a0383653b",
       "demo/openclaw-agent/fixture-probe.mjs": "cf20bb3419aa112927f4fa5403eed666aa6a1214c7844dc2f98f213e76c6e075",
       "demo/openclaw-agent/gateway.Dockerfile": "d5df7315946767869b264a52d28dd178b60b116f283ea6d58a778cc1347a9f41",
       "demo/openclaw-agent/gateway.mjs": "e53267b28bb6d64b90c28d564e7c5c0380641dbc7fc66fc429c712e3296bbcce",
-      "demo/openclaw-agent/lib.sh": "0ce09308a342b0dd94f97063adfca5eea6eeed62d1c2e2e8e6745bb5ca870c33",
+      "demo/openclaw-agent/lib.sh": "0933f26dbdcdcd6e43ece5f40bba35d528beb7c0294af260fe15017e2149386c",
       "demo/openclaw-agent/openclaw.Dockerfile": "d85e759ae28c7c8ed32b4121ee831cadad98de2065d341f8bb9e0078209fea6e",
       "demo/openclaw-agent/openclaw.json": "e45649ec7049f0433cae0a10712078d7cb737abc1de5c0ea5655579ed349cf74",
       "demo/openclaw-agent/plugin/index.mjs": "57f57251e90e0749944dc0a39752027ff1a40fd887500d3c15f967f00a6d6f02",

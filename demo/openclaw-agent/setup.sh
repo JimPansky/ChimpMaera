@@ -29,11 +29,22 @@ host_os="$(uname -s)"
 host_arch="$(uname -m)"
 node "$cm_aas035_verified_root/scripts/verify-openclaw-agent-runtime-lock.mjs" \
   --host-os "$host_os" --host-arch "$host_arch"
+cm_aas035_verified_platform=linux/amd64
+case "${DOCKER_DEFAULT_PLATFORM:-}" in
+  ""|"$cm_aas035_verified_platform") ;;
+  *)
+    printf >&2 'AAS-035 ERROR: conflicting DOCKER_DEFAULT_PLATFORM denied (required=%s)\n' \
+      "$cm_aas035_verified_platform"
+    exit 1
+    ;;
+esac
 
 # shellcheck source=demo/openclaw-agent/lib.sh
 source "$cm_aas035_setup_dir/lib.sh"
 [ "$cm_aas035_root" = "$cm_aas035_verified_root" ] ||
   cm_aas035_fail "verified repository root changed while loading fixture helper"
+[ "$cm_aas035_platform" = "$cm_aas035_verified_platform" ] ||
+  cm_aas035_fail "verified platform changed while loading fixture helper"
 
 command -v docker >/dev/null || cm_aas035_fail "Docker is required"
 docker info >/dev/null 2>&1 || cm_aas035_fail "Docker daemon is unavailable"
@@ -66,6 +77,7 @@ build_fixture_image() {
   fi
   if [ "$current_source" != "$source_sha256" ]; then
     docker build \
+      --platform "$cm_aas035_platform" \
       --provenance=false \
       --build-arg "CM_AAS035_SOURCE_SHA256=$source_sha256" \
       --file "$dockerfile" \
