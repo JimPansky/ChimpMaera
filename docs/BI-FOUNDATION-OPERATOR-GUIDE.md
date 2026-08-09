@@ -48,6 +48,12 @@ dropped capabilities, no-new-privileges, 32 PIDs, 64 MiB memory, 0.25 CPU and a
 is present. Missing/unsupported config, host/platform drift, mutable image input,
 or changed locked bytes deny before lifecycle effects.
 
+The additive BI-002 CRM declaration in `config.example.json` is also fixed to
+`enabled: false`, the supported-export/API-shaped synthetic adapter, one
+synthetic tenant, and `crm.synthetic.bi.read`. BI-001 lifecycle scripts do not
+activate it. See `docs/CRM-READ-CONNECTOR-GUIDE.md` for its explicit local
+adapter boundary and rollback.
+
 The lock records a digest-bound base and local byte closure. It does not establish
 registry signatures, current registry/CVE completeness, SBOM or reproducible-build
 provenance. The local image cache label hashes the ordered content digests only,
@@ -57,7 +63,7 @@ Docker is unavailable, the deterministic offline verifier and behavioral tests
 remain valid, while Compose-render and live-runtime evidence must be reported as
 unavailable.
 
-Non-claims: no CRM/ERP connector, dashboard, production deployment, hosted
-service, image publication, live credential, public exposure, availability,
+Non-claims: no production CRM/ERP/vendor compatibility, dashboard, production
+deployment, hosted service, image publication, live credential, public exposure, availability,
 production security, certification, current registry/CVE completeness, or
 universal sandbox claim.

@@ -23,6 +23,11 @@ test('BI-001 provenance closure accepts pinned checked-in inputs', async () => {
   assert.equal(report.status, 'PASS'); assert.equal(report.inputCount, 10); assert.match(report.image, /@sha256:[a-f0-9]{64}$/);
 });
 
+test('BI-002 foundation declaration keeps the CRM connector explicitly off and bounded', async () => {
+  const config = JSON.parse(await readFile(example, 'utf8'));
+  assert.deepEqual(config.crmConnector, { enabled: false, adapter: 'SUPPORTED_EXPORT_API_SHAPED', tenantId: 'tenant:synthetic-zoo', scope: 'crm.synthetic.bi.read' });
+});
+
 test('BI-001 fresh checkout is default-off and containment is explicit', { skip: !dockerAvailable }, () => {
   assert.deepEqual(render().services, {});
   const explicit = render(true); assert.deepEqual(Object.keys(explicit.services).sort(), ['bi-dependency', 'bi-service']);

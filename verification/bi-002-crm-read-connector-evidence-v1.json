@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "chimpmaera.verification/local-synthetic-report/v1",
+  "evidenceId": "evidence:bi-002-crm-read-v1",
+  "issue": "#11",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "commitBinding": "CONTAINING_DCO_SIGNED_COMMIT",
+  "futureCommitClaimed": false,
+  "sanitization": { "rawSecrets": false, "personalData": false, "productionIdentifiers": false, "privateInfrastructure": false, "exploitDetails": false },
+  "claims": ["FROZEN_TYPED_V1_CONTRACT", "DEFAULT_OFF", "EXACT_SYNTHETIC_SOURCE_READBACK", "FAIL_CLOSED_READ_ONLY_BOUNDARY"],
+  "nonClaims": ["PRODUCTION_VENDOR_COMPATIBILITY", "LIVE_CREDENTIALS", "REAL_TIME_FRESHNESS", "DEPLOYMENT", "PRODUCTION_ACTIVATION", "WRITE_SUPPORT"],
+  "artifacts": {
+    "contract": { "path": "tests/fixtures/crm-read/contract-v1.json", "sha256": "33502f5235ffd417719f8c4c00468285928ec098b79d9bbc6f44fe7c136e33c5" },
+    "source": { "path": "tests/fixtures/crm-read/supported-export-v1.json", "sha256": "87e3b70cf7229da269b7f9cc4fe3cae022ed272e8c88ea7fe31e3e630c3ccadd" },
+    "test": { "path": "tests/crm-read-connector.test.ts", "sha256": "5b437b3f7feac8d367eeae342c701b33a0e90bc5d4bb7e4f30f5b559f77a0b36" }
+  },
+  "verification": { "command": "npm run crm-read:test", "expected": "PASS" },
+  "rollback": "Disable the connector and discard only its scoped synthetic adapter/cache; do not widen permissions."
+}
