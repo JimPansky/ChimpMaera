@@ -31,6 +31,13 @@ checks the local image. Any absent, foreign or ambiguous ownership fails before
 command requests orphan removal. The profile declares no volumes, so reset never
 requests volume deletion. Repeating reset after interruption is supported.
 
+Local image handling has three fail-closed states. A successful inventory with no
+matching image is clean absence; exactly one immutable image ID is accepted only
+when its ID, fixture label and content-source label are readable and valid. List,
+transport, permission, multiplicity or metadata failures are ambiguous and stop
+before build, lifecycle mutation, image removal or a success message. Reset repeats
+the same inventory after `compose down` before removing the tag.
+
 The single network is Docker-internal. Only the service health surface is bound,
 and only to `127.0.0.1`. Both containers are non-root with read-only roots,
 dropped capabilities, no-new-privileges, 32 PIDs, 64 MiB memory, 0.25 CPU and a

@@ -10,12 +10,12 @@
   "localInputs": {
     "demo/bi-foundation/compose.yaml": "9eec3ffe5b9ed102377cc9b51995d22f050c2901af622f4b5f87d257cbd26fcb",
     "demo/bi-foundation/config.example.json": "972f0aa4e41d4c14905cd76fc20d8b26df369cf4a34f1506b11b26d2b99929f7",
-    "demo/bi-foundation/lib.sh": "5a00ddf434057693b37949e9293d5afe51d64c842cedb24a771322e001a58068",
-    "demo/bi-foundation/reset.sh": "622ecaa1f89eb9ab6da09b2afc89712286cd15d1bcfad46c0dbf25f6615df419",
+    "demo/bi-foundation/lib.sh": "a5923c580710d1b09f8fa982a599f0924b4c5f77cd5789a390b5437f87cf0f97",
+    "demo/bi-foundation/reset.sh": "a78b159bcdcd464c07052795a356b7625f190f53870f88b27476c92d2a38df5d",
     "demo/bi-foundation/service.Dockerfile": "a3c071e055bdd339656c806fdc78d1b4ba7b88207eb8d37d3546d3979f0f096f",
     "demo/bi-foundation/service.mjs": "f91c1439e8208cc017d98a6256b25246fdfd2ce2fdae6afb025fa82ef0d76098",
     "demo/bi-foundation/setup.sh": "43f3bc9c0a8847fe39b643e2f3514ee1a54673d42c84f69442e10fda3a7779c4",
-    "demo/bi-foundation/start.sh": "ca442d33b8f9db8390e8927a779a5e4f7652bc1e2ab0ca6a69bdc7c7c5d378ab",
+    "demo/bi-foundation/start.sh": "d9541e6378569396644438ef4388237f861ac4794c4c18a08d5dee5c8d5d7433",
     "demo/bi-foundation/stop.sh": "ecb8d68c24053c45e6ad1b7e491b45106e3caae91ad6d0a34c9a51bb24586ec0",
     "scripts/verify-bi-foundation.mjs": "d6e69c790310146085c1efb3943e042589d73dbd81bb7f4ee794a087d190506f"
   }

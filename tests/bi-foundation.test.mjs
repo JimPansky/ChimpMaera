@@ -81,13 +81,56 @@ test('BI-001 unowned project resource denies reset before every destructive call
   } finally { await rm(temp, { recursive: true, force: true }); }
 });
 
-test('BI-001 owned reset is deterministic after interruption and never deletes volumes', async () => {
+test('BI-001 clean image absence resets deterministically after interruption and never deletes volumes', async () => {
   const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-reset-')); try {
     const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log'); const mark = path.join(temp, 'failed');
     await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\ncase "$*" in "ps -aq --filter "*) printf 'owned-container\\n';; "network ls -q --filter "*) printf 'owned-network\\n';; "volume ls -q --filter "*) exit 0;; "container inspect owned-container "*|"network inspect owned-network "*) printf 'bi001-foundation-v1\\n';; "image inspect chimpmaera/bi001-foundation:local") exit 1;; *" down") [ -f "$CM_BI_FAIL_MARK" ] || { touch "$CM_BI_FAIL_MARK"; exit 75; };; esac\nexit 0\n`, { mode: 0o755 });
     const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log, CM_BI_FAIL_MARK: mark };
     assert.notEqual(spawnSync('bash', [path.join(fixture, 'reset.sh')], { env }).status, 0); assert.equal(spawnSync('bash', [path.join(fixture, 'reset.sh')], { env }).status, 0);
     const calls = await readFile(log, 'utf8'); assert.match(calls, / down$/m); assert.doesNotMatch(calls, /--volumes|--remove-orphans/);
+  } finally { await rm(temp, { recursive: true, force: true }); }
+});
+
+test('BI-001 image inventory and metadata failures deny without lifecycle mutation or success', async () => {
+  const imageId = `sha256:${'a'.repeat(64)}`;
+  for (const mode of ['list-failure', 'multiple-images', 'inspect-failure', 'label-failure']) {
+    const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-image-deny-')); try {
+      const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log');
+      await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\nif [ "$1 $2" = "image ls" ]; then case "$CM_BI_IMAGE_MODE" in list-failure) exit 70;; multiple-images) printf '${imageId}\\nsha256:${'b'.repeat(64)}\\n';; *) printf '${imageId}\\n';; esac; exit 0; fi\nif [ "$1 $2 $3" = "image inspect ${imageId}" ]; then [ "$CM_BI_IMAGE_MODE" != inspect-failure ] || exit 71; case "$5" in '{{.Id}}') printf '${imageId}\\n';; *source-sha256*) printf '${'d'.repeat(64)}\\n';; *io.chimpmaera.fixture*) [ "$CM_BI_IMAGE_MODE" != label-failure ] || exit 71; printf 'bi001-foundation-v1\\n';; *) exit 90;; esac; exit 0; fi\ncase "$*" in "ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*) exit 0;; esac\nexit 90\n`, { mode: 0o755 });
+      const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log, CM_BI_IMAGE_MODE: mode };
+      const result = spawnSync('bash', [path.join(fixture, 'reset.sh')], { env, encoding: 'utf8' }); assert.notEqual(result.status, 0, mode); assert.doesNotMatch(result.stdout, /reset|READY/i, mode);
+      const calls = await readFile(log, 'utf8'); assert.doesNotMatch(calls, /docker build|compose .* (?:down|up)|image rm| down$| up /m, mode);
+    } finally { await rm(temp, { recursive: true, force: true }); }
+  }
+});
+
+test('BI-001 start inventory failure cannot build, run Compose up, or claim READY', async () => {
+  const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-start-image-deny-')); try {
+    const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log');
+    await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\ncase "$*" in "info"|"compose version"|*"config --services"|"ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*) exit 0;; esac\nif [ "$1 $2" = "image ls" ]; then exit 70; fi\nexit 90\n`, { mode: 0o755 });
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log };
+    const result = spawnSync('bash', [path.join(fixture, 'start.sh')], { env, encoding: 'utf8' }); assert.notEqual(result.status, 0); assert.doesNotMatch(result.stdout, /READY/);
+    const calls = await readFile(log, 'utf8'); assert.doesNotMatch(calls, /^build | up /m);
+  } finally { await rm(temp, { recursive: true, force: true }); }
+});
+
+test('BI-001 present owned image is revalidated after down and removed exactly once', async () => {
+  const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-image-owned-')); try {
+    const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log'); const imageId = `sha256:${'c'.repeat(64)}`; const source = 'd'.repeat(64);
+    await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\nif [ "$1 $2" = "image ls" ]; then printf '${imageId}\\n'; exit 0; fi\nif [ "$1 $2 $3" = "image inspect ${imageId}" ]; then case "$5" in '{{.Id}}') printf '${imageId}\\n';; *source-sha256*) printf '${source}\\n';; *io.chimpmaera.fixture*) printf 'bi001-foundation-v1\\n';; *) exit 90;; esac; exit 0; fi\ncase "$*" in "ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*) exit 0;; *" down") exit 0;; "image rm chimpmaera/bi001-foundation:local") exit 0;; esac\nexit 90\n`, { mode: 0o755 });
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log };
+    const result = spawnSync('bash', [path.join(fixture, 'reset.sh')], { env, encoding: 'utf8' }); assert.equal(result.status, 0, `${result.stderr}\n${await readFile(log, 'utf8')}`); assert.match(result.stdout, /owned resources reset/);
+    const calls = await readFile(log, 'utf8'); assert.equal((calls.match(/image ls --quiet/g) ?? []).length, 2); assert.equal((calls.match(/image rm/g) ?? []).length, 1);
+  } finally { await rm(temp, { recursive: true, force: true }); }
+});
+
+test('BI-001 post-down image inventory failure cannot remove an image or claim reset success', async () => {
+  const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-image-post-down-')); try {
+    const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log'); const count = path.join(temp, 'inventory-count');
+    await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\nif [ "$1 $2" = "image ls" ]; then if [ -f "$CM_BI_COUNT" ]; then exit 72; else touch "$CM_BI_COUNT"; exit 0; fi; fi\ncase "$*" in "ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*) exit 0;; *" down") exit 0;; esac\nexit 90\n`, { mode: 0o755 });
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log, CM_BI_COUNT: count };
+    const result = spawnSync('bash', [path.join(fixture, 'reset.sh')], { env, encoding: 'utf8' }); assert.notEqual(result.status, 0); assert.doesNotMatch(result.stdout, /reset|READY/i);
+    const calls = await readFile(log, 'utf8'); assert.match(calls, / down$/m); assert.doesNotMatch(calls, /image rm/);
   } finally { await rm(temp, { recursive: true, force: true }); }
 });
 

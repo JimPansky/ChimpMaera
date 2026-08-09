@@ -17,6 +17,30 @@ cm_bi_preflight() {
   CM_BI_PORT="$(node -e "const c=require(process.argv[1]); process.stdout.write(String(c.hostPort))" "$cm_bi_config")"
   export CM_BI_PORT
 }
+cm_bi_inventory_image() {
+  local ids inspected_id owner source
+  cm_bi_image_state=absent
+  cm_bi_image_id=''
+  cm_bi_image_source=''
+  if ! ids="$(docker image ls --quiet --no-trunc --filter 'reference=chimpmaera/bi001-foundation:local' 2>/dev/null)"; then
+    cm_bi_fail 'local image inventory is unavailable'
+  fi
+  [ -z "$ids" ] && return
+  [[ "$ids" != *$'\n'* && "$ids" =~ ^sha256:[a-f0-9]{64}$ ]] ||
+    cm_bi_fail 'local image inventory is ambiguous'
+  inspected_id="$(docker image inspect "$ids" --format '{{.Id}}' 2>/dev/null)" ||
+    cm_bi_fail 'local image metadata is unavailable'
+  [ "$inspected_id" = "$ids" ] || cm_bi_fail 'local image metadata is ambiguous'
+  owner="$(docker image inspect "$ids" --format '{{index .Config.Labels "io.chimpmaera.fixture"}}' 2>/dev/null)" ||
+    cm_bi_fail 'local image metadata is unavailable'
+  [ "$owner" = bi001-foundation-v1 ] || cm_bi_fail 'unowned local image denied'
+  source="$(docker image inspect "$ids" --format '{{index .Config.Labels "io.chimpmaera.fixture.source-sha256"}}' 2>/dev/null)" ||
+    cm_bi_fail 'local image metadata is unavailable'
+  [[ "$source" =~ ^[a-f0-9]{64}$ ]] || cm_bi_fail 'local image metadata is ambiguous'
+  cm_bi_image_state=present
+  cm_bi_image_id="$ids"
+  cm_bi_image_source="$source"
+}
 cm_bi_assert_owned_resources() {
   local kind ids resource owner
   for kind in container network volume; do
@@ -34,11 +58,7 @@ cm_bi_assert_owned_resources() {
       [ "$owner" = bi001-foundation-v1 ] || cm_bi_fail 'unowned project resource denied'
     done <<< "$ids"
   done
-  if docker image inspect chimpmaera/bi001-foundation:local >/dev/null 2>&1; then
-    owner="$(docker image inspect chimpmaera/bi001-foundation:local --format '{{index .Config.Labels "io.chimpmaera.fixture"}}' 2>/dev/null)" ||
-      cm_bi_fail 'image ownership is ambiguous'
-    [ "$owner" = bi001-foundation-v1 ] || cm_bi_fail 'unowned local image denied'
-  fi
+  cm_bi_inventory_image
 }
 cm_bi_compose_cmd() {
   CM_BI_PROJECT="$cm_bi_project" CM_BI_PORT="$CM_BI_PORT" DOCKER_DEFAULT_PLATFORM=linux/amd64 \

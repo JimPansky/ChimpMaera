@@ -26,3 +26,9 @@ interrupted `compose down`. Lifecycle health uses `/readyz`; `/healthz` remains 
 separate process-up endpoint. Deterministic tests prove both READY and NOT_READY,
 and prove that image source identity depends only on ordered content digests,
 not checkout paths.
+
+Second closure follow-up: local image discovery is a strict absent/present/error
+inventory. Only clean absence or one ID with readable owned fixture and source
+labels proceeds. Inventory, transport, multiplicity, ID or label ambiguity denies
+with generic output. Start verifies a built image before `up`; reset inventories
+again after `down` and cannot silently report success after a recheck failure.
