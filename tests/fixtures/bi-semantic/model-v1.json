@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "chimpmaera.bi/semantic-model/v1",
+  "modelVersion": "1.0.0",
+  "modelId": "semantic-model:crm-erp-reconciliation-v1",
+  "defaultEnabled": false,
+  "tenantId": "tenant:synthetic-zoo",
+  "entities": ["CRM_OPPORTUNITY", "ERP_ORDER", "CANONICAL_REVENUE_FACT"],
+  "relationships": [{ "id": "relationship:opportunity-order", "from": "CRM_OPPORTUNITY", "to": "ERP_ORDER", "cardinality": "ZERO_OR_ONE_TO_ZERO_OR_ONE", "join": "DECLARED_SOURCE_ID_PAIR_ONLY" }],
+  "dimensions": [{ "id": "dimension:tenant", "expression": "canonical.tenantId" }, { "id": "dimension:currency", "expression": "canonical.currency" }, { "id": "dimension:outcome", "expression": "reconciliation.outcome" }],
+  "measures": [
+    { "id": "measure:crm-amount-minor", "unit": "EUR_MINOR", "formula": "SUM(MATCHED.crm.amount_major * 100)" },
+    { "id": "measure:erp-order-total-minor", "unit": "EUR_MINOR", "formula": "SUM(MATCHED.erp.total_minor)" },
+    { "id": "measure:reconciliation-delta-minor", "unit": "EUR_MINOR", "formula": "measure:crm-amount-minor - measure:erp-order-total-minor" }
+  ],
+  "policy": { "toleranceMinor": 0, "maxAgeSeconds": 3600, "unknownFieldsAllowed": false, "nullsAllowed": false, "writesAllowed": false, "sourceWriteBackAllowed": false, "probabilisticMergeAllowed": false, "conflictResolution": "EXPLICIT_ONLY" },
+  "modelDigest": "11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f"
+}

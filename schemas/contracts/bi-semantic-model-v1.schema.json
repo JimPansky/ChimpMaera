@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/bi-semantic-model-v1.schema.json",
+  "title": "ChimpMaera BI-004 semantic reconciliation model v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "modelVersion", "modelId", "defaultEnabled", "tenantId", "entities", "relationships", "dimensions", "measures", "policy", "modelDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.bi/semantic-model/v1" },
+    "modelVersion": { "const": "1.0.0" },
+    "modelId": { "const": "semantic-model:crm-erp-reconciliation-v1" },
+    "defaultEnabled": { "const": false },
+    "tenantId": { "const": "tenant:synthetic-zoo" },
+    "entities": { "const": ["CRM_OPPORTUNITY", "ERP_ORDER", "CANONICAL_REVENUE_FACT"] },
+    "relationships": { "const": [{ "id": "relationship:opportunity-order", "from": "CRM_OPPORTUNITY", "to": "ERP_ORDER", "cardinality": "ZERO_OR_ONE_TO_ZERO_OR_ONE", "join": "DECLARED_SOURCE_ID_PAIR_ONLY" }] },
+    "dimensions": { "const": [{ "id": "dimension:tenant", "expression": "canonical.tenantId" }, { "id": "dimension:currency", "expression": "canonical.currency" }, { "id": "dimension:outcome", "expression": "reconciliation.outcome" }] },
+    "measures": { "const": [{ "id": "measure:crm-amount-minor", "unit": "EUR_MINOR", "formula": "SUM(MATCHED.crm.amount_major * 100)" }, { "id": "measure:erp-order-total-minor", "unit": "EUR_MINOR", "formula": "SUM(MATCHED.erp.total_minor)" }, { "id": "measure:reconciliation-delta-minor", "unit": "EUR_MINOR", "formula": "measure:crm-amount-minor - measure:erp-order-total-minor" }] },
+    "policy": { "const": { "toleranceMinor": 0, "maxAgeSeconds": 3600, "unknownFieldsAllowed": false, "nullsAllowed": false, "writesAllowed": false, "sourceWriteBackAllowed": false, "probabilisticMergeAllowed": false, "conflictResolution": "EXPLICIT_ONLY" } },
+    "modelDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

@@ -17,6 +17,64 @@
   ],
   "nodes": [
     {
+      "id": "bi-semantic-reconciliation-v1",
+      "dependsOn": [
+        "vf-contract-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/bi-semantic-reconciliation.ts",
+          "role": "CONTRACT",
+          "sha256": "cc6810bef0968202d60bac1abf2be1eb5ba08e7462e776cac476d142bde6d98b"
+        },
+        {
+          "path": "schemas/contracts/bi-semantic-model-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "6c102d2abd547db5bdff0d34cb003d3dca4ffd78749887b78d6bb24a6f7ed4c7"
+        },
+        {
+          "path": "tests/fixtures/bi-semantic/model-v1.json",
+          "role": "FIXTURE",
+          "sha256": "98853c3f693ebc5d76f99f92483be431637f77483bc799a503268646d1dfe291"
+        },
+        {
+          "path": "tests/fixtures/bi-semantic/positive-reconciliation-v1.json",
+          "role": "FIXTURE",
+          "sha256": "ddfbd0883cdd97af948b7fc2151396f40771541059e48f9163d79aea821b211c"
+        },
+        {
+          "path": "tests/bi-semantic-reconciliation.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "f1e5765690aa45653a131d38032d6b8f558cda90dba4c54981112d4f935c1ad4"
+        },
+        {
+          "path": "docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "bf62527c4f045530a17033c3d2104ff886ee653a59f29d11ac9eabd1438f5c47"
+        },
+        {
+          "path": "docs/development/bi-004-semantic-reconciliation-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "33682320e75002232f886bd027cfc57b4bd60c1e2642cb0b77e75cca13f3588a"
+        },
+        {
+          "path": "verification/bi-004-semantic-reconciliation-evidence-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "c89df29df8b9809614336aa5ce439464f583bb6564c86d09728fc65eae040a82"
+        }
+      ],
+      "ownedTests": [
+        "npm run bi-semantic:test"
+      ],
+      "invariants": [
+        "Only declared source-ID pairs can match; probabilistic merge and source write-back remain denied.",
+        "Unknown versions and lineage loss fail closed; stale and unresolved records remain explicit.",
+        "Only exact MATCHED rows contribute to digest-bound KPI recomputation."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "vf-contract-v1",
       "dependsOn": [],
       "inputs": [
@@ -138,7 +196,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "0e437240e7dedd844555b3e22904edc3bd22740131db51bc9320b96ea08e5780"
+          "sha256": "9a15af0ec3e3f3c65d11a4cfdf6c8ee10be99cb87054a28cb3ba8920ef77048c"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -215,7 +273,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "a59386905cd76edf3d8422e69106f856417e5e29baa5bc87424edef11bbbe53f"
+          "sha256": "74a1f4b05c2be32e18324263fe6f006ef7f02f5216d318485a1c6ea916dc4e4f"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -362,7 +420,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "86d090d3c92d235099612f561cd582ad4e8e21a46e83ba211d1c41ea8292ddc9"
+          "sha256": "f5dfb29952b48e962d3e0ea0ddb5664aba7b7168dba2186f2feff7fc9854b54b"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -654,7 +712,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "60bf38a2d3eebeaeca9fe7141717e48b691b496067dae87cdb5cd7acc418e088"
+          "sha256": "c16f64c1070c0a3d0b536423178c84b6f0b3f4e0f26a645ba63536018ab67757"
         },
         {
           "path": "package-lock.json",
