@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "chimpmaera.openclaw-m1.1/evidence/v1",
+  "workItem": {
+    "stableId": "OPENCLAW-M1.1",
+    "githubIssue": 4,
+    "title": "Pinned default-off agent container and provenance"
+  },
+  "baseline": "0d2d990ebf9130b193704ad05a2064ba61060540",
+  "commitBinding": {
+    "method": "CONTAINING_GIT_COMMIT",
+    "path": "security/openclaw-m1.1-evidence-v1.json",
+    "reason": "The containing commit identifies the exact reviewed bytes without a circular embedded commit hash."
+  },
+  "testedIdentity": {
+    "lockId": "openclaw-agent-runtime-2026.7.1-linux-amd64",
+    "version": "2026.7.1",
+    "upstreamCommit": "2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4",
+    "indexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "platform": "linux/amd64",
+    "platformManifestDigest": "sha256:165b4992f1b4b74ffdd7a02c887ba006f9f5dc951eca420eef573a8b233b543f",
+    "gatewayBaseReference": "docker.io/library/node:24.14.1-bookworm-slim@sha256:e484ae3f1e3c378021c967fd42254f343c302a9263e412280eac32bf5bca7008",
+    "localArtifactCount": 22
+  },
+  "provenanceVerification": {
+    "command": "npm run openclaw-runtime-lock:verify",
+    "result": "PASS",
+    "offlineAfterCheckout": true
+  },
+  "focusedVerification": {
+    "command": "npm run openclaw-m1.1:test",
+    "passed": 14,
+    "failed": 0,
+    "runtimeInvocationByNegativeSpies": 0
+  },
+  "negativeProbes": [
+    "MUTABLE_TAG_DENIED_BEFORE_DOCKER",
+    "MISSING_DIGEST_DENIED_BEFORE_DOCKER",
+    "MISSING_LOCK_DENIED_BEFORE_DOCKER",
+    "PROVENANCE_MISMATCH_DENIED_BEFORE_DOCKER",
+    "ALTERED_LOCAL_INPUT_DENIED_BEFORE_DOCKER",
+    "DRIFTED_EXECUTABLE_HELPER_DENIED_BEFORE_SOURCE_OR_DOCKER",
+    "DRIFTED_SETUP_RESET_SMOKE_AND_VERIFIER_DENIED_BY_OFFLINE_VERIFICATION",
+    "DRIFTED_LIFECYCLE_AND_VERIFIER_DENIED_BY_SETUP_BEFORE_DOCKER",
+    "UNLISTED_FIXTURE_TREE_MATERIAL_DENIED_BEFORE_DOCKER",
+    "CONFLICTING_DOCKER_DEFAULT_PLATFORM_DENIED_BEFORE_DOCKER",
+    "EXPLICIT_AMD64_BUILD_AND_COMPOSE_PLATFORM_BOUND",
+    "UNSUPPORTED_ARCHITECTURE_DENIED_BEFORE_DOCKER",
+    "INTERRUPTED_SETUP_RESET_IDEMPOTENT_WITH_NO_START"
+  ],
+  "fullVerification": {
+    "status": "PASS",
+    "authoritativeRepositoryTest": {
+      "command": "npm test",
+      "secureDefaultPretest": { "passed": 12, "failed": 0 },
+      "learningRoutingPretest": { "passed": 26, "failed": 0 },
+      "main": { "passed": 390, "failed": 0 }
+    },
+    "commands": [
+      { "command": "npm run lint", "result": "PASS" },
+      { "command": "npm run build", "result": "PASS" },
+      { "command": "npm run docs:test", "result": "PASS_5_OF_5" },
+      { "command": "npm run video:test", "result": "PASS_75_OF_75" },
+      { "command": "npm run supply-chain:verify", "result": "PASS_7_CHECKS" },
+      { "command": "npm run release-governance:test", "result": "PASS_33_OF_33" },
+      { "command": "npm run release-governance:verify", "result": "PASS" },
+      { "command": "npm run proof:secure-default", "result": "PASS" },
+      { "command": "./scripts/build-public-release.sh --output <isolated-absolute-path>", "result": "PASS" },
+      { "command": "sha256sum -c SHA256SUMS", "result": "PASS" }
+    ]
+  },
+  "runtime": {
+    "externalImagePulledOrStarted": false,
+    "ownerStackTouched": false,
+    "evidenceType": "STATIC_AND_SYNTHETIC_COMMAND_SPY"
+  },
+  "supportedClaim": "Exact offline provenance and all 22 checked-in fixture/lifecycle/verifier inputs are verified before setup permits Docker; every build and Compose lifecycle path is explicitly bound to linux/amd64; the fixture remains default-off and its setup/reset lifecycle is deterministic and ownership-scoped.",
+  "nonClaims": [
+    "NO_REGISTRY_SIGNATURE_VERIFICATION",
+    "NO_CURRENT_CVE_COMPLETE_SBOM_OR_THIRD_PARTY_LICENCE_CLEARANCE",
+    "NO_UPSTREAM_REPRODUCIBLE_BUILD_OR_IMAGE_PUBLICATION_CLAIM",
+    "NO_NON_AMD64_PLATFORM_CLAIM",
+    "NO_PRODUCTION_FITNESS_OR_HOSTILE_HOST_ISOLATION_CLAIM",
+    "NO_MALICIOUS_CHECKOUT_OR_SELF_VERIFIER_TAMPER_RESISTANCE"
+  ]
+}

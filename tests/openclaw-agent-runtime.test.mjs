@@ -10,11 +10,11 @@ const fixture = path.join(root, "demo/openclaw-agent");
 const composePath = path.join(fixture, "compose.yaml");
 const expectedDigest = "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c";
 
-function render(profile = false) {
+function render(profile = false, environment = process.env) {
   const args = ["compose"];
   if (profile) args.push("--profile", "aas035");
   args.push("-f", composePath, "config", "--format", "json");
-  return JSON.parse(execFileSync("docker", args, { encoding: "utf8" }));
+  return JSON.parse(execFileSync("docker", args, { encoding: "utf8", env: environment }));
 }
 
 test("AAS-035 default-off profile and immutable OpenClaw image lock", () => {
@@ -26,6 +26,11 @@ test("AAS-035 default-off profile and immutable OpenClaw image lock", () => {
   assert.doesNotMatch(dockerfile, /FROM\s+[^\n]*:(?:latest|main|stable)(?:\s|$)/);
   assert.equal(String(explicit.services["openclaw-agent"].build.provenance), "false");
   assert.equal(String(explicit.services["capability-gateway"].build.provenance), "false");
+  assert.equal(explicit.services["openclaw-agent"].platform, "linux/amd64");
+  assert.equal(explicit.services["capability-gateway"].platform, "linux/amd64");
+  const conflicting = render(true, { ...process.env, DOCKER_DEFAULT_PLATFORM: "linux/arm64" });
+  assert.equal(conflicting.services["openclaw-agent"].platform, "linux/amd64");
+  assert.equal(conflicting.services["capability-gateway"].platform, "linux/amd64");
 });
 
 test("AAS-035 non-root read-only bounded posture has one closed network", () => {
@@ -75,7 +80,20 @@ test("AAS-035 setup and rollback stay ownership-scoped", () => {
   const setup = readFileSync(path.join(fixture, "setup.sh"), "utf8");
   const reset = readFileSync(path.join(fixture, "reset.sh"), "utf8");
   assert.match(setup, /config --services/);
+  assert.match(setup, /verify-openclaw-agent-runtime-lock\.mjs/);
+  assert.ok(
+    setup.indexOf("verify-openclaw-agent-runtime-lock.mjs") < setup.indexOf("docker info"),
+    "offline provenance verification must precede Docker runtime access",
+  );
+  assert.ok(
+    setup.indexOf("verify-openclaw-agent-runtime-lock.mjs") < setup.indexOf('source "$cm_aas035_setup_dir/lib.sh"'),
+    "offline provenance verification must precede executable fixture helper loading",
+  );
+  assert.match(setup, /cm_aas035_verified_root="\$\(cd -- "\$cm_aas035_setup_dir\/\.\.\/\.\." && pwd\)"/);
+  assert.match(setup, /verified repository root changed while loading fixture helper/);
   assert.match(setup, /--provenance=false/);
+  assert.match(setup, /--platform "\$cm_aas035_platform"/);
+  assert.match(setup, /conflicting DOCKER_DEFAULT_PLATFORM denied/);
   assert.match(setup, /io\.chimpmaera\.fixture\.source-sha256/);
   assert.match(setup, /io\.chimpmaera\.upstream\.index-digest/);
   assert.match(reset, /io\.chimpmaera\.fixture/);

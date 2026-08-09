@@ -2,6 +2,7 @@ name: ${CM_AAS035_PROJECT:-chimpmaera-aas035-openclaw}
 services:
   capability-gateway:
     profiles: [aas035]
+    platform: linux/amd64
     image: chimpmaera/aas035-capability-gateway:local
     build:
       context: ../..
@@ -27,6 +28,7 @@ services:
       start_period: 2s
   openclaw-agent:
     profiles: [aas035]
+    platform: linux/amd64
     image: chimpmaera/aas035-openclaw-agent:local
     build:
       context: ../..

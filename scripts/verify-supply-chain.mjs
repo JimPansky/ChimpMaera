@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { lstat, readFile, readdir, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { verifyOpenClawAgentRuntimeLock } from "./verify-openclaw-agent-runtime-lock.mjs";
 
 const LOCK_PATH = "demo/manifests/supply-chain/artifact-lock-v1.json";
 
@@ -164,6 +165,9 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     "SUPPLY_CHAIN_RUNTIME_IMAGE_RESOLUTION_INVALID_DENIED",
   );
   checks.push("OCI_DECLARATIONS_PINNED");
+
+  await verifyOpenClawAgentRuntimeLock({ root: resolvedRoot });
+  checks.push("OPENCLAW_REFERENCE_ADAPTER_LOCK_VERIFIED");
 
   const packageJson = JSON.parse(await read("package.json"));
   const packageLock = JSON.parse(await read("package-lock.json"));
