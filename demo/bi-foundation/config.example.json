@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "chimpmaera.bi/foundation-config/v1",
+  "hostPort": 12780,
+  "platform": "linux/amd64",
+  "enabledProfile": "bi001"
+}
