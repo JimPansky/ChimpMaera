@@ -98,6 +98,16 @@ function persist(value) {
 
 let state = loadState();
 
+function persistAcceptedReplayIds(replayIds) {
+  const merged = new Set(state.identityReplay ?? []);
+  for (const replayId of replayIds) merged.add(replayId);
+  if (merged.size > workloadContract.identity.replayCacheMaxEntries) {
+    throw new Error("IDENTITY_REPLAY_CACHE_FULL_DENIED");
+  }
+  state.identityReplay = [...merged].sort();
+  persist(state);
+}
+
 function exactObject(value, keys) {
   return value !== null
     && typeof value === "object"
@@ -343,8 +353,7 @@ export function gatewayHandler(request, response) {
           authorization: request.headers.authorization,
           correlationId,
         }, { replayIds });
-        state.identityReplay = [...replayIds].sort();
-        persist(state);
+        persistAcceptedReplayIds(replayIds);
         json(response, 200, {
           schemaVersion: "chimpmaera.openclaw/gateway-broker-response/v2",
           status: "PASS",
@@ -354,7 +363,6 @@ export function gatewayHandler(request, response) {
         });
       } catch (error) {
         state.counters.denials += 1;
-        state.identityReplay = [...replayIds].sort();
         persist(state);
         json(response, 403, sanitizedDenial(error, correlationId));
       }

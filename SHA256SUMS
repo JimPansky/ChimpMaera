@@ -101,7 +101,7 @@ f35377c67289c34b8065b4697123b3819cb28dc165a60b5db7c77d29a506d964  ./demo/manifes
 c677329275e16579eebacc0b7146dc25c52fb4d949a9a20e9a355f6ad39deba8  ./demo/manifests/identity/panskys-zoo-v1.json
 61f5cf1450ec57b78feaeb77ea3d641a6072634aa62e3998ce1a82ed7502fead  ./demo/manifests/network/local-egress-policy-v1.json
 db2b9fad5068f9d0e21df1c1b610493a64dcde326b5d7417992bddbe6d8ba3e4  ./demo/manifests/supply-chain/artifact-lock-v1.json
-b692d6dcbf23a9502cf298f915c3330780eae41556e2d54bad605882d5c8bf07  ./demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json
+274155e141c0ef44c594431a22f1120e38d79fe37d44537cca5ed5fca276c8cb  ./demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json
 b7068fac151a9d1c7d0394feb6fbec5a33dad8c8d070a5ec6e72a4c8918ef118  ./demo/model-access-broker/broker.Dockerfile
 e5dd9ee8e825fc98a9b71df8121e42f37cd299c60d797682b31469165396f13d  ./demo/model-access-broker/broker.mjs
 7d5dcccb435cf55b2ca374904eae350d6fa143d103ed5be51b2ebc7c3dfa847c  ./demo/model-access-broker/compose.yaml
@@ -120,12 +120,12 @@ d451aaaad9d48f92bf7645003ca1ffd9792c2e4b8bdb9d73e296ebddcd9d3b9d  ./demo/opencla
 19bd3ab216076526e0f2f8543bf5453fb9c1023a99a2587729d18b4ba345dd7c  ./demo/openclaw-agent/fixture-probe.mjs
 64c2964195db5fc91ac8647d130c3b939bb9a115f47d1ecba8e23f25829e1ea8  ./demo/openclaw-agent/gateway.Dockerfile
 1f92a3ec179bf8af3c154a7fa593427f02a0caf0aff161220d3f6ff4f2417b99  ./demo/openclaw-agent/gateway-workload-contract-v2.json
-dcbeca6e5c742d6c60445294b3b8aab29bf4f19610dc7901d60d715597c1b941  ./demo/openclaw-agent/gateway.mjs
+24ad73eecb5df6767c3b056585834275ba818b3e86834388928caa9dc2ec056c  ./demo/openclaw-agent/gateway.mjs
 0933f26dbdcdcd6e43ece5f40bba35d528beb7c0294af260fe15017e2149386c  ./demo/openclaw-agent/lib.sh
 edfff72d40e39b75146a06a611652a5383ea66ba76bbfc576fd6fc98e55b03ce  ./demo/openclaw-agent/openclaw.Dockerfile
 e45649ec7049f0433cae0a10712078d7cb737abc1de5c0ea5655579ed349cf74  ./demo/openclaw-agent/openclaw.json
-dbaa57a42254d9d554c14bdfee5659ee260fb10185450dcab29bf46f67affaae  ./demo/openclaw-agent/plugin/identity-v2.mjs
-3d36da857855512351079ad8ff7b7c30ff23c72820c4ac26475de1c54aa5a963  ./demo/openclaw-agent/plugin/index.mjs
+635ce8034fe60162528e116a9013020e457be2c34decdc48ba4dcaf3b2366088  ./demo/openclaw-agent/plugin/identity-v2.mjs
+4040ad24f9ecad1caa0b1cb58ab603fee5037616f6bab2a78177ce3e521ff709  ./demo/openclaw-agent/plugin/index.mjs
 91574fb9e896480e2ff90ee853f1e765ea6c8a90420d3536e831c6c5c37b29c4  ./demo/openclaw-agent/plugin/openclaw.plugin.json
 b9f138f5cc1fde07e0a2203684bcd09df69f736f42c7994d1710f25d1670a52d  ./demo/openclaw-agent/plugin/package.json
 070e05c1d32a58716598da894748a190ff40ce5bfbd64f73dfe9140eabc4f48c  ./demo/openclaw-agent/reset.sh
@@ -179,7 +179,7 @@ fcf8e69a180089b6041a63adc57e8a678de0c720a2ed338b40ac80c213f0fb13  ./docs/README.
 e71b4f4f67c41f1a843c998248eca45bfbf01b4e62f23603ed970d1f6b731ecd  ./docs/RESOURCE-PLANE-PROFILES.md
 af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892  ./docs/SECURE-DEFAULT-PROOF.md
 54d4a2bec3e58247080c20ea0ff21ad80b032d6ca8995ba2db6aed7024735137  ./docs/SECURITY-ASSURANCE.md
-be82802d595d7d43342d534ed94dfbf1d2d83cebfc128bcd9c530c8c7e1f759e  ./docs/SUPPLY-CHAIN.md
+133351e203abf2ac5ba2cbf96d8019c30130d201dd3e84ad71fe93917057eba7  ./docs/SUPPLY-CHAIN.md
 d5e8fa53a62092027cf92c428c62b677957db21287523debdc288cb6e9294998  ./docs/SYSTEM-ADVISOR-GUIDE.md
 ce49bd91c5e611db908f4d5d25f529c859a1d5712eb7a5e2bcd0e04e14024bef  ./docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md
 c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f  ./docs/VERIFICATION-FABRIC-SHADOW.md
@@ -527,9 +527,9 @@ aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
 aef5db3fb6fea62af2f3897963161201546d37874ff1a3bb73a4f925928a3644  ./verification/verification-dag-v2.json
-63bead512eef6866f22a9e55a670b49f1ffd969adb790b4ba7ec0d85db86cf9f  ./docs/development/openclaw-m1.2-issue-5-pdca.md
-92a1e5bb44f366e54ec3c28649a3238074bf59f0e4018bcb27ee12da456356a9  ./security/openclaw-m1.2-evidence-v2.json
-2292e2ad923028d393ed27d5b12541470f8ab5373d1d2b7521af28779f3aee22  ./tests/openclaw-gateway-identity-network.test.mjs
+88c54824321d9b9883642d9d4a763b35e9c1b3c95a829391e6cfaf6e8b72c543  ./docs/development/openclaw-m1.2-issue-5-pdca.md
+c782d9b9edcf2b1b6e981e21797c7746a80fdf601cacd12a13e5dae60d2e4e6f  ./security/openclaw-m1.2-evidence-v2.json
+9fbcc6cee91c1ba32098bbfbc0959e1fa7b6a4c3ecb02a69575b754be49ebb51  ./tests/openclaw-gateway-identity-network.test.mjs
 e54199577415a1868cbf76db57aca6caa5d13aa8f747602fea48c29d9add4b15  ./docs/CAPABILITY-ACTION-CATALOGUE.md
 1b3db853ea2be6bfc4726d3def9a6a1cbccf44bc329ca21ffc1ad7428827d050  ./schemas/contracts/capability-catalogue-v1.schema.json
 653e88a25ad4640107980cffffee76947458bd52f0e2b44e2bdf5a059a28be8d  ./tests/fixtures/capability-catalogue/synthetic-catalogue-v1.json

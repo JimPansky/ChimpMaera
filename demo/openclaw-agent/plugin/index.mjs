@@ -1,7 +1,11 @@
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { createInvocationIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
+import {
+  createInvocationIdentity,
+  encodeSyntheticIdentity,
+  sanitizedGatewayDenialMessage,
+} from "./identity-v2.mjs";
 
 const workloadContract = JSON.parse(readFileSync("/opt/chimpmaera/gateway-workload-contract-v2.json", "utf8"));
 
@@ -97,7 +101,7 @@ export default definePluginEntry({
           || body.correlationId !== correlationId
           || body.result?.receipt?.outcome !== "SYNTHETIC_EFFECT_READBACK_VERIFIED"
           || !/^[a-f0-9]{64}$/.test(body.result?.receipt?.receiptDigest ?? "")
-        ) throw new Error(`CM_GATEWAY_DENIED_${body.error ?? response.status}`);
+        ) throw new Error(sanitizedGatewayDenialMessage(body, response.status));
         return {
           content: [{ type: "text", text: JSON.stringify(body.result) }],
           details: body,

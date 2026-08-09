@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { Readable } from "node:stream";
+import { PassThrough, Readable } from "node:stream";
 import test from "node:test";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import {
@@ -12,6 +12,7 @@ import {
   createSyntheticIdentity,
   encodeSyntheticIdentity,
   sanitizedDenial,
+  sanitizedGatewayDenialMessage,
 } from "../demo/openclaw-agent/plugin/identity-v2.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -128,12 +129,8 @@ test("OPENCLAW-M1.2 identity negatives fail closed and reuse is replay-denied", 
   );
 });
 
-function gatewayRequest(handler, route, { method = "GET", headers = {}, body } = {}) {
+function gatewayExchange(handler, request) {
   return new Promise((resolve, reject) => {
-    const request = Readable.from(body === undefined ? [] : [Buffer.from(JSON.stringify(body))]);
-    request.method = method;
-    request.url = route;
-    request.headers = headers;
     let status;
     const response = {
       writeHead(value) { status = value; },
@@ -151,6 +148,22 @@ function gatewayRequest(handler, route, { method = "GET", headers = {}, body } =
       reject(error);
     }
   });
+}
+
+function gatewayRequest(handler, route, { method = "GET", headers = {}, body } = {}) {
+  const request = Readable.from(body === undefined ? [] : [Buffer.from(JSON.stringify(body))]);
+  request.method = method;
+  request.url = route;
+  request.headers = headers;
+  return gatewayExchange(handler, request);
+}
+
+function deferredGatewayRequest(handler, route, { method = "POST", headers = {} } = {}) {
+  const request = new PassThrough();
+  request.method = method;
+  request.url = route;
+  request.headers = headers;
+  return { request, response: gatewayExchange(handler, request) };
 }
 
 test("OPENCLAW-M1.2 exact smoke probe definitions reach their V2 denial boundaries", async () => {
@@ -273,6 +286,73 @@ test("OPENCLAW-M1.2 legacy bypass creates no effect while fresh retry identity r
     delete process.env.CM_AAS035_STATE_PATH;
     await rm(temporary, { recursive: true, force: true });
   }
+});
+
+test("OPENCLAW-M1.2 overlapping failure cannot erase a later accepted replay identity", async () => {
+  const temporary = await mkdtemp(path.join(tmpdir(), "cm-openclaw-m12-overlap-"));
+  const statePath = path.join(temporary, "state.json");
+  process.env.CM_AAS035_STATE_PATH = statePath;
+  try {
+    const gatewayUrl = `${pathToFileURL(path.join(fixture, "gateway.mjs")).href}?integration=m12-overlap`;
+    const { gatewayHandler } = await import(gatewayUrl);
+    const earlier = createInvocationIdentity(contract, {
+      requestId: typed.requestId,
+      invocationId: "overlap-earlier-identity-0001",
+    });
+    const later = createInvocationIdentity(contract, {
+      requestId: typed.requestId,
+      invocationId: "overlap-later-identity-0002",
+    });
+    const headersFor = (invocation) => ({
+      authorization: `Synthetic ${encodeSyntheticIdentity(invocation.identity)}`,
+      host: "capability-gateway:8080",
+      "x-cm-correlation-id": invocation.correlationId,
+    });
+
+    const suspended = deferredGatewayRequest(gatewayHandler, contract.identity.route, {
+      headers: headersFor(earlier),
+    });
+    let state = JSON.parse(await readFile(statePath, "utf8"));
+    assert.deepEqual(state.identityReplay, [earlier.identity.claims.jti]);
+
+    const acceptedLater = await gatewayRequest(gatewayHandler, contract.identity.route, {
+      method: "POST",
+      headers: headersFor(later),
+      body: typed,
+    });
+    assert.equal(acceptedLater.status, 200);
+    assert.equal(acceptedLater.body.result.replayState, "FIRST_EXECUTION");
+
+    suspended.request.end(JSON.stringify({ ...typed, actionId: "raw.shell.execute" }));
+    const failedEarlier = await suspended.response;
+    assert.equal(failedEarlier.status, 403);
+    assert.equal(failedEarlier.body.code, "TYPED_REQUEST_BINDING_DENIED");
+
+    state = JSON.parse(await readFile(statePath, "utf8"));
+    assert.deepEqual(state.identityReplay, [earlier.identity.claims.jti, later.identity.claims.jti].sort());
+    assert.equal(state.counters.effects, 1);
+    const reusedLater = await gatewayRequest(gatewayHandler, contract.identity.route, {
+      method: "POST",
+      headers: headersFor(later),
+      body: typed,
+    });
+    assert.equal(reusedLater.status, 403);
+    assert.equal(reusedLater.body.code, "IDENTITY_REPLAY_DENIED");
+  } finally {
+    delete process.env.CM_AAS035_STATE_PATH;
+    await rm(temporary, { recursive: true, force: true });
+  }
+});
+
+test("OPENCLAW-M1.2 plugin preserves sanitized V2 denial codes with safe fallback", () => {
+  assert.equal(sanitizedGatewayDenialMessage({ code: "IDENTITY_REPLAY_DENIED" }, 403), "CM_GATEWAY_DENIED_IDENTITY_REPLAY_DENIED");
+  assert.equal(sanitizedGatewayDenialMessage({ code: "TYPED_REQUEST_BINDING_DENIED" }, 403), "CM_GATEWAY_DENIED_TYPED_REQUEST_BINDING_DENIED");
+  assert.equal(sanitizedGatewayDenialMessage({ error: "LEGACY_CAPABILITY_ROUTE_DENIED" }, 403), "CM_GATEWAY_DENIED_LEGACY_CAPABILITY_ROUTE_DENIED");
+  assert.equal(sanitizedGatewayDenialMessage({ code: "raw proof detail" }, 403), "CM_GATEWAY_DENIED_403");
+  assert.equal(sanitizedGatewayDenialMessage({ code: "raw proof detail" }, undefined), "CM_GATEWAY_DENIED_REQUEST_DENIED");
+  const plugin = readFileSync(path.join(fixture, "plugin/index.mjs"), "utf8");
+  assert.match(plugin, /sanitizedGatewayDenialMessage\(body, response\.status\)/);
+  assert.doesNotMatch(plugin, /body\.error\s*\?\?/);
 });
 
 test("OPENCLAW-M1.2 denial evidence is sanitized and does not echo identity material", () => {

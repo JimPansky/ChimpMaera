@@ -165,3 +165,15 @@ export function sanitizedDenial(error, correlationId = null) {
     code,
   };
 }
+
+export function sanitizedGatewayDenialMessage(body, status) {
+  for (const candidate of [body?.code, body?.error]) {
+    if (typeof candidate === "string" && /^[A-Z0-9_]+_DENIED$/.test(candidate)) {
+      return `CM_GATEWAY_DENIED_${candidate}`;
+    }
+  }
+  const fallback = Number.isInteger(status) && status >= 400 && status <= 599
+    ? String(status)
+    : "REQUEST_DENIED";
+  return `CM_GATEWAY_DENIED_${fallback}`;
+}

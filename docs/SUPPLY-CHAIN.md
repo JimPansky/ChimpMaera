@@ -73,7 +73,12 @@ and replay matrix. The legacy `/v1/capabilities/execute` route is retained only
 as a stable fail-closed V1 denial and cannot create an effect. Fresh V2
 assertions may safely retry the same V1 `requestId`: the Gateway returns the
 established `REPLAY_SAME_RECEIPT`, while reuse of an identical assertion is
-denied before effect dispatch. The versioned V2 workload contract also binds
+denied before effect dispatch. Accepted replay identifiers are persisted as a
+monotonic bounded set: an earlier overlapping request that later fails cannot
+replace the cache or erase a newer accepted JTI. Sanitized V2 denial codes are
+preserved by the plugin; malformed or non-stable denial detail falls back to
+the HTTP status without reflecting assertion or proof material. The versioned
+V2 workload contract also binds
 the lifecycle smoke definitions: the wrong-subject probe reaches
 `IDENTITY_SUBJECT_DENIED`, and the unknown-action probe uses otherwise-valid
 identity claims to reach `TYPED_REQUEST_BINDING_DENIED`. A non-container test

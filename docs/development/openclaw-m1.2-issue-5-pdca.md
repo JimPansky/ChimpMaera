@@ -52,6 +52,11 @@ tenants, providers, credentials, or network identity systems.
   the sole V2 broker route. Their definitions live in the V2 workload contract
   and are executed unchanged by both fixture smoke and an in-process Gateway
   test, proving their expected denial boundaries remain route-compatible.
+- Made accepted replay state monotonic across overlapping requests. Request
+  snapshots can only merge accepted JTIs into the bounded 64-entry cache; a
+  later failure never restores or replaces the current cache.
+- Preserved sanitized V2 denial codes through the plugin error boundary while
+  retaining status/`REQUEST_DENIED` fallback for malformed, non-stable detail.
 
 ## Check
 
@@ -59,9 +64,9 @@ tenants, providers, credentials, or network identity systems.
 | --- | --- |
 | 1. Short-lived least-privilege workload identity | V2 contract readback and positive behavioral test prove exact subject, audience, tenant, one action scope, route, correlation, fixed clock, and 60-second TTL. |
 | 2. No long-lived or ambient credentials | Compose/runtime inspection, credential-environment and credential-shaped-byte probes, empty live-credential policy, and public non-secret assurance marker. |
-| 3. Expected Gateway request and correlation | Positive V2 authorization/broker probe returns `PASS`, preserves each validated invocation correlation ID, and produces the existing V1 synthetic effect receipt inside the V2 wrapper. A fresh-identity retry of the same `requestId` returns that exact receipt with one effect. |
+| 3. Expected Gateway request and correlation | Positive V2 authorization/broker probe returns `PASS`, preserves each validated invocation correlation ID, and produces the existing V1 synthetic effect receipt inside the V2 wrapper. A fresh-identity retry of the same `requestId` returns that exact receipt with one effect. Sanitized V2 denial codes survive the plugin boundary without assertion/proof reflection. |
 | 4. Direct paths denied | Internal Compose network readback plus behavioral destination/protocol/DNS/port/method/route matrix covers internet, provider, metadata, control-plane, peer, unexpected targets, and the legacy V1 capability bypass. Gateway-state readback proves the legacy probe creates zero effect attempts/effects. The unknown-action smoke definition uses the only V2 route and otherwise-valid identity to reach typed-request denial without an effect. |
-| 5. Identity failures close | Missing, expired, wrong-subject, wrong-audience, wrong-tenant, wrong-scope, wrong-route, correlation mismatch, malformed proof, and identical-assertion second-use probes return stable denial codes. The exact wrong-identity smoke definition reaches V2 subject denial. Fresh assertion identity is distinct from request-level effect idempotency. |
+| 5. Identity failures close | Missing, expired, wrong-subject, wrong-audience, wrong-tenant, wrong-scope, wrong-route, correlation mismatch, malformed proof, and identical-assertion second-use probes return stable denial codes. The exact wrong-identity smoke definition reaches V2 subject denial. A deterministic suspended-request interleaving proves an earlier failure cannot erase a later accepted JTI, whose reuse remains denied. Fresh assertion identity is distinct from request-level effect idempotency. |
 
 The focused commands are `npm run openclaw-runtime-lock:verify` and
 `npm run openclaw-m1.2:test`. The authoritative repository gates, exact results,
@@ -82,8 +87,9 @@ provider effects because neither exists in this slice.
 Supported claim: deterministic local synthetic enforcement of the exact V2
 identity and single Gateway path in the pinned, default-off fixture, with
 correlation preservation, bounded TTL, replay denial, internal-network
-readback, legacy execution denial, exact-receipt retry idempotency, sanitized
-outcomes, and zero live/ambient credential fixtures.
+readback, legacy execution denial, monotonic bounded replay state,
+exact-receipt retry idempotency, stable sanitized denial propagation,
+sanitized outcomes, and zero live/ambient credential fixtures.
 
 Honest non-claims:
 
