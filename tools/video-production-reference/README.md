@@ -3,6 +3,7 @@
 Canonical authoring and governance:
 
 - [Governed visual storytelling](docs/VISUAL-LANGUAGE-AUTHORING.md)
+- [Template and release-segment authoring](docs/TEMPLATE-SEGMENT-AUTHORING.md)
 - [Audience discovery and audience lock](docs/AUDIENCE-DISCOVERY.md)
 - [2026-08-03 hardening evidence and maturity](docs/PROCESS-HARDENING-EVIDENCE.md)
 - Machine contracts: `schemas/storyboard.schema.json`, `schemas/audience-discovery-canvas.schema.json`, `schemas/script-package.schema.json`, `schemas/learning-record.schema.json`
@@ -125,6 +126,13 @@ Generate synthetic examples and run the smoke:
 
 ```bash
 ./scripts/smoke.sh
+```
+
+Verify that documented local paths, Docker/Compose build inputs, commands,
+schemas, and declared reference assets remain present and digest-consistent:
+
+```bash
+python3 tools/video-production-reference/scripts/verify_reference_closure.py
 ```
 
 The runtime profile is network-disabled, non-root, read-only root filesystem,

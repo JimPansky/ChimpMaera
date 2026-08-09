@@ -35,14 +35,19 @@ Evidence on the final pre-commit tree:
 
 - focused INT-PROFILE suite: 6/6 PASS, including 500 object-key reorderings,
   malformed primitive denial and variant/class crossover denial;
-- authoritative repository suite: 365/365 PASS;
+- authoritative repository suite after merging `origin/main` at
+  `9e5f9ec6d83448b196e45443ae88e08c90c910b7`: 366/366 PASS;
 - Secure Default manifest probes: 12/12 PASS;
-- Learning Routing pretest: 10/10 PASS;
+- Learning Routing pretest: 26/26 PASS;
+- Signal Release Intake focused suite: 4/4 PASS;
+- Verification Fabric v2 focused suite: 16/16 PASS;
+- video reference suite: 75/75 PASS;
 - documentation site: 5/5 PASS;
 - TypeScript lint, supply-chain verification, release-governance verification
   and Secure Default proof: PASS;
-- root `SHA256SUMS`: 501/501 PASS;
-- isolated public-release build and its public-safety scan: PASS; and
+- root `SHA256SUMS`: 520/520 PASS;
+- isolated public-release build and its public-safety scan: PASS with 467
+  staged files; and
 - `git diff --check`: PASS.
 
 ## Act
