@@ -3,11 +3,14 @@ set -euo pipefail
 # shellcheck source=demo/openclaw-agent/lib.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 
+command -v node >/dev/null || cm_aas035_fail "Node.js is required for offline provenance verification"
+host_os="$(uname -s)"
+host_arch="$(uname -m)"
+node "$cm_aas035_root/scripts/verify-openclaw-agent-runtime-lock.mjs" \
+  --host-os "$host_os" --host-arch "$host_arch"
 command -v docker >/dev/null || cm_aas035_fail "Docker is required"
 docker info >/dev/null 2>&1 || cm_aas035_fail "Docker daemon is unavailable"
 docker compose version >/dev/null 2>&1 || cm_aas035_fail "Docker Compose v2 is required"
-[ "$(uname -s)" = Linux ] || cm_aas035_fail "Linux is required"
-[ "$(uname -m)" = x86_64 ] || cm_aas035_fail "linux/amd64 is required"
 
 ordinary="$(docker compose --project-name "$cm_aas035_project" --file "$cm_aas035_compose" config --services)"
 [ -z "$ordinary" ] || cm_aas035_fail "AAS-035 services must remain absent without the explicit profile"

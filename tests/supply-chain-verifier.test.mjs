@@ -78,6 +78,7 @@ test("real repository declarations produce a bounded PASS report", async () => {
   assert.match(report.lockDigest, /^[a-f0-9]{64}$/);
   assert.deepEqual(report.checks, [
     "OCI_DECLARATIONS_PINNED",
+    "OPENCLAW_REFERENCE_ADAPTER_LOCK_VERIFIED",
     "NPM_LOCK_INTEGRITY_DECLARED",
     "CI_ACTIONS_NPM_AND_COMPOSE_PINNED",
     "RUNTIME_COPY_CLOSURE_VERIFIED",

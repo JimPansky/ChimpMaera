@@ -140,7 +140,7 @@
         { "path": "release/governance.json", "role": "CONTRACT", "sha256": "fd48a9efcfc13926c5573c4e7a6f3e3afa31f87dd8253e0c0354b01df7712965" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
         { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "68abd8dbf2e6c3d506c86252813df686ad028d8ce1aec89e817d6c36f17625c6" },
-        { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f" }
+        { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "031c8b699854b3c699fa754523df9a65cc57bc10fde7c73d6874a00fb83dd89b" }
       ],
       "ownedTests": [
         "npm run release-governance:test",
@@ -157,9 +157,9 @@
       "id": "secure-default-proof",
       "dependsOn": ["repository-integrity"],
       "inputs": [
-        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "70e65845696d9b97f1714d5a6aec1fd05ca759bc6a8d63739e70d8925aed3bb7" },
+        { "path": "security/secure-default-proof-v1.json", "role": "CONTRACT", "sha256": "b8c53575460bd15364ac2c6d3a81c61babe809bf358d5bd1fb8785d515535497" },
         { "path": "schemas/security/secure-default-proof-v1.schema.json", "role": "SCHEMA", "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8" },
-        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "7fbf593f1947a835c716f20818c71bd805dbb4496871eb07eede8f5ee3b124ee" },
+        { "path": "security/secure-default-proof-evidence-v1.json", "role": "DERIVED_EVIDENCE", "sha256": "ad00c7fa24c619d7d1dcf3ec0d21514eb1931874f59fc84858e8e8783d787579" },
         { "path": "scripts/verify-secure-default-proof.mjs", "role": "SECURITY", "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1" },
         { "path": "tests/secure-default-proof.test.mjs", "role": "VALIDATOR", "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0" },
         { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "DERIVED_EVIDENCE", "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892" }
@@ -177,7 +177,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "1e24cf41505b388dd139fcdad1fccd3be666d9d6c2855ad4ca170775099f838f" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "1b77eadba33eaca6507e288ac8858212ff8461032efa64877bf367b1e786088d" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "cc9d6a59d4109bc3b16857011d00f58bf14eb162b8c82758db26873fa40d17c7" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }

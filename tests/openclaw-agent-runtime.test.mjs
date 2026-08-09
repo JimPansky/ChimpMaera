@@ -75,6 +75,11 @@ test("AAS-035 setup and rollback stay ownership-scoped", () => {
   const setup = readFileSync(path.join(fixture, "setup.sh"), "utf8");
   const reset = readFileSync(path.join(fixture, "reset.sh"), "utf8");
   assert.match(setup, /config --services/);
+  assert.match(setup, /verify-openclaw-agent-runtime-lock\.mjs/);
+  assert.ok(
+    setup.indexOf("verify-openclaw-agent-runtime-lock.mjs") < setup.indexOf("docker info"),
+    "offline provenance verification must precede Docker runtime access",
+  );
   assert.match(setup, /--provenance=false/);
   assert.match(setup, /io\.chimpmaera\.fixture\.source-sha256/);
   assert.match(setup, /io\.chimpmaera\.upstream\.index-digest/);
