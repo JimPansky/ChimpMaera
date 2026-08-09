@@ -270,8 +270,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf  ./package-lock.json
-39a774f297ef52dae5da03e621c118e02d98a91c6e6d42e53ffd63401655ea24  ./package.json
+917451ce94512df9069c28283b7753c710eef9f5bdd4582b973af58941bf0e0b  ./package-lock.json
+998ebcaf6e4c530b8e24c4aa282140524b87e0e0027b1eb2a4c27bde7a906066  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 a156ea24d1b17bdbf8d6cf0381c714e326e79e746175b965e4acb0151a3a423f  ./packages/contracts/src/builder-authority.ts
@@ -511,7 +511,7 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-b7fed8a6c78e6be4a9a2e5b10f2fcfd7020226d1134a607af6ffce782c016f52  ./verification/verification-dag-v2.json
+e16485cf97f1a23c346b1ecf88c758c9a628815407db0b4c4ac47bd41fc37e98  ./verification/verification-dag-v2.json
 eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10  ./packages/contracts/src/integration-profile.ts
 66495d4d334d26afaaaf5137147fb7803061c4338ed3de3475770ed4f12a7d68  ./schemas/contracts/integration-profile-v1.schema.json
 9587b83e99ddb076334fbff99b00c851690f0b251ff86f7549c05408d13d021f  ./tests/fixtures/integration-profile/positive-variants-v1.json
