@@ -79,6 +79,22 @@ const bi004Inputs = [
   ["verification/bi-004-semantic-reconciliation-evidence-v1.json", "DERIVED_EVIDENCE"],
 ];
 bi004Node.inputs = bi004Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
+const bi005Node = dag.nodes.find(({ id }) => id === "bi-dashboard-readback-v1");
+if (bi005Node === undefined) throw new Error("BI_005_DAG_NODE_MISSING");
+const bi005Inputs = [
+  ["packages/contracts/src/bi-dashboard.ts", "CONTRACT"],
+  ["schemas/contracts/bi-dashboard-v1.schema.json", "SCHEMA"],
+  ["tests/fixtures/bi-dashboard/dashboard-set-v1.json", "FIXTURE"],
+  ["tests/fixtures/bi-dashboard/request-v1.json", "FIXTURE"],
+  ["tests/fixtures/bi-dashboard/negative-probes-v1.json", "FIXTURE"],
+  ["tests/bi-dashboard.test.ts", "VALIDATOR"],
+  ["scripts/render-bi-dashboard-evidence.mjs", "VALIDATOR"],
+  ["docs/BI-DASHBOARD-READBACK-GUIDE.md", "DERIVED_EVIDENCE"],
+  ["docs/development/bi-005-dashboard-readback-pdca.md", "DERIVED_EVIDENCE"],
+  ["verification/bi-005-dashboard-evidence-v1.json", "DERIVED_EVIDENCE"],
+  ...["normal", "empty", "stale", "conflict", "denied", "error"].map((state) => [`verification/bi-005-dashboard-readbacks/${state}.json`, "DERIVED_EVIDENCE"]),
+];
+bi005Node.inputs = bi005Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
 const m14Node = dag.nodes.find(({ id }) => id === "openclaw-m1-4");
 if (m14Node === undefined) throw new Error("OPENCLAW_M1_4_DAG_NODE_MISSING");
 const m14Inputs = [

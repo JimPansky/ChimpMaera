@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "chimpmaera.verification/local-synthetic-report/v1",
+  "evidenceId": "evidence:bi-005-dashboard-readback-v1",
+  "issue": "#14",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "commitBinding": "CONTAINING_DCO_SIGNED_COMMIT",
+  "futureCommitClaimed": false,
+  "sanitization": {
+    "rawSecrets": false,
+    "personalData": false,
+    "realFinancialRecords": false,
+    "productionIdentifiers": false,
+    "privateInfrastructure": false,
+    "exploitDetails": false,
+    "rawSourceIdentifiersInRenderedReadback": false
+  },
+  "claims": [
+    "DEFAULT_OFF_READ_ONLY_DASHBOARD_SET_V1",
+    "BI_004_FORMULA_AND_VALUE_READBACK_ONLY",
+    "VISIBLE_KPI_CONTEXT",
+    "DETERMINISTIC_FIXED_FILTERS",
+    "TENANT_SAFE_CANONICAL_DRILL_THROUGH",
+    "SANITIZED_LINEAGE",
+    "EXPLICIT_SIX_STATE_RENDERING",
+    "DETERMINISTIC_ACCESSIBILITY_CHECKS",
+    "FAIL_CLOSED_BOUNDARY",
+    "NO_SOURCE_OR_CONTROL_PLANE_MUTATION"
+  ],
+  "nonClaims": [
+    "WRITE_BACK_OR_OPERATIONAL_COMMANDS",
+    "DMS_DASHBOARD",
+    "EXECUTIVE_FORECAST_GUARANTEE",
+    "PRODUCTION_ANALYTICS_SERVICE_OR_SLA",
+    "REAL_TIME_GUARANTEE",
+    "DECISION_AUTOMATION",
+    "FINANCIAL_ASSURANCE",
+    "ACCESSIBILITY_CERTIFICATION",
+    "LIVE_CREDENTIALS_OR_REAL_DATA",
+    "PROVIDER_ONBOARDING",
+    "SERVICE_EXPOSURE",
+    "DEPLOYMENT",
+    "IMAGE_PUBLICATION",
+    "PRODUCTION_ACTIVATION",
+    "INFRASTRUCTURE_MUTATION"
+  ],
+  "semanticBinding": {
+    "schemaVersion": "chimpmaera.bi/semantic-model/v1",
+    "modelVersion": "1.0.0",
+    "modelDigest": "11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f",
+    "acceptedMetricIds": [
+      "measure:crm-amount-minor",
+      "measure:erp-order-total-minor",
+      "measure:reconciliation-delta-minor"
+    ],
+    "kpiToFormulaToSourceTrace": [
+      {
+        "metricId": "measure:crm-amount-minor",
+        "formula": "SUM(MATCHED.crm.amount_major * 100)",
+        "semanticFormulaPath": "/measures/0/formula",
+        "semanticValuePath": "/kpis/crmAmountMinor",
+        "sourceReadback": "BI-004 report rows[].lineage plus rows[].values; raw source IDs are hashed before rendering"
+      },
+      {
+        "metricId": "measure:erp-order-total-minor",
+        "formula": "SUM(MATCHED.erp.total_minor)",
+        "semanticFormulaPath": "/measures/1/formula",
+        "semanticValuePath": "/kpis/erpOrderTotalMinor",
+        "sourceReadback": "BI-004 report rows[].lineage plus rows[].values; raw source IDs are hashed before rendering"
+      },
+      {
+        "metricId": "measure:reconciliation-delta-minor",
+        "formula": "measure:crm-amount-minor - measure:erp-order-total-minor",
+        "semanticFormulaPath": "/measures/2/formula",
+        "semanticValuePath": "/kpis/reconciliationDeltaMinor",
+        "sourceReadback": "BI-004 report rows[].lineage plus rows[].values; raw source IDs are hashed before rendering"
+      }
+    ]
+  },
+  "stateReadback": {
+    "normal": {
+      "path": "verification/bi-005-dashboard-readbacks/normal.json",
+      "state": "NORMAL",
+      "code": "DASHBOARD_READY",
+      "sha256": "40455b437905fe6cdd97cfe3f99e3222fcc6593c57047152c2d7b7ec0d228813"
+    },
+    "empty": {
+      "path": "verification/bi-005-dashboard-readbacks/empty.json",
+      "state": "EMPTY",
+      "code": "NO_MATCHED_FACTS",
+      "sha256": "5c96ace3f679149cd195f8732d6ed75487d24a891acc5b61f48defb35559896f"
+    },
+    "stale": {
+      "path": "verification/bi-005-dashboard-readbacks/stale.json",
+      "state": "STALE",
+      "code": "SOURCE_STALE",
+      "sha256": "15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa"
+    },
+    "conflict": {
+      "path": "verification/bi-005-dashboard-readbacks/conflict.json",
+      "state": "CONFLICT",
+      "code": "CONFLICTING_FILTERS",
+      "sha256": "ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77"
+    },
+    "denied": {
+      "path": "verification/bi-005-dashboard-readbacks/denied.json",
+      "state": "DENIED",
+      "code": "ACCESS_DENIED",
+      "sha256": "5dc933ea91e6bf89f4be60c3106ca5eefc3034438a8d7e5b5eb60ee18024438f"
+    },
+    "error": {
+      "path": "verification/bi-005-dashboard-readbacks/error.json",
+      "state": "ERROR",
+      "code": "SOURCE_UNAVAILABLE",
+      "sha256": "393af7b629ac8e9fc09f8cf598c96026c8e269d16bc0d126c49a6ead3cd32b6c"
+    }
+  },
+  "artifacts": {
+    "implementation": {
+      "path": "packages/contracts/src/bi-dashboard.ts",
+      "sha256": "56ff6d5d08f58025e8e9b305397c7dc5b9c560aeff3d27d480def3ce4d165e00"
+    },
+    "schema": {
+      "path": "schemas/contracts/bi-dashboard-v1.schema.json",
+      "sha256": "8379a30dcf43f0d74de0d77a86b1db69d5487ea5e21a9992ebf72c67e7a5e55c"
+    },
+    "dashboardContract": {
+      "path": "tests/fixtures/bi-dashboard/dashboard-set-v1.json",
+      "sha256": "593143a972d9cfa1b7f9a5c78dcf43957be8ae66367641f1864f33568d9dbdd8"
+    },
+    "request": {
+      "path": "tests/fixtures/bi-dashboard/request-v1.json",
+      "sha256": "ddeca5fb3c3af72fd949ae198477659cb4d4efd4883c3e80257148d7c83cb93d"
+    },
+    "negativeProbes": {
+      "path": "tests/fixtures/bi-dashboard/negative-probes-v1.json",
+      "sha256": "3266e585b58057a414aa76405d4cbefa15c705ac82c55ce48a740145750f507d"
+    },
+    "test": {
+      "path": "tests/bi-dashboard.test.ts",
+      "sha256": "b044631cd004de497aa335578589079bcd80e89cbb1538731be21e7f12722aa1"
+    },
+    "guide": {
+      "path": "docs/BI-DASHBOARD-READBACK-GUIDE.md",
+      "sha256": "ebeacede0d8f1af2f5e72a3724e867fea6d640e7bb1bd8ac7f21486c41e89b01"
+    },
+    "pdca": {
+      "path": "docs/development/bi-005-dashboard-readback-pdca.md",
+      "sha256": "37bbdbc840cb31b67efa0c2a6cbe6746a6c7d9b6b8a9c0dc1ee650ff271d478a"
+    },
+    "generator": {
+      "path": "scripts/render-bi-dashboard-evidence.mjs",
+      "sha256": "e63e7db417b272d0967733f3c8a05203058e996fe69e86035cd236cd2c5e56dd"
+    },
+    "bi004Implementation": {
+      "path": "packages/contracts/src/bi-semantic-reconciliation.ts",
+      "sha256": "cc6810bef0968202d60bac1abf2be1eb5ba08e7462e776cac476d142bde6d98b"
+    },
+    "bi004Model": {
+      "path": "tests/fixtures/bi-semantic/model-v1.json",
+      "sha256": "98853c3f693ebc5d76f99f92483be431637f77483bc799a503268646d1dfe291"
+    },
+    "bi004Input": {
+      "path": "tests/fixtures/bi-semantic/positive-reconciliation-v1.json",
+      "sha256": "ddfbd0883cdd97af948b7fc2151396f40771541059e48f9163d79aea821b211c"
+    }
+  },
+  "verification": {
+    "command": "npm run bi-dashboard:test",
+    "expected": "10 tests pass and 6 deterministic readbacks match"
+  },
+  "accessibility": {
+    "semanticLandmarks": true,
+    "orderedHeadings": true,
+    "nativeKeyboardButtons": true,
+    "meaningfulLabels": true,
+    "deterministicContrastChecks": true,
+    "certificationClaimed": false
+  },
+  "sourceMutationProof": {
+    "attemptedOperations": [],
+    "dashboardWritesAllowed": false,
+    "crmWritesAllowed": false,
+    "erpWritesAllowed": false,
+    "catalogueWritesAllowed": false,
+    "policyWritesAllowed": false,
+    "effectDispatchAllowed": false,
+    "inputDigestsEqual": true
+  },
+  "threatBoundary": "Validates checked-in local-synthetic BI-004 model/report bytes and one in-process read request. It does not claim protection from a hostile process replacing memory after validation, provider transport behavior, or production tenant controls.",
+  "rollback": "Disable dashboard/model version 1.0.0 and return to the last verified read-only BI-004 view; never substitute an unverified metric, widen permissions, or expose hidden lineage."
+}

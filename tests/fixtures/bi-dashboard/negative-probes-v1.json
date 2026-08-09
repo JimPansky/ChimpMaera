@@ -1,0 +1,15 @@
+[
+  { "caseId": "unknown-metric", "target": "request", "path": "/metricIds", "value": ["measure:invented"], "expectedState": "DENIED", "expectedCode": "UNKNOWN_METRIC" },
+  { "caseId": "tenant-mismatch", "target": "request", "path": "/tenantId", "value": "tenant:other", "expectedState": "DENIED", "expectedCode": "TENANT_MISMATCH" },
+  { "caseId": "tenant-swap", "target": "report", "path": "/tenantId", "value": "tenant:other", "expectedState": "DENIED", "expectedCode": "TENANT_MISMATCH" },
+  { "caseId": "stale-model", "target": "request", "path": "/modelValidatedAt", "value": "2026-08-10T07:00:00Z", "expectedState": "STALE", "expectedCode": "STALE_MODEL" },
+  { "caseId": "missing-lineage", "target": "report", "path": "/rows/0/lineage", "value": "__DELETE__", "expectedState": "ERROR", "expectedCode": "MISSING_LINEAGE" },
+  { "caseId": "role-hidden-source-id", "target": "request", "path": "/drillThrough/sourceId", "value": "erp-record:order-001", "expectedState": "DENIED", "expectedCode": "ROLE_HIDDEN_SOURCE_ID" },
+  { "caseId": "missing-data", "target": "report", "path": "/kpis/crmAmountMinor", "value": "__DELETE__", "expectedState": "ERROR", "expectedCode": "MISSING_DATA" },
+  { "caseId": "divide-by-zero", "target": "request", "path": "/calculation", "value": { "operator": "DIVIDE", "denominator": 0 }, "expectedState": "ERROR", "expectedCode": "DIVIDE_BY_ZERO" },
+  { "caseId": "conflicting-filters", "target": "request", "path": "/filters/currencies", "value": ["EUR", "USD"], "expectedState": "CONFLICT", "expectedCode": "CONFLICTING_FILTERS" },
+  { "caseId": "inaccessible-interaction", "target": "request", "path": "/interactionMode", "value": "POINTER_ONLY", "expectedState": "DENIED", "expectedCode": "INACCESSIBLE_INTERACTION" },
+  { "caseId": "source-unavailable", "target": "options", "path": "/available", "value": false, "expectedState": "ERROR", "expectedCode": "SOURCE_UNAVAILABLE" },
+  { "caseId": "formula-drift", "target": "model", "path": "/measures/0/formula", "value": "SUM(crm.amount_major)", "expectedState": "DENIED", "expectedCode": "MODEL_BINDING_MISMATCH" },
+  { "caseId": "report-integrity-drift", "target": "report", "path": "/kpis/reconciliationDeltaMinor", "value": 1, "expectedState": "ERROR", "expectedCode": "REPORT_INTEGRITY_INVALID" }
+]
