@@ -118,6 +118,28 @@ test("AAS-035 setup and rollback stay ownership-scoped", () => {
   assert.doesNotMatch(`${setup}\n${reset}`, /openclaw gateway --port 18789|systemctl|pkill|killall|\/var\/run\/docker\.sock/);
 });
 
+test("AAS-035 source cache-buster covers every Docker COPY input", () => {
+  const setup = readFileSync(path.join(fixture, "setup.sh"), "utf8");
+  const cacheBlock = setup.slice(setup.indexOf("source_sha256="), setup.indexOf("build_fixture_image()"));
+  const cacheInputs = [...cacheBlock.matchAll(/\$cm_aas035_root\/(demo\/openclaw-agent\/[A-Za-z0-9./_-]+)/g)]
+    .map((match) => match[1]);
+  const copyInputs = [];
+  for (const dockerfile of ["gateway.Dockerfile", "openclaw.Dockerfile"]) {
+    const copyLines = readFileSync(path.join(fixture, dockerfile), "utf8").split("\n")
+      .filter((line) => line.startsWith("COPY "));
+    for (const line of copyLines) {
+      const match = line.match(/^COPY(?:\s+--\S+)*\s+(\S+)\s+\S+$/);
+      assert.ok(match, `unparsed Docker COPY input: ${dockerfile}: ${line}`);
+      copyInputs.push(match[1]);
+    }
+  }
+  assert.ok(copyInputs.includes("demo/openclaw-agent/gateway-state.mjs"));
+  for (const input of copyInputs) {
+    assert.ok(cacheInputs.some((cached) => input === cached || input.startsWith(`${cached}/`)),
+      `Docker COPY input omitted from source cache-buster: ${input}`);
+  }
+});
+
 test("AAS-035 smoke records the complete denial and lifecycle matrix", () => {
   const smoke = readFileSync(path.join(fixture, "smoke.sh"), "utf8");
   const probe = readFileSync(path.join(fixture, "fixture-probe.mjs"), "utf8");

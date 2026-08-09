@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { Readable } from "node:stream";
 import test from "node:test";
 import {
   createInitialGatewayState,
@@ -9,7 +10,14 @@ import {
   loadGatewayState,
   persistGatewayState,
 } from "../demo/openclaw-agent/gateway-state.mjs";
-import { digest, resetMind, scopeId } from "../demo/openclaw-agent/mind-store.mjs";
+import {
+  digest,
+  MAX_ADVANCEABLE_MIND_GENERATION,
+  MAX_MIND_GENERATION,
+  mindStatus,
+  resetMind,
+  scopeId,
+} from "../demo/openclaw-agent/mind-store.mjs";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname);
 const runtimeContract = JSON.parse(await readFile(path.join(root, "demo/openclaw-agent/runtime-contract-v1.json"), "utf8"));
@@ -42,6 +50,23 @@ async function stateFile(value) {
 function entry(key, value, durationMs = runtimeContract.mindStore.retention.seconds * 1000) {
   return { key, dataClass: "SYNTHETIC_WORKING_NOTE", value, valueDigest: digest(value),
     createdAtMs: nowMs, expiresAtMs: nowMs + durationMs, generation: 1 };
+}
+
+function gatewayRequest(handler, route, body) {
+  const request = Readable.from([Buffer.from(JSON.stringify(body))]);
+  request.method = "POST";
+  request.url = route;
+  request.headers = { "x-cm-workload-identity": runtimeContract.workload.identity };
+  return new Promise((resolve, reject) => {
+    let status;
+    const response = {
+      writeHead(value) { status = value; },
+      end(value) {
+        try { resolve({ status, body: JSON.parse(String(value)) }); } catch (error) { reject(error); }
+      },
+    };
+    try { handler(request, response); } catch (error) { reject(error); }
+  });
 }
 
 test("realistic M1.2 file migrates atomically and preserves effects, replay, counters, and legacy mind", async () => {
@@ -137,6 +162,58 @@ test("expired persisted entries are purged before readiness and remain absent af
   assert.equal(loaded.expiredEntriesPurged, 1);
   assert.equal(loaded.state.mind.scopes[primary].entries["entry.expired"], undefined);
   assert.equal(loadGatewayState({ statePath, context, nowMs }).state.mind.scopes[primary].entries["entry.expired"], undefined);
+});
+
+test("gateway reload accepts the exact advanceable generation and boundary denial remains durable", async () => {
+  const state = createInitialGatewayState(context, nowMs);
+  state.mind.scopes[primary].generation = MAX_ADVANCEABLE_MIND_GENERATION;
+  const statePath = await stateFile(state);
+  const loaded = loadGatewayState({ statePath, context, nowMs });
+  assert.equal(mindStatus(loaded.state.mind, runtimeContract).generation, MAX_ADVANCEABLE_MIND_GENERATION);
+  resetMind(loaded.state.mind, runtimeContract, {
+    workloadIdentity: runtimeContract.workload.identity, tenant: runtimeContract.workload.tenant,
+    purpose: runtimeContract.workload.purpose, generation: MAX_ADVANCEABLE_MIND_GENERATION,
+  }, { persist: () => persistGatewayState(statePath, loaded.state) });
+  const boundary = loadGatewayState({ statePath, context, nowMs });
+  assert.equal(mindStatus(boundary.state.mind, runtimeContract).generation, MAX_MIND_GENERATION);
+
+  const memoryBefore = structuredClone(boundary.state);
+  const diskBefore = await readFile(statePath, "utf8");
+  let persistenceCalls = 0;
+  assert.throws(() => resetMind(boundary.state.mind, runtimeContract, {
+    workloadIdentity: runtimeContract.workload.identity, tenant: runtimeContract.workload.tenant,
+    purpose: runtimeContract.workload.purpose, generation: MAX_MIND_GENERATION,
+  }, { persist: () => { persistenceCalls += 1; persistGatewayState(statePath, boundary.state); } }),
+  /MIND_GENERATION_EXHAUSTED_DENIED/);
+  assert.equal(persistenceCalls, 0);
+  assert.deepEqual(boundary.state, memoryBefore);
+  assert.equal(await readFile(statePath, "utf8"), diskBefore);
+  assert.equal(loadGatewayState({ statePath, context, nowMs }).state.mind.scopes[primary].generation, MAX_MIND_GENERATION);
+
+  const previousStatePath = process.env.CM_AAS035_STATE_PATH;
+  process.env.CM_AAS035_STATE_PATH = statePath;
+  try {
+    const gatewayUrl = new URL("../demo/openclaw-agent/gateway.mjs", import.meta.url);
+    gatewayUrl.searchParams.set("generation-boundary", String(nowMs));
+    const { gatewayHandler } = await import(gatewayUrl);
+    const denial = await gatewayRequest(gatewayHandler, "/v1/reset", {
+      workloadIdentity: runtimeContract.workload.identity, tenant: runtimeContract.workload.tenant,
+      purpose: runtimeContract.workload.purpose, generation: MAX_MIND_GENERATION,
+    });
+    assert.equal(denial.status, 403);
+    assert.equal(denial.body.error, "MIND_GENERATION_EXHAUSTED_DENIED");
+    const deniedReload = loadGatewayState({ statePath, context, nowMs });
+    assert.equal(deniedReload.state.mind.scopes[primary].generation, MAX_MIND_GENERATION);
+    assert.equal(deniedReload.state.counters.denials, 1);
+  } finally {
+    if (previousStatePath === undefined) delete process.env.CM_AAS035_STATE_PATH;
+    else process.env.CM_AAS035_STATE_PATH = previousStatePath;
+  }
+
+  const invalid = structuredClone(boundary.state);
+  invalid.mind.scopes[primary].generation = Number.MAX_SAFE_INTEGER;
+  const invalidPath = await stateFile(invalid);
+  assert.throws(() => loadGatewayState({ statePath: invalidPath, context, nowMs }), /MIND_STATE_INVALID_DENIED/);
 });
 
 test("disk recovery commits interrupted reset while preserving replay and effect receipt across reload", async () => {

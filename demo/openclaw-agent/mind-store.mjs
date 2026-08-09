@@ -1,6 +1,10 @@
 import { createHash } from "node:crypto";
 
 export const MIND_STATE_VERSION = "chimpmaera.openclaw/mind-state/v1";
+// Keep every READY generation's immediate successor inside the safe-integer
+// domain. The final accepted generation is deliberately reset-exhausted.
+export const MAX_MIND_GENERATION = Number.MAX_SAFE_INTEGER - 1;
+export const MAX_ADVANCEABLE_MIND_GENERATION = MAX_MIND_GENERATION - 1;
 
 function canonical(value) {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
@@ -83,11 +87,14 @@ export function validateMindState(state, contract) {
     || !(state.reset === null || (exactObject(state.reset, ["scope", "fromGeneration", "toGeneration"])
       && /^[a-f0-9]{64}$/.test(state.reset.scope)
       && Number.isSafeInteger(state.reset.fromGeneration) && state.reset.fromGeneration >= 1
-      && Number.isSafeInteger(state.reset.toGeneration) && state.reset.toGeneration >= 1))) {
+      && state.reset.fromGeneration <= MAX_ADVANCEABLE_MIND_GENERATION
+      && Number.isSafeInteger(state.reset.toGeneration) && state.reset.toGeneration >= 1
+      && state.reset.toGeneration <= MAX_MIND_GENERATION))) {
     deny("MIND_STATE_INVALID_DENIED");
   }
   for (const [key, scope] of Object.entries(state.scopes)) {
     if (!/^[a-f0-9]{64}$/.test(key) || !Number.isSafeInteger(scope?.generation) || scope.generation < 1
+      || scope.generation > MAX_MIND_GENERATION
       || scope.entries === null || typeof scope.entries !== "object" || Array.isArray(scope.entries)
       || !exactObject(scope, scope.lastResetFrom === undefined
         ? ["generation", "entries"] : ["generation", "entries", "lastResetFrom"])
@@ -233,12 +240,24 @@ export function resetMind(state, contract, request, { persist, interruptAfterPre
     return { status: "PASS", reset: "ALREADY_COMMITTED", generation: scope.generation, isolationDigest: digest(Object.fromEntries(Object.entries(state.scopes).filter(([key]) => key !== scopeKey))) };
   }
   if (scope === undefined || request.generation !== scope.generation) deny("MIND_STALE_GENERATION_DENIED");
+  if (scope.generation > MAX_ADVANCEABLE_MIND_GENERATION) {
+    deny("MIND_GENERATION_EXHAUSTED_DENIED");
+  }
+  const nextGeneration = scope.generation + 1;
+  const journal = { scope: scopeKey, fromGeneration: scope.generation, toGeneration: nextGeneration };
+  const prepared = structuredClone(state);
+  prepared.reset = journal;
+  validateMindState(prepared, contract);
+  const committed = structuredClone(prepared);
+  committed.scopes[scopeKey] = { generation: nextGeneration, entries: {}, lastResetFrom: scope.generation };
+  committed.reset = null;
+  validateMindState(committed, contract);
   const isolationDigestBefore = digest(Object.fromEntries(Object.entries(state.scopes).filter(([key]) => key !== scopeKey)));
-  state.reset = { scope: scopeKey, fromGeneration: scope.generation, toGeneration: scope.generation + 1 };
+  state.reset = journal;
   persist(state);
   if (interruptAfterPrepare) deny("SYNTHETIC_RESET_INTERRUPTED");
   recoverMindState(state, contract, persist);
   const isolationDigestAfter = digest(Object.fromEntries(Object.entries(state.scopes).filter(([key]) => key !== scopeKey)));
   if (isolationDigestAfter !== isolationDigestBefore) deny("MIND_RESET_ISOLATION_VIOLATION_DENIED");
-  return { status: "PASS", reset: contract.mindStore.reset.behavior, generation: scope.generation + 1, isolationDigest: isolationDigestAfter };
+  return { status: "PASS", reset: contract.mindStore.reset.behavior, generation: nextGeneration, isolationDigest: isolationDigestAfter };
 }

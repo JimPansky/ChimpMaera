@@ -7,6 +7,8 @@ import Ajv2020 from "ajv/dist/2020.js";
 import {
   digest,
   initialMindState,
+  MAX_ADVANCEABLE_MIND_GENERATION,
+  MAX_MIND_GENERATION,
   mindStatus,
   readMind,
   recoverMindState,
@@ -49,7 +51,7 @@ test("OPENCLAW-M1.3 contract binds allowed classes, retention, quotas, reset and
   assert.equal(contract.scratch.capacityBytes, 1_048_576);
   assert.equal(contract.scratch.lifetime, "CONTAINER_INSTANCE_ONLY_PURGED_ON_RESTART");
   assert.deepEqual(fixture.expectedDenials.sort(), [
-    "MIND_CONTRACT_DENIED", "MIND_ENTRY_QUOTA_DENIED", "MIND_RECOVERY_REPLAY_DENIED", "MIND_RESET_IN_PROGRESS_DENIED",
+    "MIND_CONTRACT_DENIED", "MIND_ENTRY_QUOTA_DENIED", "MIND_GENERATION_EXHAUSTED_DENIED", "MIND_RECOVERY_REPLAY_DENIED", "MIND_RESET_IN_PROGRESS_DENIED",
     "MIND_RETENTION_EXPIRED_DENIED", "MIND_SCOPE_DENIED", "MIND_STALE_GENERATION_DENIED", "MIND_STATE_INVALID_DENIED",
     "MIND_TOTAL_QUOTA_DENIED",
   ]);
@@ -129,4 +131,26 @@ test("persisted entry tampering and stale nested generation fail closed", () => 
   const generationScope = Object.values(generationTamper.state.scopes).find((scope) => scope.generation === 1);
   generationScope.entries["synthetic.note"].generation = 2;
   assert.throws(() => recoverMindState(generationTamper.state, contract, generationTamper.persist), /MIND_STATE_INVALID_DENIED/);
+});
+
+test("generation boundary prevalidation advances exactly once and denial is mutation-free", () => {
+  const subject = harness();
+  const primaryKey = Object.keys(subject.state.scopes).find((key) => subject.state.scopes[key].generation === 1);
+  subject.state.scopes[primaryKey].generation = MAX_ADVANCEABLE_MIND_GENERATION;
+  const result = resetMind(subject.state, contract, {
+    ...binding, generation: MAX_ADVANCEABLE_MIND_GENERATION,
+  }, { persist: subject.persist });
+  assert.equal(result.generation, MAX_MIND_GENERATION);
+  assert.equal(mindStatus(subject.state, contract).generation, MAX_MIND_GENERATION);
+
+  const before = structuredClone(subject.state);
+  const persistedCount = subject.snapshots.length;
+  assert.throws(() => resetMind(subject.state, contract, {
+    ...binding, generation: MAX_MIND_GENERATION,
+  }, { persist: subject.persist }), /MIND_GENERATION_EXHAUSTED_DENIED/);
+  assert.deepEqual(subject.state, before);
+  assert.equal(subject.snapshots.length, persistedCount);
+
+  subject.state.scopes[primaryKey].generation = Number.MAX_SAFE_INTEGER;
+  assert.throws(() => mindStatus(subject.state, contract), /MIND_STATE_INVALID_DENIED/);
 });

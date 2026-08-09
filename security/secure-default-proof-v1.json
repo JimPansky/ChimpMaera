@@ -129,7 +129,7 @@
     {
       "path": "tests/openclaw-agent-runtime.test.mjs",
       "role": "TEST",
-      "sha256": "c540fb7cf2c0cc3533041cabccbf05a840c651665d1aed05c47063ae5025ba87"
+      "sha256": "aa5ec35a48225abf59f5248733f21bf336901b08328bd462205a55baf8ebc36b"
     },
     {
       "path": "tests/model-access-broker-runtime.test.mjs",
@@ -149,12 +149,12 @@
     {
       "path": "demo/openclaw-agent/mind-store.mjs",
       "role": "IMPLEMENTATION",
-      "sha256": "3afd1b8c20558471cf6172857f10f7f2cf982ff3165031b96e57bdd2d074e724"
+      "sha256": "858923acb091f0759b88098b367ec636432fcb258c67bed5bce57860e0e6432d"
     },
     {
       "path": "tests/openclaw-gateway-state.test.mjs",
       "role": "TEST",
-      "sha256": "0c105e8de6ee09298ec48bcdf2c961600d41d688a2393d201d0526d5588477a9"
+      "sha256": "6c305f133efce39a16096e68bede5efd74c633358ee7e0be81ef8c99b590bce9"
     }
   ],
   "claims": [

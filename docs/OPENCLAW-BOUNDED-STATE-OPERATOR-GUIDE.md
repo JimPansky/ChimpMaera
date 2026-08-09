@@ -42,6 +42,11 @@ effect replay receipts, and sanitised run evidence. During a prepared reset,
 reads/writes deny. Startup completes a valid prepared reset before readiness;
 an invalid or replayed journal fails startup/readiness. Old-generation reads
 and writes deny. Repeating the same completed reset is safe and idempotent.
+Persisted generations are bounded below the unsafe-integer edge. The exact
+maximum advanceable generation can complete once into a valid final generation;
+a further reset returns `MIND_GENERATION_EXHAUSTED_DENIED` without changing the
+journal or mind state. The store-layer denial performs no persistence; at the
+Gateway endpoint only the bounded denial counter is durably incremented.
 
 Health means the process is live. Readiness additionally means the state file
 is valid, no recovery is pending, and persistence succeeds. Quota exhaustion
@@ -55,6 +60,10 @@ effects and their receipts, replay JTIs, counters, and valid legacy mind entries
 then initializes the managed scoped mind envelope. Invalid legacy input is left
 unchanged and startup fails closed. Purging valid legacy state is not an upgrade
 step.
+
+The setup image cache key covers every source used by both fixture Dockerfiles,
+including `gateway-state.mjs`; changing only state validation therefore forces
+the owned local Gateway image to rebuild on the next explicit setup.
 
 ## Reproduction and evidence
 

@@ -58,6 +58,7 @@ source_sha256="$({
     "$cm_aas035_root/demo/openclaw-agent/gateway.Dockerfile" \
     "$cm_aas035_root/demo/openclaw-agent/openclaw.Dockerfile" \
     "$cm_aas035_root/demo/openclaw-agent/gateway.mjs" \
+    "$cm_aas035_root/demo/openclaw-agent/gateway-state.mjs" \
     "$cm_aas035_root/demo/openclaw-agent/mind-store.mjs" \
     "$cm_aas035_root/demo/openclaw-agent/fixture-probe.mjs" \
     "$cm_aas035_root/demo/openclaw-agent/gateway-workload-contract-v2.json" \

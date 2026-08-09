@@ -395,7 +395,7 @@
         {
           "path": "security/secure-default-proof-v1.json",
           "role": "CONTRACT",
-          "sha256": "79289fee118d354269918a17f8f2fcfb3a2ad7fb16ce6304720b36d915d85e9e"
+          "sha256": "cc6003b28e3350bf2c72d35ee440f2d7e2388d76ee583f0b3d79dd7ee63ddf38"
         },
         {
           "path": "schemas/security/secure-default-proof-v1.schema.json",
@@ -405,7 +405,7 @@
         {
           "path": "security/secure-default-proof-evidence-v1.json",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "cd0e209b8d12a77708612939ecbcbf90dcf20a828688be90ae77e49e4e7d37e8"
+          "sha256": "1def8759c85a3f8923e151937276905629d6afa3935107e6222c2022eb73eb99"
         },
         {
           "path": "scripts/verify-secure-default-proof.mjs",
