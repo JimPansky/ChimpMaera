@@ -22,9 +22,14 @@ curl --fail http://127.0.0.1:12780/readyz
 
 `setup.sh` verifies only and leaves the service off. `start.sh` is the sole
 activation entry point. Health means the process responds; readiness additionally
-requires its internal dependency. Stop retains no persistent service data; reset
-also removes only the labelled local image after an ownership check. Repeating
-reset after interruption is supported.
+requires its internal dependency, and Compose lifecycle completion uses
+`/readyz`, not `/healthz`. Stop retains no persistent service data. Before reset
+removes anything, it enumerates every container, network and volume carrying the
+selected Compose project label and requires the fixture ownership label; it also
+checks the local image. Any absent, foreign or ambiguous ownership fails before
+`compose down`. Start and stop apply the same ownership precheck, and no lifecycle
+command requests orphan removal. The profile declares no volumes, so reset never
+requests volume deletion. Repeating reset after interruption is supported.
 
 The single network is Docker-internal. Only the service health surface is bound,
 and only to `127.0.0.1`. Both containers are non-root with read-only roots,
@@ -35,7 +40,9 @@ or changed locked bytes deny before lifecycle effects.
 
 The lock records a digest-bound base and local byte closure. It does not establish
 registry signatures, current registry/CVE completeness, SBOM or reproducible-build
-provenance. Roll back by running `reset.sh`, then reverting the issue commit. If
+provenance. The local image cache label hashes the ordered content digests only,
+so identical bytes produce the same identity in different checkout paths. Roll
+back by running `reset.sh`, then reverting the issue commits. If
 Docker is unavailable, the deterministic offline verifier and behavioral tests
 remain valid, while Compose-render and live-runtime evidence must be reported as
 unavailable.

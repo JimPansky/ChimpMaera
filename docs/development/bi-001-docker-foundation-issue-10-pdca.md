@@ -18,3 +18,11 @@ Act: fallback is to leave the profile absent. Rollback runs the ownership-scoped
 reset and reverts the containing commit. Review triggers are any image/version,
 network, bind, identity, resource, config-schema or lifecycle change. No live
 runtime is required for acceptance; unavailable Docker evidence is reported.
+
+Follow-up review closure: reset now validates all project-labelled container,
+network and volume resources plus the local image before any removal, omits
+volume deletion because no volume is declared, and remains retry-safe after an
+interrupted `compose down`. Lifecycle health uses `/readyz`; `/healthz` remains a
+separate process-up endpoint. Deterministic tests prove both READY and NOT_READY,
+and prove that image source identity depends only on ordered content digests,
+not checkout paths.

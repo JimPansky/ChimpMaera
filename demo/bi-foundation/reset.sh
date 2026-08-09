@@ -2,7 +2,8 @@
 set -euo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib.sh"
 cm_bi_preflight
-cm_bi_compose_cmd down --remove-orphans --volumes
+cm_bi_assert_owned_resources
+cm_bi_compose_cmd down
 image_id="$(docker image inspect chimpmaera/bi001-foundation:local --format '{{.Id}}' 2>/dev/null || true)"
 if [ -n "$image_id" ]; then
   owner="$(docker image inspect "$image_id" --format '{{index .Config.Labels "io.chimpmaera.fixture"}}')"

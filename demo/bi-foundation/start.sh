@@ -3,7 +3,8 @@ set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$here/lib.sh"
 "$here/setup.sh"
-source_sha256="$(sha256sum "$here/service.mjs" "$here/service.Dockerfile" | sha256sum | cut -d' ' -f1)"
+cm_bi_assert_owned_resources
+source_sha256="$(cm_bi_source_sha256 "$here")"
 current_source=''
 if docker image inspect chimpmaera/bi001-foundation:local >/dev/null 2>&1; then
   owner="$(docker image inspect chimpmaera/bi001-foundation:local --format '{{index .Config.Labels "io.chimpmaera.fixture"}}')"
@@ -13,5 +14,5 @@ fi
 if [ "$current_source" != "$source_sha256" ]; then
   docker build --platform linux/amd64 --provenance=false --build-arg "CM_BI_SOURCE_SHA256=$source_sha256" --file "$here/service.Dockerfile" --tag chimpmaera/bi001-foundation:local "$cm_bi_root"
 fi
-cm_bi_compose_cmd up --detach --wait --remove-orphans
+cm_bi_compose_cmd up --detach --wait
 printf 'BI-001 foundation READY on http://127.0.0.1:%s (project=%s).\n' "$CM_BI_PORT" "$cm_bi_project"

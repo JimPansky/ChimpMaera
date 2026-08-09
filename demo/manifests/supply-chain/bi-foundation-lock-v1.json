@@ -8,15 +8,15 @@
     "verification": "DECLARATION_PINNED_REGISTRY_SIGNATURE_NOT_VERIFIED"
   },
   "localInputs": {
-    "demo/bi-foundation/compose.yaml": "d60b0c98a58967a8b1b31c02e02c327b5777ef30a603f6d6ed6d67c46deb0a4c",
+    "demo/bi-foundation/compose.yaml": "9eec3ffe5b9ed102377cc9b51995d22f050c2901af622f4b5f87d257cbd26fcb",
     "demo/bi-foundation/config.example.json": "972f0aa4e41d4c14905cd76fc20d8b26df369cf4a34f1506b11b26d2b99929f7",
-    "demo/bi-foundation/lib.sh": "1075cb86ef0081ccbc542224786ee4bf786db2c2fbb86cd562800c22f86265fa",
-    "demo/bi-foundation/reset.sh": "5fc55eaea5c9fb36679a6dd811657fca6514952018029cd912d0777ded510afb",
+    "demo/bi-foundation/lib.sh": "5a00ddf434057693b37949e9293d5afe51d64c842cedb24a771322e001a58068",
+    "demo/bi-foundation/reset.sh": "622ecaa1f89eb9ab6da09b2afc89712286cd15d1bcfad46c0dbf25f6615df419",
     "demo/bi-foundation/service.Dockerfile": "a3c071e055bdd339656c806fdc78d1b4ba7b88207eb8d37d3546d3979f0f096f",
-    "demo/bi-foundation/service.mjs": "4d4dc10c544f552f1613168ca104c2d2a95e737aad10f5e8730116b4c617ba0e",
+    "demo/bi-foundation/service.mjs": "f91c1439e8208cc017d98a6256b25246fdfd2ce2fdae6afb025fa82ef0d76098",
     "demo/bi-foundation/setup.sh": "43f3bc9c0a8847fe39b643e2f3514ee1a54673d42c84f69442e10fda3a7779c4",
-    "demo/bi-foundation/start.sh": "e0cc4cb7c834ee00d3ad0aca3fda96da90eccc635c4009139b660c842e8e102c",
-    "demo/bi-foundation/stop.sh": "ec8e0062c18d18fa7903a881ef4266b4dc3a2d925386396a4fc8784a9d371909",
+    "demo/bi-foundation/start.sh": "ca442d33b8f9db8390e8927a779a5e4f7652bc1e2ab0ca6a69bdc7c7c5d378ab",
+    "demo/bi-foundation/stop.sh": "ecb8d68c24053c45e6ad1b7e491b45106e3caae91ad6d0a34c9a51bb24586ec0",
     "scripts/verify-bi-foundation.mjs": "d6e69c790310146085c1efb3943e042589d73dbd81bb7f4ee794a087d190506f"
   }
 }
