@@ -75,8 +75,8 @@ test("AAS-035 prerequisite lock binds official Docker, source, image and licence
   );
   assert.equal(report.platform, "linux/amd64");
   assert.equal(report.host, "Linux/x86_64");
-  assert.equal(report.artifactCount, 18);
-  assert.equal(report.checks.length, 5);
+  assert.equal(report.artifactCount, 22);
+  assert.equal(report.checks.length, 6);
 });
 
 test("OPENCLAW-M1.1 setup rejects required provenance probes before any Docker invocation", async () => {
@@ -163,6 +163,46 @@ test("OPENCLAW-M1.1 drifted executable helper denies before source or Docker sid
     await assert.rejects(readFile(spy.log, "utf8"), /ENOENT/, "Docker was invoked");
   } finally {
     await rm(target, { recursive: true, force: true });
+  }
+});
+
+test("OPENCLAW-M1.1 lifecycle, verifier and unexpected fixture drift deny before Docker", async () => {
+  for (const [relativePath, newlyAdded] of [
+    ["demo/openclaw-agent/setup.sh", false],
+    ["demo/openclaw-agent/reset.sh", false],
+    ["demo/openclaw-agent/smoke.sh", false],
+    ["scripts/verify-openclaw-agent-runtime-lock.mjs", false],
+    ["demo/openclaw-agent/plugin/unlisted.mjs", true],
+  ]) {
+    const target = await materializeFixtureRoot();
+    try {
+      const driftedPath = path.join(target, relativePath);
+      if (newlyAdded) await writeFile(driftedPath, "// synthetic unlisted material input\n");
+      else {
+        const original = await readFile(driftedPath, "utf8");
+        const comment = relativePath.endsWith(".mjs") ? "//" : "#";
+        await writeFile(driftedPath, `${original}\n${comment} synthetic normal-checkout drift\n`);
+      }
+      await assert.rejects(
+        verifyOpenClawAgentRuntimeLock({ root: target }),
+        /OPENCLAW_RUNTIME_(?:ARTIFACT_MISMATCH|FIXTURE_TREE)_DENIED/,
+        `${relativePath}: offline verifier accepted drift`,
+      );
+      const spy = await installSpies(target);
+      const result = spawnSync("bash", [path.join(target, "demo/openclaw-agent/setup.sh")], {
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          PATH: `${spy.bin}:${process.env.PATH}`,
+          CM_OPENCLAW_SPY_LOG: spy.log,
+        },
+      });
+      assert.notEqual(result.status, 0, relativePath);
+      assert.match(result.stderr, /OPENCLAW_RUNTIME_(?:ARTIFACT_MISMATCH|FIXTURE_TREE)_DENIED/, relativePath);
+      await assert.rejects(readFile(spy.log, "utf8"), /ENOENT/, `${relativePath}: Docker was invoked`);
+    } finally {
+      await rm(target, { recursive: true, force: true });
+    }
   }
 });
 

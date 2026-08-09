@@ -87,20 +87,25 @@
       "demo/openclaw-agent/plugin/index.mjs": "57f57251e90e0749944dc0a39752027ff1a40fd887500d3c15f967f00a6d6f02",
       "demo/openclaw-agent/plugin/openclaw.plugin.json": "91574fb9e896480e2ff90ee853f1e765ea6c8a90420d3536e831c6c5c37b29c4",
       "demo/openclaw-agent/plugin/package.json": "b9f138f5cc1fde07e0a2203684bcd09df69f736f42c7994d1710f25d1670a52d",
+      "demo/openclaw-agent/reset.sh": "070e05c1d32a58716598da894748a190ff40ce5bfbd64f73dfe9140eabc4f48c",
       "demo/openclaw-agent/runtime-contract-v1.json": "a4ee640e27df5b88fec3b086af1fbd052dc0cf051e481ef9585afd384a7b4f02",
+      "demo/openclaw-agent/setup.sh": "d54c5935b5321ec475670be9daedbeffe4cc9190ebf93dc834c12c2e796334c7",
+      "demo/openclaw-agent/smoke.sh": "e481864915f33ac3911ddb1cee9b2633fbd5f768240c83def6347c49ba069e8d",
       "demo/openclaw-agent/workspace/AGENTS.md": "8af1de73d292c240183f9f3bfca19aceed67cc376e8011bf0562c6695202434a",
       "demo/openclaw-agent/workspace/HEARTBEAT.md": "8cdddbf0dd0115381d86f3c8fa00bef4875741bdafdfc62e6ac4905f565a2376",
       "demo/openclaw-agent/workspace/IDENTITY.md": "16d08180e575b4f21c5c644a7ab30d36cd594041a6e609d0a9c2b1efa16baf0b",
       "demo/openclaw-agent/workspace/SOUL.md": "67a1b1e5beaade5a71d9fbeeb57dc3ad3456852cf209272283d9088ef9df75eb",
       "demo/openclaw-agent/workspace/TOOLS.md": "1cc93153c7172e29fdbdefaf557658f339e3659edd586464a4c81ec4d537b6c8",
       "demo/openclaw-agent/workspace/USER.md": "516f5c02403683b3643819843e751f3b394f0e191b6f5306d54f59cfaa692ac1",
-      "demo/openclaw-agent/workspace/openclaw-workspace-state.json": "c5c00120ca505ef6a7d60a56a2f43c67804a49bc79779fc9fba3a3ee5923f590"
+      "demo/openclaw-agent/workspace/openclaw-workspace-state.json": "c5c00120ca505ef6a7d60a56a2f43c67804a49bc79779fc9fba3a3ee5923f590",
+      "scripts/verify-openclaw-agent-runtime-lock.mjs": "309a6ff7bfae14a9bf8011da4c5fc18af83ce9349a824b42a7bce2763e68900e"
     }
   },
   "nonClaims": [
     "NO_REGISTRY_SIGNATURE_VERIFICATION",
     "NO_COMPLETE_SBOM_CVE_OR_THIRD_PARTY_LICENSE_AUDIT",
     "NO_IMAGE_BYTE_REDISTRIBUTION_BY_CHIMPMAERA",
+    "NO_MALICIOUS_CHECKOUT_OR_SELF_VERIFIER_TAMPER_RESISTANCE",
     "NO_PRODUCTION_SANDBOX_OR_LIVE_PROVIDER_CLAIM"
   ]
 }

@@ -42,7 +42,7 @@ positive/negative/lifecycle map is:
 
 | OPENCLAW-M1.1 acceptance | Command | Exact primary artifacts |
 | --- | --- | --- |
-| Every runtime/build input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; both Dockerfiles; Compose; executable helper; plugin package; 18 locked local inputs |
+| Every runtime/build/lifecycle input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; verifier; setup/reset/smoke/helper; both Dockerfiles; Compose; plugin package; 22 locked local inputs |
 | Provenance result records exact tested identity | `npm run openclaw-runtime-lock:verify` | verifier JSON report and `security/openclaw-m1.1-evidence-v1.json` |
 | Fresh checkout is off; explicit lifecycle is deterministic | `npm run openclaw-m1.1:test` | profiled Compose, `setup.sh`, `reset.sh`, focused tests |
 | Unsupported or mismatched inputs deny before runtime | `npm run openclaw-m1.1:test` | offline verifier, setup preflight, Docker command spies |
@@ -61,10 +61,12 @@ service to enable or start. To opt into the isolated local fixture, run:
 
 Setup resolves its worktree root without loading fixture helpers, then verifies
 the checked-in provenance lock, selected host platform, executable `lib.sh`,
-and all other locked local inputs. Only after that passes does it source the
-helper or permit the first Docker command. It then builds only the two labelled
-local derivative images and starts only the explicitly profiled, project-scoped
-services. Stop/remove is deterministic and ownership-scoped:
+all three lifecycle entry points, the verifier bytes, and all other locked
+local inputs. The verifier also rejects any unlisted file or non-regular entry
+in the complete fixture tree. Only after that passes does it source the helper or permit the
+first Docker command. It then builds only the two labelled local derivative
+images and starts only the explicitly profiled, project-scoped services.
+Stop/remove is deterministic and ownership-scoped:
 
 Both service declarations and both direct build commands explicitly request
 `linux/amd64`; every shared Compose lifecycle command also receives that fixed
@@ -96,4 +98,9 @@ This proof does not start or publish an external image, verify a registry
 signature, establish current CVE status, provide a complete SBOM or third-party
 licence clearance, prove reproducible upstream image construction, validate
 other architectures, or establish production/hostile-host fitness. Docker and
-the host kernel remain in the local trusted computing base.
+the host kernel remain in the local trusted computing base. The verifier's own
+checked-in digest detects normal byte drift, while the reviewed Git commit,
+repository checksum ledger, and supply-chain closure provide its external
+binding. This is not cryptographic protection against a malicious checkout
+that rewrites the lock, verifier, lifecycle scripts, and their bindings
+together.

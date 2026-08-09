@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -26,7 +26,10 @@ const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/plugin/index.mjs",
   "demo/openclaw-agent/plugin/openclaw.plugin.json",
   "demo/openclaw-agent/plugin/package.json",
+  "demo/openclaw-agent/reset.sh",
   "demo/openclaw-agent/runtime-contract-v1.json",
+  "demo/openclaw-agent/setup.sh",
+  "demo/openclaw-agent/smoke.sh",
   "demo/openclaw-agent/workspace/AGENTS.md",
   "demo/openclaw-agent/workspace/HEARTBEAT.md",
   "demo/openclaw-agent/workspace/IDENTITY.md",
@@ -34,6 +37,7 @@ const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/workspace/TOOLS.md",
   "demo/openclaw-agent/workspace/USER.md",
   "demo/openclaw-agent/workspace/openclaw-workspace-state.json",
+  "scripts/verify-openclaw-agent-runtime-lock.mjs",
 ];
 
 function deny(code) {
@@ -50,6 +54,24 @@ async function read(repositoryRoot, relativePath, code) {
   } catch {
     deny(code);
   }
+}
+
+async function fixtureFiles(repositoryRoot, relativeDirectory = "demo/openclaw-agent") {
+  let entries;
+  try {
+    entries = await readdir(path.join(repositoryRoot, relativeDirectory), { withFileTypes: true });
+  } catch {
+    deny("OPENCLAW_RUNTIME_FIXTURE_TREE_MISSING_DENIED");
+  }
+  const files = [];
+  for (const entry of entries.sort((left, right) =>
+    (left.name < right.name ? -1 : left.name > right.name ? 1 : 0))) {
+    const relativePath = path.posix.join(relativeDirectory, entry.name);
+    if (entry.isDirectory()) files.push(...await fixtureFiles(repositoryRoot, relativePath));
+    else if (entry.isFile()) files.push(relativePath);
+    else deny("OPENCLAW_RUNTIME_FIXTURE_TREE_TYPE_DENIED");
+  }
+  return files;
 }
 
 export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } = {}) {
@@ -166,9 +188,16 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
     && Object.values(artifacts).every((digest) => SHA256.test(digest)),
     "OPENCLAW_RUNTIME_ARTIFACT_SET_DENIED",
   );
+  const expectedFixtureFiles = EXPECTED_ARTIFACTS.filter((relativePath) =>
+    relativePath.startsWith("demo/openclaw-agent/"));
+  assert(
+    (await fixtureFiles(repositoryRoot)).join("\n") === expectedFixtureFiles.join("\n"),
+    "OPENCLAW_RUNTIME_FIXTURE_TREE_DENIED",
+  );
   for (const [relativePath, expectedDigest] of Object.entries(artifacts)) {
     assert(
-      relativePath.startsWith("demo/openclaw-agent/")
+      (relativePath.startsWith("demo/openclaw-agent/")
+        || relativePath === "scripts/verify-openclaw-agent-runtime-lock.mjs")
       && !relativePath.includes(".."),
       "OPENCLAW_RUNTIME_ARTIFACT_PATH_DENIED",
     );
@@ -185,6 +214,7 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
   const requiredNonClaims = [
     "NO_COMPLETE_SBOM_CVE_OR_THIRD_PARTY_LICENSE_AUDIT",
     "NO_IMAGE_BYTE_REDISTRIBUTION_BY_CHIMPMAERA",
+    "NO_MALICIOUS_CHECKOUT_OR_SELF_VERIFIER_TAMPER_RESISTANCE",
     "NO_PRODUCTION_SANDBOX_OR_LIVE_PROVIDER_CLAIM",
     "NO_REGISTRY_SIGNATURE_VERIFICATION",
   ];
@@ -213,6 +243,7 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
       "LICENSE_AND_REFERENCE_ONLY_DISTRIBUTION_BOUNDARY_DECLARED",
       "DEFAULT_OFF_ZERO_AMBIENT_AUTHORITY_SELECTION_POLICY_BOUND",
       "SUPPORTED_HOST_AND_LOCAL_BUILD_INPUTS_BOUND",
+      "LIFECYCLE_AND_VERIFIER_BYTES_BOUND",
     ],
   };
 }

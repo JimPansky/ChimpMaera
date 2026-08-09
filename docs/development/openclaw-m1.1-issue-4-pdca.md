@@ -91,3 +91,21 @@ Synthetic execution proves the conflict produces zero Docker calls, the
 accepted path issues two amd64-only build requests, and Compose rendering stays
 amd64 even under a hostile arm64 ambient default. No image was pulled, built,
 or started while collecting this evidence.
+
+## Independent lifecycle-integrity repair
+
+Review found that `setup.sh` and `reset.sh` controlled Docker while remaining
+outside the 18-artifact lock. The complete fixture audit found 21 checked-in
+files under `demo/openclaw-agent`; the lock now covers every one, including
+`setup.sh`, `reset.sh`, and `smoke.sh`, and separately covers the offline
+verifier for 22 artifacts total. Deterministic normal-drift probes alter each
+lifecycle entry point and the verifier in isolated copies: both direct offline
+verification and canonical setup preflight deny, with no Docker-spy output.
+An additional probe adds an unlisted plugin file and proves the complete
+fixture-tree comparison denies that material build-context expansion too.
+
+The self-verifier digest detects ordinary repository drift but is not an
+independent cryptographic root of trust. A malicious checkout able to rewrite
+the verifier, lock, lifecycle scripts, and bindings together is not claimed to
+be resisted; review of the containing Git commit plus the repository checksum
+and supply-chain closures remains the external trust boundary.
