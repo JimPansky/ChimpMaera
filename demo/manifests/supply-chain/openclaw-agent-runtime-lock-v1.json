@@ -87,11 +87,12 @@
     "artifactSha256": {
       "demo/openclaw-agent/compose.yaml": "5dfacfe2ab1e3ba3a502bb2ee1bb1271b7df49537fecf7d5509f0dfa79344466",
       "demo/openclaw-agent/fixture-probe.mjs": "fd4311fca2b96a82b57cd7a0213da3ad5624680ee7e1403f019a7bd260d58f01",
+      "demo/openclaw-agent/gateway-state.mjs": "a3bd767ff39f7b5e0137e6da735f2d3f017cb325a9d900e6b40a9206b1d5dc51",
       "demo/openclaw-agent/gateway-workload-contract-v2.json": "4a635cf9e56fa11e89f4861c4ac42c713e2b5c60333b00500e0838eb182ba442",
-      "demo/openclaw-agent/gateway.Dockerfile": "430de769b9989e3fbaab04c6eaea95ea64298a83d631b8bb5c4a340231e80a7c",
-      "demo/openclaw-agent/gateway.mjs": "7be9efd09d749cd847ab0f56b0300d69a77e08b70ca217987c561c17f09d2891",
+      "demo/openclaw-agent/gateway.Dockerfile": "b8fb6c8b07a7052b7e33f7369a82180d22a40df5b4aaa86a33d347bd210a8cc5",
+      "demo/openclaw-agent/gateway.mjs": "4a9c22169d8472a89231f86c2e38371f7020271624d7515a9eb0af6b5ea26601",
       "demo/openclaw-agent/lib.sh": "0933f26dbdcdcd6e43ece5f40bba35d528beb7c0294af260fe15017e2149386c",
-      "demo/openclaw-agent/mind-store.mjs": "c3929cb63002f6581881038b0030ba9fe43a279d081584867fa7e3344303ae0b",
+      "demo/openclaw-agent/mind-store.mjs": "3afd1b8c20558471cf6172857f10f7f2cf982ff3165031b96e57bdd2d074e724",
       "demo/openclaw-agent/openclaw.Dockerfile": "edfff72d40e39b75146a06a611652a5383ea66ba76bbfc576fd6fc98e55b03ce",
       "demo/openclaw-agent/openclaw.json": "e45649ec7049f0433cae0a10712078d7cb737abc1de5c0ea5655579ed349cf74",
       "demo/openclaw-agent/plugin/identity-v2.mjs": "635ce8034fe60162528e116a9013020e457be2c34decdc48ba4dcaf3b2366088",
@@ -99,7 +100,7 @@
       "demo/openclaw-agent/plugin/openclaw.plugin.json": "91574fb9e896480e2ff90ee853f1e765ea6c8a90420d3536e831c6c5c37b29c4",
       "demo/openclaw-agent/plugin/package.json": "b9f138f5cc1fde07e0a2203684bcd09df69f736f42c7994d1710f25d1670a52d",
       "demo/openclaw-agent/reset.sh": "070e05c1d32a58716598da894748a190ff40ce5bfbd64f73dfe9140eabc4f48c",
-      "demo/openclaw-agent/runtime-contract-v1.json": "6ecc672236a8d5615d6013d94bc206787eae5006dbe0876f11497ab5ca4c676c",
+      "demo/openclaw-agent/runtime-contract-v1.json": "a895070029de01ea3b4e6966cc76f6d4408fb561fd8c135f5755f9a8ba1270d6",
       "demo/openclaw-agent/setup.sh": "017a9c8098ee419701580f7ff1f8a4c9ba84b7baa9c87a61379d605cd0ba877e",
       "demo/openclaw-agent/smoke.sh": "ca59aff3a9d428af82da71901217c3c9aea5e3b8af5d21807a89277c1c056b64",
       "demo/openclaw-agent/workspace/AGENTS.md": "8af1de73d292c240183f9f3bfca19aceed67cc376e8011bf0562c6695202434a",
@@ -109,7 +110,7 @@
       "demo/openclaw-agent/workspace/TOOLS.md": "1cc93153c7172e29fdbdefaf557658f339e3659edd586464a4c81ec4d537b6c8",
       "demo/openclaw-agent/workspace/USER.md": "516f5c02403683b3643819843e751f3b394f0e191b6f5306d54f59cfaa692ac1",
       "demo/openclaw-agent/workspace/openclaw-workspace-state.json": "c5c00120ca505ef6a7d60a56a2f43c67804a49bc79779fc9fba3a3ee5923f590",
-      "scripts/verify-openclaw-agent-runtime-lock.mjs": "bdef85f44b5bd2312229c394d2a4d69a40a5b709bbb1a231ebec12aa1b20ff1b"
+      "scripts/verify-openclaw-agent-runtime-lock.mjs": "bb2c9bf47cea26568ef29f203943fc6940d8d30735d87e711982727b871673eb"
     }
   },
   "nonClaims": [

@@ -35,8 +35,8 @@
         },
         "quota": {
           "type": "object", "additionalProperties": false,
-          "required": ["maxEntries", "maxValueBytes", "maxTotalBytes"],
-          "properties": {"maxEntries": {"const": 16}, "maxValueBytes": {"const": 2048}, "maxTotalBytes": {"const": 16384}}
+          "required": ["maxScopes", "maxEntries", "maxValueBytes", "maxTotalBytes"],
+          "properties": {"maxScopes": {"const": 16}, "maxEntries": {"const": 16}, "maxValueBytes": {"const": 2048}, "maxTotalBytes": {"const": 16384}}
         },
         "reset": {
           "type": "object", "additionalProperties": false, "required": ["behavior", "preserves", "interruptionBehavior"],

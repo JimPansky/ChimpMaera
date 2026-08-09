@@ -63,6 +63,7 @@ test("AAS-035 identity, managed mind and typed tool surfaces are finite", () => 
   assert.equal(contract.workload.identity, "workload:aas035-openclaw-agent-v1");
   assert.equal(contract.runtime.network, "aas035_gateway_only");
   assert.equal(contract.mindStore.quota.maxEntries, 16);
+  assert.equal(contract.mindStore.quota.maxScopes, 16);
   assert.equal(contract.mindStore.quota.maxValueBytes, 2048);
   assert.equal(contract.mindStore.quota.maxTotalBytes, 16384);
   assert.equal(contract.scratch.capacityBytes, 1048576);

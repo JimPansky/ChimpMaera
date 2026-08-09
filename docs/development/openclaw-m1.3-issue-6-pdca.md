@@ -33,6 +33,14 @@ provenance gate, replay evidence, and ownership-scoped rollback.
   restart, reset, stale state, and replay;
 - added deterministic no-daemon lifecycle tests, schema, fixtures, operator
   boundaries, evidence, and immutable input/checksum bindings.
+- added a fail-closed atomic V1-to-V2 Gateway state migration that preserves
+  validated M1.2 effects/receipts, replay JTIs, counters, and legacy mind data;
+- validates the complete persisted V2 envelope, including exact shapes, safe
+  counters and replay bounds, scope/value/entry/byte quotas, retention duration,
+  digests and generations, before recovery or readiness;
+- reloads realistic serialized state through the production loader to prove
+  migration and interrupted-reset recovery preserve effect receipts and replay
+  state across two successive restarts.
 
 ## Check
 

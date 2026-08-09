@@ -3,10 +3,10 @@
   "proofId": "secure-default-safe-guided-v1",
   "profile": "SAFE_GUIDED",
   "evidenceState": "CURRENT",
-  "manifestDigest": "ccb0318b90307ac237e615867d7e6639639818b684e202f648e0e8a38d3c8cd3",
+  "manifestDigest": "c8acf21b168930cb80373bf26d682b499059146efc3a8a04238bcf7dd4188119",
   "schemaDigest": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8",
   "verifierDigest": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1",
-  "inputSetDigest": "7ff688f617234e39c2795976599f4f1c9edb9aa8b201052e0adca3bb5162ff10",
+  "inputSetDigest": "cbeb2bf2c1b3f5497be1179e05ce33fdc4c7a5507d20ca06fca4c794718de793",
   "commands": [
     {
       "command": "npm run build --silent",
@@ -84,5 +84,5 @@
     }
   ],
   "overallVerdict": "PASS",
-  "reportDigest": "c8181b57bf0a7700c94b20ebe3f9c29002e05a133acae499bc5518fef34a549f"
+  "reportDigest": "b4527c85dd23ff24f9b8dd72fd088e096fe85d364f16ae652062189200b1519c"
 }

@@ -29,7 +29,7 @@
       "expiryBehavior": "DENY_AND_PURGE_ON_ACCESS",
       "durability": "LOCAL_FIXTURE_VOLUME_ONLY_NOT_BACKUP"
     },
-    "quota": {"maxEntries": 16, "maxValueBytes": 2048, "maxTotalBytes": 16384},
+    "quota": {"maxScopes": 16, "maxEntries": 16, "maxValueBytes": 2048, "maxTotalBytes": 16384},
     "reset": {
       "behavior": "TWO_PHASE_PURGE_BOUND_SCOPE_MUTABLE_ENTRIES_ONLY",
       "preserves": ["FOREIGN_SCOPES", "EFFECT_REPLAY_RECEIPTS", "SANITIZED_RUN_EVIDENCE"],

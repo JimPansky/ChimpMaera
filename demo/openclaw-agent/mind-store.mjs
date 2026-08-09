@@ -18,7 +18,12 @@ export function scopeId({ workloadIdentity, tenant, purpose }) {
   return digest({ workloadIdentity, tenant, purpose });
 }
 
-export function initialMindState(contract) {
+export function initialMindState(contract, { nowMs = 0 } = {}) {
+  const retentionMs = contract.mindStore.retention.seconds * 1000;
+  if (!Number.isSafeInteger(nowMs) || nowMs < 0
+    || !Number.isSafeInteger(retentionMs) || nowMs > Number.MAX_SAFE_INTEGER - retentionMs) {
+    deny("MIND_CLOCK_INVALID_DENIED");
+  }
   const primary = scopeId({
     workloadIdentity: contract.workload.identity,
     tenant: contract.workload.tenant,
@@ -37,8 +42,8 @@ export function initialMindState(contract) {
             dataClass: "SYNTHETIC_WORKING_NOTE",
             value: "synthetic foreign workload canary",
             valueDigest: digest("synthetic foreign workload canary"),
-            createdAtMs: 0,
-            expiresAtMs: 253402300799000,
+            createdAtMs: nowMs,
+            expiresAtMs: nowMs + retentionMs,
             generation: 7,
           },
         },
@@ -70,11 +75,15 @@ function boundScope(contract, binding) {
   return scopeId(expected);
 }
 
-function validateState(state, contract) {
+export function validateMindState(state, contract) {
   if (!exactObject(state, ["schemaVersion", "scopes", "reset"])
     || state.schemaVersion !== MIND_STATE_VERSION
     || state.scopes === null || typeof state.scopes !== "object" || Array.isArray(state.scopes)
-    || !(state.reset === null || (state.reset !== null && typeof state.reset === "object"))) {
+    || Object.keys(state.scopes).length > contract.mindStore.quota.maxScopes
+    || !(state.reset === null || (exactObject(state.reset, ["scope", "fromGeneration", "toGeneration"])
+      && /^[a-f0-9]{64}$/.test(state.reset.scope)
+      && Number.isSafeInteger(state.reset.fromGeneration) && state.reset.fromGeneration >= 1
+      && Number.isSafeInteger(state.reset.toGeneration) && state.reset.toGeneration >= 1))) {
     deny("MIND_STATE_INVALID_DENIED");
   }
   for (const [key, scope] of Object.entries(state.scopes)) {
@@ -86,6 +95,10 @@ function validateState(state, contract) {
         && (!Number.isSafeInteger(scope.lastResetFrom) || scope.lastResetFrom !== scope.generation - 1))) {
       deny("MIND_STATE_INVALID_DENIED");
     }
+    if (Object.keys(scope.entries).length > contract.mindStore.quota.maxEntries) {
+      deny("MIND_STATE_INVALID_DENIED");
+    }
+    let totalBytes = 0;
     for (const [entryKey, entry] of Object.entries(scope.entries)) {
       if (!exactObject(entry, ["key", "dataClass", "value", "valueDigest", "createdAtMs", "expiresAtMs", "generation"])
         || entry.key !== entryKey || !/^[a-z][a-z0-9.-]{2,48}$/.test(entry.key)
@@ -94,15 +107,33 @@ function validateState(state, contract) {
         || entry.valueDigest !== digest(entry.value)
         || !Number.isSafeInteger(entry.createdAtMs) || entry.createdAtMs < 0
         || !Number.isSafeInteger(entry.expiresAtMs) || entry.expiresAtMs <= entry.createdAtMs
+        || entry.expiresAtMs - entry.createdAtMs > contract.mindStore.retention.seconds * 1000
         || entry.generation !== scope.generation) {
         deny("MIND_STATE_INVALID_DENIED");
       }
+      totalBytes += Buffer.byteLength(entry.value);
     }
+    if (totalBytes > contract.mindStore.quota.maxTotalBytes) deny("MIND_STATE_INVALID_DENIED");
   }
 }
 
+export function purgeExpiredMindEntries(state, contract, nowMs) {
+  if (!Number.isSafeInteger(nowMs) || nowMs < 0) deny("MIND_CLOCK_INVALID_DENIED");
+  validateMindState(state, contract);
+  let purged = 0;
+  for (const scope of Object.values(state.scopes)) {
+    for (const [key, entry] of Object.entries(scope.entries)) {
+      if (entry.expiresAtMs <= nowMs) {
+        delete scope.entries[key];
+        purged += 1;
+      }
+    }
+  }
+  return purged;
+}
+
 export function recoverMindState(state, contract, persist) {
-  validateState(state, contract);
+  validateMindState(state, contract);
   if (state.reset === null) return { status: "CLEAN", recovered: false };
   const { scope, fromGeneration, toGeneration } = state.reset;
   const current = state.scopes[scope];
@@ -119,7 +150,7 @@ export function recoverMindState(state, contract, persist) {
 }
 
 export function mindStatus(state, contract) {
-  validateState(state, contract);
+  validateMindState(state, contract);
   const scope = boundScope(contract, {
     workloadIdentity: contract.workload.identity,
     tenant: contract.workload.tenant,
@@ -139,7 +170,7 @@ function expire(scope, nowMs) {
 }
 
 export function writeMind(state, contract, request, { nowMs, persist }) {
-  validateState(state, contract);
+  validateMindState(state, contract);
   if (state.reset !== null) deny("MIND_RESET_IN_PROGRESS_DENIED");
   if (!exactObject(request, ["workloadIdentity", "tenant", "purpose", "generation", "key", "dataClass", "value"])) {
     deny("MIND_CONTRACT_DENIED");
@@ -154,13 +185,16 @@ export function writeMind(state, contract, request, { nowMs, persist }) {
     deny("MIND_CONTRACT_DENIED");
   }
   expire(scope, nowMs);
+  const retentionMs = contract.mindStore.retention.seconds * 1000;
+  if (!Number.isSafeInteger(nowMs) || nowMs < 0
+    || nowMs > Number.MAX_SAFE_INTEGER - retentionMs) deny("MIND_CLOCK_INVALID_DENIED");
   const entry = {
     key: request.key,
     dataClass: request.dataClass,
     value: request.value,
     valueDigest: digest(request.value),
     createdAtMs: nowMs,
-    expiresAtMs: nowMs + contract.mindStore.retention.seconds * 1000,
+    expiresAtMs: nowMs + retentionMs,
     generation: scope.generation,
   };
   const next = { ...scope.entries, [request.key]: entry };
@@ -173,7 +207,7 @@ export function writeMind(state, contract, request, { nowMs, persist }) {
 }
 
 export function readMind(state, contract, request, { nowMs, persist }) {
-  validateState(state, contract);
+  validateMindState(state, contract);
   if (state.reset !== null) deny("MIND_RESET_IN_PROGRESS_DENIED");
   if (!exactObject(request, ["workloadIdentity", "tenant", "purpose", "generation", "key"])) deny("MIND_CONTRACT_DENIED");
   const scopeKey = boundScope(contract, request);
@@ -190,7 +224,7 @@ export function readMind(state, contract, request, { nowMs, persist }) {
 }
 
 export function resetMind(state, contract, request, { persist, interruptAfterPrepare = false }) {
-  validateState(state, contract);
+  validateMindState(state, contract);
   if (state.reset !== null) deny("MIND_RESET_IN_PROGRESS_DENIED");
   if (!exactObject(request, ["workloadIdentity", "tenant", "purpose", "generation"])) deny("RESET_SCOPE_DENIED");
   const scopeKey = boundScope(contract, request);

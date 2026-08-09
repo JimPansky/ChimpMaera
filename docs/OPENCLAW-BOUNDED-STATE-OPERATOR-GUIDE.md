@@ -29,9 +29,12 @@ device is mounted or declared, not that Linux exposes no device nodes.
 Every operation is bound to workload identity, tenant, purpose, and generation.
 Only `SYNTHETIC_PREFERENCE` and `SYNTHETIC_WORKING_NOTE` are accepted. Credentials,
 customer or personal data, and production secrets are explicitly denied data
-classes. Values are limited to 2,048 bytes, the scope to 16 entries and 16,384
-value bytes, and retention to 86,400 seconds. Expired reads deny and remove the
-expired entry.
+classes. Values are limited to 2,048 bytes, each scope to 16 entries and 16,384
+value bytes, the envelope to 16 scopes, and retention to 86,400 seconds. The
+persisted envelope is validated in full before readiness; malformed shapes,
+unsafe counters, invalid effects/replay state, quota excess, excessive retention,
+digest tampering, and stale generations fail closed. Expired entries are purged
+before readiness and cannot be read.
 
 Reset is a two-phase, persisted, scope-derived generation change. It deletes
 only mutable entries in the bound scope. It preserves foreign-scope state,
@@ -45,6 +48,13 @@ is valid, no recovery is pending, and persistence succeeds. Quota exhaustion
 is a scoped request denial and does not make the Gateway unready. Reset and
 restart return to readiness only after the generation transition or recovery
 has completed.
+
+An existing valid `chimpmaera.aas035/gateway-state/v1` M1.2 file is upgraded
+atomically to `gateway-state/v2` at startup. The migration preserves validated
+effects and their receipts, replay JTIs, counters, and valid legacy mind entries,
+then initializes the managed scoped mind envelope. Invalid legacy input is left
+unchanged and startup fails closed. Purging valid legacy state is not an upgrade
+step.
 
 ## Reproduction and evidence
 
@@ -77,9 +87,10 @@ Rollback is ownership-scoped:
 ```
 
 That stops/removes only the candidate project, its labelled synthetic state,
-and owned derivative image tags. Reverting the issue commit then restores the
-prior default-off baseline. A retained pre-M1.3 state schema fails closed; use
-the scoped purge when intentionally returning to the clean synthetic baseline.
+and owned derivative image tags. Reverting the issue commits then restores the
+prior default-off baseline. The scoped purge is destructive rollback to an
+intentionally clean synthetic baseline, not the migration path for valid M1.2
+state.
 
 Docker, its daemon, the host kernel, and the Gateway remain in the TCB. Review
 again if the runtime digest, platform, Compose controls, writable paths,

@@ -1,15 +1,20 @@
-import { createHash } from "node:crypto";
-import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { authorizeGatewayRequest, sanitizedDenial } from "./plugin/identity-v2.mjs";
 import {
+  canonicalGatewayJson as canonical,
+  gatewayDigest as digest,
+  loadGatewayState,
+  MAX_GATEWAY_COUNTER,
+  persistGatewayState,
+  validateGatewayState,
+} from "./gateway-state.mjs";
+import {
   digest as mindDigest,
-  initialMindState,
   mindStatus,
   readMind as managedReadMind,
-  recoverMindState,
   resetMind,
   scopeId,
   writeMind as managedWriteMind,
@@ -57,57 +62,36 @@ const authority = Object.freeze({
   actionId: contract.workload.actionId,
 });
 
-function canonical(value) {
-  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
-  if (value !== null && typeof value === "object") {
-    return `{${Object.keys(value).sort().map(
-      (key) => `${JSON.stringify(key)}:${canonical(value[key])}`,
-    ).join(",")}}`;
+const gatewayStateContext = Object.freeze({
+  runtimeContract: contract,
+  workloadContract,
+  policy,
+  authority,
+  requestTemplate,
+});
+const loadedState = loadGatewayState({
+  statePath,
+  context: gatewayStateContext,
+  nowMs: Date.now(),
+});
+let state = loadedState.state;
+const recovery = loadedState.recovery;
+
+function incrementCounter(name) {
+  if (state.counters[name] >= MAX_GATEWAY_COUNTER) {
+    throw new Error("GATEWAY_COUNTER_EXHAUSTED_DENIED");
   }
-  return JSON.stringify(value);
+  state.counters[name] += 1;
 }
 
-function digest(value) {
-  return createHash("sha256").update(canonical(value)).digest("hex");
-}
-
-function initialState() {
-  return {
-    schemaVersion: "chimpmaera.aas035/gateway-state/v2",
-    effects: {},
-    mind: initialMindState(contract),
-    identityReplay: [],
-    counters: { modelCalls: 0, effectAttempts: 0, effects: 0, denials: 0 },
-  };
-}
-
-function loadState() {
-  try {
-    const value = JSON.parse(readFileSync(statePath, "utf8"));
-    if (
-      value?.schemaVersion !== "chimpmaera.aas035/gateway-state/v2"
-      || typeof value.effects !== "object"
-      || typeof value.mind !== "object"
-      || !Array.isArray(value.identityReplay ?? [])
-      || typeof value.counters !== "object"
-    ) throw new Error("STATE_INVALID");
-    return value;
-  } catch (error) {
-    if (error?.code !== "ENOENT") throw error;
-    const value = initialState();
-    persist(value);
-    return value;
-  }
+function recordDenial() {
+  if (state.counters.denials < MAX_GATEWAY_COUNTER) state.counters.denials += 1;
 }
 
 function persist(value) {
-  const temporary = `${statePath}.tmp`;
-  writeFileSync(temporary, `${canonical(value)}\n`, { mode: 0o600 });
-  renameSync(temporary, statePath);
+  validateGatewayState(value, gatewayStateContext);
+  persistGatewayState(statePath, value);
 }
-
-let state = loadState();
-const recovery = recoverMindState(state.mind, contract, () => persist(state));
 
 function persistAcceptedReplayIds(replayIds) {
   const merged = new Set(state.identityReplay ?? []);
@@ -173,7 +157,7 @@ function validateTypedRequest(value) {
 }
 
 function executeCapability(value) {
-  state.counters.effectAttempts += 1;
+  incrementCounter("effectAttempts");
   validateTypedRequest(value);
   const requestDigest = digest(value);
   const prior = state.effects[value.requestId];
@@ -210,7 +194,7 @@ function executeCapability(value) {
   const receipt = { ...core, receiptDigest: digest(core) };
   const record = { requestDigest, providerResult, readback, receipt };
   state.effects[value.requestId] = record;
-  state.counters.effects += 1;
+  incrementCounter("effects");
   persist(state);
   return { status: "PASS", replayState: "FIRST_EXECUTION", ...record };
 }
@@ -309,6 +293,7 @@ export function gatewayHandler(request, response) {
       return;
     }
     if (request.method === "GET" && request.url === "/readyz") {
+      validateGatewayState(state, gatewayStateContext);
       const status = mindStatus(state.mind, contract);
       if (status.phase !== "READY") throw new Error("MIND_NOT_READY_DENIED");
       persist(state);
@@ -324,7 +309,7 @@ export function gatewayHandler(request, response) {
       if (request.headers.authorization !== `Bearer ${modelMarker}`) throw new Error("MODEL_ROUTE_IDENTITY_DENIED");
       const value = await body(request);
       if (value.model !== "cm-agent-v1" || !Array.isArray(value.messages)) throw new Error("MODEL_REQUEST_DENIED");
-      state.counters.modelCalls += 1;
+      incrementCounter("modelCalls");
       persist(state);
       sendCompletion(response, value, toolCallResponse(value.messages));
       return;
@@ -356,7 +341,7 @@ export function gatewayHandler(request, response) {
           result: executeCapability(await body(request)),
         });
       } catch (error) {
-        state.counters.denials += 1;
+        recordDenial();
         persist(state);
         json(response, 403, sanitizedDenial(error, correlationId));
       }
@@ -380,7 +365,13 @@ export function gatewayHandler(request, response) {
         policyDigest: digest(policy),
         authorityDigest: digest(authority),
         stateDigest: digest(state),
-        lifecycle: { health: "LIVE", readiness: mindStatus(state.mind, contract), startupRecovery: recovery.status },
+        lifecycle: {
+          health: "LIVE",
+          readiness: mindStatus(state.mind, contract),
+          startupMigration: loadedState.migration,
+          startupRecovery: recovery.status,
+          expiredEntriesPurged: loadedState.expiredEntriesPurged,
+        },
         counters: state.counters,
         effectReceiptDigests: Object.values(state.effects).map((entry) => entry.receipt.receiptDigest).sort(),
         mindEntryDigests: Object.values(state.mind.scopes).flatMap((scope) => Object.values(scope.entries).map((entry) => entry.valueDigest)).sort(),
@@ -399,7 +390,7 @@ export function gatewayHandler(request, response) {
     throw new Error("ROUTE_DENIED");
   };
   run().catch((error) => {
-    state.counters.denials += 1;
+    recordDenial();
     persist(state);
     json(response, 403, { status: "DENY", error: error instanceof Error ? error.message : "REQUEST_DENIED" });
   });

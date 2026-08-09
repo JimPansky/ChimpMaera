@@ -3,7 +3,10 @@
   "proofId": "secure-default-safe-guided-v1",
   "profile": "SAFE_GUIDED",
   "claimBoundary": "A bounded local, synthetic repository proof for the declared SAFE_GUIDED reference path only. It does not establish production readiness, universal security, hostile-host resistance, live-provider or tenant compatibility, certification, or claims for broader authority profiles.",
-  "profileExclusions": ["FULL_CONTROL_LAB", "RAMPAGE"],
+  "profileExclusions": [
+    "FULL_CONTROL_LAB",
+    "RAMPAGE"
+  ],
   "schemaBinding": {
     "path": "schemas/security/secure-default-proof-v1.schema.json",
     "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8"
@@ -23,108 +26,365 @@
     "authoritative": "npm test"
   },
   "artifacts": [
-    { "path": "schemas/security/secure-default-proof-v1.schema.json", "role": "SCHEMA", "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8" },
-    { "path": "scripts/verify-secure-default-proof.mjs", "role": "VERIFIER", "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1" },
-    { "path": "tests/secure-default-proof.test.mjs", "role": "TEST", "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0" },
-    { "path": "docs/SECURE-DEFAULT-PROOF.md", "role": "EVIDENCE", "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892" },
-    { "path": "demo/manifests/authority/SAFE_GUIDED-v1.json", "role": "IMPLEMENTATION", "sha256": "5fff550dd498c81b160f100606d34157bcd9bafedc08f2bed1c64b28536559d3" },
-    { "path": "demo/manifests/authority/RAMPAGE-v1.json", "role": "IMPLEMENTATION", "sha256": "2ca8b68ae00d0c8f6752b6c7e4ae81dbae9747ac59b24776b89d0284d26636e4" },
-    { "path": "demo/runtime/admin-ai-poc.mjs", "role": "IMPLEMENTATION", "sha256": "a6957fd1a1388cd6ba77e2627492ca6c1a329a3e216678e21845fbfb65edd3da" },
-    { "path": "demo/runtime/approval-workbench.mjs", "role": "IMPLEMENTATION", "sha256": "9b7e133473dde1d060812d1689c4e21aea864a59fbfca3826018f52dda9769d6" },
-    { "path": "demo/runtime/enforcement-gate.mjs", "role": "IMPLEMENTATION", "sha256": "8399adcc9a2e5d55a35ac3356dbb49c471bfdf60898e48e2d5a48fe01b68b935" },
-    { "path": "demo/seed-and-flow.sh", "role": "IMPLEMENTATION", "sha256": "bd658b60138d44cbe499bdeb82d7f49f052fb5284c85866cc59b2e728f473600" },
-    { "path": "demo/openclaw-agent/compose.yaml", "role": "IMPLEMENTATION", "sha256": "5dfacfe2ab1e3ba3a502bb2ee1bb1271b7df49537fecf7d5509f0dfa79344466" },
-    { "path": "demo/openclaw-agent/runtime-contract-v1.json", "role": "IMPLEMENTATION", "sha256": "6ecc672236a8d5615d6013d94bc206787eae5006dbe0876f11497ab5ca4c676c" },
-    { "path": "demo/model-access-broker/broker.mjs", "role": "IMPLEMENTATION", "sha256": "e5dd9ee8e825fc98a9b71df8121e42f37cd299c60d797682b31469165396f13d" },
-    { "path": "demo/model-access-broker/compose.yaml", "role": "IMPLEMENTATION", "sha256": "7d5dcccb435cf55b2ca374904eae350d6fa143d103ed5be51b2ebc7c3dfa847c" },
-    { "path": "demo/model-access-broker/runtime-contract-v1.json", "role": "IMPLEMENTATION", "sha256": "d41bfdd57e19cbde64eb2efc03f21200590810a9ea949cdf0a0c8a31bef35f79" },
-    { "path": "packages/contracts/src/capability-catalogue.ts", "role": "IMPLEMENTATION", "sha256": "c3a9a8268e9e7e1c717608b76ea57e4974aaf0aa0425cfc55f44c5ecd17a01b5" },
-    { "path": "tests/capability-catalogue.test.ts", "role": "TEST", "sha256": "68129a712cda08769c96e799239a06eab5dd4e4242752aa13f6d4c079dc18693" },
-    { "path": "tests/demo-enforcement-gate.test.mjs", "role": "TEST", "sha256": "7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74" },
-    { "path": "tests/demo-admin-ai-poc.test.mjs", "role": "TEST", "sha256": "d9157598e660243c1b98552b09c43a05127701f0fe343c1a14c0eb984eaea9cd" },
-    { "path": "tests/demo-approval-workbench.test.mjs", "role": "TEST", "sha256": "2cb4aaad1ca1435c2c0abca543796f21de783ae678eabed1adac308ce1969e2b" },
-    { "path": "tests/openclaw-agent-runtime.test.mjs", "role": "TEST", "sha256": "2e9d3d9fe7db7677bf14516c706f8502997951bd2e190aa746b8948105a4aa3b" },
-    { "path": "tests/model-access-broker-runtime.test.mjs", "role": "TEST", "sha256": "c4c2492f936df0923d79480a6fb89cb7bb1a1cab3cf1f3c2555b7eeb3c1f4b3d" },
-    { "path": "tests/poc-early-admin-ai-setup.test.ts", "role": "TEST", "sha256": "06dbdf922993b0e0d8c07534c4d562ca4dac97125e1c2f67fb6662a1c4283c0b" }
+    {
+      "path": "schemas/security/secure-default-proof-v1.schema.json",
+      "role": "SCHEMA",
+      "sha256": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8"
+    },
+    {
+      "path": "scripts/verify-secure-default-proof.mjs",
+      "role": "VERIFIER",
+      "sha256": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1"
+    },
+    {
+      "path": "tests/secure-default-proof.test.mjs",
+      "role": "TEST",
+      "sha256": "599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0"
+    },
+    {
+      "path": "docs/SECURE-DEFAULT-PROOF.md",
+      "role": "EVIDENCE",
+      "sha256": "af84acfe9b4a110fee54837b51ff51fa355d520e88c4362147ec648a43420892"
+    },
+    {
+      "path": "demo/manifests/authority/SAFE_GUIDED-v1.json",
+      "role": "IMPLEMENTATION",
+      "sha256": "5fff550dd498c81b160f100606d34157bcd9bafedc08f2bed1c64b28536559d3"
+    },
+    {
+      "path": "demo/manifests/authority/RAMPAGE-v1.json",
+      "role": "IMPLEMENTATION",
+      "sha256": "2ca8b68ae00d0c8f6752b6c7e4ae81dbae9747ac59b24776b89d0284d26636e4"
+    },
+    {
+      "path": "demo/runtime/admin-ai-poc.mjs",
+      "role": "IMPLEMENTATION",
+      "sha256": "a6957fd1a1388cd6ba77e2627492ca6c1a329a3e216678e21845fbfb65edd3da"
+    },
+    {
+      "path": "demo/runtime/approval-workbench.mjs",
+      "role": "IMPLEMENTATION",
+      "sha256": "9b7e133473dde1d060812d1689c4e21aea864a59fbfca3826018f52dda9769d6"
+    },
+    {
+      "path": "demo/runtime/enforcement-gate.mjs",
+      "role": "IMPLEMENTATION",
+      "sha256": "8399adcc9a2e5d55a35ac3356dbb49c471bfdf60898e48e2d5a48fe01b68b935"
+    },
+    {
+      "path": "demo/seed-and-flow.sh",
+      "role": "IMPLEMENTATION",
+      "sha256": "bd658b60138d44cbe499bdeb82d7f49f052fb5284c85866cc59b2e728f473600"
+    },
+    {
+      "path": "demo/openclaw-agent/compose.yaml",
+      "role": "IMPLEMENTATION",
+      "sha256": "5dfacfe2ab1e3ba3a502bb2ee1bb1271b7df49537fecf7d5509f0dfa79344466"
+    },
+    {
+      "path": "demo/openclaw-agent/runtime-contract-v1.json",
+      "role": "IMPLEMENTATION",
+      "sha256": "a895070029de01ea3b4e6966cc76f6d4408fb561fd8c135f5755f9a8ba1270d6"
+    },
+    {
+      "path": "demo/model-access-broker/broker.mjs",
+      "role": "IMPLEMENTATION",
+      "sha256": "e5dd9ee8e825fc98a9b71df8121e42f37cd299c60d797682b31469165396f13d"
+    },
+    {
+      "path": "demo/model-access-broker/compose.yaml",
+      "role": "IMPLEMENTATION",
+      "sha256": "7d5dcccb435cf55b2ca374904eae350d6fa143d103ed5be51b2ebc7c3dfa847c"
+    },
+    {
+      "path": "demo/model-access-broker/runtime-contract-v1.json",
+      "role": "IMPLEMENTATION",
+      "sha256": "d41bfdd57e19cbde64eb2efc03f21200590810a9ea949cdf0a0c8a31bef35f79"
+    },
+    {
+      "path": "packages/contracts/src/capability-catalogue.ts",
+      "role": "IMPLEMENTATION",
+      "sha256": "c3a9a8268e9e7e1c717608b76ea57e4974aaf0aa0425cfc55f44c5ecd17a01b5"
+    },
+    {
+      "path": "tests/capability-catalogue.test.ts",
+      "role": "TEST",
+      "sha256": "68129a712cda08769c96e799239a06eab5dd4e4242752aa13f6d4c079dc18693"
+    },
+    {
+      "path": "tests/demo-enforcement-gate.test.mjs",
+      "role": "TEST",
+      "sha256": "7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74"
+    },
+    {
+      "path": "tests/demo-admin-ai-poc.test.mjs",
+      "role": "TEST",
+      "sha256": "d9157598e660243c1b98552b09c43a05127701f0fe343c1a14c0eb984eaea9cd"
+    },
+    {
+      "path": "tests/demo-approval-workbench.test.mjs",
+      "role": "TEST",
+      "sha256": "2cb4aaad1ca1435c2c0abca543796f21de783ae678eabed1adac308ce1969e2b"
+    },
+    {
+      "path": "tests/openclaw-agent-runtime.test.mjs",
+      "role": "TEST",
+      "sha256": "c540fb7cf2c0cc3533041cabccbf05a840c651665d1aed05c47063ae5025ba87"
+    },
+    {
+      "path": "tests/model-access-broker-runtime.test.mjs",
+      "role": "TEST",
+      "sha256": "c4c2492f936df0923d79480a6fb89cb7bb1a1cab3cf1f3c2555b7eeb3c1f4b3d"
+    },
+    {
+      "path": "tests/poc-early-admin-ai-setup.test.ts",
+      "role": "TEST",
+      "sha256": "06dbdf922993b0e0d8c07534c4d562ca4dac97125e1c2f67fb6662a1c4283c0b"
+    },
+    {
+      "path": "demo/openclaw-agent/gateway-state.mjs",
+      "role": "IMPLEMENTATION",
+      "sha256": "a3bd767ff39f7b5e0137e6da735f2d3f017cb325a9d900e6b40a9206b1d5dc51"
+    },
+    {
+      "path": "demo/openclaw-agent/mind-store.mjs",
+      "role": "IMPLEMENTATION",
+      "sha256": "3afd1b8c20558471cf6172857f10f7f2cf982ff3165031b96e57bdd2d074e724"
+    },
+    {
+      "path": "tests/openclaw-gateway-state.test.mjs",
+      "role": "TEST",
+      "sha256": "0c105e8de6ee09298ec48bcdf2c961600d41d688a2393d201d0526d5588477a9"
+    }
   ],
   "claims": [
     {
-      "claimId": "CM-SD-001", "kind": "PROPERTY", "statement": "The isolated Agent and model fixtures receive no ambient reusable provider, host or tenant credentials.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/openclaw-agent/compose.yaml", "demo/openclaw-agent/runtime-contract-v1.json", "demo/model-access-broker/compose.yaml"],
-      "testPaths": ["tests/openclaw-agent-runtime.test.mjs", "tests/model-access-broker-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-001",
+      "kind": "PROPERTY",
+      "statement": "The isolated Agent and model fixtures receive no ambient reusable provider, host or tenant credentials.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/openclaw-agent/compose.yaml",
+        "demo/openclaw-agent/runtime-contract-v1.json",
+        "demo/model-access-broker/compose.yaml"
+      ],
+      "testPaths": [
+        "tests/openclaw-agent-runtime.test.mjs",
+        "tests/model-access-broker-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-002", "kind": "PROPERTY", "statement": "Agent or model input cannot approve itself, and client-supplied confirmation is not executable authority.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/runtime/enforcement-gate.mjs", "demo/runtime/approval-workbench.mjs"],
-      "testPaths": ["tests/demo-enforcement-gate.test.mjs", "tests/demo-approval-workbench.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-002",
+      "kind": "PROPERTY",
+      "statement": "Agent or model input cannot approve itself, and client-supplied confirmation is not executable authority.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/runtime/enforcement-gate.mjs",
+        "demo/runtime/approval-workbench.mjs"
+      ],
+      "testPaths": [
+        "tests/demo-enforcement-gate.test.mjs",
+        "tests/demo-approval-workbench.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-003", "kind": "PROPERTY", "statement": "The declared proposer path has no direct provider-effect route and reaches effects only through the bounded coordinator and Gateway path.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/seed-and-flow.sh", "demo/openclaw-agent/compose.yaml", "demo/runtime/enforcement-gate.mjs"],
-      "testPaths": ["tests/demo-enforcement-gate.test.mjs", "tests/openclaw-agent-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-003",
+      "kind": "PROPERTY",
+      "statement": "The declared proposer path has no direct provider-effect route and reaches effects only through the bounded coordinator and Gateway path.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/seed-and-flow.sh",
+        "demo/openclaw-agent/compose.yaml",
+        "demo/runtime/enforcement-gate.mjs"
+      ],
+      "testPaths": [
+        "tests/demo-enforcement-gate.test.mjs",
+        "tests/openclaw-agent-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-004", "kind": "PROPERTY", "statement": "Declared capabilities and effect actions are finite, closed, typed and digest-bound, while catalogue inspection remains inactive.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["packages/contracts/src/capability-catalogue.ts", "demo/runtime/enforcement-gate.mjs"],
-      "testPaths": ["tests/capability-catalogue.test.ts", "tests/demo-enforcement-gate.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-004",
+      "kind": "PROPERTY",
+      "statement": "Declared capabilities and effect actions are finite, closed, typed and digest-bound, while catalogue inspection remains inactive.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "packages/contracts/src/capability-catalogue.ts",
+        "demo/runtime/enforcement-gate.mjs"
+      ],
+      "testPaths": [
+        "tests/capability-catalogue.test.ts",
+        "tests/demo-enforcement-gate.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-005", "kind": "PROPERTY", "statement": "Unknown actions, wrong scope or tenant, and widened or malformed payloads deny before provider access.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/runtime/enforcement-gate.mjs", "packages/contracts/src/capability-catalogue.ts"],
-      "testPaths": ["tests/demo-enforcement-gate.test.mjs", "tests/capability-catalogue.test.ts", "tests/openclaw-agent-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-005",
+      "kind": "PROPERTY",
+      "statement": "Unknown actions, wrong scope or tenant, and widened or malformed payloads deny before provider access.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/runtime/enforcement-gate.mjs",
+        "packages/contracts/src/capability-catalogue.ts"
+      ],
+      "testPaths": [
+        "tests/demo-enforcement-gate.test.mjs",
+        "tests/capability-catalogue.test.ts",
+        "tests/openclaw-agent-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-006", "kind": "PROPERTY", "statement": "Material effects require external Policy and Owner authority bound to the action, scope, policy and profile generations, and use-time state.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/runtime/admin-ai-poc.mjs", "demo/runtime/approval-workbench.mjs", "demo/runtime/enforcement-gate.mjs"],
-      "testPaths": ["tests/demo-admin-ai-poc.test.mjs", "tests/demo-approval-workbench.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-006",
+      "kind": "PROPERTY",
+      "statement": "Material effects require external Policy and Owner authority bound to the action, scope, policy and profile generations, and use-time state.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/runtime/admin-ai-poc.mjs",
+        "demo/runtime/approval-workbench.mjs",
+        "demo/runtime/enforcement-gate.mjs"
+      ],
+      "testPaths": [
+        "tests/demo-admin-ai-poc.test.mjs",
+        "tests/demo-approval-workbench.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-007", "kind": "PROPERTY", "statement": "The model uses an opaque credential reference and only the bounded broker resolves the synthetic provider credential without returning its value.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/model-access-broker/broker.mjs", "demo/model-access-broker/runtime-contract-v1.json"],
-      "testPaths": ["tests/model-access-broker-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-007",
+      "kind": "PROPERTY",
+      "statement": "The model uses an opaque credential reference and only the bounded broker resolves the synthetic provider credential without returning its value.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/model-access-broker/broker.mjs",
+        "demo/model-access-broker/runtime-contract-v1.json"
+      ],
+      "testPaths": [
+        "tests/model-access-broker-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-008", "kind": "PROPERTY", "statement": "The synthetic provider route is fixed and broker-owned rather than a model-selected URL or generic invocation surface.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/model-access-broker/broker.mjs", "demo/model-access-broker/runtime-contract-v1.json", "demo/model-access-broker/compose.yaml"],
-      "testPaths": ["tests/model-access-broker-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-008",
+      "kind": "PROPERTY",
+      "statement": "The synthetic provider route is fixed and broker-owned rather than a model-selected URL or generic invocation surface.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/model-access-broker/broker.mjs",
+        "demo/model-access-broker/runtime-contract-v1.json",
+        "demo/model-access-broker/compose.yaml"
+      ],
+      "testPaths": [
+        "tests/model-access-broker-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-009", "kind": "PROPERTY", "statement": "Provider transport acceptance is not success; authoritative semantic readback is mandatory and drift produces no success receipt.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/runtime/enforcement-gate.mjs", "demo/runtime/approval-workbench.mjs"],
-      "testPaths": ["tests/demo-enforcement-gate.test.mjs", "tests/demo-approval-workbench.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-009",
+      "kind": "PROPERTY",
+      "statement": "Provider transport acceptance is not success; authoritative semantic readback is mandatory and drift produces no success receipt.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/runtime/enforcement-gate.mjs",
+        "demo/runtime/approval-workbench.mjs"
+      ],
+      "testPaths": [
+        "tests/demo-enforcement-gate.test.mjs",
+        "tests/demo-approval-workbench.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-010", "kind": "PROPERTY", "statement": "The local receipt is digest-bound to the canonical action, applicable authority and policy, provider object, and authoritative readback.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/runtime/enforcement-gate.mjs"],
-      "testPaths": ["tests/demo-enforcement-gate.test.mjs", "tests/demo-admin-ai-poc.test.mjs", "tests/demo-approval-workbench.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-010",
+      "kind": "PROPERTY",
+      "statement": "The local receipt is digest-bound to the canonical action, applicable authority and policy, provider object, and authoritative readback.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/runtime/enforcement-gate.mjs"
+      ],
+      "testPaths": [
+        "tests/demo-enforcement-gate.test.mjs",
+        "tests/demo-admin-ai-poc.test.mjs",
+        "tests/demo-approval-workbench.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-011", "kind": "PROPERTY", "statement": "Enumerated replay, tamper, direct-path, cross-tenant, unknown-route or action, and payload-widening probes deny or remain idempotent.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/runtime/enforcement-gate.mjs", "demo/openclaw-agent/runtime-contract-v1.json", "demo/model-access-broker/runtime-contract-v1.json"],
-      "testPaths": ["tests/demo-enforcement-gate.test.mjs", "tests/demo-admin-ai-poc.test.mjs", "tests/demo-approval-workbench.test.mjs", "tests/openclaw-agent-runtime.test.mjs", "tests/model-access-broker-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-011",
+      "kind": "PROPERTY",
+      "statement": "Enumerated replay, tamper, direct-path, cross-tenant, unknown-route or action, and payload-widening probes deny or remain idempotent.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/runtime/enforcement-gate.mjs",
+        "demo/openclaw-agent/runtime-contract-v1.json",
+        "demo/model-access-broker/runtime-contract-v1.json"
+      ],
+      "testPaths": [
+        "tests/demo-enforcement-gate.test.mjs",
+        "tests/demo-admin-ai-poc.test.mjs",
+        "tests/demo-approval-workbench.test.mjs",
+        "tests/openclaw-agent-runtime.test.mjs",
+        "tests/model-access-broker-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-012", "kind": "PROPERTY", "statement": "The local fixture adds non-root and read-only containers, dropped capabilities, no-new-privileges, internal networks, and no host socket or published fixture ports.", "verdict": "PROVEN_LOCAL_SYNTHETIC",
-      "implementationPaths": ["demo/openclaw-agent/compose.yaml", "demo/model-access-broker/compose.yaml"],
-      "testPaths": ["tests/openclaw-agent-runtime.test.mjs", "tests/model-access-broker-runtime.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-012",
+      "kind": "PROPERTY",
+      "statement": "The local fixture adds non-root and read-only containers, dropped capabilities, no-new-privileges, internal networks, and no host socket or published fixture ports.",
+      "verdict": "PROVEN_LOCAL_SYNTHETIC",
+      "implementationPaths": [
+        "demo/openclaw-agent/compose.yaml",
+        "demo/model-access-broker/compose.yaml"
+      ],
+      "testPaths": [
+        "tests/openclaw-agent-runtime.test.mjs",
+        "tests/model-access-broker-runtime.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     },
     {
-      "claimId": "CM-SD-NC-001", "kind": "NON_CLAIM", "statement": "No production readiness, universal or absolute security, certification, hostile-host resistance, live provider or tenant compatibility, or inheritance by broader authority profiles is claimed.", "verdict": "EXPLICITLY_NOT_CLAIMED",
-      "implementationPaths": ["demo/manifests/authority/SAFE_GUIDED-v1.json", "demo/manifests/authority/RAMPAGE-v1.json"],
-      "testPaths": ["tests/poc-early-admin-ai-setup.test.ts", "tests/secure-default-proof.test.mjs"],
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md"]
+      "claimId": "CM-SD-NC-001",
+      "kind": "NON_CLAIM",
+      "statement": "No production readiness, universal or absolute security, certification, hostile-host resistance, live provider or tenant compatibility, or inheritance by broader authority profiles is claimed.",
+      "verdict": "EXPLICITLY_NOT_CLAIMED",
+      "implementationPaths": [
+        "demo/manifests/authority/SAFE_GUIDED-v1.json",
+        "demo/manifests/authority/RAMPAGE-v1.json"
+      ],
+      "testPaths": [
+        "tests/poc-early-admin-ai-setup.test.ts",
+        "tests/secure-default-proof.test.mjs"
+      ],
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md"
+      ]
     }
   ]
 }
