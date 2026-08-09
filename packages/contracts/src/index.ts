@@ -12,6 +12,7 @@ export * from "./capability-catalogue.js";
 export * from "./model-access-broker.js";
 export * from "./development-worker.js";
 export * from "./skill-admission.js";
+export * from "./skill-bundle.js";
 export * from "./protected-audit-timeline.js";
 export * from "./builder-authority.js";
 export * from "./resource-plane-profiles.js";

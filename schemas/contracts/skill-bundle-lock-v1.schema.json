@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/skill-bundle-lock-v1.schema.json",
+  "title": "ChimpMaera immutable Skill Bundle lock tuple v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "lockVersion", "bundleId", "bundleVersion", "manifestDigest",
+    "manifestBytesSha256", "fileSetDigest", "lockIdentity", "source", "files",
+    "compatibility", "authority", "rollback"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.skill-bundle/lock/v1" },
+    "lockVersion": { "const": "1.0.0" },
+    "bundleId": { "type": "string", "pattern": "^skillbundle:[a-z0-9][a-z0-9._-]{2,63}$" },
+    "bundleVersion": { "$ref": "#/$defs/semver" },
+    "manifestDigest": { "$ref": "#/$defs/digest" },
+    "manifestBytesSha256": { "$ref": "#/$defs/digest" },
+    "fileSetDigest": { "$ref": "#/$defs/digest" },
+    "lockIdentity": { "$ref": "#/$defs/digest" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "locator", "mutable"],
+      "properties": {
+        "kind": { "const": "LOCAL_CONTENT" },
+        "locator": { "type": "string", "pattern": "^skill-bundle\\+sha256:[a-f0-9]{64}$" },
+        "mutable": { "const": false }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/lockFile" }
+    },
+    "compatibility": { "$ref": "skill-bundle-manifest-v1.schema.json#/$defs/compatibility" },
+    "authority": { "$ref": "skill-bundle-manifest-v1.schema.json#/$defs/authority" },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "lkgLockIdentity"],
+      "properties": {
+        "mode": { "const": "RESTORE_EXACT_LOCK_OR_DENY" },
+        "lkgLockIdentity": { "$ref": "#/$defs/digest" }
+      }
+    }
+  },
+  "$defs": {
+    "semver": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?($|/))[A-Za-z0-9._/-]+$"
+    },
+    "lockFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "role", "mediaType", "size", "sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "role": { "enum": ["ENTRYPOINT", "DOC", "CONFIG", "ASSET", "TEST_FIXTURE"] },
+        "mediaType": { "enum": ["text/markdown", "application/json", "text/plain"] },
+        "size": { "type": "integer", "minimum": 0, "maximum": 131072 },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}
