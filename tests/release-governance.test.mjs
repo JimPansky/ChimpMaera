@@ -107,6 +107,9 @@ test("release governance negative probes fail closed", async (t) => {
     ["extension assurance release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-014", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-014` release binding]", "[`CM-REL-013` release binding]")],
     ["agent-work event release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-015", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-015` release binding]", "[`CM-REL-014` release binding]")],
     ["maintenance contract release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-005", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-005` release binding]", "[`CM-REL-004` release binding]")],
+    ["VIDEO-M2 release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-016", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-016` release binding]", "[`CM-REL-015` release binding]")],
+    ["ASF intake release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-017", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-017` release binding]", "[`CM-REL-016` release binding]")],
+    ["integration profile release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-018", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-018` release binding]", "[`CM-REL-017` release binding]")],
     ["stale limitation version", "LIMITATIONS_STALE_V01_BINDING_DENIED", (root) => replace(root, "docs/KNOWN-LIMITATIONS.md", "The current local demo", "The v0.1 demo")],
     ["withdrawn video", "WITHDRAWN_ACTIVE_VIDEO_DENIED:8mB7O81Y2xA", (root) => append(root, "README.md", "https://youtu.be/8mB7O81Y2xA")],
     ["missing non-claim", "NON_CLAIMS_MISSING:CM-REL-001", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.claimEvidence[0].nonClaims = []; writeFileSync(p, JSON.stringify(j)); }],
@@ -114,6 +117,7 @@ test("release governance negative probes fail closed", async (t) => {
     ["missing grouped component evidence", "RELEASE_COMPONENT_EVIDENCE_MISSING:Verification Fabric", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.claimEvidence = j.claimEvidence.filter((claim) => claim.component !== "Verification Fabric"); writeFileSync(p, JSON.stringify(j)); }],
     ["component byte not in public manifest", "COMPONENT_PATH_UNMANIFESTED:CM-REL-004:packages/contracts/src/verification-fabric.ts", (root) => replace(root, "release/public-files.manifest", "packages/contracts/src/verification-fabric.ts\tpackages/contracts/src/verification-fabric.ts\t0644\n", "")],
     ["asset hash removed", "ASSET_INVENTORY_INVALID", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.currentRelease.assets[0].sha256 = "unknown"; writeFileSync(p, JSON.stringify(j)); }],
+    ["publication metadata removed", "CURRENT_PUBLICATION_METADATA_INVALID", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); delete j.currentRelease.releaseId; writeFileSync(p, JSON.stringify(j)); }],
     ["private path leak", "LEAK_PRIVATE_HOME_PATH:README.md", (root) => append(root, "README.md", ["Current files: ", "home", "alice", "private", ""].join("/"))],
     ["calendar generator title", "GENERATOR_CALENDAR_RELEASE_TITLE_DENIED", (root) => replace(root, "scripts/daily-poc.mjs", "const releaseTitle = incrementCandidateTitle(manifest);", "const releaseTitle = `ChimpMaera POC Daily — ${manifest.date}`;")]
   ];

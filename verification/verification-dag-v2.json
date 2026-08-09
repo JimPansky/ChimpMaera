@@ -117,9 +117,9 @@
       "id": "repository-integrity",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "integration-profile-v1", "learning-routing-foundation"],
       "inputs": [
-        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5" },
+        { "path": "release/governance.json", "role": "CONTRACT", "sha256": "fd48a9efcfc13926c5573c4e7a6f3e3afa31f87dd8253e0c0354b01df7712965" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
-        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "a7734fbb94687d442e3571249f7fa40de44c18679ad6f71fb57de30fb11c5d86" },
+        { "path": "scripts/verify-release-governance.mjs", "role": "SECURITY", "sha256": "68abd8dbf2e6c3d506c86252813df686ad028d8ce1aec89e817d6c36f17625c6" },
         { "path": "scripts/verify-supply-chain.mjs", "role": "SECURITY", "sha256": "51a4d87c3d916871dabcc26835567121cb6307faaea08da5e5a7fc5c6da9197f" }
       ],
       "ownedTests": [
