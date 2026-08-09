@@ -1,9 +1,13 @@
 import { createHash } from "node:crypto";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { authorizeGatewayRequest, sanitizedDenial } from "./plugin/identity-v2.mjs";
 
-const contract = JSON.parse(readFileSync("./runtime-contract-v1.json", "utf8"));
-const statePath = "/var/lib/chimpmaera/state.json";
+const contract = JSON.parse(readFileSync(new URL("./runtime-contract-v1.json", import.meta.url), "utf8"));
+const workloadContract = JSON.parse(readFileSync(new URL("./gateway-workload-contract-v2.json", import.meta.url), "utf8"));
+const statePath = process.env.CM_AAS035_STATE_PATH ?? "/var/lib/chimpmaera/state.json";
 const modelMarker = "synthetic-workload-routing-marker-not-a-secret";
 const requestTemplate = Object.freeze({
   schemaVersion: "chimpmaera.aas035/typed-capability-request/v1",
@@ -62,6 +66,7 @@ function initialState() {
     schemaVersion: "chimpmaera.aas035/gateway-state/v1",
     effects: {},
     mind: {},
+    identityReplay: [],
     counters: { modelCalls: 0, effectAttempts: 0, effects: 0, denials: 0 },
   };
 }
@@ -73,6 +78,7 @@ function loadState() {
       value?.schemaVersion !== "chimpmaera.aas035/gateway-state/v1"
       || typeof value.effects !== "object"
       || typeof value.mind !== "object"
+      || !Array.isArray(value.identityReplay ?? [])
       || typeof value.counters !== "object"
     ) throw new Error("STATE_INVALID");
     return value;
@@ -91,6 +97,16 @@ function persist(value) {
 }
 
 let state = loadState();
+
+function persistAcceptedReplayIds(replayIds) {
+  const merged = new Set(state.identityReplay ?? []);
+  for (const replayId of replayIds) merged.add(replayId);
+  if (merged.size > workloadContract.identity.replayCacheMaxEntries) {
+    throw new Error("IDENTITY_REPLAY_CACHE_FULL_DENIED");
+  }
+  state.identityReplay = [...merged].sort();
+  persist(state);
+}
 
 function exactObject(value, keys) {
   return value !== null
@@ -294,7 +310,7 @@ function sendCompletion(response, request, result) {
   });
 }
 
-const server = createServer((request, response) => {
+export function gatewayHandler(request, response) {
   const run = async () => {
     if (request.method === "GET" && request.url === "/healthz") {
       json(response, 200, { status: "PASS", role: "capability-gateway" });
@@ -320,8 +336,36 @@ const server = createServer((request, response) => {
       return;
     }
     if (request.method === "POST" && request.url === "/v1/capabilities/execute") {
-      workload(request);
-      json(response, 200, executeCapability(await body(request)));
+      throw new Error("LEGACY_CAPABILITY_ROUTE_DENIED");
+    }
+    if (request.method === "POST" && request.url === workloadContract.identity.route) {
+      const correlationId = request.headers["x-cm-correlation-id"];
+      const replayIds = new Set(state.identityReplay ?? []);
+      try {
+        const host = new URL(`http://${request.headers.host ?? "invalid"}`).hostname;
+        const authorization = authorizeGatewayRequest(workloadContract, {
+          protocol: "http:",
+          dnsTarget: host,
+          host,
+          port: 8080,
+          method: request.method,
+          path: request.url,
+          authorization: request.headers.authorization,
+          correlationId,
+        }, { replayIds });
+        persistAcceptedReplayIds(replayIds);
+        json(response, 200, {
+          schemaVersion: "chimpmaera.openclaw/gateway-broker-response/v2",
+          status: "PASS",
+          correlationId: authorization.correlationId,
+          authorization,
+          result: executeCapability(await body(request)),
+        });
+      } catch (error) {
+        state.counters.denials += 1;
+        persist(state);
+        json(response, 403, sanitizedDenial(error, correlationId));
+      }
       return;
     }
     if (request.method === "POST" && request.url === "/v1/mind/entries") {
@@ -367,9 +411,14 @@ const server = createServer((request, response) => {
     persist(state);
     json(response, 403, { status: "DENY", error: error instanceof Error ? error.message : "REQUEST_DENIED" });
   });
-});
+}
 
-server.listen(8080, "0.0.0.0");
-for (const signal of ["SIGINT", "SIGTERM"]) {
-  process.once(signal, () => server.close(() => process.exit(0)));
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const server = createServer(gatewayHandler);
+  const listenPort = Number(process.env.CM_AAS035_PORT ?? "8080");
+  const listenHost = process.env.CM_AAS035_LISTEN_HOST ?? "0.0.0.0";
+  server.listen(listenPort, listenHost);
+  for (const signal of ["SIGINT", "SIGTERM"]) {
+    process.once(signal, () => server.close(() => process.exit(0)));
+  }
 }

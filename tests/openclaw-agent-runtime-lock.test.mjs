@@ -75,8 +75,8 @@ test("AAS-035 prerequisite lock binds official Docker, source, image and licence
   );
   assert.equal(report.platform, "linux/amd64");
   assert.equal(report.host, "Linux/x86_64");
-  assert.equal(report.artifactCount, 22);
-  assert.equal(report.checks.length, 6);
+  assert.equal(report.artifactCount, 24);
+  assert.equal(report.checks.length, 7);
 });
 
 test("OPENCLAW-M1.1 setup rejects required provenance probes before any Docker invocation", async () => {

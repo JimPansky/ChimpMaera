@@ -99,11 +99,13 @@ demo/model-access-broker/setup.sh	demo/model-access-broker/setup.sh	0755
 demo/model-access-broker/smoke.sh	demo/model-access-broker/smoke.sh	0755
 demo/openclaw-agent/compose.yaml	demo/openclaw-agent/compose.yaml	0644
 demo/openclaw-agent/fixture-probe.mjs	demo/openclaw-agent/fixture-probe.mjs	0644
+demo/openclaw-agent/gateway-workload-contract-v2.json	demo/openclaw-agent/gateway-workload-contract-v2.json	0644
 demo/openclaw-agent/gateway.Dockerfile	demo/openclaw-agent/gateway.Dockerfile	0644
 demo/openclaw-agent/gateway.mjs	demo/openclaw-agent/gateway.mjs	0644
 demo/openclaw-agent/lib.sh	demo/openclaw-agent/lib.sh	0644
 demo/openclaw-agent/openclaw.Dockerfile	demo/openclaw-agent/openclaw.Dockerfile	0644
 demo/openclaw-agent/openclaw.json	demo/openclaw-agent/openclaw.json	0644
+demo/openclaw-agent/plugin/identity-v2.mjs	demo/openclaw-agent/plugin/identity-v2.mjs	0644
 demo/openclaw-agent/plugin/index.mjs	demo/openclaw-agent/plugin/index.mjs	0644
 demo/openclaw-agent/plugin/openclaw.plugin.json	demo/openclaw-agent/plugin/openclaw.plugin.json	0644
 demo/openclaw-agent/plugin/package.json	demo/openclaw-agent/plugin/package.json	0644
@@ -251,6 +253,7 @@ release/governance.json	release/governance.json	0644
 security/secure-default-proof-evidence-v1.json	security/secure-default-proof-evidence-v1.json	0644
 security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 security/openclaw-m1.1-evidence-v1.json	security/openclaw-m1.1-evidence-v1.json	0644
+security/openclaw-m1.2-evidence-v2.json	security/openclaw-m1.2-evidence-v2.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
@@ -377,6 +380,7 @@ tests/power-platform-read-connector.test.ts	tests/power-platform-read-connector.
 tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-runtime.test.mjs	0644
 tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
+tests/openclaw-gateway-identity-network.test.mjs	tests/openclaw-gateway-identity-network.test.mjs	0644
 tests/skill-admission.test.ts	tests/skill-admission.test.ts	0644
 packages/contracts/src/analytics-projection.ts	packages/contracts/src/analytics-projection.ts	0644
 packages/contracts/src/bi-execution-spine.ts	packages/contracts/src/bi-execution-spine.ts	0644

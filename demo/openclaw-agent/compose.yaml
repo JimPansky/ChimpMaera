@@ -42,7 +42,6 @@ services:
       OPENCLAW_CONFIG_PATH: /opt/chimpmaera/openclaw.json
       OPENCLAW_STATE_DIR: /var/lib/openclaw
       HOME: /var/lib/openclaw/user
-      NO_PROXY: capability-gateway,127.0.0.1,localhost
     command: ["node", "openclaw.mjs", "gateway"]
     user: "1000:1000"
     read_only: true

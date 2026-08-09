@@ -79,7 +79,11 @@ jq -e '
 
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs filesystem > "$run_dir/filesystem.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs egress > "$run_dir/egress.json"
-for probe in wrong-identity unknown-action route-bypass cross-tenant oversize; do
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs gateway-v2 > "$run_dir/gateway-v2.json"
+for probe in identity-missing identity-expired identity-wrong-audience identity-wrong-tenant identity-replay; do
+  cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs "$probe" > "$run_dir/$probe.json"
+done
+for probe in wrong-identity unknown-action route-bypass legacy-capability-bypass cross-tenant oversize; do
   cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs "$probe" > "$run_dir/$probe.json"
 done
 

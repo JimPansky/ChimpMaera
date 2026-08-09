@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "chimpmaera.openclaw/gateway-workload-contract/v2",
+  "fixtureId": "aas035-openclaw-agent-v1",
+  "status": "SYNTHETIC_LOCAL_CONTRACT_ONLY",
+  "clock": {
+    "now": "2026-08-09T12:00:00.000Z",
+    "maxTtlSeconds": 60,
+    "allowedClockSkewSeconds": 0
+  },
+  "identity": {
+    "schemaVersion": "chimpmaera.openclaw/synthetic-workload-identity/v2",
+    "subject": "workload:aas035-openclaw-agent-v1",
+    "audience": "chimpmaera://capability-gateway/v2/broker/capabilities/execute",
+    "tenant": "tenant:synthetic-zoo",
+    "scope": ["capability:crm.contact.create"],
+    "route": "/v2/broker/capabilities/execute",
+    "replayCacheMaxEntries": 64,
+    "assurance": "PUBLIC_DETERMINISTIC_FIXTURE_BINDING_NOT_AUTHENTICATION"
+  },
+  "networkPolicy": {
+    "default": "DENY",
+    "dns": { "allow": ["capability-gateway"], "denyUnexpected": true },
+    "egress": {
+      "allow": [{
+        "protocol": "http:",
+        "host": "capability-gateway",
+        "port": 8080,
+        "method": "POST",
+        "path": "/v2/broker/capabilities/execute"
+      }],
+      "denyCategories": [
+        "DIRECT_INTERNET",
+        "DIRECT_PROVIDER",
+        "METADATA_SERVICE",
+        "CONTROL_PLANE",
+        "PEER_SERVICE",
+        "UNEXPECTED_DESTINATION",
+        "UNEXPECTED_PROTOCOL",
+        "UNEXPECTED_DNS_TARGET",
+        "UNEXPECTED_ROUTE"
+      ]
+    },
+    "composeNetwork": "aas035_gateway_only",
+    "composeInternal": true
+  },
+  "smokeProbes": [
+    {
+      "mode": "wrong-identity",
+      "route": "/v2/broker/capabilities/execute",
+      "expectedCode": "IDENTITY_SUBJECT_DENIED",
+      "identityOverrides": { "subject": "workload:foreign" },
+      "bodyOverrides": {}
+    },
+    {
+      "mode": "unknown-action",
+      "route": "/v2/broker/capabilities/execute",
+      "expectedCode": "TYPED_REQUEST_BINDING_DENIED",
+      "identityOverrides": {},
+      "bodyOverrides": { "actionId": "raw.shell.execute" }
+    }
+  ],
+  "credentialPolicy": {
+    "ambientProxyEnvironmentAllowed": false,
+    "ambientCredentialEnvironmentAllowed": false,
+    "applicationCredentialFilesAllowed": false,
+    "providerCredentialFilesAllowed": false,
+    "hostCredentialMountsAllowed": false,
+    "liveCredentials": false
+  }
+}

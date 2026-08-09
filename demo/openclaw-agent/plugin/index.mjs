@@ -1,4 +1,13 @@
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
+import { randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
+import {
+  createInvocationIdentity,
+  encodeSyntheticIdentity,
+  sanitizedGatewayDenialMessage,
+} from "./identity-v2.mjs";
+
+const workloadContract = JSON.parse(readFileSync("/opt/chimpmaera/gateway-workload-contract-v2.json", "utf8"));
 
 const expected = Object.freeze({
   schemaVersion: "chimpmaera.aas035/typed-capability-request/v1",
@@ -71,11 +80,16 @@ export default definePluginEntry({
       parameters,
       async execute(_id, params) {
         exactRequest(params);
-        const response = await fetch(`${config.baseUrl}/v1/capabilities/execute`, {
+        const { correlationId, identity } = createInvocationIdentity(workloadContract, {
+          requestId: params.requestId,
+          invocationId: randomUUID(),
+        });
+        const response = await fetch(`${config.baseUrl}/v2/broker/capabilities/execute`, {
           method: "POST",
           headers: {
+            authorization: `Synthetic ${encodeSyntheticIdentity(identity)}`,
             "content-type": "application/json",
-            "x-cm-workload-identity": config.workloadIdentity,
+            "x-cm-correlation-id": correlationId,
           },
           body: JSON.stringify(params),
           signal: AbortSignal.timeout(10_000),
@@ -84,11 +98,12 @@ export default definePluginEntry({
         if (
           !response.ok
           || body.status !== "PASS"
-          || body.receipt?.outcome !== "SYNTHETIC_EFFECT_READBACK_VERIFIED"
-          || !/^[a-f0-9]{64}$/.test(body.receipt?.receiptDigest ?? "")
-        ) throw new Error(`CM_GATEWAY_DENIED_${body.error ?? response.status}`);
+          || body.correlationId !== correlationId
+          || body.result?.receipt?.outcome !== "SYNTHETIC_EFFECT_READBACK_VERIFIED"
+          || !/^[a-f0-9]{64}$/.test(body.result?.receipt?.receiptDigest ?? "")
+        ) throw new Error(sanitizedGatewayDenialMessage(body, response.status));
         return {
-          content: [{ type: "text", text: JSON.stringify(body) }],
+          content: [{ type: "text", text: JSON.stringify(body.result) }],
           details: body,
         };
       },
