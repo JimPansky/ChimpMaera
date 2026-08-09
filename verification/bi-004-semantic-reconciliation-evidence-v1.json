@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "chimpmaera.verification/local-synthetic-report/v1",
+  "evidenceId": "evidence:bi-004-semantic-reconciliation-v1",
+  "issue": "#13",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "commitBinding": "CONTAINING_DCO_SIGNED_COMMIT",
+  "futureCommitClaimed": false,
+  "sanitization": { "rawSecrets": false, "personalData": false, "realFinancialRecords": false, "productionIdentifiers": false, "privateInfrastructure": false, "exploitDetails": false },
+  "claims": ["FROZEN_DETERMINISTIC_MODEL_V1", "EXPLICIT_FORMULAS", "CANONICAL_SOURCE_ID_PRESERVATION", "EXPLICIT_OUTCOME_MATRIX", "EXACT_SYNTHETIC_KPI_RECOMPUTATION", "FAIL_CLOSED_MODEL_GATE", "NO_SOURCE_WRITE_BACK"],
+  "nonClaims": ["PROBABILISTIC_AUTO_MERGE", "MASTER_DATA_WRITE_BACK", "DMS_DATA", "COMPLIANCE_ASSERTION", "ACCOUNTING_FINANCIAL_OR_AUDIT_OPINION", "PRODUCTION_CRM_OR_ERP_COMPATIBILITY", "LIVE_CREDENTIALS", "UNIVERSAL_SCHEMA_COMPATIBILITY", "PROVIDER_ONBOARDING", "DEPLOYMENT", "SERVICE_EXPOSURE", "INFRASTRUCTURE_MUTATION"],
+  "artifacts": {
+    "implementation": { "path": "packages/contracts/src/bi-semantic-reconciliation.ts", "sha256": "cc6810bef0968202d60bac1abf2be1eb5ba08e7462e776cac476d142bde6d98b" },
+    "schema": { "path": "schemas/contracts/bi-semantic-model-v1.schema.json", "sha256": "6c102d2abd547db5bdff0d34cb003d3dca4ffd78749887b78d6bb24a6f7ed4c7" },
+    "model": { "path": "tests/fixtures/bi-semantic/model-v1.json", "sha256": "98853c3f693ebc5d76f99f92483be431637f77483bc799a503268646d1dfe291" },
+    "source": { "path": "tests/fixtures/bi-semantic/positive-reconciliation-v1.json", "sha256": "ddfbd0883cdd97af948b7fc2151396f40771541059e48f9163d79aea821b211c" },
+    "test": { "path": "tests/bi-semantic-reconciliation.test.ts", "sha256": "f1e5765690aa45653a131d38032d6b8f558cda90dba4c54981112d4f935c1ad4" },
+    "guide": { "path": "docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md", "sha256": "bf62527c4f045530a17033c3d2104ff886ee653a59f29d11ac9eabd1438f5c47" }
+  },
+  "verification": { "command": "npm run bi-semantic:test", "expected": "8 tests pass" },
+  "kpiReadback": { "crmAmountMinor": 8750000, "erpOrderTotalMinor": 8750000, "reconciliationDeltaMinor": 0, "toleranceMinor": 0, "exact": true },
+  "sourceWriteBackProof": { "attemptedOperations": [], "writesAllowed": false, "sourceWriteBackAllowed": false, "inputDigestsEqual": true },
+  "rollback": "Disable semantic model 1.0.0, discard derived reports, and restore the last verified CRM/ERP V1 contracts; unresolved conflicts remain explicit."
+}

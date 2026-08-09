@@ -83,6 +83,13 @@ tests/fixtures/crm-read/contract-v1.json	tests/fixtures/crm-read/contract-v1.jso
 tests/fixtures/crm-read/supported-export-v1.json	tests/fixtures/crm-read/supported-export-v1.json	0644
 verification/bi-002-crm-read-connector-evidence-v1.json	verification/bi-002-crm-read-connector-evidence-v1.json	0644
 docs/ERP-READ-CONNECTOR-GUIDE.md	docs/ERP-READ-CONNECTOR-GUIDE.md	0644
+docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md	docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md	0644
+packages/contracts/src/bi-semantic-reconciliation.ts	packages/contracts/src/bi-semantic-reconciliation.ts	0644
+schemas/contracts/bi-semantic-model-v1.schema.json	schemas/contracts/bi-semantic-model-v1.schema.json	0644
+tests/bi-semantic-reconciliation.test.ts	tests/bi-semantic-reconciliation.test.ts	0644
+tests/fixtures/bi-semantic/model-v1.json	tests/fixtures/bi-semantic/model-v1.json	0644
+tests/fixtures/bi-semantic/positive-reconciliation-v1.json	tests/fixtures/bi-semantic/positive-reconciliation-v1.json	0644
+verification/bi-004-semantic-reconciliation-evidence-v1.json	verification/bi-004-semantic-reconciliation-evidence-v1.json	0644
 packages/contracts/src/erp-read-connector.ts	packages/contracts/src/erp-read-connector.ts	0644
 schemas/contracts/erp-read-connector-v1.schema.json	schemas/contracts/erp-read-connector-v1.schema.json	0644
 tests/erp-read-connector.test.ts	tests/erp-read-connector.test.ts	0644

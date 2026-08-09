@@ -66,6 +66,19 @@ writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEv
 
 const dagPath = "verification/verification-dag-v2.json";
 const dag = JSON.parse(readFileSync(path.join(root, dagPath), "utf8"));
+const bi004Node = dag.nodes.find(({ id }) => id === "bi-semantic-reconciliation-v1");
+if (bi004Node === undefined) throw new Error("BI_004_DAG_NODE_MISSING");
+const bi004Inputs = [
+  ["packages/contracts/src/bi-semantic-reconciliation.ts", "CONTRACT"],
+  ["schemas/contracts/bi-semantic-model-v1.schema.json", "SCHEMA"],
+  ["tests/fixtures/bi-semantic/model-v1.json", "FIXTURE"],
+  ["tests/fixtures/bi-semantic/positive-reconciliation-v1.json", "FIXTURE"],
+  ["tests/bi-semantic-reconciliation.test.ts", "VALIDATOR"],
+  ["docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md", "DERIVED_EVIDENCE"],
+  ["docs/development/bi-004-semantic-reconciliation-pdca.md", "DERIVED_EVIDENCE"],
+  ["verification/bi-004-semantic-reconciliation-evidence-v1.json", "DERIVED_EVIDENCE"],
+];
+bi004Node.inputs = bi004Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
 const m14Node = dag.nodes.find(({ id }) => id === "openclaw-m1-4");
 if (m14Node === undefined) throw new Error("OPENCLAW_M1_4_DAG_NODE_MISSING");
 const m14Inputs = [
