@@ -1,6 +1,6 @@
 # Finite inactive capability/action catalogue
 
-Status: **LOCALLY VALIDATED CANDIDATE, NOT MERGED OR RELEASED**
+Status: **INACTIVE-BY-DEFAULT CONTRACT; RELEASE STATUS IS GOVERNED BY GITHUB LATEST**
 Work item: AAS-012 / issue #3
 
 This contract defines a closed local-synthetic catalogue and exercises its

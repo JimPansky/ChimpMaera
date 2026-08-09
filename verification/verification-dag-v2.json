@@ -177,8 +177,8 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "086c26b8dc95f417a678b707c0ddab2bbf728d10b15b1c1a87911076f6887830" },
-        { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "7a4b3673b6f183f0eb82b9cd230b9d1ff06c932f61bdf24d221542d129486a14" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "1e24cf41505b388dd139fcdad1fccd3be666d9d6c2855ad4ca170775099f838f" },
+        { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "cc9d6a59d4109bc3b16857011d00f58bf14eb162b8c82758db26873fa40d17c7" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }
       ],
