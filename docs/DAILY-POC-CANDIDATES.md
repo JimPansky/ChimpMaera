@@ -4,6 +4,8 @@
 from one canonical manifest and a clean frozen Git source. It never publishes.
 The manifest is the only editorial source for release notes, demo instructions,
 claims, non-claims, the README pointer, evidence indexes and video inputs.
+Author reusable templates and release-specific segments through the
+[template and segment authoring guide](../tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md).
 
 ## Version and title policy
 
