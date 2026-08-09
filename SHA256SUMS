@@ -192,6 +192,7 @@ d5e8fa53a62092027cf92c428c62b677957db21287523debdc288cb6e9294998  ./docs/SYSTEM-
 ce49bd91c5e611db908f4d5d25f529c859a1d5712eb7a5e2bcd0e04e14024bef  ./docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md
 c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f  ./docs/VERIFICATION-FABRIC-SHADOW.md
 e7b64b1de504a574c8a2c53f848b169cb6c50966b4892705494f1130bd5cc41b  ./docs/VISIBILITY-CHANNEL-MATRIX.md
+0072a5eabcda9d7e8a9a2d6abea4baa2708b3a29864c09bd3a209e48f78edad2  ./docs/VOICE-LOCAL-PTT.md
 2a5ace7a916c37d1369abb3f244bb7a0688fbce2d4d5388a858677793925a663  ./docs/ZOO-FIELD-GUIDE.md
 dca1a885043f0cdda8e738db25dd4bba404dbb78e909f45340689a15f61c86dc  ./docs/alternatives.md
 20e3a8bd957716752add8a36ccd485594e600ffd7335f1d257eff8cfaa34c880  ./docs/capabilities.md
@@ -291,7 +292,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 f98132c11626053d1a6453b8fd9358d1d30b72460eaf3d8b0cb394f9f58e4541  ./package-lock.json
-dbf8546d6915d65a69ec482cfd5cab61629a82bb8532271b377304ecede80672  ./package.json
+b19cc7383cb12bc24f0546f4ccdaac2f7e356f5307668d50900e47816f86e8e0  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 d2310f860109f87b799ba4eb4b067255d4237c4bbb71c1780145d14908a608bd  ./packages/contracts/src/azure-identity-profile.ts
@@ -313,7 +314,7 @@ ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/con
 c5b7d230b24b548c7ed3bfbe51ada53ef1fbcbcf7018fae10e29177a9567b78f  ./packages/contracts/src/hmi-discover-payload.ts
 36c8b8c157ce5590b516f1680f8922eef9cf736c34a42649c0b0d4a764c1f1ff  ./packages/contracts/src/hmi-explain-payload.ts
 c837c4e01a67cee0a2d4dcca916c4d1f84f36f07ef62c81142c914fd7969723c  ./packages/contracts/src/hmi-harness-adapter.ts
-c2cfff276469fee456d89c69d10ac35814faef6275ffe6d561b190705f0fbca1  ./packages/contracts/src/index.ts
+8d3c683d14d4f1ec9a999396ff86463804ccf2a6ce6f102737a6a4d5c9c7cd40  ./packages/contracts/src/index.ts
 1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50  ./packages/contracts/src/injection-trust-boundary.ts
 eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10  ./packages/contracts/src/integration-profile.ts
 83e85b6a287efbd8aa10ca1cf222d8801f2d8f7acc2cacb301fbc14d362eb5bc  ./packages/contracts/src/learning-routing-baseline.ts
@@ -339,11 +340,12 @@ d2326a6b1af62ed4e8f3a65c30b1978bd285691bdc7f2e4b872b6091c68f8977  ./packages/con
 f548fbba7ce159f1d000818b4f9db043f2c422e7e587002f5da38a71d95ca992  ./packages/contracts/src/update-doctor.ts
 e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/contracts/src/verification-fabric-v2.ts
 2e4948641104cbbb496dc5974c33ce823571c12997649bbb1cf7d06e6b0349e1  ./packages/contracts/src/verification-fabric.ts
+15bc8aa2ebc2f28a4293e3e4428a44044fda5bdd5ad9cf76da7db6294536c9d2  ./packages/contracts/src/voice-local-ptt.ts
 1509f7722dcefb6fd75e27dfc3d9a50116a53b11f804d77458195174520cde2e  ./packages/dev-worker/src/cli.ts
 70ed27a5ae3663d92a2cc0bf9db1554293e1d969abbfaa2f21257b6769885865  ./packages/dev-worker/src/controller.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
-fd48a9efcfc13926c5573c4e7a6f3e3afa31f87dd8253e0c0354b01df7712965  ./release/governance.json
-008ff5537e24412b741c1e7ece1faa9df9bcf85b711ed61fe0149fafbe16085f  ./release/public-files.manifest
+6861b56208ebf07fef77f962050520a5f861e7ba2354b5a8e0470c262ce1b486  ./release/governance.json
+9f0a33d514bf920292bce382135e6b3cf18e368fe2d399ce5c759f361a1d491d  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 ff383ccc0829599d11542109ac3b4f1380719e8c85ce49eabd7938a98ad4e942  ./schemas/contracts/azure-identity-profile-v1.schema.json
@@ -382,6 +384,11 @@ fc3efb14bbe442cbaedfdb710780a28c0e7285dab6cb2c1712ae932669dcacfa  ./schemas/cont
 e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2  ./schemas/contracts/verification-attestation-v2.schema.json
 5286ece3ec3ef1b8619ffa4926a43ebd36b62b9f15169547d9c4a47e3c36f133  ./schemas/contracts/verification-evidence-dag-v2.schema.json
 c5e9e5ff60901523bc6e4014213a9e80728c364204b5a084cc9f5c323db5ab1e  ./schemas/contracts/verification-fabric-bundle-v1.schema.json
+43012befd22298653b1dc87aaa077f5eddb34a6818b184b006bf8ff0383a1adc  ./schemas/contracts/voice-config-v1.schema.json
+42f7420ed98a5b77092142b1c27a1149a3b462afbe7008df230da0dc35f2631d  ./schemas/contracts/voice-receipt-v1.schema.json
+1c8a92a40c04d933d422f19ea3c920af293dc17195813765996e4fddadef62c0  ./schemas/contracts/voice-stt-v1.schema.json
+ef814900ee1d2dd3802eace802cec68cfa92f221d0b4a15759e798cb3fb02043  ./schemas/contracts/voice-tts-v1.schema.json
+159cf70d07045946a757c131a67eff40bda078b11efe26865ae799dc735f8b1a  ./schemas/contracts/voice-turn-v1.schema.json
 96717353050a8284599db2842e1db52e0b2090be712a3876ee61ed53f24eaa11  ./schemas/daily-poc-manifest-v1.schema.json
 10243b4fa7d25dcde5464f0e0077d29632cef8c145f9a4925829126745f03166  ./schemas/development-worker-profile-v1.schema.json
 f84ab8f9434925d8464dc7f2da4d16693bf603f08907ff01cc1d2430d9af4522  ./schemas/runtime/openclaw-state-contract-v1.schema.json
@@ -395,7 +402,7 @@ f07d256cd4eea23181f79cd672eb031cf2727ce99cf036c7f2895c67d9f57687  ./scripts/refr
 0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218  ./scripts/verification-plan.mjs
 7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5  ./scripts/verification-shadow.mjs
 bb2c9bf47cea26568ef29f203943fc6940d8d30735d87e711982727b871673eb  ./scripts/verify-openclaw-agent-runtime-lock.mjs
-68abd8dbf2e6c3d506c86252813df686ad028d8ce1aec89e817d6c36f17625c6  ./scripts/verify-release-governance.mjs
+35fb4d206e0f6e014557c500933f92715d336ccfe16c99c850b0eb8dc1a82744  ./scripts/verify-release-governance.mjs
 4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1  ./scripts/verify-secure-default-proof.mjs
 031c8b699854b3c699fa754523df9a65cc57bc10fde7c73d6874a00fb83dd89b  ./scripts/verify-supply-chain.mjs
 0bec85125b688f735c6cc3572b58760c65084685a499d16978d341b24439c9c9  ./security/openclaw-m1.1-evidence-v1.json
@@ -517,6 +524,7 @@ df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update
 911255ea325e6dbc02bad39566be2714693d7f3a9a6d3d82b0ca1563491e009d  ./tests/update-doctor.test.ts
 c20e79aa5aeab2a8c657a24ab1aba14b53d36357c84ac293a46ee6cbdd208295  ./tests/verification-fabric-v2.test.ts
 a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verification-fabric.test.ts
+aa2e5a4808796fa516c89b198222236df26cb68d210ff2336101da1aa3e253f4  ./tests/voice-local-ptt.test.ts
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
 1b49391a2a113298baf13c5ec6a6f88d21bf4d54825ed4a9c172cb64aaa33c6a  ./tools/video-production-reference/Dockerfile
 7a173c3a11ebeae7d4d561cb5fc4afba1a9d25e585400e17c18304da459a77df  ./tools/video-production-reference/METHODOLOGY-CHANGELOG.md
@@ -580,4 +588,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-1e358a163b3f86b9dd1e1b9c22f061e5a439726d23a62bdc7c6cf439e59f2176  ./verification/verification-dag-v2.json
+91e09cab5dfbbba0f739ce6b8e8eb9e3a03b61739da9c909cf39c1a1818f74de  ./verification/verification-dag-v2.json

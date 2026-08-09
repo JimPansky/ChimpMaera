@@ -222,7 +222,7 @@ export function validateRepository(root = process.cwd()) {
   const publicManifest = read(root, "release/public-files.manifest");
   const publicPaths = new Set(publicManifest.trim().split("\n").map((line) => line.split("\t")[0]));
   issue(issues, Array.isArray(governance.claimEvidence) && governance.claimEvidence.length > 0, "CLAIM_EVIDENCE_MAPPING_MISSING");
-  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "VIDEO-M2 Template Authoring", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles"]);
+  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "VIDEO-M2 Template Authoring", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles", "VOICE-M0 Local PTT"]);
   const observedComponents = new Set();
   for (const mapping of governance.claimEvidence ?? []) {
     issue(issues, /^CM-REL-\d{3}$/.test(mapping.claimId ?? ""), `CLAIM_ID_INVALID:${mapping.claimId ?? "missing"}`);

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "chimpmaera.voice/stt-contract/v1",
+  "$defs": {
+    "ids": {"type":"object","properties":{"sessionId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"turnId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"correlationId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"}}},
+    "request": {"type":"object","additionalProperties":false,"required":["schemaVersion","sessionId","turnId","correlationId","language","codec","audioBytes","durationMs"],"properties":{"schemaVersion":{"const":"chimpmaera.voice/stt-request/v1"},"sessionId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"turnId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"correlationId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"language":{"enum":["de","en"]},"codec":{"enum":["wav","pcm_s16le"]},"audioBytes":{"type":"integer","minimum":1},"durationMs":{"type":"integer","minimum":1}}},
+    "result": {"type":"object","additionalProperties":false,"required":["schemaVersion","sessionId","turnId","correlationId","language","transcript","trust","retention"],"properties":{"schemaVersion":{"const":"chimpmaera.voice/stt-result/v1"},"sessionId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"turnId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"correlationId":{"type":"string","pattern":"^[A-Za-z0-9:_-]{1,128}$"},"language":{"enum":["de","en"]},"transcript":{"type":"string","minLength":1},"trust":{"const":"UNTRUSTED_VOICE_TRANSCRIPT"},"retention":{"enum":["EPHEMERAL","OPERATOR_POLICY"]}}}
+  },
+  "oneOf": [{"$ref":"#/$defs/request"},{"$ref":"#/$defs/result"}]
+}

@@ -401,11 +401,18 @@ tests/fixtures/analytics/positive-projection-v1.json	tests/fixtures/analytics/po
 tests/fixtures/bi-execution-spine/negative-matrix-v1.json	tests/fixtures/bi-execution-spine/negative-matrix-v1.json	0644
 tests/fixtures/bi-execution-spine/positive-bundle-v1.json	tests/fixtures/bi-execution-spine/positive-bundle-v1.json	0644
 packages/contracts/src/integration-profile.ts	packages/contracts/src/integration-profile.ts	0644
+packages/contracts/src/voice-local-ptt.ts	packages/contracts/src/voice-local-ptt.ts	0644
 schemas/contracts/integration-profile-v1.schema.json	schemas/contracts/integration-profile-v1.schema.json	0644
+schemas/contracts/voice-stt-v1.schema.json	schemas/contracts/voice-stt-v1.schema.json	0644
+schemas/contracts/voice-tts-v1.schema.json	schemas/contracts/voice-tts-v1.schema.json	0644
+schemas/contracts/voice-turn-v1.schema.json	schemas/contracts/voice-turn-v1.schema.json	0644
+schemas/contracts/voice-config-v1.schema.json	schemas/contracts/voice-config-v1.schema.json	0644
+schemas/contracts/voice-receipt-v1.schema.json	schemas/contracts/voice-receipt-v1.schema.json	0644
 tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
 tests/fixtures/integration-profile/negative-probes-v1.json	tests/fixtures/integration-profile/negative-probes-v1.json	0644
 tests/fixtures/integration-profile/positive-variants-v1.json	tests/fixtures/integration-profile/positive-variants-v1.json	0644
 docs/INTEGRATION-PROFILES.md	docs/INTEGRATION-PROFILES.md	0644
+docs/VOICE-LOCAL-PTT.md	docs/VOICE-LOCAL-PTT.md	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644
@@ -421,6 +428,7 @@ tests/poc-showcase.test.ts	tests/poc-showcase.test.ts	0644
 tests/supply-chain-verifier.test.mjs	tests/supply-chain-verifier.test.mjs	0644
 tests/release-governance.test.mjs	tests/release-governance.test.mjs	0644
 tests/verification-fabric-v2.test.ts	tests/verification-fabric-v2.test.ts	0644
+tests/voice-local-ptt.test.ts	tests/voice-local-ptt.test.ts	0644
 tests/verification-fabric.test.ts	tests/verification-fabric.test.ts	0644
 tests/update-doctor-compose-adapter.test.ts	tests/update-doctor-compose-adapter.test.ts	0644
 tests/update-doctor-core.test.ts	tests/update-doctor-core.test.ts	0644
