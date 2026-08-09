@@ -7,6 +7,18 @@ declarations:
 npm run supply-chain:verify
 ```
 
+The BI-001 foundation has a separate complete local-input lock and focused gate:
+
+```sh
+npm run bi-foundation:test
+```
+
+Its sole base is the same digest-pinned Node 24.14.1 declaration already used by
+the repository. The lock binds all Compose, lifecycle, configuration, service,
+Dockerfile and verifier bytes. This proves checked-in declaration consistency,
+not registry signatures, current vulnerability status, SBOM completeness or
+reproducible construction.
+
 It compares the versioned artifact lock with Dockerfile and Compose image
 references, requires npm lock integrity fields, requires full commit SHAs for
 CI actions, checks that every runtime module enters the runtime image, checks

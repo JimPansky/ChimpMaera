@@ -1,0 +1,55 @@
+name: ${CM_BI_PROJECT:-chimpmaera-bi001}
+services:
+  bi-dependency:
+    profiles: [bi001]
+    platform: linux/amd64
+    image: chimpmaera/bi001-foundation:local
+    build:
+      context: ../..
+      dockerfile: demo/bi-foundation/service.Dockerfile
+      provenance: false
+    labels: {io.chimpmaera.fixture: bi001-foundation-v1}
+    environment: {CM_BI_ROLE: dependency, CM_BI_PORT: "8090"}
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=4m,mode=1777"]
+    networks: [bi_internal]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:8090/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 1s
+      retries: 10
+  bi-service:
+    profiles: [bi001]
+    platform: linux/amd64
+    image: chimpmaera/bi001-foundation:local
+    depends_on: {bi-dependency: {condition: service_healthy}}
+    labels: {io.chimpmaera.fixture: bi001-foundation-v1}
+    environment:
+      CM_BI_ROLE: service
+      CM_BI_PORT: "8080"
+      CM_BI_DEPENDENCY_URL: http://bi-dependency:8090/healthz
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=4m,mode=1777"]
+    ports: ["127.0.0.1:${CM_BI_PORT:-12780}:8080"]
+    networks: [bi_internal]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 1s
+      retries: 10
+networks:
+  bi_internal:
+    internal: true
+    labels: {io.chimpmaera.fixture: bi001-foundation-v1}

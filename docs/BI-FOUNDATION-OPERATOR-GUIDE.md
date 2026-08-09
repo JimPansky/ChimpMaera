@@ -1,0 +1,46 @@
+# BI-001 default-off Docker foundation
+
+This is a local synthetic foundation, not a dashboard or hosted BI service. A
+fresh checkout defines no active service unless the `bi001` profile is selected.
+
+## Reproduce
+
+Use Linux/x86_64, Node.js 24, Docker Engine and Compose v2. Check out the exact
+candidate commit reported with the delivery, then run:
+
+```sh
+cp demo/bi-foundation/config.example.json demo/bi-foundation/config.local.json
+npm ci --ignore-scripts --no-audit --no-fund
+npm run bi-foundation:test
+./demo/bi-foundation/setup.sh
+./demo/bi-foundation/start.sh
+curl --fail http://127.0.0.1:12780/healthz
+curl --fail http://127.0.0.1:12780/readyz
+./demo/bi-foundation/stop.sh
+./demo/bi-foundation/reset.sh
+```
+
+`setup.sh` verifies only and leaves the service off. `start.sh` is the sole
+activation entry point. Health means the process responds; readiness additionally
+requires its internal dependency. Stop retains no persistent service data; reset
+also removes only the labelled local image after an ownership check. Repeating
+reset after interruption is supported.
+
+The single network is Docker-internal. Only the service health surface is bound,
+and only to `127.0.0.1`. Both containers are non-root with read-only roots,
+dropped capabilities, no-new-privileges, 32 PIDs, 64 MiB memory, 0.25 CPU and a
+4 MiB temporary filesystem. No host path, socket, credential or persistent volume
+is present. Missing/unsupported config, host/platform drift, mutable image input,
+or changed locked bytes deny before lifecycle effects.
+
+The lock records a digest-bound base and local byte closure. It does not establish
+registry signatures, current registry/CVE completeness, SBOM or reproducible-build
+provenance. Roll back by running `reset.sh`, then reverting the issue commit. If
+Docker is unavailable, the deterministic offline verifier and behavioral tests
+remain valid, while Compose-render and live-runtime evidence must be reported as
+unavailable.
+
+Non-claims: no CRM/ERP connector, dashboard, production deployment, hosted
+service, image publication, live credential, public exposure, availability,
+production security, certification, current registry/CVE completeness, or
+universal sandbox claim.
