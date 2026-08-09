@@ -406,7 +406,7 @@ f84ab8f9434925d8464dc7f2da4d16693bf603f08907ff01cc1d2430d9af4522  ./schemas/runt
 e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8  ./schemas/security/secure-default-proof-v1.schema.json
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
-fac6083c8041cdfd0b78c58f88791bab7e16a26178e377f8fa84edea34f4b20a  ./scripts/build-public-release.sh
+0c8b65daa9538bf6fe1255a84c9773e7c636e969666a927d6f5dc7bb48d67ff4  ./scripts/build-public-release.sh
 da2109476338820e2ae5b2b42f720cf2d7c3b359122ee28bcea6fea65e1b1818  ./scripts/daily-poc.mjs
 abab50a97cf7113e2cad4125992fb3178a67877f573e974b128f2494ef1883b8  ./scripts/learning-routing-baseline.mjs
 fa5d4f06a66ee308696643d48271b12fb234e492318a6869fcad2bc9c854d030  ./scripts/refresh-integrity-data.mjs
@@ -609,4 +609,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-d0e4ddeb8f9d3fffb33df30c18d9beafe2335554a83d51e621642cce65d0da87  ./verification/verification-dag-v2.json
+4b506c2a14e63ff6cc1c91fa057ae6c44e072ed4f071af7e9346fc9947a2c726  ./verification/verification-dag-v2.json
