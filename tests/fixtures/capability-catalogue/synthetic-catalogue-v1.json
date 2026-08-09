@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "chimpmaera.security/capability-catalogue/v1",
+  "catalogueId": "chimpmaera.local/synthetic-actions",
+  "version": "1.0.0",
+  "activationDefault": "INACTIVE",
+  "actions": [
+    {
+      "schemaVersion": "chimpmaera.security/capability-action/v1",
+      "actionId": "crm.contact.create",
+      "version": "1.0.0",
+      "resource": "synthetic.crm.contact",
+      "requestSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["email", "name"],
+        "properties": {
+          "email": { "type": "string", "minLength": 3, "maxLength": 120, "pattern": "^[^@\\s]+@example\\.test$" },
+          "name": { "type": "string", "minLength": 1, "maxLength": 80 }
+        }
+      },
+      "responseSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["contactId"],
+        "properties": { "contactId": { "type": "string", "pattern": "^synthetic-contact-[0-9]{3}$" } }
+      },
+      "resourceBounds": { "maxRequestBytes": 512, "maxResponseBytes": 512, "maxExecutionMs": 1000, "maxInvocations": 1 },
+      "evidenceContract": {
+        "required": true,
+        "allowedSinkTypes": ["SYNTHETIC_MEMORY"],
+        "receiptSchemaVersion": "chimpmaera.security/capability-broker-receipt/v1",
+        "correlationMode": "SHA256_SANITIZED"
+      },
+      "limitations": [
+        "LOCAL_SYNTHETIC_VALIDATION_ONLY",
+        "NO_LIVE_PROVIDER_OR_CREDENTIAL_USE",
+        "CATALOGUE_ADMISSION_DOES_NOT_ESTABLISH_SAFETY",
+        "SYNCHRONOUS_PREPARE_BOUND_ONLY_NO_CANCELLATION",
+        "IN_MEMORY_REPLAY_RESERVATION_ONLY"
+      ],
+      "activationState": "INACTIVE",
+      "digest": "8a032b1057fcd5c10497877cbb53ceadbd9f76fba899c630855ed5019045c24a"
+    },
+    {
+      "schemaVersion": "chimpmaera.security/capability-action/v1",
+      "actionId": "erp.order.create",
+      "version": "1.0.0",
+      "resource": "synthetic.erp.order",
+      "requestSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["quantity", "sku"],
+        "properties": {
+          "quantity": { "type": "integer", "minimum": 1, "maximum": 100 },
+          "sku": { "type": "string", "minLength": 3, "maxLength": 32, "pattern": "^SYN-[A-Z0-9-]+$" }
+        }
+      },
+      "responseSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["orderId"],
+        "properties": { "orderId": { "type": "string", "pattern": "^synthetic-order-[0-9]{3}$" } }
+      },
+      "resourceBounds": { "maxRequestBytes": 512, "maxResponseBytes": 512, "maxExecutionMs": 1000, "maxInvocations": 1 },
+      "evidenceContract": {
+        "required": true,
+        "allowedSinkTypes": ["SYNTHETIC_MEMORY"],
+        "receiptSchemaVersion": "chimpmaera.security/capability-broker-receipt/v1",
+        "correlationMode": "SHA256_SANITIZED"
+      },
+      "limitations": [
+        "LOCAL_SYNTHETIC_VALIDATION_ONLY",
+        "NO_LIVE_PROVIDER_OR_CREDENTIAL_USE",
+        "CATALOGUE_ADMISSION_DOES_NOT_ESTABLISH_SAFETY",
+        "SYNCHRONOUS_PREPARE_BOUND_ONLY_NO_CANCELLATION",
+        "IN_MEMORY_REPLAY_RESERVATION_ONLY"
+      ],
+      "activationState": "INACTIVE",
+      "digest": "a20f5c9b60cbb9af1d098ae31c5f3e46e37722c6a9548b9f25b331c0287b98ab"
+    }
+  ],
+  "digest": "bb0060a254f450684bd17f6559d267d6f02d225c4c4d37479c3010c60d1b8427"
+}
