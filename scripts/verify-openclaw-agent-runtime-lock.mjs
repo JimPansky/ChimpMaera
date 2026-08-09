@@ -261,6 +261,18 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
         identityOverrides: {},
         bodyOverrides: { actionId: "raw.shell.execute" },
       },
+      {
+        mode: "replay-conflict",
+        route: workloadContract.identity.route,
+        expectedCode: "TYPED_REQUEST_PAYLOAD_DENIED",
+        identityOverrides: {},
+        bodyOverrides: {
+          payload: {
+            email: "agent.fixture@synthetic.invalid",
+            name: "Changed",
+          },
+        },
+      },
     ]),
     "OPENCLAW_SMOKE_PROBE_CONTRACT_DENIED",
   );

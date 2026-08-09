@@ -171,7 +171,7 @@ test("OPENCLAW-M1.2 exact smoke probe definitions reach their V2 denial boundari
   const statePath = path.join(temporary, "state.json");
   process.env.CM_AAS035_STATE_PATH = statePath;
   try {
-    assert.deepEqual(contract.smokeProbes.map((probe) => probe.mode), ["wrong-identity", "unknown-action"]);
+    assert.deepEqual(contract.smokeProbes.map((probe) => probe.mode), ["wrong-identity", "unknown-action", "replay-conflict"]);
     const gatewayUrl = `${pathToFileURL(path.join(fixture, "gateway.mjs")).href}?integration=m12-smoke-contract`;
     const { gatewayHandler } = await import(gatewayUrl);
     for (const probe of contract.smokeProbes) {
@@ -203,10 +203,10 @@ test("OPENCLAW-M1.2 exact smoke probe definitions reach their V2 denial boundari
       });
     }
     const state = JSON.parse(await readFile(statePath, "utf8"));
-    assert.equal(state.counters.effectAttempts, 1);
+    assert.equal(state.counters.effectAttempts, 2);
     assert.equal(state.counters.effects, 0);
     assert.deepEqual(state.effects, {});
-    assert.equal(state.identityReplay.length, 1);
+    assert.equal(state.identityReplay.length, 2);
   } finally {
     delete process.env.CM_AAS035_STATE_PATH;
     await rm(temporary, { recursive: true, force: true });

@@ -116,7 +116,7 @@ test("AAS-035 smoke records the complete denial and lifecycle matrix", () => {
   const smoke = readFileSync(path.join(fixture, "smoke.sh"), "utf8");
   const probe = readFileSync(path.join(fixture, "fixture-probe.mjs"), "utf8");
   for (const marker of [
-    "wrong-identity", "unknown-action", "route-bypass", "cross-tenant",
+    "wrong-identity", "unknown-action", "replay-conflict", "route-bypass", "cross-tenant",
     "oversize", "filesystem", "egress", "replay", "mind-write", "mind-read",
     "gateway-v2", "identity-missing", "identity-expired", "identity-wrong-audience",
     "identity-wrong-tenant", "identity-replay", "semantic-reset-idempotent",
