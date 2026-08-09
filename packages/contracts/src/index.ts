@@ -42,3 +42,4 @@ export * from "./learning-routing-baseline.js";
 export * from "./learning-routing-recommender.js";
 export * from "./signal-release-intake.js";
 export * from "./operation-event-quality.js";
+export * from "./integration-profile.js";

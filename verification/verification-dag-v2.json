@@ -35,6 +35,26 @@
       "globalInvalidation": false
     },
     {
+      "id": "integration-profile-v1",
+      "dependsOn": ["vf-contract-v1"],
+      "inputs": [
+        { "path": "packages/contracts/src/integration-profile.ts", "role": "CONTRACT", "sha256": "eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10" },
+        { "path": "schemas/contracts/integration-profile-v1.schema.json", "role": "SCHEMA", "sha256": "66495d4d334d26afaaaf5137147fb7803061c4338ed3de3475770ed4f12a7d68" },
+        { "path": "tests/fixtures/integration-profile/positive-variants-v1.json", "role": "FIXTURE", "sha256": "9587b83e99ddb076334fbff99b00c851690f0b251ff86f7549c05408d13d021f" },
+        { "path": "tests/fixtures/integration-profile/negative-probes-v1.json", "role": "FIXTURE", "sha256": "371624fea662e1dc02bfd217aaa57564cc8b47c2a0d4d8ba889751ce85de251e" },
+        { "path": "tests/integration-profile.test.ts", "role": "VALIDATOR", "sha256": "957f638c0dcf241dcbcc18f7e419d0ee401c50fdb08cb40b8e941ff08b069050" },
+        { "path": "docs/INTEGRATION-PROFILES.md", "role": "DERIVED_EVIDENCE", "sha256": "da49594a312bf47f605acd4afd9f94d9bd9f83c1e30ce31c1c35a45336390133" }
+      ],
+      "ownedTests": ["npm run integration-profile:test"],
+      "invariants": [
+        "Integration profiles remain local-synthetic references and never grant authority or activate a route.",
+        "Unknown actions, writes, private paths, unpinned inputs, cross-tenant references, stale evidence, incompatible versions, missing rollback and generic proxies fail closed.",
+        "Verification, extension assurance and update behavior remain owned by their existing CM contracts."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "vf-shadow-v2",
       "dependsOn": ["vf-contract-v1"],
       "inputs": [
@@ -43,7 +63,7 @@
         { "path": "schemas/contracts/verification-attestation-v2.schema.json", "role": "SCHEMA", "sha256": "e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2" },
         { "path": "scripts/verification-plan.mjs", "role": "VALIDATOR", "sha256": "0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218" },
         { "path": "scripts/verification-shadow.mjs", "role": "VALIDATOR", "sha256": "7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5" },
-        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "84993a7c2f063adb66a2b5732ece3d5feb22a5efb12297339550dea25b3b2eff" },
+        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "8ae6f5afbfb6d8d8328632093ceb34a6a7b4a8083f11f531f87a19d00c059d21" },
         { "path": "docs/VERIFICATION-FABRIC-SHADOW.md", "role": "DERIVED_EVIDENCE", "sha256": "c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f" }
       ],
       "ownedTests": ["node --test dist/tests/verification-fabric-v2.test.js"],
@@ -59,7 +79,7 @@
       "id": "learning-routing-foundation",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "0ba2455d812a6467534df0b70e3e67f1d61553875963c8c45f3ba3512ac971f7" },
+        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "6114ccec93a661fc3e1018500898353d3782f767d0fdf3aadedade2362a01418" },
         { "path": "packages/contracts/src/signal-release-intake.ts", "role": "CONTRACT", "sha256": "d2326a6b1af62ed4e8f3a65c30b1978bd285691bdc7f2e4b872b6091c68f8977" },
         { "path": "packages/contracts/src/learning-routing.ts", "role": "CONTRACT", "sha256": "7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b" },
         { "path": "packages/contracts/src/learning-routing-outcome.ts", "role": "CONTRACT", "sha256": "06716b26f31318ac2055de1646ac163944e869c79494d127139228633eea83da" },
@@ -95,7 +115,7 @@
     },
     {
       "id": "repository-integrity",
-      "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "learning-routing-foundation"],
+      "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "integration-profile-v1", "learning-routing-foundation"],
       "inputs": [
         { "path": "release/governance.json", "role": "CONTRACT", "sha256": "9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
@@ -137,7 +157,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "2e15c480dae93b37a6f299b9dd9eeac57bbf6ff37251e969f8aad0980dcacb51" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "39a774f297ef52dae5da03e621c118e02d98a91c6e6d42e53ffd63401655ea24" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }

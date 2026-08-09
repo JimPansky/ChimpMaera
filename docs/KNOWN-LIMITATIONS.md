@@ -85,6 +85,11 @@ change does not broaden the released asset claims.
   They do not run third-party scans, establish that code is safe, accept or
   install an extension, issue a trust badge, disclose vulnerabilities, activate
   a binding, grant authority, certify security, or prove production fitness.
+- Integration profiles validate five closed synthetic manifest variants only.
+  They do not contact or import a connector, prove Power Platform or mailbox
+  compatibility, handle a real tenant or credential, create an issue, grant
+  authority, activate a route, permit generic proxying or prove production
+  readiness.
 - The minimized agent-work event contract validates synthetic pseudonymous
   records and deletion/readback decisions only. It does not collect events,
   establish a legal basis, operate telemetry, monitor workers, train a model,
