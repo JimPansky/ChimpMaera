@@ -24,8 +24,8 @@ evidence.
 ## OPENCLAW-M1.1 reference-adapter verification
 
 GitHub issue #4 completes the public traceability pass over the existing
-AAS-035 OpenClaw Docker Reference Adapter. The exact offline identity and its
-18 local build/runtime and executable-helper inputs are verified with:
+AAS-035 OpenClaw Docker Reference Adapter. The exact offline identity and all
+currently selected local build/runtime and executable-helper inputs are verified with:
 
 ```sh
 npm run openclaw-runtime-lock:verify
@@ -42,11 +42,48 @@ positive/negative/lifecycle map is:
 
 | OPENCLAW-M1.1 acceptance | Command | Exact primary artifacts |
 | --- | --- | --- |
-| Every runtime/build/lifecycle input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; verifier; setup/reset/smoke/helper; both Dockerfiles; Compose; plugin package; 22 locked local inputs |
+| Every runtime/build/lifecycle input is immutable | `npm run openclaw-runtime-lock:verify` | runtime lock; verifier; setup/reset/smoke/helper; both Dockerfiles; Compose; plugin package; V2 workload/network contract; 24 locked local inputs |
 | Provenance result records exact tested identity | `npm run openclaw-runtime-lock:verify` | verifier JSON report and `security/openclaw-m1.1-evidence-v1.json` |
 | Fresh checkout is off; explicit lifecycle is deterministic | `npm run openclaw-m1.1:test` | profiled Compose, `setup.sh`, `reset.sh`, focused tests |
 | Unsupported or mismatched inputs deny before runtime | `npm run openclaw-m1.1:test` | offline verifier, setup preflight, Docker command spies |
 | Platform, limits and rollback are explicit | this section | runtime lock, this declaration, issue PDCA/evidence bindings |
+
+## OPENCLAW-M1.2 gateway workload boundary
+
+GitHub issue #5 adds `chimpmaera.openclaw/gateway-workload-contract/v2`
+without changing the existing V1 request or receipt formats. The local
+synthetic identity is workload-, audience-, tenant-, scope-, route-,
+correlation-, and time-bound for at most 60 seconds on the deterministic
+fixture clock. Each identity identifier is accepted once. Its public
+deterministic proof is intentionally not a secret or production authentication
+mechanism.
+
+The network contract has one allow entry: HTTP POST to
+`capability-gateway:8080/v2/broker/capabilities/execute` on the internal
+`aas035_gateway_only` Compose network. Everything else is default-denied. The
+focused behavioral gate is:
+
+```sh
+npm run openclaw-m1.2:test
+```
+
+It executes the positive correlation-bound request and negative destination,
+protocol, DNS, route, missing/expired/audience/tenant/scope/correlation/proof,
+and replay matrix. It also reads back the finite policy and proves the fixture
+has no ambient proxy or credential environment, host credential mount, live
+credential-shaped fixture bytes, or production credential claim. Denial
+results contain only a version, status, optional validated correlation ID, and
+stable code.
+
+Evidence is bound by the containing Git commit in
+`security/openclaw-m1.2-evidence-v2.json` and mapped criterion-by-criterion in
+`docs/development/openclaw-m1.2-issue-5-pdca.md`. Rollback first runs the
+ownership-scoped `reset.sh --purge`, then reverts the containing commit through
+normal review. This local contract is not hostile-network certification,
+production identity assurance, production IdP/tenant/credential distribution,
+service-mesh rollout, live provider or application-database access,
+infrastructure activation, or evidence about untested container/runtime
+escapes.
 
 ### Default-off local lifecycle
 

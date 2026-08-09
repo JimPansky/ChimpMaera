@@ -18,11 +18,13 @@ const EXPECTED = Object.freeze({
 const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/compose.yaml",
   "demo/openclaw-agent/fixture-probe.mjs",
+  "demo/openclaw-agent/gateway-workload-contract-v2.json",
   "demo/openclaw-agent/gateway.Dockerfile",
   "demo/openclaw-agent/gateway.mjs",
   "demo/openclaw-agent/lib.sh",
   "demo/openclaw-agent/openclaw.Dockerfile",
   "demo/openclaw-agent/openclaw.json",
+  "demo/openclaw-agent/plugin/identity-v2.mjs",
   "demo/openclaw-agent/plugin/index.mjs",
   "demo/openclaw-agent/plugin/openclaw.plugin.json",
   "demo/openclaw-agent/plugin/package.json",
@@ -205,6 +207,44 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
     const actualDigest = createHash("sha256").update(bytes).digest("hex");
     assert(actualDigest === expectedDigest, "OPENCLAW_RUNTIME_ARTIFACT_MISMATCH_DENIED");
   }
+  let workloadContract;
+  try {
+    workloadContract = JSON.parse((await read(
+      repositoryRoot,
+      "demo/openclaw-agent/gateway-workload-contract-v2.json",
+      "OPENCLAW_GATEWAY_WORKLOAD_CONTRACT_MISSING_DENIED",
+    )).toString("utf8"));
+  } catch (error) {
+    if (error.message?.endsWith("_DENIED")) throw error;
+    deny("OPENCLAW_GATEWAY_WORKLOAD_CONTRACT_PARSE_DENIED");
+  }
+  const gatewayAllow = workloadContract?.networkPolicy?.egress?.allow;
+  assert(
+    workloadContract.schemaVersion === "chimpmaera.openclaw/gateway-workload-contract/v2"
+    && workloadContract.status === "SYNTHETIC_LOCAL_CONTRACT_ONLY"
+    && workloadContract.clock.maxTtlSeconds === 60
+    && workloadContract.clock.allowedClockSkewSeconds === 0
+    && workloadContract.identity.subject === "workload:aas035-openclaw-agent-v1"
+    && workloadContract.identity.audience === "chimpmaera://capability-gateway/v2/broker/capabilities/execute"
+    && workloadContract.identity.tenant === "tenant:synthetic-zoo"
+    && workloadContract.identity.scope.join("\n") === "capability:crm.contact.create"
+    && workloadContract.identity.route === "/v2/broker/capabilities/execute"
+    && workloadContract.identity.replayCacheMaxEntries === 64
+    && workloadContract.identity.assurance === "PUBLIC_DETERMINISTIC_FIXTURE_BINDING_NOT_AUTHENTICATION"
+    && workloadContract.networkPolicy.default === "DENY"
+    && workloadContract.networkPolicy.dns.allow.join("\n") === "capability-gateway"
+    && Array.isArray(gatewayAllow)
+    && gatewayAllow.length === 1
+    && gatewayAllow[0].protocol === "http:"
+    && gatewayAllow[0].host === "capability-gateway"
+    && gatewayAllow[0].port === 8080
+    && gatewayAllow[0].method === "POST"
+    && gatewayAllow[0].path === workloadContract.identity.route
+    && workloadContract.networkPolicy.composeNetwork === "aas035_gateway_only"
+    && workloadContract.networkPolicy.composeInternal === true
+    && Object.values(workloadContract.credentialPolicy).every((value) => value === false),
+    "OPENCLAW_GATEWAY_WORKLOAD_CONTRACT_DENIED",
+  );
   assert(
     JSON.stringify(lock).includes(":latest") === false
     && JSON.stringify(lock).includes(":main") === false
@@ -244,6 +284,7 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
       "DEFAULT_OFF_ZERO_AMBIENT_AUTHORITY_SELECTION_POLICY_BOUND",
       "SUPPORTED_HOST_AND_LOCAL_BUILD_INPUTS_BOUND",
       "LIFECYCLE_AND_VERIFIER_BYTES_BOUND",
+      "SHORT_LIVED_IDENTITY_AND_SINGLE_GATEWAY_PATH_BOUND",
     ],
   };
 }

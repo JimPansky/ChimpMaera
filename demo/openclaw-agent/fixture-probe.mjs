@@ -1,9 +1,11 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { createSyntheticIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
 
 const mode = process.argv[2] ?? "";
 const base = "http://capability-gateway:8080";
 const identity = "workload:aas035-openclaw-agent-v1";
 const headers = { "content-type": "application/json", "x-cm-workload-identity": identity };
+const workloadContract = JSON.parse(await readFile("/opt/chimpmaera/gateway-workload-contract-v2.json", "utf8"));
 const mind = {
   tenant: "tenant:synthetic-zoo",
   purpose: "purpose:synthetic-contact-fixture",
@@ -49,8 +51,76 @@ async function expectDeny(path, options, code) {
   return value;
 }
 
+function v2Options(label, overrides = {}, correlationId = `corr-aas035-${label}-0001`) {
+  const assertion = createSyntheticIdentity(workloadContract, {
+    correlationId,
+    jti: `jti-aas035-${label}-0001`,
+    overrides,
+  });
+  return {
+    method: "POST",
+    headers: {
+      authorization: `Synthetic ${encodeSyntheticIdentity(assertion)}`,
+      "content-type": "application/json",
+      "x-cm-correlation-id": correlationId,
+    },
+    body: JSON.stringify(typed),
+  };
+}
+
+async function expectV2Deny(options, code) {
+  const { response, value } = await parsed(await request(workloadContract.identity.route, options));
+  if (response.status !== 403 || value.status !== "DENY" || value.code !== code) {
+    throw new Error(`EXPECTED_V2_DENY_${code}_${response.status}_${JSON.stringify(value)}`);
+  }
+  if (JSON.stringify(value).includes("proof") || JSON.stringify(value).includes("authorization")) {
+    throw new Error("UNSANITIZED_V2_DENIAL");
+  }
+  return value;
+}
+
 let result;
 switch (mode) {
+  case "gateway-v2": {
+    const correlationId = "corr-aas035-gateway-v2-0001";
+    const { response, value } = await parsed(await request(
+      workloadContract.identity.route,
+      v2Options("gateway-v2", {}, correlationId),
+    ));
+    if (!response.ok || value.status !== "PASS" || value.correlationId !== correlationId
+      || value.authorization?.correlationId !== correlationId
+      || value.result?.receipt?.outcome !== "SYNTHETIC_EFFECT_READBACK_VERIFIED") {
+      throw new Error("GATEWAY_V2_EXPECTED_ALLOW_FAILED");
+    }
+    result = {
+      schemaVersion: value.schemaVersion,
+      status: value.status,
+      correlationId: value.correlationId,
+      identity: value.authorization.identity,
+      network: value.authorization.network,
+      receiptDigest: value.result.receipt.receiptDigest,
+    };
+    break;
+  }
+  case "identity-missing":
+    result = await expectV2Deny({ method: "POST", headers: { "content-type": "application/json", "x-cm-correlation-id": "corr-aas035-missing-0001" }, body: JSON.stringify(typed) }, "IDENTITY_MISSING_DENIED");
+    break;
+  case "identity-expired":
+    result = await expectV2Deny(v2Options("expired", { expiresAt: workloadContract.clock.now }), "IDENTITY_EXPIRED_DENIED");
+    break;
+  case "identity-wrong-audience":
+    result = await expectV2Deny(v2Options("audience", { audience: "chimpmaera://unexpected.invalid/denied" }), "IDENTITY_AUDIENCE_DENIED");
+    break;
+  case "identity-wrong-tenant":
+    result = await expectV2Deny(v2Options("tenant", { tenant: "tenant:foreign" }), "IDENTITY_TENANT_DENIED");
+    break;
+  case "identity-replay": {
+    const options = v2Options("replay");
+    const first = await parsed(await request(workloadContract.identity.route, options));
+    if (!first.response.ok || first.value.status !== "PASS") throw new Error("IDENTITY_REPLAY_FIRST_USE_FAILED");
+    result = await expectV2Deny(options, "IDENTITY_REPLAY_DENIED");
+    break;
+  }
   case "mind-write":
     result = await expectPass("/v1/mind/entries", { method: "POST", headers, body: JSON.stringify(mind) });
     break;

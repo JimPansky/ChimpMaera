@@ -62,6 +62,13 @@ test("AAS-035 identity, managed mind and typed tool surfaces are finite", () => 
   assert.equal(contract.mindStore.maxValueBytes, 2048);
   assert.equal(contract.mindStore.maxTotalBytes, 16384);
   assert.equal(contract.nonClaims.length, 4);
+  const workloadContract = JSON.parse(readFileSync(path.join(fixture, "gateway-workload-contract-v2.json"), "utf8"));
+  assert.equal(workloadContract.schemaVersion, "chimpmaera.openclaw/gateway-workload-contract/v2");
+  assert.equal(workloadContract.clock.maxTtlSeconds, 60);
+  assert.equal(workloadContract.networkPolicy.default, "DENY");
+  assert.equal(workloadContract.networkPolicy.egress.allow.length, 1);
+  assert.deepEqual(workloadContract.identity.scope, ["capability:crm.contact.create"]);
+  assert.equal(workloadContract.credentialPolicy.liveCredentials, false);
   const manifest = JSON.parse(readFileSync(path.join(fixture, "plugin/openclaw.plugin.json"), "utf8"));
   assert.deepEqual(manifest.contracts.tools, ["chimpmaera_capability_request"]);
   const config = JSON.parse(readFileSync(path.join(fixture, "openclaw.json"), "utf8"));
@@ -107,7 +114,9 @@ test("AAS-035 smoke records the complete denial and lifecycle matrix", () => {
   for (const marker of [
     "wrong-identity", "unknown-action", "route-bypass", "cross-tenant",
     "oversize", "filesystem", "egress", "replay", "mind-write", "mind-read",
-    "semantic-reset-idempotent", "owner_fingerprint", "ownedRuntimeResidue",
+    "gateway-v2", "identity-missing", "identity-expired", "identity-wrong-audience",
+    "identity-wrong-tenant", "identity-replay", "semantic-reset-idempotent",
+    "owner_fingerprint", "ownedRuntimeResidue",
   ]) assert.match(`${smoke}\n${probe}`, new RegExp(marker));
   assert.match(smoke, /for index in 1 2 3 4/);
   assert.match(smoke, /fixture-probe\.mjs replay/);

@@ -8,6 +8,8 @@ LABEL io.chimpmaera.fixture="aas035-openclaw-agent-v1" \
 USER root
 COPY --chown=node:node demo/openclaw-agent/openclaw.json /opt/chimpmaera/openclaw.json
 COPY --chown=node:node demo/openclaw-agent/fixture-probe.mjs /opt/chimpmaera/fixture-probe.mjs
+COPY --chown=node:node demo/openclaw-agent/gateway-workload-contract-v2.json /opt/chimpmaera/gateway-workload-contract-v2.json
+COPY --chown=node:node demo/openclaw-agent/plugin/identity-v2.mjs /opt/chimpmaera/identity-v2.mjs
 COPY --chown=node:node demo/openclaw-agent/workspace /opt/chimpmaera/workspace
 COPY --chown=node:node demo/openclaw-agent/plugin /opt/chimpmaera/plugins/chimpmaera-capability
 RUN mkdir -p /var/lib/openclaw && chown node:node /var/lib/openclaw
