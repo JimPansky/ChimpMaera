@@ -59,7 +59,7 @@
       "id": "learning-routing-foundation",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "37c3dcb517c78304990255bbd41dfbaf0bd081949c76e8c923b4a63b390f5e02" },
+        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "0ba2455d812a6467534df0b70e3e67f1d61553875963c8c45f3ba3512ac971f7" },
         { "path": "packages/contracts/src/signal-release-intake.ts", "role": "CONTRACT", "sha256": "d2326a6b1af62ed4e8f3a65c30b1978bd285691bdc7f2e4b872b6091c68f8977" },
         { "path": "packages/contracts/src/learning-routing.ts", "role": "CONTRACT", "sha256": "7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b" },
         { "path": "packages/contracts/src/learning-routing-outcome.ts", "role": "CONTRACT", "sha256": "06716b26f31318ac2055de1646ac163944e869c79494d127139228633eea83da" },
@@ -137,7 +137,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "dbd6b7f74c8a31c7a89e60fd07621a3d71763096415508521e26de63209019cc" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "2e15c480dae93b37a6f299b9dd9eeac57bbf6ff37251e969f8aad0980dcacb51" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }

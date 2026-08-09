@@ -5,6 +5,8 @@
 Ship the current ChimpMaera video-development environment as an inspectable
 reference, not as a mature studio. The implementation follows the handoff
 contracts proven by the public-safe delta chain in `../methodology/`.
+Canonical editorial inputs follow the
+[template and segment authoring contract](TEMPLATE-SEGMENT-AUTHORING.md).
 
 ## Runtime Shape
 
