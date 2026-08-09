@@ -1,0 +1,11 @@
+[
+  { "caseId": "dead-thread", "gate": "THREAD_LIVE", "reason": "THREAD_LIVE_DENIED" },
+  { "caseId": "duplicate", "gate": "NOT_DUPLICATE", "reason": "NOT_DUPLICATE_DENIED" },
+  { "caseId": "poor-fit", "gate": "CHIMPMAERA_FIT", "reason": "CHIMPMAERA_FIT_DENIED" },
+  { "caseId": "unevidenced", "gate": "PROBLEM_EVIDENCED", "reason": "PROBLEM_EVIDENCED_DENIED" },
+  { "caseId": "not-actionable", "gate": "ACTIONABLE", "reason": "ACTIONABLE_DENIED" },
+  { "caseId": "private-input", "gate": "PUBLIC_ONLY", "reason": "PUBLIC_ONLY_DENIED" },
+  { "caseId": "unsafe", "gate": "CONTENT_SAFE", "reason": "CONTENT_SAFE_DENIED" },
+  { "caseId": "ip-risk", "gate": "IP_CLEAR", "reason": "IP_CLEAR_DENIED" },
+  { "caseId": "external-effect", "gate": "LOCAL_DECISION_ONLY", "reason": "LOCAL_DECISION_ONLY_DENIED" }
+]
