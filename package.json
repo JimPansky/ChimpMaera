@@ -48,6 +48,8 @@
     "openclaw-m1.2:test": "node --test tests/openclaw-gateway-identity-network.test.mjs tests/openclaw-agent-runtime-lock.test.mjs tests/openclaw-agent-runtime.test.mjs",
     "openclaw-m1.3:test": "node --test tests/openclaw-gateway-identity-network.test.mjs tests/openclaw-gateway-state.test.mjs tests/openclaw-agent-runtime-lock.test.mjs tests/openclaw-agent-runtime.test.mjs tests/openclaw-mind-store.test.mjs",
     "openclaw-m1.4:test": "npm run build --silent && node --test tests/canonical-json-runtime-parity.test.mjs tests/openclaw-gateway-identity-network.test.mjs tests/openclaw-gateway-state.test.mjs tests/openclaw-m1.4-gateway-e2e.test.mjs tests/openclaw-agent-runtime-lock.test.mjs tests/openclaw-agent-runtime.test.mjs tests/openclaw-mind-store.test.mjs",
+    "openclaw-m1.5:test": "node --test tests/openclaw-m1.5-adversarial-evidence.test.mjs",
+    "openclaw-m1.5:evidence": "node scripts/verify-openclaw-m1.5-evidence.mjs",
     "daily-poc:test": "node --test tests/daily-poc.test.mjs",
     "video:test": "python3 -m unittest discover -s tools/video-production-reference/tests",
     "demo:install": "./demo/install.sh",

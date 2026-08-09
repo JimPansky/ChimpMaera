@@ -520,7 +520,7 @@
         {
           "path": "tests/helpers/openclaw-m1-4-harness.mjs",
           "role": "FIXTURE",
-          "sha256": "e9308957634610ca721bf0beb9f37bb5d55e95c6b344e3c7ba94ebebf76be052"
+          "sha256": "db8f975679af390b49120ac9c928ba6f0e988988919b14402b474a4aee3e84ba"
         },
         {
           "path": "docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md",
@@ -550,10 +550,59 @@
       "globalInvalidation": false
     },
     {
+      "id": "openclaw-m1-5",
+      "dependsOn": [
+        "openclaw-m1-4"
+      ],
+      "inputs": [
+        {
+          "path": "tests/fixtures/openclaw-m1.5/adversarial-matrix-v1.json",
+          "role": "FIXTURE",
+          "sha256": "99f71e2fa9fcd3737dc6cb6409523bccb88fdc0a13661fa5b199f11f49bb5c71"
+        },
+        {
+          "path": "tests/openclaw-m1.5-adversarial-evidence.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "31df3de7154358084df60a83e629466db634404f12e75a3a3d2940548ac186a7"
+        },
+        {
+          "path": "scripts/verify-openclaw-m1.5-evidence.mjs",
+          "role": "VALIDATOR",
+          "sha256": "d9425a27b387b69f62c0a53d9b1ffee6b5b48a99c53c2ea3ef1493a547ea238e"
+        },
+        {
+          "path": "scripts/run-openclaw-m1.5-probes.mjs",
+          "role": "VALIDATOR",
+          "sha256": "9c762d9450c03f106232aaeb5133c59b0635c977bcdb3c9523eb6f2111c24d5c"
+        },
+        {
+          "path": "security/openclaw-m1.5-evidence-index-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "9827bf56a836d90d54ca109b15797bc9229972cbf53b3218ab589b03be264f91"
+        },
+        {
+          "path": "docs/development/openclaw-m1.5-issue-8-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "0062590cfb4840c2de3e9f3b6c9de08b749b5078e1bc26b0159d9005078bc635"
+        }
+      ],
+      "ownedTests": [
+        "npm run openclaw-m1.5:test",
+        "npm run openclaw-m1.5:evidence"
+      ],
+      "invariants": [
+        "The adversarial matrix remains synthetic, sanitized and deterministic.",
+        "Missing or tampered evidence and readback cannot upgrade a claim.",
+        "Commit-bound output is final only when resolved from a clean committed Git HEAD."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
       "id": "secure-default-proof",
       "dependsOn": [
         "repository-integrity",
-        "openclaw-m1-4"
+        "openclaw-m1-5"
       ],
       "inputs": [
         {
@@ -605,7 +654,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "f6540005b872f2adc5b6d5bd6513691fc19302431ac57d7b0cc8cc790cea1499"
+          "sha256": "7c82b0aa0bd41f955e5a10652d9e232bc4fb4df9513d81bc42c2e7899cf59851"
         },
         {
           "path": "package-lock.json",
