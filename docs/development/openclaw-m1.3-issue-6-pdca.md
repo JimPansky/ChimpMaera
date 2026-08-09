@@ -49,6 +49,17 @@ supply-chain, release-governance, secure-default, public-stage, and checksum
 gates remain authoritative. Exact executed results are recorded in the
 synthetic evidence file in the containing commit.
 
+Final owner-lane readback on exact committed implementation tree
+`0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26` records the focused suite at
+35/35 PASS, authoritative `npm test` at 405/405 PASS (including secure-default
+metadata 12/12 and learning routing 26/26), and secure-default proof at PASS
+with report digest
+`b4527c85dd23ff24f9b8dd72fd088e096fe85d364f16ae652062189200b1519c`.
+These results include deterministic Compose rendering, not live-container
+execution. The earlier Codex sandbox Docker/socket and selected child-process
+EPERM restrictions remain historical environment evidence; exact pinned images
+were not started and live smoke remains unexecuted and unclaimed.
+
 ## Act
 
 Rollback stops and purges only the labelled candidate runtime and synthetic

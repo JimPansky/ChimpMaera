@@ -18,8 +18,10 @@
   },
   "focusedVerification": {
     "command": "npm run openclaw-m1.3:test",
-    "result": "ENVIRONMENT_BLOCKED_DOCKER_COMPOSE_CHILD_PROCESS_EPERM",
-    "subtests": {"runtimeLock": "9_PASS", "runtimeContract": "3_SAFE_SUBTESTS_PASS_2_COMPOSE_RENDER_SUBTESTS_ENVIRONMENT_BLOCKED", "gatewayWorkloadBoundary": "9_PASS", "gatewayStatePersistence": "6_PASS", "mindStoreLifecycle": "6_PASS", "fileGroups": "4_PASS_1_ENVIRONMENT_BLOCKED"}
+    "result": "PASS_35_OF_35",
+    "testedTreeCommit": "0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26",
+    "executionLane": "OWNER_LANE",
+    "subtests": {"runtimeLock": 9, "runtimeContract": 5, "gatewayWorkloadBoundary": 9, "gatewayStatePersistence": 6, "mindStoreLifecycle": 6, "passed": 35, "failed": 0}
   },
   "deterministicBoundaries": {
     "scratch": {"capacityBytes": 1048576, "verification": "COMPOSE_RENDER_AND_LIVE_PROBE_DEFINITION_VALIDATED", "liveBoundaryResult": "NOT_EXECUTED_MISSING_PINNED_IMAGES"},
@@ -40,24 +42,24 @@
   ],
   "repositoryVerification": [
     {"command": "npm run lint", "result": "PASS"},
-    {"command": "npm test", "result": "ENVIRONMENT_BLOCKED_IN_PRETEST_CHILD_PROCESS_SPAWN"},
-    {"command": "npm test --ignore-scripts", "result": "56_OF_63_FILE_GROUPS_PASS_7_CHILD_PROCESS_DEPENDENT_GROUPS_ENVIRONMENT_BLOCKED"},
+    {"command": "npm test", "result": "PASS_405_OF_405", "executionLane": "OWNER_LANE", "pretest": "SECURE_DEFAULT_METADATA_12_OF_12_AND_LEARNING_ROUTING_26_OF_26_PASS"},
     {"command": "npm run supply-chain:verify", "result": "PASS_7_CHECKS"},
     {"command": "npm run release-governance:test", "result": "PASS"},
     {"command": "npm run release-governance:verify", "result": "PASS"},
     {"command": "npm run docs:test", "result": "PASS"},
     {"command": "npm run video:test", "result": "PASS_75_OF_75"},
-    {"command": "npm run proof:secure-default", "result": "ENVIRONMENT_BLOCKED_BY_AUTHORITATIVE_CHILD_PROCESS_GATES"},
+    {"command": "npm run proof:secure-default", "result": "PASS", "executionLane": "OWNER_LANE", "overallVerdict": "PASS", "authoritative": "NPM_TEST_PASS", "reportDigest": "b4527c85dd23ff24f9b8dd72fd088e096fe85d364f16ae652062189200b1519c"},
     {"command": "secure-default metadata and generated-evidence validation", "result": "PASS"},
     {"command": "./scripts/build-public-release.sh --output /tmp/cm-product-increment-rc-20260809-issue6-followup-final2", "result": "PASS"},
     {"command": "sha256sum -c SHA256SUMS", "result": "PASS_583_OF_583"}
   ],
   "environmentBoundary": {
+    "scope": "CODEX_SANDBOX_HISTORICAL_EXECUTION_ENVIRONMENT",
     "dockerDaemonAccessible": false,
     "liveSmokeExecuted": false,
     "liveSmokeCommand": "./demo/openclaw-agent/smoke.sh",
-    "evidenceUsed": "COMPOSE_RENDERING_SYNTHETIC_COMMAND_SPIES_AND_DETERMINISTIC_STATE_MACHINE",
-    "broadSuiteNote": "Docker API access was denied at /var/run/docker.sock, and the sandbox denied selected child-process probes with EPERM. No image was pulled or started. All independent daemon-free gates were completed; exact partial broad/focused results are recorded above."
+    "evidenceUsed": "OWNER_LANE_DETERMINISTIC_COMPOSE_RENDERING_SYNTHETIC_COMMAND_SPIES_AND_DETERMINISTIC_STATE_MACHINE",
+    "broadSuiteNote": "The owner lane reran the focused suite, authoritative npm test, and secure-default proof successfully on exact committed tree 0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26. Historically, the Codex sandbox denied Docker API access at /var/run/docker.sock and selected child-process probes with EPERM. Exact pinned images remain absent/not started; no image was pulled or started and live smoke was not executed. Deterministic Compose rendering tests are PASS and are not live-container evidence."
   },
   "supportedClaim": "The exact default-off local synthetic Reference Adapter declares and validates the effective Compose configuration for non-root read-only bounded compute and container-instance scratch, and deterministically tests complete persisted-envelope validation, atomic valid M1.2 state migration, and a generation-bound managed synthetic mind store with scoped reset and fail-closed disk recovery that preserves validated local effect receipts and replay state.",
   "rollback": "Stop and purge only the labelled candidate runtime and scoped synthetic state with demo/openclaw-agent/reset.sh --purge, then revert the containing commit to restore the prior default-off baseline.",
