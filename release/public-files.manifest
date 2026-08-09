@@ -362,6 +362,12 @@ schemas/contracts/chimpmaera-analytics-v1.schema.json	schemas/contracts/chimpmae
 tests/analytics-projection.test.ts	tests/analytics-projection.test.ts	0644
 tests/fixtures/analytics/negative-matrix-v1.json	tests/fixtures/analytics/negative-matrix-v1.json	0644
 tests/fixtures/analytics/positive-projection-v1.json	tests/fixtures/analytics/positive-projection-v1.json	0644
+packages/contracts/src/integration-profile.ts	packages/contracts/src/integration-profile.ts	0644
+schemas/contracts/integration-profile-v1.schema.json	schemas/contracts/integration-profile-v1.schema.json	0644
+tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
+tests/fixtures/integration-profile/negative-probes-v1.json	tests/fixtures/integration-profile/negative-probes-v1.json	0644
+tests/fixtures/integration-profile/positive-variants-v1.json	tests/fixtures/integration-profile/positive-variants-v1.json	0644
+docs/INTEGRATION-PROFILES.md	docs/INTEGRATION-PROFILES.md	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644

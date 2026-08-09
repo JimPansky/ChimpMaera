@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 2,
+  "graphVersion": 3,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -35,6 +35,26 @@
       "globalInvalidation": false
     },
     {
+      "id": "integration-profile-v1",
+      "dependsOn": ["vf-contract-v1"],
+      "inputs": [
+        { "path": "packages/contracts/src/integration-profile.ts", "role": "CONTRACT", "sha256": "eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10" },
+        { "path": "schemas/contracts/integration-profile-v1.schema.json", "role": "SCHEMA", "sha256": "66495d4d334d26afaaaf5137147fb7803061c4338ed3de3475770ed4f12a7d68" },
+        { "path": "tests/fixtures/integration-profile/positive-variants-v1.json", "role": "FIXTURE", "sha256": "9587b83e99ddb076334fbff99b00c851690f0b251ff86f7549c05408d13d021f" },
+        { "path": "tests/fixtures/integration-profile/negative-probes-v1.json", "role": "FIXTURE", "sha256": "371624fea662e1dc02bfd217aaa57564cc8b47c2a0d4d8ba889751ce85de251e" },
+        { "path": "tests/integration-profile.test.ts", "role": "VALIDATOR", "sha256": "957f638c0dcf241dcbcc18f7e419d0ee401c50fdb08cb40b8e941ff08b069050" },
+        { "path": "docs/INTEGRATION-PROFILES.md", "role": "DERIVED_EVIDENCE", "sha256": "da49594a312bf47f605acd4afd9f94d9bd9f83c1e30ce31c1c35a45336390133" }
+      ],
+      "ownedTests": ["npm run integration-profile:test"],
+      "invariants": [
+        "Integration profiles remain local-synthetic references and never grant authority or activate a route.",
+        "Unknown actions, writes, private paths, unpinned inputs, cross-tenant references, stale evidence, incompatible versions, missing rollback and generic proxies fail closed.",
+        "Verification, extension assurance and update behavior remain owned by their existing CM contracts."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "vf-shadow-v2",
       "dependsOn": ["vf-contract-v1"],
       "inputs": [
@@ -43,7 +63,7 @@
         { "path": "schemas/contracts/verification-attestation-v2.schema.json", "role": "SCHEMA", "sha256": "e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2" },
         { "path": "scripts/verification-plan.mjs", "role": "VALIDATOR", "sha256": "0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218" },
         { "path": "scripts/verification-shadow.mjs", "role": "VALIDATOR", "sha256": "7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5" },
-        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "9b0de4a58c4a9e22c68886d7da1bc58d9e789b80783da0c1ce9fe4704e914f36" },
+        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "234006e42ad19f1744b0f5bf89f2a43b9c3974228f9d63c021c3ec8570374160" },
         { "path": "docs/VERIFICATION-FABRIC-SHADOW.md", "role": "DERIVED_EVIDENCE", "sha256": "c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f" }
       ],
       "ownedTests": ["node --test dist/tests/verification-fabric-v2.test.js"],
@@ -57,7 +77,7 @@
     },
     {
       "id": "repository-integrity",
-      "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
+      "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "integration-profile-v1"],
       "inputs": [
         { "path": "release/governance.json", "role": "CONTRACT", "sha256": "9fc7301b5f14ae9e11fc4ae9c359aba07b138946358200e153c846253691cef5" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
@@ -99,7 +119,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "8e28a79e868ee0df4528dc36b676e703dd65d42138db90534638d53181b64790" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "3cc47d0daf23b2bc4dce95a5c27b0ccf9a6a89b6d0ba2e1990687e54885e7805" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "b816884a87ba78a7719f38fc9abe804c626073b3d023b957d412dfbbf6863abf" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }

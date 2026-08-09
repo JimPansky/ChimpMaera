@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/integration-profile-v1.schema.json",
+  "title": "ChimpMaera integration profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "identity", "integration", "upstream", "data", "identityProfile", "routes", "lifecycle", "verification", "overrides", "claimBoundary", "profileDigest"],
+  "properties": {
+    "schemaVersion": { "const": "cm.integration-profile/v1" },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileId", "schemaVersion", "adapterId", "adapterVersion", "contractVersion", "policyGeneration", "evidenceGeneration"],
+      "properties": {
+        "profileId": { "$ref": "#/$defs/id" },
+        "schemaVersion": { "const": "cm.integration-profile/v1" },
+        "adapterId": { "$ref": "#/$defs/id" },
+        "adapterVersion": { "const": "1.0.0" },
+        "contractVersion": { "const": "1.0.0" },
+        "policyGeneration": { "const": "cm-policy:synthetic-v1" },
+        "evidenceGeneration": { "const": "cm-evidence:synthetic-v1" }
+      }
+    },
+    "integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["variant", "capabilityClass", "allowedActions", "externalWriteAllowed", "genericProxyAllowed"],
+      "properties": {
+        "variant": { "enum": ["POWER_APPS_READ_ONLY", "POWER_BI_READ_ONLY_PROJECTION", "MAILBOX_STYLE_READ_ADAPTER", "LOCAL_KNOWLEDGE_CORPUS", "ISSUE_CANDIDATE_EXPORT_ONLY"] },
+        "capabilityClass": { "enum": ["READ_ONLY", "READ_ONLY_PROJECTION", "EXPORT_ONLY"] },
+        "allowedActions": { "type": "array", "minItems": 1, "maxItems": 4, "uniqueItems": true, "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,63}$" } },
+        "externalWriteAllowed": { "const": false },
+        "genericProxyAllowed": { "const": false }
+      }
+    },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceKind", "sourceRef", "sourceVersion", "sourceDigest", "license", "pinned", "replacementReviewAtMs"],
+      "properties": {
+        "sourceKind": { "enum": ["CM_OWNED_CONTRACT", "LOCAL_SYNTHETIC_CORPUS"] },
+        "sourceRef": { "$ref": "#/$defs/reference" },
+        "sourceVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "sourceDigest": { "$ref": "#/$defs/digest" },
+        "license": { "const": "Apache-2.0" },
+        "pinned": { "const": true },
+        "replacementReviewAtMs": { "type": "integer", "minimum": 1786147200000, "maximum": 1893456000000 }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authoritativeReadSource", "projectionClass", "classification", "schemaVersion", "lineageKeys", "excludedFields", "privatePath"],
+      "properties": {
+        "authoritativeReadSource": { "$ref": "#/$defs/reference" },
+        "projectionClass": { "enum": ["NONE", "READ_ONLY", "EXPORT_ONLY"] },
+        "classification": { "const": "LOCAL_SYNTHETIC_PUBLIC" },
+        "schemaVersion": { "$ref": "#/$defs/reference" },
+        "lineageKeys": { "type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9]{1,63}$" } },
+        "excludedFields": { "const": ["credentials", "personalIdentity", "privatePath", "providerData", "rawContent", "tenantIdentifier"] },
+        "privatePath": { "type": "null" }
+      }
+    },
+    "identityProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tenantScope", "tenantReference", "identityMode", "leastPrivilege", "approvalBoundary", "crossTenantAllowed", "ambientCredentialAllowed"],
+      "properties": {
+        "tenantScope": { "const": "SINGLE_SYNTHETIC_TENANT" },
+        "tenantReference": { "type": "null" },
+        "identityMode": { "enum": ["DELEGATED_LEAST_PRIVILEGE", "WORKLOAD_READ_ONLY", "LOCAL_NO_IDENTITY"] },
+        "leastPrivilege": { "const": true },
+        "approvalBoundary": { "const": "OWNER_POLICY_EVENT_REQUIRED_FOR_ACTIVATION" },
+        "crossTenantAllowed": { "const": false },
+        "ambientCredentialAllowed": { "const": false }
+      }
+    },
+    "routes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["purpose", "component", "contractSchemaVersion", "mode"],
+        "properties": {
+          "purpose": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,63}$" },
+          "component": { "enum": ["POWER_PLATFORM_READ_CONNECTOR", "POWER_BI_READ_ONLY_PROJECTION", "AGENT_WORK_INTELLIGENCE", "HMI_CONTRIBUTION_PREFLIGHT", "VERIFICATION_FABRIC", "EXTENSION_TRUST_LAB", "UPDATE_CONTROLLER"] },
+          "contractSchemaVersion": { "$ref": "#/$defs/reference" },
+          "mode": { "const": "REFERENCE_ONLY" }
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storageClass", "retentionClass", "backupMode", "deletionReadback", "migrationMode", "acceptedProfileDigest", "lkgProfileDigest", "rollbackTarget"],
+      "properties": {
+        "storageClass": { "enum": ["NO_RUNTIME_STORAGE", "LOCAL_SYNTHETIC_FIXTURE"] },
+        "retentionClass": { "const": "PUBLIC_SYNTHETIC_FIXTURE_ONLY" },
+        "backupMode": { "const": "NOT_APPLICABLE_NO_PERSISTENCE" },
+        "deletionReadback": { "const": "LOCAL_FIXTURE_REMOVAL_ONLY" },
+        "migrationMode": { "const": "PRESERVE_OLD_READER_UNTIL_REPLACEMENT_READBACK" },
+        "acceptedProfileDigest": { "$ref": "#/$defs/digest" },
+        "lkgProfileDigest": { "$ref": "#/$defs/digest" },
+        "rollbackTarget": { "$ref": "#/$defs/reference" }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fabricSchemaVersion", "evidenceBundleRef", "evidenceDigest", "verifiedAtMs", "freshUntilMs", "negativeProbeSet", "authoritativeReadback", "residualRisk"],
+      "properties": {
+        "fabricSchemaVersion": { "const": "chimpmaera.verification/fabric-bundle/v1" },
+        "evidenceBundleRef": { "$ref": "#/$defs/reference" },
+        "evidenceDigest": { "$ref": "#/$defs/digest" },
+        "verifiedAtMs": { "type": "integer", "minimum": 1700000000000, "maximum": 1786147200000 },
+        "freshUntilMs": { "type": "integer", "minimum": 1786147200000, "maximum": 1893456000000 },
+        "negativeProbeSet": { "const": "INT-PROFILE-001" },
+        "authoritativeReadback": { "const": "LOCAL_FIXTURE_VALIDATION_ONLY" },
+        "residualRisk": { "const": "REAL_SYSTEM_COMPATIBILITY_NOT_VALIDATED" }
+      }
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowlistedNames", "values", "genericHost", "genericPath", "genericProxy"],
+      "properties": {
+        "allowlistedNames": { "const": ["displayName", "refreshCadenceMs"] },
+        "values": { "type": "object", "additionalProperties": false, "maxProperties": 0 },
+        "genericHost": { "type": "null" },
+        "genericPath": { "type": "null" },
+        "genericProxy": { "type": "null" }
+      }
+    },
+    "claimBoundary": { "const": "LOCAL_SYNTHETIC_CONTRACT_ONLY_NO_TENANT_NO_CREDENTIAL_NO_PROVIDER_CALL_NO_AUTHORITY_NO_ACTIVATION_NO_EXTERNAL_WRITE" },
+    "profileDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "reference": { "type": "string", "minLength": 3, "maxLength": 160, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]+$" }
+  }
+}
