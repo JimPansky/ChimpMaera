@@ -1,6 +1,7 @@
 import { appendFile, readFile, statfs, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { createInvocationIdentity, createSyntheticIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
+import { syntheticOpenClawM14Request } from "./capability-m1-4-adapter.mjs";
 
 const mode = process.argv[2] ?? "";
 const base = "http://capability-gateway:8080";
@@ -130,6 +131,27 @@ function freshV2Options() {
   };
 }
 
+function freshM14Options(requestId = "request:openclaw-m14-0001") {
+  const invocation = createInvocationIdentity(workloadContract, {
+    requestId,
+    invocationId: randomUUID(),
+  });
+  return {
+    method: "POST",
+    headers: {
+      authorization: `Synthetic ${encodeSyntheticIdentity(invocation.identity)}`,
+      "content-type": "application/json",
+      "x-cm-correlation-id": invocation.correlationId,
+      "x-cm-request-schema": "chimpmaera.security/capability-execution-request/v1",
+    },
+    body: JSON.stringify(syntheticOpenClawM14Request({
+      correlationId: invocation.correlationId,
+      workloadIdentity: workloadContract.identity.subject,
+      requestId,
+    })),
+  };
+}
+
 let result;
 switch (mode) {
   case "gateway-v2": {
@@ -150,6 +172,29 @@ switch (mode) {
       identity: value.authorization.identity,
       network: value.authorization.network,
       receiptDigest: value.result.receipt.receiptDigest,
+    };
+    break;
+  }
+  case "gateway-m14": {
+    const { response, value } = await parsed(await request(
+      workloadContract.identity.route,
+      freshM14Options("request:openclaw-m14-smoke-0001"),
+    ));
+    if (!response.ok || value.status !== "PASS"
+      || value.result?.outcome !== "SYNTHETIC_EFFECT_READBACK_VERIFIED"
+      || value.result?.effectState !== "CONFIRMED_ONE"
+      || value.result?.effectCount !== 1
+      || JSON.stringify(value).includes("alex@example.test")
+      || JSON.stringify(value).includes("Alex Example")) {
+      throw new Error("GATEWAY_M14_EXPECTED_ALLOW_FAILED");
+    }
+    result = {
+      schemaVersion: value.schemaVersion,
+      status: value.status,
+      replayState: value.result.replayState,
+      actionId: value.result.actionId,
+      receiptDigest: value.result.receiptDigest,
+      readbackDigest: value.result.readbackDigest,
     };
     break;
   }
@@ -191,6 +236,24 @@ switch (mode) {
     result = {
       status: "PASS",
       receiptDigest: first.value.result.receipt.receiptDigest,
+      replayState: second.value.result.replayState,
+    };
+    break;
+  }
+  case "m14-replay": {
+    const requestId = "request:openclaw-m14-replay";
+    const first = await parsed(await request(workloadContract.identity.route, freshM14Options(requestId)));
+    const second = await parsed(await request(workloadContract.identity.route, freshM14Options(requestId)));
+    if (!first.response.ok || !second.response.ok
+      || first.value.result.effectCount !== 1
+      || second.value.result.effectCount !== 1
+      || second.value.result.replayState !== "RECOVERED_SAME_RECEIPT") {
+      throw new Error("M14_REPLAY_NOT_EXACTLY_ONCE");
+    }
+    result = {
+      status: "PASS",
+      firstReceiptDigest: first.value.result.receiptDigest,
+      retryReceiptDigest: second.value.result.receiptDigest,
       replayState: second.value.result.replayState,
     };
     break;

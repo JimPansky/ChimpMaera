@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "chimpmaera.openclaw-m1.4/evidence/v1",
+  "workItem": {
+    "stableId": "OPENCLAW-M1.4",
+    "githubIssue": 7,
+    "title": "Schema-validated canonical broker effect and duplicate-safe readback"
+  },
+  "baseline": "5073c058eccdab84fe97d7f3eb1a48b2ea9423ce",
+  "commitBinding": {
+    "method": "CONTAINING_GIT_COMMIT",
+    "path": "security/openclaw-m1.4-evidence-v1.json",
+    "reason": "The containing commit identifies the exact tested bytes without a circular embedded commit hash."
+  },
+  "canonicalAction": {
+    "catalogueVersion": "1.0.0",
+    "catalogueDigest": "bb0060a254f450684bd17f6559d267d6f02d225c4c4d37479c3010c60d1b8427",
+    "actionId": "crm.contact.create",
+    "actionVersion": "1.0.0",
+    "actionDigest": "8a032b1057fcd5c10497877cbb53ceadbd9f76fba899c630855ed5019045c24a",
+    "policyDigest": "c0670df5ef0d91635316b52f66cc65123792b857c328d24e21daf98a0adf2b89",
+    "evidenceSink": "SYNTHETIC_MEMORY_DIGESTED_REFERENCE"
+  },
+  "positiveReadback": {
+    "requestSchemaVersion": "chimpmaera.security/capability-execution-request/v1",
+    "responseSchemaVersion": "chimpmaera.openclaw-m1.4/gateway-broker-response/v1",
+    "brokerReceiptSchemaVersion": "chimpmaera.security/capability-broker-receipt/v1",
+    "effectState": "CONFIRMED_ONE",
+    "effectCount": 1,
+    "authoritativeFixtureReadback": "VALIDATED_IN_PRIVATE_GATEWAY_STATE_AND_PUBLICLY_DIGESTED",
+    "sanitizedFields": [
+      "correlationDigest",
+      "requestIdDigest",
+      "requestDigest",
+      "decisionDigest",
+      "receiptDigest",
+      "providerResponseDigest",
+      "readbackDigest",
+      "evidenceRef"
+    ]
+  },
+  "duplicateSafety": {
+    "idempotencyKey": "requestId",
+    "freshIdentityRetry": "DISTINCT_INVOCATION_JTI_WITH_CANONICAL_REQUEST_CORRELATION_AND_SAME_DECISION_RECEIPT",
+    "concurrentDuplicate": "ONE_PRIVATE_EFFECT_RECORD_AND_ONE_SHARED_PUBLIC_RECEIPT_DIGEST",
+    "preCommitInterruption": "DURABLE_RESERVED_FAILS_CLOSED_AS_IN_FLIGHT_AFTER_RESTART",
+    "postCommitAmbiguity": "DURABLE_COMMITTED_RECONCILES_FROM_AUTHORITATIVE_READBACK_WITHOUT_SECOND_EFFECT"
+  },
+  "restartValidation": {
+    "authorizationBindingSchema": "chimpmaera.openclaw-m1.4/authorization-binding/v1",
+    "effectStateSchema": "chimpmaera.openclaw-m1.4/effect-state/v3",
+    "reservationStateSchema": "chimpmaera.openclaw-m1.4/effect-reservation/v2",
+    "workloadContractBinding": "SUBJECT_AUDIENCE_TENANT_SCOPE_ROUTE_NETWORK_EXACT_TIME_CANONICAL_CORRELATION_AND_CONTRACT_DIGEST",
+    "providerReadback": "EXACT_DETERMINISTIC_FIXTURE_RESULT_ONLY",
+    "pluginConsumer": "EXACT_VERSIONED_RESPONSE_WITH_RECONSTRUCTED_CANONICAL_DECISION_AND_RECEIPT_DIGESTS"
+  },
+  "negativeMatrix": [
+    "ACTION_INACTIVE_DENIED",
+    "CATALOGUE_DIGEST_MISMATCH_DENIED",
+    "ACTION_DIGEST_MISMATCH_DENIED",
+    "CROSS_TENANT_DENIED",
+    "POLICY_BINDING_MISMATCH_DENIED",
+    "EVIDENCE_SINK_MISSING_DENIED",
+    "REQUEST_RESOURCE_DENIED",
+    "REQUEST_SCHEMA_INVALID_DENIED",
+    "REQUEST_SCHEMA_MISMATCH_DENIED",
+    "CORRELATION_MISSING_DENIED",
+    "IDENTITY_SUBJECT_DENIED",
+    "IDENTITY_AUDIENCE_DENIED",
+    "IDENTITY_ROUTE_DENIED",
+    "IDENTITY_EXPIRED_DENIED",
+    "ACTIVATION_STALE_DENIED",
+    "POLICY_STALE_DENIED",
+    "RESPONSE_SCHEMA_INVALID_DENIED",
+    "REPLAY_IN_FLIGHT_DENIED",
+    "ROUTE_DENIED"
+  ],
+  "verification": {
+    "focused": {
+      "command": "npm run openclaw-m1.4:test",
+      "result": "PASS"
+    },
+    "plannedRepositoryGate": "npm run openclaw-m1.4:test"
+  },
+  "sanitization": {
+    "rawIdentityTokenReturned": false,
+    "rawCorrelationIdReturnedInM14Outcome": false,
+    "rawRequestIdReturnedInM14Outcome": false,
+    "requestEmailOrNameReturnedInM14Outcome": false,
+    "rawProviderResponseOrReadbackReturnedInM14Outcome": false,
+    "privateHostPathReturned": false,
+    "credentialMaterialReturned": false
+  },
+  "rollback": "Revert the containing issue commit(s), then run demo/openclaw-agent/reset.sh --purge only for labelled local fixture resources.",
+  "nonClaims": [
+    "NO_LIVE_PROVIDER_OR_CREDENTIAL_USE",
+    "NO_PRODUCTION_IDENTITY_ASSURANCE",
+    "NO_DISTRIBUTED_REPLAY_STORE",
+    "NO_HOSTILE_HOST_CONTAINMENT",
+    "NO_CRYPTOGRAPHIC_INTEGRITY_AGAINST_REPLACEMENT_OF_ALL_LOCAL_TRUST_ANCHORS",
+    "NO_PRODUCTION_READINESS_OR_SECURITY_CERTIFICATION"
+  ]
+}

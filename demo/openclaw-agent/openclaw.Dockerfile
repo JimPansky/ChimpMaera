@@ -10,6 +10,10 @@ COPY --chown=node:node demo/openclaw-agent/openclaw.json /opt/chimpmaera/opencla
 COPY --chown=node:node demo/openclaw-agent/fixture-probe.mjs /opt/chimpmaera/fixture-probe.mjs
 COPY --chown=node:node demo/openclaw-agent/gateway-workload-contract-v2.json /opt/chimpmaera/gateway-workload-contract-v2.json
 COPY --chown=node:node demo/openclaw-agent/plugin/identity-v2.mjs /opt/chimpmaera/identity-v2.mjs
+COPY --chown=node:node packages/contracts/src/canonical-json.js /opt/packages/contracts/src/canonical-json.js
+COPY --chown=node:node packages/contracts/src/capability-catalogue.ts /opt/packages/contracts/src/capability-catalogue.ts
+COPY --chown=node:node demo/openclaw-agent/capability-m1-4-adapter.mjs /opt/chimpmaera/capability-m1-4-adapter.mjs
+COPY --chown=node:node demo/openclaw-agent/capability-m1-4-adapter.mjs /opt/chimpmaera/plugins/capability-m1-4-adapter.mjs
 COPY --chown=node:node demo/openclaw-agent/workspace /opt/chimpmaera/workspace
 COPY --chown=node:node demo/openclaw-agent/plugin /opt/chimpmaera/plugins/chimpmaera-capability
 RUN mkdir -p /var/lib/openclaw && chown node:node /var/lib/openclaw

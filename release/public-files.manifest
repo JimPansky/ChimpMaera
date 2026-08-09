@@ -97,6 +97,7 @@ demo/model-access-broker/reset.sh	demo/model-access-broker/reset.sh	0755
 demo/model-access-broker/runtime-contract-v1.json	demo/model-access-broker/runtime-contract-v1.json	0644
 demo/model-access-broker/setup.sh	demo/model-access-broker/setup.sh	0755
 demo/model-access-broker/smoke.sh	demo/model-access-broker/smoke.sh	0755
+demo/openclaw-agent/capability-m1-4-adapter.mjs	demo/openclaw-agent/capability-m1-4-adapter.mjs	0644
 demo/openclaw-agent/compose.yaml	demo/openclaw-agent/compose.yaml	0644
 demo/openclaw-agent/fixture-probe.mjs	demo/openclaw-agent/fixture-probe.mjs	0644
 demo/openclaw-agent/gateway-workload-contract-v2.json	demo/openclaw-agent/gateway-workload-contract-v2.json	0644
@@ -111,6 +112,7 @@ demo/openclaw-agent/plugin/identity-v2.mjs	demo/openclaw-agent/plugin/identity-v
 demo/openclaw-agent/plugin/index.mjs	demo/openclaw-agent/plugin/index.mjs	0644
 demo/openclaw-agent/plugin/openclaw.plugin.json	demo/openclaw-agent/plugin/openclaw.plugin.json	0644
 demo/openclaw-agent/plugin/package.json	demo/openclaw-agent/plugin/package.json	0644
+demo/openclaw-agent/plugin/response-v1.mjs	demo/openclaw-agent/plugin/response-v1.mjs	0644
 demo/openclaw-agent/reset.sh	demo/openclaw-agent/reset.sh	0755
 demo/openclaw-agent/runtime-contract-v1.json	demo/openclaw-agent/runtime-contract-v1.json	0644
 demo/openclaw-agent/setup.sh	demo/openclaw-agent/setup.sh	0755
@@ -204,6 +206,7 @@ examples/poc-release/showcase-v1.json	examples/poc-release/showcase-v1.json	0644
 examples/poc-setup-planner/catalog-v1.json	examples/poc-setup-planner/catalog-v1.json	0644
 package-lock.json	package-lock.json	0644
 package.json	package.json	0644
+packages/contracts/src/canonical-json.js	packages/contracts/src/canonical-json.js	0644
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
 packages/contracts/src/development-worker.ts	packages/contracts/src/development-worker.ts	0644
 packages/contracts/src/builder-authority.ts	packages/contracts/src/builder-authority.ts	0644
@@ -258,6 +261,7 @@ security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 security/openclaw-m1.1-evidence-v1.json	security/openclaw-m1.1-evidence-v1.json	0644
 security/openclaw-m1.2-evidence-v2.json	security/openclaw-m1.2-evidence-v2.json	0644
 security/openclaw-m1.3-evidence-v1.json	security/openclaw-m1.3-evidence-v1.json	0644
+security/openclaw-m1.4-evidence-v1.json	security/openclaw-m1.4-evidence-v1.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
@@ -388,6 +392,9 @@ tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.tes
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
 tests/openclaw-gateway-identity-network.test.mjs	tests/openclaw-gateway-identity-network.test.mjs	0644
 tests/openclaw-gateway-state.test.mjs	tests/openclaw-gateway-state.test.mjs	0644
+tests/openclaw-m1.4-gateway-e2e.test.mjs	tests/openclaw-m1.4-gateway-e2e.test.mjs	0644
+tests/canonical-json-runtime-parity.test.mjs	tests/canonical-json-runtime-parity.test.mjs	0644
+tests/helpers/openclaw-m1-4-harness.mjs	tests/helpers/openclaw-m1-4-harness.mjs	0644
 tests/openclaw-mind-store.test.mjs	tests/openclaw-mind-store.test.mjs	0644
 tests/fixtures/openclaw-state/gateway-state-v1.json	tests/fixtures/openclaw-state/gateway-state-v1.json	0644
 tests/fixtures/openclaw-state/lifecycle-v1.json	tests/fixtures/openclaw-state/lifecycle-v1.json	0644

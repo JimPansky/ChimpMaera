@@ -138,7 +138,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "c20e79aa5aeab2a8c657a24ab1aba14b53d36357c84ac293a46ee6cbdd208295"
+          "sha256": "bff3858e2876f7432ee0793ef4284f2dbb92ec37478c66f36c30ae18358f97ef"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -357,12 +357,12 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "6861b56208ebf07fef77f962050520a5f861e7ba2354b5a8e0470c262ce1b486"
+          "sha256": "cdaee2f8eb032c0625263ae52feccad0cec5ae9881f6c89c4fa950f5e45592e6"
         },
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d"
+          "sha256": "f128565151b840b1a66c233ae579697d5683c05f0a9371c98131f0a502a23c69"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -387,15 +387,179 @@
       "globalInvalidation": false
     },
     {
-      "id": "secure-default-proof",
+      "id": "openclaw-m1-4",
       "dependsOn": [
         "repository-integrity"
       ],
       "inputs": [
         {
+          "path": "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json",
+          "role": "CONTRACT",
+          "sha256": "123ab62f3c792d4865a4fa16fbf27403b68c47148dea10ab8125ea02f948d496"
+        },
+        {
+          "path": "scripts/verify-openclaw-agent-runtime-lock.mjs",
+          "role": "VALIDATOR",
+          "sha256": "acfeeeac150ab65150d3f6eb465c70bca2324d056b8790f25b8a7c9f2c6377d7"
+        },
+        {
+          "path": "demo/openclaw-agent/runtime-contract-v1.json",
+          "role": "CONTRACT",
+          "sha256": "a895070029de01ea3b4e6966cc76f6d4408fb561fd8c135f5755f9a8ba1270d6"
+        },
+        {
+          "path": "demo/openclaw-agent/gateway-workload-contract-v2.json",
+          "role": "CONTRACT",
+          "sha256": "4a635cf9e56fa11e89f4861c4ac42c713e2b5c60333b00500e0838eb182ba442"
+        },
+        {
+          "path": "demo/openclaw-agent/plugin/identity-v2.mjs",
+          "role": "SECURITY",
+          "sha256": "646dd4f042d01451ac61563aaea4d18a47a7e4255dce84fe6269855929b0df6d"
+        },
+        {
+          "path": "demo/openclaw-agent/gateway.mjs",
+          "role": "SOURCE",
+          "sha256": "c68f632e9999a7a4c83f21b5eaad48ca73d77038738a8a7c71b36b6d1e659829"
+        },
+        {
+          "path": "demo/openclaw-agent/gateway-state.mjs",
+          "role": "SOURCE",
+          "sha256": "83dfcffd50e39d8281c53649a4d44dc87fd3659e70cd16df61042604c8d45253"
+        },
+        {
+          "path": "demo/openclaw-agent/gateway.Dockerfile",
+          "role": "SOURCE",
+          "sha256": "2be6f5d1aafb6555bccba2903b4f9bf006d7331012a2fe0dc0250a994b3e3ae5"
+        },
+        {
+          "path": "demo/openclaw-agent/openclaw.Dockerfile",
+          "role": "SOURCE",
+          "sha256": "90975a72109a1a6699009002eac4326147742bd55c2eadf9c3d086e19de71260"
+        },
+        {
+          "path": "demo/openclaw-agent/openclaw.json",
+          "role": "CONTRACT",
+          "sha256": "00c81ee8f09534cd94276e7e320bc1bb24770ec849ebaab1f9ad864df1999bab"
+        },
+        {
+          "path": "demo/openclaw-agent/plugin/index.mjs",
+          "role": "SOURCE",
+          "sha256": "a4d1370c87302e9beadcd46fb4a73e4502b5384c0b7a929640230f57b484ff85"
+        },
+        {
+          "path": "demo/openclaw-agent/plugin/response-v1.mjs",
+          "role": "VALIDATOR",
+          "sha256": "fd9878e78412f74c83fc5fcf8fb04458b3e6dd7027975d6df0a6fc2919f869b5"
+        },
+        {
+          "path": "demo/openclaw-agent/plugin/openclaw.plugin.json",
+          "role": "CONTRACT",
+          "sha256": "95b91cc6081de22de7c079232eda201bdc61ad905d144b1d192d04530a244d12"
+        },
+        {
+          "path": "demo/openclaw-agent/plugin/package.json",
+          "role": "CONTRACT",
+          "sha256": "95dc527fe92bac3e4e3294837b8e4e3aea74cbc93e91c8c45f700483e6e77531"
+        },
+        {
+          "path": "demo/openclaw-agent/capability-m1-4-adapter.mjs",
+          "role": "SOURCE",
+          "sha256": "617592280074cba608bef7589298be917a0af2aec9aa62862bf4ee238697de1f"
+        },
+        {
+          "path": "packages/contracts/src/capability-catalogue.ts",
+          "role": "CONTRACT",
+          "sha256": "9d24442a94c2cfcf9c305732a60ceadf286200a2eae26b6dabd157769a223f54"
+        },
+        {
+          "path": "packages/contracts/src/canonical-json.ts",
+          "role": "CONTRACT",
+          "sha256": "666513ba9a89c0eae0daa0e0159a262eb4e0aa105971a151a19bac1a9b6c4826"
+        },
+        {
+          "path": "packages/contracts/src/canonical-json.js",
+          "role": "SOURCE",
+          "sha256": "e0ab8804532a55b161407e59167cf3027ebceb7df72a4d1dd1a485b1db4400ec"
+        },
+        {
+          "path": "tests/capability-catalogue.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "3fb6871824cc52620fd580e386a98bcc12dcf5a8f395ebdb08e8fa115f1ca5cc"
+        },
+        {
+          "path": "tests/canonical-json-runtime-parity.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "929ab3a426ed99e3aaadf00b0a8ffe6866503bdaadebbd348995a871b63f2ed2"
+        },
+        {
+          "path": "tests/openclaw-agent-runtime-lock.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "9a169c1157b7a27919f100905a686e01e6e9e3cf4d05690d62c97b8b915a1c24"
+        },
+        {
+          "path": "tests/openclaw-agent-runtime.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "2febc29725e6846a0212746fb317f0e5c43e755a07d5e0209b14dc77e54f243f"
+        },
+        {
+          "path": "tests/openclaw-gateway-identity-network.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "8dccff10d8c854fcb2ca1092b0566bffe05b55c4254a8f94964d9b9f94c84c08"
+        },
+        {
+          "path": "tests/openclaw-gateway-state.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "20b506684872823088a5a2ff0a2c7182a1c4f25571cced4ae08be1403ab031b4"
+        },
+        {
+          "path": "tests/openclaw-m1.4-gateway-e2e.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "964ec5254f2a4ead3e8cea3a0511e3b953ce517df4d8b096b826cce5c72a5c0f"
+        },
+        {
+          "path": "tests/helpers/openclaw-m1-4-harness.mjs",
+          "role": "FIXTURE",
+          "sha256": "e9308957634610ca721bf0beb9f37bb5d55e95c6b344e3c7ba94ebebf76be052"
+        },
+        {
+          "path": "docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "cc7a1043bcb5b724ee9ec677771fa063121f52dc9333fedc962f089d455b7271"
+        },
+        {
+          "path": "docs/development/openclaw-m1.4-issue-7-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "b595fcfc18b5348fbfddd65edc081293392b7e0669b037235e5a17536b21d70f"
+        },
+        {
+          "path": "security/openclaw-m1.4-evidence-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "c4359d5548a5b6cfaee765979879cb348283b34f47f4d3273c188c6eeaea7da6"
+        }
+      ],
+      "ownedTests": [
+        "npm run openclaw-m1.4:test"
+      ],
+      "invariants": [
+        "Only crm.contact.create can execute through the M1.4 OpenClaw Gateway path.",
+        "Gateway outcomes expose digest-bound sanitized receipts and evidence references without raw identity assertions or raw correlation IDs.",
+        "Retry, concurrent duplicate, interruption and post-commit ambiguity never produce duplicate synthetic effects."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
+      "id": "secure-default-proof",
+      "dependsOn": [
+        "repository-integrity",
+        "openclaw-m1-4"
+      ],
+      "inputs": [
+        {
           "path": "security/secure-default-proof-v1.json",
           "role": "CONTRACT",
-          "sha256": "cc6003b28e3350bf2c72d35ee440f2d7e2388d76ee583f0b3d79dd7ee63ddf38"
+          "sha256": "76eb71da949d73677b0ec08aba39cd7aa7cd3cb7f3ab9c60a2d4884cb1ff0ef6"
         },
         {
           "path": "schemas/security/secure-default-proof-v1.schema.json",
@@ -405,7 +569,7 @@
         {
           "path": "security/secure-default-proof-evidence-v1.json",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "1def8759c85a3f8923e151937276905629d6afa3935107e6222c2022eb73eb99"
+          "sha256": "b8ccd6efbf8979059e1e330ab7d31bded4872b65a47d0115c927e182deaa29ce"
         },
         {
           "path": "scripts/verify-secure-default-proof.mjs",
@@ -441,7 +605,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "50359d52dc8c7106b1b01ba0b3963078e581fb5df3b3565988f0ea3d6dd8ab01"
+          "sha256": "f6540005b872f2adc5b6d5bd6513691fc19302431ac57d7b0cc8cc790cea1499"
         },
         {
           "path": "package-lock.json",
