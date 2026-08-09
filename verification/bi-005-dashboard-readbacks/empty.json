@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "chimpmaera.bi/dashboard-readback/v1",
+  "dashboardVersion": "1.0.0",
+  "state": "EMPTY",
+  "code": "NO_MATCHED_FACTS",
+  "heading": "CRM and ERP reconciliation dashboard",
+  "statusMessage": "No BI-004 MATCHED facts are available for the active filters.",
+  "activeFilters": [
+    "tenant=tenant:synthetic-zoo",
+    "currency=EUR",
+    "outcome=MATCHED"
+  ],
+  "kpis": [
+    {
+      "metricId": "measure:crm-amount-minor",
+      "label": "Matched CRM amount",
+      "value": 0,
+      "formattedValue": "0",
+      "unit": "EUR_MINOR",
+      "formula": "SUM(MATCHED.crm.amount_major * 100)",
+      "semanticValuePath": "/kpis/crmAmountMinor",
+      "semanticFormulaPath": "/measures/0/formula",
+      "freshness": {
+        "status": "UNAVAILABLE_NO_MATCHED_ROWS",
+        "observedAt": null,
+        "sourceGeneratedAt": []
+      },
+      "trust": [],
+      "activeFilters": [
+        "tenant=tenant:synthetic-zoo",
+        "currency=EUR",
+        "outcome=MATCHED"
+      ],
+      "limitations": [
+        "Local synthetic readback only; no production analytics service or SLA.",
+        "Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.",
+        "Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.",
+        "Accessibility checks are deterministic contract tests, not certification.",
+        "No write-back, operational command, forecast, decision automation, or financial assurance."
+      ],
+      "sourceLineage": []
+    },
+    {
+      "metricId": "measure:erp-order-total-minor",
+      "label": "Matched ERP order total",
+      "value": 0,
+      "formattedValue": "0",
+      "unit": "EUR_MINOR",
+      "formula": "SUM(MATCHED.erp.total_minor)",
+      "semanticValuePath": "/kpis/erpOrderTotalMinor",
+      "semanticFormulaPath": "/measures/1/formula",
+      "freshness": {
+        "status": "UNAVAILABLE_NO_MATCHED_ROWS",
+        "observedAt": null,
+        "sourceGeneratedAt": []
+      },
+      "trust": [],
+      "activeFilters": [
+        "tenant=tenant:synthetic-zoo",
+        "currency=EUR",
+        "outcome=MATCHED"
+      ],
+      "limitations": [
+        "Local synthetic readback only; no production analytics service or SLA.",
+        "Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.",
+        "Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.",
+        "Accessibility checks are deterministic contract tests, not certification.",
+        "No write-back, operational command, forecast, decision automation, or financial assurance."
+      ],
+      "sourceLineage": []
+    },
+    {
+      "metricId": "measure:reconciliation-delta-minor",
+      "label": "Reconciliation delta",
+      "value": 0,
+      "formattedValue": "0",
+      "unit": "EUR_MINOR",
+      "formula": "measure:crm-amount-minor - measure:erp-order-total-minor",
+      "semanticValuePath": "/kpis/reconciliationDeltaMinor",
+      "semanticFormulaPath": "/measures/2/formula",
+      "freshness": {
+        "status": "UNAVAILABLE_NO_MATCHED_ROWS",
+        "observedAt": null,
+        "sourceGeneratedAt": []
+      },
+      "trust": [],
+      "activeFilters": [
+        "tenant=tenant:synthetic-zoo",
+        "currency=EUR",
+        "outcome=MATCHED"
+      ],
+      "limitations": [
+        "Local synthetic readback only; no production analytics service or SLA.",
+        "Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.",
+        "Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.",
+        "Accessibility checks are deterministic contract tests, not certification.",
+        "No write-back, operational command, forecast, decision automation, or financial assurance."
+      ],
+      "sourceLineage": []
+    }
+  ],
+  "drillThrough": {
+    "selectedCanonicalId": null,
+    "availableCanonicalIds": [],
+    "rows": []
+  },
+  "accessibility": {
+    "landmarks": [
+      "main",
+      "section:kpi-overview",
+      "section:reconciled-fact-detail"
+    ],
+    "headingOrder": [
+      1,
+      2,
+      2,
+      3,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      3,
+      2
+    ],
+    "meaningfulLabels": [
+      "CRM and ERP reconciliation dashboard",
+      "Reconciled fact drill-through"
+    ],
+    "keyboardOrder": [],
+    "contrastChecks": [
+      {
+        "token": "text",
+        "ratio": 14.68,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "secondaryText",
+        "ratio": 10.31,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "link",
+        "ratio": 8.94,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "focus",
+        "ratio": 5.98,
+        "minimum": 3,
+        "pass": true
+      }
+    ],
+    "certificationClaimed": false
+  },
+  "mutationProof": {
+    "attemptedOperations": [],
+    "dashboardWritesAllowed": false,
+    "crmWritesAllowed": false,
+    "erpWritesAllowed": false,
+    "catalogueWritesAllowed": false,
+    "policyWritesAllowed": false,
+    "effectDispatchAllowed": false,
+    "inputDigestBefore": "de373f8f6d5f54a53e2adda538dcc94833d84fe563f6ec18130b959274e6edfc",
+    "inputDigestAfter": "de373f8f6d5f54a53e2adda538dcc94833d84fe563f6ec18130b959274e6edfc"
+  },
+  "html": "<main aria-labelledby=\"dashboard-heading\"><h1 id=\"dashboard-heading\">CRM and ERP reconciliation dashboard</h1><p role=\"status\" aria-live=\"polite\" data-state=\"EMPTY\">No BI-004 MATCHED facts are available for the active filters.</p><section aria-labelledby=\"kpi-overview-heading\"><h2 id=\"kpi-overview-heading\">KPI overview</h2><article aria-labelledby=\"measure:crm-amount-minor-heading\"><h2 id=\"measure:crm-amount-minor-heading\">Matched CRM amount</h2><dl><dt>Value</dt><dd>0</dd><dt>Unit</dt><dd>EUR_MINOR</dd><dt>Formula</dt><dd><code>SUM(MATCHED.crm.amount_major * 100)</code></dd><dt>Formula readback</dt><dd><code>/measures/0/formula</code></dd><dt>Value readback</dt><dd><code>/kpis/crmAmountMinor</code></dd><dt>Freshness</dt><dd>UNAVAILABLE_NO_MATCHED_ROWS; observed unavailable; sources unavailable</dd><dt>Trust</dt><dd>unavailable</dd><dt>Active filters</dt><dd>tenant=tenant:synthetic-zoo; currency=EUR; outcome=MATCHED</dd></dl><h3>Source lineage</h3><ul><li>No matched source lineage is available.</li></ul><h3>Limitations</h3><ul><li>Local synthetic readback only; no production analytics service or SLA.</li><li>Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.</li><li>Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.</li><li>Accessibility checks are deterministic contract tests, not certification.</li><li>No write-back, operational command, forecast, decision automation, or financial assurance.</li></ul></article><article aria-labelledby=\"measure:erp-order-total-minor-heading\"><h2 id=\"measure:erp-order-total-minor-heading\">Matched ERP order total</h2><dl><dt>Value</dt><dd>0</dd><dt>Unit</dt><dd>EUR_MINOR</dd><dt>Formula</dt><dd><code>SUM(MATCHED.erp.total_minor)</code></dd><dt>Formula readback</dt><dd><code>/measures/1/formula</code></dd><dt>Value readback</dt><dd><code>/kpis/erpOrderTotalMinor</code></dd><dt>Freshness</dt><dd>UNAVAILABLE_NO_MATCHED_ROWS; observed unavailable; sources unavailable</dd><dt>Trust</dt><dd>unavailable</dd><dt>Active filters</dt><dd>tenant=tenant:synthetic-zoo; currency=EUR; outcome=MATCHED</dd></dl><h3>Source lineage</h3><ul><li>No matched source lineage is available.</li></ul><h3>Limitations</h3><ul><li>Local synthetic readback only; no production analytics service or SLA.</li><li>Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.</li><li>Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.</li><li>Accessibility checks are deterministic contract tests, not certification.</li><li>No write-back, operational command, forecast, decision automation, or financial assurance.</li></ul></article><article aria-labelledby=\"measure:reconciliation-delta-minor-heading\"><h2 id=\"measure:reconciliation-delta-minor-heading\">Reconciliation delta</h2><dl><dt>Value</dt><dd>0</dd><dt>Unit</dt><dd>EUR_MINOR</dd><dt>Formula</dt><dd><code>measure:crm-amount-minor - measure:erp-order-total-minor</code></dd><dt>Formula readback</dt><dd><code>/measures/2/formula</code></dd><dt>Value readback</dt><dd><code>/kpis/reconciliationDeltaMinor</code></dd><dt>Freshness</dt><dd>UNAVAILABLE_NO_MATCHED_ROWS; observed unavailable; sources unavailable</dd><dt>Trust</dt><dd>unavailable</dd><dt>Active filters</dt><dd>tenant=tenant:synthetic-zoo; currency=EUR; outcome=MATCHED</dd></dl><h3>Source lineage</h3><ul><li>No matched source lineage is available.</li></ul><h3>Limitations</h3><ul><li>Local synthetic readback only; no production analytics service or SLA.</li><li>Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.</li><li>Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.</li><li>Accessibility checks are deterministic contract tests, not certification.</li><li>No write-back, operational command, forecast, decision automation, or financial assurance.</li></ul></article></section><section aria-labelledby=\"drill-heading\"><h2 id=\"drill-heading\">Reconciled fact detail</h2><nav aria-label=\"Reconciled fact drill-through\"></nav><p>No reconciled fact selected.</p></section></main>",
+  "readbackDigest": "af2259100159549f3b60e88677b66de5eb57fe654992b2fba1d3b66547e69935"
+}

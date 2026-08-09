@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 4,
+  "graphVersion": 5,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -16,6 +16,104 @@
     "./scripts/build-public-release.sh --output <isolated-absolute-path>"
   ],
   "nodes": [
+    {
+      "id": "bi-dashboard-readback-v1",
+      "dependsOn": [
+        "bi-semantic-reconciliation-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/bi-dashboard.ts",
+          "role": "CONTRACT",
+          "sha256": "56ff6d5d08f58025e8e9b305397c7dc5b9c560aeff3d27d480def3ce4d165e00"
+        },
+        {
+          "path": "schemas/contracts/bi-dashboard-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "8379a30dcf43f0d74de0d77a86b1db69d5487ea5e21a9992ebf72c67e7a5e55c"
+        },
+        {
+          "path": "tests/fixtures/bi-dashboard/dashboard-set-v1.json",
+          "role": "FIXTURE",
+          "sha256": "593143a972d9cfa1b7f9a5c78dcf43957be8ae66367641f1864f33568d9dbdd8"
+        },
+        {
+          "path": "tests/fixtures/bi-dashboard/request-v1.json",
+          "role": "FIXTURE",
+          "sha256": "ddeca5fb3c3af72fd949ae198477659cb4d4efd4883c3e80257148d7c83cb93d"
+        },
+        {
+          "path": "tests/fixtures/bi-dashboard/negative-probes-v1.json",
+          "role": "FIXTURE",
+          "sha256": "3266e585b58057a414aa76405d4cbefa15c705ac82c55ce48a740145750f507d"
+        },
+        {
+          "path": "tests/bi-dashboard.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "b044631cd004de497aa335578589079bcd80e89cbb1538731be21e7f12722aa1"
+        },
+        {
+          "path": "scripts/render-bi-dashboard-evidence.mjs",
+          "role": "VALIDATOR",
+          "sha256": "e63e7db417b272d0967733f3c8a05203058e996fe69e86035cd236cd2c5e56dd"
+        },
+        {
+          "path": "docs/BI-DASHBOARD-READBACK-GUIDE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "ebeacede0d8f1af2f5e72a3724e867fea6d640e7bb1bd8ac7f21486c41e89b01"
+        },
+        {
+          "path": "docs/development/bi-005-dashboard-readback-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "37bbdbc840cb31b67efa0c2a6cbe6746a6c7d9b6b8a9c0dc1ee650ff271d478a"
+        },
+        {
+          "path": "verification/bi-005-dashboard-evidence-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "932d6c3837087e523f540f69c951373ee5d9e8210dec52ce37fe75fcd6c4dd1e"
+        },
+        {
+          "path": "verification/bi-005-dashboard-readbacks/normal.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "40455b437905fe6cdd97cfe3f99e3222fcc6593c57047152c2d7b7ec0d228813"
+        },
+        {
+          "path": "verification/bi-005-dashboard-readbacks/empty.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "5c96ace3f679149cd195f8732d6ed75487d24a891acc5b61f48defb35559896f"
+        },
+        {
+          "path": "verification/bi-005-dashboard-readbacks/stale.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa"
+        },
+        {
+          "path": "verification/bi-005-dashboard-readbacks/conflict.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77"
+        },
+        {
+          "path": "verification/bi-005-dashboard-readbacks/denied.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "5dc933ea91e6bf89f4be60c3106ca5eefc3034438a8d7e5b5eb60ee18024438f"
+        },
+        {
+          "path": "verification/bi-005-dashboard-readbacks/error.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "393af7b629ac8e9fc09f8cf598c96026c8e269d16bc0d126c49a6ead3cd32b6c"
+        }
+      ],
+      "ownedTests": [
+        "npm run bi-dashboard:test"
+      ],
+      "invariants": [
+        "Dashboard KPI values and formulas are read back from the accepted BI-004 report/model and are never recomputed or substituted.",
+        "Tenant, model, lineage, filters, role-hidden identifiers, freshness, accessibility, and report integrity fail closed before KPI or drill-row display.",
+        "Canonical-ID drill-through sanitizes source lineage and no dashboard, CRM, ERP, catalogue, policy, or effect mutation is possible."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
     {
       "id": "bi-semantic-reconciliation-v1",
       "dependsOn": [
@@ -196,7 +294,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "9a15af0ec3e3f3c65d11a4cfdf6c8ee10be99cb87054a28cb3ba8920ef77048c"
+          "sha256": "769978ced9ec8e998291b198e77cb81de31bc379e05fd756ce6fc380ce949f1b"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -273,7 +371,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "74a1f4b05c2be32e18324263fe6f006ef7f02f5216d318485a1c6ea916dc4e4f"
+          "sha256": "bab061320af285262c2700d94f9ec4fd8103047d5d2a48acc7a5b44d07e2049a"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -420,7 +518,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "f5dfb29952b48e962d3e0ea0ddb5664aba7b7168dba2186f2feff7fc9854b54b"
+          "sha256": "b1859f4e611b3d1f85178b83e39926e7c6a1833a4b260773f2acb937f99e22c7"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -712,7 +810,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "c16f64c1070c0a3d0b536423178c84b6f0b3f4e0f26a645ba63536018ab67757"
+          "sha256": "c65c28a2831e5ed53e761b4727f4c16761b63c6072904b48bdd3622c8b2e8152"
         },
         {
           "path": "package-lock.json",

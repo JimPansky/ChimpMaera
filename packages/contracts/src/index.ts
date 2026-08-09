@@ -47,5 +47,6 @@ export * from "./bi-execution-spine.js";
 export * from "./crm-read-connector.js";
 export * from "./erp-read-connector.js";
 export * from "./bi-semantic-reconciliation.js";
+export * from "./bi-dashboard.js";
 export * from "./integration-profile.js";
 export * from "./voice-local-ptt.js";

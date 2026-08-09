@@ -74,7 +74,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "integration-profile-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "integration-profile-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 
@@ -102,8 +102,16 @@ test("BI execution spine changes select the bounded owner and downstream integri
 test("BI semantic reconciliation changes select the bounded owner and integrity gates", () => {
   const result = plan(["packages/contracts/src/bi-semantic-reconciliation.ts"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["bi-semantic-reconciliation-v1"]);
+  assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-semantic-reconciliation-v1"]);
   assert.ok(result.selectedTests.includes("npm run bi-semantic:test"));
+  assert.ok(result.selectedTests.includes("npm run bi-dashboard:test"));
+});
+
+test("BI dashboard changes select only the bounded dashboard owner and integrity gates", () => {
+  const result = plan(["packages/contracts/src/bi-dashboard.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1"]);
+  assert.ok(result.selectedTests.includes("npm run bi-dashboard:test"));
 });
 
 test("both canonical JSON implementations invalidate the M1.4 node and secure-default closure", () => {

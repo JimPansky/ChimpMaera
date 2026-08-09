@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "chimpmaera.bi/dashboard-readback/v1",
+  "dashboardVersion": "1.0.0",
+  "state": "NORMAL",
+  "code": "DASHBOARD_READY",
+  "heading": "CRM and ERP reconciliation dashboard",
+  "statusMessage": "3 reconciled synthetic facts available.",
+  "activeFilters": [
+    "tenant=tenant:synthetic-zoo",
+    "currency=EUR",
+    "outcome=MATCHED"
+  ],
+  "kpis": [
+    {
+      "metricId": "measure:crm-amount-minor",
+      "label": "Matched CRM amount",
+      "value": 8750000,
+      "formattedValue": "8,750,000",
+      "unit": "EUR_MINOR",
+      "formula": "SUM(MATCHED.crm.amount_major * 100)",
+      "semanticValuePath": "/kpis/crmAmountMinor",
+      "semanticFormulaPath": "/measures/0/formula",
+      "freshness": {
+        "status": "FRESH",
+        "observedAt": "2026-08-10T08:30:00Z",
+        "sourceGeneratedAt": [
+          "2026-08-10T08:00:00Z"
+        ]
+      },
+      "trust": [
+        "LOCAL_SYNTHETIC"
+      ],
+      "activeFilters": [
+        "tenant=tenant:synthetic-zoo",
+        "currency=EUR",
+        "outcome=MATCHED"
+      ],
+      "limitations": [
+        "Local synthetic readback only; no production analytics service or SLA.",
+        "Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.",
+        "Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.",
+        "Accessibility checks are deterministic contract tests, not certification.",
+        "No write-back, operational command, forecast, decision automation, or financial assurance."
+      ],
+      "sourceLineage": [
+        {
+          "system": "SYNTHETIC_CRM",
+          "readbackPath": "/rows/0/lineage/crm",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:a2625964ed9f",
+          "digestRef": "sha256:79e27070b3e1",
+          "batchRef": "ref:f867eb1789eb",
+          "sourceRecordRef": null
+        },
+        {
+          "system": "SYNTHETIC_CRM",
+          "readbackPath": "/rows/1/lineage/crm",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:a2625964ed9f",
+          "digestRef": "sha256:79e27070b3e1",
+          "batchRef": "ref:f867eb1789eb",
+          "sourceRecordRef": null
+        },
+        {
+          "system": "SYNTHETIC_CRM",
+          "readbackPath": "/rows/2/lineage/crm",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:a2625964ed9f",
+          "digestRef": "sha256:79e27070b3e1",
+          "batchRef": "ref:f867eb1789eb",
+          "sourceRecordRef": null
+        }
+      ]
+    },
+    {
+      "metricId": "measure:erp-order-total-minor",
+      "label": "Matched ERP order total",
+      "value": 8750000,
+      "formattedValue": "8,750,000",
+      "unit": "EUR_MINOR",
+      "formula": "SUM(MATCHED.erp.total_minor)",
+      "semanticValuePath": "/kpis/erpOrderTotalMinor",
+      "semanticFormulaPath": "/measures/1/formula",
+      "freshness": {
+        "status": "FRESH",
+        "observedAt": "2026-08-10T08:30:00Z",
+        "sourceGeneratedAt": [
+          "2026-08-10T08:00:00Z"
+        ]
+      },
+      "trust": [
+        "LOCAL_SYNTHETIC"
+      ],
+      "activeFilters": [
+        "tenant=tenant:synthetic-zoo",
+        "currency=EUR",
+        "outcome=MATCHED"
+      ],
+      "limitations": [
+        "Local synthetic readback only; no production analytics service or SLA.",
+        "Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.",
+        "Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.",
+        "Accessibility checks are deterministic contract tests, not certification.",
+        "No write-back, operational command, forecast, decision automation, or financial assurance."
+      ],
+      "sourceLineage": [
+        {
+          "system": "SYNTHETIC_ERP",
+          "readbackPath": "/rows/0/lineage/erp",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:e8a0db95e80f",
+          "digestRef": "sha256:01b2e51e8953",
+          "batchRef": "ref:2a3678f79048",
+          "sourceRecordRef": "ref:c041e5230c4d"
+        },
+        {
+          "system": "SYNTHETIC_ERP",
+          "readbackPath": "/rows/1/lineage/erp",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:e8a0db95e80f",
+          "digestRef": "sha256:01b2e51e8953",
+          "batchRef": "ref:2a3678f79048",
+          "sourceRecordRef": "ref:35669340bd98"
+        },
+        {
+          "system": "SYNTHETIC_ERP",
+          "readbackPath": "/rows/2/lineage/erp",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:e8a0db95e80f",
+          "digestRef": "sha256:01b2e51e8953",
+          "batchRef": "ref:2a3678f79048",
+          "sourceRecordRef": "ref:2e6ca93ea965"
+        }
+      ]
+    },
+    {
+      "metricId": "measure:reconciliation-delta-minor",
+      "label": "Reconciliation delta",
+      "value": 0,
+      "formattedValue": "0",
+      "unit": "EUR_MINOR",
+      "formula": "measure:crm-amount-minor - measure:erp-order-total-minor",
+      "semanticValuePath": "/kpis/reconciliationDeltaMinor",
+      "semanticFormulaPath": "/measures/2/formula",
+      "freshness": {
+        "status": "FRESH",
+        "observedAt": "2026-08-10T08:30:00Z",
+        "sourceGeneratedAt": [
+          "2026-08-10T08:00:00Z"
+        ]
+      },
+      "trust": [
+        "LOCAL_SYNTHETIC"
+      ],
+      "activeFilters": [
+        "tenant=tenant:synthetic-zoo",
+        "currency=EUR",
+        "outcome=MATCHED"
+      ],
+      "limitations": [
+        "Local synthetic readback only; no production analytics service or SLA.",
+        "Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.",
+        "Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.",
+        "Accessibility checks are deterministic contract tests, not certification.",
+        "No write-back, operational command, forecast, decision automation, or financial assurance."
+      ],
+      "sourceLineage": [
+        {
+          "system": "SYNTHETIC_CRM",
+          "readbackPath": "/rows/0/lineage/crm",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:a2625964ed9f",
+          "digestRef": "sha256:79e27070b3e1",
+          "batchRef": "ref:f867eb1789eb",
+          "sourceRecordRef": null
+        },
+        {
+          "system": "SYNTHETIC_ERP",
+          "readbackPath": "/rows/0/lineage/erp",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:e8a0db95e80f",
+          "digestRef": "sha256:01b2e51e8953",
+          "batchRef": "ref:2a3678f79048",
+          "sourceRecordRef": "ref:c041e5230c4d"
+        },
+        {
+          "system": "SYNTHETIC_CRM",
+          "readbackPath": "/rows/1/lineage/crm",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:a2625964ed9f",
+          "digestRef": "sha256:79e27070b3e1",
+          "batchRef": "ref:f867eb1789eb",
+          "sourceRecordRef": null
+        },
+        {
+          "system": "SYNTHETIC_ERP",
+          "readbackPath": "/rows/1/lineage/erp",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:e8a0db95e80f",
+          "digestRef": "sha256:01b2e51e8953",
+          "batchRef": "ref:2a3678f79048",
+          "sourceRecordRef": "ref:35669340bd98"
+        },
+        {
+          "system": "SYNTHETIC_CRM",
+          "readbackPath": "/rows/2/lineage/crm",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:a2625964ed9f",
+          "digestRef": "sha256:79e27070b3e1",
+          "batchRef": "ref:f867eb1789eb",
+          "sourceRecordRef": null
+        },
+        {
+          "system": "SYNTHETIC_ERP",
+          "readbackPath": "/rows/2/lineage/erp",
+          "datasetRef": "ref:ed3f39b96d7e",
+          "exportRef": "ref:e8a0db95e80f",
+          "digestRef": "sha256:01b2e51e8953",
+          "batchRef": "ref:2a3678f79048",
+          "sourceRecordRef": "ref:2e6ca93ea965"
+        }
+      ]
+    }
+  ],
+  "drillThrough": {
+    "selectedCanonicalId": "canonical:3a68bea677e96a44319d4431",
+    "availableCanonicalIds": [
+      "canonical:3a68bea677e96a44319d4431",
+      "canonical:9b62a23b45a18b1591d7bd50",
+      "canonical:ff48c7ad37847f2f11c92873"
+    ],
+    "rows": [
+      {
+        "canonicalId": "canonical:3a68bea677e96a44319d4431",
+        "outcome": "MATCHED",
+        "crmAmountMinor": 1800000,
+        "erpTotalMinor": 1800000,
+        "deltaMinor": 0,
+        "currency": "EUR",
+        "freshness": {
+          "observedAt": "2026-08-10T08:30:00Z",
+          "crmGeneratedAt": "2026-08-10T08:00:00Z",
+          "erpGeneratedAt": "2026-08-10T08:00:00Z"
+        },
+        "trust": [
+          "LOCAL_SYNTHETIC",
+          "LOCAL_SYNTHETIC"
+        ],
+        "sanitizedLineage": [
+          {
+            "system": "SYNTHETIC_CRM",
+            "readbackPath": "/rows/0/lineage/crm",
+            "datasetRef": "ref:ed3f39b96d7e",
+            "exportRef": "ref:a2625964ed9f",
+            "digestRef": "sha256:79e27070b3e1",
+            "batchRef": "ref:f867eb1789eb",
+            "sourceRecordRef": null
+          },
+          {
+            "system": "SYNTHETIC_ERP",
+            "readbackPath": "/rows/0/lineage/erp",
+            "datasetRef": "ref:ed3f39b96d7e",
+            "exportRef": "ref:e8a0db95e80f",
+            "digestRef": "sha256:01b2e51e8953",
+            "batchRef": "ref:2a3678f79048",
+            "sourceRecordRef": "ref:c041e5230c4d"
+          }
+        ]
+      }
+    ]
+  },
+  "accessibility": {
+    "landmarks": [
+      "main",
+      "section:kpi-overview",
+      "section:reconciled-fact-detail"
+    ],
+    "headingOrder": [
+      1,
+      2,
+      2,
+      3,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      3,
+      2
+    ],
+    "meaningfulLabels": [
+      "CRM and ERP reconciliation dashboard",
+      "Reconciled fact drill-through",
+      "Open reconciled fact canonical:3a68bea677e96a44319d4431",
+      "Open reconciled fact canonical:9b62a23b45a18b1591d7bd50",
+      "Open reconciled fact canonical:ff48c7ad37847f2f11c92873"
+    ],
+    "keyboardOrder": [
+      "drill:canonical:3a68bea677e96a44319d4431",
+      "drill:canonical:9b62a23b45a18b1591d7bd50",
+      "drill:canonical:ff48c7ad37847f2f11c92873"
+    ],
+    "contrastChecks": [
+      {
+        "token": "text",
+        "ratio": 14.68,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "secondaryText",
+        "ratio": 10.31,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "link",
+        "ratio": 8.94,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "focus",
+        "ratio": 5.98,
+        "minimum": 3,
+        "pass": true
+      }
+    ],
+    "certificationClaimed": false
+  },
+  "mutationProof": {
+    "attemptedOperations": [],
+    "dashboardWritesAllowed": false,
+    "crmWritesAllowed": false,
+    "erpWritesAllowed": false,
+    "catalogueWritesAllowed": false,
+    "policyWritesAllowed": false,
+    "effectDispatchAllowed": false,
+    "inputDigestBefore": "099423567091a8a9dcdbe261bb1e1195adefa60a46fb6112d672da23139aba60",
+    "inputDigestAfter": "099423567091a8a9dcdbe261bb1e1195adefa60a46fb6112d672da23139aba60"
+  },
+  "html": "<main aria-labelledby=\"dashboard-heading\"><h1 id=\"dashboard-heading\">CRM and ERP reconciliation dashboard</h1><p role=\"status\" aria-live=\"polite\" data-state=\"NORMAL\">3 reconciled synthetic facts available.</p><section aria-labelledby=\"kpi-overview-heading\"><h2 id=\"kpi-overview-heading\">KPI overview</h2><article aria-labelledby=\"measure:crm-amount-minor-heading\"><h2 id=\"measure:crm-amount-minor-heading\">Matched CRM amount</h2><dl><dt>Value</dt><dd>8,750,000</dd><dt>Unit</dt><dd>EUR_MINOR</dd><dt>Formula</dt><dd><code>SUM(MATCHED.crm.amount_major * 100)</code></dd><dt>Formula readback</dt><dd><code>/measures/0/formula</code></dd><dt>Value readback</dt><dd><code>/kpis/crmAmountMinor</code></dd><dt>Freshness</dt><dd>FRESH; observed 2026-08-10T08:30:00Z; sources 2026-08-10T08:00:00Z</dd><dt>Trust</dt><dd>LOCAL_SYNTHETIC</dd><dt>Active filters</dt><dd>tenant=tenant:synthetic-zoo; currency=EUR; outcome=MATCHED</dd></dl><h3>Source lineage</h3><ul><li>SYNTHETIC_CRM at <code>/rows/0/lineage/crm</code>; dataset ref:ed3f39b96d7e; export ref:a2625964ed9f; digest sha256:79e27070b3e1</li><li>SYNTHETIC_CRM at <code>/rows/1/lineage/crm</code>; dataset ref:ed3f39b96d7e; export ref:a2625964ed9f; digest sha256:79e27070b3e1</li><li>SYNTHETIC_CRM at <code>/rows/2/lineage/crm</code>; dataset ref:ed3f39b96d7e; export ref:a2625964ed9f; digest sha256:79e27070b3e1</li></ul><h3>Limitations</h3><ul><li>Local synthetic readback only; no production analytics service or SLA.</li><li>Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.</li><li>Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.</li><li>Accessibility checks are deterministic contract tests, not certification.</li><li>No write-back, operational command, forecast, decision automation, or financial assurance.</li></ul></article><article aria-labelledby=\"measure:erp-order-total-minor-heading\"><h2 id=\"measure:erp-order-total-minor-heading\">Matched ERP order total</h2><dl><dt>Value</dt><dd>8,750,000</dd><dt>Unit</dt><dd>EUR_MINOR</dd><dt>Formula</dt><dd><code>SUM(MATCHED.erp.total_minor)</code></dd><dt>Formula readback</dt><dd><code>/measures/1/formula</code></dd><dt>Value readback</dt><dd><code>/kpis/erpOrderTotalMinor</code></dd><dt>Freshness</dt><dd>FRESH; observed 2026-08-10T08:30:00Z; sources 2026-08-10T08:00:00Z</dd><dt>Trust</dt><dd>LOCAL_SYNTHETIC</dd><dt>Active filters</dt><dd>tenant=tenant:synthetic-zoo; currency=EUR; outcome=MATCHED</dd></dl><h3>Source lineage</h3><ul><li>SYNTHETIC_ERP at <code>/rows/0/lineage/erp</code>; dataset ref:ed3f39b96d7e; export ref:e8a0db95e80f; digest sha256:01b2e51e8953</li><li>SYNTHETIC_ERP at <code>/rows/1/lineage/erp</code>; dataset ref:ed3f39b96d7e; export ref:e8a0db95e80f; digest sha256:01b2e51e8953</li><li>SYNTHETIC_ERP at <code>/rows/2/lineage/erp</code>; dataset ref:ed3f39b96d7e; export ref:e8a0db95e80f; digest sha256:01b2e51e8953</li></ul><h3>Limitations</h3><ul><li>Local synthetic readback only; no production analytics service or SLA.</li><li>Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.</li><li>Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.</li><li>Accessibility checks are deterministic contract tests, not certification.</li><li>No write-back, operational command, forecast, decision automation, or financial assurance.</li></ul></article><article aria-labelledby=\"measure:reconciliation-delta-minor-heading\"><h2 id=\"measure:reconciliation-delta-minor-heading\">Reconciliation delta</h2><dl><dt>Value</dt><dd>0</dd><dt>Unit</dt><dd>EUR_MINOR</dd><dt>Formula</dt><dd><code>measure:crm-amount-minor - measure:erp-order-total-minor</code></dd><dt>Formula readback</dt><dd><code>/measures/2/formula</code></dd><dt>Value readback</dt><dd><code>/kpis/reconciliationDeltaMinor</code></dd><dt>Freshness</dt><dd>FRESH; observed 2026-08-10T08:30:00Z; sources 2026-08-10T08:00:00Z</dd><dt>Trust</dt><dd>LOCAL_SYNTHETIC</dd><dt>Active filters</dt><dd>tenant=tenant:synthetic-zoo; currency=EUR; outcome=MATCHED</dd></dl><h3>Source lineage</h3><ul><li>SYNTHETIC_CRM at <code>/rows/0/lineage/crm</code>; dataset ref:ed3f39b96d7e; export ref:a2625964ed9f; digest sha256:79e27070b3e1</li><li>SYNTHETIC_ERP at <code>/rows/0/lineage/erp</code>; dataset ref:ed3f39b96d7e; export ref:e8a0db95e80f; digest sha256:01b2e51e8953</li><li>SYNTHETIC_CRM at <code>/rows/1/lineage/crm</code>; dataset ref:ed3f39b96d7e; export ref:a2625964ed9f; digest sha256:79e27070b3e1</li><li>SYNTHETIC_ERP at <code>/rows/1/lineage/erp</code>; dataset ref:ed3f39b96d7e; export ref:e8a0db95e80f; digest sha256:01b2e51e8953</li><li>SYNTHETIC_CRM at <code>/rows/2/lineage/crm</code>; dataset ref:ed3f39b96d7e; export ref:a2625964ed9f; digest sha256:79e27070b3e1</li><li>SYNTHETIC_ERP at <code>/rows/2/lineage/erp</code>; dataset ref:ed3f39b96d7e; export ref:e8a0db95e80f; digest sha256:01b2e51e8953</li></ul><h3>Limitations</h3><ul><li>Local synthetic readback only; no production analytics service or SLA.</li><li>Only BI-004 MATCHED EUR facts contribute; unresolved and stale facts are excluded.</li><li>Filters are intentionally fixed to one synthetic tenant, EUR, and MATCHED outcome.</li><li>Accessibility checks are deterministic contract tests, not certification.</li><li>No write-back, operational command, forecast, decision automation, or financial assurance.</li></ul></article></section><section aria-labelledby=\"drill-heading\"><h2 id=\"drill-heading\">Reconciled fact detail</h2><nav aria-label=\"Reconciled fact drill-through\"><button type=\"button\" data-canonical-id=\"canonical:3a68bea677e96a44319d4431\" aria-label=\"Open reconciled fact canonical:3a68bea677e96a44319d4431\">Open canonical:3a68bea677e96a44319d4431</button><button type=\"button\" data-canonical-id=\"canonical:9b62a23b45a18b1591d7bd50\" aria-label=\"Open reconciled fact canonical:9b62a23b45a18b1591d7bd50\">Open canonical:9b62a23b45a18b1591d7bd50</button><button type=\"button\" data-canonical-id=\"canonical:ff48c7ad37847f2f11c92873\" aria-label=\"Open reconciled fact canonical:ff48c7ad37847f2f11c92873\">Open canonical:ff48c7ad37847f2f11c92873</button></nav><table><caption>Selected reconciled synthetic CRM and ERP fact</caption><thead><tr><th scope=\"col\">Canonical ID</th><th scope=\"col\">Outcome</th><th scope=\"col\">CRM amount minor</th><th scope=\"col\">ERP total minor</th><th scope=\"col\">Delta minor</th><th scope=\"col\">Currency</th><th scope=\"col\">Observed at</th><th scope=\"col\">Trust</th><th scope=\"col\">Sanitized lineage</th></tr></thead><tbody><tr><th scope=\"row\">canonical:3a68bea677e96a44319d4431</th><td>MATCHED</td><td>1800000</td><td>1800000</td><td>0</td><td>EUR</td><td>2026-08-10T08:30:00Z</td><td>LOCAL_SYNTHETIC, LOCAL_SYNTHETIC</td><td>SYNTHETIC_CRM:sha256:79e27070b3e1; SYNTHETIC_ERP:sha256:01b2e51e8953</td></tr></tbody></table></section></main>",
+  "readbackDigest": "231259cb287b7e2ce4a8f9355441bfc8a186e241b09de418afd177a9d8d27f29"
+}

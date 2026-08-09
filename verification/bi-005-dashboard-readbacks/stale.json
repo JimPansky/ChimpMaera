@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "chimpmaera.bi/dashboard-readback/v1",
+  "dashboardVersion": "1.0.0",
+  "state": "STALE",
+  "code": "SOURCE_STALE",
+  "heading": "CRM and ERP reconciliation dashboard",
+  "statusMessage": "BI-004 marked the source facts stale; no KPI is displayed.",
+  "activeFilters": [],
+  "kpis": [],
+  "drillThrough": {
+    "selectedCanonicalId": null,
+    "availableCanonicalIds": [],
+    "rows": []
+  },
+  "accessibility": {
+    "landmarks": [
+      "main",
+      "section:dashboard-status"
+    ],
+    "headingOrder": [
+      1,
+      2
+    ],
+    "meaningfulLabels": [
+      "CRM and ERP reconciliation dashboard",
+      "Dashboard status"
+    ],
+    "keyboardOrder": [],
+    "contrastChecks": [
+      {
+        "token": "text",
+        "ratio": 14.68,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "secondaryText",
+        "ratio": 10.31,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "link",
+        "ratio": 8.94,
+        "minimum": 4.5,
+        "pass": true
+      },
+      {
+        "token": "focus",
+        "ratio": 5.98,
+        "minimum": 3,
+        "pass": true
+      }
+    ],
+    "certificationClaimed": false
+  },
+  "mutationProof": {
+    "attemptedOperations": [],
+    "dashboardWritesAllowed": false,
+    "crmWritesAllowed": false,
+    "erpWritesAllowed": false,
+    "catalogueWritesAllowed": false,
+    "policyWritesAllowed": false,
+    "effectDispatchAllowed": false,
+    "inputDigestBefore": "d0d0ad6325691f1e4356973a1b5b74a1b2a51d0d2a11d5a29c3e6877821429db",
+    "inputDigestAfter": "d0d0ad6325691f1e4356973a1b5b74a1b2a51d0d2a11d5a29c3e6877821429db"
+  },
+  "html": "<main aria-labelledby=\"dashboard-heading\"><h1 id=\"dashboard-heading\">CRM and ERP reconciliation dashboard</h1><section aria-labelledby=\"dashboard-status-heading\"><h2 id=\"dashboard-status-heading\">Dashboard status</h2><p role=\"status\" aria-live=\"polite\" data-state=\"STALE\">BI-004 marked the source facts stale; no KPI is displayed.</p></section></main>",
+  "readbackDigest": "370deed8a823d6defdf6ec898d6952531598b782a017a85b69c7bbd80781ce60"
+}
