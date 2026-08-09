@@ -1,0 +1,23 @@
+{
+  "schemaVersion":"chimpmaera.openclaw-m1.5/adversarial-matrix/v2",
+  "fixtureClass":"SYNTHETIC_SANITIZED_REPRODUCIBLE",
+  "probes":[
+    {"id":"NET-01","area":"CONTAINMENT","scenario":"direct network variants","expected":{"outcome":"DENIED","codes":["PROTOCOL_DENIED","DNS_TARGET_DENIED","DESTINATION_DENIED","ROUTE_DENIED"]}},
+    {"id":"RUNTIME-01","area":"CONTAINMENT","scenario":"filesystem credential socket and device paths","expected":{"outcome":"DECLARED_ABSENT_OR_READ_ONLY","checks":8}},
+    {"id":"FX-01","area":"CONTAINMENT","scenario":"unmanaged effect route","expected":{"outcome":"DENIED","code":"ROUTE_DENIED","effects":0}},
+    {"id":"ID-01","area":"IDENTITY_SCHEMA","scenario":"malformed identity and schema","expected":{"outcome":"DENIED","codes":["IDENTITY_PROOF_DENIED","REQUEST_SCHEMA_INVALID_DENIED"],"effects":0}},
+    {"id":"TEN-01","area":"TENANT","scenario":"tenant swapped mind read write and reset","expected":{"outcome":"DENIED","code":"MIND_SCOPE_DENIED","state":"BYTE_PRESERVED"}},
+    {"id":"TEN-02","area":"TENANT","scenario":"tenant swapped receipt read and retry","expected":{"outcome":"INDISTINGUISHABLE_DENIAL","code":"CROSS_TENANT_DENIED","states":"BOTH_BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED","effects":1}},
+    {"id":"TEN-03","area":"TENANT","scenario":"tenant swapped reserved recovery","expected":{"outcome":"INDISTINGUISHABLE_DENIAL","code":"CROSS_TENANT_DENIED","states":"BOTH_BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED","effects":0}},
+    {"id":"TEN-04","area":"TENANT","scenario":"tenant swapped committed recovery","expected":{"outcome":"INDISTINGUISHABLE_DENIAL","code":"CROSS_TENANT_DENIED","states":"BOTH_BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED","effects":1}},
+    {"id":"STALE-01","area":"FRESHNESS","scenario":"stale policy binding and state","expected":{"outcome":"DENIED","codes":["POLICY_BINDING_MISMATCH_DENIED","MIND_STALE_GENERATION_DENIED"],"effects":0}},
+    {"id":"REPLAY-01","area":"REPLAY_QUOTA","scenario":"identity replay duplicate and quota","expected":{"outcome":"DETERMINISTIC","replayCode":"IDENTITY_REPLAY_DENIED","quotaCode":"IDENTITY_REPLAY_CACHE_FULL_DENIED","duplicate":"SAME_RECEIPT_ONE_EFFECT"}},
+    {"id":"RESET-01","area":"RESET","scenario":"interrupted reset recovery and replay","expected":{"outcome":"RECOVERED_ONCE","prepared":"RESET_RECOVERY_REQUIRED","retry":"ALREADY_COMMITTED","foreign":"BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED"}},
+    {"id":"TIME-01","area":"PARTIAL_FAILURE","scenario":"pre reservation timeout","expected":{"outcome":"DENIED","code":"IDENTITY_EXPIRED_DENIED","retry":"IDENTITY_EXPIRED_DENIED","durable":"UNCHANGED","effects":0,"receipt":"NONE","foreign":"BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED"}},
+    {"id":"FAIL-01","area":"PARTIAL_FAILURE","scenario":"post reservation interruption restart","expected":{"outcome":"DENIED","code":"REPLAY_IN_FLIGHT_DENIED","retry":"REPLAY_IN_FLIGHT_DENIED","durable":"RESERVED","effects":0,"receipt":"NONE","foreign":"BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED"}},
+    {"id":"FAIL-02","area":"PARTIAL_FAILURE","scenario":"post commit readback ambiguity","expected":{"outcome":"RECOVERED","replay":"RECOVERED_AUTHORITATIVE_READBACK","retry":"RECOVERED_SAME_RECEIPT","durable":"COMMITTED_TO_EFFECT","effects":1,"receipt":"SAME","foreign":"BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED"}},
+    {"id":"FAIL-03","area":"PARTIAL_FAILURE","scenario":"broker malformed response","expected":{"outcome":"DENIED","code":"RESPONSE_SCHEMA_INVALID_DENIED","retry":"RESPONSE_SCHEMA_INVALID_DENIED","durable":"UNCHANGED","effects":0,"receipt":"NONE","foreign":"BYTE_PRESERVED","partitions":"EMBEDDED","comparator":"MUTATION_DETECTED"}},
+    {"id":"EVD-01","area":"EVIDENCE","scenario":"missing tampered or broadened evidence","expected":{"outcome":"DENIED","codes":["EVIDENCE_MISSING_DENIED","EVIDENCE_INDEX_SEMANTICS_DENIED","PUBLIC_CLAIM_SCOPE_DENIED"]}},
+    {"id":"NC-01","area":"NON_CLAIM","scenario":"local synthetic scope only","expected":{"outcome":"EXPLICITLY_NOT_CLAIMED","count":9}}
+  ]
+}

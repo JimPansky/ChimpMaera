@@ -249,7 +249,7 @@
     {
       "path": "tests/helpers/openclaw-m1-4-harness.mjs",
       "role": "TEST",
-      "sha256": "e9308957634610ca721bf0beb9f37bb5d55e95c6b344e3c7ba94ebebf76be052"
+      "sha256": "db8f975679af390b49120ac9c928ba6f0e988988919b14402b474a4aee3e84ba"
     },
     {
       "path": "security/openclaw-m1.4-evidence-v1.json",

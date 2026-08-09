@@ -31,7 +31,7 @@ export function admitWithCanonicalFixtures(request, { activation = canonicalActi
   );
 }
 
-export function brokerWithSyntheticResponse(request, response) {
+export function brokerWithSyntheticResponse(request, response, { receipts = new Map() } = {}) {
   const decision = admitWithCanonicalFixtures(request);
   let effects = 0;
   const receipt = executeCapabilityAtBrokerV1(
@@ -40,7 +40,7 @@ export function brokerWithSyntheticResponse(request, response) {
     canonicalPolicy,
     decision,
     OBSERVED_AT,
-    new Map(),
+    receipts,
     { prepare: () => ({ response, commit: () => { effects += 1; } }) },
     { nowMs: () => 0 },
   );

@@ -1,0 +1,17 @@
+{
+  "schemaVersion":"chimpmaera.openclaw-m1.5/evidence-index/v2",
+  "workItem":"OPENCLAW-M1.5",
+  "baseline":"3eb78a1ca74420923abfd8a705c40c3ba15732c8",
+  "binding":{"method":"EXECUTED_PROBE_OUTPUT_AND_CLEAN_GIT_HEAD","state":"PRE_COMMIT_NON_FINAL","testedCommit":null,"finalizeCommand":"npm run openclaw-m1.5:evidence -- --finalize"},
+  "matrix":{"path":"tests/fixtures/openclaw-m1.5/adversarial-matrix-v1.json","probeCommand":"node scripts/run-openclaw-m1.5-probes.mjs"},
+  "claims":[
+    {"id":"M15-C1","statement":"The exact local synthetic harness denies documented direct paths and validates the fixture's declared read-only or absent runtime paths.","probes":["NET-01","RUNTIME-01","FX-01","ID-01"]},
+    {"id":"M15-C2","statement":"The exact local synthetic harness denies tenant-swapped mind, receipt, reset and recovery operations without changing either synthetic tenant state.","probes":["TEN-01","TEN-02","TEN-03","TEN-04"]},
+    {"id":"M15-C3","statement":"The exact local synthetic harness produces deterministic stale, replay, duplicate, quota, timeout and partial-failure outcomes.","probes":["STALE-01","REPLAY-01","TIME-01","FAIL-01","FAIL-02","FAIL-03"]},
+    {"id":"M15-C4","statement":"The exact local synthetic reset harness recovers an interrupted reset once without changing its foreign-workload canary.","probes":["RESET-01"]},
+    {"id":"M15-C5","statement":"The evidence validator fails closed for missing, tampered or broadened local-synthetic evidence.","probes":["EVD-01"]}
+  ],
+  "nonClaims":["NO_INDEPENDENT_AUDIT","NO_UNIVERSAL_SANDBOX","NO_HOSTILE_HOST_OR_PRODUCTION_MULTI_TENANT_PROOF","NO_AVAILABILITY_GUARANTEE","NO_SECURITY_CERTIFICATION","NO_LIVE_CREDENTIAL_PROVIDER_OR_INFRASTRUCTURE_CLAIM","NO_PRODUCTION_ACTIVATION","NO_CURRENT_IMAGE_CVE_OR_SBOM_CLAIM","NO_RAW_VULNERABILITY_DISCLOSURE"],
+  "limitations":["Deterministic local synthetic API and harness execution plus declared runtime-configuration validation only.","No Docker or live-container execution is evidence in this slice.","The tracked index remains non-final until the owner finalizes a clean committed tree."],
+  "sanitization":{"syntheticOnly":true,"rawExploitDetail":false,"secretOrPersonalData":false,"privateInfrastructure":false}
+}

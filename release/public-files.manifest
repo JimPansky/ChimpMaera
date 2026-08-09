@@ -262,6 +262,7 @@ security/openclaw-m1.1-evidence-v1.json	security/openclaw-m1.1-evidence-v1.json	
 security/openclaw-m1.2-evidence-v2.json	security/openclaw-m1.2-evidence-v2.json	0644
 security/openclaw-m1.3-evidence-v1.json	security/openclaw-m1.3-evidence-v1.json	0644
 security/openclaw-m1.4-evidence-v1.json	security/openclaw-m1.4-evidence-v1.json	0644
+security/openclaw-m1.5-evidence-index-v1.json	security/openclaw-m1.5-evidence-index-v1.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
@@ -312,6 +313,8 @@ scripts/verify-release-governance.mjs	scripts/verify-release-governance.mjs	0755
 scripts/verify-secure-default-proof.mjs	scripts/verify-secure-default-proof.mjs	0755
 scripts/verify-supply-chain.mjs	scripts/verify-supply-chain.mjs	0755
 scripts/verify-openclaw-agent-runtime-lock.mjs	scripts/verify-openclaw-agent-runtime-lock.mjs	0755
+scripts/verify-openclaw-m1.5-evidence.mjs	scripts/verify-openclaw-m1.5-evidence.mjs	0755
+scripts/run-openclaw-m1.5-probes.mjs	scripts/run-openclaw-m1.5-probes.mjs	0755
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/builder-agent-runtime.test.mjs	tests/builder-agent-runtime.test.mjs	0644
 tests/builder-authority.test.ts	tests/builder-authority.test.ts	0644
@@ -393,6 +396,8 @@ tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
 tests/openclaw-gateway-identity-network.test.mjs	tests/openclaw-gateway-identity-network.test.mjs	0644
 tests/openclaw-gateway-state.test.mjs	tests/openclaw-gateway-state.test.mjs	0644
 tests/openclaw-m1.4-gateway-e2e.test.mjs	tests/openclaw-m1.4-gateway-e2e.test.mjs	0644
+tests/openclaw-m1.5-adversarial-evidence.test.mjs	tests/openclaw-m1.5-adversarial-evidence.test.mjs	0644
+tests/fixtures/openclaw-m1.5/adversarial-matrix-v1.json	tests/fixtures/openclaw-m1.5/adversarial-matrix-v1.json	0644
 tests/canonical-json-runtime-parity.test.mjs	tests/canonical-json-runtime-parity.test.mjs	0644
 tests/helpers/openclaw-m1-4-harness.mjs	tests/helpers/openclaw-m1-4-harness.mjs	0644
 tests/openclaw-mind-store.test.mjs	tests/openclaw-mind-store.test.mjs	0644
