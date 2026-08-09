@@ -535,7 +535,7 @@ b8c70273fd4992a13e46b671603b19f75e3876e5a1e07f6e7f92045830f872dd  ./tests/skill-
 df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update-doctor-compose-adapter.test.ts
 2857f96b93fe7c076130c82cce24c30bd0c2e5c144e5843c9b7fe4f6850134fa  ./tests/update-doctor-core.test.ts
 911255ea325e6dbc02bad39566be2714693d7f3a9a6d3d82b0ca1563491e009d  ./tests/update-doctor.test.ts
-bff3858e2876f7432ee0793ef4284f2dbb92ec37478c66f36c30ae18358f97ef  ./tests/verification-fabric-v2.test.ts
+0e437240e7dedd844555b3e22904edc3bd22740131db51bc9320b96ea08e5780  ./tests/verification-fabric-v2.test.ts
 a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verification-fabric.test.ts
 aa2e5a4808796fa516c89b198222236df26cb68d210ff2336101da1aa3e253f4  ./tests/voice-local-ptt.test.ts
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
@@ -601,4 +601,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-c2beb4927770a6a3698d77795189d7ff74ef426589552583654c802c92ceec6e  ./verification/verification-dag-v2.json
+7c8615a827a9e87ae8358d33e1d182becdba4dbb09703f60b81b7f2c9d1dbb29  ./verification/verification-dag-v2.json

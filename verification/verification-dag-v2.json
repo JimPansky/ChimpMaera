@@ -138,7 +138,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "bff3858e2876f7432ee0793ef4284f2dbb92ec37478c66f36c30ae18358f97ef"
+          "sha256": "0e437240e7dedd844555b3e22904edc3bd22740131db51bc9320b96ea08e5780"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
