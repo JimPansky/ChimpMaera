@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/operation-event-quality-v1.schema.json",
+  "title": "ChimpMaera CM-OBS operation event and quality evidence record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "operation",
+    "times",
+    "source",
+    "missingness",
+    "quality",
+    "retention",
+    "claimBoundary",
+    "recordDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.cm-obs/operation-event-quality/v1" },
+    "operation": { "$ref": "#/$defs/operation" },
+    "times": { "$ref": "#/$defs/times" },
+    "source": { "$ref": "#/$defs/source" },
+    "missingness": { "$ref": "#/$defs/missingness" },
+    "quality": { "$ref": "#/$defs/quality" },
+    "retention": { "$ref": "#/$defs/retention" },
+    "claimBoundary": { "const": "DECLARATIVE_CM_OBS_CONTRACT_ONLY_NO_COLLECTOR_NO_DASHBOARD_AUTHORITY_NO_RUNTIME_ACTIVATION_NO_PRODUCTION_TELEMETRY" },
+    "recordDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "timestamp": { "type": "integer", "minimum": 0 },
+    "id": { "type": "string", "pattern": "^[a-z]+:[a-z0-9][a-z0-9-]{7,63}$" },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "runId", "attemptId", "traceId", "correlationId"],
+      "properties": {
+        "operationId": { "type": "string", "pattern": "^op:[a-z0-9][a-z0-9-]{7,63}$" },
+        "runId": { "type": "string", "pattern": "^run:[a-z0-9][a-z0-9-]{7,63}$" },
+        "attemptId": { "type": "string", "pattern": "^attempt:[a-z0-9][a-z0-9-]{7,63}$" },
+        "traceId": { "type": "string", "pattern": "^[a-f0-9]{32}$" },
+        "correlationId": { "oneOf": [{ "type": "null" }, { "type": "string", "pattern": "^corr:[a-z0-9][a-z0-9-]{7,63}$" }] }
+      }
+    },
+    "times": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventTimeMs", "observedTimeMs", "ingestTimeMs"],
+      "properties": {
+        "eventTimeMs": { "$ref": "#/$defs/timestamp" },
+        "observedTimeMs": { "$ref": "#/$defs/timestamp" },
+        "ingestTimeMs": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producer",
+        "sequence",
+        "replayWindowMs",
+        "eventDigest",
+        "previousEventDigest",
+        "rawEvidenceDigest",
+        "rawEvidenceRef",
+        "rawEvidenceClass"
+      ],
+      "properties": {
+        "producer": { "enum": ["AWI", "VERIFICATION_FABRIC", "DEV_WORKER", "LEARNING_ROUTER", "BI_PROJECTION", "CM_OBS_FIXTURE"] },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "replayWindowMs": { "type": "integer", "minimum": 1 },
+        "eventDigest": { "$ref": "#/$defs/digest" },
+        "previousEventDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/digest" }] },
+        "rawEvidenceDigest": { "$ref": "#/$defs/digest" },
+        "rawEvidenceRef": { "type": "string", "pattern": "^obs-fixture:[a-z0-9][a-z0-9-]{7,63}$" },
+        "rawEvidenceClass": { "enum": ["PUBLIC_SYNTHETIC", "OWNER_PRIVATE_REFERENCE"] }
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reasons", "expectedAtMs"],
+      "properties": {
+        "status": { "enum": ["PRESENT", "MISSING", "PROVISIONAL"] },
+        "reasons": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "EVIDENCE_NOT_PRODUCED",
+              "SOURCE_REDACTED",
+              "LATE_OBSERVED_EVENT",
+              "DIGEST_UNAVAILABLE",
+              "SEQUENCE_GAP",
+              "ASSESSMENT_PENDING"
+            ]
+          }
+        },
+        "expectedAtMs": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/timestamp" }] }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "purpose", "purposeFit", "assessmentKind", "assessmentDigest"],
+      "properties": {
+        "state": { "enum": ["PASS", "WARN", "QUARANTINE", "BLOCK", "UNKNOWN"] },
+        "purpose": { "enum": ["AWI_JOIN", "VF_ATTESTATION", "DEV_WORKER_RECEIPT", "LR_EPISODE_NORMALIZATION", "BI_READ_ONLY_PROJECTION"] },
+        "purposeFit": { "type": "boolean" },
+        "assessmentKind": { "const": "APPEND_ONLY_ASSESSMENT" },
+        "assessmentDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "retainUntilMs", "minimization", "rollbackProfile"],
+      "properties": {
+        "classification": { "enum": ["PUBLIC_SYNTHETIC", "OWNER_PRIVATE_DERIVED"] },
+        "retainUntilMs": { "$ref": "#/$defs/timestamp" },
+        "minimization": { "const": "DIGESTS_AND_REASON_CODES_ONLY_NO_RAW_CONTENT" },
+        "rollbackProfile": { "const": "DISABLE_OBS_PROJECTION_FAIL_CLOSED" }
+      }
+    }
+  }
+}

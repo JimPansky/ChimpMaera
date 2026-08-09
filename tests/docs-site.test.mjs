@@ -12,6 +12,7 @@ const curatedPages = [
   ["capabilities.html", `${baseUrl}capabilities`],
   ["examples.html", `${baseUrl}examples`],
   ["EXTENSION-ASSURANCE-PROFILES.html", `${baseUrl}EXTENSION-ASSURANCE-PROFILES`],
+  ["INTEGRATION-PROFILES.html", `${baseUrl}INTEGRATION-PROFILES`],
   ["KNOWN-LIMITATIONS.html", `${baseUrl}KNOWN-LIMITATIONS`],
   ["QUICKSTART.html", `${baseUrl}QUICKSTART`],
   ["RESOURCE-PLANE-PROFILES.html", `${baseUrl}RESOURCE-PLANE-PROFILES`],
