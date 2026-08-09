@@ -1,11 +1,66 @@
 # OpenClaw bounded runtime and state contract
 
-Status: default-off local synthetic Reference Adapter for `OPENCLAW-M1.3`
+Status: default-off local synthetic Reference Adapter through `OPENCLAW-M1.4`
 
 This slice gives the pinned OpenClaw fixture narrowly bounded temporary state
 and a managed synthetic mind store. It does not give the Agent host access,
 privileged execution, arbitrary mounts, direct provider access, or a durable
 production store.
+
+## M1.4 canonical capability path
+
+`OPENCLAW-M1.4` adds one default-off, local-synthetic end-to-end path for
+`crm.contact.create`. The OpenClaw tool still exposes only
+`chimpmaera_capability_request`; the Gateway now accepts the versioned
+`chimpmaera.security/capability-execution-request/v1` request shape and routes
+that exact CRM action through a narrow runtime adapter for the canonical
+AAS-012 admission and broker implementations. The older AAS-035 typed request remains in the
+fixture as a regression surface but is no longer the agent-facing tool
+contract.
+
+The M1.4 route binds the workload assertion, tenant, policy digest, action
+digest, request digest, evidence sink and correlation digest before producing
+a synthetic contact response. The validated response and authoritative
+readback remain private Gateway state. Public Gateway outcomes use a closed
+digest-only projection containing fixed effect metadata, request ID,
+correlation, decision, receipt, response and readback digests, and a sanitized
+evidence reference. They do not return the caller request ID, raw identity
+assertion, raw correlation ID, request email/name, provider response/readback,
+private host paths or credential material.
+
+Duplicate request IDs are durable in the Gateway state. The Gateway persists a
+`RESERVED` record before provider commit and a `COMMITTED` record containing
+authoritative fixture readback during commit. A fresh-identity retry or
+concurrent duplicate confirms the same single synthetic contact readback
+without issuing a second effect. After restart, unresolved `RESERVED` records
+remain fail-closed and consumed; `COMMITTED` records reconcile from readback
+without invoking the provider effect again.
+
+Each M1.4 reservation and effect also contains a closed versioned authorization
+binding. Restart validation checks its subject, audience, tenant, scope,
+network tuple, route, validity window, private correlation binding and workload
+contract digest against `gateway-workload-contract-v2.json`. The only accepted
+provider response/readback is the deterministic fixture result used by the
+canonical broker. Coordinated replacement and redigesting of another
+schema-valid response, authorization metadata or correlation namespace fails
+closed. This is semantic local-state validation, not a cryptographic guarantee
+against a hostile actor that can replace all repository, runtime and storage
+trust anchors.
+
+For M1.4, the correlation is a deterministic domain-separated derivation of
+the request ID and the validity window is exactly the workload contract clock
+plus its maximum TTL. Retries use distinct invocation JTIs but reproduce that
+same authorization binding. A replay is rejected unless its current decision
+and authorization binding exactly match durable state; successful replay
+projections use the stored decision and receipt together.
+
+The OpenClaw plugin independently validates the complete exact-key public
+response before returning it to the Agent: envelope/result versions, fixed
+catalogue/action/policy/effect metadata, replay enum, every digest format,
+workload/tenant/request/correlation/provider/evidence bindings and the envelope
+digest must all match. Decision and receipt digests are reconstructed from the
+canonical request, AAS-012 fixtures and fixed authoritative readback rather than
+accepted from the response.
 
 ## Effective runtime boundary
 
@@ -55,11 +110,12 @@ restart return to readiness only after the generation transition or recovery
 has completed.
 
 An existing valid `chimpmaera.aas035/gateway-state/v1` M1.2 file is upgraded
-atomically to `gateway-state/v2` at startup. The migration preserves validated
-effects and their receipts, replay JTIs, counters, and valid legacy mind entries,
-then initializes the managed scoped mind envelope. Invalid legacy input is left
-unchanged and startup fails closed. Purging valid legacy state is not an upgrade
-step.
+atomically to `gateway-state/v3` at startup. Existing valid V2 state is also
+upgraded to V3. The migration preserves validated legacy effects and their
+receipts, replay JTIs, counters, and valid legacy mind entries, then initializes
+the managed scoped mind envelope and empty M1.4 effect/recovery stores. Invalid
+legacy input is left unchanged and startup fails closed. Purging valid legacy
+state is not an upgrade step.
 
 The setup image cache key covers every source used by both fixture Dockerfiles,
 including `gateway-state.mjs`; changing only state validation therefore forces
@@ -72,7 +128,7 @@ running daemon:
 
 ```sh
 npm run openclaw-runtime-lock:verify
-npm run openclaw-m1.3:test
+npm run openclaw-m1.4:test
 ```
 
 On the supported Linux/x86_64 Docker host, the explicit live smoke is:

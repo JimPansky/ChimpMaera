@@ -57,6 +57,9 @@ source_sha256="$({
   sha256sum \
     "$cm_aas035_root/demo/openclaw-agent/gateway.Dockerfile" \
     "$cm_aas035_root/demo/openclaw-agent/openclaw.Dockerfile" \
+    "$cm_aas035_root/packages/contracts/src/canonical-json.js" \
+    "$cm_aas035_root/packages/contracts/src/capability-catalogue.ts" \
+    "$cm_aas035_root/demo/openclaw-agent/capability-m1-4-adapter.mjs" \
     "$cm_aas035_root/demo/openclaw-agent/gateway.mjs" \
     "$cm_aas035_root/demo/openclaw-agent/gateway-state.mjs" \
     "$cm_aas035_root/demo/openclaw-agent/mind-store.mjs" \

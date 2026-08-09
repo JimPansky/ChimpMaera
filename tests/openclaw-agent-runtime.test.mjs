@@ -84,6 +84,8 @@ test("AAS-035 identity, managed mind and typed tool surfaces are finite", () => 
   const plugin = readFileSync(path.join(fixture, "plugin/index.mjs"), "utf8");
   assert.match(plugin, /createInvocationIdentity/);
   assert.match(plugin, /randomUUID\(\)/);
+  assert.match(plugin, /const request = \{ \.\.\.params, correlationId \}/);
+  assert.doesNotMatch(plugin, /correlationId:\s*\{\s*type:/);
   assert.doesNotMatch(plugin, /jti:\s*`jti-\$\{params\.requestId\}`/);
   const workspaceState = JSON.parse(readFileSync(path.join(fixture, "workspace/openclaw-workspace-state.json"), "utf8"));
   assert.equal(workspaceState.version, 1);
@@ -121,7 +123,7 @@ test("AAS-035 setup and rollback stay ownership-scoped", () => {
 test("AAS-035 source cache-buster covers every Docker COPY input", () => {
   const setup = readFileSync(path.join(fixture, "setup.sh"), "utf8");
   const cacheBlock = setup.slice(setup.indexOf("source_sha256="), setup.indexOf("build_fixture_image()"));
-  const cacheInputs = [...cacheBlock.matchAll(/\$cm_aas035_root\/(demo\/openclaw-agent\/[A-Za-z0-9./_-]+)/g)]
+  const cacheInputs = [...cacheBlock.matchAll(/\$cm_aas035_root\/((?:demo\/openclaw-agent|packages\/contracts\/src)\/[A-Za-z0-9./_-]+)/g)]
     .map((match) => match[1]);
   const copyInputs = [];
   for (const dockerfile of ["gateway.Dockerfile", "openclaw.Dockerfile"]) {
@@ -148,12 +150,13 @@ test("AAS-035 smoke records the complete denial and lifecycle matrix", () => {
     "oversize", "mind-quota", "filesystem", "privilege", "mounts", "scratch-limit",
     "egress", "replay", "mind-write", "mind-read",
     "gateway-v2", "identity-missing", "identity-expired", "identity-wrong-audience",
-    "identity-wrong-tenant", "identity-replay", "semantic-reset-idempotent",
+    "identity-wrong-tenant", "identity-replay", "gateway-m14", "m14-replay", "semantic-reset-idempotent",
     "legacy-capability-bypass", "owner_fingerprint", "ownedRuntimeResidue",
   ]) assert.match(`${smoke}\n${probe}`, new RegExp(marker));
   assert.match(smoke, /for index in 1 2 3 4/);
   assert.match(smoke, /fixture-probe\.mjs replay/);
   assert.match(smoke, /idempotent setup recreated the OpenClaw container/);
   assert.match(smoke, /effects == 1/);
+  assert.match(smoke, /openClawM14EffectCount == 3/);
   assert.match(smoke, /reset\.sh" --purge/);
 });

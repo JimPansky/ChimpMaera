@@ -19,6 +19,13 @@ import {
   scopeId,
   writeMind as managedWriteMind,
 } from "./mind-store.mjs";
+import {
+  OPENCLAW_M14_DENIAL_SCHEMA,
+  OPENCLAW_M14_REQUEST_SCHEMA,
+  executeOpenClawM14Capability,
+  sanitizedOpenClawM14Denial,
+  syntheticOpenClawM14Request,
+} from "./capability-m1-4-adapter.mjs";
 
 const contract = JSON.parse(readFileSync(new URL("./runtime-contract-v1.json", import.meta.url), "utf8"));
 const workloadContract = JSON.parse(readFileSync(new URL("./gateway-workload-contract-v2.json", import.meta.url), "utf8"));
@@ -41,6 +48,12 @@ const requestTemplate = Object.freeze({
     name: "AAS-035 Synthetic Agent",
   },
 });
+const openClawM14RequestWithCorrelation = syntheticOpenClawM14Request({
+  correlationId: ["corr", "aas035", "openclaw", "m14", "template", "0001"].join("-"),
+  workloadIdentity: workloadContract.identity.subject,
+});
+const { correlationId: _pluginGeneratedCorrelation, ...openClawM14ParameterTemplate } = openClawM14RequestWithCorrelation;
+const openClawM14RequestTemplate = Object.freeze(openClawM14ParameterTemplate);
 const expectedRequestKeys = Object.keys(requestTemplate).sort();
 const expectedPayloadKeys = Object.keys(requestTemplate.payload).sort();
 const policy = Object.freeze({
@@ -68,6 +81,7 @@ const gatewayStateContext = Object.freeze({
   policy,
   authority,
   requestTemplate,
+  openClawM14RequestTemplate,
 });
 const loadedState = loadGatewayState({
   statePath,
@@ -199,6 +213,20 @@ function executeCapability(value) {
   return { status: "PASS", replayState: "FIRST_EXECUTION", ...record };
 }
 
+function executeOpenClawM14(value, authorization) {
+  incrementCounter("effectAttempts");
+  const result = executeOpenClawM14Capability(
+    state, value, authorization, workloadContract, () => persist(state),
+  );
+  if (result.schemaVersion === OPENCLAW_M14_DENIAL_SCHEMA) {
+    recordDenial();
+    persist(state);
+    return { statusCode: 403, body: result };
+  }
+  persist(state);
+  return { statusCode: 200, body: result };
+}
+
 function writeMind(value) {
   return {
     ...managedWriteMind(state.mind, contract, value, { nowMs: Date.now(), persist: () => persist(state) }),
@@ -235,7 +263,7 @@ function toolCallResponse(messages) {
           type: "function",
           function: {
             name: "chimpmaera_capability_request",
-            arguments: JSON.stringify(requestTemplate),
+            arguments: JSON.stringify(openClawM14RequestTemplate),
           },
         }],
       },
@@ -246,7 +274,7 @@ function toolCallResponse(messages) {
     const outer = JSON.parse(toolResult.content);
     const text = outer?.content?.[0]?.text ?? toolResult.content;
     const parsed = typeof text === "string" ? JSON.parse(text) : text;
-    digestText = parsed?.receipt?.receiptDigest ?? "unknown";
+    digestText = parsed?.receipt?.receiptDigest ?? parsed?.receiptDigest ?? parsed?.result?.receiptDigest ?? "unknown";
   } catch {
     const match = String(toolResult.content).match(/[a-f0-9]{64}/);
     digestText = match?.[0] ?? "unknown";
@@ -319,7 +347,13 @@ export function gatewayHandler(request, response) {
     }
     if (request.method === "POST" && request.url === workloadContract.identity.route) {
       const correlationId = request.headers["x-cm-correlation-id"];
+      const transportSchema = request.headers["x-cm-request-schema"];
+      const transportIsM14 = transportSchema === OPENCLAW_M14_REQUEST_SCHEMA;
+      const transportIsM14Family = typeof transportSchema === "string"
+        && transportSchema.startsWith("chimpmaera.security/capability-execution-request/");
       const replayIds = new Set(state.identityReplay ?? []);
+      let value;
+      let useOpenClawM14Denial = transportIsM14Family;
       try {
         const host = new URL(`http://${request.headers.host ?? "invalid"}`).hostname;
         const authorization = authorizeGatewayRequest(workloadContract, {
@@ -333,17 +367,32 @@ export function gatewayHandler(request, response) {
           correlationId,
         }, { replayIds });
         persistAcceptedReplayIds(replayIds);
+        value = await body(request);
+        const bodyIsM14 = value.schemaVersion === OPENCLAW_M14_REQUEST_SCHEMA;
+        const bodyIsM14Family = typeof value.schemaVersion === "string"
+          && value.schemaVersion.startsWith("chimpmaera.security/capability-execution-request/");
+        useOpenClawM14Denial = transportIsM14Family || bodyIsM14Family;
+        if (useOpenClawM14Denial && (!transportIsM14 || !bodyIsM14)) {
+          throw new Error("REQUEST_SCHEMA_MISMATCH_DENIED");
+        }
+        if (transportIsM14 && bodyIsM14) {
+          const { statusCode, body: responseBody } = executeOpenClawM14(value, authorization);
+          json(response, statusCode, responseBody);
+          return;
+        }
         json(response, 200, {
           schemaVersion: "chimpmaera.openclaw/gateway-broker-response/v2",
           status: "PASS",
           correlationId: authorization.correlationId,
           authorization,
-          result: executeCapability(await body(request)),
+          result: executeCapability(value),
         });
       } catch (error) {
         recordDenial();
         persist(state);
-        json(response, 403, sanitizedDenial(error, correlationId));
+        json(response, 403, useOpenClawM14Denial
+          ? sanitizedOpenClawM14Denial(error, correlationId)
+          : sanitizedDenial(error, correlationId));
       }
       return;
     }
@@ -374,6 +423,8 @@ export function gatewayHandler(request, response) {
         },
         counters: state.counters,
         effectReceiptDigests: Object.values(state.effects).map((entry) => entry.receipt.receiptDigest).sort(),
+        openClawM14ReceiptDigests: Object.values(state.openclawM14Effects).map((entry) => entry.receipt.receiptDigest).sort(),
+        openClawM14EffectCount: Object.values(state.openclawM14Effects).filter((entry) => entry.receipt.effectState === "CONFIRMED_ONE").length,
         mindEntryDigests: Object.values(state.mind.scopes).flatMap((scope) => Object.values(scope.entries).map((entry) => entry.valueDigest)).sort(),
         foreignScopeDigest: mindDigest(Object.fromEntries(Object.entries(state.mind.scopes).filter(([key]) => key !== scopeId({ workloadIdentity: contract.workload.identity, tenant: contract.workload.tenant, purpose: contract.workload.purpose })))),
       });

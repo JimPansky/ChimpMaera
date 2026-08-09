@@ -7,6 +7,9 @@ WORKDIR /opt/chimpmaera
 COPY demo/openclaw-agent/runtime-contract-v1.json ./runtime-contract-v1.json
 COPY demo/openclaw-agent/gateway-workload-contract-v2.json ./gateway-workload-contract-v2.json
 COPY demo/openclaw-agent/plugin/identity-v2.mjs ./plugin/identity-v2.mjs
+COPY packages/contracts/src/canonical-json.js /packages/contracts/src/canonical-json.js
+COPY packages/contracts/src/capability-catalogue.ts /packages/contracts/src/capability-catalogue.ts
+COPY demo/openclaw-agent/capability-m1-4-adapter.mjs ./capability-m1-4-adapter.mjs
 COPY demo/openclaw-agent/mind-store.mjs ./mind-store.mjs
 COPY demo/openclaw-agent/gateway-state.mjs ./gateway-state.mjs
 COPY demo/openclaw-agent/gateway.mjs ./gateway.mjs

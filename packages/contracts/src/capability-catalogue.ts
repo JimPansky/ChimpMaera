@@ -344,6 +344,11 @@ function isBoundId(value: unknown, prefix: string): value is string {
     && new RegExp(`^${prefix}:[a-z0-9][a-z0-9._-]{2,63}$`).test(value);
 }
 
+function isCorrelationId(value: unknown): value is string {
+  return isBoundId(value, "correlation")
+    || (typeof value === "string" && /^corr-aas035-[a-z0-9-]{8,64}$/.test(value));
+}
+
 function isTimestamp(value: unknown): value is string {
   return typeof value === "string"
     && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value)
@@ -627,7 +632,7 @@ export function admitCapabilityExecutionAtGatewayV1(
     || !isBoundId(candidate.tenant, "tenant")
     || !isBoundId(candidate.workloadIdentity, "workload")
     || !isBoundId(candidate.userIdentity, "user")
-    || !isBoundId(candidate.correlationId, "correlation")
+    || !isCorrelationId(candidate.correlationId)
     || !isBoundId(candidate.requestId, "request")
     || !exactKeys(candidate.evidenceSink, ["sinkId", "type"])
     || candidate.evidenceSink.type !== "SYNTHETIC_MEMORY"

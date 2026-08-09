@@ -3,10 +3,10 @@
   "proofId": "secure-default-safe-guided-v1",
   "profile": "SAFE_GUIDED",
   "evidenceState": "CURRENT",
-  "manifestDigest": "1ee3093ba460946a375b7a88437d52142ba540a1349117b9d390ea23f12fa8ab",
+  "manifestDigest": "0e8a87f36dc36fc4e161c9e39e4405ef6f7c95955b4b6b868666179538b03217",
   "schemaDigest": "e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8",
   "verifierDigest": "4cc5b1c775f07620649bf8f94ec8e47bf0681e595c81da46173af1b7e83791e1",
-  "inputSetDigest": "657f11a73df0eafcb7d8f4373198a8ffca814b868f69c6b5099b5596eb9727e9",
+  "inputSetDigest": "e96b045a799d3f94e881d12f2535a21bf6a331b88b552cc6b0f4b092bafcc472",
   "commands": [
     {
       "command": "npm run build --silent",
@@ -14,7 +14,7 @@
       "outcome": "PASS"
     },
     {
-      "command": "node --test tests/secure-default-proof.test.mjs tests/demo-enforcement-gate.test.mjs tests/demo-admin-ai-poc.test.mjs tests/demo-approval-workbench.test.mjs tests/openclaw-agent-runtime.test.mjs tests/model-access-broker-runtime.test.mjs dist/tests/capability-catalogue.test.js dist/tests/poc-early-admin-ai-setup.test.js",
+      "command": "node --test tests/secure-default-proof.test.mjs tests/demo-enforcement-gate.test.mjs tests/demo-admin-ai-poc.test.mjs tests/demo-approval-workbench.test.mjs tests/canonical-json-runtime-parity.test.mjs tests/openclaw-agent-runtime-lock.test.mjs tests/openclaw-agent-runtime.test.mjs tests/openclaw-gateway-identity-network.test.mjs tests/openclaw-gateway-state.test.mjs tests/openclaw-m1.4-gateway-e2e.test.mjs tests/model-access-broker-runtime.test.mjs dist/tests/capability-catalogue.test.js dist/tests/poc-early-admin-ai-setup.test.js",
       "category": "FOCUSED",
       "outcome": "PASS"
     },
@@ -84,5 +84,5 @@
     }
   ],
   "overallVerdict": "PASS",
-  "reportDigest": "adecbb0d86838c45bde09d2d44979f442a54b22ab401a7e7562ba6801ea3b07c"
+  "reportDigest": "b0ff2c216cd867f74c4b1235afeeda65a87117b987a5acdc6a305ad5fd378581"
 }

@@ -7,9 +7,11 @@ import {
   scopeId,
   validateMindState,
 } from "./mind-store.mjs";
+import { validateOpenClawM14State } from "./capability-m1-4-adapter.mjs";
 
 export const GATEWAY_STATE_V1 = "chimpmaera.aas035/gateway-state/v1";
 export const GATEWAY_STATE_V2 = "chimpmaera.aas035/gateway-state/v2";
+export const GATEWAY_STATE_V3 = "chimpmaera.openclaw/gateway-state/v3";
 export const MAX_GATEWAY_COUNTER = 1_000_000_000;
 
 export function canonicalGatewayJson(value) {
@@ -141,8 +143,10 @@ function validateLegacyMind(mind, runtimeContract) {
 export function createInitialGatewayState(context, nowMs) {
   if (!Number.isSafeInteger(nowMs) || nowMs < 0) deny("GATEWAY_STATE_CLOCK_INVALID_DENIED");
   return {
-    schemaVersion: GATEWAY_STATE_V2,
+    schemaVersion: GATEWAY_STATE_V3,
     effects: {},
+    openclawM14Effects: {},
+    openclawM14InFlight: {},
     mind: initialMindState(context.runtimeContract, { nowMs }),
     identityReplay: [],
     counters: { modelCalls: 0, effectAttempts: 0, effects: 0, denials: 0 },
@@ -150,11 +154,14 @@ export function createInitialGatewayState(context, nowMs) {
 }
 
 export function validateGatewayState(state, context) {
-  if (!exactObject(state, ["schemaVersion", "effects", "mind", "identityReplay", "counters"])
-    || state.schemaVersion !== GATEWAY_STATE_V2) {
+  if (!exactObject(state, [
+    "schemaVersion", "effects", "openclawM14Effects", "openclawM14InFlight", "mind", "identityReplay", "counters",
+  ])
+    || state.schemaVersion !== GATEWAY_STATE_V3) {
     deny("GATEWAY_STATE_INVALID_DENIED");
   }
   const effectCount = validateEffects(state.effects, context);
+  validateOpenClawM14State(state, context.workloadContract);
   validateCounters(state.counters, effectCount);
   validateIdentityReplay(state.identityReplay, context.workloadContract);
   validateMindState(state.mind, context.runtimeContract);
@@ -165,6 +172,23 @@ export function validateGatewayState(state, context) {
   });
   if (state.mind.scopes[primary] === undefined) deny("GATEWAY_STATE_MIND_PRIMARY_INVALID_DENIED");
   return state;
+}
+
+export function migrateGatewayStateV2(state, context) {
+  if (!exactObject(state, ["schemaVersion", "effects", "mind", "identityReplay", "counters"])
+    || state.schemaVersion !== GATEWAY_STATE_V2) {
+    deny("GATEWAY_STATE_V2_INVALID_DENIED");
+  }
+  const effectCount = validateEffects(state.effects, context);
+  validateCounters(state.counters, effectCount);
+  validateIdentityReplay(state.identityReplay, context.workloadContract);
+  validateMindState(state.mind, context.runtimeContract);
+  return validateGatewayState({
+    ...state,
+    schemaVersion: GATEWAY_STATE_V3,
+    openclawM14Effects: {},
+    openclawM14InFlight: {},
+  }, context);
 }
 
 export function migrateGatewayStateV1(state, context, nowMs) {
@@ -214,14 +238,18 @@ export function loadGatewayState({ statePath, context, nowMs }) {
     if (error?.code !== "ENOENT") deny("GATEWAY_STATE_PARSE_DENIED");
     value = createInitialGatewayState(context, nowMs);
     persistGatewayState(statePath, value);
-    return { state: value, migration: "CREATED_V2", recovery: { status: "CLEAN", recovered: false }, expiredEntriesPurged: 0 };
+    return { state: value, migration: "CREATED_V3", recovery: { status: "CLEAN", recovered: false }, expiredEntriesPurged: 0 };
   }
 
   let migration = "NONE";
   if (value?.schemaVersion === GATEWAY_STATE_V1) {
     value = migrateGatewayStateV1(value, context, nowMs);
     persistGatewayState(statePath, value);
-    migration = "V1_TO_V2";
+    migration = "V1_TO_V3";
+  } else if (value?.schemaVersion === GATEWAY_STATE_V2) {
+    value = migrateGatewayStateV2(value, context);
+    persistGatewayState(statePath, value);
+    migration = "V2_TO_V3";
   } else {
     validateGatewayState(value, context);
   }

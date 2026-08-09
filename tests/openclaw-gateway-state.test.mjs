@@ -11,6 +11,14 @@ import {
   persistGatewayState,
 } from "../demo/openclaw-agent/gateway-state.mjs";
 import {
+  digest as m14Digest,
+  executeOpenClawM14Capability,
+  syntheticOpenClawM14Request,
+  validateOpenClawM14State,
+} from "../demo/openclaw-agent/capability-m1-4-adapter.mjs";
+import { durableSnapshotAt, receiptForDecision } from "./helpers/openclaw-m1-4-harness.mjs";
+import { canonicalOpenClawM14CorrelationId } from "../demo/openclaw-agent/plugin/identity-v2.mjs";
+import {
   digest,
   MAX_ADVANCEABLE_MIND_GENERATION,
   MAX_MIND_GENERATION,
@@ -39,6 +47,67 @@ const authority = { authorityId: "aas035-synthetic-authority-v1", policyDigest: 
 const context = { runtimeContract, workloadContract, requestTemplate, policy, authority };
 const nowMs = 1_900_000_000_000;
 const primary = scopeId({ workloadIdentity: runtimeContract.workload.identity, tenant: runtimeContract.workload.tenant, purpose: runtimeContract.workload.purpose });
+
+function m14Authorization(correlationId) {
+  const target = workloadContract.networkPolicy.egress.allow[0];
+  return {
+    schemaVersion: "chimpmaera.openclaw/gateway-authorization-result/v2",
+    status: "ALLOW",
+    correlationId,
+    identity: {
+      subject: workloadContract.identity.subject,
+      audience: workloadContract.identity.audience,
+      tenant: workloadContract.identity.tenant,
+      scope: workloadContract.identity.scope,
+      issuedAt: workloadContract.clock.now,
+      expiresAt: new Date(Date.parse(workloadContract.clock.now) + 60_000).toISOString(),
+    },
+    network: {
+      protocol: target.protocol,
+      host: target.host,
+      port: target.port,
+      method: target.method,
+      path: target.path,
+    },
+  };
+}
+
+function populateM14Effect(state, suffix = "disk-0001") {
+  const requestId = `request:openclaw-m14-${suffix}`;
+  const correlationId = canonicalOpenClawM14CorrelationId(requestId);
+  const request = syntheticOpenClawM14Request({
+    correlationId,
+    requestId,
+    workloadIdentity: workloadContract.identity.subject,
+  });
+  const result = executeOpenClawM14Capability(
+    state, request, m14Authorization(correlationId), workloadContract, () => {},
+  );
+  assert.equal(result.status, "PASS");
+  return request.requestId;
+}
+
+function populateM14Reservation(state, suffix = "disk-reserved-0001") {
+  const requestId = `request:openclaw-m14-${suffix}`;
+  const correlationId = canonicalOpenClawM14CorrelationId(requestId);
+  const request = syntheticOpenClawM14Request({
+    correlationId,
+    requestId,
+    workloadIdentity: workloadContract.identity.subject,
+  });
+  const durable = durableSnapshotAt(state, "RESERVED", (value) => validateOpenClawM14State(value, workloadContract), (persist) => {
+    executeOpenClawM14Capability(state, request, m14Authorization(correlationId), workloadContract, persist);
+  });
+  Object.assign(state, durable);
+  return request.requestId;
+}
+
+function redigestM14(value, field) {
+  const changed = structuredClone(value);
+  delete changed[field];
+  changed[field] = m14Digest(changed);
+  return changed;
+}
 
 async function stateFile(value) {
   const directory = await mkdtemp(path.join(tmpdir(), "cm-gateway-state-"));
@@ -73,9 +142,11 @@ test("realistic M1.2 file migrates atomically and preserves effects, replay, cou
   const legacy = JSON.parse(await readFile(path.join(root, "tests/fixtures/openclaw-state/gateway-state-v1.json"), "utf8"));
   const statePath = await stateFile(legacy);
   const loaded = loadGatewayState({ statePath, context, nowMs });
-  assert.equal(loaded.migration, "V1_TO_V2");
-  assert.equal(loaded.state.schemaVersion, "chimpmaera.aas035/gateway-state/v2");
+  assert.equal(loaded.migration, "V1_TO_V3");
+  assert.equal(loaded.state.schemaVersion, "chimpmaera.openclaw/gateway-state/v3");
   assert.deepEqual(loaded.state.effects, legacy.effects);
+  assert.deepEqual(loaded.state.openclawM14Effects, {});
+  assert.deepEqual(loaded.state.openclawM14InFlight, {});
   assert.deepEqual(loaded.state.identityReplay, legacy.identityReplay);
   assert.deepEqual(loaded.state.counters, legacy.counters);
   assert.equal(loaded.state.mind.scopes[primary].entries["working.note"].value, "synthetic legacy note");
@@ -125,10 +196,13 @@ test("persisted mind quota and retention exact boundaries pass; one beyond fails
   assert.equal(loadGatewayState({ statePath, context, nowMs }).state.mind.scopes[primary].entries["entry.value"].value.length, 2048);
 });
 
-test("complete V2 envelope malformed shapes and unsafe bounds never load", async () => {
+test("complete V3 envelope malformed shapes and unsafe bounds never load", async () => {
   const cases = [
     (s) => { s.effects = []; }, (s) => { s.effects = null; },
     (s) => { s.effects = { "aas035-openclaw-bad00001": {} }; },
+    (s) => { s.openclawM14Effects = []; },
+    (s) => { s.openclawM14InFlight = []; },
+    (s) => { s.openclawM14InFlight = { "request:openclaw-m14-bad": "not-a-digest" }; },
     (s) => { s.counters = []; }, (s) => { s.counters.effects = -1; },
     (s) => { s.counters.denials = 1_000_000_001; },
     (s) => { s.identityReplay = null; }, (s) => { s.identityReplay = ["bad"]; },
@@ -145,6 +219,116 @@ test("complete V2 envelope malformed shapes and unsafe bounds never load", async
     const invalid = createInitialGatewayState(context, nowMs); mutate(invalid);
     const statePath = await stateFile(invalid);
     assert.throws(() => loadGatewayState({ statePath, context, nowMs }), /DENIED/);
+  }
+});
+
+test("tampered M1.4 V3 records fail closed from disk on restart", async () => {
+  const valid = createInitialGatewayState(context, nowMs);
+  const firstId = populateM14Effect(valid, "disk-tamper-0001");
+  const secondId = populateM14Effect(valid, "disk-tamper-0002");
+  const reservedId = populateM14Reservation(valid, "disk-tamper-reserved");
+  let statePath = await stateFile(valid);
+  assert.equal(Object.keys(loadGatewayState({ statePath, context, nowMs }).state.openclawM14Effects).length, 2);
+
+  const mutations = [
+    (state) => { state.openclawM14Effects[firstId].schemaVersion = "tampered"; },
+    (state) => { state.openclawM14Effects[firstId].workloadIdentity = "workload:synthetic-agent"; },
+    (state) => { state.openclawM14Effects[firstId].tenant = "tenant:other"; },
+    (state) => { state.openclawM14Effects[firstId].policyGeneration = "0.9.0"; },
+    (state) => { state.openclawM14Effects[firstId].requestDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].correlationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.decisionDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.request = { email: "replacement@example.test", name: "Replacement" }; },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.request.extra = "forbidden"; },
+    (state) => { state.openclawM14Effects[firstId].decision.extra = "forbidden"; },
+    (state) => { state.openclawM14Effects[firstId].decision.correlationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.correlationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.actionDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.catalogueDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.activationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.policyId = "policy:other"; },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.policyDigest = "0".repeat(64); },
+    (state) => { state.openclawM14Effects[firstId].decision.ticket.policyVersion = "0.9.0"; },
+    (state) => { state.openclawM14Effects[firstId].readback.contactId = "synthetic-contact-999"; },
+    (state) => { state.openclawM14Effects[firstId].receipt.response.contactId = "synthetic-contact-999"; },
+    (state) => { state.openclawM14Effects[firstId].receipt.privatePath = "/private/provider/path"; },
+    (state) => { state.openclawM14Effects[secondId].effectOrdinal = state.openclawM14Effects[firstId].effectOrdinal; },
+    (state) => { state.openclawM14InFlight[reservedId].decision.decisionDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.request = { email: "replacement@example.test", name: "Replacement" }; },
+    (state) => { state.openclawM14InFlight[reservedId].requestDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].correlationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.correlationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.extra = "forbidden"; },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.catalogueDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.actionDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.activationDigest = "0".repeat(64); },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.policyId = "policy:other"; },
+    (state) => { state.openclawM14InFlight[reservedId].decision.ticket.policyDigest = "0".repeat(64); },
+    (state) => {
+      const record = state.openclawM14Effects[firstId];
+      record.readback = { contactId: "synthetic-contact-999" };
+      record.readbackDigest = m14Digest(record.readback);
+      record.receipt = receiptForDecision(record.decision, record.readback);
+    },
+    (state) => {
+      const record = state.openclawM14Effects[firstId];
+      record.authorizationBinding.audience = "chimpmaera://forged";
+      record.authorizationBinding = redigestM14(record.authorizationBinding, "bindingDigest");
+    },
+    (state) => {
+      const record = state.openclawM14InFlight[reservedId];
+      record.authorizationBinding.scope = ["capability:erp.order.create"];
+      record.authorizationBinding = redigestM14(record.authorizationBinding, "bindingDigest");
+    },
+    (state) => {
+      const record = state.openclawM14Effects[firstId];
+      const canonical = canonicalOpenClawM14CorrelationId(firstId);
+      const correlationId = canonical.replace(/[a-f0-9]{12}$/, canonical.endsWith("000000000000")
+        ? "111111111111" : "000000000000");
+      const correlationDigest = m14Digest(correlationId);
+      record.correlationDigest = correlationDigest;
+      record.authorizationBinding.correlationId = correlationId;
+      record.authorizationBinding.correlationDigest = correlationDigest;
+      record.authorizationBinding = redigestM14(record.authorizationBinding, "bindingDigest");
+      record.decision.correlationDigest = correlationDigest;
+      record.decision.ticket.correlationDigest = correlationDigest;
+      record.decision = redigestM14(record.decision, "decisionDigest");
+      record.receipt = receiptForDecision(record.decision, record.readback);
+    },
+    (state) => {
+      const record = state.openclawM14Effects[firstId];
+      record.authorizationBinding.issuedAt = "2026-08-09T11:59:59.000Z";
+      record.authorizationBinding.expiresAt = "2026-08-09T12:00:59.000Z";
+      record.authorizationBinding = redigestM14(record.authorizationBinding, "bindingDigest");
+    },
+    (state) => {
+      const record = state.openclawM14InFlight[reservedId];
+      const canonical = canonicalOpenClawM14CorrelationId(reservedId);
+      const correlationId = canonical.replace(/[a-f0-9]{12}$/, canonical.endsWith("000000000000")
+        ? "111111111111" : "000000000000");
+      const correlationDigest = m14Digest(correlationId);
+      record.correlationDigest = correlationDigest;
+      record.authorizationBinding.correlationId = correlationId;
+      record.authorizationBinding.correlationDigest = correlationDigest;
+      record.authorizationBinding = redigestM14(record.authorizationBinding, "bindingDigest");
+      record.decision.correlationDigest = correlationDigest;
+      record.decision.ticket.correlationDigest = correlationDigest;
+      record.decision = redigestM14(record.decision, "decisionDigest");
+    },
+    (state) => {
+      const record = state.openclawM14InFlight[reservedId];
+      record.authorizationBinding.issuedAt = "2026-08-09T11:59:59.000Z";
+      record.authorizationBinding.expiresAt = "2026-08-09T12:00:59.000Z";
+      record.authorizationBinding = redigestM14(record.authorizationBinding, "bindingDigest");
+    },
+  ];
+  for (const mutate of mutations) {
+    const invalid = structuredClone(valid);
+    mutate(invalid);
+    statePath = await stateFile(invalid);
+    const before = await readFile(statePath, "utf8");
+    assert.throws(() => loadGatewayState({ statePath, context, nowMs }), /OPENCLAW_M14_STATE_INVALID_DENIED/);
+    assert.equal(await readFile(statePath, "utf8"), before);
   }
 });
 

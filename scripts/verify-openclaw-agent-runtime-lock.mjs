@@ -16,6 +16,7 @@ const EXPECTED = Object.freeze({
   gatewayBase: "docker.io/library/node:24.14.1-bookworm-slim@sha256:e484ae3f1e3c378021c967fd42254f343c302a9263e412280eac32bf5bca7008",
 });
 const EXPECTED_ARTIFACTS = [
+  "demo/openclaw-agent/capability-m1-4-adapter.mjs",
   "demo/openclaw-agent/compose.yaml",
   "demo/openclaw-agent/fixture-probe.mjs",
   "demo/openclaw-agent/gateway-state.mjs",
@@ -30,6 +31,7 @@ const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/plugin/index.mjs",
   "demo/openclaw-agent/plugin/openclaw.plugin.json",
   "demo/openclaw-agent/plugin/package.json",
+  "demo/openclaw-agent/plugin/response-v1.mjs",
   "demo/openclaw-agent/reset.sh",
   "demo/openclaw-agent/runtime-contract-v1.json",
   "demo/openclaw-agent/setup.sh",
@@ -41,6 +43,8 @@ const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/workspace/TOOLS.md",
   "demo/openclaw-agent/workspace/USER.md",
   "demo/openclaw-agent/workspace/openclaw-workspace-state.json",
+  "packages/contracts/src/canonical-json.js",
+  "packages/contracts/src/capability-catalogue.ts",
   "scripts/verify-openclaw-agent-runtime-lock.mjs",
 ];
 
@@ -201,6 +205,8 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
   for (const [relativePath, expectedDigest] of Object.entries(artifacts)) {
     assert(
       (relativePath.startsWith("demo/openclaw-agent/")
+        || relativePath === "packages/contracts/src/canonical-json.js"
+        || relativePath === "packages/contracts/src/capability-catalogue.ts"
         || relativePath === "scripts/verify-openclaw-agent-runtime-lock.mjs")
       && !relativePath.includes(".."),
       "OPENCLAW_RUNTIME_ARTIFACT_PATH_DENIED",

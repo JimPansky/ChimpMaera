@@ -56,19 +56,32 @@ export function createSyntheticIdentity(contract, {
   return { claims, proof: proofFor(claims) };
 }
 
+export function canonicalOpenClawM14CorrelationId(requestId) {
+  if (typeof requestId !== "string" || !/^request:openclaw-m14-[a-z0-9-]{4,40}$/.test(requestId)) {
+    deny("IDENTITY_INVOCATION_DENIED");
+  }
+  const identityStem = requestId.replace(/^request:/, "aas035-");
+  const requestDigest = sha256(`chimpmaera-openclaw-m14-correlation-v1\n${requestId}`).slice(0, 12);
+  return `corr-${identityStem}-${requestDigest}`;
+}
+
 export function createInvocationIdentity(contract, { requestId, invocationId } = {}) {
-  if (!/^aas035-[a-z0-9-]{8,48}$/.test(requestId ?? "")
-    || typeof invocationId !== "string"
+  const legacy = typeof requestId === "string" && /^aas035-[a-z0-9-]{8,48}$/.test(requestId);
+  const m14 = typeof requestId === "string" && /^request:openclaw-m14-[a-z0-9-]{4,40}$/.test(requestId);
+  if ((!legacy && !m14) || typeof invocationId !== "string"
     || !/^[a-zA-Z0-9-]{8,128}$/.test(invocationId)) {
     deny("IDENTITY_INVOCATION_DENIED");
   }
+  const identityStem = legacy ? requestId : requestId.replace(/^request:/, "aas035-");
   const invocationDigest = sha256(`chimpmaera-synthetic-invocation-v2\n${invocationId}`).slice(0, 12);
-  const correlationId = `corr-${requestId}-${invocationDigest}`;
+  const correlationId = m14
+    ? canonicalOpenClawM14CorrelationId(requestId)
+    : `corr-${identityStem}-${invocationDigest}`;
   return {
     correlationId,
     identity: createSyntheticIdentity(contract, {
       correlationId,
-      jti: `jti-${requestId}-${invocationDigest}`,
+      jti: `jti-${identityStem}-${invocationDigest}`,
     }),
   };
 }

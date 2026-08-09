@@ -199,6 +199,30 @@ test("AAS-012 exact separately authorized entry passes gateway and broker once",
   assert.equal(effects, 1);
 });
 
+test("AAS-012 admits the bounded M1.2 correlation format without widening malformed IDs", () => {
+  const { catalogue, activation, policy, request } = setup();
+  const compatible = mutate(request, (draft) => {
+    draft.correlationId = "corr-aas035-openclaw-m14-oracle-0001";
+  });
+  const allowed = admitCapabilityExecutionAtGatewayV1(
+    catalogue, activation, policy, compatible, OBSERVED_AT,
+  );
+  assert.equal(allowed.outcome, "ALLOW");
+  assert.equal(JSON.stringify(allowed).includes("corr-aas035"), false);
+
+  for (const correlationId of ["corr-aas035-short", "corr-other-openclaw-m14-oracle-0001", "corr-aas035-UPPERCASE-0001"]) {
+    const denied = admitCapabilityExecutionAtGatewayV1(
+      catalogue,
+      activation,
+      policy,
+      mutate(request, (draft) => { draft.correlationId = correlationId; }),
+      OBSERVED_AT,
+    );
+    assert.equal(denied.outcome, "DENY");
+    assert.deepEqual(denied.issues, ["REQUEST_SCHEMA_INVALID_DENIED"]);
+  }
+});
+
 function assertDeniedGateway(
   decision: CapabilityGatewayDecisionV1,
   issue: CapabilityDecisionIssueV1,

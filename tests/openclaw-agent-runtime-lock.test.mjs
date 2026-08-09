@@ -21,6 +21,10 @@ async function materializeFixtureRoot() {
     path.join(root, "scripts/verify-openclaw-agent-runtime-lock.mjs"),
     path.join(target, "scripts/verify-openclaw-agent-runtime-lock.mjs"),
   );
+  await mkdir(path.join(target, "packages/contracts/src"), { recursive: true });
+  for (const name of ["canonical-json.js", "capability-catalogue.ts"]) {
+    await cp(path.join(root, "packages/contracts/src", name), path.join(target, "packages/contracts/src", name));
+  }
   return target;
 }
 
@@ -75,7 +79,7 @@ test("AAS-035 prerequisite lock binds official Docker, source, image and licence
   );
   assert.equal(report.platform, "linux/amd64");
   assert.equal(report.host, "Linux/x86_64");
-  assert.equal(report.artifactCount, 26);
+  assert.equal(report.artifactCount, 30);
   assert.equal(report.checks.length, 7);
 });
 

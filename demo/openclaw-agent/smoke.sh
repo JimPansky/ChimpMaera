@@ -98,6 +98,7 @@ cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs ready > "$run_dir/ready-after-agent-restart.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs egress > "$run_dir/egress.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs gateway-v2 > "$run_dir/gateway-v2.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs gateway-m14 > "$run_dir/gateway-m14.json"
 for probe in identity-missing identity-expired identity-wrong-audience identity-wrong-tenant identity-replay; do
   cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs "$probe" > "$run_dir/$probe.json"
 done
@@ -107,7 +108,7 @@ done
 
 cm_aas035_compose_cmd exec -T openclaw-agent node openclaw.mjs agent \
   --agent main --session-key aas035-e2e \
-  --message 'Create the one authorized synthetic AAS-035 contact through ChimpMaera and report its receipt digest.' \
+  --message 'Create the one authorized synthetic OPENCLAW-M1.4 contact through ChimpMaera and report its receipt digest.' \
   --thinking off --timeout 90 --json > "$run_dir/agent-e2e.json"
 jq -e '
   (.payloads // .result.payloads // []) as $p
@@ -115,6 +116,7 @@ jq -e '
 ' "$run_dir/agent-e2e.json" >/dev/null
 
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs replay > "$run_dir/replay.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs m14-replay > "$run_dir/m14-replay.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mind-write > "$run_dir/mind-write.json"
 cm_aas035_compose_cmd restart capability-gateway > "$run_dir/gateway-restart.log"
 cm_aas035_compose_cmd up --detach --wait capability-gateway >> "$run_dir/gateway-restart.log"
@@ -137,7 +139,7 @@ cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs ready > "$run_dir/ready-after-quota-exhaustion.json"
 
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs evidence > "$run_dir/evidence-before-reset.json"
-jq -e '.status == "PASS" and .counters.effects == 1 and .counters.effectAttempts >= 10 and .counters.modelCalls >= 2 and (.effectReceiptDigests | length == 1)' "$run_dir/evidence-before-reset.json" >/dev/null
+jq -e '.status == "PASS" and .counters.effects == 1 and .openClawM14EffectCount == 3 and .counters.effectAttempts >= 13 and .counters.modelCalls >= 2 and (.effectReceiptDigests | length == 1) and (.openClawM14ReceiptDigests | length == 3)' "$run_dir/evidence-before-reset.json" >/dev/null
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs reset > "$run_dir/semantic-reset-first.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs reset > "$run_dir/semantic-reset-idempotent.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mind-stale > "$run_dir/mind-stale-after-reset.json"
@@ -145,9 +147,11 @@ cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs replay > "$run_dir/replay-after-reset.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs evidence > "$run_dir/evidence-after-reset.json"
 jq -e --slurpfile before "$run_dir/evidence-before-reset.json" '
-  .status == "PASS" and .lifecycle.readiness.phase == "READY"
-  and .effectReceiptDigests == $before[0].effectReceiptDigests
-  and .foreignScopeDigest == $before[0].foreignScopeDigest
+	  .status == "PASS" and .lifecycle.readiness.phase == "READY"
+	  and .effectReceiptDigests == $before[0].effectReceiptDigests
+	  and .openClawM14ReceiptDigests == $before[0].openClawM14ReceiptDigests
+	  and .openClawM14EffectCount == $before[0].openClawM14EffectCount
+	  and .foreignScopeDigest == $before[0].foreignScopeDigest
 ' "$run_dir/evidence-after-reset.json" >/dev/null
 
 capture_logs
