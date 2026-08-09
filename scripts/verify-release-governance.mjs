@@ -45,6 +45,9 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, governance.schemaVersion === "chimpmaera.release-governance/v1", "GOVERNANCE_SCHEMA_DENIED");
   const release = governance.currentRelease ?? {};
   issue(issues, /^v\d+\.\d+\.\d+-poc\.\d{8}\.\d+$/.test(release.tag ?? ""), "CURRENT_TAG_INVALID");
+  issue(issues, Number.isSafeInteger(release.releaseId) && release.releaseId > 0
+    && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(release.publishedAt ?? "")
+    && release.url === `https://github.com/${governance.repository}/releases/tag/${release.tag}`, "CURRENT_PUBLICATION_METADATA_INVALID");
   issue(issues, typeof release.title === "string" && release.title.includes(release.increment ?? "__missing__"), "FUNCTIONAL_INCREMENT_TITLE_MISSING");
   issue(issues, !/\b(?:daily|today(?:'s)?|calendar)\b/i.test(release.title ?? ""), "CALENDAR_RELEASE_IDENTITY_DENIED");
   issue(issues, release.draft === false && release.prerelease === false && release.mustBeLatest === true, "LATEST_POLICY_NOT_FAIL_CLOSED");
@@ -188,6 +191,9 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /CM-REL-014/.test(capabilityRow("Extension assurance profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-014");
   issue(issues, /CM-REL-015/.test(capabilityRow("Minimized agent-work event contract")), "CAPABILITY_MAPPING_INVALID:CM-REL-015");
   issue(issues, /CM-REL-005/.test(capabilityRow("Update, migration, and Doctor contracts")), "CAPABILITY_MAPPING_INVALID:CM-REL-005");
+  issue(issues, /CM-REL-016/.test(capabilityRow("VIDEO-M2 template authoring")), "CAPABILITY_MAPPING_INVALID:CM-REL-016");
+  issue(issues, /CM-REL-017/.test(capabilityRow("ASF-INTAKE-2 signal release intake")), "CAPABILITY_MAPPING_INVALID:CM-REL-017");
+  issue(issues, /CM-REL-018/.test(capabilityRow("INT-PROFILE-001 integration profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-018");
 
   const docsHub = read(root, "docs/README.md");
   issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub) && /Caged Agent → Gateway → Capability\s+Constellation/.test(docsHub), "DOCS_HUB_PRODUCT_ARCHITECTURE_MISSING");
@@ -216,7 +222,7 @@ export function validateRepository(root = process.cwd()) {
   const publicManifest = read(root, "release/public-files.manifest");
   const publicPaths = new Set(publicManifest.trim().split("\n").map((line) => line.split("\t")[0]));
   issue(issues, Array.isArray(governance.claimEvidence) && governance.claimEvidence.length > 0, "CLAIM_EVIDENCE_MAPPING_MISSING");
-  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract"]);
+  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "VIDEO-M2 Template Authoring", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles"]);
   const observedComponents = new Set();
   for (const mapping of governance.claimEvidence ?? []) {
     issue(issues, /^CM-REL-\d{3}$/.test(mapping.claimId ?? ""), `CLAIM_ID_INVALID:${mapping.claimId ?? "missing"}`);
@@ -279,10 +285,13 @@ export async function verifyPublicReadback(root = process.cwd()) {
     getJson(`${api}/git/ref/tags/${expected.tag}`)
   ]);
   assert.equal(release.tag_name, expected.tag, "PUBLIC_TAG_MISMATCH");
+  assert.equal(release.id, expected.releaseId, "PUBLIC_RELEASE_ID_MISMATCH");
   assert.equal(release.name, expected.title, "PUBLIC_TITLE_MISMATCH");
   assert.equal(release.target_commitish, expected.targetCommitish, "PUBLIC_TARGET_MISMATCH");
   assert.equal(release.draft, expected.draft, "PUBLIC_DRAFT_MISMATCH");
   assert.equal(release.prerelease, expected.prerelease, "PUBLIC_PRERELEASE_MISMATCH");
+  assert.equal(release.published_at, expected.publishedAt, "PUBLIC_PUBLISHED_AT_MISMATCH");
+  assert.equal(release.html_url, expected.url, "PUBLIC_RELEASE_URL_MISMATCH");
   assert.equal(latest.tag_name, expected.tag, "PUBLIC_LATEST_MISMATCH");
   assert.equal(tagRef.object.sha, expected.tagObjectSha, "PUBLIC_TAG_OBJECT_MUTATED");
   assert.equal(tagRef.object.type, "commit", "PUBLIC_TAG_TYPE_MUTATED");
