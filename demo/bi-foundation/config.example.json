@@ -8,5 +8,11 @@
     "adapter": "SUPPORTED_EXPORT_API_SHAPED",
     "tenantId": "tenant:synthetic-zoo",
     "scope": "crm.synthetic.bi.read"
+  },
+  "erpConnector": {
+    "enabled": false,
+    "adapter": "SUPPORTED_EXPORT_API_SHAPED",
+    "tenantId": "tenant:synthetic-zoo",
+    "scope": "erp.synthetic.bi.read"
   }
 }

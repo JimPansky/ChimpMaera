@@ -82,6 +82,13 @@ tests/crm-read-connector.test.ts	tests/crm-read-connector.test.ts	0644
 tests/fixtures/crm-read/contract-v1.json	tests/fixtures/crm-read/contract-v1.json	0644
 tests/fixtures/crm-read/supported-export-v1.json	tests/fixtures/crm-read/supported-export-v1.json	0644
 verification/bi-002-crm-read-connector-evidence-v1.json	verification/bi-002-crm-read-connector-evidence-v1.json	0644
+docs/ERP-READ-CONNECTOR-GUIDE.md	docs/ERP-READ-CONNECTOR-GUIDE.md	0644
+packages/contracts/src/erp-read-connector.ts	packages/contracts/src/erp-read-connector.ts	0644
+schemas/contracts/erp-read-connector-v1.schema.json	schemas/contracts/erp-read-connector-v1.schema.json	0644
+tests/erp-read-connector.test.ts	tests/erp-read-connector.test.ts	0644
+tests/fixtures/erp-read/contract-v1.json	tests/fixtures/erp-read/contract-v1.json	0644
+tests/fixtures/erp-read/supported-export-v1.json	tests/fixtures/erp-read/supported-export-v1.json	0644
+verification/bi-003-erp-read-connector-evidence-v1.json	verification/bi-003-erp-read-connector-evidence-v1.json	0644
 demo/builder-agent/fixture-probe.mjs	demo/builder-agent/fixture-probe.mjs	0644
 demo/builder-agent/gateway.Dockerfile	demo/builder-agent/gateway.Dockerfile	0644
 demo/builder-agent/gateway.mjs	demo/builder-agent/gateway.mjs	0644

@@ -9,7 +9,7 @@
   },
   "localInputs": {
     "demo/bi-foundation/compose.yaml": "9eec3ffe5b9ed102377cc9b51995d22f050c2901af622f4b5f87d257cbd26fcb",
-    "demo/bi-foundation/config.example.json": "83163d5d4e4c04795bdc04dcb7f5bc6668dd54dda2c68c18591b795c9c5ecded",
+    "demo/bi-foundation/config.example.json": "8fec85e73e0c670f88336d247a5c1d7fa32860dab5ab7956199f1a587c1e2f73",
     "demo/bi-foundation/lib.sh": "a5923c580710d1b09f8fa982a599f0924b4c5f77cd5789a390b5437f87cf0f97",
     "demo/bi-foundation/reset.sh": "5dce694f89e2d5e1bc9c0ddad1edea7a5f5b1725365dee3f352b6830af34ed36",
     "demo/bi-foundation/service.Dockerfile": "a3c071e055bdd339656c806fdc78d1b4ba7b88207eb8d37d3546d3979f0f096f",
@@ -17,6 +17,6 @@
     "demo/bi-foundation/setup.sh": "43f3bc9c0a8847fe39b643e2f3514ee1a54673d42c84f69442e10fda3a7779c4",
     "demo/bi-foundation/start.sh": "d9541e6378569396644438ef4388237f861ac4794c4c18a08d5dee5c8d5d7433",
     "demo/bi-foundation/stop.sh": "ecb8d68c24053c45e6ad1b7e491b45106e3caae91ad6d0a34c9a51bb24586ec0",
-    "scripts/verify-bi-foundation.mjs": "a65f275c7bec63ae0e832501cf3899d15d68ad9b9e2e2fc0e880b5e1cb2df2c3"
+    "scripts/verify-bi-foundation.mjs": "7446367fb72c4b306a4bbf970fede64dcc5dbba9f47bc6f60c8a1696b117a855"
   }
 }
