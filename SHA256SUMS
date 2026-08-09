@@ -272,8 +272,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-cc9d6a59d4109bc3b16857011d00f58bf14eb162b8c82758db26873fa40d17c7  ./package-lock.json
-1b77eadba33eaca6507e288ac8858212ff8461032efa64877bf367b1e786088d  ./package.json
+4a59906d5cb4f66afedbddc606925e5e1f97776c82245176b382efba85208811  ./package-lock.json
+b4788d8d09c53b25c405154232281f8b959c34b87dc9fdef33853eda827f29df  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 151a6cdd416b9cc7d9b942fab86f69dceacea8d27a3c79302c9cff81dbdd5ef8  ./packages/contracts/src/bi-execution-spine.ts
@@ -524,7 +524,7 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-42a8f5e35b5e6f7f3bda3093b87b28bba056b47d75c70d7fccc04c63e11eb94a  ./verification/verification-dag-v2.json
+75e96fce44cb60c84574a23481cf6403da2eef539b345a6a94829d2af75b3fee  ./verification/verification-dag-v2.json
 e54199577415a1868cbf76db57aca6caa5d13aa8f747602fea48c29d9add4b15  ./docs/CAPABILITY-ACTION-CATALOGUE.md
 1b3db853ea2be6bfc4726d3def9a6a1cbccf44bc329ca21ffc1ad7428827d050  ./schemas/contracts/capability-catalogue-v1.schema.json
 653e88a25ad4640107980cffffee76947458bd52f0e2b44e2bdf5a059a28be8d  ./tests/fixtures/capability-catalogue/synthetic-catalogue-v1.json
