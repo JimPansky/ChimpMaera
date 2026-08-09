@@ -178,6 +178,7 @@ docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS
 docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
 docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
 docs/LEARNING-ROUTING-CONTRACTS.md	docs/LEARNING-ROUTING-CONTRACTS.md	0644
+docs/OPERATION-EVENT-QUALITY-CONTRACT.md	docs/OPERATION-EVENT-QUALITY-CONTRACT.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
 docs/VERIFICATION-FABRIC-SHADOW.md	docs/VERIFICATION-FABRIC-SHADOW.md	0644
@@ -225,6 +226,9 @@ packages/contracts/src/learning-routing.ts	packages/contracts/src/learning-routi
 packages/contracts/src/learning-routing-outcome.ts	packages/contracts/src/learning-routing-outcome.ts	0644
 packages/contracts/src/learning-routing-threats.ts	packages/contracts/src/learning-routing-threats.ts	0644
 packages/contracts/src/learning-routing-baseline.ts	packages/contracts/src/learning-routing-baseline.ts	0644
+packages/contracts/src/learning-routing-recommender.ts	packages/contracts/src/learning-routing-recommender.ts	0644
+packages/contracts/src/signal-release-intake.ts	packages/contracts/src/signal-release-intake.ts	0644
+packages/contracts/src/operation-event-quality.ts	packages/contracts/src/operation-event-quality.ts	0644
 packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
 packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-access-broker.ts	0644
 packages/contracts/src/protected-audit-timeline.ts	packages/contracts/src/protected-audit-timeline.ts	0644
@@ -278,6 +282,7 @@ schemas/contracts/routing-attempt-v1.schema.json	schemas/contracts/routing-attem
 schemas/contracts/routing-context-v1.schema.json	schemas/contracts/routing-context-v1.schema.json	0644
 schemas/contracts/routing-decision-v1.schema.json	schemas/contracts/routing-decision-v1.schema.json	0644
 schemas/contracts/routing-outcome-v1.schema.json	schemas/contracts/routing-outcome-v1.schema.json	0644
+schemas/contracts/operation-event-quality-v1.schema.json	schemas/contracts/operation-event-quality-v1.schema.json	0644
 schemas/adaptability-benchmark-result-v1.schema.json	schemas/adaptability-benchmark-result-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
@@ -330,6 +335,8 @@ tests/fixtures/extension-assurance/positive-profile-v1.json	tests/fixtures/exten
 tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	0644
 tests/fixtures/agent-work-intelligence/negative-matrix-v1.json	tests/fixtures/agent-work-intelligence/negative-matrix-v1.json	0644
 tests/fixtures/agent-work-intelligence/positive-public-event-v1.json	tests/fixtures/agent-work-intelligence/positive-public-event-v1.json	0644
+tests/fixtures/operation-event-quality/negative-matrix-v1.json	tests/fixtures/operation-event-quality/negative-matrix-v1.json	0644
+tests/fixtures/operation-event-quality/positive-public-v1.json	tests/fixtures/operation-event-quality/positive-public-v1.json	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
 tests/model-access-broker-runtime.test.mjs	tests/model-access-broker-runtime.test.mjs	0644
 tests/model-access-broker.test.ts	tests/model-access-broker.test.ts	0644
@@ -337,13 +344,18 @@ tests/protected-audit-timeline.test.ts	tests/protected-audit-timeline.test.ts	06
 tests/resource-plane-profiles.test.ts	tests/resource-plane-profiles.test.ts	0644
 tests/extension-assurance-profile.test.ts	tests/extension-assurance-profile.test.ts	0644
 tests/agent-work-event.test.ts	tests/agent-work-event.test.ts	0644
+tests/operation-event-quality.test.ts	tests/operation-event-quality.test.ts	0644
 tests/learning-routing.test.ts	tests/learning-routing.test.ts	0644
 tests/learning-routing-outcome.test.ts	tests/learning-routing-outcome.test.ts	0644
 tests/learning-routing-threats.test.ts	tests/learning-routing-threats.test.ts	0644
 tests/learning-routing-baseline.test.ts	tests/learning-routing-baseline.test.ts	0644
+tests/learning-routing-recommender.test.ts	tests/learning-routing-recommender.test.ts	0644
+tests/signal-release-intake.test.ts	tests/signal-release-intake.test.ts	0644
 tests/fixtures/learning-routing/threat-replay-manifest-v1.json	tests/fixtures/learning-routing/threat-replay-manifest-v1.json	0644
 tests/fixtures/learning-routing/historical-episodes-august-v1.json	tests/fixtures/learning-routing/historical-episodes-august-v1.json	0644
 tests/fixtures/learning-routing/baseline-golden-v1.json	tests/fixtures/learning-routing/baseline-golden-v1.json	0644
+tests/fixtures/signal-release-intake/positive-v1.json	tests/fixtures/signal-release-intake/positive-v1.json	0644
+tests/fixtures/signal-release-intake/rejections-v1.json	tests/fixtures/signal-release-intake/rejections-v1.json	0644
 tests/secure-default-proof.test.mjs	tests/secure-default-proof.test.mjs	0644
 tests/hmi-core.test.ts	tests/hmi-core.test.ts	0644
 tests/hmi-harness-adapter.test.ts	tests/hmi-harness-adapter.test.ts	0644
@@ -364,6 +376,12 @@ schemas/contracts/chimpmaera-analytics-v1.schema.json	schemas/contracts/chimpmae
 tests/analytics-projection.test.ts	tests/analytics-projection.test.ts	0644
 tests/fixtures/analytics/negative-matrix-v1.json	tests/fixtures/analytics/negative-matrix-v1.json	0644
 tests/fixtures/analytics/positive-projection-v1.json	tests/fixtures/analytics/positive-projection-v1.json	0644
+packages/contracts/src/integration-profile.ts	packages/contracts/src/integration-profile.ts	0644
+schemas/contracts/integration-profile-v1.schema.json	schemas/contracts/integration-profile-v1.schema.json	0644
+tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
+tests/fixtures/integration-profile/negative-probes-v1.json	tests/fixtures/integration-profile/negative-probes-v1.json	0644
+tests/fixtures/integration-profile/positive-variants-v1.json	tests/fixtures/integration-profile/positive-variants-v1.json	0644
+docs/INTEGRATION-PROFILES.md	docs/INTEGRATION-PROFILES.md	0644
 tests/demo-local-egress-policy.test.mjs	tests/demo-local-egress-policy.test.mjs	0644
 tests/demo-paperless-ngx-zoo-adapter.test.mjs	tests/demo-paperless-ngx-zoo-adapter.test.mjs	0644
 tests/demo-policy-evaluator.test.mjs	tests/demo-policy-evaluator.test.mjs	0644
@@ -397,6 +415,7 @@ tools/video-production-reference/assets/reference/voice-reference-de.wav	tools/v
 tools/video-production-reference/bin/cm-video	tools/video-production-reference/bin/cm-video	0755
 tools/video-production-reference/compose.yaml	tools/video-production-reference/compose.yaml	0644
 tools/video-production-reference/docs/ARCHITECTURE.md	tools/video-production-reference/docs/ARCHITECTURE.md	0644
+tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md	tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md	0644
 tools/video-production-reference/docs/CURRENT-LIMITS.md	tools/video-production-reference/docs/CURRENT-LIMITS.md	0644
 tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md	tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md	0644
 tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md	tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md	0644
@@ -425,6 +444,7 @@ tools/video-production-reference/schemas/script-package.schema.json	tools/video-
 tools/video-production-reference/schemas/storyboard.schema.json	tools/video-production-reference/schemas/storyboard.schema.json	0644
 tools/video-production-reference/schemas/video-job.schema.json	tools/video-production-reference/schemas/video-job.schema.json	0644
 tools/video-production-reference/scripts/smoke.sh	tools/video-production-reference/scripts/smoke.sh	0755
+tools/video-production-reference/scripts/verify_reference_closure.py	tools/video-production-reference/scripts/verify_reference_closure.py	0644
 tools/video-production-reference/src/cm_video_ref/__init__.py	tools/video-production-reference/src/cm_video_ref/__init__.py	0644
 tools/video-production-reference/src/cm_video_ref/audience_copy.py	tools/video-production-reference/src/cm_video_ref/audience_copy.py	0644
 tools/video-production-reference/src/cm_video_ref/batch.py	tools/video-production-reference/src/cm_video_ref/batch.py	0644
@@ -442,6 +462,7 @@ tools/video-production-reference/templates/script-package-v1.json	tools/video-pr
 tools/video-production-reference/templates/visual-grammar-families-v1.json	tools/video-production-reference/templates/visual-grammar-families-v1.json	0644
 tools/video-production-reference/tests/test_batch.py	tools/video-production-reference/tests/test_batch.py	0644
 tools/video-production-reference/tests/test_cm_video.py	tools/video-production-reference/tests/test_cm_video.py	0644
+tools/video-production-reference/tests/test_reference_closure.py	tools/video-production-reference/tests/test_reference_closure.py	0644
 tools/video-production-reference/tests/test_visual_governance.py	tools/video-production-reference/tests/test_visual_governance.py	0644
 tsconfig.json	tsconfig.json	0644
 verification/verification-dag-v2.json	verification/verification-dag-v2.json	0644

@@ -1,0 +1,97 @@
+[
+  {
+    "schemaVersion": "cm.integration-profile/v1",
+    "identity": { "profileId": "integration:power-apps-read-only", "schemaVersion": "cm.integration-profile/v1", "adapterId": "adapter:power-apps-synthetic", "adapterVersion": "1.0.0", "contractVersion": "1.0.0", "policyGeneration": "cm-policy:synthetic-v1", "evidenceGeneration": "cm-evidence:synthetic-v1" },
+    "integration": { "variant": "POWER_APPS_READ_ONLY", "capabilityClass": "READ_ONLY", "allowedActions": ["READ_RECORD", "READ_METADATA"], "externalWriteAllowed": false, "genericProxyAllowed": false },
+    "upstream": { "sourceKind": "CM_OWNED_CONTRACT", "sourceRef": "chimpmaera.connector/power-platform-read/v1", "sourceVersion": "1.0.0", "sourceDigest": "1111111111111111111111111111111111111111111111111111111111111111", "license": "Apache-2.0", "pinned": true, "replacementReviewAtMs": 1817683200000 },
+    "data": { "authoritativeReadSource": "local-synthetic:power-apps-records", "projectionClass": "NONE", "classification": "LOCAL_SYNTHETIC_PUBLIC", "schemaVersion": "chimpmaera.connector/power-platform-read/v1", "lineageKeys": ["recordId", "receiptDigest"], "excludedFields": ["credentials", "personalIdentity", "privatePath", "providerData", "rawContent", "tenantIdentifier"], "privatePath": null },
+    "identityProfile": { "tenantScope": "SINGLE_SYNTHETIC_TENANT", "tenantReference": null, "identityMode": "DELEGATED_LEAST_PRIVILEGE", "leastPrivilege": true, "approvalBoundary": "OWNER_POLICY_EVENT_REQUIRED_FOR_ACTIVATION", "crossTenantAllowed": false, "ambientCredentialAllowed": false },
+    "routes": [
+      { "purpose": "READ_ADAPTER", "component": "POWER_PLATFORM_READ_CONNECTOR", "contractSchemaVersion": "chimpmaera.connector/power-platform-read/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "VERIFY_EVIDENCE", "component": "VERIFICATION_FABRIC", "contractSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "ASSESS_EXTENSION", "component": "EXTENSION_TRUST_LAB", "contractSchemaVersion": "chimpmaera.extension-trust/assurance-profile/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "UPDATE_FALLBACK", "component": "UPDATE_CONTROLLER", "contractSchemaVersion": "chimpmaera.update/doctor-contract-bundle/v1", "mode": "REFERENCE_ONLY" }
+    ],
+    "lifecycle": { "storageClass": "NO_RUNTIME_STORAGE", "retentionClass": "PUBLIC_SYNTHETIC_FIXTURE_ONLY", "backupMode": "NOT_APPLICABLE_NO_PERSISTENCE", "deletionReadback": "LOCAL_FIXTURE_REMOVAL_ONLY", "migrationMode": "PRESERVE_OLD_READER_UNTIL_REPLACEMENT_READBACK", "acceptedProfileDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "lkgProfileDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "rollbackTarget": "cm-lkg:integration-disabled-v1" },
+    "verification": { "fabricSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "evidenceBundleRef": "fixture:int-profile-power-apps-v1", "evidenceDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "verifiedAtMs": 1785542400000, "freshUntilMs": 1817078400000, "negativeProbeSet": "INT-PROFILE-001", "authoritativeReadback": "LOCAL_FIXTURE_VALIDATION_ONLY", "residualRisk": "REAL_SYSTEM_COMPATIBILITY_NOT_VALIDATED" },
+    "overrides": { "allowlistedNames": ["displayName", "refreshCadenceMs"], "values": {}, "genericHost": null, "genericPath": null, "genericProxy": null },
+    "claimBoundary": "LOCAL_SYNTHETIC_CONTRACT_ONLY_NO_TENANT_NO_CREDENTIAL_NO_PROVIDER_CALL_NO_AUTHORITY_NO_ACTIVATION_NO_EXTERNAL_WRITE",
+    "profileDigest": "0e1adf84868e8f36cf315ddba12f5470c81a8dfb7cc9da735c06062513a84a21"
+  },
+  {
+    "schemaVersion": "cm.integration-profile/v1",
+    "identity": { "profileId": "integration:power-bi-read-only", "schemaVersion": "cm.integration-profile/v1", "adapterId": "adapter:power-bi-synthetic", "adapterVersion": "1.0.0", "contractVersion": "1.0.0", "policyGeneration": "cm-policy:synthetic-v1", "evidenceGeneration": "cm-evidence:synthetic-v1" },
+    "integration": { "variant": "POWER_BI_READ_ONLY_PROJECTION", "capabilityClass": "READ_ONLY_PROJECTION", "allowedActions": ["READ_PROJECTION"], "externalWriteAllowed": false, "genericProxyAllowed": false },
+    "upstream": { "sourceKind": "CM_OWNED_CONTRACT", "sourceRef": "chimpmaera.analytics/v1", "sourceVersion": "1.0.0", "sourceDigest": "2222222222222222222222222222222222222222222222222222222222222222", "license": "Apache-2.0", "pinned": true, "replacementReviewAtMs": 1817683200000 },
+    "data": { "authoritativeReadSource": "local-synthetic:verification-projection", "projectionClass": "READ_ONLY", "classification": "LOCAL_SYNTHETIC_PUBLIC", "schemaVersion": "chimpmaera.analytics/v1", "lineageKeys": ["projectionId", "sourceContractDigest"], "excludedFields": ["credentials", "personalIdentity", "privatePath", "providerData", "rawContent", "tenantIdentifier"], "privatePath": null },
+    "identityProfile": { "tenantScope": "SINGLE_SYNTHETIC_TENANT", "tenantReference": null, "identityMode": "WORKLOAD_READ_ONLY", "leastPrivilege": true, "approvalBoundary": "OWNER_POLICY_EVENT_REQUIRED_FOR_ACTIVATION", "crossTenantAllowed": false, "ambientCredentialAllowed": false },
+    "routes": [
+      { "purpose": "READ_PROJECTION", "component": "POWER_BI_READ_ONLY_PROJECTION", "contractSchemaVersion": "chimpmaera.analytics/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "VERIFY_EVIDENCE", "component": "VERIFICATION_FABRIC", "contractSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "ASSESS_EXTENSION", "component": "EXTENSION_TRUST_LAB", "contractSchemaVersion": "chimpmaera.extension-trust/assurance-profile/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "UPDATE_FALLBACK", "component": "UPDATE_CONTROLLER", "contractSchemaVersion": "chimpmaera.update/doctor-contract-bundle/v1", "mode": "REFERENCE_ONLY" }
+    ],
+    "lifecycle": { "storageClass": "NO_RUNTIME_STORAGE", "retentionClass": "PUBLIC_SYNTHETIC_FIXTURE_ONLY", "backupMode": "NOT_APPLICABLE_NO_PERSISTENCE", "deletionReadback": "LOCAL_FIXTURE_REMOVAL_ONLY", "migrationMode": "PRESERVE_OLD_READER_UNTIL_REPLACEMENT_READBACK", "acceptedProfileDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "lkgProfileDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "rollbackTarget": "cm-lkg:integration-disabled-v1" },
+    "verification": { "fabricSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "evidenceBundleRef": "fixture:int-profile-power-bi-v1", "evidenceDigest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "verifiedAtMs": 1785542400000, "freshUntilMs": 1817078400000, "negativeProbeSet": "INT-PROFILE-001", "authoritativeReadback": "LOCAL_FIXTURE_VALIDATION_ONLY", "residualRisk": "REAL_SYSTEM_COMPATIBILITY_NOT_VALIDATED" },
+    "overrides": { "allowlistedNames": ["displayName", "refreshCadenceMs"], "values": {}, "genericHost": null, "genericPath": null, "genericProxy": null },
+    "claimBoundary": "LOCAL_SYNTHETIC_CONTRACT_ONLY_NO_TENANT_NO_CREDENTIAL_NO_PROVIDER_CALL_NO_AUTHORITY_NO_ACTIVATION_NO_EXTERNAL_WRITE",
+    "profileDigest": "780a09cb17c8529271847c08f0182a25b94eb3a06fc141cd15b39637ce2c37f3"
+  },
+  {
+    "schemaVersion": "cm.integration-profile/v1",
+    "identity": { "profileId": "integration:mailbox-read-only", "schemaVersion": "cm.integration-profile/v1", "adapterId": "adapter:mailbox-style-synthetic", "adapterVersion": "1.0.0", "contractVersion": "1.0.0", "policyGeneration": "cm-policy:synthetic-v1", "evidenceGeneration": "cm-evidence:synthetic-v1" },
+    "integration": { "variant": "MAILBOX_STYLE_READ_ADAPTER", "capabilityClass": "READ_ONLY", "allowedActions": ["LIST_MESSAGES", "READ_MESSAGE_METADATA"], "externalWriteAllowed": false, "genericProxyAllowed": false },
+    "upstream": { "sourceKind": "LOCAL_SYNTHETIC_CORPUS", "sourceRef": "local-synthetic:mailbox-metadata-v1", "sourceVersion": "1.0.0", "sourceDigest": "3333333333333333333333333333333333333333333333333333333333333333", "license": "Apache-2.0", "pinned": true, "replacementReviewAtMs": 1817683200000 },
+    "data": { "authoritativeReadSource": "local-synthetic:mailbox-metadata", "projectionClass": "NONE", "classification": "LOCAL_SYNTHETIC_PUBLIC", "schemaVersion": "chimpmaera.agent-work-intelligence/event-record/v1", "lineageKeys": ["messageKey", "sourceDigest"], "excludedFields": ["credentials", "personalIdentity", "privatePath", "providerData", "rawContent", "tenantIdentifier"], "privatePath": null },
+    "identityProfile": { "tenantScope": "SINGLE_SYNTHETIC_TENANT", "tenantReference": null, "identityMode": "DELEGATED_LEAST_PRIVILEGE", "leastPrivilege": true, "approvalBoundary": "OWNER_POLICY_EVENT_REQUIRED_FOR_ACTIVATION", "crossTenantAllowed": false, "ambientCredentialAllowed": false },
+    "routes": [
+      { "purpose": "READ_EVENT_METADATA", "component": "AGENT_WORK_INTELLIGENCE", "contractSchemaVersion": "chimpmaera.agent-work-intelligence/event-record/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "VERIFY_EVIDENCE", "component": "VERIFICATION_FABRIC", "contractSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "ASSESS_EXTENSION", "component": "EXTENSION_TRUST_LAB", "contractSchemaVersion": "chimpmaera.extension-trust/assurance-profile/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "UPDATE_FALLBACK", "component": "UPDATE_CONTROLLER", "contractSchemaVersion": "chimpmaera.update/doctor-contract-bundle/v1", "mode": "REFERENCE_ONLY" }
+    ],
+    "lifecycle": { "storageClass": "LOCAL_SYNTHETIC_FIXTURE", "retentionClass": "PUBLIC_SYNTHETIC_FIXTURE_ONLY", "backupMode": "NOT_APPLICABLE_NO_PERSISTENCE", "deletionReadback": "LOCAL_FIXTURE_REMOVAL_ONLY", "migrationMode": "PRESERVE_OLD_READER_UNTIL_REPLACEMENT_READBACK", "acceptedProfileDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "lkgProfileDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "rollbackTarget": "cm-lkg:integration-disabled-v1" },
+    "verification": { "fabricSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "evidenceBundleRef": "fixture:int-profile-mailbox-v1", "evidenceDigest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "verifiedAtMs": 1785542400000, "freshUntilMs": 1817078400000, "negativeProbeSet": "INT-PROFILE-001", "authoritativeReadback": "LOCAL_FIXTURE_VALIDATION_ONLY", "residualRisk": "REAL_SYSTEM_COMPATIBILITY_NOT_VALIDATED" },
+    "overrides": { "allowlistedNames": ["displayName", "refreshCadenceMs"], "values": {}, "genericHost": null, "genericPath": null, "genericProxy": null },
+    "claimBoundary": "LOCAL_SYNTHETIC_CONTRACT_ONLY_NO_TENANT_NO_CREDENTIAL_NO_PROVIDER_CALL_NO_AUTHORITY_NO_ACTIVATION_NO_EXTERNAL_WRITE",
+    "profileDigest": "623cbc9a11e1a47e19ff7bf96f91fd9f664c8da0e8db373bfbca88329c22ebb8"
+  },
+  {
+    "schemaVersion": "cm.integration-profile/v1",
+    "identity": { "profileId": "integration:local-knowledge-corpus", "schemaVersion": "cm.integration-profile/v1", "adapterId": "adapter:local-corpus-synthetic", "adapterVersion": "1.0.0", "contractVersion": "1.0.0", "policyGeneration": "cm-policy:synthetic-v1", "evidenceGeneration": "cm-evidence:synthetic-v1" },
+    "integration": { "variant": "LOCAL_KNOWLEDGE_CORPUS", "capabilityClass": "READ_ONLY", "allowedActions": ["READ_CORPUS", "SEARCH_CORPUS"], "externalWriteAllowed": false, "genericProxyAllowed": false },
+    "upstream": { "sourceKind": "LOCAL_SYNTHETIC_CORPUS", "sourceRef": "local-synthetic:knowledge-corpus-v1", "sourceVersion": "1.0.0", "sourceDigest": "4444444444444444444444444444444444444444444444444444444444444444", "license": "Apache-2.0", "pinned": true, "replacementReviewAtMs": 1817683200000 },
+    "data": { "authoritativeReadSource": "local-synthetic:knowledge-corpus", "projectionClass": "NONE", "classification": "LOCAL_SYNTHETIC_PUBLIC", "schemaVersion": "chimpmaera.agent-work-intelligence/event-record/v1", "lineageKeys": ["documentKey", "sourceDigest"], "excludedFields": ["credentials", "personalIdentity", "privatePath", "providerData", "rawContent", "tenantIdentifier"], "privatePath": null },
+    "identityProfile": { "tenantScope": "SINGLE_SYNTHETIC_TENANT", "tenantReference": null, "identityMode": "LOCAL_NO_IDENTITY", "leastPrivilege": true, "approvalBoundary": "OWNER_POLICY_EVENT_REQUIRED_FOR_ACTIVATION", "crossTenantAllowed": false, "ambientCredentialAllowed": false },
+    "routes": [
+      { "purpose": "READ_KNOWLEDGE", "component": "AGENT_WORK_INTELLIGENCE", "contractSchemaVersion": "chimpmaera.agent-work-intelligence/event-record/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "VERIFY_EVIDENCE", "component": "VERIFICATION_FABRIC", "contractSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "ASSESS_EXTENSION", "component": "EXTENSION_TRUST_LAB", "contractSchemaVersion": "chimpmaera.extension-trust/assurance-profile/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "UPDATE_FALLBACK", "component": "UPDATE_CONTROLLER", "contractSchemaVersion": "chimpmaera.update/doctor-contract-bundle/v1", "mode": "REFERENCE_ONLY" }
+    ],
+    "lifecycle": { "storageClass": "LOCAL_SYNTHETIC_FIXTURE", "retentionClass": "PUBLIC_SYNTHETIC_FIXTURE_ONLY", "backupMode": "NOT_APPLICABLE_NO_PERSISTENCE", "deletionReadback": "LOCAL_FIXTURE_REMOVAL_ONLY", "migrationMode": "PRESERVE_OLD_READER_UNTIL_REPLACEMENT_READBACK", "acceptedProfileDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "lkgProfileDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "rollbackTarget": "cm-lkg:integration-disabled-v1" },
+    "verification": { "fabricSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "evidenceBundleRef": "fixture:int-profile-knowledge-v1", "evidenceDigest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "verifiedAtMs": 1785542400000, "freshUntilMs": 1817078400000, "negativeProbeSet": "INT-PROFILE-001", "authoritativeReadback": "LOCAL_FIXTURE_VALIDATION_ONLY", "residualRisk": "REAL_SYSTEM_COMPATIBILITY_NOT_VALIDATED" },
+    "overrides": { "allowlistedNames": ["displayName", "refreshCadenceMs"], "values": {}, "genericHost": null, "genericPath": null, "genericProxy": null },
+    "claimBoundary": "LOCAL_SYNTHETIC_CONTRACT_ONLY_NO_TENANT_NO_CREDENTIAL_NO_PROVIDER_CALL_NO_AUTHORITY_NO_ACTIVATION_NO_EXTERNAL_WRITE",
+    "profileDigest": "767fd701ef166df08416bc80e04360455467e42f0eed9b2b09252e515d1cce70"
+  },
+  {
+    "schemaVersion": "cm.integration-profile/v1",
+    "identity": { "profileId": "integration:issue-candidate-export", "schemaVersion": "cm.integration-profile/v1", "adapterId": "adapter:issue-candidate-synthetic", "adapterVersion": "1.0.0", "contractVersion": "1.0.0", "policyGeneration": "cm-policy:synthetic-v1", "evidenceGeneration": "cm-evidence:synthetic-v1" },
+    "integration": { "variant": "ISSUE_CANDIDATE_EXPORT_ONLY", "capabilityClass": "EXPORT_ONLY", "allowedActions": ["EXPORT_ISSUE_CANDIDATE"], "externalWriteAllowed": false, "genericProxyAllowed": false },
+    "upstream": { "sourceKind": "CM_OWNED_CONTRACT", "sourceRef": "chimpmaera.hmi/contribute-preflight/v1", "sourceVersion": "1.0.0", "sourceDigest": "5555555555555555555555555555555555555555555555555555555555555555", "license": "Apache-2.0", "pinned": true, "replacementReviewAtMs": 1817683200000 },
+    "data": { "authoritativeReadSource": "local-synthetic:issue-candidate", "projectionClass": "EXPORT_ONLY", "classification": "LOCAL_SYNTHETIC_PUBLIC", "schemaVersion": "chimpmaera.hmi/contribute-preflight/v1", "lineageKeys": ["candidateId", "evidenceDigest"], "excludedFields": ["credentials", "personalIdentity", "privatePath", "providerData", "rawContent", "tenantIdentifier"], "privatePath": null },
+    "identityProfile": { "tenantScope": "SINGLE_SYNTHETIC_TENANT", "tenantReference": null, "identityMode": "LOCAL_NO_IDENTITY", "leastPrivilege": true, "approvalBoundary": "OWNER_POLICY_EVENT_REQUIRED_FOR_ACTIVATION", "crossTenantAllowed": false, "ambientCredentialAllowed": false },
+    "routes": [
+      { "purpose": "EXPORT_CANDIDATE", "component": "HMI_CONTRIBUTION_PREFLIGHT", "contractSchemaVersion": "chimpmaera.hmi/contribute-preflight/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "VERIFY_EVIDENCE", "component": "VERIFICATION_FABRIC", "contractSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "ASSESS_EXTENSION", "component": "EXTENSION_TRUST_LAB", "contractSchemaVersion": "chimpmaera.extension-trust/assurance-profile/v1", "mode": "REFERENCE_ONLY" },
+      { "purpose": "UPDATE_FALLBACK", "component": "UPDATE_CONTROLLER", "contractSchemaVersion": "chimpmaera.update/doctor-contract-bundle/v1", "mode": "REFERENCE_ONLY" }
+    ],
+    "lifecycle": { "storageClass": "NO_RUNTIME_STORAGE", "retentionClass": "PUBLIC_SYNTHETIC_FIXTURE_ONLY", "backupMode": "NOT_APPLICABLE_NO_PERSISTENCE", "deletionReadback": "LOCAL_FIXTURE_REMOVAL_ONLY", "migrationMode": "PRESERVE_OLD_READER_UNTIL_REPLACEMENT_READBACK", "acceptedProfileDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "lkgProfileDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "rollbackTarget": "cm-lkg:integration-disabled-v1" },
+    "verification": { "fabricSchemaVersion": "chimpmaera.verification/fabric-bundle/v1", "evidenceBundleRef": "fixture:int-profile-issue-candidate-v1", "evidenceDigest": "6666666666666666666666666666666666666666666666666666666666666666", "verifiedAtMs": 1785542400000, "freshUntilMs": 1817078400000, "negativeProbeSet": "INT-PROFILE-001", "authoritativeReadback": "LOCAL_FIXTURE_VALIDATION_ONLY", "residualRisk": "REAL_SYSTEM_COMPATIBILITY_NOT_VALIDATED" },
+    "overrides": { "allowlistedNames": ["displayName", "refreshCadenceMs"], "values": {}, "genericHost": null, "genericPath": null, "genericProxy": null },
+    "claimBoundary": "LOCAL_SYNTHETIC_CONTRACT_ONLY_NO_TENANT_NO_CREDENTIAL_NO_PROVIDER_CALL_NO_AUTHORITY_NO_ACTIVATION_NO_EXTERNAL_WRITE",
+    "profileDigest": "4f4862847d4752e00aa8b654520737b924c71a9c71f8d43ed94842d00991c7bf"
+  }
+]

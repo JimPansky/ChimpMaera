@@ -74,7 +74,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["learning-routing-foundation", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["integration-profile-v1", "learning-routing-foundation", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 
@@ -83,6 +83,13 @@ test("learning-routing changes select the complete foundation and downstream int
   assert.equal(result.mode, "IMPACTED_SHADOW");
   assert.deepEqual(result.selectedNodes, ["learning-routing-foundation", "repository-integrity", "secure-default-proof"]);
   assert.ok(result.selectedTests.includes("npm run learning-routing:test"));
+});
+
+test("integration profile changes select the bounded owner and downstream integrity gates", () => {
+  const result = plan(["packages/contracts/src/integration-profile.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["integration-profile-v1", "repository-integrity", "secure-default-proof"]);
+  assert.ok(result.selectedTests.includes("npm run integration-profile:test"));
 });
 
 test("central toolchain and security changes invalidate the global closure", () => {
