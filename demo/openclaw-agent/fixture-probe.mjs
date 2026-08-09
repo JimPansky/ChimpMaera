@@ -199,14 +199,12 @@ switch (mode) {
     break;
   }
   case "wrong-identity":
-  case "unknown-action": {
+  case "unknown-action":
+  case "replay-conflict": {
     const probe = v2SmokeProbe(mode);
     result = await expectV2Deny(probe.options, probe.expectedCode, probe.route);
     break;
   }
-  case "replay-conflict":
-    result = await expectDeny("/v1/capabilities/execute", { method: "POST", headers, body: JSON.stringify({ ...typed, payload: { ...typed.payload, name: "Changed" } }) }, "TYPED_REQUEST_PAYLOAD_DENIED");
-    break;
   case "oversize":
     result = await expectDeny("/v1/mind/entries", { method: "POST", headers, body: JSON.stringify({ ...mind, value: "x".repeat(2049) }) }, "MIND_CONTRACT_DENIED");
     break;

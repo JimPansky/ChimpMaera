@@ -57,6 +57,18 @@
       "expectedCode": "TYPED_REQUEST_BINDING_DENIED",
       "identityOverrides": {},
       "bodyOverrides": { "actionId": "raw.shell.execute" }
+    },
+    {
+      "mode": "replay-conflict",
+      "route": "/v2/broker/capabilities/execute",
+      "expectedCode": "TYPED_REQUEST_PAYLOAD_DENIED",
+      "identityOverrides": {},
+      "bodyOverrides": {
+        "payload": {
+          "email": "agent.fixture@synthetic.invalid",
+          "name": "Changed"
+        }
+      }
     }
   ],
   "credentialPolicy": {

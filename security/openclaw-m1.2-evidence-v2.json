@@ -46,6 +46,7 @@
     { "probe": "SAME_REQUEST_ID_FRESH_IDENTITY_RETRY", "outcome": "ALLOW", "code": "REPLAY_SAME_RECEIPT_ONE_EFFECT" },
     { "probe": "SMOKE_WRONG_IDENTITY_ON_V2_ROUTE", "outcome": "DENY", "code": "IDENTITY_SUBJECT_DENIED" },
     { "probe": "SMOKE_UNKNOWN_ACTION_WITH_VALID_V2_IDENTITY", "outcome": "DENY", "code": "TYPED_REQUEST_BINDING_DENIED_ZERO_EFFECTS" },
+    { "probe": "SMOKE_REPLAY_CONFLICT_WITH_VALID_V2_IDENTITY", "outcome": "DENY", "code": "TYPED_REQUEST_PAYLOAD_DENIED_ZERO_EFFECTS" },
     { "probe": "OVERLAPPING_EARLIER_FAILURE_CANNOT_ERASE_LATER_JTI", "outcome": "DENY", "code": "LATER_ASSERTION_REUSE_IDENTITY_REPLAY_DENIED" },
     { "probe": "PLUGIN_V2_SANITIZED_DENIAL_PROPAGATION", "outcome": "ALLOW", "code": "STABLE_CODE_PRESERVED_RAW_DETAIL_FALLS_BACK" },
     { "probe": "UNEXPECTED_DESTINATION_INTERNET", "outcome": "DENY", "code": "DESTINATION_DENIED" },
@@ -76,12 +77,12 @@
     "result": "PASS_SYNTHETIC_SANITIZED_ONLY"
   },
   "artifactChecksums": {
-    "demo/openclaw-agent/gateway-workload-contract-v2.json": "1f92a3ec179bf8af3c154a7fa593427f02a0caf0aff161220d3f6ff4f2417b99",
+    "demo/openclaw-agent/gateway-workload-contract-v2.json": "4a635cf9e56fa11e89f4861c4ac42c713e2b5c60333b00500e0838eb182ba442",
     "demo/openclaw-agent/plugin/identity-v2.mjs": "635ce8034fe60162528e116a9013020e457be2c34decdc48ba4dcaf3b2366088",
     "demo/openclaw-agent/plugin/index.mjs": "4040ad24f9ecad1caa0b1cb58ab603fee5037616f6bab2a78177ce3e521ff709",
     "demo/openclaw-agent/gateway.mjs": "24ad73eecb5df6767c3b056585834275ba818b3e86834388928caa9dc2ec056c",
-    "tests/openclaw-gateway-identity-network.test.mjs": "9fbcc6cee91c1ba32098bbfbc0959e1fa7b6a4c3ecb02a69575b754be49ebb51",
-    "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json": "274155e141c0ef44c594431a22f1120e38d79fe37d44537cca5ed5fca276c8cb"
+    "tests/openclaw-gateway-identity-network.test.mjs": "8dccff10d8c854fcb2ca1092b0566bffe05b55c4254a8f94964d9b9f94c84c08",
+    "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json": "a88d0545f3cbb25f9b05db9b00cfcb9856536c1c57f3bbbc5de1d077807604ed"
   },
   "verification": {
     "focused": {
@@ -113,7 +114,7 @@
       ]
     }
   },
-  "supportedClaim": "The pinned default-off local fixture deterministically enforces one correlation-bound Gateway execution path using a fresh per-invocation 60-second least-privilege synthetic identity, denies the legacy V1 execution bypass with zero effects, retains newer accepted JTIs across overlapping earlier failures, returns one exact receipt for same-requestId retries with fresh identity, preserves stable sanitized V2 denial codes at the plugin boundary, denies identical-assertion reuse and enumerated network/identity drift, and contains no live or ambient credential fixture.",
+  "supportedClaim": "The pinned default-off local fixture deterministically enforces one correlation-bound Gateway execution path using a fresh per-invocation 60-second least-privilege synthetic identity, denies the legacy V1 execution bypass with zero effects, routes the retained invalid-payload smoke probe through V2 to its stable sanitized denial with zero effects, retains newer accepted JTIs across overlapping earlier failures, returns one exact receipt for same-requestId retries with fresh identity, preserves stable sanitized V2 denial codes at the plugin boundary, denies identical-assertion reuse and enumerated network/identity drift, and contains no live or ambient credential fixture.",
   "nonClaims": [
     "NO_HOSTILE_NETWORK_CERTIFICATION",
     "NO_PRODUCTION_IDENTITY_ASSURANCE",

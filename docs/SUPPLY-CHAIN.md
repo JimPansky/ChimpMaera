@@ -80,9 +80,11 @@ preserved by the plugin; malformed or non-stable denial detail falls back to
 the HTTP status without reflecting assertion or proof material. The versioned
 V2 workload contract also binds
 the lifecycle smoke definitions: the wrong-subject probe reaches
-`IDENTITY_SUBJECT_DENIED`, and the unknown-action probe uses otherwise-valid
-identity claims to reach `TYPED_REQUEST_BINDING_DENIED`. A non-container test
-executes those exact definitions through the Gateway handler. It also reads
+`IDENTITY_SUBJECT_DENIED`; the unknown-action probe uses otherwise-valid
+identity claims to reach `TYPED_REQUEST_BINDING_DENIED`; and the retained
+replay-conflict probe uses a fresh valid identity with an invalid typed payload
+to reach `TYPED_REQUEST_PAYLOAD_DENIED`. A non-container test executes those
+exact definitions through the Gateway handler and proves zero effects. It also reads
 back the finite policy and proves the fixture
 has no ambient proxy or credential environment, host credential mount, live
 credential-shaped fixture bytes, or production credential claim. Denial
