@@ -39,8 +39,8 @@ tenants, providers, credentials, or network identity systems.
 - Removed the ambient `NO_PROXY` variable. The workload environment contains
   only local OpenClaw path/state settings; no application, provider, host,
   tenant, proxy, or credential environment is introduced.
-- Bound both new fixture files and all modified runtime/lifecycle bytes into
-  the official offline runtime lock, now covering 24 artifacts.
+- Bound the versioned fixture contracts and all modified runtime/lifecycle
+  bytes into the official offline runtime lock, covering 24 artifacts.
 - Closed the independently reviewed legacy execution bypass: the old V1
   capability route now returns its stable V1 denial shape before parsing or
   effect dispatch, even when the public static V1 workload marker is present.
@@ -48,6 +48,10 @@ tenants, providers, credentials, or network identity systems.
   uses a fresh UUID-derived synthetic JTI/correlation binding; `requestId`
   remains unchanged, so a response-loss retry with a fresh identity returns
   the exact established receipt while identical-assertion reuse still denies.
+- Rebound the existing wrong-identity and unknown-action lifecycle probes to
+  the sole V2 broker route. Their definitions live in the V2 workload contract
+  and are executed unchanged by both fixture smoke and an in-process Gateway
+  test, proving their expected denial boundaries remain route-compatible.
 
 ## Check
 
@@ -56,8 +60,8 @@ tenants, providers, credentials, or network identity systems.
 | 1. Short-lived least-privilege workload identity | V2 contract readback and positive behavioral test prove exact subject, audience, tenant, one action scope, route, correlation, fixed clock, and 60-second TTL. |
 | 2. No long-lived or ambient credentials | Compose/runtime inspection, credential-environment and credential-shaped-byte probes, empty live-credential policy, and public non-secret assurance marker. |
 | 3. Expected Gateway request and correlation | Positive V2 authorization/broker probe returns `PASS`, preserves each validated invocation correlation ID, and produces the existing V1 synthetic effect receipt inside the V2 wrapper. A fresh-identity retry of the same `requestId` returns that exact receipt with one effect. |
-| 4. Direct paths denied | Internal Compose network readback plus behavioral destination/protocol/DNS/port/method/route matrix covers internet, provider, metadata, control-plane, peer, unexpected targets, and the legacy V1 capability bypass. Gateway-state readback proves the legacy probe creates zero effect attempts/effects. |
-| 5. Identity failures close | Missing, expired, wrong-audience, wrong-tenant, wrong-scope, wrong-route, correlation mismatch, malformed proof, and identical-assertion second-use probes return stable denial codes. Fresh assertion identity is distinct from request-level effect idempotency. |
+| 4. Direct paths denied | Internal Compose network readback plus behavioral destination/protocol/DNS/port/method/route matrix covers internet, provider, metadata, control-plane, peer, unexpected targets, and the legacy V1 capability bypass. Gateway-state readback proves the legacy probe creates zero effect attempts/effects. The unknown-action smoke definition uses the only V2 route and otherwise-valid identity to reach typed-request denial without an effect. |
+| 5. Identity failures close | Missing, expired, wrong-subject, wrong-audience, wrong-tenant, wrong-scope, wrong-route, correlation mismatch, malformed proof, and identical-assertion second-use probes return stable denial codes. The exact wrong-identity smoke definition reaches V2 subject denial. Fresh assertion identity is distinct from request-level effect idempotency. |
 
 The focused commands are `npm run openclaw-runtime-lock:verify` and
 `npm run openclaw-m1.2:test`. The authoritative repository gates, exact results,

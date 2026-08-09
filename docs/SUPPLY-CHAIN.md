@@ -73,7 +73,12 @@ and replay matrix. The legacy `/v1/capabilities/execute` route is retained only
 as a stable fail-closed V1 denial and cannot create an effect. Fresh V2
 assertions may safely retry the same V1 `requestId`: the Gateway returns the
 established `REPLAY_SAME_RECEIPT`, while reuse of an identical assertion is
-denied before effect dispatch. It also reads back the finite policy and proves the fixture
+denied before effect dispatch. The versioned V2 workload contract also binds
+the lifecycle smoke definitions: the wrong-subject probe reaches
+`IDENTITY_SUBJECT_DENIED`, and the unknown-action probe uses otherwise-valid
+identity claims to reach `TYPED_REQUEST_BINDING_DENIED`. A non-container test
+executes those exact definitions through the Gateway handler. It also reads
+back the finite policy and proves the fixture
 has no ambient proxy or credential environment, host credential mount, live
 credential-shaped fixture bytes, or production credential claim. Denial
 results contain only a version, status, optional validated correlation ID, and

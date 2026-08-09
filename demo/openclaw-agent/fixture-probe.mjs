@@ -69,8 +69,8 @@ function v2Options(label, overrides = {}, correlationId = `corr-aas035-${label}-
   };
 }
 
-async function expectV2Deny(options, code) {
-  const { response, value } = await parsed(await request(workloadContract.identity.route, options));
+async function expectV2Deny(options, code, route = workloadContract.identity.route) {
+  const { response, value } = await parsed(await request(route, options));
   if (response.status !== 403 || value.status !== "DENY" || value.code !== code) {
     throw new Error(`EXPECTED_V2_DENY_${code}_${response.status}_${JSON.stringify(value)}`);
   }
@@ -78,6 +78,38 @@ async function expectV2Deny(options, code) {
     throw new Error("UNSANITIZED_V2_DENIAL");
   }
   return value;
+}
+
+function v2SmokeProbe(probeMode) {
+  const probe = workloadContract.smokeProbes?.find((candidate) => candidate.mode === probeMode);
+  if (!probe
+    || probe.route !== workloadContract.identity.route
+    || !/^[A-Z0-9_]+_DENIED$/.test(probe.expectedCode)
+    || probe.identityOverrides === null
+    || typeof probe.identityOverrides !== "object"
+    || probe.bodyOverrides === null
+    || typeof probe.bodyOverrides !== "object") {
+    throw new Error("SMOKE_PROBE_CONTRACT_DENIED");
+  }
+  const correlationId = `corr-aas035-${probe.mode}-0001`;
+  const assertion = createSyntheticIdentity(workloadContract, {
+    correlationId,
+    jti: `jti-aas035-${probe.mode}-0001`,
+    overrides: probe.identityOverrides,
+  });
+  return {
+    route: probe.route,
+    expectedCode: probe.expectedCode,
+    options: {
+      method: "POST",
+      headers: {
+        authorization: `Synthetic ${encodeSyntheticIdentity(assertion)}`,
+        "content-type": "application/json",
+        "x-cm-correlation-id": correlationId,
+      },
+      body: JSON.stringify({ ...typed, ...probe.bodyOverrides }),
+    },
+  };
 }
 
 function freshV2Options() {
@@ -167,11 +199,11 @@ switch (mode) {
     break;
   }
   case "wrong-identity":
-    result = await expectDeny("/v1/capabilities/execute", { method: "POST", headers: { ...headers, "x-cm-workload-identity": "workload:foreign" }, body: JSON.stringify(typed) }, "WORKLOAD_IDENTITY_DENIED");
+  case "unknown-action": {
+    const probe = v2SmokeProbe(mode);
+    result = await expectV2Deny(probe.options, probe.expectedCode, probe.route);
     break;
-  case "unknown-action":
-    result = await expectDeny("/v1/capabilities/execute", { method: "POST", headers, body: JSON.stringify({ ...typed, actionId: "raw.shell.execute" }) }, "TYPED_REQUEST_BINDING_DENIED");
-    break;
+  }
   case "replay-conflict":
     result = await expectDeny("/v1/capabilities/execute", { method: "POST", headers, body: JSON.stringify({ ...typed, payload: { ...typed.payload, name: "Changed" } }) }, "TYPED_REQUEST_PAYLOAD_DENIED");
     break;

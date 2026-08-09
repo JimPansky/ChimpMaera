@@ -43,6 +43,22 @@
     "composeNetwork": "aas035_gateway_only",
     "composeInternal": true
   },
+  "smokeProbes": [
+    {
+      "mode": "wrong-identity",
+      "route": "/v2/broker/capabilities/execute",
+      "expectedCode": "IDENTITY_SUBJECT_DENIED",
+      "identityOverrides": { "subject": "workload:foreign" },
+      "bodyOverrides": {}
+    },
+    {
+      "mode": "unknown-action",
+      "route": "/v2/broker/capabilities/execute",
+      "expectedCode": "TYPED_REQUEST_BINDING_DENIED",
+      "identityOverrides": {},
+      "bodyOverrides": { "actionId": "raw.shell.execute" }
+    }
+  ],
   "credentialPolicy": {
     "ambientProxyEnvironmentAllowed": false,
     "ambientCredentialEnvironmentAllowed": false,

@@ -153,6 +153,53 @@ function gatewayRequest(handler, route, { method = "GET", headers = {}, body } =
   });
 }
 
+test("OPENCLAW-M1.2 exact smoke probe definitions reach their V2 denial boundaries", async () => {
+  const temporary = await mkdtemp(path.join(tmpdir(), "cm-openclaw-m12-smoke-"));
+  const statePath = path.join(temporary, "state.json");
+  process.env.CM_AAS035_STATE_PATH = statePath;
+  try {
+    assert.deepEqual(contract.smokeProbes.map((probe) => probe.mode), ["wrong-identity", "unknown-action"]);
+    const gatewayUrl = `${pathToFileURL(path.join(fixture, "gateway.mjs")).href}?integration=m12-smoke-contract`;
+    const { gatewayHandler } = await import(gatewayUrl);
+    for (const probe of contract.smokeProbes) {
+      assert.equal(probe.route, contract.identity.route);
+      assert.equal(probe.route, contract.networkPolicy.egress.allow[0].path);
+      const correlationId = `corr-aas035-${probe.mode}-0001`;
+      const identity = createSyntheticIdentity(contract, {
+        correlationId,
+        jti: `jti-aas035-${probe.mode}-0001`,
+        overrides: probe.identityOverrides,
+      });
+      const response = await gatewayRequest(gatewayHandler, probe.route, {
+        method: "POST",
+        headers: {
+          authorization: `Synthetic ${encodeSyntheticIdentity(identity)}`,
+          host: "capability-gateway:8080",
+          "x-cm-correlation-id": correlationId,
+        },
+        body: { ...typed, ...probe.bodyOverrides },
+      });
+      assert.deepEqual(response, {
+        status: 403,
+        body: {
+          schemaVersion: "chimpmaera.openclaw/gateway-denial/v2",
+          status: "DENY",
+          correlationId,
+          code: probe.expectedCode,
+        },
+      });
+    }
+    const state = JSON.parse(await readFile(statePath, "utf8"));
+    assert.equal(state.counters.effectAttempts, 1);
+    assert.equal(state.counters.effects, 0);
+    assert.deepEqual(state.effects, {});
+    assert.equal(state.identityReplay.length, 1);
+  } finally {
+    delete process.env.CM_AAS035_STATE_PATH;
+    await rm(temporary, { recursive: true, force: true });
+  }
+});
+
 test("OPENCLAW-M1.2 legacy bypass creates no effect while fresh retry identity returns one exact receipt", async () => {
   const temporary = await mkdtemp(path.join(tmpdir(), "cm-openclaw-m12-http-"));
   const statePath = path.join(temporary, "state.json");

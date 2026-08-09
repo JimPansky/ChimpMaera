@@ -44,6 +44,8 @@
     { "probe": "EXPECTED_GATEWAY_REQUEST", "outcome": "ALLOW", "code": "PASS_CORRELATION_PRESERVED" },
     { "probe": "LEGACY_V1_CAPABILITY_BYPASS", "outcome": "DENY", "code": "LEGACY_CAPABILITY_ROUTE_DENIED_ZERO_EFFECTS" },
     { "probe": "SAME_REQUEST_ID_FRESH_IDENTITY_RETRY", "outcome": "ALLOW", "code": "REPLAY_SAME_RECEIPT_ONE_EFFECT" },
+    { "probe": "SMOKE_WRONG_IDENTITY_ON_V2_ROUTE", "outcome": "DENY", "code": "IDENTITY_SUBJECT_DENIED" },
+    { "probe": "SMOKE_UNKNOWN_ACTION_WITH_VALID_V2_IDENTITY", "outcome": "DENY", "code": "TYPED_REQUEST_BINDING_DENIED_ZERO_EFFECTS" },
     { "probe": "UNEXPECTED_DESTINATION_INTERNET", "outcome": "DENY", "code": "DESTINATION_DENIED" },
     { "probe": "UNEXPECTED_DESTINATION_PROVIDER", "outcome": "DENY", "code": "DESTINATION_DENIED" },
     { "probe": "UNEXPECTED_DESTINATION_METADATA", "outcome": "DENY", "code": "DESTINATION_DENIED" },
@@ -72,16 +74,16 @@
     "result": "PASS_SYNTHETIC_SANITIZED_ONLY"
   },
   "artifactChecksums": {
-    "demo/openclaw-agent/gateway-workload-contract-v2.json": "9473e7af181d5c74f0b6079dd69a9ff4c9d6a7a21f1af89b4e19e24ec85d8d33",
+    "demo/openclaw-agent/gateway-workload-contract-v2.json": "1f92a3ec179bf8af3c154a7fa593427f02a0caf0aff161220d3f6ff4f2417b99",
     "demo/openclaw-agent/plugin/identity-v2.mjs": "dbaa57a42254d9d554c14bdfee5659ee260fb10185450dcab29bf46f67affaae",
     "demo/openclaw-agent/gateway.mjs": "dcbeca6e5c742d6c60445294b3b8aab29bf4f19610dc7901d60d715597c1b941",
-    "tests/openclaw-gateway-identity-network.test.mjs": "bdff41711411b718afb0c1d8c1d788951765ba8256b6753a64f7c491667eb539",
-    "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json": "809c239ab2f8defbd11370f58eb493c71f97112d938ea90abfadd15f728db507"
+    "tests/openclaw-gateway-identity-network.test.mjs": "2292e2ad923028d393ed27d5b12541470f8ab5373d1d2b7521af28779f3aee22",
+    "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json": "b692d6dcbf23a9502cf298f915c3330780eae41556e2d54bad605882d5c8bf07"
   },
   "verification": {
     "focused": {
       "command": "npm run openclaw-m1.2:test",
-      "passedBehavioralTests": 20,
+      "passedBehavioralTests": 21,
       "passedIsolatedFiles": 3,
       "failed": 0
     },
@@ -94,7 +96,8 @@
       "commands": [
         { "command": "npm run lint", "result": "PASS" },
         { "command": "npm run build", "result": "PASS" },
-        { "command": "npm test", "result": "PASS_SECURE_DEFAULT_12_OF_12_LEARNING_ROUTING_26_OF_26_AUTHORITATIVE_MAIN_390_OF_390" },
+        { "command": "node --check demo/openclaw-agent/fixture-probe.mjs && node --check demo/openclaw-agent/gateway.mjs && node --check tests/openclaw-gateway-identity-network.test.mjs && node --check scripts/verify-openclaw-agent-runtime-lock.mjs", "result": "PASS" },
+        { "command": "npm test", "result": "PASS_SECURE_DEFAULT_12_OF_12_LEARNING_ROUTING_26_OF_26_AUTHORITATIVE_MAIN_391_OF_391" },
         { "command": "npm run docs:test", "result": "PASS_5_OF_5" },
         { "command": "npm run supply-chain:verify", "result": "PASS_7_CHECKS" },
         { "command": "npm run release-governance:test", "result": "PASS_33_OF_33" },

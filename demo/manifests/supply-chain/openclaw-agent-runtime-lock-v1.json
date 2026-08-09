@@ -78,9 +78,9 @@
     "pluginPeerVersion": "2026.7.1",
     "artifactSha256": {
       "demo/openclaw-agent/compose.yaml": "d451aaaad9d48f92bf7645003ca1ffd9792c2e4b8bdb9d73e296ebddcd9d3b9d",
-      "demo/openclaw-agent/fixture-probe.mjs": "a45a848e917839ab7f2fc5f9210bcc9bafdec4edb134a22ac8ea5188408750bd",
+      "demo/openclaw-agent/fixture-probe.mjs": "19bd3ab216076526e0f2f8543bf5453fb9c1023a99a2587729d18b4ba345dd7c",
       "demo/openclaw-agent/gateway.Dockerfile": "64c2964195db5fc91ac8647d130c3b939bb9a115f47d1ecba8e23f25829e1ea8",
-      "demo/openclaw-agent/gateway-workload-contract-v2.json": "9473e7af181d5c74f0b6079dd69a9ff4c9d6a7a21f1af89b4e19e24ec85d8d33",
+      "demo/openclaw-agent/gateway-workload-contract-v2.json": "1f92a3ec179bf8af3c154a7fa593427f02a0caf0aff161220d3f6ff4f2417b99",
       "demo/openclaw-agent/gateway.mjs": "dcbeca6e5c742d6c60445294b3b8aab29bf4f19610dc7901d60d715597c1b941",
       "demo/openclaw-agent/lib.sh": "0933f26dbdcdcd6e43ece5f40bba35d528beb7c0294af260fe15017e2149386c",
       "demo/openclaw-agent/openclaw.Dockerfile": "edfff72d40e39b75146a06a611652a5383ea66ba76bbfc576fd6fc98e55b03ce",
@@ -100,7 +100,7 @@
       "demo/openclaw-agent/workspace/TOOLS.md": "1cc93153c7172e29fdbdefaf557658f339e3659edd586464a4c81ec4d537b6c8",
       "demo/openclaw-agent/workspace/USER.md": "516f5c02403683b3643819843e751f3b394f0e191b6f5306d54f59cfaa692ac1",
       "demo/openclaw-agent/workspace/openclaw-workspace-state.json": "c5c00120ca505ef6a7d60a56a2f43c67804a49bc79779fc9fba3a3ee5923f590",
-      "scripts/verify-openclaw-agent-runtime-lock.mjs": "2c7f9c1692a8880fdc99ed5a90430844b185bf61c481d22d95fb4fae6ae18101"
+      "scripts/verify-openclaw-agent-runtime-lock.mjs": "6115015cf663a983d38be6bdf4aba30c72470b647d831ac8bfa0f464a544e40c"
     }
   },
   "nonClaims": [

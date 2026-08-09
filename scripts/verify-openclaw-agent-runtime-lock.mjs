@@ -246,6 +246,25 @@ export async function verifyOpenClawAgentRuntimeLock({ root, hostOs, hostArch } 
     "OPENCLAW_GATEWAY_WORKLOAD_CONTRACT_DENIED",
   );
   assert(
+    JSON.stringify(workloadContract.smokeProbes) === JSON.stringify([
+      {
+        mode: "wrong-identity",
+        route: workloadContract.identity.route,
+        expectedCode: "IDENTITY_SUBJECT_DENIED",
+        identityOverrides: { subject: "workload:foreign" },
+        bodyOverrides: {},
+      },
+      {
+        mode: "unknown-action",
+        route: workloadContract.identity.route,
+        expectedCode: "TYPED_REQUEST_BINDING_DENIED",
+        identityOverrides: {},
+        bodyOverrides: { actionId: "raw.shell.execute" },
+      },
+    ]),
+    "OPENCLAW_SMOKE_PROBE_CONTRACT_DENIED",
+  );
+  assert(
     JSON.stringify(lock).includes(":latest") === false
     && JSON.stringify(lock).includes(":main") === false
     && JSON.stringify(lock).includes("docker.sock") === false,
