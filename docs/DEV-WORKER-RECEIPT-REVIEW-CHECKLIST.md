@@ -78,3 +78,17 @@ readback mismatch must leave neither the owned branch nor MR. The receipt is
 synthetic publication-boundary evidence only and grants no merge, mark-ready,
 force-push, deletion, tag, release, admin, variable, runner, registry, or token
 authority.
+
+## M3 governed workload receipt addendum
+
+For `chimpmaera.dev/governed-workload-receipt/v1`, recompute the request,
+adapter output and receipt digests. Confirm the admission sequence is positive,
+the adapter ID/version/config digest matches trusted policy, and usage is no
+greater than the reserved request/cost budget. For a writer, require a patch
+digest and no review result. For a reviewer, require no patch digest, a
+PASS/REJECT outcome, an independent findings digest, a distinct REVIEWER lease
+and only evidence-read authority. All five authority flags must be false.
+
+Treat this as deterministic single-controller fixture evidence only. It does
+not establish distributed scheduling, crash durability, a live harness/model,
+real workspace isolation, publication, merge, release or deployment.

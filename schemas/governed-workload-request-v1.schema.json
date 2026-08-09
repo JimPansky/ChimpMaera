@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://schemas.chimpmaera.dev/governed-workload-request-v1.schema.json","type":"object","additionalProperties":false,
+  "required":["schemaVersion","requestId","workload","workloadIdentity","projectId","issueIid","workOrderId","workOrderDigest","lease","adapter","provider","budget","evidenceDigest","requestedCapabilities","expiresAt","requestDigest"],
+  "properties":{
+    "schemaVersion":{"const":"chimpmaera.dev/governed-workload-request/v1"},"requestId":{"type":"string","pattern":"^run:[a-z0-9][a-z0-9._-]{2,63}$"},"workload":{"enum":["WRITER","REVIEWER"]},"workloadIdentity":{"type":"string","pattern":"^workload:[a-z0-9][a-z0-9._-]{2,63}$"},"projectId":{"type":"string","minLength":1,"maxLength":128},"issueIid":{"type":"integer","minimum":1},"workOrderId":{"type":"string","pattern":"^order:[a-z0-9][a-z0-9._-]{2,63}$"},"workOrderDigest":{"$ref":"#/$defs/sha256"},
+    "lease":{"type":"object","additionalProperties":false,"required":["id","kind","expiresAt"],"properties":{"id":{"type":"string","pattern":"^lease:[a-z0-9][a-z0-9._-]{2,63}$"},"kind":{"enum":["WRITER","REVIEWER"]},"expiresAt":{"type":"string","format":"date-time"}}},
+    "adapter":{"type":"object","additionalProperties":false,"required":["id","version","configDigest"],"properties":{"id":{"enum":["opencode-contract-fixture","portable-local-fixture"]},"version":{"const":"1.0.0"},"configDigest":{"$ref":"#/$defs/sha256"}}},
+    "provider":{"type":"object","additionalProperties":false,"required":["id","modelAlias"],"properties":{"id":{"type":"string","pattern":"^provider:[a-z0-9][a-z0-9._-]{2,63}$"},"modelAlias":{"enum":["cm.dev.fast","cm.dev.review"]}}},
+    "budget":{"type":"object","additionalProperties":false,"required":["requests","costMicros"],"properties":{"requests":{"type":"integer","minimum":1,"maximum":10},"costMicros":{"type":"integer","minimum":0,"maximum":1000000}}},"evidenceDigest":{"$ref":"#/$defs/sha256"},"requestedCapabilities":{"type":"array","minItems":1,"items":{"enum":["cm.dev.model.invoke","cm.dev.test.run","cm.dev.evidence.read"]},"uniqueItems":true},"expiresAt":{"type":"string","format":"date-time"},"requestDigest":{"$ref":"#/$defs/sha256"}
+  },"$defs":{"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}
+}

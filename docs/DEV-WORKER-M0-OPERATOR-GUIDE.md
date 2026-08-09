@@ -172,6 +172,58 @@ production activation, runtime/network isolation proof, customer-data test,
 merge/mark-ready/force-push/delete/tag/release/admin/variable/runner/registry
 authority, independent review, M3 parallelism, or second-adapter evidence.
 
+## M3 controller scheduling and independent review
+
+M3 adds strict `governed-workload-request/v1` and
+`governed-workload-receipt/v1` contracts without changing any M0–M2 wire
+format. The default-off controller must be explicitly enabled by trusted local
+policy. Admission is synchronous and deterministic: schema/digest, freshness,
+request identity, adapter binding, workload/lease/identity/capability/model
+binding, writer-scope conflicts, then global/project/provider budgets. A
+reservation is recorded before an adapter can yield. Writer exclusion is keyed
+independently by project-and-issue and project-and-work-order, so concurrent
+attempts cannot obtain two writer leases for either scope. Global, project and
+provider parallel, request and cost ceilings are controller-owned and
+cumulative; exhaustion denies rather than queues, retries, or widens.
+
+The reviewer is a distinct `workload:cm-dev-reviewer-m3` workload using the
+server-bound `cm.dev.review` route, its own `REVIEWER` lease, and only
+`cm.dev.evidence.read`. Its frozen adapter input contains an evidence digest,
+workload kind and model alias: no workspace path, patch-write function,
+publication function, route selector or budget editor exists. Output claiming
+workspace mutation, publication, path/route/budget widening, a patch, or a
+writer lease is denied. The receipt records all five authorities as false.
+
+Both `opencode-contract-fixture` and `portable-local-fixture` implement the
+same thin adapter interface and are bound by ID, semantic version and config
+digest. They are deterministic in-process JSON fixtures. This proves that the
+governance core is not coupled to OpenCode-specific APIs; it does **not** prove
+or claim execution of OpenCode, Aider, mini-SWE-agent, a live model provider,
+network isolation, or a real source host. Adapter output digest, workload and
+usage mismatches fail closed. Failed admitted attempts retain their reserved
+cumulative request/cost allocation conservatively. Active slots are released
+in `finally`, while first-writer lease ownership remains bound to each issue
+and work-order scope for the controller lifetime.
+
+M3 evidence is the two schemas, controller core, two fixture paths, positive
+receipts, and adversarial tests for parallel oversubscription, same-issue and
+same-order writers, every budget tier, reviewer authority attempts, adapter
+mismatch/tampering, replay/conflict, expiry, wrong identity/lease/capability/
+model, and unknown fields. No M3 CLI or publication route is added.
+
+Assumption: one controller instance is the atomic admission domain. Risk: the
+in-memory reservation ledger does not coordinate multiple processes or survive
+a restart. Fallback: run one default-off controller instance or place the same
+compare-and-reserve transition behind a durable transactional store before
+production. Review marker: require a cross-process linearizability design and
+crash-recovery test before distributed activation.
+
+Rollback: revert the M3 contract additions, governance source, schemas, test,
+package test entry, manifest/checksum entries, and these documentation
+sections. The fixture adapters perform no external effects, so rollback needs
+no provider, workspace, branch, MR, credential, infrastructure, or release
+cleanup.
+
 ## Trust and authority boundary
 
 The trusted controller validates the strict schemas, work-order digest,
