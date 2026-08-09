@@ -272,8 +272,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-917451ce94512df9069c28283b7753c710eef9f5bdd4582b973af58941bf0e0b  ./package-lock.json
-b20f269bf908c8e78c3a234c1b2255d87021642840c60c9218d3c31dda4677d4  ./package.json
+7a4b3673b6f183f0eb82b9cd230b9d1ff06c932f61bdf24d221542d129486a14  ./package-lock.json
+086c26b8dc95f417a678b707c0ddab2bbf728d10b15b1c1a87911076f6887830  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 151a6cdd416b9cc7d9b942fab86f69dceacea8d27a3c79302c9cff81dbdd5ef8  ./packages/contracts/src/bi-execution-spine.ts
@@ -523,4 +523,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-80aa01a3f29e16b49e808775b2802896713e5e5f3ca72eb09198dedc36f86002  ./verification/verification-dag-v2.json
+26e19bbad6716b228c6a56dd56665a1eb5e567bb5bec2a6a207abc0efae0626c  ./verification/verification-dag-v2.json
