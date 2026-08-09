@@ -197,7 +197,7 @@ dca1a885043f0cdda8e738db25dd4bba404dbb78e909f45340689a15f61c86dc  ./docs/alterna
 20e3a8bd957716752add8a36ccd485594e600ffd7335f1d257eff8cfaa34c880  ./docs/capabilities.md
 845699add71af22318c15b72bc16dfcdcd31d34107bb5ca02ebd52e339efc68b  ./docs/development/bi-001-read-only-analytics-projection-pdca.md
 f0f24ff22e907c010a7f943756617a14f24065415fa15bbdae86ae3bdc3ac6c8  ./docs/development/openclaw-m1.2-issue-5-pdca.md
-896dcae36f8ea397e1e8075ca0fb168793e0e6f30f1647351009feaa54affed5  ./docs/development/openclaw-m1.3-issue-6-pdca.md
+3ffe682439e929183b0f3e01af506e07529a748432d70849f553f759d927f6d0  ./docs/development/openclaw-m1.3-issue-6-pdca.md
 1a1f64a091f6cb38bfe5d387aed4f63c1063589b3df40151f2cc78e2cb3a1ac3  ./docs/examples.md
 3a8c46d14211e72ee03079f1817803d79758b3626e9ab956832f642d855d1f07  ./docs/index.md
 0776dba7e366dbed9a23459852782f7aaa1a109c4c332a981f9d2cb9dc313a3a  ./docs/public/robots.txt
@@ -400,7 +400,7 @@ bb2c9bf47cea26568ef29f203943fc6940d8d30735d87e711982727b871673eb  ./scripts/veri
 031c8b699854b3c699fa754523df9a65cc57bc10fde7c73d6874a00fb83dd89b  ./scripts/verify-supply-chain.mjs
 0bec85125b688f735c6cc3572b58760c65084685a499d16978d341b24439c9c9  ./security/openclaw-m1.1-evidence-v1.json
 757925d7eacbf8fe0b08e9b4450a4eb78069f56cea85add3acc1c5279fa3ead6  ./security/openclaw-m1.2-evidence-v2.json
-b3977be9496a92ded6092e127b0ebc86e321e3009ca3033623511d8e198d0ab2  ./security/openclaw-m1.3-evidence-v1.json
+f5545b9c65c4c136baf60fe8f190e253f9a397ef805647fdf61a8ec45e0a29e2  ./security/openclaw-m1.3-evidence-v1.json
 1def8759c85a3f8923e151937276905629d6afa3935107e6222c2022eb73eb99  ./security/secure-default-proof-evidence-v1.json
 cc6003b28e3350bf2c72d35ee440f2d7e2388d76ee583f0b3d79dd7ee63ddf38  ./security/secure-default-proof-v1.json
 9c8e23f22b503c9aa8dbe776068cac478c381cf80528b5ef2d4a07c4da4b4382  ./tests/adaptability-benchmark-m0.test.mjs

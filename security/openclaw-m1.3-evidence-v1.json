@@ -18,10 +18,12 @@
   },
   "focusedVerification": {
     "command": "npm run openclaw-m1.3:test",
-    "result": "PENDING_OWNER_LANE_RERUN_CHANGED_BYTES",
-    "expectedSubtests": {"runtimeLock": 9, "runtimeContract": 6, "gatewayWorkloadBoundary": 9, "gatewayStatePersistence": 7, "mindStoreLifecycle": 7, "total": 38},
+    "result": "PASS_38_OF_38",
+    "testedTreeCommit": "541007a8fb9a54f6bbc94a30f7c3c05bc838a382",
+    "executionLane": "OWNER_LANE",
+    "subtests": {"runtimeLock": 9, "runtimeContract": 6, "gatewayWorkloadBoundary": 9, "gatewayStatePersistence": 7, "mindStoreLifecycle": 7, "passed": 38, "failed": 0},
     "currentCodexSandbox": {"result": "PASS_36_OF_36_SANDBOX_SAFE", "composeRendering": "2_TESTS_ENVIRONMENT_BLOCKED_BY_DOCKER_CHILD_PROCESS_EPERM"},
-    "historicalOwnerLane": {"testedTreeCommit": "0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26", "result": "HISTORICAL_PASS_35_OF_35_STALE_FOR_CURRENT_DIFF"}
+    "ownerLaneComposeRendering": "PASS_2_OF_2_NO_LIVE_CONTAINER_EXECUTION"
   },
   "deterministicBoundaries": {
     "scratch": {"capacityBytes": 1048576, "verification": "COMPOSE_RENDER_AND_LIVE_PROBE_DEFINITION_VALIDATED", "liveBoundaryResult": "NOT_EXECUTED_MISSING_PINNED_IMAGES"},
@@ -43,15 +45,9 @@
   ],
   "repositoryVerification": [
     {"command": "npm run lint", "result": "PASS"},
-    {"command": "npm test", "result": "PENDING_OWNER_LANE_RERUN_CHANGED_BYTES", "historical": "PASS_405_OF_405_ON_0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26_STALE"},
-    {"command": "npm run supply-chain:verify", "result": "HISTORICAL_PASS_7_CHECKS_STALE_FOR_CURRENT_DIFF"},
-    {"command": "npm run release-governance:test", "result": "HISTORICAL_PASS_STALE_FOR_CURRENT_DIFF"},
-    {"command": "npm run release-governance:verify", "result": "HISTORICAL_PASS_STALE_FOR_CURRENT_DIFF"},
-    {"command": "npm run docs:test", "result": "HISTORICAL_PASS_STALE_FOR_CURRENT_DIFF"},
-    {"command": "npm run video:test", "result": "HISTORICAL_PASS_75_OF_75_STALE_FOR_CURRENT_DIFF"},
-    {"command": "npm run proof:secure-default", "result": "PENDING_OWNER_LANE_RERUN_CHANGED_BYTES", "historical": {"testedTreeCommit": "0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26", "overallVerdict": "HISTORICAL_PASS_STALE", "reportDigest": "b4527c85dd23ff24f9b8dd72fd088e096fe85d364f16ae652062189200b1519c"}},
+    {"command": "npm test", "result": "PASS_408_OF_408", "testedTreeCommit": "541007a8fb9a54f6bbc94a30f7c3c05bc838a382", "executionLane": "OWNER_LANE", "pretest": "SECURE_DEFAULT_METADATA_12_OF_12_AND_LEARNING_ROUTING_26_OF_26_PASS"},
+    {"command": "npm run proof:secure-default", "result": "PASS", "testedTreeCommit": "541007a8fb9a54f6bbc94a30f7c3c05bc838a382", "executionLane": "OWNER_LANE", "overallVerdict": "PASS", "authoritative": "NPM_TEST_PASS", "reportDigest": "adecbb0d86838c45bde09d2d44979f442a54b22ab401a7e7562ba6801ea3b07c"},
     {"command": "secure-default metadata and generated-evidence validation", "result": "PASS"},
-    {"command": "./scripts/build-public-release.sh --output /tmp/cm-product-increment-rc-20260809-issue6-followup-final2", "result": "HISTORICAL_PASS_STALE_FOR_CURRENT_DIFF"},
     {"command": "sha256sum -c SHA256SUMS", "result": "PASS_583_OF_583"}
   ],
   "environmentBoundary": {
@@ -59,8 +55,8 @@
     "dockerDaemonAccessible": false,
     "liveSmokeExecuted": false,
     "liveSmokeCommand": "./demo/openclaw-agent/smoke.sh",
-    "evidenceUsed": "SANDBOX_SAFE_STATE_CACHE_REGRESSIONS_AND_HISTORICAL_OWNER_LANE_COMPOSE_RENDERING",
-    "broadSuiteNote": "Owner-lane focused, authoritative npm test, and secure-default results for 0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26 are historical and stale after the current generation-boundary and cache-closure changes; fresh owner-lane results are pending. Historically, the Codex sandbox denied Docker API access at /var/run/docker.sock and selected child-process probes with EPERM. Exact pinned images remain absent/not started; no image was pulled or started and live smoke was not executed. Deterministic Compose rendering is not live-container evidence."
+    "evidenceUsed": "OWNER_LANE_DETERMINISTIC_COMPOSE_RENDERING_AND_STATE_CACHE_REGRESSIONS",
+    "broadSuiteNote": "The owner lane reran the focused suite, authoritative npm test, and secure-default proof successfully on exact committed code/test tree 541007a8fb9a54f6bbc94a30f7c3c05bc838a382. Historically, the Codex sandbox denied Docker API access at /var/run/docker.sock and selected child-process probes with EPERM. Exact pinned images remain absent/not started; no image was pulled or started and live smoke was not executed. Deterministic Compose rendering is PASS and is not live-container evidence."
   },
   "supportedClaim": "The exact default-off local synthetic Reference Adapter declares and validates the effective Compose configuration for non-root read-only bounded compute and container-instance scratch, and deterministically tests complete persisted-envelope validation, atomic valid M1.2 state migration, and a generation-bound managed synthetic mind store with scoped reset and fail-closed disk recovery that preserves validated local effect receipts and replay state.",
   "rollback": "Stop and purge only the labelled candidate runtime and scoped synthetic state with demo/openclaw-agent/reset.sh --purge, then revert the containing commit to restore the prior default-off baseline.",

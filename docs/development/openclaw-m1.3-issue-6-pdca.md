@@ -54,22 +54,17 @@ supply-chain, release-governance, secure-default, public-stage, and checksum
 gates remain authoritative. Exact executed results are recorded in the
 synthetic evidence file in the containing commit.
 
-Historical owner-lane readback on exact committed implementation tree
-`0e40e0b91b7783b0bd0fd2e6d7c9543e121a2f26` records the focused suite at
-35/35 PASS, authoritative `npm test` at 405/405 PASS (including secure-default
-metadata 12/12 and learning routing 26/26), and secure-default proof at PASS
-with report digest
-`b4527c85dd23ff24f9b8dd72fd088e096fe85d364f16ae652062189200b1519c`.
+Final owner-lane readback on exact committed code/test tree
+`541007a8fb9a54f6bbc94a30f7c3c05bc838a382` records the focused suite at
+38/38 PASS (runtime lock 9, runtime contract 6, Gateway workload 9, Gateway
+state persistence 7, mind lifecycle 7), authoritative `npm test` at 408/408
+PASS (including secure-default metadata 12/12 and learning routing 26/26), and
+secure-default proof at PASS with report digest
+`adecbb0d86838c45bde09d2d44979f442a54b22ab401a7e7562ba6801ea3b07c`.
 These results include deterministic Compose rendering, not live-container
 execution. The earlier Codex sandbox Docker/socket and selected child-process
 EPERM restrictions remain historical environment evidence; exact pinned images
 were not started and live smoke remains unexecuted and unclaimed.
-
-That readback predates the generation-boundary and Docker cache-closure fixes in
-the current diff and is therefore stale, not final evidence for these bytes. The
-next owner-lane focused expectation is 38 tests: runtime lock 9, runtime contract
-6, Gateway workload 9, Gateway state persistence 7, and mind lifecycle 7. Full
-`npm test` and secure-default proof require a fresh owner-lane rerun after commit.
 
 ## Act
 
