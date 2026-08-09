@@ -35,6 +35,17 @@ test("repository release governance passes", () => {
   assert.deepEqual(validateRepository(ROOT), []);
 });
 
+test("public release builder binds its exact file count to the manifest", () => {
+  const manifest = readFileSync(join(ROOT, "release", "public-files.manifest"), "utf8");
+  const count = manifest.split("\n").filter((line) => line && !line.startsWith("#")).length;
+  const builder = readFileSync(join(ROOT, "scripts", "build-public-release.sh"), "utf8");
+  const binding = builder.match(/^if count != (\d+):$/m);
+  assert.ok(binding, "PUBLIC_MANIFEST_EXACT_COUNT_BINDING_MISSING");
+  assert.equal(Number(binding[1]), count);
+  assert.equal(count, 550);
+  assert.doesNotMatch(builder, /if count\s*(?:>|>=|<|<=)\s*\d+/);
+});
+
 test("Verification Fabric release truth delegates volatile Shadow progress to its issue", () => {
   const governance = JSON.parse(readFileSync(join(ROOT, "release", "governance.json"), "utf8"));
   const verification = governance.claimEvidence.find(({ claimId }) => claimId === "CM-REL-004");

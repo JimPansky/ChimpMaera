@@ -24,7 +24,8 @@ export async function verifyBiFoundation({ repositoryRoot = root, configPath, ho
   if (!configPath) return { status: 'PASS', inputCount: expectedPaths.length, image: lock.baseImage.reference };
   let config; try { config = JSON.parse(await readFile(configPath, 'utf8')); } catch { deny('BI_CONFIG_MISSING_OR_INVALID_DENIED'); }
   if (config.schemaVersion !== 'chimpmaera.bi/foundation-config/v1' || config.platform !== 'linux/amd64' || config.enabledProfile !== 'bi001' || !Number.isInteger(config.hostPort) || config.hostPort < 1024 || config.hostPort > 65535
-    || JSON.stringify(config.crmConnector) !== JSON.stringify({ enabled: false, adapter: 'SUPPORTED_EXPORT_API_SHAPED', tenantId: 'tenant:synthetic-zoo', scope: 'crm.synthetic.bi.read' })) deny('BI_CONFIG_UNSUPPORTED_DENIED');
+    || JSON.stringify(config.crmConnector) !== JSON.stringify({ enabled: false, adapter: 'SUPPORTED_EXPORT_API_SHAPED', tenantId: 'tenant:synthetic-zoo', scope: 'crm.synthetic.bi.read' })
+    || JSON.stringify(config.erpConnector) !== JSON.stringify({ enabled: false, adapter: 'SUPPORTED_EXPORT_API_SHAPED', tenantId: 'tenant:synthetic-zoo', scope: 'erp.synthetic.bi.read' })) deny('BI_CONFIG_UNSUPPORTED_DENIED');
   process.env.CM_BI_PORT = String(config.hostPort);
   return { status: 'PASS', inputCount: expectedPaths.length, image: lock.baseImage.reference, hostPort: config.hostPort };
 }

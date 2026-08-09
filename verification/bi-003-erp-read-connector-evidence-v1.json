@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "chimpmaera.verification/local-synthetic-report/v1",
+  "evidenceId": "evidence:bi-003-erp-read-v1",
+  "issue": "#12",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "commitBinding": "CONTAINING_DCO_SIGNED_COMMIT",
+  "futureCommitClaimed": false,
+  "sanitization": { "rawSecrets": false, "personalData": false, "realFinancialRecords": false, "productionIdentifiers": false, "privateInfrastructure": false, "exploitDetails": false },
+  "claims": ["FROZEN_TYPED_V1_CONTRACT", "DEFAULT_OFF", "LEAST_PRIVILEGE", "EXACT_SYNTHETIC_SOURCE_READBACK", "METADATA_PRESERVATION", "FAIL_CLOSED_READ_ONLY_BOUNDARY"],
+  "nonClaims": ["PRODUCTION_ERP_VENDOR_COMPATIBILITY", "LIVE_CREDENTIALS", "PERSONAL_OR_CUSTOMER_DATA", "REAL_FINANCIAL_RECORDS", "FINANCIAL_CORRECTNESS", "REAL_TIME_FRESHNESS", "PROVIDER_ONBOARDING", "SERVICE_EXPOSURE", "DEPLOYMENT", "IMAGE_PUBLICATION", "PRODUCTION_ACTIVATION", "INFRASTRUCTURE_MUTATION", "POST_WRITE_APPROVAL_SUPPORT"],
+  "artifacts": {
+    "implementation": { "path": "packages/contracts/src/erp-read-connector.ts", "sha256": "b76f12d77f9b5b0bf5dade6aaac5afa7356e8049c856d0906a92103c6d204ed4" },
+    "schema": { "path": "schemas/contracts/erp-read-connector-v1.schema.json", "sha256": "8092d310682d352ae6db13f3171269fc2dc5a4f67a85ed63e9258f6c66c00cae" },
+    "contract": { "path": "tests/fixtures/erp-read/contract-v1.json", "sha256": "905c53b122a0dbd7c6b07fa5960bb04adc0523f9097587a3219e496cf8737d4f" },
+    "source": { "path": "tests/fixtures/erp-read/supported-export-v1.json", "sha256": "85194ec545b4f1e2e690b4353c6d97d1753bb6043171c00f55ca894fc6669278" },
+    "test": { "path": "tests/erp-read-connector.test.ts", "sha256": "6dc00ffa1982e4833d0b7cd837ed77974a50c1c82a5ea662e76f43d5089dbe16" }
+  },
+  "verification": { "command": "npm run erp-read:test", "expected": "7 tests pass" },
+  "rollback": "Disable the connector and discard only its scoped synthetic ERP adapter/cache; never widen permissions."
+}

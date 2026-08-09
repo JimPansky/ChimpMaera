@@ -54,6 +54,11 @@ synthetic tenant, and `crm.synthetic.bi.read`. BI-001 lifecycle scripts do not
 activate it. See `docs/CRM-READ-CONNECTOR-GUIDE.md` for its explicit local
 adapter boundary and rollback.
 
+The complementary BI-003 ERP declaration is independently fixed to
+`enabled: false`, the same deterministic adapter shape, the synthetic tenant,
+and `erp.synthetic.bi.read`. It does not alter BI-002 or grant cross-connector
+authority. See `docs/ERP-READ-CONNECTOR-GUIDE.md`.
+
 The lock records a digest-bound base and local byte closure. It does not establish
 registry signatures, current registry/CVE completeness, SBOM or reproducible-build
 provenance. The local image cache label hashes the ordered content digests only,
