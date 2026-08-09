@@ -1,0 +1,86 @@
+[
+  {
+    "caseId": "arbitrary-sql-denied",
+    "operation": "replace",
+    "path": "/questions/0/queryPlan/capabilitiesDenied",
+    "value": ["PYTHON", "SHELL", "NETWORK", "CREDENTIALS", "LIVE_CONNECTOR", "DASHBOARD_AUTHORITY"],
+    "expectedReason": "BI_EXECUTION_SPINE_QUERY_SAFETY_DENIED"
+  },
+  {
+    "caseId": "unknown-source-denied",
+    "operation": "replace",
+    "path": "/questions/0/sources/0/system",
+    "value": "WAREHOUSE_FIXTURE",
+    "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "unknown-field-denied",
+    "operation": "replace",
+    "path": "/questions/0/queryPlan/allowedFields",
+    "value": ["account_id", "customer_secret_score"],
+    "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "stale-source-denied",
+    "operation": "replace",
+    "path": "/questions/1/sources/0/freshnessMs",
+    "value": 90000000,
+    "expectedReason": "BI_EXECUTION_SPINE_SOURCE_DENIED"
+  },
+  {
+    "caseId": "missing-lineage-denied",
+    "operation": "replace",
+    "path": "/questions/2/sources/0/missingnessReasons",
+    "value": ["SEQUENCE_GAP"],
+    "expectedReason": "BI_EXECUTION_SPINE_SOURCE_DENIED"
+  },
+  {
+    "caseId": "tenant-boundary-denied",
+    "operation": "replace",
+    "path": "/questions/0/intent/tenantBoundary",
+    "value": "OWNER_PRIVATE_TENANT",
+    "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "formula-drift-denied",
+    "operation": "replace",
+    "path": "/questions/1/verificationReport/formulaVerified",
+    "value": false,
+    "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "unsupported-visualization-denied",
+    "operation": "replace",
+    "path": "/questions/2/visualization/unsupportedReason",
+    "value": "UNSUPPORTED_CHART_TYPE",
+    "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "raw-evidence-leak-denied",
+    "operation": "replace",
+    "path": "/questions/0/rawEvidence",
+    "value": "seeded-sensitive-marker-not-a-secret",
+    "expectedReason": "BI_EXECUTION_SPINE_PROHIBITED_FIELD_DENIED"
+  },
+  {
+    "caseId": "receipt-empty-denied",
+    "operation": "replace",
+    "path": "/questions/1/executionReceipt/rowCount",
+    "value": 0,
+    "expectedReason": "BI_EXECUTION_SPINE_RECEIPT_DENIED"
+  },
+  {
+    "caseId": "claim-authority-denied",
+    "operation": "replace",
+    "path": "/questions/2/claim/nonAuthority",
+    "value": "AUTHORITATIVE_DASHBOARD",
+    "expectedReason": "BI_EXECUTION_SPINE_SCHEMA_DENIED"
+  },
+  {
+    "caseId": "question-semantic-swap-denied",
+    "operation": "replace",
+    "path": "/questions/0/semanticModel/metric",
+    "value": "margin_drift_pct",
+    "expectedReason": "BI_EXECUTION_SPINE_QUESTION_SEMANTICS_DENIED"
+  }
+]

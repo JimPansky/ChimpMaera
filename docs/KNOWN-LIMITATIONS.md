@@ -99,6 +99,13 @@ change does not broaden the released asset claims.
   establish a legal basis, operate telemetry, monitor workers, train a model,
   run a dashboard, ingest production data, prove erasure in an external store,
   certify privacy compliance, or activate runtime behavior.
+- The CM-BI-EXEC-001 Draft candidate is not part of the current regular
+  release. It validates a closed local-synthetic contract, internally
+  computable digests and simulated receipt declarations only. Its opaque
+  source, operation-quality, formula and result references are not
+  independently recomputed; it does not prove an answer, run SQL or another
+  query engine, operate a dashboard, contact a provider, use production data or
+  grant authority.
 - The maintenance contract freeze validates exact synthetic locks,
   compatibility, preview plans, receipts and read-only Doctor projections. It
   does not discover systems, access a network or Docker, install packages,

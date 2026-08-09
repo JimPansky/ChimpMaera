@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 3,
+  "graphVersion": 4,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -63,7 +63,7 @@
         { "path": "schemas/contracts/verification-attestation-v2.schema.json", "role": "SCHEMA", "sha256": "e469e9775f9fdac08a8b223edcfaf07aa05860bbaef6a11bb3c0b5447d4872b2" },
         { "path": "scripts/verification-plan.mjs", "role": "VALIDATOR", "sha256": "0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218" },
         { "path": "scripts/verification-shadow.mjs", "role": "VALIDATOR", "sha256": "7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5" },
-        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "8ae6f5afbfb6d8d8328632093ceb34a6a7b4a8083f11f531f87a19d00c059d21" },
+        { "path": "tests/verification-fabric-v2.test.ts", "role": "VALIDATOR", "sha256": "c20e79aa5aeab2a8c657a24ab1aba14b53d36357c84ac293a46ee6cbdd208295" },
         { "path": "docs/VERIFICATION-FABRIC-SHADOW.md", "role": "DERIVED_EVIDENCE", "sha256": "c0c3b7d75fa3254373d768746c6b273564f8cc7036cdfefc96a242e5edaa684f" }
       ],
       "ownedTests": ["node --test dist/tests/verification-fabric-v2.test.js"],
@@ -76,10 +76,30 @@
       "globalInvalidation": false
     },
     {
+      "id": "bi-execution-spine-v1",
+      "dependsOn": ["vf-contract-v1"],
+      "inputs": [
+        { "path": "packages/contracts/src/bi-execution-spine.ts", "role": "CONTRACT", "sha256": "151a6cdd416b9cc7d9b942fab86f69dceacea8d27a3c79302c9cff81dbdd5ef8" },
+        { "path": "schemas/contracts/bi-execution-spine-v1.schema.json", "role": "SCHEMA", "sha256": "dc44f49f095f14cc67a68525a5039875b6953c4b914da6e9c6ca0d203e87ae12" },
+        { "path": "tests/fixtures/bi-execution-spine/positive-bundle-v1.json", "role": "FIXTURE", "sha256": "b59a10d21de439eccf88dbc3475065e638a5491441c82e7d242b89c1b7fde749" },
+        { "path": "tests/fixtures/bi-execution-spine/negative-matrix-v1.json", "role": "FIXTURE", "sha256": "8f3cad64346d0596556410bdb78aa50cb33ab60e5e970a20d9b885dae61cb38d" },
+        { "path": "tests/bi-execution-spine.test.ts", "role": "VALIDATOR", "sha256": "81cf8596e5d5daea75c4cc863545338989d4c084b27f1e56a707ddb146f6face" },
+        { "path": "docs/BI-EXECUTION-SPINE-CONTRACT.md", "role": "DERIVED_EVIDENCE", "sha256": "740d4f38f022d9bb32a9c039021928ae1977d50aab90afed165b208752f59409" }
+      ],
+      "ownedTests": ["npm run bi-execution-spine:test"],
+      "invariants": [
+        "The spine remains a public-synthetic contract and simulated receipt fixture with no query, provider, credential, dashboard or production-data authority.",
+        "Question semantics and internally computable artifact and envelope digests fail closed under drift.",
+        "Opaque source, operation-quality, formula and result digests are declarations and do not prove their absent referenced bytes or answer correctness."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "learning-routing-foundation",
       "dependsOn": ["vf-contract-v1", "vf-shadow-v2"],
       "inputs": [
-        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "6114ccec93a661fc3e1018500898353d3782f767d0fdf3aadedade2362a01418" },
+        { "path": "packages/contracts/src/index.ts", "role": "CONTRACT", "sha256": "c2cfff276469fee456d89c69d10ac35814faef6275ffe6d561b190705f0fbca1" },
         { "path": "packages/contracts/src/signal-release-intake.ts", "role": "CONTRACT", "sha256": "d2326a6b1af62ed4e8f3a65c30b1978bd285691bdc7f2e4b872b6091c68f8977" },
         { "path": "packages/contracts/src/learning-routing.ts", "role": "CONTRACT", "sha256": "7e8b22291b2c5480cad9b691e00f9ef6827ae483953de51ad1a1f140ca57757b" },
         { "path": "packages/contracts/src/learning-routing-outcome.ts", "role": "CONTRACT", "sha256": "06716b26f31318ac2055de1646ac163944e869c79494d127139228633eea83da" },
@@ -115,7 +135,7 @@
     },
     {
       "id": "repository-integrity",
-      "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "integration-profile-v1", "learning-routing-foundation"],
+      "dependsOn": ["vf-contract-v1", "vf-shadow-v2", "integration-profile-v1", "bi-execution-spine-v1", "learning-routing-foundation"],
       "inputs": [
         { "path": "release/governance.json", "role": "CONTRACT", "sha256": "fd48a9efcfc13926c5573c4e7a6f3e3afa31f87dd8253e0c0354b01df7712965" },
         { "path": "scripts/build-public-release.sh", "role": "SECURITY", "sha256": "bb547b1d800b795e9c6e0be925230e18f0c28b58b0e562b91be9e36b25166a4d" },
@@ -157,7 +177,7 @@
       "id": "toolchain-central",
       "dependsOn": [],
       "inputs": [
-        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "998ebcaf6e4c530b8e24c4aa282140524b87e0e0027b1eb2a4c27bde7a906066" },
+        { "path": "package.json", "role": "TOOLCHAIN", "sha256": "b20f269bf908c8e78c3a234c1b2255d87021642840c60c9218d3c31dda4677d4" },
         { "path": "package-lock.json", "role": "TOOLCHAIN", "sha256": "917451ce94512df9069c28283b7753c710eef9f5bdd4582b973af58941bf0e0b" },
         { "path": "tsconfig.json", "role": "TOOLCHAIN", "sha256": "f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838" },
         { "path": ".github/workflows/ci.yml", "role": "ENVIRONMENT", "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2" }

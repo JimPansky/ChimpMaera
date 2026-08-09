@@ -15,6 +15,7 @@ const curatedSitemapPaths = new Set([
   "",
   "alternatives",
   "AGENT-WORK-EVENT-CONTRACT",
+  "BI-EXECUTION-SPINE-CONTRACT",
   "capabilities",
   "examples",
   "EXTENSION-ASSURANCE-PROFILES",
@@ -139,6 +140,7 @@ export default defineConfig({
         items: [
           { text: "Capability evidence", link: "/capabilities" },
           { text: "Agent-work event contract", link: "/AGENT-WORK-EVENT-CONTRACT" },
+          { text: "BI execution spine candidate", link: "/BI-EXECUTION-SPINE-CONTRACT" },
           { text: "Extension assurance profiles", link: "/EXTENSION-ASSURANCE-PROFILES" },
           { text: "Integration profiles", link: "/INTEGRATION-PROFILES" },
           { text: "Resource-plane profiles", link: "/RESOURCE-PLANE-PROFILES" },

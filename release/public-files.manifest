@@ -177,6 +177,7 @@ docs/RESOURCE-PLANE-PROFILES.md	docs/RESOURCE-PLANE-PROFILES.md	0644
 docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	0644
 docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
 docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
+docs/BI-EXECUTION-SPINE-CONTRACT.md	docs/BI-EXECUTION-SPINE-CONTRACT.md	0644
 docs/LEARNING-ROUTING-CONTRACTS.md	docs/LEARNING-ROUTING-CONTRACTS.md	0644
 docs/OPERATION-EVENT-QUALITY-CONTRACT.md	docs/OPERATION-EVENT-QUALITY-CONTRACT.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
@@ -273,6 +274,7 @@ schemas/contracts/hmi-discover-payload-v1.schema.json	schemas/contracts/hmi-disc
 schemas/contracts/hmi-explain-payload-v1.schema.json	schemas/contracts/hmi-explain-payload-v1.schema.json	0644
 schemas/contracts/hmi-contribute-preflight-v1.schema.json	schemas/contracts/hmi-contribute-preflight-v1.schema.json	0644
 schemas/contracts/azure-identity-profile-v1.schema.json	schemas/contracts/azure-identity-profile-v1.schema.json	0644
+schemas/contracts/bi-execution-spine-v1.schema.json	schemas/contracts/bi-execution-spine-v1.schema.json	0644
 schemas/contracts/power-platform-read-connector-v1.schema.json	schemas/contracts/power-platform-read-connector-v1.schema.json	0644
 schemas/contracts/resource-plane-profile-input-v1.schema.json	schemas/contracts/resource-plane-profile-input-v1.schema.json	0644
 schemas/contracts/resource-plane-plan-v1.schema.json	schemas/contracts/resource-plane-plan-v1.schema.json	0644
@@ -366,16 +368,20 @@ tests/hmi-contribute-preflight.test.ts	tests/hmi-contribute-preflight.test.ts	06
 tests/hmi-post-explain-consistency.test.ts	tests/hmi-post-explain-consistency.test.ts	0644
 tests/hmi-post-contribute-consistency.test.ts	tests/hmi-post-contribute-consistency.test.ts	0644
 tests/azure-identity-profile.test.ts	tests/azure-identity-profile.test.ts	0644
+tests/bi-execution-spine.test.ts	tests/bi-execution-spine.test.ts	0644
 tests/power-platform-read-connector.test.ts	tests/power-platform-read-connector.test.ts	0644
 tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-runtime.test.mjs	0644
 tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
 tests/skill-admission.test.ts	tests/skill-admission.test.ts	0644
 packages/contracts/src/analytics-projection.ts	packages/contracts/src/analytics-projection.ts	0644
+packages/contracts/src/bi-execution-spine.ts	packages/contracts/src/bi-execution-spine.ts	0644
 schemas/contracts/chimpmaera-analytics-v1.schema.json	schemas/contracts/chimpmaera-analytics-v1.schema.json	0644
 tests/analytics-projection.test.ts	tests/analytics-projection.test.ts	0644
 tests/fixtures/analytics/negative-matrix-v1.json	tests/fixtures/analytics/negative-matrix-v1.json	0644
 tests/fixtures/analytics/positive-projection-v1.json	tests/fixtures/analytics/positive-projection-v1.json	0644
+tests/fixtures/bi-execution-spine/negative-matrix-v1.json	tests/fixtures/bi-execution-spine/negative-matrix-v1.json	0644
+tests/fixtures/bi-execution-spine/positive-bundle-v1.json	tests/fixtures/bi-execution-spine/positive-bundle-v1.json	0644
 packages/contracts/src/integration-profile.ts	packages/contracts/src/integration-profile.ts	0644
 schemas/contracts/integration-profile-v1.schema.json	schemas/contracts/integration-profile-v1.schema.json	0644
 tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
