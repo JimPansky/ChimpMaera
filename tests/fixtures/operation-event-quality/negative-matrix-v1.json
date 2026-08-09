@@ -1,0 +1,57 @@
+[
+  {
+    "caseId": "corrupt-record-digest",
+    "operation": "replace-no-rehash",
+    "path": "/recordDigest",
+    "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "expectedReason": "DIGEST_MISMATCH_DENIED"
+  },
+  {
+    "caseId": "missing-reason-absent",
+    "operation": "replace",
+    "path": "/missingness/status",
+    "value": "MISSING",
+    "expectedReason": "MISSINGNESS_REASON_DENIED"
+  },
+  {
+    "caseId": "late-event-without-provisional-state",
+    "operation": "replace",
+    "path": "/source/replayWindowMs",
+    "value": 10,
+    "expectedReason": "LATE_WINDOW_DENIED"
+  },
+  {
+    "caseId": "raw-evidence-private-in-public-retention",
+    "operation": "replace",
+    "path": "/source/rawEvidenceClass",
+    "value": "OWNER_PRIVATE_REFERENCE",
+    "expectedReason": "RAW_EVIDENCE_POLICY_DENIED"
+  },
+  {
+    "caseId": "quality-pass-not-purpose-fit",
+    "operation": "replace",
+    "path": "/quality/purposeFit",
+    "value": false,
+    "expectedReason": "QUALITY_STATE_DENIED"
+  },
+  {
+    "caseId": "unknown-field-rejected",
+    "operation": "replace",
+    "path": "/source/extra",
+    "value": "drift",
+    "expectedReason": "SCHEMA_DENIED"
+  },
+  {
+    "caseId": "missing-assessment-kind-rejected",
+    "operation": "delete",
+    "path": "/quality/assessmentKind",
+    "expectedReason": "SCHEMA_DENIED"
+  },
+  {
+    "caseId": "event-time-after-observed-time",
+    "operation": "replace",
+    "path": "/times/eventTimeMs",
+    "value": 1300,
+    "expectedReason": "TIME_ORDER_DENIED"
+  }
+]

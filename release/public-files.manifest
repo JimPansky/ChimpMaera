@@ -178,6 +178,7 @@ docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS
 docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
 docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
 docs/LEARNING-ROUTING-CONTRACTS.md	docs/LEARNING-ROUTING-CONTRACTS.md	0644
+docs/OPERATION-EVENT-QUALITY-CONTRACT.md	docs/OPERATION-EVENT-QUALITY-CONTRACT.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
 docs/VERIFICATION-FABRIC-SHADOW.md	docs/VERIFICATION-FABRIC-SHADOW.md	0644
@@ -226,6 +227,7 @@ packages/contracts/src/learning-routing-outcome.ts	packages/contracts/src/learni
 packages/contracts/src/learning-routing-threats.ts	packages/contracts/src/learning-routing-threats.ts	0644
 packages/contracts/src/learning-routing-baseline.ts	packages/contracts/src/learning-routing-baseline.ts	0644
 packages/contracts/src/learning-routing-recommender.ts	packages/contracts/src/learning-routing-recommender.ts	0644
+packages/contracts/src/operation-event-quality.ts	packages/contracts/src/operation-event-quality.ts	0644
 packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
 packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-access-broker.ts	0644
 packages/contracts/src/protected-audit-timeline.ts	packages/contracts/src/protected-audit-timeline.ts	0644
@@ -279,6 +281,7 @@ schemas/contracts/routing-attempt-v1.schema.json	schemas/contracts/routing-attem
 schemas/contracts/routing-context-v1.schema.json	schemas/contracts/routing-context-v1.schema.json	0644
 schemas/contracts/routing-decision-v1.schema.json	schemas/contracts/routing-decision-v1.schema.json	0644
 schemas/contracts/routing-outcome-v1.schema.json	schemas/contracts/routing-outcome-v1.schema.json	0644
+schemas/contracts/operation-event-quality-v1.schema.json	schemas/contracts/operation-event-quality-v1.schema.json	0644
 schemas/adaptability-benchmark-result-v1.schema.json	schemas/adaptability-benchmark-result-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
@@ -331,6 +334,8 @@ tests/fixtures/extension-assurance/positive-profile-v1.json	tests/fixtures/exten
 tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	0644
 tests/fixtures/agent-work-intelligence/negative-matrix-v1.json	tests/fixtures/agent-work-intelligence/negative-matrix-v1.json	0644
 tests/fixtures/agent-work-intelligence/positive-public-event-v1.json	tests/fixtures/agent-work-intelligence/positive-public-event-v1.json	0644
+tests/fixtures/operation-event-quality/negative-matrix-v1.json	tests/fixtures/operation-event-quality/negative-matrix-v1.json	0644
+tests/fixtures/operation-event-quality/positive-public-v1.json	tests/fixtures/operation-event-quality/positive-public-v1.json	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
 tests/model-access-broker-runtime.test.mjs	tests/model-access-broker-runtime.test.mjs	0644
 tests/model-access-broker.test.ts	tests/model-access-broker.test.ts	0644
@@ -338,6 +343,7 @@ tests/protected-audit-timeline.test.ts	tests/protected-audit-timeline.test.ts	06
 tests/resource-plane-profiles.test.ts	tests/resource-plane-profiles.test.ts	0644
 tests/extension-assurance-profile.test.ts	tests/extension-assurance-profile.test.ts	0644
 tests/agent-work-event.test.ts	tests/agent-work-event.test.ts	0644
+tests/operation-event-quality.test.ts	tests/operation-event-quality.test.ts	0644
 tests/learning-routing.test.ts	tests/learning-routing.test.ts	0644
 tests/learning-routing-outcome.test.ts	tests/learning-routing-outcome.test.ts	0644
 tests/learning-routing-threats.test.ts	tests/learning-routing-threats.test.ts	0644
