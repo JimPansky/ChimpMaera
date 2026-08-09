@@ -4,6 +4,44 @@ export const WORK_RECEIPT_SCHEMA_V1 = "chimpmaera.dev/work-receipt/v1" as const;
 export const PUBLICATION_BROKER_REQUEST_SCHEMA_V1 = "chimpmaera.dev/publication-broker-request/v1" as const;
 export const PUBLICATION_BROKER_READBACK_SCHEMA_V1 = "chimpmaera.dev/publication-broker-readback/v1" as const;
 export const PUBLICATION_BROKER_RECEIPT_SCHEMA_V1 = "chimpmaera.dev/publication-broker-receipt/v1" as const;
+export const GOVERNED_WORKLOAD_REQUEST_SCHEMA_V1 = "chimpmaera.dev/governed-workload-request/v1" as const;
+export const GOVERNED_WORKLOAD_RECEIPT_SCHEMA_V1 = "chimpmaera.dev/governed-workload-receipt/v1" as const;
+
+export type GovernedWorkloadKindV1 = "WRITER" | "REVIEWER";
+
+export interface GovernedWorkloadRequestV1 {
+  readonly schemaVersion: typeof GOVERNED_WORKLOAD_REQUEST_SCHEMA_V1;
+  readonly requestId: string;
+  readonly workload: GovernedWorkloadKindV1;
+  readonly workloadIdentity: string;
+  readonly projectId: string;
+  readonly issueIid: number;
+  readonly workOrderId: string;
+  readonly workOrderDigest: string;
+  readonly lease: { readonly id: string; readonly kind: GovernedWorkloadKindV1; readonly expiresAt: string };
+  readonly adapter: { readonly id: string; readonly version: string; readonly configDigest: string };
+  readonly provider: { readonly id: string; readonly modelAlias: DevModelAliasV1 };
+  readonly budget: { readonly requests: number; readonly costMicros: number };
+  readonly evidenceDigest: string;
+  readonly requestedCapabilities: readonly DevCapabilityV1[];
+  readonly expiresAt: string;
+  readonly requestDigest: string;
+}
+
+export interface GovernedWorkloadReceiptV1 {
+  readonly schemaVersion: typeof GOVERNED_WORKLOAD_RECEIPT_SCHEMA_V1;
+  readonly outcome: "SUCCEEDED";
+  readonly requestDigest: string;
+  readonly workload: GovernedWorkloadKindV1;
+  readonly admissionSequence: number;
+  readonly adapter: { readonly id: string; readonly version: string; readonly configDigest: string; readonly outputDigest: string };
+  readonly scope: { readonly projectId: string; readonly issueIid: number; readonly workOrderId: string };
+  readonly usage: { readonly requests: number; readonly costMicros: number };
+  readonly result: { readonly patchDigest: string | null; readonly reviewOutcome: "PASS" | "REJECT" | null; readonly findingsDigest: string | null };
+  readonly authority: { readonly workspaceMutation: false; readonly publication: false; readonly budgetWidening: false; readonly routeWidening: false; readonly writerLeaseShared: false };
+  readonly nonClaims: readonly string[];
+  readonly receiptDigest: string;
+}
 
 export type DevCapabilityV1 =
   | "cm.dev.issue.read"

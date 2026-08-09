@@ -210,6 +210,7 @@ packages/contracts/src/canonical-json.js	packages/contracts/src/canonical-json.j
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
 packages/contracts/src/development-worker.ts	packages/contracts/src/development-worker.ts	0644
 packages/dev-worker/src/publication-broker.ts	packages/dev-worker/src/publication-broker.ts	0644
+packages/dev-worker/src/m3-governance.ts	packages/dev-worker/src/m3-governance.ts	0644
 packages/contracts/src/builder-authority.ts	packages/contracts/src/builder-authority.ts	0644
 packages/contracts/src/builder-capability-resolution.ts	packages/contracts/src/builder-capability-resolution.ts	0644
 packages/contracts/src/builder-contribution-bundle.ts	packages/contracts/src/builder-contribution-bundle.ts	0644
@@ -267,6 +268,8 @@ security/openclaw-m1.5-evidence-index-v1.json	security/openclaw-m1.5-evidence-in
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
+schemas/governed-workload-receipt-v1.schema.json	schemas/governed-workload-receipt-v1.schema.json	0644
+schemas/governed-workload-request-v1.schema.json	schemas/governed-workload-request-v1.schema.json	0644
 schemas/publication-broker-readback-v1.schema.json	schemas/publication-broker-readback-v1.schema.json	0644
 schemas/publication-broker-receipt-v1.schema.json	schemas/publication-broker-receipt-v1.schema.json	0644
 schemas/publication-broker-request-v1.schema.json	schemas/publication-broker-request-v1.schema.json	0644
@@ -436,6 +439,7 @@ tests/demo-policy-generation-fence.test.mjs	tests/demo-policy-generation-fence.t
 tests/demo-policy-lifecycle.test.mjs	tests/demo-policy-lifecycle.test.mjs	0644
 tests/demo-fixture-manifest.test.ts	tests/demo-fixture-manifest.test.ts	0644
 tests/development-worker.test.ts	tests/development-worker.test.ts	0644
+tests/development-worker-m3.test.ts	tests/development-worker-m3.test.ts	0644
 tests/poc-early-admin-ai-setup.test.ts	tests/poc-early-admin-ai-setup.test.ts	0644
 tests/poc-guided-demo-bootstrap.test.ts	tests/poc-guided-demo-bootstrap.test.ts	0644
 tests/poc-setup-compatibility-planner.test.ts	tests/poc-setup-compatibility-planner.test.ts	0644
