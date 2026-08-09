@@ -416,8 +416,8 @@ d9425a27b387b69f62c0a53d9b1ffee6b5b48a99c53c2ea3ef1493a547ea238e  ./scripts/veri
 f5545b9c65c4c136baf60fe8f190e253f9a397ef805647fdf61a8ec45e0a29e2  ./security/openclaw-m1.3-evidence-v1.json
 c4359d5548a5b6cfaee765979879cb348283b34f47f4d3273c188c6eeaea7da6  ./security/openclaw-m1.4-evidence-v1.json
 9827bf56a836d90d54ca109b15797bc9229972cbf53b3218ab589b03be264f91  ./security/openclaw-m1.5-evidence-index-v1.json
-b8ccd6efbf8979059e1e330ab7d31bded4872b65a47d0115c927e182deaa29ce  ./security/secure-default-proof-evidence-v1.json
-76eb71da949d73677b0ec08aba39cd7aa7cd3cb7f3ab9c60a2d4884cb1ff0ef6  ./security/secure-default-proof-v1.json
+cdc01d94565f506ab154506818c810802e55d81e4a79abe9feaa74add36d1933  ./security/secure-default-proof-evidence-v1.json
+89426737a66e6baa6b2d16d8ecc0d25b62e4bb83d5fe7e5e80baa8a709825e78  ./security/secure-default-proof-v1.json
 9c8e23f22b503c9aa8dbe776068cac478c381cf80528b5ef2d4a07c4da4b4382  ./tests/adaptability-benchmark-m0.test.mjs
 209cb49cd67c0474e2f2cef1fed912fecad376e52b1bb2251b169f64b5c61fa9  ./tests/agent-work-event.test.ts
 013b162484f6041701b39c653e7481af70ade9e22e8ea88d4319104862678b53  ./tests/analytics-projection.test.ts
@@ -601,4 +601,4 @@ d1862208ee0e6d6f675caf728df29c23a24d5ecc4f1c7a44689c079fad8d2daf  ./tools/video-
 aadfff460efba5ece874c2dd33d376ef8a95e1b965808b8cc518ac374fb8faa9  ./tools/video-production-reference/tests/test_reference_closure.py
 001ef5ab32a92dec99213aa3289ca9e4353fc72649682418fa5ede7dfa96c99c  ./tools/video-production-reference/tests/test_visual_governance.py
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
-a18863350fd199cee9a34fc93df5f412f30b401bbad1bd7d55f46759477b6f60  ./verification/verification-dag-v2.json
+c2beb4927770a6a3698d77795189d7ff74ef426589552583654c802c92ceec6e  ./verification/verification-dag-v2.json
