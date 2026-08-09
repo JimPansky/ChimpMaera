@@ -73,8 +73,15 @@ demo/bi-foundation/start.sh	demo/bi-foundation/start.sh	0755
 demo/bi-foundation/stop.sh	demo/bi-foundation/stop.sh	0755
 demo/manifests/supply-chain/bi-foundation-lock-v1.json	demo/manifests/supply-chain/bi-foundation-lock-v1.json	0644
 docs/BI-FOUNDATION-OPERATOR-GUIDE.md	docs/BI-FOUNDATION-OPERATOR-GUIDE.md	0644
+docs/CRM-READ-CONNECTOR-GUIDE.md	docs/CRM-READ-CONNECTOR-GUIDE.md	0644
 scripts/verify-bi-foundation.mjs	scripts/verify-bi-foundation.mjs	0755
 tests/bi-foundation.test.mjs	tests/bi-foundation.test.mjs	0644
+packages/contracts/src/crm-read-connector.ts	packages/contracts/src/crm-read-connector.ts	0644
+schemas/contracts/crm-read-connector-v1.schema.json	schemas/contracts/crm-read-connector-v1.schema.json	0644
+tests/crm-read-connector.test.ts	tests/crm-read-connector.test.ts	0644
+tests/fixtures/crm-read/contract-v1.json	tests/fixtures/crm-read/contract-v1.json	0644
+tests/fixtures/crm-read/supported-export-v1.json	tests/fixtures/crm-read/supported-export-v1.json	0644
+verification/bi-002-crm-read-connector-evidence-v1.json	verification/bi-002-crm-read-connector-evidence-v1.json	0644
 demo/builder-agent/fixture-probe.mjs	demo/builder-agent/fixture-probe.mjs	0644
 demo/builder-agent/gateway.Dockerfile	demo/builder-agent/gateway.Dockerfile	0644
 demo/builder-agent/gateway.mjs	demo/builder-agent/gateway.mjs	0644

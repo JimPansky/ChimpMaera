@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/crm-read-connector-v1.schema.json",
+  "title": "ChimpMaera synthetic CRM read connector v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "contractVersion", "connectorId", "defaultEnabled", "adapter", "evidenceClass", "tenantId", "identity", "operations", "fields", "policy", "contractDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.connector/crm-read/v1" },
+    "contractVersion": { "const": "1.0.0" },
+    "connectorId": { "const": "connector:synthetic-crm-bi-v1" },
+    "defaultEnabled": { "const": false },
+    "adapter": { "const": "SUPPORTED_EXPORT_API_SHAPED" },
+    "evidenceClass": { "const": "LOCAL_SYNTHETIC" },
+    "tenantId": { "const": "tenant:synthetic-zoo" },
+    "identity": { "const": { "principalId": "principal:bi-m1-reader", "scopes": ["crm.synthetic.bi.read"], "credentialSource": "EXPLICIT_REFERENCE_ONLY" } },
+    "operations": { "const": ["LIST_ACCOUNTS", "LIST_OPPORTUNITIES", "READ_SOURCE_FACTS"] },
+    "fields": { "const": { "accounts": ["accountId", "accountName", "industry"], "opportunities": ["opportunityId", "accountId", "opportunityName", "stage", "amount", "currency", "expectedCloseDate"] } },
+    "policy": { "const": { "maxPageSize": 2, "maxAgeSeconds": 3600, "writesAllowed": false, "adminAllowed": false, "unknownFieldsAllowed": false } },
+    "contractDigest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

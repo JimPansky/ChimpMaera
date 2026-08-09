@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "chimpmaera.connector/crm-supported-export/v1",
+  "exportId": "export:synthetic-crm-001",
+  "tenantId": "tenant:synthetic-zoo",
+  "generatedAt": "2026-08-09T10:00:00Z",
+  "expiresAt": "2026-08-09T11:00:00Z",
+  "lineage": { "sourceSystem": "SYNTHETIC_CRM", "sourceDatasetId": "dataset:zoo-bi-m1", "extractionMode": "SUPPORTED_EXPORT", "sourceDigest": "79e27070b3e1c21487794fad8a657eead00aeaef768f63485bab341779f99093" },
+  "batches": [
+    { "batchId": "batch:accounts-001", "entity": "accounts", "sequence": 1, "complete": true, "records": [
+      { "accountId": "account:alpine-zoo", "accountName": "Alpine Zoo", "industry": "WILDLIFE_PARK" },
+      { "accountId": "account:river-aquarium", "accountName": "River Aquarium", "industry": "AQUARIUM" }
+    ] },
+    { "batchId": "batch:opportunities-001", "entity": "opportunities", "sequence": 2, "complete": true, "records": [
+      { "opportunityId": "opportunity:habitat-001", "accountId": "account:alpine-zoo", "opportunityName": "Habitat Renewal", "stage": "PROPOSE", "amount": 42000, "currency": "EUR", "expectedCloseDate": "2026-09-30" },
+      { "opportunityId": "opportunity:water-002", "accountId": "account:river-aquarium", "opportunityName": "Water Sensors", "stage": "QUALIFY", "amount": 18000, "currency": "EUR", "expectedCloseDate": "2026-10-15" },
+      { "opportunityId": "opportunity:care-003", "accountId": "account:alpine-zoo", "opportunityName": "Care Analytics", "stage": "WON", "amount": 27500, "currency": "EUR", "expectedCloseDate": "2026-08-31" }
+    ] }
+  ]
+}

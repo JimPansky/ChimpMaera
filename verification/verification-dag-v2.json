@@ -215,7 +215,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "65f5f49cc14d4c9648b4a86be0bd40fb68c17ddf058bcdc8d44332615dc13570"
+          "sha256": "08b50477a134e67dd450dcdcac9c36441d38c7897addc604d9ff00e3207e1897"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -362,7 +362,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "91cb2c57b70f4f7f423f2c16d70d0c527e35f1d1f52736cc1be2dc50ab366780"
+          "sha256": "98dc1bcef3e024df47bbdc5bad09985233d90ae4cbba35d3a9e7031969154140"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -654,7 +654,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "902b8559ea397b39ed5ebb0e2b44a52dac66dcc8b67d8b68a24640bf2768bcd3"
+          "sha256": "2ff337978a6aab65e834746f27e54f4e951fda465df4b4e12549abe053b9270f"
         },
         {
           "path": "package-lock.json",

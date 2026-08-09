@@ -44,5 +44,6 @@ export * from "./learning-routing-recommender.js";
 export * from "./signal-release-intake.js";
 export * from "./operation-event-quality.js";
 export * from "./bi-execution-spine.js";
+export * from "./crm-read-connector.js";
 export * from "./integration-profile.js";
 export * from "./voice-local-ptt.js";

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "chimpmaera.connector/crm-read/v1",
+  "contractVersion": "1.0.0",
+  "connectorId": "connector:synthetic-crm-bi-v1",
+  "defaultEnabled": false,
+  "adapter": "SUPPORTED_EXPORT_API_SHAPED",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "tenantId": "tenant:synthetic-zoo",
+  "identity": { "principalId": "principal:bi-m1-reader", "scopes": ["crm.synthetic.bi.read"], "credentialSource": "EXPLICIT_REFERENCE_ONLY" },
+  "operations": ["LIST_ACCOUNTS", "LIST_OPPORTUNITIES", "READ_SOURCE_FACTS"],
+  "fields": { "accounts": ["accountId", "accountName", "industry"], "opportunities": ["opportunityId", "accountId", "opportunityName", "stage", "amount", "currency", "expectedCloseDate"] },
+  "policy": { "maxPageSize": 2, "maxAgeSeconds": 3600, "writesAllowed": false, "adminAllowed": false, "unknownFieldsAllowed": false },
+  "contractDigest": "edc3575076153a86b61d0bcbe4438121b549be5cec53b91f836561be1402e164"
+}
