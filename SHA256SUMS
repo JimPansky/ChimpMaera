@@ -42,7 +42,7 @@ e88dabb7c7ec3720f5077b9158bd55d8c5b7a63c5f76c30bc39bc40fa97028d4  ./demo/app/ind
 9eec3ffe5b9ed102377cc9b51995d22f050c2901af622f4b5f87d257cbd26fcb  ./demo/bi-foundation/compose.yaml
 972f0aa4e41d4c14905cd76fc20d8b26df369cf4a34f1506b11b26d2b99929f7  ./demo/bi-foundation/config.example.json
 a5923c580710d1b09f8fa982a599f0924b4c5f77cd5789a390b5437f87cf0f97  ./demo/bi-foundation/lib.sh
-a78b159bcdcd464c07052795a356b7625f190f53870f88b27476c92d2a38df5d  ./demo/bi-foundation/reset.sh
+5dce694f89e2d5e1bc9c0ddad1edea7a5f5b1725365dee3f352b6830af34ed36  ./demo/bi-foundation/reset.sh
 a3c071e055bdd339656c806fdc78d1b4ba7b88207eb8d37d3546d3979f0f096f  ./demo/bi-foundation/service.Dockerfile
 f91c1439e8208cc017d98a6256b25246fdfd2ce2fdae6afb025fa82ef0d76098  ./demo/bi-foundation/service.mjs
 43f3bc9c0a8847fe39b643e2f3514ee1a54673d42c84f69442e10fda3a7779c4  ./demo/bi-foundation/setup.sh
@@ -113,7 +113,7 @@ f35377c67289c34b8065b4697123b3819cb28dc165a60b5db7c77d29a506d964  ./demo/manifes
 c677329275e16579eebacc0b7146dc25c52fb4d949a9a20e9a355f6ad39deba8  ./demo/manifests/identity/panskys-zoo-v1.json
 61f5cf1450ec57b78feaeb77ea3d641a6072634aa62e3998ce1a82ed7502fead  ./demo/manifests/network/local-egress-policy-v1.json
 324ac89d722cfe1a50d5d2197ee639427d3d5d113f8f2b5ce7ccbc2d8e581383  ./demo/manifests/supply-chain/artifact-lock-v1.json
-8445aa76f2ea185dcb203d3b3aabc52ac92c63f5e767c4a35132d99de038879c  ./demo/manifests/supply-chain/bi-foundation-lock-v1.json
+1a5bb57a5d14d6453db858c3461b4a8de124beeec4c7f155ec133ec299aeb01c  ./demo/manifests/supply-chain/bi-foundation-lock-v1.json
 123ab62f3c792d4865a4fa16fbf27403b68c47148dea10ab8125ea02f948d496  ./demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json
 b7068fac151a9d1c7d0394feb6fbec5a33dad8c8d070a5ec6e72a4c8918ef118  ./demo/model-access-broker/broker.Dockerfile
 e5dd9ee8e825fc98a9b71df8121e42f37cd299c60d797682b31469165396f13d  ./demo/model-access-broker/broker.mjs
@@ -175,7 +175,7 @@ ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfi
 70c593e838de55aee2711772a70f05026af5c7690184e43ad19b2f98afe35d11  ./docs/AGENT-WORK-EVENT-CONTRACT.md
 d8b2a7cfe4a063723360b9859c1c8a3ef8fdf250fdd2a33d3bbc6ccf0e7ebf07  ./docs/ARCHITECTURE.md
 740d4f38f022d9bb32a9c039021928ae1977d50aab90afed165b208752f59409  ./docs/BI-EXECUTION-SPINE-CONTRACT.md
-7e89f9b1541247a00789f168d2495a86cd9a415cfcbdf447e600f6514751cd97  ./docs/BI-FOUNDATION-OPERATOR-GUIDE.md
+cd6e6ebdead7e580563200d778d192a3249e3e3171daa10dcdb33b147dbbd5ec  ./docs/BI-FOUNDATION-OPERATOR-GUIDE.md
 f9e1327fa37b9eea02d6437d6e2a5694c0168d306f5af95f32460aff736db4cc  ./docs/BUILDER-AGENT-OPERATOR-GUIDE.md
 be80a96a24af224b5010c3698363dc6d9a400fba8a2d6529c8b1193dfc628df2  ./docs/BUILDER-CONFIGURATION-DEFAULTS.md
 3bda511b38cca044474cd3b310628318fca3d80ad0c1840b540ee37925147193  ./docs/CANON.md
@@ -446,7 +446,7 @@ cdc01d94565f506ab154506818c810802e55d81e4a79abe9feaa74add36d1933  ./security/sec
 013b162484f6041701b39c653e7481af70ade9e22e8ea88d4319104862678b53  ./tests/analytics-projection.test.ts
 1547da81d0b6a70681fcff3e23e3fd775576cd4a3583585bf94a600b39bb41f9  ./tests/azure-identity-profile.test.ts
 81cf8596e5d5daea75c4cc863545338989d4c084b27f1e56a707ddb146f6face  ./tests/bi-execution-spine.test.ts
-28cfd0bd0d9de2acb1f27bd793fdf6c0cdc04f06b9ccccf39872f31ef83dba47  ./tests/bi-foundation.test.mjs
+a29c0bf2d7e551673f805d539f77ff1c415f21215f7661d12967d10f44004bed  ./tests/bi-foundation.test.mjs
 c8f07f427e39d50ddc142c7f5d6ed0382e1058fd179eb178226a1a1b870f118c  ./tests/builder-agent-runtime.test.mjs
 a8479c98b9b211bb9ead59877b8ba0b4c1f9ff9cd0e5455ee52aaa103d34716a  ./tests/builder-authority.test.ts
 932dc4c32fc2963dfeba37514ccf94d37cf9350b9f05848d60ca98a3e497d05b  ./tests/builder-capability-resolution.test.ts

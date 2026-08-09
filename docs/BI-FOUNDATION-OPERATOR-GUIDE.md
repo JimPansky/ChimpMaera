@@ -36,7 +36,10 @@ matching image is clean absence; exactly one immutable image ID is accepted only
 when its ID, fixture label and content-source label are readable and valid. List,
 transport, permission, multiplicity or metadata failures are ambiguous and stop
 before build, lifecycle mutation, image removal or a success message. Reset repeats
-the same inventory after `compose down` before removing the tag.
+the same inventory after `compose down`, then removes only that validated immutable
+image ID without force—never the mutable tag. If references change or remain, the
+removal fails closed and reset does not claim success. This narrows local
+concurrency risk but does not claim an atomic Docker inventory/removal transaction.
 
 The single network is Docker-internal. Only the service health surface is bound,
 and only to `127.0.0.1`. Both containers are non-root with read-only roots,

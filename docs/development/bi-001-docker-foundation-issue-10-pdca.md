@@ -32,3 +32,10 @@ inventory. Only clean absence or one ID with readable owned fixture and source
 labels proceeds. Inventory, transport, multiplicity, ID or label ambiguity denies
 with generic output. Start verifies a built image before `up`; reset inventories
 again after `down` and cannot silently report success after a recheck failure.
+
+Final TOCTOU closure: reset passes the post-down validated immutable image ID to
+non-forced removal, never the mutable local tag. A concurrent tag remap therefore
+cannot redirect the removal target; changed/remaining references cause a generic
+failure with no reset-success claim. Docker offers no atomic inventory/remove
+primitive here, so residual local concurrency is bounded by immutable targeting
+and fail-closed non-forced removal rather than claimed absent.

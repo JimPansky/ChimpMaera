@@ -114,13 +114,22 @@ test('BI-001 start inventory failure cannot build, run Compose up, or claim READ
   } finally { await rm(temp, { recursive: true, force: true }); }
 });
 
-test('BI-001 present owned image is revalidated after down and removed exactly once', async () => {
+test('BI-001 tag remap cannot redirect removal away from the validated owned image ID', async () => {
   const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-image-owned-')); try {
-    const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log'); const imageId = `sha256:${'c'.repeat(64)}`; const source = 'd'.repeat(64);
-    await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\nif [ "$1 $2" = "image ls" ]; then printf '${imageId}\\n'; exit 0; fi\nif [ "$1 $2 $3" = "image inspect ${imageId}" ]; then case "$5" in '{{.Id}}') printf '${imageId}\\n';; *source-sha256*) printf '${source}\\n';; *io.chimpmaera.fixture*) printf 'bi001-foundation-v1\\n';; *) exit 90;; esac; exit 0; fi\ncase "$*" in "ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*) exit 0;; *" down") exit 0;; "image rm chimpmaera/bi001-foundation:local") exit 0;; esac\nexit 90\n`, { mode: 0o755 });
+    const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log'); const imageId = `sha256:${'c'.repeat(64)}`; const foreignId = `sha256:${'e'.repeat(64)}`; const source = 'd'.repeat(64);
+    await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\nif [ "$1 $2" = "image ls" ]; then printf '${imageId}\\n'; exit 0; fi\nif [ "$1 $2 $3" = "image inspect ${imageId}" ]; then case "$5" in '{{.Id}}') printf '${imageId}\\n';; *source-sha256*) printf '${source}\\n';; *io.chimpmaera.fixture*) printf 'bi001-foundation-v1\\n';; *) exit 90;; esac; exit 0; fi\ncase "$*" in "ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*) exit 0;; *" down") exit 0;; "image rm ${imageId}") exit 0;; "image rm chimpmaera/bi001-foundation:local"|"image rm ${foreignId}") exit 91;; esac\nexit 90\n`, { mode: 0o755 });
     const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log };
     const result = spawnSync('bash', [path.join(fixture, 'reset.sh')], { env, encoding: 'utf8' }); assert.equal(result.status, 0, `${result.stderr}\n${await readFile(log, 'utf8')}`); assert.match(result.stdout, /owned resources reset/);
-    const calls = await readFile(log, 'utf8'); assert.equal((calls.match(/image ls --quiet/g) ?? []).length, 2); assert.equal((calls.match(/image rm/g) ?? []).length, 1);
+    const calls = await readFile(log, 'utf8'); assert.equal((calls.match(/image ls --quiet/g) ?? []).length, 2); assert.match(calls, new RegExp(`image rm ${imageId}`)); assert.doesNotMatch(calls, new RegExp(`image rm (?:chimpmaera/bi001-foundation:local|${foreignId})`));
+  } finally { await rm(temp, { recursive: true, force: true }); }
+});
+
+test('BI-001 immutable image removal failure denies reset success', async () => {
+  const temp = await mkdtemp(path.join(tmpdir(), 'cm-bi-image-rm-deny-')); try {
+    const bin = path.join(temp, 'bin'); await mkdir(bin); const log = path.join(temp, 'log'); const imageId = `sha256:${'f'.repeat(64)}`; const source = 'a'.repeat(64);
+    await writeFile(path.join(bin, 'docker'), `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$CM_BI_SPY_LOG"\nif [ "$1 $2" = "image ls" ]; then printf '${imageId}\\n'; exit 0; fi\nif [ "$1 $2 $3" = "image inspect ${imageId}" ]; then case "$5" in '{{.Id}}') printf '${imageId}\\n';; *source-sha256*) printf '${source}\\n';; *io.chimpmaera.fixture*) printf 'bi001-foundation-v1\\n';; esac; exit 0; fi\ncase "$*" in "ps -aq --filter "*|"network ls -q --filter "*|"volume ls -q --filter "*|*" down") exit 0;; "image rm ${imageId}") exit 73;; esac\nexit 90\n`, { mode: 0o755 });
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, CM_BI_CONFIG: example, CM_BI_SPY_LOG: log };
+    const result = spawnSync('bash', [path.join(fixture, 'reset.sh')], { env, encoding: 'utf8' }); assert.notEqual(result.status, 0); assert.doesNotMatch(result.stdout, /reset|READY/i); assert.match(result.stderr, /validated local image removal failed/); assert.doesNotMatch(result.stderr, new RegExp(imageId));
   } finally { await rm(temp, { recursive: true, force: true }); }
 });
 
