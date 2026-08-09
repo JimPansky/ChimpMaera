@@ -1,10 +1,14 @@
 import assert from "node:assert/strict";
 import { readdirSync, readFileSync, statSync } from "node:fs";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
+import { Readable } from "node:stream";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   authorizeGatewayRequest,
+  createInvocationIdentity,
   createSyntheticIdentity,
   encodeSyntheticIdentity,
   sanitizedDenial,
@@ -13,6 +17,20 @@ import {
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const fixture = path.join(root, "demo/openclaw-agent");
 const contract = JSON.parse(readFileSync(path.join(fixture, "gateway-workload-contract-v2.json"), "utf8"));
+const typed = {
+  schemaVersion: "chimpmaera.aas035/typed-capability-request/v1",
+  tenant: "tenant:synthetic-zoo",
+  purpose: "purpose:synthetic-contact-fixture",
+  catalogueDigest: "1454c6bc785bc5185d7e1dc657cd62b620c2e2f9b79a80ac38e87573adf5c387",
+  catalogueVersion: "1.0.0",
+  adapterId: "espocrm-local-fixture",
+  adapterVersion: "1.0.0",
+  actionId: "crm.contact.create",
+  resource: "espocrm.contact",
+  effect: "CREATE",
+  requestId: "aas035-http-retry-0001",
+  payload: { email: "agent.fixture@synthetic.invalid", name: "AAS-035 Synthetic Agent" },
+};
 
 function request(label = "allow", { claimOverrides = {}, requestOverrides = {}, expiresAt } = {}) {
   const correlationId = `corr-aas035-${label}-0001`;
@@ -108,6 +126,106 @@ test("OPENCLAW-M1.2 identity negatives fail closed and reuse is replay-denied", 
     () => authorizeGatewayRequest(contract, request("capacity"), { replayIds: fullReplayCache }),
     (error) => error?.code === "IDENTITY_REPLAY_CACHE_FULL_DENIED",
   );
+});
+
+function gatewayRequest(handler, route, { method = "GET", headers = {}, body } = {}) {
+  return new Promise((resolve, reject) => {
+    const request = Readable.from(body === undefined ? [] : [Buffer.from(JSON.stringify(body))]);
+    request.method = method;
+    request.url = route;
+    request.headers = headers;
+    let status;
+    const response = {
+      writeHead(value) { status = value; },
+      end(value) {
+        try {
+          resolve({ status, body: JSON.parse(String(value)) });
+        } catch (error) {
+          reject(error);
+        }
+      },
+    };
+    try {
+      handler(request, response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+test("OPENCLAW-M1.2 legacy bypass creates no effect while fresh retry identity returns one exact receipt", async () => {
+  const temporary = await mkdtemp(path.join(tmpdir(), "cm-openclaw-m12-http-"));
+  const statePath = path.join(temporary, "state.json");
+  process.env.CM_AAS035_STATE_PATH = statePath;
+  try {
+    const gatewayUrl = `${pathToFileURL(path.join(fixture, "gateway.mjs")).href}?integration=m12-repair`;
+    const { gatewayHandler } = await import(gatewayUrl);
+    const legacy = await gatewayRequest(gatewayHandler, "/v1/capabilities/execute", {
+      method: "POST",
+      headers: { "x-cm-workload-identity": "workload:aas035-openclaw-agent-v1" },
+      body: typed,
+    });
+    assert.deepEqual(legacy, {
+      status: 403,
+      body: { status: "DENY", error: "LEGACY_CAPABILITY_ROUTE_DENIED" },
+    });
+    let state = JSON.parse(await readFile(statePath, "utf8"));
+    assert.equal(state.counters.effectAttempts, 0);
+    assert.equal(state.counters.effects, 0);
+    assert.deepEqual(state.effects, {});
+
+    const firstInvocation = createInvocationIdentity(contract, {
+      requestId: typed.requestId,
+      invocationId: "fixture-invocation-0001",
+    });
+    const secondInvocation = createInvocationIdentity(contract, {
+      requestId: typed.requestId,
+      invocationId: "fixture-invocation-0002",
+    });
+    assert.notEqual(firstInvocation.identity.claims.jti, secondInvocation.identity.claims.jti);
+    assert.deepEqual(firstInvocation, createInvocationIdentity(contract, {
+      requestId: typed.requestId,
+      invocationId: "fixture-invocation-0001",
+    }));
+
+    const invoke = (invocation) => gatewayRequest(gatewayHandler, contract.identity.route, {
+      method: "POST",
+      headers: {
+        authorization: `Synthetic ${encodeSyntheticIdentity(invocation.identity)}`,
+        host: "capability-gateway:8080",
+        "x-cm-correlation-id": invocation.correlationId,
+      },
+      body: typed,
+    });
+    const first = await invoke(firstInvocation);
+    const freshRetry = await invoke(secondInvocation);
+    assert.equal(first.status, 200);
+    assert.equal(first.body.result.replayState, "FIRST_EXECUTION");
+    assert.equal(freshRetry.status, 200);
+    assert.equal(freshRetry.body.result.replayState, "REPLAY_SAME_RECEIPT");
+    assert.equal(first.body.result.receipt.receiptDigest, freshRetry.body.result.receipt.receiptDigest);
+    assert.equal(first.body.correlationId, firstInvocation.correlationId);
+    assert.equal(freshRetry.body.correlationId, secondInvocation.correlationId);
+
+    const assertionReuse = await invoke(secondInvocation);
+    assert.deepEqual(assertionReuse, {
+      status: 403,
+      body: {
+        schemaVersion: "chimpmaera.openclaw/gateway-denial/v2",
+        status: "DENY",
+        correlationId: secondInvocation.correlationId,
+        code: "IDENTITY_REPLAY_DENIED",
+      },
+    });
+    state = JSON.parse(await readFile(statePath, "utf8"));
+    assert.equal(state.counters.effectAttempts, 2);
+    assert.equal(state.counters.effects, 1);
+    assert.equal(Object.keys(state.effects).length, 1);
+    assert.equal(state.identityReplay.length, 2);
+  } finally {
+    delete process.env.CM_AAS035_STATE_PATH;
+    await rm(temporary, { recursive: true, force: true });
+  }
 });
 
 test("OPENCLAW-M1.2 denial evidence is sanitized and does not echo identity material", () => {

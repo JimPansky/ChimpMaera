@@ -75,6 +75,10 @@ test("AAS-035 identity, managed mind and typed tool surfaces are finite", () => 
   assert.deepEqual(config.tools.allow, ["chimpmaera_capability_request"]);
   assert.deepEqual(Object.keys(config.models.providers), ["cm-fixture"]);
   assert.equal(config.models.providers["cm-fixture"].baseUrl, "http://capability-gateway:8080/v1");
+  const plugin = readFileSync(path.join(fixture, "plugin/index.mjs"), "utf8");
+  assert.match(plugin, /createInvocationIdentity/);
+  assert.match(plugin, /randomUUID\(\)/);
+  assert.doesNotMatch(plugin, /jti:\s*`jti-\$\{params\.requestId\}`/);
   const workspaceState = JSON.parse(readFileSync(path.join(fixture, "workspace/openclaw-workspace-state.json"), "utf8"));
   assert.equal(workspaceState.version, 1);
   assert.match(workspaceState.setupCompletedAt, /^2026-08-01T/);
@@ -116,7 +120,7 @@ test("AAS-035 smoke records the complete denial and lifecycle matrix", () => {
     "oversize", "filesystem", "egress", "replay", "mind-write", "mind-read",
     "gateway-v2", "identity-missing", "identity-expired", "identity-wrong-audience",
     "identity-wrong-tenant", "identity-replay", "semantic-reset-idempotent",
-    "owner_fingerprint", "ownedRuntimeResidue",
+    "legacy-capability-bypass", "owner_fingerprint", "ownedRuntimeResidue",
   ]) assert.match(`${smoke}\n${probe}`, new RegExp(marker));
   assert.match(smoke, /for index in 1 2 3 4/);
   assert.match(smoke, /fixture-probe\.mjs replay/);

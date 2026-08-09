@@ -56,6 +56,23 @@ export function createSyntheticIdentity(contract, {
   return { claims, proof: proofFor(claims) };
 }
 
+export function createInvocationIdentity(contract, { requestId, invocationId } = {}) {
+  if (!/^aas035-[a-z0-9-]{8,48}$/.test(requestId ?? "")
+    || typeof invocationId !== "string"
+    || !/^[a-zA-Z0-9-]{8,128}$/.test(invocationId)) {
+    deny("IDENTITY_INVOCATION_DENIED");
+  }
+  const invocationDigest = sha256(`chimpmaera-synthetic-invocation-v2\n${invocationId}`).slice(0, 12);
+  const correlationId = `corr-${requestId}-${invocationDigest}`;
+  return {
+    correlationId,
+    identity: createSyntheticIdentity(contract, {
+      correlationId,
+      jti: `jti-${requestId}-${invocationDigest}`,
+    }),
+  };
+}
+
 export function encodeSyntheticIdentity(identity) {
   return Buffer.from(canonical(identity)).toString("base64url");
 }

@@ -20,6 +20,8 @@
     "ttlSeconds": 60,
     "clock": "2026-08-09T12:00:00.000Z",
     "antiReplay": "ONE_ACCEPTANCE_PER_JTI",
+    "assertionIdentity": "FRESH_UUID_DERIVED_JTI_PER_INVOCATION",
+    "effectIdempotencyKey": "requestId",
     "replayCacheMaxEntries": 64,
     "assurance": "PUBLIC_DETERMINISTIC_FIXTURE_BINDING_NOT_AUTHENTICATION"
   },
@@ -40,6 +42,8 @@
   },
   "correlationBoundMatrix": [
     { "probe": "EXPECTED_GATEWAY_REQUEST", "outcome": "ALLOW", "code": "PASS_CORRELATION_PRESERVED" },
+    { "probe": "LEGACY_V1_CAPABILITY_BYPASS", "outcome": "DENY", "code": "LEGACY_CAPABILITY_ROUTE_DENIED_ZERO_EFFECTS" },
+    { "probe": "SAME_REQUEST_ID_FRESH_IDENTITY_RETRY", "outcome": "ALLOW", "code": "REPLAY_SAME_RECEIPT_ONE_EFFECT" },
     { "probe": "UNEXPECTED_DESTINATION_INTERNET", "outcome": "DENY", "code": "DESTINATION_DENIED" },
     { "probe": "UNEXPECTED_DESTINATION_PROVIDER", "outcome": "DENY", "code": "DESTINATION_DENIED" },
     { "probe": "UNEXPECTED_DESTINATION_METADATA", "outcome": "DENY", "code": "DESTINATION_DENIED" },
@@ -56,7 +60,7 @@
     { "probe": "IDENTITY_WRONG_ROUTE", "outcome": "DENY", "code": "IDENTITY_ROUTE_DENIED" },
     { "probe": "IDENTITY_CORRELATION_MISMATCH", "outcome": "DENY", "code": "IDENTITY_CORRELATION_DENIED" },
     { "probe": "CREDENTIAL_DISCOVERY", "outcome": "DENY", "code": "NO_AMBIENT_OR_LIVE_CREDENTIAL_MATERIAL" },
-    { "probe": "CREDENTIAL_REUSE", "outcome": "DENY", "code": "IDENTITY_REPLAY_DENIED" },
+    { "probe": "IDENTICAL_ASSERTION_REUSE", "outcome": "DENY", "code": "IDENTITY_REPLAY_DENIED" },
     { "probe": "REPLAY_CACHE_CAPACITY", "outcome": "DENY", "code": "IDENTITY_REPLAY_CACHE_FULL_DENIED" }
   ],
   "credentialProof": {
@@ -69,15 +73,16 @@
   },
   "artifactChecksums": {
     "demo/openclaw-agent/gateway-workload-contract-v2.json": "9473e7af181d5c74f0b6079dd69a9ff4c9d6a7a21f1af89b4e19e24ec85d8d33",
-    "demo/openclaw-agent/plugin/identity-v2.mjs": "14efffa70aed3c6b1592eb8b7d8a4a073dc27fbcf01f64a8eee7c0760010de39",
-    "demo/openclaw-agent/gateway.mjs": "d57ff3de696353cb14900ace70231c22c697806dd2fcf4d1165ec3350ab025e4",
-    "tests/openclaw-gateway-identity-network.test.mjs": "3551301bc5c262d5092dedb240011ffecafb2dbc7ec53c30aa90b84198349e71",
-    "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json": "c06b40c518e1c91b1263732998fcf27ad26f47aacd2e2156a50d3e0ead4de7ab"
+    "demo/openclaw-agent/plugin/identity-v2.mjs": "dbaa57a42254d9d554c14bdfee5659ee260fb10185450dcab29bf46f67affaae",
+    "demo/openclaw-agent/gateway.mjs": "dcbeca6e5c742d6c60445294b3b8aab29bf4f19610dc7901d60d715597c1b941",
+    "tests/openclaw-gateway-identity-network.test.mjs": "bdff41711411b718afb0c1d8c1d788951765ba8256b6753a64f7c491667eb539",
+    "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json": "809c239ab2f8defbd11370f58eb493c71f97112d938ea90abfadd15f728db507"
   },
   "verification": {
     "focused": {
       "command": "npm run openclaw-m1.2:test",
-      "passed": 19,
+      "passedBehavioralTests": 20,
+      "passedIsolatedFiles": 3,
       "failed": 0
     },
     "runtimeLock": {
@@ -87,21 +92,21 @@
     "authoritative": {
       "status": "PASS",
       "commands": [
-        { "command": "npm ci --offline --ignore-scripts --no-audit --no-fund", "result": "PASS_139_PACKAGES_FROM_VERIFIED_LOCAL_CACHE" },
         { "command": "npm run lint", "result": "PASS" },
         { "command": "npm run build", "result": "PASS" },
-        { "command": "npm test", "result": "PASS_PRETEST_12_OF_12_LEARNING_26_OF_26_MAIN_389_OF_389" },
+        { "command": "npm test", "result": "PASS_SECURE_DEFAULT_12_OF_12_LEARNING_ROUTING_26_OF_26_AUTHORITATIVE_MAIN_390_OF_390" },
         { "command": "npm run docs:test", "result": "PASS_5_OF_5" },
         { "command": "npm run supply-chain:verify", "result": "PASS_7_CHECKS" },
         { "command": "npm run release-governance:test", "result": "PASS_33_OF_33" },
         { "command": "npm run release-governance:verify", "result": "PASS" },
-        { "command": "npm run proof:secure-default", "result": "PASS_REPRODUCIBLE_EVIDENCE" },
+        { "command": "npm run proof:secure-default", "result": "PASS" },
         { "command": "npm run video:test", "result": "PASS_75_OF_75" },
-        { "command": "sha256sum -c SHA256SUMS", "result": "PASS" }
+        { "command": "sha256sum -c SHA256SUMS", "result": "PASS_535_OF_535" },
+        { "command": "git diff --check", "result": "PASS" }
       ]
     }
   },
-  "supportedClaim": "The pinned default-off local fixture deterministically enforces one correlation-bound Gateway path using a 60-second least-privilege synthetic workload identity, denies second use and enumerated network/identity drift, and contains no live or ambient credential fixture.",
+  "supportedClaim": "The pinned default-off local fixture deterministically enforces one correlation-bound Gateway execution path using a fresh per-invocation 60-second least-privilege synthetic identity, denies the legacy V1 execution bypass with zero effects, returns one exact receipt for same-requestId retries with fresh identity, denies identical-assertion reuse and enumerated network/identity drift, and contains no live or ambient credential fixture.",
   "nonClaims": [
     "NO_HOSTILE_NETWORK_CERTIFICATION",
     "NO_PRODUCTION_IDENTITY_ASSURANCE",

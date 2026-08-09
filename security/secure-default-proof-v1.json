@@ -43,7 +43,7 @@
     { "path": "tests/demo-enforcement-gate.test.mjs", "role": "TEST", "sha256": "7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74" },
     { "path": "tests/demo-admin-ai-poc.test.mjs", "role": "TEST", "sha256": "d9157598e660243c1b98552b09c43a05127701f0fe343c1a14c0eb984eaea9cd" },
     { "path": "tests/demo-approval-workbench.test.mjs", "role": "TEST", "sha256": "2cb4aaad1ca1435c2c0abca543796f21de783ae678eabed1adac308ce1969e2b" },
-    { "path": "tests/openclaw-agent-runtime.test.mjs", "role": "TEST", "sha256": "c405a8f32c93ee2f153ffe25ae742fdde92dce07f9983cd01b0bc5e148a78850" },
+    { "path": "tests/openclaw-agent-runtime.test.mjs", "role": "TEST", "sha256": "a6c51e0fbb938a8bc17f4aafef7b2007746f45d30c027b41ae0bbcdffdeb7506" },
     { "path": "tests/model-access-broker-runtime.test.mjs", "role": "TEST", "sha256": "c4c2492f936df0923d79480a6fb89cb7bb1a1cab3cf1f3c2555b7eeb3c1f4b3d" },
     { "path": "tests/poc-early-admin-ai-setup.test.ts", "role": "TEST", "sha256": "06dbdf922993b0e0d8c07534c4d562ca4dac97125e1c2f67fb6662a1c4283c0b" }
   ],

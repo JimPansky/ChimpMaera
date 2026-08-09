@@ -1,6 +1,7 @@
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
+import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { createSyntheticIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
+import { createInvocationIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
 
 const workloadContract = JSON.parse(readFileSync("/opt/chimpmaera/gateway-workload-contract-v2.json", "utf8"));
 
@@ -75,10 +76,9 @@ export default definePluginEntry({
       parameters,
       async execute(_id, params) {
         exactRequest(params);
-        const correlationId = `corr-${params.requestId}`;
-        const identity = createSyntheticIdentity(workloadContract, {
-          correlationId,
-          jti: `jti-${params.requestId}`,
+        const { correlationId, identity } = createInvocationIdentity(workloadContract, {
+          requestId: params.requestId,
+          invocationId: randomUUID(),
         });
         const response = await fetch(`${config.baseUrl}/v2/broker/capabilities/execute`, {
           method: "POST",

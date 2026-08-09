@@ -1,11 +1,13 @@
 import { createHash } from "node:crypto";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
-import { authorizeGatewayRequest, sanitizedDenial } from "./identity-v2.mjs";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { authorizeGatewayRequest, sanitizedDenial } from "./plugin/identity-v2.mjs";
 
-const contract = JSON.parse(readFileSync("./runtime-contract-v1.json", "utf8"));
-const workloadContract = JSON.parse(readFileSync("./gateway-workload-contract-v2.json", "utf8"));
-const statePath = "/var/lib/chimpmaera/state.json";
+const contract = JSON.parse(readFileSync(new URL("./runtime-contract-v1.json", import.meta.url), "utf8"));
+const workloadContract = JSON.parse(readFileSync(new URL("./gateway-workload-contract-v2.json", import.meta.url), "utf8"));
+const statePath = process.env.CM_AAS035_STATE_PATH ?? "/var/lib/chimpmaera/state.json";
 const modelMarker = "synthetic-workload-routing-marker-not-a-secret";
 const requestTemplate = Object.freeze({
   schemaVersion: "chimpmaera.aas035/typed-capability-request/v1",
@@ -298,7 +300,7 @@ function sendCompletion(response, request, result) {
   });
 }
 
-const server = createServer((request, response) => {
+export function gatewayHandler(request, response) {
   const run = async () => {
     if (request.method === "GET" && request.url === "/healthz") {
       json(response, 200, { status: "PASS", role: "capability-gateway" });
@@ -324,9 +326,7 @@ const server = createServer((request, response) => {
       return;
     }
     if (request.method === "POST" && request.url === "/v1/capabilities/execute") {
-      workload(request);
-      json(response, 200, executeCapability(await body(request)));
-      return;
+      throw new Error("LEGACY_CAPABILITY_ROUTE_DENIED");
     }
     if (request.method === "POST" && request.url === workloadContract.identity.route) {
       const correlationId = request.headers["x-cm-correlation-id"];
@@ -403,9 +403,14 @@ const server = createServer((request, response) => {
     persist(state);
     json(response, 403, { status: "DENY", error: error instanceof Error ? error.message : "REQUEST_DENIED" });
   });
-});
+}
 
-server.listen(8080, "0.0.0.0");
-for (const signal of ["SIGINT", "SIGTERM"]) {
-  process.once(signal, () => server.close(() => process.exit(0)));
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const server = createServer(gatewayHandler);
+  const listenPort = Number(process.env.CM_AAS035_PORT ?? "8080");
+  const listenHost = process.env.CM_AAS035_LISTEN_HOST ?? "0.0.0.0";
+  server.listen(listenPort, listenHost);
+  for (const signal of ["SIGINT", "SIGTERM"]) {
+    process.once(signal, () => server.close(() => process.exit(0)));
+  }
 }

@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { createSyntheticIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
+import { randomUUID } from "node:crypto";
+import { createInvocationIdentity, createSyntheticIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
 
 const mode = process.argv[2] ?? "";
 const base = "http://capability-gateway:8080";
@@ -79,6 +80,22 @@ async function expectV2Deny(options, code) {
   return value;
 }
 
+function freshV2Options() {
+  const invocation = createInvocationIdentity(workloadContract, {
+    requestId: typed.requestId,
+    invocationId: randomUUID(),
+  });
+  return {
+    method: "POST",
+    headers: {
+      authorization: `Synthetic ${encodeSyntheticIdentity(invocation.identity)}`,
+      "content-type": "application/json",
+      "x-cm-correlation-id": invocation.correlationId,
+    },
+    body: JSON.stringify(typed),
+  };
+}
+
 let result;
 switch (mode) {
   case "gateway-v2": {
@@ -130,12 +147,18 @@ switch (mode) {
     break;
   }
   case "replay": {
-    const first = await expectPass("/v1/capabilities/execute", { method: "POST", headers, body: JSON.stringify(typed) });
-    const second = await expectPass("/v1/capabilities/execute", { method: "POST", headers, body: JSON.stringify(typed) });
-    if (first.receipt.receiptDigest !== second.receipt.receiptDigest || second.replayState !== "REPLAY_SAME_RECEIPT") {
+    const first = await parsed(await request(workloadContract.identity.route, freshV2Options()));
+    const second = await parsed(await request(workloadContract.identity.route, freshV2Options()));
+    if (!first.response.ok || !second.response.ok
+      || first.value.result.receipt.receiptDigest !== second.value.result.receipt.receiptDigest
+      || second.value.result.replayState !== "REPLAY_SAME_RECEIPT") {
       throw new Error("REPLAY_NOT_EXACTLY_ONCE");
     }
-    result = { status: "PASS", receiptDigest: first.receipt.receiptDigest, replayState: second.replayState };
+    result = {
+      status: "PASS",
+      receiptDigest: first.value.result.receipt.receiptDigest,
+      replayState: second.value.result.replayState,
+    };
     break;
   }
   case "cross-tenant": {
@@ -157,6 +180,9 @@ switch (mode) {
     break;
   case "route-bypass":
     result = await expectDeny("/v1/providers/direct", { method: "POST", headers, body: "{}" }, "ROUTE_DENIED");
+    break;
+  case "legacy-capability-bypass":
+    result = await expectDeny("/v1/capabilities/execute", { method: "POST", headers, body: JSON.stringify(typed) }, "LEGACY_CAPABILITY_ROUTE_DENIED");
     break;
   case "egress": {
     const targets = [
