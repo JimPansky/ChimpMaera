@@ -159,6 +159,7 @@ docs/COMPANY-DATA-VALIDATION.md	docs/COMPANY-DATA-VALIDATION.md	0644
 docs/DEV-WORKER-M0-OPERATOR-GUIDE.md	docs/DEV-WORKER-M0-OPERATOR-GUIDE.md	0644
 docs/DEV-WORKER-RECEIPT-REVIEW-CHECKLIST.md	docs/DEV-WORKER-RECEIPT-REVIEW-CHECKLIST.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
+docs/CAPABILITY-ACTION-CATALOGUE.md	docs/CAPABILITY-ACTION-CATALOGUE.md	0644
 docs/KNOWLEDGE-HARVEST.md	docs/KNOWLEDGE-HARVEST.md	0644
 docs/alternatives.md	docs/alternatives.md	0644
 docs/capabilities.md	docs/capabilities.md	0644
@@ -250,6 +251,7 @@ release/governance.json	release/governance.json	0644
 security/secure-default-proof-evidence-v1.json	security/secure-default-proof-evidence-v1.json	0644
 security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
+schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
 schemas/work-order-v1.schema.json	schemas/work-order-v1.schema.json	0644
 schemas/work-receipt-v1.schema.json	schemas/work-receipt-v1.schema.json	0644
@@ -310,6 +312,7 @@ tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	06
 tests/demo-enforcement-gate.test.mjs	tests/demo-enforcement-gate.test.mjs	0644
 tests/docs-site.test.mjs	tests/docs-site.test.mjs	0644
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
+tests/fixtures/capability-catalogue/synthetic-catalogue-v1.json	tests/fixtures/capability-catalogue/synthetic-catalogue-v1.json	0644
 tests/company-data-pack.test.mjs	tests/company-data-pack.test.mjs	0644
 tests/company-data-graph.test.mjs	tests/company-data-graph.test.mjs	0644
 tests/mapping-registry.test.mjs	tests/mapping-registry.test.mjs	0644

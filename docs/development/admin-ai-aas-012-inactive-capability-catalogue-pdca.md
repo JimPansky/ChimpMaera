@@ -1,5 +1,10 @@
 # AAS-012 inactive capability/action catalogue — PDCA record
 
+> Historical checkpoint: this 2026-08-01 record describes the earlier
+> descriptive-only slice. The current issue #3 implementation contract is
+> documented in [the finite inactive catalogue guide](../CAPABILITY-ACTION-CATALOGUE.md).
+> Its local validation is not a merge, release, or activation claim.
+
 Date: 2026-08-01
 Branch: `feat/admin-ai-aas-012-inactive-catalogue`
 Starting checkpoint: `501122f855e4d0987896b649d0f93f3e2a6bd64c`

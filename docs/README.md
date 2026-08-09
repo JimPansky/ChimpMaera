@@ -67,6 +67,12 @@ Status labels used here:
 
 ## Extend
 
+- **Locally validated candidate / not merged or released:** the
+  [finite inactive capability/action catalogue](CAPABILITY-ACTION-CATALOGUE.md)
+  binds strict synthetic action contracts to exact versions and digests and
+  exercises fail-closed Gateway/broker admission. Presence, installation,
+  discovery, listing, local validation, merge, and release do not activate an
+  entry; activation is a separate exact maintainer authorization.
 - **Released / locally validated:** [Builder operator guide](BUILDER-AGENT-OPERATOR-GUIDE.md)
   and [Builder defaults](BUILDER-CONFIGURATION-DEFAULTS.md) cover typed,
   target-neutral contracts and two synthetic systems. No live-system builder
