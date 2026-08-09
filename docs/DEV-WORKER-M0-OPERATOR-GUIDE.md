@@ -130,6 +130,48 @@ path, digest, budget, and cleanup validation. Low-quality, empty, ambiguous,
 or scope-widening candidates are negative evidence, not a reason to widen the
 route or retry outside the configured call cap.
 
+## M2 trusted Draft-MR publication boundary
+
+M2 adds three strict, versioned contracts:
+`publication-broker-request/v1`, `publication-broker-readback/v1`, and
+`publication-broker-receipt/v1`. The default-off trusted broker accepts only
+an already-bounded patch and exact project, repository, Issue #117 snapshot,
+work-order ID/digest, lease ID/expiry, base ref/commit, changed-path digest,
+patch digest, and fresh `cm/dev-worker/117/*` branch. It can perform exactly
+three effects: create that branch, push the bounded patch, and create an open
+Draft MR targeting the bound base. Authority stays in controller-owned policy;
+the worker's v1 work order remains publication mode `NONE`.
+
+The broker rejects unknown fields, version or digest drift, malformed or
+expired requests, replay conflicts, branch collisions, foreign or protected
+paths, non-Draft or retargeted MRs, forbidden authority language, and
+credential-shaped content before publication. Exact replay returns a new
+digest-valid `REPLAYED` receipt without calling the provider again. Success
+requires strict authoritative readback of project, branch, base/head, open
+Draft MR, target, patch, paths, and sanitized CI metadata; provider
+acknowledgement alone is insufficient. Malformed, secret-shaped, or dishonest
+readback fails closed.
+
+The deterministic GitLab-compatible fake is the only adapter in this slice.
+It supports injected push, MR, and readback failures so tests prove owned
+branch/MR cleanup after partial failure. No CLI mode exposes publication and
+no credential value, URL, raw CI log, or provider error enters a request,
+readback, receipt, or denial.
+
+Scope and evidence are the strict contracts, fake adapter, broker, positive
+publish/replay/readback tests, and negative authority/confusion/failure tests.
+The dependency is clear because this boundary consumes M1's admitted patch and
+does not require M3 scheduling, independent model review, or a second adapter.
+Risk: a future real adapter could implement readback or cleanup dishonestly;
+fallback is to keep `enabled: false`. Rollback marker: revert the M2 contracts,
+broker, tests, manifest entries, and these guide/checklist additions; synthetic
+state is in memory and no external cleanup is needed.
+
+Non-claims: this is not a real GitLab/OpenRouter mutation, provider onboarding,
+production activation, runtime/network isolation proof, customer-data test,
+merge/mark-ready/force-push/delete/tag/release/admin/variable/runner/registry
+authority, independent review, M3 parallelism, or second-adapter evidence.
+
 ## Trust and authority boundary
 
 The trusted controller validates the strict schemas, work-order digest,

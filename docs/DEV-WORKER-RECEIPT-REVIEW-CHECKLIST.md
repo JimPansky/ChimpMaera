@@ -65,3 +65,16 @@ Choose exactly one:
 
 - No credential, raw prompt, raw model output, private repository information, or local environment detail.
 - This checklist does not grant merge, release, deployment, or production authority.
+
+## M2 publication receipt addendum
+
+For `chimpmaera.dev/publication-broker-receipt/v1`, independently verify the
+request and work-order digests, correlation digest, worker-owned branch name,
+Draft MR IID, head commit, and authoritative readback digest. Confirm the
+readback binds the expected project/base/source/target, open Draft status,
+patch and sorted paths, and only sanitized CI status/digest metadata. Exact
+`REPLAYED` results must add no provider calls or effects. A provider failure or
+readback mismatch must leave neither the owned branch nor MR. The receipt is
+synthetic publication-boundary evidence only and grants no merge, mark-ready,
+force-push, deletion, tag, release, admin, variable, runner, registry, or token
+authority.

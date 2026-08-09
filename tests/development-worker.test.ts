@@ -7,6 +7,10 @@ import { dirname, join } from "node:path";
 import { test } from "node:test";
 import type { WorkOrderV1 } from "../packages/contracts/src/development-worker.js";
 import {
+  FakeGitLabPublicationAdapterV1, PublicationBrokerDenied, TrustedPublicationBrokerV1,
+  publicationRequest, validatePublicationReceipt, type TrustedPublicationPolicyV1,
+} from "../packages/dev-worker/src/publication-broker.js";
+import {
   CHIMPMAERA_M1B_ALLOWED_PATHS,
   DEEPINFRA_M1B_MODEL,
   DEEPINFRA_M1B_PROVIDER_POLICY_DIGEST,
@@ -41,6 +45,85 @@ function mutateOrder(change: (draft: Record<string, any>) => void): unknown {
   draft.workOrderDigest = sha256(draft);
   return draft;
 }
+
+function m2Fixture() {
+  const order = syntheticWorkOrder();
+  const changes = [{ path: "docs/fixture-status.md", beforeSha256: sha256("Synthetic fixture status: pending.\n"), after: "Synthetic fixture status: verified.\n" }];
+  const patch = { digest: sha256(changes), changedPathsDigest: sha256(["docs/fixture-status.md"]), changes };
+  const request = publicationRequest(order, patch);
+  const policy: TrustedPublicationPolicyV1 = { enabled: true, project: order.project, issueIid: order.issue.iid, baseRef: order.base.ref, baseCommit: order.base.commit, allowedPaths: order.paths.allowed, deniedPaths: order.paths.denied, branchPrefix: "cm/dev-worker/" };
+  const provider = new FakeGitLabPublicationAdapterV1();
+  return { order, request, policy, provider, broker: new TrustedPublicationBrokerV1(policy, provider) };
+}
+
+function mutateM2(request: ReturnType<typeof publicationRequest>, change: (draft: any) => void, rebind = true): unknown {
+  const draft = structuredClone(request) as any; change(draft);
+  if (rebind) { delete draft.requestDigest; draft.requestDigest = sha256(draft); }
+  return draft;
+}
+
+function expectM2Denied(code: string, run: () => unknown): void {
+  assert.throws(run, (error: unknown) => error instanceof PublicationBrokerDenied && error.code === code, code);
+}
+
+test("DEV-WORKER-M2-1 trusted fake publishes only a fresh worker branch and Draft MR with authoritative readback and replay receipt", () => {
+  const fixture = m2Fixture();
+  const first = fixture.broker.publish(fixture.request, fixture.order, SYNTHETIC_NOW);
+  const replay = fixture.broker.publish(fixture.request, fixture.order, SYNTHETIC_NOW);
+  assert.equal(first.outcome, "PUBLISHED"); assert.equal(replay.outcome, "REPLAYED");
+  assert.equal(first.branchName, "cm/dev-worker/117/issue-117-m2"); assert.equal(first.mergeRequestIid, 117);
+  assert.deepEqual(first.effects, ["CREATE_WORKER_BRANCH", "PUSH_BOUNDED_PATCH", "CREATE_DRAFT_MR"]);
+  assert.equal(validatePublicationReceipt(first), true); assert.equal(validatePublicationReceipt(replay), true);
+  assert.deepEqual(fixture.provider.calls, ["BRANCH_EXISTS", "CREATE_BRANCH", "PUSH_PATCH", "CREATE_DRAFT_MR", "READBACK"]);
+  assert.doesNotMatch(JSON.stringify(first), /glpat-|github_pat_|access_token=|authorization:|https?:\/\//i);
+});
+
+test("DEV-WORKER-M2-2 strict request schema, version, digest, malformed time, expiry and replay conflict deny", () => {
+  for (const request of [
+    mutateM2(m2Fixture().request, (d) => { d.extra = true; }), mutateM2(m2Fixture().request, (d) => { d.schemaVersion = "chimpmaera.dev/publication-broker-request/v2"; }),
+    mutateM2(m2Fixture().request, (d) => { d.expiresAt = "not-a-time"; }), mutateM2(m2Fixture().request, (d) => { d.patch.changes = []; }),
+    mutateM2(m2Fixture().request, (d) => { d.issue.iid = 118; }, false),
+  ]) { const f = m2Fixture(); expectM2Denied("REQUEST_SCHEMA_OR_DIGEST_DENIED", () => f.broker.publish(request, f.order, SYNTHETIC_NOW)); }
+  { const f = m2Fixture(); expectM2Denied("EXPIRED_REQUEST_OR_LEASE_DENIED", () => f.broker.publish(f.request, f.order, f.order.expiresAt)); }
+  { const f = m2Fixture(); f.broker.publish(f.request, f.order, SYNTHETIC_NOW); const conflict = mutateM2(f.request, (d) => { d.mergeRequest.title = "Different safe draft"; }); expectM2Denied("REPLAY_CONFLICT_DENIED", () => f.broker.publish(conflict, f.order, SYNTHETIC_NOW)); }
+});
+
+test("DEV-WORKER-M2-3 exact project, issue, work-order, lease and base bindings deny drift before mutation", () => {
+  const cases: readonly [string, (d: any) => void][] = [
+    ["PROJECT_BINDING_DENIED", d => { d.project.id = "foreign"; }], ["PROJECT_BINDING_DENIED", d => { d.project.repository = "Other/Repo"; }],
+    ["ISSUE_BINDING_DENIED", d => { d.issue.iid = 118; d.branch.name = "cm/dev-worker/118/issue-117-m2"; }], ["ISSUE_BINDING_DENIED", d => { d.issue.snapshotDigest = "8".repeat(64); }],
+    ["WORK_ORDER_BINDING_DENIED", d => { d.workOrder.id = "order:foreign-order"; }], ["WORK_ORDER_BINDING_DENIED", d => { d.workOrder.digest = "8".repeat(64); }],
+    ["LEASE_BINDING_DENIED", d => { d.lease.id = "lease:foreign-lease"; }], ["LEASE_BINDING_DENIED", d => { d.lease.expiresAt = "2026-08-04T08:04:00.000Z"; }],
+    ["BASE_BINDING_DENIED", d => { d.base.commit = "8".repeat(40); }], ["BASE_BINDING_DENIED", d => { d.base.ref = "other"; d.mergeRequest.targetBranch = "other"; }],
+  ];
+  for (const [code, change] of cases) { const f = m2Fixture(); expectM2Denied(code, () => f.broker.publish(mutateM2(f.request, change), f.order, SYNTHETIC_NOW)); assert.deepEqual(f.provider.calls, []); }
+});
+
+test("DEV-WORKER-M2-4 branch collision, foreign/protected paths, broadened MR and forbidden authority deny", () => {
+  { const f = m2Fixture(); f.provider.createBranch(f.order.project.id, f.request.branch.name, f.order.base.commit); f.provider.calls.length = 0; expectM2Denied("BRANCH_COLLISION_DENIED", () => f.broker.publish(f.request, f.order, SYNTHETIC_NOW)); }
+  for (const path of ["docs/foreign.md", ".github/workflows/publish.yml"]) { const f = m2Fixture(); const request = mutateM2(f.request, d => { d.patch.changes[0].path = path; d.patch.changedPathsDigest = sha256([path]); d.patch.digest = sha256(d.patch.changes); }); expectM2Denied("PATH_AUTHORITY_DENIED", () => f.broker.publish(request, f.order, SYNTHETIC_NOW)); }
+  { const f = m2Fixture(); expectM2Denied("REQUEST_SCHEMA_OR_DIGEST_DENIED", () => f.broker.publish(mutateM2(f.request, d => { d.mergeRequest.draft = false; }), f.order, SYNTHETIC_NOW)); }
+  for (const change of [(d: any) => { d.mergeRequest.targetBranch = "release"; }, (d: any) => { d.mergeRequest.description = "force-push then merge and create release"; }]) { const f = m2Fixture(); expectM2Denied("DRAFT_MR_AUTHORITY_DENIED", () => f.broker.publish(mutateM2(f.request, change), f.order, SYNTHETIC_NOW)); }
+  for (const authority of ["merge", "mark-ready", "force-push", "branch-delete", "tag", "release", "project-admin", "variable", "runner", "registry", "token-create"]) { const f = m2Fixture(); expectM2Denied("DRAFT_MR_AUTHORITY_DENIED", () => f.broker.publish(mutateM2(f.request, d => { d.mergeRequest.description = `request ${authority} authority`; }), f.order, SYNTHETIC_NOW)); }
+});
+
+test("DEV-WORKER-M2-5 credential-shaped request and dishonest, secret-shaped or malformed provider readback deny and clean up", () => {
+  { const f = m2Fixture(); expectM2Denied("CREDENTIAL_SHAPED_DATA_DENIED", () => f.broker.publish(mutateM2(f.request, d => { d.patch.changes[0].after = "api_key=supersecretvalue123"; d.patch.digest = sha256(d.patch.changes); }), f.order, SYNTHETIC_NOW)); }
+  const mutations: Array<(value: any) => unknown> = [
+    value => ({ ...value, extra: true }), value => ({ ...value, schemaVersion: "chimpmaera.dev/publication-broker-readback/v2" }),
+    value => ({ ...value, projectId: "foreign" }), value => ({ ...value, branch: { ...value.branch, baseCommit: "8".repeat(40) } }),
+    value => ({ ...value, mergeRequest: { ...value.mergeRequest, draft: false } }), value => ({ ...value, commit: { ...value.commit, patchDigest: "8".repeat(64) } }),
+    value => ({ ...value, ci: { ...value.ci, sanitized: false } }), value => ({ ...value, ci: { ...value.ci, logDigest: "access_token=supersecretvalue123" } }),
+  ];
+  for (const mutation of mutations) { const f = m2Fixture(); f.provider.readbackMutation = mutation; expectM2Denied("PROVIDER_READBACK_DENIED", () => f.broker.publish(f.request, f.order, SYNTHETIC_NOW)); assert.equal(f.provider.branches.size, 0); assert.equal(f.provider.mergeRequests.size, 0); assert.equal(f.provider.calls.at(-1), "CLEANUP_READBACK"); }
+  { const f = m2Fixture(); f.provider.readbackMutation = (value: any) => { const changed = { ...value, projectId: "foreign" }; delete changed.readbackDigest; return { ...changed, readbackDigest: sha256(changed) }; }; expectM2Denied("PROVIDER_READBACK_MISMATCH_DENIED", () => f.broker.publish(f.request, f.order, SYNTHETIC_NOW)); assert.equal(f.provider.branches.size, 0); assert.equal(f.provider.mergeRequests.size, 0); }
+});
+
+test("DEV-WORKER-M2-6 push, MR and readback partial failures clean all fake provider state and fail closed", () => {
+  for (const failure of ["PUSH", "MR", "READBACK"] as const) { const f = m2Fixture(); f.provider.failAt = failure; expectM2Denied("PROVIDER_PARTIAL_FAILURE_CLEANED_DENIED", () => f.broker.publish(f.request, f.order, SYNTHETIC_NOW)); assert.equal(f.provider.branches.size, 0); assert.equal(f.provider.mergeRequests.size, 0); assert.equal(f.provider.calls.at(-1), "CLEANUP_READBACK"); }
+  { const f = m2Fixture(); f.provider.failAt = "MR"; f.provider.cleanupFailure = true; expectM2Denied("PROVIDER_CLEANUP_FAILED_DENIED", () => f.broker.publish(f.request, f.order, SYNTHETIC_NOW)); assert.equal(f.provider.branches.size, 1); }
+  { const f = m2Fixture(); const off = new TrustedPublicationBrokerV1({ ...f.policy, enabled: false }, f.provider); expectM2Denied("PUBLICATION_DISABLED_DENIED", () => off.publish(f.request, f.order, SYNTHETIC_NOW)); assert.deepEqual(f.provider.calls, []); }
+});
 
 function expectDenied(code: string, options: Parameters<typeof runSyntheticDevelopmentWorker>[0]): void {
   assert.throws(() => runSyntheticDevelopmentWorker(options), (error: unknown) => error instanceof DevWorkerDenied && error.code === code, code);
