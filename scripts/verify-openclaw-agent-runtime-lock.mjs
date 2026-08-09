@@ -18,10 +18,12 @@ const EXPECTED = Object.freeze({
 const EXPECTED_ARTIFACTS = [
   "demo/openclaw-agent/compose.yaml",
   "demo/openclaw-agent/fixture-probe.mjs",
+  "demo/openclaw-agent/gateway-state.mjs",
   "demo/openclaw-agent/gateway-workload-contract-v2.json",
   "demo/openclaw-agent/gateway.Dockerfile",
   "demo/openclaw-agent/gateway.mjs",
   "demo/openclaw-agent/lib.sh",
+  "demo/openclaw-agent/mind-store.mjs",
   "demo/openclaw-agent/openclaw.Dockerfile",
   "demo/openclaw-agent/openclaw.json",
   "demo/openclaw-agent/plugin/identity-v2.mjs",

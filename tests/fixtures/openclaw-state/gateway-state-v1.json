@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "chimpmaera.aas035/gateway-state/v1",
+  "effects": {
+    "aas035-openclaw-e2e-0001": {
+      "requestDigest": "e0c2ba493e966b5bd90d3de507daae00a0c6018a88cf1704247ba3f7d992fc41",
+      "providerResult": {"fixture": "synthetic-contact-store", "objectReference": "contact:e0c2ba493e966b5b", "email": "agent.fixture@synthetic.invalid", "name": "AAS-035 Synthetic Agent"},
+      "readback": {"fixture": "synthetic-contact-store", "objectReference": "contact:e0c2ba493e966b5b", "email": "agent.fixture@synthetic.invalid", "name": "AAS-035 Synthetic Agent"},
+      "receipt": {"schemaVersion": "chimpmaera.aas035/effect-receipt/v1", "workloadIdentity": "workload:aas035-openclaw-agent-v1", "tenant": "tenant:synthetic-zoo", "purpose": "purpose:synthetic-contact-fixture", "catalogueDigest": "1454c6bc785bc5185d7e1dc657cd62b620c2e2f9b79a80ac38e87573adf5c387", "catalogueVersion": "1.0.0", "adapterId": "espocrm-local-fixture", "adapterVersion": "1.0.0", "actionId": "crm.contact.create", "requestId": "aas035-openclaw-e2e-0001", "requestDigest": "e0c2ba493e966b5bd90d3de507daae00a0c6018a88cf1704247ba3f7d992fc41", "policyDigest": "77b09e5b31d44cc0058e210d7e40325ca6b7fcee9ac46681f9c4d7ae1a6000d6", "authorityDigest": "389fa7ad905f8155af6a6f24aaddc60fecfc8ac3e1a55b99cbdc400b5cbe315c", "effectDigest": "cc6f95f2e89e58bc8de8c3d33a387c99574000c4431247b5b09916fafeb66a6d", "readbackDigest": "cc6f95f2e89e58bc8de8c3d33a387c99574000c4431247b5b09916fafeb66a6d", "outcome": "SYNTHETIC_EFFECT_READBACK_VERIFIED", "receiptDigest": "6e8dc56810493c2300d59c4ee7ef6a2f91c4afe6d2e63de044699cbc9d3852f0"}
+    }
+  },
+  "mind": {
+    "tenant:synthetic-zoo\npurpose:synthetic-contact-fixture\nworking.note": {"tenant": "tenant:synthetic-zoo", "purpose": "purpose:synthetic-contact-fixture", "trust": "SYNTHETIC_UNTRUSTED_AGENT_MEMORY", "key": "working.note", "value": "synthetic legacy note", "valueDigest": "ef5942f55b7bb790e55e76fa241e3473118ae90578af143939f95840b9f6eb71"}
+  },
+  "identityReplay": ["jti-aas035-legacy-0001"],
+  "counters": {"modelCalls": 3, "effectAttempts": 2, "effects": 1, "denials": 1}
+}

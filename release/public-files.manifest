@@ -102,7 +102,9 @@ demo/openclaw-agent/fixture-probe.mjs	demo/openclaw-agent/fixture-probe.mjs	0644
 demo/openclaw-agent/gateway-workload-contract-v2.json	demo/openclaw-agent/gateway-workload-contract-v2.json	0644
 demo/openclaw-agent/gateway.Dockerfile	demo/openclaw-agent/gateway.Dockerfile	0644
 demo/openclaw-agent/gateway.mjs	demo/openclaw-agent/gateway.mjs	0644
+demo/openclaw-agent/gateway-state.mjs	demo/openclaw-agent/gateway-state.mjs	0644
 demo/openclaw-agent/lib.sh	demo/openclaw-agent/lib.sh	0644
+demo/openclaw-agent/mind-store.mjs	demo/openclaw-agent/mind-store.mjs	0644
 demo/openclaw-agent/openclaw.Dockerfile	demo/openclaw-agent/openclaw.Dockerfile	0644
 demo/openclaw-agent/openclaw.json	demo/openclaw-agent/openclaw.json	0644
 demo/openclaw-agent/plugin/identity-v2.mjs	demo/openclaw-agent/plugin/identity-v2.mjs	0644
@@ -153,6 +155,7 @@ demo/uninstall.sh	demo/uninstall.sh	0755
 docs/ARCHITECTURE.md	docs/ARCHITECTURE.md	0644
 docs/.vitepress/config.mts	docs/.vitepress/config.mts	0644
 docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	0644
+docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	0644
 docs/BUILDER-AGENT-OPERATOR-GUIDE.md	docs/BUILDER-AGENT-OPERATOR-GUIDE.md	0644
 docs/BUILDER-CONFIGURATION-DEFAULTS.md	docs/BUILDER-CONFIGURATION-DEFAULTS.md	0644
 docs/CANON.md	docs/CANON.md	0644
@@ -254,6 +257,7 @@ security/secure-default-proof-evidence-v1.json	security/secure-default-proof-evi
 security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 security/openclaw-m1.1-evidence-v1.json	security/openclaw-m1.1-evidence-v1.json	0644
 security/openclaw-m1.2-evidence-v2.json	security/openclaw-m1.2-evidence-v2.json	0644
+security/openclaw-m1.3-evidence-v1.json	security/openclaw-m1.3-evidence-v1.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
@@ -294,8 +298,10 @@ schemas/contracts/operation-event-quality-v1.schema.json	schemas/contracts/opera
 schemas/adaptability-benchmark-result-v1.schema.json	schemas/adaptability-benchmark-result-v1.schema.json	0644
 schemas/contracts/protected-audit-timeline-v1.schema.json	schemas/contracts/protected-audit-timeline-v1.schema.json	0644
 schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
+schemas/runtime/openclaw-state-contract-v1.schema.json	schemas/runtime/openclaw-state-contract-v1.schema.json	0644
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 scripts/learning-routing-baseline.mjs	scripts/learning-routing-baseline.mjs	0644
+scripts/refresh-integrity-data.mjs	scripts/refresh-integrity-data.mjs	0644
 scripts/verification-plan.mjs	scripts/verification-plan.mjs	0755
 scripts/verification-shadow.mjs	scripts/verification-shadow.mjs	0755
 scripts/verify-release-governance.mjs	scripts/verify-release-governance.mjs	0755
@@ -381,6 +387,10 @@ tests/managed-skill-lifecycle-runtime.test.mjs	tests/managed-skill-lifecycle-run
 tests/openclaw-agent-runtime-lock.test.mjs	tests/openclaw-agent-runtime-lock.test.mjs	0644
 tests/openclaw-agent-runtime.test.mjs	tests/openclaw-agent-runtime.test.mjs	0644
 tests/openclaw-gateway-identity-network.test.mjs	tests/openclaw-gateway-identity-network.test.mjs	0644
+tests/openclaw-gateway-state.test.mjs	tests/openclaw-gateway-state.test.mjs	0644
+tests/openclaw-mind-store.test.mjs	tests/openclaw-mind-store.test.mjs	0644
+tests/fixtures/openclaw-state/gateway-state-v1.json	tests/fixtures/openclaw-state/gateway-state-v1.json	0644
+tests/fixtures/openclaw-state/lifecycle-v1.json	tests/fixtures/openclaw-state/lifecycle-v1.json	0644
 tests/skill-admission.test.ts	tests/skill-admission.test.ts	0644
 packages/contracts/src/analytics-projection.ts	packages/contracts/src/analytics-projection.ts	0644
 packages/contracts/src/bi-execution-spine.ts	packages/contracts/src/bi-execution-spine.ts	0644

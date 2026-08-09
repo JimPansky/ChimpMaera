@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "chimpmaera.openclaw-m1.3/synthetic-lifecycle-fixture/v1",
+  "clock": {"createdAtMs": 1000, "expiresAtMs": 86401000, "expiredAtMs": 86401000},
+  "entry": {"key": "synthetic.note", "dataClass": "SYNTHETIC_WORKING_NOTE", "value": "synthetic fixture"},
+  "foreign": {"tenant": "tenant:synthetic-foreign", "key": "isolation.canary"},
+  "expectedDenials": [
+    "MIND_SCOPE_DENIED",
+    "MIND_CONTRACT_DENIED",
+    "MIND_ENTRY_QUOTA_DENIED",
+    "MIND_TOTAL_QUOTA_DENIED",
+    "MIND_RETENTION_EXPIRED_DENIED",
+    "MIND_RESET_IN_PROGRESS_DENIED",
+    "MIND_STALE_GENERATION_DENIED",
+    "MIND_GENERATION_EXHAUSTED_DENIED",
+    "MIND_STATE_INVALID_DENIED",
+    "MIND_RECOVERY_REPLAY_DENIED"
+  ]
+}

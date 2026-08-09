@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "chimpmaera.openclaw-m1.3/evidence/v1",
+  "workItem": {"stableId": "OPENCLAW-M1.3", "githubIssue": 6, "title": "Bounded scratch and managed mind-store contract"},
+  "baseline": "0dd0b67483e75de03acab9a3448b645172aeeb68",
+  "commitBinding": {
+    "method": "CONTAINING_GIT_COMMIT",
+    "path": "security/openclaw-m1.3-evidence-v1.json",
+    "reason": "The containing commit identifies the exact tested bytes without a circular embedded commit hash."
+  },
+  "testedIdentity": {
+    "lockId": "openclaw-agent-runtime-2026.7.1-linux-amd64",
+    "upstreamVersion": "2026.7.1",
+    "upstreamCommit": "2d2ddc43d0dcf71f31283d780f9fe9ff4cc04fe4",
+    "indexDigest": "sha256:6a31d44b2944e7adcd2b582bf6fb463111264ebca97a0201795b799135bd102c",
+    "platform": "linux/amd64",
+    "lockedLocalArtifacts": 26,
+    "fixture": "SYNTHETIC_ONLY"
+  },
+  "focusedVerification": {
+    "command": "npm run openclaw-m1.3:test",
+    "result": "PASS_38_OF_38",
+    "testedTreeCommit": "541007a8fb9a54f6bbc94a30f7c3c05bc838a382",
+    "executionLane": "OWNER_LANE",
+    "subtests": {"runtimeLock": 9, "runtimeContract": 6, "gatewayWorkloadBoundary": 9, "gatewayStatePersistence": 7, "mindStoreLifecycle": 7, "passed": 38, "failed": 0},
+    "currentCodexSandbox": {"result": "PASS_36_OF_36_SANDBOX_SAFE", "composeRendering": "2_TESTS_ENVIRONMENT_BLOCKED_BY_DOCKER_CHILD_PROCESS_EPERM"},
+    "ownerLaneComposeRendering": "PASS_2_OF_2_NO_LIVE_CONTAINER_EXECUTION"
+  },
+  "deterministicBoundaries": {
+    "scratch": {"capacityBytes": 1048576, "verification": "COMPOSE_RENDER_AND_LIVE_PROBE_DEFINITION_VALIDATED", "liveBoundaryResult": "NOT_EXECUTED_MISSING_PINNED_IMAGES"},
+    "mind": {"maxScopes": 16, "maxEntries": 16, "maxValueBytes": 2048, "maxTotalBytes": 16384, "retentionSeconds": 86400},
+    "healthReadiness": ["UNIT_START_READY", "UNIT_QUOTA_EXHAUSTION_READY", "UNIT_RESET_RECOVERY_NOT_READY", "UNIT_RESET_COMPLETE_READY", "UNIT_RESTART_RECOVERY_PATH_READY"]
+  },
+  "deterministicNegativeProbesPassed": [
+    "CROSS_TENANT_READ_WRITE_DENIED", "DENIED_DATA_CLASS_REJECTED",
+    "STALE_GENERATION_DENIED", "VALUE_ENTRY_AND_TOTAL_QUOTA_EXHAUSTION_DENIED", "INTERRUPTED_RESET_READ_WRITE_DENIED",
+    "INVALID_RECOVERY_JOURNAL_REPLAY_DENIED", "PERSISTED_ENTRY_DIGEST_AND_GENERATION_TAMPER_DENIED",
+    "PERSISTED_QUOTA_RETENTION_EXACT_BOUNDARY_AND_ONE_BEYOND", "FULL_V2_ENVELOPE_SHAPE_AND_SAFE_BOUND_VALIDATION",
+    "ATOMIC_M1_2_TO_M1_3_STATE_MIGRATION", "INVALID_LEGACY_STATE_UNCHANGED_AND_DENIED",
+    "GENERATION_BOUNDARY_PREVALIDATED_MIND_UNCHANGED_DENIAL_COUNTER_DURABLE", "DOCKER_COPY_CACHE_BUSTER_CLOSURE",
+    "FOREIGN_SCOPE_UNCHANGED_BY_RESET", "DISK_RELOAD_PRESERVES_EFFECT_RECEIPT_AND_IDENTITY_REPLAY"
+  ],
+  "liveProbeMatrixAvailableNotExecuted": [
+    "ROOT_AND_OUTSIDE_STATE_WRITE_DENIED", "PRIVILEGE_CHANGE_DENIED", "DOCKER_SOCKET_AND_HOST_DEVICE_ACCESS_DENIED",
+    "BIND_HOST_DEVICE_AND_UNEXPECTED_MOUNT_ABSENT", "EXACT_SCRATCH_BOUNDARY_AND_RESTART_LIFETIME"
+  ],
+  "repositoryVerification": [
+    {"command": "npm run lint", "result": "PASS"},
+    {"command": "npm test", "result": "PASS_408_OF_408", "testedTreeCommit": "541007a8fb9a54f6bbc94a30f7c3c05bc838a382", "executionLane": "OWNER_LANE", "pretest": "SECURE_DEFAULT_METADATA_12_OF_12_AND_LEARNING_ROUTING_26_OF_26_PASS"},
+    {"command": "npm run proof:secure-default", "result": "PASS", "testedTreeCommit": "541007a8fb9a54f6bbc94a30f7c3c05bc838a382", "executionLane": "OWNER_LANE", "overallVerdict": "PASS", "authoritative": "NPM_TEST_PASS", "reportDigest": "adecbb0d86838c45bde09d2d44979f442a54b22ab401a7e7562ba6801ea3b07c"},
+    {"command": "secure-default metadata and generated-evidence validation", "result": "PASS"},
+    {"command": "sha256sum -c SHA256SUMS", "result": "PASS_583_OF_583"}
+  ],
+  "environmentBoundary": {
+    "scope": "CODEX_SANDBOX_HISTORICAL_EXECUTION_ENVIRONMENT",
+    "dockerDaemonAccessible": false,
+    "liveSmokeExecuted": false,
+    "liveSmokeCommand": "./demo/openclaw-agent/smoke.sh",
+    "evidenceUsed": "OWNER_LANE_DETERMINISTIC_COMPOSE_RENDERING_AND_STATE_CACHE_REGRESSIONS",
+    "broadSuiteNote": "The owner lane reran the focused suite, authoritative npm test, and secure-default proof successfully on exact committed code/test tree 541007a8fb9a54f6bbc94a30f7c3c05bc838a382. Historically, the Codex sandbox denied Docker API access at /var/run/docker.sock and selected child-process probes with EPERM. Exact pinned images remain absent/not started; no image was pulled or started and live smoke was not executed. Deterministic Compose rendering is PASS and is not live-container evidence."
+  },
+  "supportedClaim": "The exact default-off local synthetic Reference Adapter declares and validates the effective Compose configuration for non-root read-only bounded compute and container-instance scratch, and deterministically tests complete persisted-envelope validation, atomic valid M1.2 state migration, and a generation-bound managed synthetic mind store with scoped reset and fail-closed disk recovery that preserves validated local effect receipts and replay state.",
+  "rollback": "Stop and purge only the labelled candidate runtime and scoped synthetic state with demo/openclaw-agent/reset.sh --purge, then revert the containing commit to restore the prior default-off baseline.",
+  "nonClaims": [
+    "NO_HOSTILE_HOST_CONTAINMENT", "NO_PRODUCTION_DATA_PROTECTION", "NO_DURABLE_BACKUP_GUARANTEE",
+    "NO_PRIVACY_OR_COMPLIANCE_CERTIFICATION", "NO_DISASTER_RECOVERY_GUARANTEE", "NO_LIVE_RUNTIME_EVIDENCE_IN_THIS_SANDBOX"
+  ]
+}

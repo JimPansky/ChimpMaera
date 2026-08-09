@@ -62,6 +62,11 @@ jq -e '
   and ($c.HostConfig.Privileged | not)
   and $c.HostConfig.PidsLimit == 128
   and $c.HostConfig.Memory == 805306368
+  and $c.HostConfig.NanoCpus == 1000000000
+  and (($c.HostConfig.Devices // []) | length == 0)
+  and (($c.HostConfig.Binds // []) | length == 0)
+  and (($c.HostConfig.Tmpfs | keys | sort) == ["/scratch", "/tmp", "/var/lib/openclaw"])
+  and (($c.Mounts | map(select(.Type == "volume"))) | length == 0)
   and (($c.Mounts | map(select(.Type == "bind"))) | length == 0)
   and (($c.Mounts | map(select(.Destination == "/var/run/docker.sock"))) | length == 0)
   and (($c.NetworkSettings.Networks | keys) | length == 1)
@@ -73,11 +78,24 @@ jq -e '
   and ($c.HostConfig.CapDrop == ["ALL"])
   and ($c.HostConfig.SecurityOpt | index("no-new-privileges:true") != null)
   and ($c.HostConfig.Privileged | not)
+  and $c.HostConfig.PidsLimit == 64
+  and $c.HostConfig.Memory == 134217728
+  and $c.HostConfig.NanoCpus == 500000000
+  and (($c.HostConfig.Devices // []) | length == 0)
+  and (($c.HostConfig.Binds // []) | length == 0)
+  and (($c.Mounts | map(select(.Type == "volume" and .Destination == "/var/lib/chimpmaera"))) | length == 1)
   and (($c.Mounts | map(select(.Type == "bind"))) | length == 0)
   and (($c.NetworkSettings.Networks | keys) | length == 1)
 ' "$run_dir/gateway-inspect.json" >/dev/null
 
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs filesystem > "$run_dir/filesystem.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs privilege > "$run_dir/privilege.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mounts > "$run_dir/mounts.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs scratch-limit > "$run_dir/scratch-limit.json"
+cm_aas035_compose_cmd restart openclaw-agent > "$run_dir/agent-restart.log"
+cm_aas035_compose_cmd up --detach --wait openclaw-agent >> "$run_dir/agent-restart.log"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs scratch-empty > "$run_dir/scratch-after-restart.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs ready > "$run_dir/ready-after-agent-restart.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs egress > "$run_dir/egress.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs gateway-v2 > "$run_dir/gateway-v2.json"
 for probe in identity-missing identity-expired identity-wrong-audience identity-wrong-tenant identity-replay; do
@@ -100,6 +118,7 @@ cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mind-write > "$run_dir/mind-write.json"
 cm_aas035_compose_cmd restart capability-gateway > "$run_dir/gateway-restart.log"
 cm_aas035_compose_cmd up --detach --wait capability-gateway >> "$run_dir/gateway-restart.log"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs ready > "$run_dir/ready-after-gateway-restart.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mind-read > "$run_dir/mind-read-after-restart.json"
 
 for index in 1 2 3 4; do
@@ -114,10 +133,22 @@ for result in "$run_dir"/load/*.json; do
   jq -e '.status == "PASS" and .replayState == "REPLAY_SAME_RECEIPT" and (.receiptDigest | test("^[a-f0-9]{64}$"))' "$result" >/dev/null
 done
 
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mind-quota > "$run_dir/mind-quota.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs ready > "$run_dir/ready-after-quota-exhaustion.json"
+
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs evidence > "$run_dir/evidence-before-reset.json"
 jq -e '.status == "PASS" and .counters.effects == 1 and .counters.effectAttempts >= 10 and .counters.modelCalls >= 2 and (.effectReceiptDigests | length == 1)' "$run_dir/evidence-before-reset.json" >/dev/null
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs reset > "$run_dir/semantic-reset-first.json"
 cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs reset > "$run_dir/semantic-reset-idempotent.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs mind-stale > "$run_dir/mind-stale-after-reset.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs ready > "$run_dir/ready-after-reset.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs replay > "$run_dir/replay-after-reset.json"
+cm_aas035_compose_cmd exec -T openclaw-agent node /opt/chimpmaera/fixture-probe.mjs evidence > "$run_dir/evidence-after-reset.json"
+jq -e --slurpfile before "$run_dir/evidence-before-reset.json" '
+  .status == "PASS" and .lifecycle.readiness.phase == "READY"
+  and .effectReceiptDigests == $before[0].effectReceiptDigests
+  and .foreignScopeDigest == $before[0].foreignScopeDigest
+' "$run_dir/evidence-after-reset.json" >/dev/null
 
 capture_logs
 owner_during="$(owner_fingerprint)"

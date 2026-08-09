@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { appendFile, readFile, statfs, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { createInvocationIdentity, createSyntheticIdentity, encodeSyntheticIdentity } from "./identity-v2.mjs";
 
@@ -8,10 +8,12 @@ const identity = "workload:aas035-openclaw-agent-v1";
 const headers = { "content-type": "application/json", "x-cm-workload-identity": identity };
 const workloadContract = JSON.parse(await readFile("/opt/chimpmaera/gateway-workload-contract-v2.json", "utf8"));
 const mind = {
+  workloadIdentity: identity,
   tenant: "tenant:synthetic-zoo",
   purpose: "purpose:synthetic-contact-fixture",
-  trust: "SYNTHETIC_UNTRUSTED_AGENT_MEMORY",
+  generation: 1,
   key: "aas035.memory",
+  dataClass: "SYNTHETIC_WORKING_NOTE",
   value: "bounded durable synthetic mind entry",
 };
 const typed = {
@@ -174,7 +176,7 @@ switch (mode) {
     result = await expectPass("/v1/mind/entries", { method: "POST", headers, body: JSON.stringify(mind) });
     break;
   case "mind-read": {
-    const query = new URLSearchParams({ tenant: mind.tenant, purpose: mind.purpose, trust: mind.trust, key: mind.key });
+    const query = new URLSearchParams({ workloadIdentity: mind.workloadIdentity, tenant: mind.tenant, purpose: mind.purpose, generation: String(mind.generation), key: mind.key });
     result = await expectPass(`/v1/mind/entries?${query}`, { headers });
     break;
   }
@@ -195,7 +197,7 @@ switch (mode) {
   }
   case "cross-tenant": {
     const foreign = { ...mind, tenant: "tenant:foreign" };
-    result = await expectDeny("/v1/mind/entries", { method: "POST", headers, body: JSON.stringify(foreign) }, "MIND_CONTRACT_DENIED");
+    result = await expectDeny("/v1/mind/entries", { method: "POST", headers, body: JSON.stringify(foreign) }, "MIND_SCOPE_DENIED");
     break;
   }
   case "wrong-identity":
@@ -208,6 +210,67 @@ switch (mode) {
   case "oversize":
     result = await expectDeny("/v1/mind/entries", { method: "POST", headers, body: JSON.stringify({ ...mind, value: "x".repeat(2049) }) }, "MIND_CONTRACT_DENIED");
     break;
+  case "mind-quota": {
+    for (let index = 0; index < 8; index += 1) {
+      await expectPass("/v1/mind/entries", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ ...mind, key: index === 0 ? mind.key : `quota.${index}`, value: "x".repeat(2048) }),
+      });
+    }
+    const denial = await expectDeny("/v1/mind/entries", {
+      method: "POST", headers, body: JSON.stringify({ ...mind, key: "quota.beyond", value: "x" }),
+    }, "MIND_TOTAL_QUOTA_DENIED");
+    result = { status: "PASS", exactTotalBytes: 16384, byteBeyondBoundary: denial.error };
+    break;
+  }
+  case "scratch-limit": {
+    const scratch = "/scratch/exact-boundary.bin";
+    const before = await statfs("/scratch");
+    await writeFile(scratch, Buffer.alloc(1024 * 1024));
+    let denied = false;
+    try { await appendFile(scratch, Buffer.from([0])); } catch (error) { denied = error?.code === "ENOSPC"; }
+    if (!denied) throw new Error("SCRATCH_LIMIT_NOT_ENFORCED");
+    result = { status: "PASS", capacityBytes: 1024 * 1024, exactBoundaryWrite: "PASS", byteBeyondBoundary: "ENOSPC", mountBlocks: before.blocks, blockSize: before.bsize };
+    break;
+  }
+  case "scratch-empty": {
+    try {
+      await readFile("/scratch/exact-boundary.bin");
+      throw new Error("STALE_SCRATCH_AFTER_RESTART");
+    } catch (error) {
+      if (String(error).includes("STALE_SCRATCH_AFTER_RESTART")) throw error;
+    }
+    result = { status: "PASS", staleScratch: "ABSENT_AFTER_RESTART" };
+    break;
+  }
+  case "ready": {
+    const { response, value } = await parsed(await request("/readyz"));
+    if (!response.ok || value.status !== "PASS" || value.lifecycle !== "READY") throw new Error(`NOT_READY_${JSON.stringify(value)}`);
+    result = value;
+    break;
+  }
+  case "mind-stale": {
+    const query = new URLSearchParams({ workloadIdentity: mind.workloadIdentity, tenant: mind.tenant, purpose: mind.purpose, generation: String(mind.generation), key: mind.key });
+    result = await expectDeny(`/v1/mind/entries?${query}`, { headers }, "MIND_STALE_GENERATION_DENIED");
+    break;
+  }
+  case "privilege": {
+    let denied = false;
+    try { process.setuid(0); } catch (error) { denied = ["EPERM", "EACCES"].includes(error?.code); }
+    if (!denied || process.getuid() === 0) throw new Error("PRIVILEGE_CHANGE_NOT_DENIED");
+    const status = await readFile("/proc/self/status", "utf8");
+    const readback = Object.fromEntries(status.split("\n").filter((line) => /^(?:Uid|Gid|CapEff|NoNewPrivs):/.test(line)).map((line) => line.split(/:\s+/, 2)));
+    result = { status: "PASS", changeToRoot: "DENIED", readback };
+    break;
+  }
+  case "mounts": {
+    const mountInfo = await readFile("/proc/self/mountinfo", "utf8");
+    const forbidden = mountInfo.split("\n").filter((line) => /docker\.sock|\/dev\/(?:sd|vd|nvme)|\/host(?:\/|\s)/.test(line));
+    if (forbidden.length > 0) throw new Error("UNEXPECTED_MOUNT_AVAILABLE");
+    result = { status: "PASS", unexpectedMounts: 0, declaredWritableDestinations: ["/scratch", "/tmp", "/var/lib/openclaw"] };
+    break;
+  }
   case "route-bypass":
     result = await expectDeny("/v1/providers/direct", { method: "POST", headers, body: "{}" }, "ROUTE_DENIED");
     break;
@@ -242,6 +305,7 @@ switch (mode) {
       { path: "/opt/chimpmaera/write-denied", operation: "write" },
       { path: "/etc/write-denied", operation: "write" },
       { path: "/var/run/docker.sock", operation: "read" },
+      { path: "/dev/kmsg", operation: "read" },
       { path: "/proc/1/root/etc/shadow", operation: "read" },
     ];
     for (const target of targets) {
@@ -268,7 +332,7 @@ switch (mode) {
     result = await expectPass("/v1/evidence", { headers });
     break;
   case "reset":
-    result = await expectPass("/v1/reset", { method: "POST", headers, body: JSON.stringify({ tenant: mind.tenant, purpose: mind.purpose }) });
+    result = await expectPass("/v1/reset", { method: "POST", headers, body: JSON.stringify({ workloadIdentity: mind.workloadIdentity, tenant: mind.tenant, purpose: mind.purpose, generation: mind.generation }) });
     break;
   default:
     throw new Error(`UNKNOWN_PROBE_${mode}`);
