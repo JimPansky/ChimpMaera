@@ -180,6 +180,7 @@ docs/VISIBILITY-CHANNEL-MATRIX.md	docs/VISIBILITY-CHANNEL-MATRIX.md	0644
 docs/RELEASE-GOVERNANCE.md	docs/RELEASE-GOVERNANCE.md	0644
 docs/SECURITY-ASSURANCE.md	docs/SECURITY-ASSURANCE.md	0644
 docs/SECURE-DEFAULT-PROOF.md	docs/SECURE-DEFAULT-PROOF.md	0644
+docs/SKILL-BUNDLE-CONTRACTS.md	docs/SKILL-BUNDLE-CONTRACTS.md	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/RESOURCE-PLANE-PROFILES.md	docs/RESOURCE-PLANE-PROFILES.md	0644
 docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	0644
@@ -248,6 +249,7 @@ packages/contracts/src/resource-plane-profiles.ts	packages/contracts/src/resourc
 packages/contracts/src/extension-assurance-profile.ts	packages/contracts/src/extension-assurance-profile.ts	0644
 packages/contracts/src/agent-work-event.ts	packages/contracts/src/agent-work-event.ts	0644
 packages/contracts/src/skill-admission.ts	packages/contracts/src/skill-admission.ts	0644
+packages/contracts/src/skill-bundle.ts	packages/contracts/src/skill-bundle.ts	0644
 packages/contracts/src/paperless-zoo-adapter.ts	packages/contracts/src/paperless-zoo-adapter.ts	0644
 packages/contracts/src/policy-evaluator.ts	packages/contracts/src/policy-evaluator.ts	0644
 packages/contracts/src/poc-early-admin-ai-setup.ts	packages/contracts/src/poc-early-admin-ai-setup.ts	0644
@@ -267,6 +269,8 @@ security/openclaw-m1.4-evidence-v1.json	security/openclaw-m1.4-evidence-v1.json	
 security/openclaw-m1.5-evidence-index-v1.json	security/openclaw-m1.5-evidence-index-v1.json	0644
 schemas/contracts/poc-admin-authority-profile-v1.schema.json	schemas/contracts/poc-admin-authority-profile-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
+schemas/contracts/skill-bundle-manifest-v1.schema.json	schemas/contracts/skill-bundle-manifest-v1.schema.json	0644
+schemas/contracts/skill-bundle-lock-v1.schema.json	schemas/contracts/skill-bundle-lock-v1.schema.json	0644
 schemas/development-worker-profile-v1.schema.json	schemas/development-worker-profile-v1.schema.json	0644
 schemas/governed-workload-receipt-v1.schema.json	schemas/governed-workload-receipt-v1.schema.json	0644
 schemas/governed-workload-request-v1.schema.json	schemas/governed-workload-request-v1.schema.json	0644
@@ -411,6 +415,7 @@ tests/openclaw-mind-store.test.mjs	tests/openclaw-mind-store.test.mjs	0644
 tests/fixtures/openclaw-state/gateway-state-v1.json	tests/fixtures/openclaw-state/gateway-state-v1.json	0644
 tests/fixtures/openclaw-state/lifecycle-v1.json	tests/fixtures/openclaw-state/lifecycle-v1.json	0644
 tests/skill-admission.test.ts	tests/skill-admission.test.ts	0644
+tests/skill-bundle.test.ts	tests/skill-bundle.test.ts	0644
 packages/contracts/src/analytics-projection.ts	packages/contracts/src/analytics-projection.ts	0644
 packages/contracts/src/bi-execution-spine.ts	packages/contracts/src/bi-execution-spine.ts	0644
 schemas/contracts/chimpmaera-analytics-v1.schema.json	schemas/contracts/chimpmaera-analytics-v1.schema.json	0644

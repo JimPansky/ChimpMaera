@@ -88,6 +88,12 @@ Status labels used here:
   prepares canonical, digest-bound local-synthetic bytes; it performs no
   submission, publication, external write, credential use or runtime
   activation. A production UI is absent.
+- **Locally validated / not in the current regular release:** [Skill Bundle
+  canonical contracts](SKILL-BUNDLE-CONTRACTS.md) define strict manifest, lock,
+  exact-file verification and compatibility identities for generation,
+  analysis, installation and rollback consumers. They do not install, activate,
+  publish, auto-update, grant capabilities or prove live registry/runtime
+  safety.
 - **Released contract / external evidence required:** the Entra profile and all
   five Power Platform read operations use exactly `cm.discovery.read`.
   `cm.operator.read` remains reserved for a future separate administrative-read
