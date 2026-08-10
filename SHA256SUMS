@@ -175,6 +175,7 @@ ab8f4c2f2bfa6219ca833427ca788baa6f1317b0c4c253c8c8076eeac97ccd69  ./demo/tsconfi
 70c593e838de55aee2711772a70f05026af5c7690184e43ad19b2f98afe35d11  ./docs/AGENT-WORK-EVENT-CONTRACT.md
 d8b2a7cfe4a063723360b9859c1c8a3ef8fdf250fdd2a33d3bbc6ccf0e7ebf07  ./docs/ARCHITECTURE.md
 ebeacede0d8f1af2f5e72a3724e867fea6d640e7bb1bd8ac7f21486c41e89b01  ./docs/BI-DASHBOARD-READBACK-GUIDE.md
+b4f1449dafe1b957e3509f2ac74146d6684198805d36be11d123893ad75104fe  ./docs/BI-E2E-EVIDENCE-GATE.md
 740d4f38f022d9bb32a9c039021928ae1977d50aab90afed165b208752f59409  ./docs/BI-EXECUTION-SPINE-CONTRACT.md
 c0a69ba4fa59c07446cb6261f5f38dc7b88c9c56c6c57fe773468f113b50e29a  ./docs/BI-FOUNDATION-OPERATOR-GUIDE.md
 bf62527c4f045530a17033c3d2104ff886ee653a59f29d11ac9eabd1438f5c47  ./docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md
@@ -312,7 +313,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 986b0ffd52771a6a8dc14e83e17102c94e69280d45196d1e501f00e97cbe6e9c  ./package-lock.json
-c65c28a2831e5ed53e761b4727f4c16761b63c6072904b48bdd3622c8b2e8152  ./package.json
+ce41486a1009fa8d33df6c576c1128068705cc199f8f0b585779225489526bdf  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 d2310f860109f87b799ba4eb4b067255d4237c4bbb71c1780145d14908a608bd  ./packages/contracts/src/azure-identity-profile.ts
@@ -373,7 +374,7 @@ b2717b420cff3db392bc280f0b716f17f82cc82954c25015fde81b386b426b6c  ./packages/dev
 133e3f953df25435f912d60c2ccc6df693a340c8b1450c06b025c86403fc1926  ./packages/dev-worker/src/publication-broker.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 cdaee2f8eb032c0625263ae52feccad0cec5ae9881f6c89c4fa950f5e45592e6  ./release/governance.json
-277cf05768a9a67d8205bd60e6a17eeee279eae5dd2e22abccaaaf2b74c5ead1  ./release/public-files.manifest
+dff3bee2e37d3b161cdacfa30739bb770e7251cf30e4f26b5cb893d7f43fdec1  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 ff383ccc0829599d11542109ac3b4f1380719e8c85ce49eabd7938a98ad4e942  ./schemas/contracts/azure-identity-profile-v1.schema.json
@@ -434,11 +435,13 @@ f84ab8f9434925d8464dc7f2da4d16693bf603f08907ff01cc1d2430d9af4522  ./schemas/runt
 e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8  ./schemas/security/secure-default-proof-v1.schema.json
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
-b1859f4e611b3d1f85178b83e39926e7c6a1833a4b260773f2acb937f99e22c7  ./scripts/build-public-release.sh
+935305d869c8e4e6ba30e961328e2eda4a4c1b78fc31f68275828894c6a8dfdb  ./scripts/bi-e2e-gate.mjs
+61672e30db09efbbf707eecccebd7483f02c0f8c48f3e011a7bbdbb2cb2baa53  ./scripts/build-public-release.sh
 da2109476338820e2ae5b2b42f720cf2d7c3b359122ee28bcea6fea65e1b1818  ./scripts/daily-poc.mjs
 abab50a97cf7113e2cad4125992fb3178a67877f573e974b128f2494ef1883b8  ./scripts/learning-routing-baseline.mjs
-38cab340e89d6cceb6d33c4b736e1e2652cc05a53c396b2d02a23600bfbbdcc8  ./scripts/refresh-integrity-data.mjs
+9f004e84fd7b40c163c53340e67c52a77ee2046dd58c074a214d406a24fe4001  ./scripts/refresh-integrity-data.mjs
 e63e7db417b272d0967733f3c8a05203058e996fe69e86035cd236cd2c5e56dd  ./scripts/render-bi-dashboard-evidence.mjs
+0c7e9c77166f1873021351dadf2c63f427cdeeca1c79c71fcb3409012565177a  ./scripts/render-bi-e2e-evidence.mjs
 9c762d9450c03f106232aaeb5133c59b0635c977bcdb3c9523eb6f2111c24d5c  ./scripts/run-openclaw-m1.5-probes.mjs
 0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218  ./scripts/verification-plan.mjs
 7f24007e2e5db9638d25e5c3c94cef607771798672e46ccf9f81a23f4eeb8ce5  ./scripts/verification-shadow.mjs
@@ -460,6 +463,7 @@ cdc01d94565f506ab154506818c810802e55d81e4a79abe9feaa74add36d1933  ./security/sec
 013b162484f6041701b39c653e7481af70ade9e22e8ea88d4319104862678b53  ./tests/analytics-projection.test.ts
 1547da81d0b6a70681fcff3e23e3fd775576cd4a3583585bf94a600b39bb41f9  ./tests/azure-identity-profile.test.ts
 b044631cd004de497aa335578589079bcd80e89cbb1538731be21e7f12722aa1  ./tests/bi-dashboard.test.ts
+1404c07b7c0ceab9cb799c2b23f0cd1a4e39cfcb1d976cd122ac5430669efe5b  ./tests/bi-e2e-gate.test.mjs
 81cf8596e5d5daea75c4cc863545338989d4c084b27f1e56a707ddb146f6face  ./tests/bi-execution-spine.test.ts
 7edc250c4d4036d371cde9c34d2ac11dde2df1464d016c632e2e6ea9d7ff89d0  ./tests/bi-foundation.test.mjs
 f1e5765690aa45653a131d38032d6b8f558cda90dba4c54981112d4f935c1ad4  ./tests/bi-semantic-reconciliation.test.ts
@@ -588,7 +592,7 @@ b4cb7c2f3b2570316979405def59070160fb3df38ca0a9fce7a5a5dd7ad2ce28  ./tests/skill-
 df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update-doctor-compose-adapter.test.ts
 2857f96b93fe7c076130c82cce24c30bd0c2e5c144e5843c9b7fe4f6850134fa  ./tests/update-doctor-core.test.ts
 911255ea325e6dbc02bad39566be2714693d7f3a9a6d3d82b0ca1563491e009d  ./tests/update-doctor.test.ts
-769978ced9ec8e998291b198e77cb81de31bc379e05fd756ce6fc380ce949f1b  ./tests/verification-fabric-v2.test.ts
+6a1e0cb2b92e238b2a9d43cbf7b1833f49501137aed1855b86bf1aa7470d8d23  ./tests/verification-fabric-v2.test.ts
 a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verification-fabric.test.ts
 aa2e5a4808796fa516c89b198222236df26cb68d210ff2336101da1aa3e253f4  ./tests/voice-local-ptt.test.ts
 915355b458b64e08b9440719e7a1e6552a1d0cbafbd45b46cf5d0eefb29bcd49  ./tools/video-production-reference/ASSET-USAGE.md
@@ -664,4 +668,5 @@ ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77  ./verification
 393af7b629ac8e9fc09f8cf598c96026c8e269d16bc0d126c49a6ead3cd32b6c  ./verification/bi-005-dashboard-readbacks/error.json
 40455b437905fe6cdd97cfe3f99e3222fcc6593c57047152c2d7b7ec0d228813  ./verification/bi-005-dashboard-readbacks/normal.json
 15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa  ./verification/bi-005-dashboard-readbacks/stale.json
-27fb5007069d92650e301c4c542cafd5b38681fdb9f35934e39403a5118cef5c  ./verification/verification-dag-v2.json
+2655ebc4ad753537910b81838bacdf7ff905013eed9ee929a1bc9e3bced9ff95  ./verification/bi-006-e2e-evidence-index-v1.json
+d1ba79f26883b7c7a6306d303ecb3e8787ac03d84af63209bc958c9e155609b5  ./verification/verification-dag-v2.json

@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "chimpmaera.verification/bi-e2e-evidence-index/v1",
+  "evidenceId": "evidence:bi-006-e2e-gate-v1",
+  "issue": "#15",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "testedCommit": "28de5f9a3b914865b6e03ff197f6efc24906588c",
+  "commitBinding": "IMPLEMENTATION_TREE_DERIVED_FROM_EXACT_TESTED_COMMIT_IN_CONTAINING_DCO_SIGNED_COMMIT",
+  "modelVersion": "1.0.0",
+  "modelDigest": "11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f",
+  "fixtureDigests": {
+    "tests/fixtures/crm-read/supported-export-v1.json": "87e3b70cf7229da269b7f9cc4fe3cae022ed272e8c88ea7fe31e3e630c3ccadd",
+    "tests/fixtures/erp-read/supported-export-v1.json": "85194ec545b4f1e2e690b4353c6d97d1753bb6043171c00f55ca894fc6669278",
+    "tests/fixtures/bi-semantic/model-v1.json": "98853c3f693ebc5d76f99f92483be431637f77483bc799a503268646d1dfe291",
+    "tests/fixtures/bi-semantic/positive-reconciliation-v1.json": "ddfbd0883cdd97af948b7fc2151396f40771541059e48f9163d79aea821b211c",
+    "tests/fixtures/bi-dashboard/dashboard-set-v1.json": "593143a972d9cfa1b7f9a5c78dcf43957be8ae66367641f1864f33568d9dbdd8",
+    "tests/fixtures/bi-dashboard/request-v1.json": "ddeca5fb3c3af72fd949ae198477659cb4d4efd4883c3e80257148d7c83cb93d"
+  },
+  "testCounts": {
+    "tests": 9,
+    "assertions": 44,
+    "namedNegativeProbes": 15
+  },
+  "exactReadbacks": {
+    "crmAmountMinor": 8750000,
+    "erpOrderTotalMinor": 8750000,
+    "reconciliationDeltaMinor": 0,
+    "dashboard": {
+      "measure:crm-amount-minor": 8750000,
+      "measure:erp-order-total-minor": 8750000,
+      "measure:reconciliation-delta-minor": 0
+    }
+  },
+  "toleranceMinor": 0,
+  "health": "HEALTHY",
+  "readiness": "READY",
+  "resultDigest": "a053f699efd78ed403ebefba908b7f0b958f8a95449101a4cb68fac500044e9d",
+  "supportedClaims": [
+    "LOCAL_SYNTHETIC_E2E",
+    "DEFAULT_OFF",
+    "READ_ONLY",
+    "EXACT_ZERO_TOLERANCE_RECONCILIATION",
+    "DETERMINISTIC_RESET_AND_REPLAY"
+  ],
+  "nonClaims": [
+    "PRODUCTION_READINESS",
+    "LIVE_SYSTEM_COMPATIBILITY",
+    "DMS_COVERAGE",
+    "AUDIT_OR_COMPLIANCE_ASSURANCE",
+    "REAL_TIME_LOAD_OR_SLA_CERTIFICATION",
+    "RELEASE",
+    "DEPLOYMENT",
+    "INFRASTRUCTURE_BEHAVIOR"
+  ],
+  "limitations": [
+    "One local synthetic tenant and fixed EUR fixtures",
+    "No live provider, credential, network, container, or infrastructure execution",
+    "Commit binding identifies the exact protected base; the containing signed commit binds implementation bytes",
+    "Secret/privacy scan is deterministic pattern screening, not a general data-loss-prevention certification"
+  ],
+  "probes": {
+    "write": {
+      "outcome": "DENIED",
+      "code": "WRITE_DENIED"
+    },
+    "tenant": {
+      "outcome": "DENIED",
+      "code": "TENANT_MISMATCH"
+    },
+    "schema": {
+      "outcome": "DENIED",
+      "code": "UNKNOWN_SCHEMA_VERSION"
+    },
+    "lineage": {
+      "outcome": "DENIED",
+      "code": "LINEAGE_MISSING"
+    },
+    "freshness": {
+      "outcome": "DENIED",
+      "code": "SOURCE_STALE"
+    },
+    "replay": {
+      "outcome": "DENIED",
+      "code": "REPLAY_DENIED"
+    },
+    "unsupported-metric": {
+      "outcome": "DENIED",
+      "code": "UNKNOWN_METRIC"
+    },
+    "formula-drift": {
+      "outcome": "DENIED",
+      "code": "FORMULA_DRIFT"
+    },
+    "duplicate": {
+      "outcome": "DENIED",
+      "code": "DUPLICATE_DENIED"
+    },
+    "timeout": {
+      "outcome": "UNAVAILABLE",
+      "code": "SOURCE_TIMEOUT"
+    },
+    "unavailable-source": {
+      "outcome": "UNAVAILABLE",
+      "code": "SOURCE_UNAVAILABLE"
+    },
+    "tampered-evidence": {
+      "outcome": "DENIED",
+      "code": "EVIDENCE_DIGEST_MISMATCH"
+    },
+    "identity-drift": {
+      "outcome": "DENIED",
+      "code": "TESTED_COMMIT_MISMATCH"
+    },
+    "interrupted-run": {
+      "outcome": "DENIED",
+      "code": "RUN_INTERRUPTED"
+    },
+    "interrupted-reset": {
+      "outcome": "DENIED",
+      "code": "RESET_SCOPE_UNVERIFIED"
+    }
+  },
+  "artifacts": {
+    "scripts/bi-e2e-gate.mjs": "935305d869c8e4e6ba30e961328e2eda4a4c1b78fc31f68275828894c6a8dfdb",
+    "tests/bi-e2e-gate.test.mjs": "1404c07b7c0ceab9cb799c2b23f0cd1a4e39cfcb1d976cd122ac5430669efe5b",
+    "docs/BI-E2E-EVIDENCE-GATE.md": "b4f1449dafe1b957e3509f2ac74146d6684198805d36be11d123893ad75104fe",
+    "docs/development/bi-006-e2e-evidence-gate-pdca.md": "15b9a3edcd93e597589b53b2ecb5bbfbaf76692492d220ff051ce3696eaf74f7"
+  },
+  "secretPrivacyScan": {
+    "status": "PASS",
+    "filesScanned": 10,
+    "forbiddenPatternMatches": 0,
+    "patterns": [
+      "PRIVATE_KEY_MATERIAL",
+      "LIVE_CREDENTIAL_ASSIGNMENT",
+      "NON_EXAMPLE_EMAIL",
+      "PRIVATE_NETWORK_ADDRESS"
+    ]
+  },
+  "rollback": "Disable BI services/connectors, remove only marker-verified synthetic BI-006 state, restore protected default-off baseline 28de5f9a3b914865b6e03ff197f6efc24906588c, and retain failed probe readbacks as negative evidence."
+}
