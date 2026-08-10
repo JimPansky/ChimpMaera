@@ -1,0 +1,119 @@
+{
+  "projection": "coverage-blind-spots",
+  "rows": [
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:0e624a1a135e4441e96ebbd5",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "columns"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:2a90353984b239a91775226e",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "routines"
+    },
+    {
+      "classification": "UNSUPPORTED_DYNAMIC_FACT",
+      "coverageId": "cmdb:coverage:sha256:3718a25a1eb6ec81e3d92e6a",
+      "detail": "Dynamic and undeclared dependencies are not guessed.",
+      "status": "BLIND_SPOT",
+      "subject": "dynamic-sql-lineage"
+    },
+    {
+      "classification": "SAFE_PRIVILEGE_LIMIT",
+      "coverageId": "cmdb:coverage:sha256:39d759975a71e2854baaa948",
+      "detail": "Stage 1 does not grant EXECUTE or source-table access merely to expand routine visibility; only objects natively visible to the metadata-only principal are reported.",
+      "status": "BLIND_SPOT",
+      "subject": "routine-object-visibility"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:50aecd4efa75386badb61213",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "viewDependencies"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:51936fd380f6c8ca4dffd578",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "triggers"
+    },
+    {
+      "classification": "SECURITY_BOUNDARY",
+      "coverageId": "cmdb:coverage:sha256:5615e7942339ccbcafab017b",
+      "detail": "No row samples or profiling were queried.",
+      "status": "EXCLUDED",
+      "subject": "row-data"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:689f6a627384c7dcb2dcc148",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "identity"
+    },
+    {
+      "classification": "ENGINE_METADATA_UNAVAILABLE",
+      "coverageId": "cmdb:coverage:sha256:6b4f55fbf454464fd1c01e6e",
+      "detail": "VIEW_TABLE_USAGE was unavailable; no view dependency was guessed.",
+      "status": "BLIND_SPOT",
+      "subject": "view-dependencies"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:73e665dc07cdc36defdebe08",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "grants"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:862417b9e7c3720bcb3263cd",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "events"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:8729ca25b6de4efb72f61d6d",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "indexes"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:d98a034f5cb8a0e3f07d5d8b",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "tables"
+    },
+    {
+      "classification": "NATIVE_INFORMATION_SCHEMA",
+      "coverageId": "cmdb:coverage:sha256:e225063b944e4b1d9f7de7e8",
+      "detail": null,
+      "status": "COVERED",
+      "subject": "constraints"
+    },
+    {
+      "classification": "INTENTIONALLY_INVISIBLE",
+      "coverageId": "cmdb:coverage:sha256:e650b7eae1e9b3683c0f5355",
+      "detail": "Stored object names and native attributes are inventoried; SQL/code bodies are excluded.",
+      "status": "BLIND_SPOT",
+      "subject": "stored-code-body"
+    },
+    {
+      "classification": "ENGINE_METADATA_LIMIT",
+      "coverageId": "cmdb:coverage:sha256:e6a8f9c4bbfcaa7b8e65265a",
+      "detail": "MariaDB Stage 1 does not expose a complete body-free native routine dependency relation.",
+      "status": "BLIND_SPOT",
+      "subject": "routine-table-usage"
+    }
+  ],
+  "schemaVersion": "chimpmaera.bi/discovery-s1/v1",
+  "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9"
+}

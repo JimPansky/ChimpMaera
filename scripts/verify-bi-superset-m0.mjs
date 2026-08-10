@@ -17,7 +17,8 @@ export async function verifyBiSupersetM0() {
   if (config.datasetCount !== 1 || config.tenantId !== 'tenant:synthetic-zoo' || config.productionAuthority !== false) deny('BI_SUPERSET_SCOPE_DRIFT');
   if (!/^FROM apache\/superset:5\.0\.0@sha256:[a-f0-9]{64}$/m.test(dockerfile)) deny('BI_SUPERSET_IMAGE_NOT_DIGEST_BOUND');
   for (const required of ['profiles: [bi-superset-m0]', '127.0.0.1:${CM_BI_SUPERSET_PORT:-8088}:8088', 'internal: true', 'com.docker.network.bridge.enable_ip_masquerade: "false"', 'read_only: true', 'no-new-privileges:true', 'cap_drop: [ALL]']) if (!compose.includes(required)) deny('BI_SUPERSET_CONTAINMENT_DRIFT');
-  if ((bootstrap.match(/SqlaTable\(/g) || []).length !== 1 || !bootstrap.includes('datasetCount":db.session.query(SqlaTable).count()')) deny('BI_SUPERSET_DATASET_IMPORT_DRIFT');
+  if ((bootstrap.match(/SqlaTable\(/g) || []).length !== 2 || !bootstrap.includes('datasetCount":db.session.query(SqlaTable).count()')) deny('BI_SUPERSET_DATASET_IMPORT_DRIFT');
+  for (const value of ['cm_discovery_inventory','cm_discovery_relationships','cm_discovery_coverage','discovery-projections.json']) if (!bootstrap.includes(value)) deny('BI_DISCOVERY_SUPERSET_PROJECTION_DRIFT');
   for (const value of ['8750000','LOCAL_SYNTHETIC_NON_PRODUCTION_READ_ONLY_NON_AUTHORITY','11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f']) if (!bootstrap.includes(value)) deny('BI_SUPERSET_TRUTH_DRIFT');
   if (!renderer.includes('reconcileCrmErpV1') || !renderer.includes('positive-reconciliation-v1.json')) deny('BI_SUPERSET_PARALLEL_SEMANTIC_MODEL');
   return { status: 'PASS', image: dockerfile.match(/^FROM (.+)$/m)[1], datasetCount: 1 };

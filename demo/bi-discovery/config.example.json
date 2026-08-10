@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "chimpmaera.bi/discovery-s1-config/v1",
+  "enabled": false,
+  "source": {
+    "application": "Dolibarr",
+    "version": "22.0.3",
+    "engine": "MariaDB",
+    "database": "dolidb"
+  },
+  "principal": "cm_discovery_s1",
+  "access": "metadata-only-read-only",
+  "rowData": false,
+  "rowProfiling": false,
+  "rawStoredCode": false,
+  "supersetDirectSourceAccess": false
+}

@@ -1,0 +1,50 @@
+{
+  "artifactDigests": {
+    "coverageProjection": "b1010de10dfb5f3d3fcaa8ffb21de61780543300e55b62c311cdeeda5e3a9b3b",
+    "drift": "d4f43b58dc3722675b2fef540eee55b24af2b679f3766e5c0a343039218d14f7",
+    "evidence": "031dbaf07bbe5f84867770fd0ab72079eef359bd8029d78a0a8dcfeb36fa21fa",
+    "inventoryProjection": "a362ec34153caada0b07c80498511410b390b349f1f8491bd455aab184019dee",
+    "knowledge": "bb81c9ae28a0c4d51dc87b8a026b176640cce937eefefa90141fc699f645636a",
+    "relationshipsProjection": "ea4e54743264a5914376a1ff08d1225f0d32d1be006b083467a2f702b902417f"
+  },
+  "collectorIdentity": {
+    "collectorDigest": "872ddfe21fab68ea467c3ea70506f8cf889fad149a6160d5f713cca1af24c090",
+    "contract": "chimpmaera.bi/discovery-s1/v1",
+    "name": "ChimpMaera BI Discovery S1 collector",
+    "querySetDigest": "10cdfc34b3112c6c7d127b48805faaa81f2f3029e240953285c6930b2ede9d2b",
+    "version": "1.0.0"
+  },
+  "groundTruth": {
+    "inventedEdges": 0,
+    "inventedObjects": 0,
+    "mandatoryEdges": {
+      "found": 3,
+      "total": 3
+    },
+    "mandatoryObjects": {
+      "found": 10,
+      "total": 10
+    },
+    "scope": "CURATED_MANDATORY_SUBSET_NOT_FULL_DOLIBARR_SEMANTICS",
+    "status": "PASS"
+  },
+  "scanId": "cmdb:scan:sha256:a6ee331b9b864d675b9f4f5a",
+  "schemaVersion": "chimpmaera.bi/discovery-s1/v1",
+  "securityBoundary": {
+    "credentials": false,
+    "dynamicFactsGuessed": false,
+    "rawStoredCode": false,
+    "rowData": false,
+    "rowProfiling": false,
+    "supersetSourceRoute": false
+  },
+  "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+  "sourceIdentity": {
+    "application": "Dolibarr",
+    "applicationVersion": "22.0.3",
+    "database": "dolidb",
+    "engine": "MariaDB",
+    "engineVersion": "11.8.3-MariaDB-ubu2404",
+    "principalClassification": "DEDICATED_METADATA_ONLY_READ_ONLY"
+  }
+}

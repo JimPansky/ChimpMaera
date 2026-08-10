@@ -11,6 +11,25 @@ STATE = Path("/var/lib/chimpmaera-bi")
 TENANT = "tenant:synthetic-zoo"
 DATASET_UUID = "24021830-0040-4000-8000-000000000004"
 DASHBOARD_UUID = "24021830-0050-4000-8000-000000000005"
+DISCOVERY_DASHBOARD_UUID = "24021870-0050-4000-8000-000000000187"
+DISCOVERY_DATASETS = [
+    ("24021870-0040-4000-8000-000000000181", "cm_discovery_inventory", "ChimpMaera Discovery — object inventory", [("object_id","TEXT"),("kind","TEXT"),("schema_name","TEXT"),("name","TEXT"),("parent_name","TEXT"),("type","TEXT"),("classification","TEXT"),("source_digest","TEXT")]),
+    ("24021870-0040-4000-8000-000000000182", "cm_discovery_relationships", "ChimpMaera Discovery — relationships and dependencies", [("edge_id","TEXT"),("kind","TEXT"),("from_id","TEXT"),("to_id","TEXT"),("classification","TEXT"),("source_digest","TEXT")]),
+    ("24021870-0040-4000-8000-000000000183", "cm_discovery_coverage", "ChimpMaera Discovery — coverage and blind spots", [("coverage_id","TEXT"),("subject","TEXT"),("status","TEXT"),("classification","TEXT"),("detail","TEXT"),("source_digest","TEXT")]),
+]
+
+def discovery_projections():
+    source = STATE / "discovery-projections.json"
+    if not source.exists():
+        return None
+    value = json.loads(source.read_text())
+    assert value["schemaVersion"] == "chimpmaera.bi/discovery-s1-superset-projections/v1"
+    assert len(value["sourceDigest"]) == 64
+    for name in ("inventory", "relationships", "coverage"):
+        projection = value[name]
+        assert projection["sourceDigest"] == value["sourceDigest"]
+        assert projection["schemaVersion"] == "chimpmaera.bi/discovery-s1/v1"
+    return value
 
 def accepted_rows():
     projection = json.loads((STATE / "projection.json").read_text())
@@ -23,6 +42,7 @@ def accepted_rows():
 
 def atomic_projection():
     rows = accepted_rows()
+    discovery = discovery_projections()
     fd, name = tempfile.mkstemp(prefix="semantic-", suffix=".db", dir=STATE)
     os.close(fd)
     conn = sqlite3.connect(name)
@@ -30,7 +50,16 @@ def atomic_projection():
     conn.executemany("INSERT INTO bi004_reconciled_fact (canonical_id,tenant_id,currency,outcome,crm_amount_minor,erp_order_total_minor,delta_minor,crm_opportunity_id,erp_order_id,erp_source_record_id) VALUES (?,?,?,?,?,?,?,?,?,?)", rows)
     conn.execute("CREATE TABLE bi004_foreign_tenant_probe (canonical_id TEXT PRIMARY KEY, tenant_id TEXT NOT NULL)")
     conn.execute("INSERT INTO bi004_foreign_tenant_probe VALUES ('canonical:foreign-denied', 'tenant:foreign-probe')")
+    if discovery:
+        digest = discovery["sourceDigest"]
+        conn.execute("CREATE TABLE cm_discovery_inventory (object_id TEXT PRIMARY KEY, kind TEXT NOT NULL, schema_name TEXT NOT NULL, name TEXT NOT NULL, parent_name TEXT, type TEXT, classification TEXT NOT NULL, source_digest TEXT NOT NULL)")
+        conn.executemany("INSERT INTO cm_discovery_inventory VALUES (?,?,?,?,?,?,?,?)", [(row["objectId"],row["kind"],row["schemaName"],row["name"],row["parentName"],row["type"],row["classification"],digest) for row in discovery["inventory"]["rows"]])
+        conn.execute("CREATE TABLE cm_discovery_relationships (edge_id TEXT PRIMARY KEY, kind TEXT NOT NULL, from_id TEXT NOT NULL, to_id TEXT NOT NULL, classification TEXT NOT NULL, source_digest TEXT NOT NULL)")
+        conn.executemany("INSERT INTO cm_discovery_relationships VALUES (?,?,?,?,?,?)", [(row["edgeId"],row["kind"],row["fromId"],row["toId"],row["classification"],digest) for row in discovery["relationships"]["rows"]])
+        conn.execute("CREATE TABLE cm_discovery_coverage (coverage_id TEXT PRIMARY KEY, subject TEXT NOT NULL, status TEXT NOT NULL, classification TEXT NOT NULL, detail TEXT, source_digest TEXT NOT NULL)")
+        conn.executemany("INSERT INTO cm_discovery_coverage VALUES (?,?,?,?,?,?)", [(row["coverageId"],row["subject"],row["status"],row["classification"],row["detail"],digest) for row in discovery["coverage"]["rows"]])
     conn.commit(); conn.close(); os.chmod(name, 0o600); os.replace(name, STATE / "semantic.db")
+    return discovery
 
 def deny_permissions(role):
     forbidden = ("sql lab", "sql query", "database", "dataset", "datasource", "upload", "plugin", "css template", "saved query")
@@ -39,6 +68,18 @@ def deny_permissions(role):
         if permission.permission.name in {"can_add", "can_edit", "can_write", "can_delete", "can_upload"} or any(value in key for value in forbidden):
             role.permissions.remove(permission)
 
+def remove_legacy_datasource_permission(sm, view_menu_name):
+    """Remove the old space-separated PVM without deleting its shared view menu."""
+    legacy = sm.find_permission_view_menu("datasource access", view_menu_name)
+    if not legacy:
+        return
+    for role in db.session.query(sm.role_model).all():
+        if legacy in role.permissions:
+            role.permissions.remove(legacy)
+    db.session.flush()
+    db.session.delete(legacy)
+    db.session.flush()
+
 app = create_app()
 with app.app_context():
     from superset import db
@@ -46,7 +87,7 @@ with app.app_context():
     from superset.models.core import Database
     from superset.models.dashboard import Dashboard
     from superset.models.slice import Slice
-    atomic_projection()
+    discovery = atomic_projection()
     sm = app.appbuilder.sm
     admin = sm.find_user(username="cm_admin")
     if not admin:
@@ -73,9 +114,28 @@ with app.app_context():
         dataset.columns = [TableColumn(column_name=name, type=typ, filterable=name in {"canonical_id","tenant_id","currency","outcome"}, groupby=name in {"canonical_id","tenant_id","currency","outcome"}) for name, typ in [("canonical_id","TEXT"),("tenant_id","TEXT"),("currency","TEXT"),("outcome","TEXT"),("crm_amount_minor","INTEGER"),("erp_order_total_minor","INTEGER"),("delta_minor","INTEGER"),("crm_opportunity_id","TEXT"),("erp_order_id","TEXT"),("erp_source_record_id","TEXT"),("freshness_state","TEXT"),("trust_marking","TEXT"),("lineage_model_digest","TEXT")]]
         dataset.metrics = [SqlMetric(metric_name=name, expression=expression, verbose_name=label, description="Canonical BI-004 formula readback; Superset visualization only") for name, expression, label in [("measure:crm-amount-minor","SUM(crm_amount_minor)","CRM amount minor — 8,750,000"),("measure:erp-order-total-minor","SUM(erp_order_total_minor)","ERP order total minor — 8,750,000"),("measure:reconciliation-delta-minor","SUM(delta_minor)","Exact reconciliation delta minor — 0")]]
     db.session.flush()
-    datasource_permission = sm.add_permission_view_menu("datasource access", dataset.perm)
+    datasource_permission = sm.add_permission_view_menu("datasource_access", dataset.perm)
+    remove_legacy_datasource_permission(sm, dataset.perm)
     if datasource_permission and datasource_permission not in analyst_role.permissions:
         sm.add_permission_role(analyst_role, datasource_permission)
+    discovery_datasets = []
+    stale_discovery_datasets = []
+    if discovery:
+        for dataset_uuid, table_name, title, columns in DISCOVERY_DATASETS:
+            discovery_dataset = db.session.query(SqlaTable).filter_by(uuid=dataset_uuid).one_or_none()
+            if not discovery_dataset:
+                discovery_dataset = SqlaTable(uuid=dataset_uuid, table_name=table_name, database=database, is_sqllab_view=False, description=f"READ-ONLY CM-owned metadata projection. Provenance source digest {discovery['sourceDigest']}; no ERP row data, credentials or stored code.")
+                db.session.add(discovery_dataset); db.session.flush()
+                discovery_dataset.columns = [TableColumn(column_name=name, type=typ, filterable=True, groupby=True) for name, typ in columns]
+            discovery_dataset.description = f"READ-ONLY CM-owned metadata projection. Provenance source digest {discovery['sourceDigest']}; no ERP row data, credentials or stored code."
+            permission = sm.add_permission_view_menu("datasource_access", discovery_dataset.perm)
+            remove_legacy_datasource_permission(sm, discovery_dataset.perm)
+            if permission and permission not in analyst_role.permissions:
+                sm.add_permission_role(analyst_role, permission)
+            discovery_datasets.append((discovery_dataset, title, columns))
+    else:
+        stale_uuids = [entry[0] for entry in DISCOVERY_DATASETS]
+        stale_discovery_datasets = db.session.query(SqlaTable).filter(SqlaTable.uuid.in_(stale_uuids)).all()
     charts = []
     chart_specs = [
         ("BI-004 CRM amount minor", "big_number_total", {"metric":"measure:crm-amount-minor","subheader":"EUR minor · accepted synthetic BI-004"}),
@@ -97,7 +157,36 @@ with app.app_context():
         db.session.add(dashboard)
     dashboard.description = "LOCAL SYNTHETIC · NON-PRODUCTION · READ-ONLY · NON-AUTHORITY · freshness accepted at 2026-08-10T08:30:00Z · lineage model 11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f"
     dashboard.slices = charts
+    if discovery:
+        discovery_charts = []
+        for discovery_dataset, title, columns in discovery_datasets:
+            chart = db.session.query(Slice).filter_by(slice_name=title).one_or_none()
+            params = {"adhoc_filters":[],"all_columns":[name for name,_ in columns],"datasource":f"{discovery_dataset.id}__table","order_by_cols":[],"row_limit":1000,"server_pagination":True,"viz_type":"table"}
+            if not chart:
+                chart = Slice(slice_name=title, viz_type="table", datasource_type="table", datasource_id=discovery_dataset.id)
+                db.session.add(chart)
+            chart.params = json.dumps(params, sort_keys=True); discovery_charts.append(chart)
+        db.session.flush()
+        discovery_dashboard = db.session.query(Dashboard).filter_by(uuid=DISCOVERY_DASHBOARD_UUID).one_or_none()
+        if not discovery_dashboard:
+            discovery_dashboard = Dashboard(uuid=DISCOVERY_DASHBOARD_UUID, dashboard_title="ChimpMaera Dolibarr structure discovery", slug="chimpmaera-dolibarr-structure-discovery", published=True)
+            db.session.add(discovery_dashboard)
+        discovery_dashboard.description = f"READ-ONLY METADATA · NO ERP ROWS · NO CREDENTIALS · NO STORED CODE · source digest {discovery['sourceDigest']}"
+        discovery_dashboard.slices = discovery_charts
+    else:
+        stale_dashboard = db.session.query(Dashboard).filter_by(uuid=DISCOVERY_DASHBOARD_UUID).one_or_none()
+        if stale_dashboard:
+            for chart in list(stale_dashboard.slices): db.session.delete(chart)
+            db.session.delete(stale_dashboard)
+        discovery_titles = [entry[2] for entry in DISCOVERY_DATASETS]
+        for stale_chart in db.session.query(Slice).filter(Slice.slice_name.in_(discovery_titles)).all():
+            db.session.delete(stale_chart)
+        db.session.flush()
+        for stale_dataset in stale_discovery_datasets:
+            remove_legacy_datasource_permission(sm, stale_dataset.perm)
+            db.session.delete(stale_dataset)
+            db.session.flush()
     db.session.commit()
-    marker = {"schemaVersion":"chimpmaera.bi/superset-m0-state/v1","status":"READY","datasetCount":db.session.query(SqlaTable).count(),"dashboardUuid":DASHBOARD_UUID,"datasetUuid":DATASET_UUID,"rowCount":len(accepted_rows()),"kpis":{"crmAmountMinor":8750000,"erpOrderTotalMinor":8750000,"reconciliationDeltaMinor":0},"modelDigest":"11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f","markings":["LOCAL_SYNTHETIC","NON_PRODUCTION","READ_ONLY","NON_AUTHORITY"]}
+    marker = {"schemaVersion":"chimpmaera.bi/superset-m0-state/v1","status":"READY","datasetCount":db.session.query(SqlaTable).count(),"baseDatasetCount":1,"discoveryProjectionCount":3 if discovery else 0,"discoverySourceDigest":discovery["sourceDigest"] if discovery else None,"dashboardUuid":DASHBOARD_UUID,"datasetUuid":DATASET_UUID,"rowCount":len(accepted_rows()),"kpis":{"crmAmountMinor":8750000,"erpOrderTotalMinor":8750000,"reconciliationDeltaMinor":0},"modelDigest":"11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f","markings":["LOCAL_SYNTHETIC","NON_PRODUCTION","READ_ONLY","NON_AUTHORITY"]}
     marker["semanticSha256"] = hashlib.sha256((STATE / "semantic.db").read_bytes()).hexdigest()
     temp = STATE / "accepted.json.tmp"; temp.write_text(json.dumps(marker, sort_keys=True)+"\n"); os.chmod(temp,0o600); os.replace(temp, STATE / "accepted.json")

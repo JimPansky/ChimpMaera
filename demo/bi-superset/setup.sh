@@ -16,6 +16,9 @@ fi
 chmod 600 "$cm_ss_state/runtime.env"
 npm run build --silent
 node "$cm_ss_root/scripts/render-bi-superset-projection.mjs"
+if [ -f "$cm_ss_root/demo/bi-discovery/state/latest/SHA256SUMS" ]; then
+  node "$cm_ss_root/scripts/publish-bi-discovery-superset.mjs" --pack "$cm_ss_root/demo/bi-discovery/state/latest"
+fi
 ordinary="$(CM_BI_SUPERSET_PORT="$cm_ss_port" docker compose --project-name "$cm_ss_project" --file "$cm_ss_here/compose.yaml" config --services)"
 [ -z "$ordinary" ] || cm_ss_fail 'Superset must remain default-off'
 printf 'BI-SUPERSET-M0 setup verified; Superset remains OFF. Analyst password is in %s/runtime.env.\n' "$cm_ss_state"
