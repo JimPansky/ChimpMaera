@@ -120,6 +120,37 @@ const bi006Inputs = [
   ["verification/bi-006-e2e-evidence-index-v1.json", "DERIVED_EVIDENCE"],
 ];
 bi006Node.inputs = bi006Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
+let mediaNode = dag.nodes.find(({ id }) => id === "know-media-m1-audience-learning-v1");
+if (mediaNode === undefined) {
+  mediaNode = {
+    id: "know-media-m1-audience-learning-v1",
+    dependsOn: ["vf-contract-v1"],
+    inputs: [],
+    ownedTests: ["npm run video:test"],
+    invariants: [
+      "Audience assumptions retain observed, sourced, hypothesis and editorial-decision types with provenance, scope, confidence and non-stale review dates.",
+      "Learning records are append-only and digest-bound; promotion gates retain positive, negative, rejected and unresolved evidence.",
+      "Audience adaptation preserves one claim/evidence core while exact-revision human editorial, audience-fit and visual review remains required."
+    ],
+    riskClass: "HIGH",
+    globalInvalidation: false,
+  };
+  dag.nodes.push(mediaNode);
+}
+const mediaInputs = [
+  ["tools/video-production-reference/src/cm_video_ref/visual_governance.py", "CONTRACT"],
+  ["tools/video-production-reference/schemas/audience-discovery-canvas.schema.json", "SCHEMA"],
+  ["tools/video-production-reference/schemas/learning-record.schema.json", "SCHEMA"],
+  ["tools/video-production-reference/schemas/media-learning-event.schema.json", "SCHEMA"],
+  ["tools/video-production-reference/templates/audience-discovery-canvas-v1.json", "FIXTURE"],
+  ["tools/video-production-reference/fixtures/audience-adaptation-proof-v1.json", "FIXTURE"],
+  ["tools/video-production-reference/fixtures/privacy-safe-feedback-routes-v1.json", "FIXTURE"],
+  ["tools/video-production-reference/fixtures/video-governance-learning-records.json", "DERIVED_EVIDENCE"],
+  ["tools/video-production-reference/fixtures/rejected-slide-decks-2026-08-03.json", "DERIVED_EVIDENCE"],
+  ["tools/video-production-reference/tests/test_visual_governance.py", "VALIDATOR"],
+  ["tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md", "DERIVED_EVIDENCE"],
+];
+mediaNode.inputs = mediaInputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
 const m14Node = dag.nodes.find(({ id }) => id === "openclaw-m1-4");
 if (m14Node === undefined) throw new Error("OPENCLAW_M1_4_DAG_NODE_MISSING");
 const m14Inputs = [

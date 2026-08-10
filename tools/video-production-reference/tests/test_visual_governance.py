@@ -9,8 +9,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from cm_video_ref.visual_governance import (
+    canonical_digest,
+    evaluate_learning_state,
     VisualGovernanceError,
     validate_audience_canvas,
+    validate_audience_adaptations,
+    validate_feedback_routes,
     validate_learning_records,
     validate_storyboard,
 )
@@ -185,14 +189,15 @@ class AudienceDiscoveryTests(unittest.TestCase):
             "schemaVersion": "cm.audience-discovery-canvas/v1",
             "context": f"Technical explainer for {family}",
             "decisionToInfluence": "Inspect the bounded proof",
+            "contentFamilies": ["authority", "verification", "public-truth"],
             "primaryAudiences": [{"id": "TECHNICAL_EXPERT", "jobToBeDone": "verify mechanism"}],
             "secondaryAudiences": [{"id": "TECHNICAL_DECISION_MAKER"}],
             "excludedAudiences": [{"id": "UNIVERSAL", "reason": "avoid invented universal fit"}],
             "evidence": [{"id": "E1", "source": "public issue", "privacy": "aggregate"}, {"id": "E2", "source": "review rubric", "privacy": "aggregate"}],
             "assumptions": [
-                {"id": "A1", "statement": "Experts need mechanism proof", "classification": "SOURCED_FACT", "evidenceRefs": ["E1"], "confidence": "MEDIUM", "owner": "editor", "reviewDate": "2026-08-03", "disconfirmingEvidence": [], "stale": False},
-                {"id": "A2", "statement": "Decision makers need boundary first", "classification": "OBSERVED_FACT", "evidenceRefs": ["E2"], "confidence": "MEDIUM", "owner": "editor", "reviewDate": "2026-08-03", "disconfirmingEvidence": [], "stale": False},
-                {"id": "A3", "statement": "Fast pacing will work", "classification": "HYPOTHESIS", "evidenceRefs": [], "confidence": "LOW", "validationProbe": "blind comprehension rubric", "owner": "editor", "reviewDate": "2026-08-03", "disconfirmingEvidence": [], "stale": False},
+                {"id": "A1", "statement": "Experts need mechanism proof", "type": "sourced", "provenance": "desk research E1", "scope": ["TECHNICAL_EXPERT"], "evidenceRefs": ["E1"], "confidence": "MEDIUM", "owner": "editor", "reviewDate": "2026-09-10", "disconfirmingEvidence": []},
+                {"id": "A2", "statement": "Decision makers need boundary first", "type": "observed", "provenance": "review rubric E2", "scope": ["TECHNICAL_DECISION_MAKER"], "evidenceRefs": ["E2"], "confidence": "MEDIUM", "owner": "editor", "reviewDate": "2026-09-10", "disconfirmingEvidence": []},
+                {"id": "A3", "statement": "Fast pacing will work", "type": "hypothesis", "provenance": "bounded editorial inference", "scope": ["TECHNICAL_EXPERT"], "evidenceRefs": [], "confidence": "LOW", "validationProbe": "blind comprehension rubric", "owner": "editor", "reviewDate": "2026-09-10", "disconfirmingEvidence": []},
             ],
             "unknowns": [{"question": "recall after one day", "impact": "pacing", "probe": "delayed recall"}],
             "review": {"confidence": "MEDIUM", "antiStereotypeCheck": "PASS", "privacyReview": "PASS", "lockedRevisionSha256": h(family)},
@@ -204,7 +209,7 @@ class AudienceDiscoveryTests(unittest.TestCase):
 
     def test_stale_assumption_rejected(self):
         value = self.canvas()
-        value["assumptions"][0]["stale"] = True
+        value["assumptions"][0]["reviewDate"] = "2026-08-09"
         with self.assertRaisesRegex(VisualGovernanceError, "stale audience assumption"):
             validate_audience_canvas(value)
 
@@ -222,6 +227,33 @@ class AudienceDiscoveryTests(unittest.TestCase):
         self.assertNotEqual(expert["opening"], decision["opening"])
         self.assertEqual(expert["facts"], decision["facts"])
 
+    def test_every_assumption_requires_type_provenance_confidence_scope_and_review(self):
+        for field in ("type", "provenance", "confidence", "scope", "reviewDate"):
+            with self.subTest(field=field):
+                value = self.canvas(); value["assumptions"][0].pop(field)
+                with self.assertRaises(VisualGovernanceError):
+                    validate_audience_canvas(value)
+
+    def test_fact_hypothesis_confusion_rejected(self):
+        value = self.canvas(); value["assumptions"][2]["type"] = "observed"
+        with self.assertRaisesRegex(VisualGovernanceError, "facts require declared audience evidence"):
+            validate_audience_canvas(value)
+
+    def test_immutable_core_yields_two_material_adaptations(self):
+        value = json.loads((ROOT / "fixtures/audience-adaptation-proof-v1.json").read_text())
+        result = validate_audience_adaptations(value)
+        self.assertEqual(result["audiences"], ["TECHNICAL_DECISION_MAKER", "TECHNICAL_EXPERT"])
+
+    def test_claim_drift_and_missing_adaptation_rejected(self):
+        value = json.loads((ROOT / "fixtures/audience-adaptation-proof-v1.json").read_text())
+        value["variants"][0]["factualCoreDigest"] = h("drift")
+        with self.assertRaisesRegex(VisualGovernanceError, "claim/evidence drift"):
+            validate_audience_adaptations(value)
+        value = json.loads((ROOT / "fixtures/audience-adaptation-proof-v1.json").read_text())
+        value["variants"][0]["adaptationDeclaration"] = ""
+        with self.assertRaisesRegex(VisualGovernanceError, "declared adaptation"):
+            validate_audience_adaptations(value)
+
 
 class LearningGovernanceTests(unittest.TestCase):
     def records(self):
@@ -230,9 +262,10 @@ class LearningGovernanceTests(unittest.TestCase):
     def test_observation_to_governed_template_and_rollback_path(self):
         result = validate_learning_records(self.records())
         self.assertEqual(result["highestStage"], "L4_GOVERNED_TEMPLATE")
-        record = self.records()[0]
+        record = self.records()[1]
         self.assertTrue(record["supersession"]["supersedes"])
         self.assertTrue(record["rollback"]["trigger"])
+        self.assertEqual(self.records()[2]["stage"], "L1_NORMALIZED_FINDING")
 
     def test_missing_provenance_rejected(self):
         value = self.records(); value[0]["provenance"] = []
@@ -240,27 +273,69 @@ class LearningGovernanceTests(unittest.TestCase):
             validate_learning_records(value)
 
     def test_cherry_picked_positive_only_rejected(self):
-        value = self.records(); value[0]["evidence"]["negative"] = []
+        value = self.records(); value[1]["evidence"] = [row for row in value[1]["evidence"] if row["polarity"] == "POSITIVE"]
+        self.resign(value[1])
         with self.assertRaisesRegex(VisualGovernanceError, "cherry-pick"):
             validate_learning_records(value)
 
     def test_single_weak_observation_promotion_rejected(self):
-        value = self.records(); value[0]["derivedFrom"] = ["one"]; value[0].pop("strongJustification", None)
+        value = self.records(); value[1]["derivedFrom"] = ["one"]; value[1].pop("strongJustification", None); self.resign(value[1])
         with self.assertRaisesRegex(VisualGovernanceError, "single weak observation"):
             validate_learning_records(value)
 
     def test_cross_audience_reuse_without_adaptation_rejected(self):
-        value = self.records(); value[0]["declaredAdaptation"] = None
+        value = self.records(); value[1]["declaredAdaptation"] = None; self.resign(value[1])
         with self.assertRaisesRegex(VisualGovernanceError, "declared adaptation"):
             validate_learning_records(value)
 
     def test_circular_derivation_rejected(self):
         value = self.records()
-        second = copy.deepcopy(value[0]); second["id"] = "LR-SECOND"; second["dependencies"] = [value[0]["id"]]
-        value[0]["dependencies"] = [second["id"]]
-        value.append(second)
+        value[0]["dependencies"] = [value[1]["id"]]
+        self.resign(value[0])
         with self.assertRaisesRegex(VisualGovernanceError, "circular learning derivation"):
             validate_learning_records(value)
+
+    def resign(self, record):
+        unsigned = {key: item for key, item in record.items() if key != "integrity"}
+        record["integrity"]["recordSha256"] = canonical_digest(unsigned)
+
+    def test_tampering_rejected(self):
+        value = self.records(); value[0]["confidence"] = "LOW"
+        with self.assertRaisesRegex(VisualGovernanceError, "tampering"):
+            validate_learning_records(value)
+
+    def test_rejected_modules_drive_concrete_rules_and_tests(self):
+        records = self.records(); raw, rule = records[0], records[1]
+        self.assertEqual([row["polarity"] for row in raw["evidence"]], ["REJECTED"] * 6)
+        self.assertIn("visual_governance.py", rule["provenance"]["outputRevision"])
+        self.assertIn("test_three_static_text_slides_rejected", rule["provenance"]["testReviewEvidence"])
+
+    def test_source_audience_dependency_or_outcome_change_downgrades(self):
+        record = self.records()[0]
+        for dimension in ("source_evidence", "audience_assumptions", "dependencies", "outcomes"):
+            with self.subTest(dimension=dimension):
+                result = evaluate_learning_state(record, changed_dimensions=[dimension])
+                self.assertEqual(result["action"], "DOWNGRADE")
+
+    def test_no_change_never_automatically_promotes_one_success(self):
+        record = self.records()[0]
+        self.assertEqual(evaluate_learning_state(record)["action"], "NO_AUTOMATIC_PROMOTION")
+
+
+class FeedbackRoutingTests(unittest.TestCase):
+    def events(self):
+        return json.loads((ROOT / "fixtures/privacy-safe-feedback-routes-v1.json").read_text())
+
+    def test_every_route_emits_decision_receipt(self):
+        self.assertEqual(validate_feedback_routes(self.events())["receipts"], 2)
+
+    def test_raw_identity_and_incomplete_receipt_rejected(self):
+        value = self.events(); value[0]["email"] = "person@example.invalid"
+        with self.assertRaisesRegex(VisualGovernanceError, "privacy violation"):
+            validate_feedback_routes(value)
+        value = self.events(); value[0]["routeReceipt"].pop("notChanged")
+        with self.assertRaisesRegex(VisualGovernanceError, "receipt incomplete"):
+            validate_feedback_routes(value)
 
 
 if __name__ == "__main__":

@@ -1,12 +1,7 @@
 {
-  "schemaVersion": "cm.audience-discovery-canvas/v1",
-  "context": "Describe product/content context and decision to influence.",
-  "decisionToInfluence": "State the post-view decision or behavior.",
-  "primaryAudiences": [{"id": "PRIMARY", "jobToBeDone": "", "trigger": "", "currentAlternative": "", "priorKnowledge": [], "vocabulary": [], "toolsEnvironment": [], "constraints": [], "accessibilityNeeds": [], "stakes": [], "motivations": [], "objections": [], "skepticism": [], "fearedFailure": [], "desiredProof": [], "viewingContext": {"platform": "", "device": "", "attentionPattern": ""}, "desiredAction": "", "acceptableCta": ""}],
-  "secondaryAudiences": [{"id": "SECONDARY"}],
-  "excludedAudiences": [{"id": "EXCLUDED", "reason": "Avoid a false universal audience."}],
-  "assumptions": [{"id": "A1", "statement": "", "classification": "HYPOTHESIS", "evidenceRefs": [], "confidence": "LOW", "validationProbe": "", "owner": "", "reviewDate": "", "disconfirmingEvidence": []}],
-  "evidence": [{"id": "E1", "sourceType": "issue|interview|analytics|documentation|review", "source": "", "collectedAt": "", "samplingLimit": "", "privacy": "aggregate or pseudonymous"}],
-  "unknowns": [{"question": "", "impact": "", "probe": ""}],
-  "review": {"confidence": "LOW", "plannedProbe": "", "antiStereotypeCheck": "PASS", "privacyReview": "PASS", "lockedRevisionSha256": "0000000000000000000000000000000000000000000000000000000000000000"}
+  "schemaVersion": "cm.audience-discovery-canvas/v1", "context": "Bounded media context; do not infer universal fit.", "decisionToInfluence": "State one post-view decision.", "contentFamilies": ["authority", "verification", "public-truth"],
+  "primaryAudiences": [{"id": "PRIMARY", "jobToBeDone": "", "trigger": "", "priorKnowledge": [], "vocabulary": [], "constraints": [], "accessibilityNeeds": [], "desiredProof": [], "viewingContext": {"platform": "", "device": "", "attentionPattern": ""}, "acceptableCta": ""}], "secondaryAudiences": [{"id": "SECONDARY"}], "excludedAudiences": [{"id": "EXCLUDED", "reason": "Avoid invented universal fit."}],
+  "assumptions": [{"id": "A1", "statement": "Bounded hypothesis only", "type": "hypothesis", "provenance": "No external evidence available", "evidenceRefs": [], "confidence": "LOW", "scope": ["PRIMARY"], "validationProbe": "Run an exact-revision comprehension probe", "owner": "editor", "reviewDate": "2099-01-01", "disconfirmingEvidence": []}],
+  "evidence": [{"id": "E1", "sourceType": "documentation", "source": "repository public-safe source", "collectedAt": "2026-08-10", "samplingLimit": "One bounded repository source; no population inference.", "privacy": "AGGREGATE"}], "unknowns": [{"question": "Does the intended audience understand the mechanism?", "impact": "framing and proof depth", "probe": "Blind central-claim, mechanism, boundary and next-action recall"}],
+  "review": {"confidence": "LOW", "plannedProbe": "Exact-revision human audience-fit and comprehension review", "antiStereotypeCheck": "PASS", "privacyReview": "PASS", "lockedRevisionSha256": "0000000000000000000000000000000000000000000000000000000000000000"}
 }

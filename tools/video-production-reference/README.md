@@ -6,7 +6,8 @@ Canonical authoring and governance:
 - [Template and release-segment authoring](docs/TEMPLATE-SEGMENT-AUTHORING.md)
 - [Audience discovery and audience lock](docs/AUDIENCE-DISCOVERY.md)
 - [2026-08-03 hardening evidence and maturity](docs/PROCESS-HARDENING-EVIDENCE.md)
-- Machine contracts: `schemas/storyboard.schema.json`, `schemas/audience-discovery-canvas.schema.json`, `schemas/script-package.schema.json`, `schemas/learning-record.schema.json`
+- Machine contracts: `schemas/storyboard.schema.json`, `schemas/audience-discovery-canvas.schema.json`, `schemas/script-package.schema.json`, `schemas/learning-record.schema.json`, `schemas/media-learning-event.schema.json`
+- Public-safe deterministic proofs: `fixtures/audience-adaptation-proof-v1.json`, `fixtures/privacy-safe-feedback-routes-v1.json`, and append-only `fixtures/video-governance-learning-records.json`
 - Versioned audience, visual grammar, script, learning and privacy-safe event templates: `templates/`
 
 This directory ships a public reference Docker for the current

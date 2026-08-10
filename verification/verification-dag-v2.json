@@ -405,7 +405,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "d55471980b38d4cad59f7ca7ba2a4525b4f210a3e1e67fe891f057f7bd3f6bf4"
+          "sha256": "70cf43abf6504c125217b15be9a990c022bb71500235685bd08a3dfd5fae7021"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -629,7 +629,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "9e7a4ca9bc24cb8556cb0c4f0dcc5e98c6bfb4794f6b182e62b524d9ae0f9501"
+          "sha256": "6890dcf641f901e1adb1c46239948f5f1a09ac66a51e5f63fa36a963e6b810e6"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -1009,6 +1009,79 @@
       ],
       "riskClass": "CRITICAL",
       "globalInvalidation": true
+    },
+    {
+      "id": "know-media-m1-audience-learning-v1",
+      "dependsOn": [
+        "vf-contract-v1"
+      ],
+      "inputs": [
+        {
+          "path": "tools/video-production-reference/src/cm_video_ref/visual_governance.py",
+          "role": "CONTRACT",
+          "sha256": "980be1f44bbfc0cc4d3c60121047aebba05967e6ccbc199a71da85cf03edb00a"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/audience-discovery-canvas.schema.json",
+          "role": "SCHEMA",
+          "sha256": "1eec2f454b6823cda4097a37183a4d03695035d46f51b89b01512c2c8ba7e3e1"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/learning-record.schema.json",
+          "role": "SCHEMA",
+          "sha256": "e5d6153a7363e912346675c6ffa9fae4ab4e08642cfb3f82e513e7b7dd1c92b5"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/media-learning-event.schema.json",
+          "role": "SCHEMA",
+          "sha256": "f684dd97796743cb6ffc7e965247a24c9c124e82534cd99f40663ddc976ef04c"
+        },
+        {
+          "path": "tools/video-production-reference/templates/audience-discovery-canvas-v1.json",
+          "role": "FIXTURE",
+          "sha256": "6dc7542e375e87dc63111d596eb1c05cb43be9119d08ab3c1a3ba53b21b738bf"
+        },
+        {
+          "path": "tools/video-production-reference/fixtures/audience-adaptation-proof-v1.json",
+          "role": "FIXTURE",
+          "sha256": "db1e545bfc962aed2e967de48833e6b511ce894d4e283c8c081e1ddcb436234a"
+        },
+        {
+          "path": "tools/video-production-reference/fixtures/privacy-safe-feedback-routes-v1.json",
+          "role": "FIXTURE",
+          "sha256": "e771e65ecdff64ae94680a02df799ab371338fc39a7b27fc6fd47da8e3b048b6"
+        },
+        {
+          "path": "tools/video-production-reference/fixtures/video-governance-learning-records.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "3985b92335c2ac5e3cb1c67dc7618a9275ed05b9aea43d60c223ba9661a6a54c"
+        },
+        {
+          "path": "tools/video-production-reference/fixtures/rejected-slide-decks-2026-08-03.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "c2c4b22645b1fa8f45510853368b266e8553791a97208ec6fece9dc4bcbdcf81"
+        },
+        {
+          "path": "tools/video-production-reference/tests/test_visual_governance.py",
+          "role": "VALIDATOR",
+          "sha256": "4e57235108c3a35589d8c977674a7e5e3d55940cf51d48fa647ff8f70a82737c"
+        },
+        {
+          "path": "tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "522cd1fb8874990b17ede9040f9d87ad61c3af74828515327436687324d03277"
+        }
+      ],
+      "ownedTests": [
+        "npm run video:test"
+      ],
+      "invariants": [
+        "Audience assumptions retain observed, sourced, hypothesis and editorial-decision types with provenance, scope, confidence and non-stale review dates.",
+        "Learning records are append-only and digest-bound; promotion gates retain positive, negative, rejected and unresolved evidence.",
+        "Audience adaptation preserves one claim/evidence core while exact-revision human editorial, audience-fit and visual review remains required."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
     }
   ]
 }
