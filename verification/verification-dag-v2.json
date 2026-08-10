@@ -982,12 +982,12 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "a1cff38190faa787fb8c496286af1d230aed66f61b30121851b49d2302a4593b"
+          "sha256": "36c3a0381e1851db5ceb24daee1ff4f2be91d47927d162a243be22b3cc7aee14"
         },
         {
           "path": "package-lock.json",
           "role": "TOOLCHAIN",
-          "sha256": "c90694c4686a60ae16f691c4258c566f5df6ef0997955c676afd6a0812c2b91a"
+          "sha256": "193194c7bb794aa75418e8996636b2d5ac93bffbf09a48528c4fe6bb375069b2"
         },
         {
           "path": "tsconfig.json",
