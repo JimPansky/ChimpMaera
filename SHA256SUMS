@@ -315,8 +315,8 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 86e95faf62822834d6dd9f3b08499032f75651b246259346e71dfafef7632042  ./examples/daily-poc/v0.2.0-poc.20260802.3/manifest.json
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
-791b3af0fe31fb0e77142734ba5c74fab26e724bf4c90ff6db0a83a1d7f52e2b  ./package-lock.json
-692857d3bd0947501d022f95bf0fd372c86eb9af29a93a5476a9143e57ded9e7  ./package.json
+c90694c4686a60ae16f691c4258c566f5df6ef0997955c676afd6a0812c2b91a  ./package-lock.json
+6d5d9fcd9e32edc0f873ff022b57009ef4c3a0d39a0feee70b9937880c26d5f9  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 d2310f860109f87b799ba4eb4b067255d4237c4bbb71c1780145d14908a608bd  ./packages/contracts/src/azure-identity-profile.ts
@@ -690,4 +690,4 @@ ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77  ./verification
 15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa  ./verification/bi-005-dashboard-readbacks/stale.json
 2655ebc4ad753537910b81838bacdf7ff905013eed9ee929a1bc9e3bced9ff95  ./verification/bi-006-e2e-evidence-index-v1.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
-9250a055beca252a3f6b3b9e6aaf339c786a04d45f45fb89f945c79a8741a288  ./verification/verification-dag-v2.json
+f74803d3cfbe3a01526c42edec73adeda7718461f5e1707d681583d96c1683da  ./verification/verification-dag-v2.json
