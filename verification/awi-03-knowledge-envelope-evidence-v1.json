@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "chimpmaera.verification/awi-03-knowledge-envelope-evidence/v1",
+  "issue": 44,
+  "baseCommit": "83b20fe85356ebeb326fc7455080ecf131a75359",
+  "profile": "DEFAULT_OFF_LOCAL_SYNTHETIC",
+  "focusedCommand": "npm run knowledge-envelope:test",
+  "authoritativeSuite": {"command":"npm test","runs":1,"outcome":"PASS","tests":530,"passed":530,"failed":0},
+  "objectiveCounts": {"tests":7,"appleEnvelopes":4,"adversarialEnvelopeFixtures":6,"selectionPolicyDenials":4,"taxonomyDigestReplays":100,"selectionOrderReplays":100,"safeMigrations":1,"unsafeRollbackProbes":1,"authorityEntries":0},
+  "immutableDigests": {"priorTaxonomy":"10bfca8b451d36e435ce76417126d661524aab7069c8686522d76f78ebc7737a","activeTaxonomy":"b517aedc9b41c2c56b903f4a8bbcb092cb48254602f54900515db1417945405c","verifiedAppleProcedure":"baaf09afc0171172d3af0646273b6a0247b8c8bbd8be83b24fe72939e569385a","unverifiedAppleClaim":"0f0ad9dfedec325b47f89ffddbe4cb780649b464f13039ae687d9a115c476580","conflictingClaimA":"59a5a778654019809cbb8ec6ff69983430e20b551ba719fcd6f831374127b54c","conflictingClaimB":"6c8828ed218d53b86ccb2e158088244591669ff52b16bfeedb50b4a931dcac9f"},
+  "authorityBoundary": "READ_ONLY_KNOWLEDGE_NO_CREDENTIAL_POLICY_CAPABILITY_TOOL_WRITE_OR_EXECUTION_AUTHORITY",
+  "rollback": "Disable AWI-03, restore exact prior taxonomy/generation LKG, retain rejected/conflicting evidence append-only, and remove only scoped synthetic state without changing unrelated accepted generations.",
+  "nonClaims": ["No global truth or corpus completeness.","No production storage, retrieval, enrichment, model or provider.","No production taxonomy governance, certification, deployment, availability, performance or SLA.","No autonomous acceptance, credential, approval, capability, tool, write or execution authority."]
+}

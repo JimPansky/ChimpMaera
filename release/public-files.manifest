@@ -576,4 +576,14 @@ tools/video-production-reference/tests/test_cm_video.py	tools/video-production-r
 tools/video-production-reference/tests/test_reference_closure.py	tools/video-production-reference/tests/test_reference_closure.py	0644
 tools/video-production-reference/tests/test_visual_governance.py	tools/video-production-reference/tests/test_visual_governance.py	0644
 tsconfig.json	tsconfig.json	0644
+packages/contracts/src/knowledge-envelope.ts	packages/contracts/src/knowledge-envelope.ts	0644
+schemas/contracts/knowledge-envelope-v1.schema.json	schemas/contracts/knowledge-envelope-v1.schema.json	0644
+schemas/contracts/knowledge-taxonomy-v1.schema.json	schemas/contracts/knowledge-taxonomy-v1.schema.json	0644
+tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	0644
+tests/fixtures/knowledge-envelope/apple-claims-v1.json	tests/fixtures/knowledge-envelope/apple-claims-v1.json	0644
+tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json	tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json	0644
+tests/knowledge-envelope.test.ts	tests/knowledge-envelope.test.ts	0644
+docs/KNOWLEDGE-ENVELOPE.md	docs/KNOWLEDGE-ENVELOPE.md	0644
+docs/AWI-03-EVIDENCE.md	docs/AWI-03-EVIDENCE.md	0644
+verification/awi-03-knowledge-envelope-evidence-v1.json	verification/awi-03-knowledge-envelope-evidence-v1.json	0644
 verification/verification-dag-v2.json	verification/verification-dag-v2.json	0644

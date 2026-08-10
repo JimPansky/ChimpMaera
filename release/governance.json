@@ -265,6 +265,18 @@
       "traceability": {"issues": [157], "pullRequests": [], "sourceCommits": [], "pdcaPaths": ["docs/development/voice-m0-issue-157-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
     },
     {
+      "claimId": "CM-REL-021",
+      "component": "AWI-03 Universal Knowledge Envelope",
+      "claim": "ChimpMaera ships a strict local-synthetic attributable knowledge envelope with governed taxonomy generations, conflict-preserving deterministic selection and authority-free read-only explanation.",
+      "userValue": "Maintainers can retain unresolved domain-neutral knowledge and exact citations while curated selection fails closed and bounded exploratory results remain visibly unresolved.",
+      "includedBytes": ["packages/contracts/src/knowledge-envelope.ts", "schemas/contracts/knowledge-envelope-v1.schema.json", "schemas/contracts/knowledge-taxonomy-v1.schema.json", "tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json", "tests/fixtures/knowledge-envelope/apple-claims-v1.json", "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json", "tests/knowledge-envelope.test.ts", "docs/KNOWLEDGE-ENVELOPE.md", "docs/AWI-03-EVIDENCE.md", "verification/awi-03-knowledge-envelope-evidence-v1.json"],
+      "functionalProof": {"testPaths": ["tests/knowledge-envelope.test.ts"], "result": "PASS 7/7: four immutable attributable apple envelopes, exact curated/exploratory selection, read-only HMI explanation, 100 taxonomy digest replays and 100 order-independent selection replays verify."},
+      "safetyProof": {"testPaths": ["tests/knowledge-envelope.test.ts", "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json"], "result": "PASS: six retained envelope adversaries, four policy denials and unsafe migration fail closed or retain explicit unresolved state; all six authority classes remain empty."},
+      "evidencePaths": ["docs/KNOWLEDGE-ENVELOPE.md", "docs/AWI-03-EVIDENCE.md", "verification/awi-03-knowledge-envelope-evidence-v1.json"],
+      "nonClaims": ["Local deterministic synthetic default-off evidence only; no global truth, corpus completeness, production storage/retrieval, online enrichment, live model/provider, production taxonomy governance, licence determination, certification, deployment, availability, performance/SLA, autonomous acceptance or execution authority is proven."],
+      "traceability": {"issues": [44], "pullRequests": [], "sourceCommits": [], "pdcaPaths": ["docs/AWI-03-EVIDENCE.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+    },
+    {
       "claimId": "CM-REL-011",
       "claim": "ChimpMaera ships a directly runnable, closed and digest-bound repository proof for the local synthetic SAFE_GUIDED secure-default path.",
       "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md", "security/secure-default-proof-v1.json", "security/secure-default-proof-evidence-v1.json"],

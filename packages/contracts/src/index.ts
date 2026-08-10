@@ -35,6 +35,7 @@ export * from "./azure-identity-profile.js";
 export * from "./power-platform-read-connector.js";
 export * from "./extension-assurance-profile.js";
 export * from "./agent-work-event.js";
+export * from "./knowledge-envelope.js";
 export * from "./analytics-projection.js";
 export * from "./learning-routing.js";
 export * from "./learning-routing-outcome.js";

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/knowledge-taxonomy-v1.schema.json",
+  "title": "ChimpMaera governed knowledge taxonomy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taxonomyId", "generation", "priorGeneration", "kinds", "migrations", "compatibility", "taxonomyDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.knowledge/taxonomy/v1" },
+    "taxonomyId": { "$ref": "#/$defs/id" },
+    "generation": { "type": "integer", "minimum": 1 },
+    "priorGeneration": { "oneOf": [{ "type": "null" }, { "type": "integer", "minimum": 1 }] },
+    "kinds": { "type": "array", "minItems": 6, "uniqueItems": true, "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,47}$" } },
+    "migrations": { "type": "array", "uniqueItems": true, "items": { "type": "object", "additionalProperties": false, "required": ["fromKind", "toKind"], "properties": { "fromKind": { "type": "string" }, "toKind": { "type": "string" } } } },
+    "compatibility": { "const": "STRICT_ADDITIVE_OR_EXPLICIT_RENAME" },
+    "taxonomyDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

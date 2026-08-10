@@ -59,6 +59,14 @@ test("canonical Evidence DAG input digests match the current repository bytes", 
   }
 });
 
+test("AWI-03 knowledge changes select the bounded critical owner and hard gates", () => {
+  const result = plan(["packages/contracts/src/knowledge-envelope.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["awi-03-knowledge-envelope"]);
+  assert.deepEqual(result.selectedTests, ["npm run knowledge-envelope:test"]);
+  assert.deepEqual(result.hardGates, [...graph().hardGates].sort((a, b) => a.localeCompare(b, "en")));
+});
+
 test("single-node changes select the owner, downstream integrity and mandatory hard gates", () => {
   const result = plan(["scripts/verification-plan.mjs"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");

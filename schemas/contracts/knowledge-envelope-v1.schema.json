@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/knowledge-envelope-v1.schema.json",
+  "title": "ChimpMaera universal knowledge envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "envelopeId", "taxonomy", "scope", "kind", "statement", "attribution", "epistemicStatus", "trust", "freshness", "sensitivity", "permittedUses", "conflictsWith", "derivedFrom", "generationCandidate", "authority", "authorityBoundary", "envelopeDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.knowledge/envelope/v1" },
+    "envelopeId": { "$ref": "#/$defs/id" },
+    "taxonomy": { "type": "object", "additionalProperties": false, "required": ["taxonomyId", "generation", "taxonomyDigest"], "properties": { "taxonomyId": { "$ref": "#/$defs/id" }, "generation": { "type": "integer", "minimum": 1 }, "taxonomyDigest": { "$ref": "#/$defs/digest" } } },
+    "scope": { "type": "object", "additionalProperties": false, "required": ["namespace", "audience"], "properties": { "namespace": { "type": "string", "minLength": 1, "maxLength": 96 }, "audience": { "enum": ["PUBLIC_SYNTHETIC", "OWNER_PRIVATE"] } } },
+    "kind": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,47}$" },
+    "statement": { "type": "string", "minLength": 1, "maxLength": 2048 },
+    "attribution": { "type": "array", "minItems": 1, "maxItems": 16, "items": { "$ref": "#/$defs/source" } },
+    "epistemicStatus": { "enum": ["VERIFIED", "SUPPORTED", "UNVERIFIED", "DISPUTED", "UNRESOLVED"] },
+    "trust": { "enum": ["LOW", "MEDIUM", "HIGH"] },
+    "freshness": { "type": "object", "additionalProperties": false, "required": ["assessedAtMs", "staleAfterMs"], "properties": { "assessedAtMs": { "type": "integer", "minimum": 0 }, "staleAfterMs": { "type": "integer", "minimum": 0 } } },
+    "sensitivity": { "enum": ["PUBLIC", "INTERNAL", "RESTRICTED"] },
+    "permittedUses": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["CURATED_READ", "EXPLORATORY_READ", "KNOWLEDGE_GENERATION_CANDIDATE"] } },
+    "conflictsWith": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "derivedFrom": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "generationCandidate": { "enum": ["ACCEPTED", "NOT_CANDIDATE"] },
+    "authority": { "$ref": "#/$defs/authority" },
+    "authorityBoundary": { "const": "READ_ONLY_KNOWLEDGE_NO_CREDENTIAL_POLICY_CAPABILITY_TOOL_WRITE_OR_EXECUTION_AUTHORITY" },
+    "envelopeDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "source": { "type": "object", "additionalProperties": false, "required": ["sourceId", "citation", "sourceDigest", "observedAtMs", "licence"], "properties": { "sourceId": { "$ref": "#/$defs/id" }, "citation": { "type": "string", "minLength": 1, "maxLength": 512 }, "sourceDigest": { "$ref": "#/$defs/digest" }, "observedAtMs": { "type": "integer", "minimum": 0 }, "licence": { "enum": ["CC0-1.0", "CC-BY-4.0", "APACHE-2.0", "OWNER_AUTHORIZED"] } } },
+    "authority": { "type": "object", "additionalProperties": false, "required": ["credentials", "policyApprovals", "capabilities", "toolAccess", "writeTargets", "executionRoutes"], "properties": { "credentials": { "type": "array", "maxItems": 0 }, "policyApprovals": { "type": "array", "maxItems": 0 }, "capabilities": { "type": "array", "maxItems": 0 }, "toolAccess": { "type": "array", "maxItems": 0 }, "writeTargets": { "type": "array", "maxItems": 0 }, "executionRoutes": { "type": "array", "maxItems": 0 } } }
+  }
+}
