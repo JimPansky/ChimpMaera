@@ -1,36 +1,15 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://chimpmaera.org/schemas/audience-discovery-canvas-v1.json",
-  "title": "ChimpMaera Audience Discovery Canvas",
-  "type": "object",
-  "additionalProperties": true,
-  "required": ["schemaVersion", "context", "decisionToInfluence", "primaryAudiences", "secondaryAudiences", "excludedAudiences", "assumptions", "evidence", "unknowns", "review"],
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "https://chimpmaera.org/schemas/audience-discovery-canvas-v1.json", "title": "ChimpMaera Audience Discovery Canvas v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "context", "decisionToInfluence", "contentFamilies", "primaryAudiences", "secondaryAudiences", "excludedAudiences", "assumptions", "evidence", "unknowns", "review"],
   "properties": {
-    "schemaVersion": {"const": "cm.audience-discovery-canvas/v1"},
-    "primaryAudiences": {"type": "array", "minItems": 1},
-    "secondaryAudiences": {"type": "array", "minItems": 1},
-    "excludedAudiences": {"type": "array", "minItems": 1},
-    "assumptions": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "required": ["id", "statement", "classification", "evidenceRefs", "confidence", "owner", "reviewDate", "disconfirmingEvidence"],
-        "properties": {
-          "classification": {"enum": ["OBSERVED_FACT", "SOURCED_FACT", "HYPOTHESIS", "EDITORIAL_DECISION"]},
-          "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]}
-        }
-      }
-    },
-    "review": {
-      "type": "object",
-      "required": ["confidence", "antiStereotypeCheck", "privacyReview", "lockedRevisionSha256"],
-      "properties": {
-        "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]},
-        "antiStereotypeCheck": {"const": "PASS"},
-        "privacyReview": {"const": "PASS"},
-        "lockedRevisionSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
-      }
-    }
-  }
+    "schemaVersion": {"const": "cm.audience-discovery-canvas/v1"}, "context": {"type": "string", "minLength": 1}, "decisionToInfluence": {"type": "string", "minLength": 1},
+    "contentFamilies": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"enum": ["authority", "verification", "public-truth"]}},
+    "primaryAudiences": {"$ref": "#/$defs/audiences"}, "secondaryAudiences": {"$ref": "#/$defs/audiences"}, "excludedAudiences": {"$ref": "#/$defs/audiences"},
+    "evidence": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["id", "sourceType", "source", "collectedAt", "samplingLimit", "privacy"], "properties": {"id": {"type": "string", "minLength": 1}, "sourceType": {"enum": ["interview", "desk-research", "comment-mining", "documentation", "review", "aggregate-event"]}, "source": {"type": "string", "minLength": 1}, "collectedAt": {"type": "string", "format": "date"}, "samplingLimit": {"type": "string", "minLength": 1}, "privacy": {"enum": ["AGGREGATE", "CONSENTED_MINIMIZED_NOTE", "PSEUDONYMOUS_JUSTIFIED"]}, "sha256": {"$ref": "#/$defs/digest"}}}},
+    "assumptions": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["id", "statement", "type", "provenance", "evidenceRefs", "confidence", "scope", "owner", "reviewDate", "disconfirmingEvidence"], "properties": {"id": {"type": "string", "minLength": 1}, "statement": {"type": "string", "minLength": 1}, "type": {"enum": ["observed", "sourced", "hypothesis", "editorial-decision"]}, "provenance": {"type": "string", "minLength": 1}, "evidenceRefs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]}, "scope": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "validationProbe": {"type": "string", "minLength": 1}, "rationale": {"type": "string", "minLength": 1}, "owner": {"type": "string", "minLength": 1}, "reviewDate": {"type": "string", "format": "date"}, "disconfirmingEvidence": {"type": "array", "items": {"type": "string"}}}, "allOf": [{"if": {"properties": {"type": {"const": "hypothesis"}}}, "then": {"required": ["validationProbe"], "properties": {"validationProbe": {"type": "string", "minLength": 1}}}}, {"if": {"properties": {"type": {"const": "editorial-decision"}}}, "then": {"required": ["rationale"], "properties": {"rationale": {"type": "string", "minLength": 1}}}}]}},
+    "unknowns": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["question", "impact", "probe"], "properties": {"question": {"type": "string", "minLength": 1}, "impact": {"type": "string", "minLength": 1}, "probe": {"type": "string", "minLength": 1}}}},
+    "review": {"type": "object", "additionalProperties": false, "required": ["confidence", "antiStereotypeCheck", "privacyReview", "lockedRevisionSha256"], "properties": {"confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]}, "plannedProbe": {"type": "string", "minLength": 1}, "antiStereotypeCheck": {"const": "PASS"}, "privacyReview": {"const": "PASS"}, "lockedRevisionSha256": {"$ref": "#/$defs/digest"}}}
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "audiences": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string", "minLength": 1}}, "additionalProperties": true}}}
 }

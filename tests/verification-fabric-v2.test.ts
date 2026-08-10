@@ -82,8 +82,15 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1", "bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "intake-001-issue-candidate-v1", "integration-profile-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1", "bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
+});
+
+test("media audience-learning changes select the bounded video owner", () => {
+  const result = plan(["tools/video-production-reference/schemas/learning-record.schema.json"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["know-media-m1-audience-learning-v1"]);
+  assert.deepEqual(result.selectedTests, ["npm run video:test"]);
 });
 
 test("learning-routing changes select the complete foundation and downstream integrity gates", () => {

@@ -534,7 +534,9 @@ tools/video-production-reference/docs/VISUAL-LANGUAGE-AUTHORING.md	tools/video-p
 tools/video-production-reference/examples/minimal/generate_assets.py	tools/video-production-reference/examples/minimal/generate_assets.py	0755
 tools/video-production-reference/examples/minimal/generate_evidence.py	tools/video-production-reference/examples/minimal/generate_evidence.py	0755
 tools/video-production-reference/fixtures/audience-copy-gate.json	tools/video-production-reference/fixtures/audience-copy-gate.json	0644
+tools/video-production-reference/fixtures/audience-adaptation-proof-v1.json	tools/video-production-reference/fixtures/audience-adaptation-proof-v1.json	0644
 tools/video-production-reference/fixtures/methodology-probes.json	tools/video-production-reference/fixtures/methodology-probes.json	0644
+tools/video-production-reference/fixtures/privacy-safe-feedback-routes-v1.json	tools/video-production-reference/fixtures/privacy-safe-feedback-routes-v1.json	0644
 tools/video-production-reference/fixtures/rejected-slide-decks-2026-08-03.json	tools/video-production-reference/fixtures/rejected-slide-decks-2026-08-03.json	0644
 tools/video-production-reference/fixtures/video-governance-learning-records.json	tools/video-production-reference/fixtures/video-governance-learning-records.json	0644
 tools/video-production-reference/fixtures/visual-governance-negative-probes.json	tools/video-production-reference/fixtures/visual-governance-negative-probes.json	0644
@@ -548,6 +550,7 @@ tools/video-production-reference/schemas/audience-discovery-canvas.schema.json	t
 tools/video-production-reference/schemas/consumed-deltas.schema.json	tools/video-production-reference/schemas/consumed-deltas.schema.json	0644
 tools/video-production-reference/schemas/methodology-evidence.schema.json	tools/video-production-reference/schemas/methodology-evidence.schema.json	0644
 tools/video-production-reference/schemas/learning-record.schema.json	tools/video-production-reference/schemas/learning-record.schema.json	0644
+tools/video-production-reference/schemas/media-learning-event.schema.json	tools/video-production-reference/schemas/media-learning-event.schema.json	0644
 tools/video-production-reference/schemas/process-delta.schema.json	tools/video-production-reference/schemas/process-delta.schema.json	0644
 tools/video-production-reference/schemas/public-copy-policy.schema.json	tools/video-production-reference/schemas/public-copy-policy.schema.json	0644
 tools/video-production-reference/schemas/scene.schema.json	tools/video-production-reference/schemas/scene.schema.json	0644
