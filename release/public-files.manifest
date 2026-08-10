@@ -587,3 +587,11 @@ docs/KNOWLEDGE-ENVELOPE.md	docs/KNOWLEDGE-ENVELOPE.md	0644
 docs/AWI-03-EVIDENCE.md	docs/AWI-03-EVIDENCE.md	0644
 verification/awi-03-knowledge-envelope-evidence-v1.json	verification/awi-03-knowledge-envelope-evidence-v1.json	0644
 verification/verification-dag-v2.json	verification/verification-dag-v2.json	0644
+packages/contracts/src/issue-candidate.ts	packages/contracts/src/issue-candidate.ts	0644
+schemas/contracts/issue-candidate-v1.schema.json	schemas/contracts/issue-candidate-v1.schema.json	0644
+tests/fixtures/issue-candidate/positive-v1.json	tests/fixtures/issue-candidate/positive-v1.json	0644
+tests/fixtures/issue-candidate/quarantine-v1.json	tests/fixtures/issue-candidate/quarantine-v1.json	0644
+tests/issue-candidate.test.ts	tests/issue-candidate.test.ts	0644
+docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md	docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md	0644
+scripts/render-issue-candidate-evidence.mjs	scripts/render-issue-candidate-evidence.mjs	0755
+verification/intake-001-evidence-v1.json	verification/intake-001-evidence-v1.json	0644

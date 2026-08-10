@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "chimpmaera.verification/local-synthetic-report/v1",
+  "evidenceId": "evidence:intake-001-issue-candidate-v1",
+  "issue": "#46",
+  "parentIssue": "#39",
+  "separateUncompletedIssue": "#52",
+  "evidenceClass": "LOCAL_SYNTHETIC",
+  "commitBinding": "CONTAINING_DCO_SIGNED_COMMIT",
+  "futureCommitClaimed": false,
+  "objectiveCounts": {
+    "focusedTests": 8,
+    "positiveCompleteLifecycles": 1,
+    "quarantineFixtures": 7,
+    "classificationDenials": 1,
+    "duplicateOutcomes": 2,
+    "approvalDenials": 4,
+    "recoveryOutcomes": 6,
+    "historyTamperProbes": 1,
+    "defaultAmbientCapabilities": 0,
+    "realPublicWrites": 0
+  },
+  "negativeEvidenceStates": [
+    "quarantined",
+    "duplicate_blocked",
+    "review_required",
+    "recovery_required"
+  ],
+  "sanitization": {
+    "rawSecrets": false,
+    "personalData": false,
+    "privatePaths": false,
+    "privateInfrastructure": false,
+    "exploitDetails": false
+  },
+  "claims": [
+    "STRICT_LOCAL_ISSUE_CANDIDATE_V1_LIFECYCLE",
+    "DETERMINISTIC_FAIL_CLOSED_SANITIZATION",
+    "MANDATORY_DEDUPE_BEFORE_SUBMIT",
+    "EXACT_ACTION_CONTENT_DESTINATION_APPROVAL",
+    "INJECTED_LEAST_PRIVILEGE_ADAPTER_ONLY",
+    "SINGLE_IDEMPOTENT_ATTEMPT",
+    "EXACT_RECEIPT_AND_READBACK_BINDING",
+    "IMMUTABLE_HASH_CHAINED_RECOVERY_EVIDENCE"
+  ],
+  "nonClaims": [
+    "AUTONOMOUS_OR_REAL_PUBLIC_WRITE",
+    "PUBLIC_SECURITY_DISCLOSURE",
+    "AUTOMATIC_REMOTE_ISSUE_CLOSURE",
+    "ISSUE_52_CONTRIBUTION_CONTROL_PLANE",
+    "THIRD_PARTY_SOCIAL_POSTING",
+    "LIVE_CREDENTIALS_DATA_OR_PROVIDERS",
+    "DEPLOYMENT",
+    "PRODUCTION_ACTIVATION",
+    "INFRASTRUCTURE_MUTATION",
+    "MERGED_OR_RELEASED"
+  ],
+  "artifacts": {
+    "packages/contracts/src/issue-candidate.ts": {
+      "sha256": "3b3afd3616d3f3a29170e3764bb6cc398147051fae5bc33e45057627796c532a"
+    },
+    "schemas/contracts/issue-candidate-v1.schema.json": {
+      "sha256": "e442f491bcbde525603b8bf9d4153758af93889138aedcbf64e0ced8ff6940af"
+    },
+    "tests/fixtures/issue-candidate/positive-v1.json": {
+      "sha256": "e1555582df11358c74e45053e9a0a70b3daf838fbc7870b6f77633f9726cdec3"
+    },
+    "tests/fixtures/issue-candidate/quarantine-v1.json": {
+      "sha256": "6a58ef56d2037c0ad1709c3476373ec1e46bec69e80c07f02db00b367f5e61c9"
+    },
+    "tests/issue-candidate.test.ts": {
+      "sha256": "a6d92272e7784e7e35d745b52ac38588e9be2d03744386f8055064ade3fb85b7"
+    },
+    "docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md": {
+      "sha256": "437ea30db2ea06e6c1eedae3608f56ff99cddd162fef129bd311f5d856c1a081"
+    },
+    "docs/development/intake-001-issue-46-pdca.md": {
+      "sha256": "8bf623fa2941a4cfb572600cbc9623006419e005a1e2b94cc92d4d729a23ea2c"
+    }
+  },
+  "verification": {
+    "focusedCommand": "npm run issue-candidate:test",
+    "authoritativeCommand": "npm test"
+  },
+  "rollback": "Disable only intake profile/route, restore exact last accepted v1 contract, retain receipts and quarantine evidence append-only, and use a protected revert after merge."
+}
