@@ -1,0 +1,62 @@
+name: ${CM_BI_SUPERSET_PROJECT:-chimpmaera-bi-superset-m0}
+services:
+  superset-init:
+    profiles: [bi-superset-m0]
+    platform: linux/amd64
+    image: chimpmaera/bi-superset-m0:local
+    build:
+      context: ../..
+      dockerfile: demo/bi-superset/Dockerfile
+    labels: {io.chimpmaera.fixture: bi-superset-m0-v1}
+    env_file:
+      - path: state/runtime.env
+        required: false
+    environment: {SUPERSET_CONFIG_PATH: /opt/chimpmaera-bi/superset_config.py}
+    command: ["/opt/chimpmaera-bi/init.sh"]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1.0
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777"]
+    volumes: ["./state:/var/lib/chimpmaera-bi:rw"]
+    networks: [superset_internal]
+    restart: "no"
+  superset:
+    profiles: [bi-superset-m0]
+    platform: linux/amd64
+    image: chimpmaera/bi-superset-m0:local
+    depends_on: {superset-init: {condition: service_completed_successfully}}
+    labels: {io.chimpmaera.fixture: bi-superset-m0-v1}
+    env_file:
+      - path: state/runtime.env
+        required: false
+    environment: {SUPERSET_CONFIG_PATH: /opt/chimpmaera-bi/superset_config.py}
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1.0
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777"]
+    volumes: ["./state:/var/lib/chimpmaera-bi:rw"]
+    ports: ["127.0.0.1:${CM_BI_SUPERSET_PORT:-8088}:8088"]
+    networks: [superset_internal, localhost_access]
+    healthcheck:
+      test: [CMD, python, /opt/chimpmaera-bi/readiness.py]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+networks:
+  superset_internal:
+    internal: true
+    labels: {io.chimpmaera.fixture: bi-superset-m0-v1}
+  localhost_access:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "false"
+    labels: {io.chimpmaera.fixture: bi-superset-m0-v1}
