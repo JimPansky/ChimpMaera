@@ -1,0 +1,53 @@
+{
+  "approvalId": "approved:sha256:d7dddea1deb2ed92cb0df489c941158696aa648b0ec93f75404e78ef25f13ceb",
+  "fields": [
+    {
+      "aggregation": "SUM",
+      "columnRef": "net_amount",
+      "objectRef": "orders"
+    },
+    {
+      "aggregation": "SUM",
+      "columnRef": "net_amount",
+      "objectRef": "invoices"
+    },
+    {
+      "aggregation": "SUM",
+      "columnRef": "tax_amount",
+      "objectRef": "orders"
+    },
+    {
+      "aggregation": "SUM",
+      "columnRef": "tax_amount",
+      "objectRef": "invoices"
+    },
+    {
+      "aggregation": "SUM",
+      "columnRef": "gross_amount",
+      "objectRef": "orders"
+    },
+    {
+      "aggregation": "SUM",
+      "columnRef": "gross_amount",
+      "objectRef": "invoices"
+    }
+  ],
+  "profileDigest": "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce",
+  "rows": [
+    {
+      "grossAmount": 714,
+      "netAmount": 600,
+      "recordCount": 3,
+      "recordType": "ORDER",
+      "taxAmount": 114
+    },
+    {
+      "grossAmount": 357,
+      "netAmount": 300,
+      "recordCount": 2,
+      "recordType": "INVOICE",
+      "taxAmount": 57
+    }
+  ],
+  "schemaVersion": "chimpmaera.bi/curated-projection/v1"
+}

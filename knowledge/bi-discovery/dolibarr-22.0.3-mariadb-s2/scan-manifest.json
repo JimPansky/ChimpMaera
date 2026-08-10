@@ -1,0 +1,25 @@
+{
+  "approvalId": "approved:sha256:d7dddea1deb2ed92cb0df489c941158696aa648b0ec93f75404e78ef25f13ceb",
+  "artifactDigests": {
+    "approval": "40a44cb3d2d11dcc1744b04f81ceb60aeeecdedde6d828afd819b7a8f9d1eac2",
+    "knowledge": "13479fe23eca4daafdcde4152e2767b72cbc032c8ab148897963c740991ecd84",
+    "normalized": "632e36be6231d1ee831247b9b76852dab7972631f317af02f215adb4aa156df6",
+    "profile": "c1655b270042eea41f668e799d3bd465afb562aeec560d7fb58e4c17e0edaea7",
+    "projection": "ae90e5cdd880d78ce28aea5b3cc827c18ff0532b015c1387f3e3e95b4993977b",
+    "review": "8607b830bb3bd1634ceff8d9325c49101ed670eb8fd8f5b009850c6ef9905a65",
+    "superset": "e8c3306f62e0dcc71f46d2a6f04af1bb900f4bacb021fdbd25f3160910691366"
+  },
+  "directSupersetSourceRoute": false,
+  "domain": "sales-orders-invoices",
+  "nonClaims": [
+    "single Dolibarr sales orders/invoices domain only",
+    "aggregate approved projection only",
+    "no row samples",
+    "no production readiness"
+  ],
+  "profileDigest": "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce",
+  "rowSamples": false,
+  "schemaVersion": "chimpmaera.bi/discovery-s2-pack/v1",
+  "stage1ScanId": "cmdb:scan:sha256:a6ee331b9b864d675b9f4f5a",
+  "stage1SourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9"
+}

@@ -15,5 +15,8 @@ try:
         assert marker["discoveryProjectionCount"] == 3 and len(marker["discoverySourceDigest"]) == 64
         for table in ("cm_discovery_inventory", "cm_discovery_relationships", "cm_discovery_coverage"):
             assert db.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] > 0
+    if marker.get("s2DiscoveryProjectionCount"):
+        assert marker["s2DiscoveryProjectionCount"] == 1 and len(marker["s2DiscoveryProfileDigest"]) == 64
+        assert db.execute("SELECT COUNT(*), SUM(total_ttc) FROM cm_discovery_s2_sales_profile").fetchone() == (2, 298201)
 except Exception:
     raise SystemExit(1)

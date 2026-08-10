@@ -1,0 +1,106 @@
+{
+  "dashboard": {
+    "charts": [
+      {
+        "fields": [
+          {
+            "aggregation": "SUM",
+            "columnRef": "net_amount",
+            "objectRef": "orders"
+          },
+          {
+            "aggregation": "SUM",
+            "columnRef": "net_amount",
+            "objectRef": "invoices"
+          },
+          {
+            "aggregation": "SUM",
+            "columnRef": "tax_amount",
+            "objectRef": "orders"
+          },
+          {
+            "aggregation": "SUM",
+            "columnRef": "tax_amount",
+            "objectRef": "invoices"
+          },
+          {
+            "aggregation": "SUM",
+            "columnRef": "gross_amount",
+            "objectRef": "orders"
+          },
+          {
+            "aggregation": "SUM",
+            "columnRef": "gross_amount",
+            "objectRef": "invoices"
+          }
+        ],
+        "name": "Approved profile drill-through",
+        "type": "table"
+      },
+      {
+        "metric": "COUNT(*)",
+        "name": "Approved aggregate count",
+        "type": "big_number"
+      }
+    ],
+    "title": "ChimpMaera Dolibarr sales profile starter"
+  },
+  "dataset": {
+    "fields": [
+      {
+        "aggregation": "SUM",
+        "columnRef": "net_amount",
+        "objectRef": "orders"
+      },
+      {
+        "aggregation": "SUM",
+        "columnRef": "net_amount",
+        "objectRef": "invoices"
+      },
+      {
+        "aggregation": "SUM",
+        "columnRef": "tax_amount",
+        "objectRef": "orders"
+      },
+      {
+        "aggregation": "SUM",
+        "columnRef": "tax_amount",
+        "objectRef": "invoices"
+      },
+      {
+        "aggregation": "SUM",
+        "columnRef": "gross_amount",
+        "objectRef": "orders"
+      },
+      {
+        "aggregation": "SUM",
+        "columnRef": "gross_amount",
+        "objectRef": "invoices"
+      }
+    ],
+    "name": "cm_discovery_s2_sales_profile",
+    "rows": [
+      {
+        "grossAmount": 714,
+        "netAmount": 600,
+        "recordCount": 3,
+        "recordType": "ORDER",
+        "taxAmount": 114
+      },
+      {
+        "grossAmount": 357,
+        "netAmount": 300,
+        "recordCount": 2,
+        "recordType": "INVOICE",
+        "taxAmount": 57
+      }
+    ]
+  },
+  "schemaVersion": "chimpmaera.bi/superset-approved-profile-bundle/v1",
+  "source": {
+    "approvalId": "approved:sha256:d7dddea1deb2ed92cb0df489c941158696aa648b0ec93f75404e78ef25f13ceb",
+    "directSourceRoute": false,
+    "kind": "APPROVED_PROFILE_PROJECTION",
+    "profileDigest": "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce"
+  }
+}

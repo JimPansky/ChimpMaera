@@ -1,0 +1,15 @@
+{
+  "engine":"MariaDB","cancelSafe":true,"elapsedMs":18,
+  "rows":[
+    {"objectRef":"orders","columnRef":"created_at","evidenceRef":"stage1:orders.created_at","typeFamily":"TEMPORAL","row_count":3,"null_count":0,"distinct_count":3,"minimum":"2026-01-01","maximum":"2026-01-03","freshness_maximum":"2026-01-03"},
+    {"objectRef":"orders","columnRef":"status_code","evidenceRef":"stage1:orders.status_code","typeFamily":"NUMERIC","row_count":3,"null_count":0,"distinct_count":2,"minimum":1,"maximum":2,"distribution":[{"value":1,"count":2},{"value":2,"count":1}]},
+    {"objectRef":"orders","columnRef":"net_amount","evidenceRef":"stage1:orders.net_amount","typeFamily":"NUMERIC","row_count":3,"null_count":0,"distinct_count":3,"minimum":100,"maximum":300},
+    {"objectRef":"orders","columnRef":"tax_amount","evidenceRef":"stage1:orders.tax_amount","typeFamily":"NUMERIC","row_count":3,"null_count":0,"distinct_count":3,"minimum":19,"maximum":57},
+    {"objectRef":"orders","columnRef":"gross_amount","evidenceRef":"stage1:orders.gross_amount","typeFamily":"NUMERIC","row_count":3,"null_count":0,"distinct_count":3,"minimum":119,"maximum":357},
+    {"objectRef":"invoices","columnRef":"created_at","evidenceRef":"stage1:invoices.created_at","typeFamily":"TEMPORAL","row_count":2,"null_count":0,"distinct_count":2,"minimum":"2026-01-02","maximum":"2026-01-03","freshness_maximum":"2026-01-03"},
+    {"objectRef":"invoices","columnRef":"status_code","evidenceRef":"stage1:invoices.status_code","typeFamily":"NUMERIC","row_count":2,"null_count":0,"distinct_count":2,"minimum":1,"maximum":2,"distribution":[{"value":1,"count":1},{"value":2,"count":1}]},
+    {"objectRef":"invoices","columnRef":"net_amount","evidenceRef":"stage1:invoices.net_amount","typeFamily":"NUMERIC","row_count":2,"null_count":0,"distinct_count":2,"minimum":100,"maximum":200},
+    {"objectRef":"invoices","columnRef":"tax_amount","evidenceRef":"stage1:invoices.tax_amount","typeFamily":"NUMERIC","row_count":2,"null_count":0,"distinct_count":2,"minimum":19,"maximum":38},
+    {"objectRef":"invoices","columnRef":"gross_amount","evidenceRef":"stage1:invoices.gross_amount","typeFamily":"NUMERIC","row_count":2,"null_count":0,"distinct_count":2,"minimum":119,"maximum":238}
+  ]
+}
