@@ -1,0 +1,14 @@
+{
+  "fixtureId": "fictional:purchasing-m0",
+  "dataClass": "PUBLIC_SYNTHETIC",
+  "contributions": [
+    {"id":"c1","organization":"Acme Anvils","system":"ProcureFox 2.0","text":"Every purchase request requires an accountable approver. At Acme Anvils, ProcureFox 2.0 requests above 10000 credits require tier-2 approval."},
+    {"id":"c2","organization":"Acme Anvils","system":"ProcureFox 2.0","text":"Every purchase request requires an accountable approver. At Acme Anvils, ProcureFox 2.0 requests above 10000 credits require tier-2 approval."},
+    {"id":"c3","organization":"Beta Bakery","system":"ProcureFox 3.1","text":"Every purchase request requires an accountable approver. Beta Bakery uses buyer approval for requests up to 500 credits."},
+    {"id":"c4","organization":"Acme Anvils","system":"ProcureFox 2.0","text":"Acme Anvils policy exception allows emergency requests to bypass tier-2 only when the fictional incident board records an exception."},
+    {"id":"c5","organization":"Acme Anvils","system":"ProcureFox 2.0","text":"ProcureFox 2.0 requests above 10000 credits require tier-3 approval."},
+    {"id":"c6","organization":null,"system":null,"text":"Requests above 10000 credits require approval."}
+  ],
+  "expectedRelations": ["EXACT_DUPLICATE","EQUIVALENT","CORE_PLUS_CONTEXTUAL_DELTA","SUBSUMPTION","DISJOINT_VARIANT","OVERLAPPING_CONFLICT"],
+  "nonClaims": ["No real organization, customer, person, credential, provider, network, or production knowledge is represented."]
+}

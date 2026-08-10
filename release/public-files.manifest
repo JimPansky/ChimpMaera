@@ -580,6 +580,16 @@ tools/video-production-reference/tests/test_reference_closure.py	tools/video-pro
 tools/video-production-reference/tests/test_visual_governance.py	tools/video-production-reference/tests/test_visual_governance.py	0644
 tsconfig.json	tsconfig.json	0644
 packages/contracts/src/knowledge-envelope.ts	packages/contracts/src/knowledge-envelope.ts	0644
+packages/contracts/src/knowledge-quality.ts	packages/contracts/src/knowledge-quality.ts	0644
+schemas/contracts/knowledge-contribution-envelope-v1.schema.json	schemas/contracts/knowledge-contribution-envelope-v1.schema.json	0644
+tests/fixtures/knowledge-quality/purchasing-v1.json	tests/fixtures/knowledge-quality/purchasing-v1.json	0644
+tests/knowledge-quality.test.ts	tests/knowledge-quality.test.ts	0644
+tests/knowledge-quality-api.test.mjs	tests/knowledge-quality-api.test.mjs	0644
+demo/knowledge-quality/api.mjs	demo/knowledge-quality/api.mjs	0644
+demo/knowledge-quality/Dockerfile	demo/knowledge-quality/Dockerfile	0644
+demo/knowledge-quality/compose.yaml	demo/knowledge-quality/compose.yaml	0644
+docs/KNOWLEDGE-QUALITY-SERVICE.md	docs/KNOWLEDGE-QUALITY-SERVICE.md	0644
+docs/development/lkc-qual-01-m0-evidence.md	docs/development/lkc-qual-01-m0-evidence.md	0644
 schemas/contracts/knowledge-envelope-v1.schema.json	schemas/contracts/knowledge-envelope-v1.schema.json	0644
 schemas/contracts/knowledge-taxonomy-v1.schema.json	schemas/contracts/knowledge-taxonomy-v1.schema.json	0644
 tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	0644
@@ -589,6 +599,7 @@ tests/knowledge-envelope.test.ts	tests/knowledge-envelope.test.ts	0644
 docs/KNOWLEDGE-ENVELOPE.md	docs/KNOWLEDGE-ENVELOPE.md	0644
 docs/AWI-03-EVIDENCE.md	docs/AWI-03-EVIDENCE.md	0644
 verification/awi-03-knowledge-envelope-evidence-v1.json	verification/awi-03-knowledge-envelope-evidence-v1.json	0644
+verification/lkc-qual-01-m0-evidence-v1.json	verification/lkc-qual-01-m0-evidence-v1.json	0644
 verification/verification-dag-v2.json	verification/verification-dag-v2.json	0644
 packages/contracts/src/issue-candidate.ts	packages/contracts/src/issue-candidate.ts	0644
 schemas/contracts/issue-candidate-v1.schema.json	schemas/contracts/issue-candidate-v1.schema.json	0644
