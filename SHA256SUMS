@@ -385,7 +385,7 @@ b2717b420cff3db392bc280f0b716f17f82cc82954c25015fde81b386b426b6c  ./packages/dev
 133e3f953df25435f912d60c2ccc6df693a340c8b1450c06b025c86403fc1926  ./packages/dev-worker/src/publication-broker.ts
 53c9279671427231000a7113906f397a436b7b7b79f0cb752b58b8c34318c47c  ./packages/setup-coordinator/src/index.ts
 508cf7342086b3dd8ee2ecfdf41c6732f7988d384b04ab60a50367766e324ba8  ./release/governance.json
-4bbe27505e2489ad1bd55850e676f4cac7affda813e6614d3b7f19726c21e198  ./release/public-files.manifest
+3efe8cec709e7a423e8f08897d599266bf2e097548ed4cbe95ac909aae7e7001  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 ff383ccc0829599d11542109ac3b4f1380719e8c85ce49eabd7938a98ad4e942  ./schemas/contracts/azure-identity-profile-v1.schema.json

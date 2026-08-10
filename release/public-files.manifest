@@ -589,7 +589,6 @@ demo/knowledge-quality/api.mjs	demo/knowledge-quality/api.mjs	0644
 demo/knowledge-quality/Dockerfile	demo/knowledge-quality/Dockerfile	0644
 demo/knowledge-quality/compose.yaml	demo/knowledge-quality/compose.yaml	0644
 docs/KNOWLEDGE-QUALITY-SERVICE.md	docs/KNOWLEDGE-QUALITY-SERVICE.md	0644
-docs/development/lkc-qual-01-m0-evidence.md	docs/development/lkc-qual-01-m0-evidence.md	0644
 schemas/contracts/knowledge-envelope-v1.schema.json	schemas/contracts/knowledge-envelope-v1.schema.json	0644
 schemas/contracts/knowledge-taxonomy-v1.schema.json	schemas/contracts/knowledge-taxonomy-v1.schema.json	0644
 tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	0644
