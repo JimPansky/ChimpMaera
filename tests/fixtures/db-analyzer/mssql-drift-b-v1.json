@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "chimpmaera.db/synthetic-drift-case/v1",
+  "engine": "mssql",
+  "observedAt": "2026-08-10T20:00:00Z",
+  "mutations": [
+    {
+      "operation": "CHANGE_FIELD",
+      "queryId": "mssql.structure.columns",
+      "key": {"schema_name": "dbo", "relation_name": "orders", "ordinal_position": 2, "column_name": "quantity"},
+      "field": "default_expression",
+      "before": "((0))",
+      "after": "((1))"
+    },
+    {
+      "operation": "REMOVE_ROW",
+      "queryId": "mssql.structure.synonyms",
+      "key": {"schema_name": "dbo", "synonym_name": "customer_directory"}
+    },
+    {
+      "operation": "ADD_ROW",
+      "queryId": "mssql.structure.sequences",
+      "key": {"schema_name": "dbo", "sequence_name": "invoice_number_seq"},
+      "row": {
+        "schema_name": "dbo", "sequence_name": "invoice_number_seq", "data_type": "bigint",
+        "numeric_precision": 19, "numeric_scale": 0, "start_value": "5000", "increment_by": "1",
+        "min_value": "5000", "max_value": "9223372036854775807", "is_cycling": false,
+        "cache_size": 50, "observed_value": "5000", "observed_value_semantics": "CURRENT_VALUE"
+      }
+    }
+  ],
+  "expected": {
+    "status": "DRIFT",
+    "summary": {"added": 1, "removed": 1, "changed": 1, "unchanged": 14},
+    "added": [{"queryId": "mssql.structure.sequences", "key": {"schema_name": "dbo", "sequence_name": "invoice_number_seq"}}],
+    "removed": [{"queryId": "mssql.structure.synonyms", "key": {"schema_name": "dbo", "synonym_name": "customer_directory"}}],
+    "changed": [{"queryId": "mssql.structure.columns", "key": {"schema_name": "dbo", "relation_name": "orders", "ordinal_position": 2, "column_name": "quantity"}}],
+    "zeroUnexplainedChanges": true
+  }
+}

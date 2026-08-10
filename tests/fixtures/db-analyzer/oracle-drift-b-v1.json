@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "chimpmaera.db/synthetic-drift-case/v1",
+  "engine": "oracle",
+  "observedAt": "2026-08-10T20:00:00Z",
+  "mutations": [
+    {
+      "operation": "CHANGE_FIELD",
+      "queryId": "oracle.structure.columns",
+      "key": {"schema_name": "CM_APP", "relation_name": "ORDERS", "ordinal_position": 2, "column_name": "QUANTITY"},
+      "field": "default_expression",
+      "before": "0",
+      "after": "1"
+    },
+    {
+      "operation": "REMOVE_ROW",
+      "queryId": "oracle.structure.synonyms",
+      "key": {"schema_name": "CM_APP", "synonym_name": "CUSTOMER_DIRECTORY"}
+    },
+    {
+      "operation": "ADD_ROW",
+      "queryId": "oracle.structure.sequences",
+      "key": {"schema_name": "CM_APP", "sequence_name": "INVOICE_NUMBER_SEQ"},
+      "row": {
+        "schema_name": "CM_APP", "sequence_name": "INVOICE_NUMBER_SEQ", "data_type": "NUMBER",
+        "numeric_precision": null, "numeric_scale": null, "start_value": null, "increment_by": "1",
+        "min_value": "5000", "max_value": "9999999999999999999999999999", "is_cycling": false,
+        "cache_size": 50, "observed_value": "5000", "observed_value_semantics": "LAST_NUMBER"
+      }
+    }
+  ],
+  "expected": {
+    "status": "DRIFT",
+    "summary": {"added": 1, "removed": 1, "changed": 1, "unchanged": 14},
+    "added": [{"queryId": "oracle.structure.sequences", "key": {"schema_name": "CM_APP", "sequence_name": "INVOICE_NUMBER_SEQ"}}],
+    "removed": [{"queryId": "oracle.structure.synonyms", "key": {"schema_name": "CM_APP", "synonym_name": "CUSTOMER_DIRECTORY"}}],
+    "changed": [{"queryId": "oracle.structure.columns", "key": {"schema_name": "CM_APP", "relation_name": "ORDERS", "ordinal_position": 2, "column_name": "QUANTITY"}}],
+    "zeroUnexplainedChanges": true
+  }
+}

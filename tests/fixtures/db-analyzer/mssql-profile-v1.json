@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "chimpmaera.db/analyze-profile/v1",
+  "profileId": "synthetic-mssql-structure-map",
+  "engine": "mssql",
+  "mode": "SYNTHETIC",
+  "queryPack": {"version": "v1"},
+  "scope": {"database": "CM_SYNTHETIC", "container": null, "schemas": ["dbo"]},
+  "policy": {"access": "READ_ONLY", "allowRowSamples": false, "maxQueryTimeoutMs": 5000},
+  "adapter": {"kind": "synthetic", "fixture": "mssql-preflight-v1.json"}
+}

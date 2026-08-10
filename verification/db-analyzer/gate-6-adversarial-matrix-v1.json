@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "chimpmaera.db/gate-6-adversarial-matrix/v1",
+  "engines": ["mssql", "oracle"],
+  "probes": [
+    {"id": "permission-denied", "expectedState": "DENIED", "expectedVisibility": "INVISIBLE", "expectedEmpty": "NOT_CLAIMED"},
+    {"id": "partial-visibility", "expectedState": "PARTIAL", "expectedVisibility": "VISIBLE_PARTIAL", "expectedEmpty": "NOT_CLAIMED"},
+    {"id": "timeout", "expectedState": "TIMEOUT", "expectedVisibility": "UNKNOWN", "expectedEmpty": "NOT_CLAIMED"},
+    {"id": "result-tamper", "expectedError": "DB_QUERY_RESULT_TAMPERED"},
+    {"id": "sql-mutation-tamper", "expectedError": "DB_QUERY_MUTATION_DENIED"},
+    {"id": "row-sample-tamper", "expectedError": "DB_QUERY_ROW_SOURCE_DENIED"}
+  ]
+}
