@@ -17,6 +17,54 @@
   ],
   "nodes": [
     {
+      "id": "bi-e2e-evidence-gate-v1",
+      "dependsOn": [
+        "bi-dashboard-readback-v1"
+      ],
+      "inputs": [
+        {
+          "path": "scripts/bi-e2e-gate.mjs",
+          "role": "VALIDATOR",
+          "sha256": "935305d869c8e4e6ba30e961328e2eda4a4c1b78fc31f68275828894c6a8dfdb"
+        },
+        {
+          "path": "scripts/render-bi-e2e-evidence.mjs",
+          "role": "VALIDATOR",
+          "sha256": "0c7e9c77166f1873021351dadf2c63f427cdeeca1c79c71fcb3409012565177a"
+        },
+        {
+          "path": "tests/bi-e2e-gate.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "1404c07b7c0ceab9cb799c2b23f0cd1a4e39cfcb1d976cd122ac5430669efe5b"
+        },
+        {
+          "path": "docs/BI-E2E-EVIDENCE-GATE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "b4f1449dafe1b957e3509f2ac74146d6684198805d36be11d123893ad75104fe"
+        },
+        {
+          "path": "docs/development/bi-006-e2e-evidence-gate-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "15b9a3edcd93e597589b53b2ecb5bbfbaf76692492d220ff051ce3696eaf74f7"
+        },
+        {
+          "path": "verification/bi-006-e2e-evidence-index-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "2655ebc4ad753537910b81838bacdf7ff905013eed9ee929a1bc9e3bced9ff95"
+        }
+      ],
+      "ownedTests": [
+        "npm run bi-e2e:test"
+      ],
+      "invariants": [
+        "Exact CRM and ERP fixture readbacks, reconciliation KPIs, and dashboard values agree at the declared zero tolerance.",
+        "All named denial, unavailable, interruption, reset, identity, and evidence-tamper probes fail closed without upgraded claims.",
+        "Reset removes only marker-verified derived BI state while source fixtures remain byte-identical and reruns remain deterministic."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "bi-dashboard-readback-v1",
       "dependsOn": [
         "bi-semantic-reconciliation-v1"
@@ -294,7 +342,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "769978ced9ec8e998291b198e77cb81de31bc379e05fd756ce6fc380ce949f1b"
+          "sha256": "6a1e0cb2b92e238b2a9d43cbf7b1833f49501137aed1855b86bf1aa7470d8d23"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -518,7 +566,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "b1859f4e611b3d1f85178b83e39926e7c6a1833a4b260773f2acb937f99e22c7"
+          "sha256": "61672e30db09efbbf707eecccebd7483f02c0f8c48f3e011a7bbdbb2cb2baa53"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -810,7 +858,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "c65c28a2831e5ed53e761b4727f4c16761b63c6072904b48bdd3622c8b2e8152"
+          "sha256": "ce41486a1009fa8d33df6c576c1128068705cc199f8f0b585779225489526bdf"
         },
         {
           "path": "package-lock.json",

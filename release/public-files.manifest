@@ -73,9 +73,14 @@ demo/bi-foundation/start.sh	demo/bi-foundation/start.sh	0755
 demo/bi-foundation/stop.sh	demo/bi-foundation/stop.sh	0755
 demo/manifests/supply-chain/bi-foundation-lock-v1.json	demo/manifests/supply-chain/bi-foundation-lock-v1.json	0644
 docs/BI-FOUNDATION-OPERATOR-GUIDE.md	docs/BI-FOUNDATION-OPERATOR-GUIDE.md	0644
+docs/BI-E2E-EVIDENCE-GATE.md	docs/BI-E2E-EVIDENCE-GATE.md	0644
 docs/CRM-READ-CONNECTOR-GUIDE.md	docs/CRM-READ-CONNECTOR-GUIDE.md	0644
 scripts/verify-bi-foundation.mjs	scripts/verify-bi-foundation.mjs	0755
+scripts/bi-e2e-gate.mjs	scripts/bi-e2e-gate.mjs	0755
+scripts/render-bi-e2e-evidence.mjs	scripts/render-bi-e2e-evidence.mjs	0755
 tests/bi-foundation.test.mjs	tests/bi-foundation.test.mjs	0644
+tests/bi-e2e-gate.test.mjs	tests/bi-e2e-gate.test.mjs	0644
+verification/bi-006-e2e-evidence-index-v1.json	verification/bi-006-e2e-evidence-index-v1.json	0644
 packages/contracts/src/crm-read-connector.ts	packages/contracts/src/crm-read-connector.ts	0644
 schemas/contracts/crm-read-connector-v1.schema.json	schemas/contracts/crm-read-connector-v1.schema.json	0644
 tests/crm-read-connector.test.ts	tests/crm-read-connector.test.ts	0644

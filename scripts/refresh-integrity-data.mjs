@@ -95,6 +95,17 @@ const bi005Inputs = [
   ...["normal", "empty", "stale", "conflict", "denied", "error"].map((state) => [`verification/bi-005-dashboard-readbacks/${state}.json`, "DERIVED_EVIDENCE"]),
 ];
 bi005Node.inputs = bi005Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
+const bi006Node = dag.nodes.find(({ id }) => id === "bi-e2e-evidence-gate-v1");
+if (bi006Node === undefined) throw new Error("BI_006_DAG_NODE_MISSING");
+const bi006Inputs = [
+  ["scripts/bi-e2e-gate.mjs", "VALIDATOR"],
+  ["scripts/render-bi-e2e-evidence.mjs", "VALIDATOR"],
+  ["tests/bi-e2e-gate.test.mjs", "VALIDATOR"],
+  ["docs/BI-E2E-EVIDENCE-GATE.md", "DERIVED_EVIDENCE"],
+  ["docs/development/bi-006-e2e-evidence-gate-pdca.md", "DERIVED_EVIDENCE"],
+  ["verification/bi-006-e2e-evidence-index-v1.json", "DERIVED_EVIDENCE"],
+];
+bi006Node.inputs = bi006Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
 const m14Node = dag.nodes.find(({ id }) => id === "openclaw-m1-4");
 if (m14Node === undefined) throw new Error("OPENCLAW_M1_4_DAG_NODE_MISSING");
 const m14Inputs = [
