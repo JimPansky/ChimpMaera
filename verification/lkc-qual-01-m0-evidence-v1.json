@@ -5,6 +5,7 @@
   "dataClass": "PUBLIC_SYNTHETIC",
   "claim": "Focused local M0 qualification contract and offline demo evidence only.",
   "bindings": [
+    {"path":"package.json","sha256":"a1cff38190faa787fb8c496286af1d230aed66f61b30121851b49d2302a4593b"},
     {"path":"packages/contracts/src/knowledge-quality.ts","sha256":"781d2a718e083de9a94b579308aad7cf29ad7943094482995442b56b72d20ac2"},
     {"path":"schemas/contracts/knowledge-contribution-envelope-v1.schema.json","sha256":"731349165a14d5de6526560ff8e35348241868f192b56d8c290990527e4d5494"},
     {"path":"tests/fixtures/knowledge-quality/purchasing-v1.json","sha256":"a8909e4767cb29c7f553ad70ee40f4a3ddf40b4605b0f4b5e62f8bb215c44396"},
@@ -15,6 +16,7 @@
     {"path":"docs/KNOWLEDGE-QUALITY-SERVICE.md","sha256":"7031723899cc3145522bd544e4a7f553c7176dccaea5521051d1cf63b925274d"}
   ],
   "focusedAssertions": 9,
+  "authoritativeRegistration": {"command":"npm test","lifecycle":"pretest","focusedCommand":"npm run knowledge-quality:test","occurrences":1,"standaloneParityOccurrences":0},
   "authority": "NONE",
   "network": "OFFLINE_PROFILE_ONLY",
   "nonClaims": ["CI", "merge", "release", "deployment", "production activation", "global domain quality", "parent epic completion"]

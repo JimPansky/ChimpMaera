@@ -9,6 +9,8 @@
 
 The focused evidence binds state-dependent JSON Schema/runtime parity, exact contribution-bound receipt validation, executable typed purchasing golden cases, strict configuration/context/model boundaries, deterministic qualification, applicability-first retrieval, fail-closed quarantine, exact LKG rollback or explicit denial, the default-off internal-network/loopback-only compose profile, and read-only API export. The owner-reserved repository-wide `npm test` suite was not run.
 
+Required-CI registration is through the repository-standard `pretest` lifecycle: `knowledge-quality:test` appears exactly once, while the narrower `knowledge-quality:schema-parity` command remains standalone because its assertion already runs inside the complete focused suite.
+
 Expected focused commands after final bytes are bound:
 
 ```text

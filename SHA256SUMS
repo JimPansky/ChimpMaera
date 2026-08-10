@@ -224,7 +224,7 @@ dca1a885043f0cdda8e738db25dd4bba404dbb78e909f45340689a15f61c86dc  ./docs/alterna
 53e984fc6aa7d08c60b4b248574f8680fa4b8683d950a492d1e7db63ff4f83c0  ./docs/capabilities.md
 845699add71af22318c15b72bc16dfcdcd31d34107bb5ca02ebd52e339efc68b  ./docs/development/bi-001-read-only-analytics-projection-pdca.md
 33682320e75002232f886bd027cfc57b4bd60c1e2642cb0b77e75cca13f3588a  ./docs/development/bi-004-semantic-reconciliation-pdca.md
-5425eed4a9fab7d771904ac50b450f530cac2c0d813aec1082014a5927dddd05  ./docs/development/lkc-qual-01-m0-evidence.md
+9bd84df398223c1563a96a8e7cd4e72fec9c4ceba57397ed06d4272d238dd6f1  ./docs/development/lkc-qual-01-m0-evidence.md
 f0f24ff22e907c010a7f943756617a14f24065415fa15bbdae86ae3bdc3ac6c8  ./docs/development/openclaw-m1.2-issue-5-pdca.md
 3ffe682439e929183b0f3e01af506e07529a748432d70849f553f759d927f6d0  ./docs/development/openclaw-m1.3-issue-6-pdca.md
 0062590cfb4840c2de3e9f3b6c9de08b749b5078e1bc26b0159d9005078bc635  ./docs/development/openclaw-m1.5-issue-8-pdca.md
@@ -321,7 +321,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 d0190f4caf44e2a846267b9182e42585f4c45052da4c3b7995702dded2d23176  ./examples/poc-release/showcase-v1.json
 a17c595ec0607e75c869874c60bad9d7348dedf51fbc752cf4b8873408103712  ./examples/poc-setup-planner/catalog-v1.json
 c90694c4686a60ae16f691c4258c566f5df6ef0997955c676afd6a0812c2b91a  ./package-lock.json
-9d06c9d04fc579e61aa59ea2dc6e894016ccb83a524300900d8391a6c499dafc  ./package.json
+a1cff38190faa787fb8c496286af1d230aed66f61b30121851b49d2302a4593b  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 d2310f860109f87b799ba4eb4b067255d4237c4bbb71c1780145d14908a608bd  ./packages/contracts/src/azure-identity-profile.ts
@@ -700,5 +700,5 @@ ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77  ./verification
 15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa  ./verification/bi-005-dashboard-readbacks/stale.json
 2655ebc4ad753537910b81838bacdf7ff905013eed9ee929a1bc9e3bced9ff95  ./verification/bi-006-e2e-evidence-index-v1.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
-d1af43c35e9d0f6f6db98076e021654a946072b19e222d54aa46c444978b5872  ./verification/lkc-qual-01-m0-evidence-v1.json
-ee6eced9d6faeb05f058064bd94b6d5637245692439652efbcd24cc5732af10f  ./verification/verification-dag-v2.json
+e2fa73eb5312982af288d29df015b0dc3e010f3fdba6405ce3b464b4ccece660  ./verification/lkc-qual-01-m0-evidence-v1.json
+e91308df5fa16eae2697ec76cbf9b2b6e4d63b9700826c9c201905199afc540d  ./verification/verification-dag-v2.json
