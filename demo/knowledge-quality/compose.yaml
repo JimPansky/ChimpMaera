@@ -1,0 +1,27 @@
+name: ${CM_LKC_QUAL_PROJECT:-chimpmaera-lkc-qual}
+services:
+  knowledge-quality:
+    profiles: [lkc-qual]
+    image: chimpmaera/lkc-qual-m0:local
+    build:
+      context: ../..
+      dockerfile: demo/knowledge-quality/Dockerfile
+      provenance: false
+    ports: ["127.0.0.1:18080:8080"]
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 32
+    mem_limit: 64m
+    cpus: 0.25
+    tmpfs: ["/tmp:rw,noexec,nosuid,nodev,size=4m,mode=1777"]
+    networks: [offline_loopback]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 2s
+      retries: 10
+networks:
+  offline_loopback:
+    internal: true

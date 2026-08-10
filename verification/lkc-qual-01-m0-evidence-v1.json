@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "chimpmaera.verification/local-evidence-binding/v1",
+  "evidenceId": "lkc-qual-01-m0-issue-116",
+  "pinnedBase": "5a995b95670947967896dc703cd96796c1d2e89b",
+  "dataClass": "PUBLIC_SYNTHETIC",
+  "claim": "Focused local M0 qualification contract and offline demo evidence only.",
+  "bindings": [
+    {"path":"package.json","sha256":"a1cff38190faa787fb8c496286af1d230aed66f61b30121851b49d2302a4593b"},
+    {"path":"packages/contracts/src/knowledge-quality.ts","sha256":"781d2a718e083de9a94b579308aad7cf29ad7943094482995442b56b72d20ac2"},
+    {"path":"schemas/contracts/knowledge-contribution-envelope-v1.schema.json","sha256":"731349165a14d5de6526560ff8e35348241868f192b56d8c290990527e4d5494"},
+    {"path":"tests/fixtures/knowledge-quality/purchasing-v1.json","sha256":"a8909e4767cb29c7f553ad70ee40f4a3ddf40b4605b0f4b5e62f8bb215c44396"},
+    {"path":"tests/knowledge-quality.test.ts","sha256":"b9354762dc2fdea40006e2dc31ff14da5bd78abbe5b8df238d8ce5e02aae0fee"},
+    {"path":"tests/knowledge-quality-api.test.mjs","sha256":"97880bcb7c48c42b7538cf17a5e2cb49b3cbfd4638de61b24e336eb1a786abe3"},
+    {"path":"demo/knowledge-quality/api.mjs","sha256":"a4e73af678a7830ea8de48523c3ea70cae5d56d4e42f4ff7441e382b73a48dd2"},
+    {"path":"demo/knowledge-quality/compose.yaml","sha256":"b678875b24890ea52ea34636643c8578db90c24d6521c7ae24e31a16b580fecc"},
+    {"path":"docs/KNOWLEDGE-QUALITY-SERVICE.md","sha256":"7031723899cc3145522bd544e4a7f553c7176dccaea5521051d1cf63b925274d"}
+  ],
+  "focusedAssertions": 9,
+  "authoritativeRegistration": {"command":"npm test","lifecycle":"pretest","focusedCommand":"npm run knowledge-quality:test","occurrences":1,"standaloneParityOccurrences":0},
+  "authority": "NONE",
+  "network": "OFFLINE_PROFILE_ONLY",
+  "nonClaims": ["CI", "merge", "release", "deployment", "production activation", "global domain quality", "parent epic completion"]
+}

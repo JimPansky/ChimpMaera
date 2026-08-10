@@ -1,0 +1,18 @@
+{
+  "fixtureId": "fictional:purchasing-m0",
+  "dataClass": "PUBLIC_SYNTHETIC",
+  "relationCases": [
+    {"caseId":"exact-duplicate","claims":[{"statement":"Requests require approval.","organization":"acme-anvils","system":"procurefox-2.0"},{"statement":"Requests require approval.","organization":"acme-anvils","system":"procurefox-2.0"}],"expected":{"kind":"EXACT_DUPLICATE","commonCore":null,"leftContextualDelta":null,"rightContextualDelta":null}},
+    {"caseId":"equivalent","claims":[{"statement":"Requests require approval.","organization":"acme-anvils","system":"procurefox-2.0"},{"statement":"Requests require approval!","organization":"acme-anvils","system":"procurefox-2.0"}],"expected":{"kind":"EQUIVALENT","commonCore":null,"leftContextualDelta":null,"rightContextualDelta":null}},
+    {"caseId":"safe-core-contextual-delta","claims":[{"statement":"Every purchase request requires an accountable approver. Acme Anvils uses tier-2 approval.","organization":"shared-context","system":"shared-system"},{"statement":"Every purchase request requires an accountable approver. Beta Bakery uses buyer approval.","organization":"shared-context","system":"shared-system"}],"expected":{"kind":"CORE_PLUS_CONTEXTUAL_DELTA","commonCore":"Every purchase request requires an accountable approver.","leftContextualDelta":"Acme Anvils uses tier-2 approval.","rightContextualDelta":"Beta Bakery uses buyer approval."}},
+    {"caseId":"subsumption","claims":[{"statement":"Requests require approval.","organization":"acme-anvils","system":"procurefox-2.0"},{"statement":"Requests require approval. Emergency requests need a recorded board exception.","organization":"acme-anvils","system":"procurefox-2.0"}],"expected":{"kind":"SUBSUMPTION","commonCore":null,"leftContextualDelta":null,"rightContextualDelta":null}},
+    {"caseId":"disjoint-system-variants","claims":[{"statement":"Tier-2 approval applies.","organization":"acme-anvils","system":"procurefox-2.0"},{"statement":"Buyer approval applies.","organization":"beta-bakery","system":"procurefox-3.1"}],"expected":{"kind":"DISJOINT_VARIANT","commonCore":null,"leftContextualDelta":null,"rightContextualDelta":null}},
+    {"caseId":"overlapping-conflict","claims":[{"statement":"Requests above 10000 credits require tier-2 approval.","organization":"acme-anvils","system":"procurefox-2.0"},{"statement":"Requests above 10000 credits require tier-3 approval.","organization":"acme-anvils","system":"procurefox-2.0"}],"expected":{"kind":"OVERLAPPING_CONFLICT","commonCore":null,"leftContextualDelta":null,"rightContextualDelta":null}},
+    {"caseId":"unsafe-abstraction-denied","claims":[{"statement":"All emergency purchases bypass approval.","organization":"acme-anvils","system":"procurefox-2.0"},{"statement":"All emergency purchases require board approval.","organization":"acme-anvils","system":"procurefox-2.0"}],"expected":{"kind":"OVERLAPPING_CONFLICT","commonCore":null,"leftContextualDelta":null,"rightContextualDelta":null}}
+  ],
+  "workflowCases": [
+    {"caseId":"policy-exception","statement":"Emergency requests may bypass tier-2 only with a recorded fictional board exception.","applicability":{"prerequisites_constraints_exceptions":"recorded-board-exception"},"materialDimensions":[],"expectedOutcome":"PROPOSED"},
+    {"caseId":"missing-system-context","statement":"Requests above 10000 credits require approval.","applicability":{},"materialDimensions":["system_config"],"expectedOutcome":"NEEDS_CONTEXT","expectedQuestionDimension":"system_config"}
+  ],
+  "nonClaims": ["No real organization, customer, person, credential, provider, network, or production knowledge is represented."]
+}
