@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "chimpmaera.bi/superset-m0-config/v1",
+  "enabled": false,
+  "host": "127.0.0.1",
+  "hostPort": 8088,
+  "platform": "linux/amd64",
+  "tenantId": "tenant:synthetic-zoo",
+  "semanticModelVersion": "1.0.0",
+  "semanticModelDigest": "11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f",
+  "datasetCount": 1,
+  "trust": "LOCAL_SYNTHETIC",
+  "productionAuthority": false
+}
+
