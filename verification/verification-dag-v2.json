@@ -629,7 +629,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "6890dcf641f901e1adb1c46239948f5f1a09ac66a51e5f63fa36a963e6b810e6"
+          "sha256": "a56f103a3dfe6bef66cd493120111e5b70045320d2803a3e7b54e2b14b8f3c36"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
