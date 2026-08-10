@@ -444,7 +444,7 @@ e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8  ./schemas/secu
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
 935305d869c8e4e6ba30e961328e2eda4a4c1b78fc31f68275828894c6a8dfdb  ./scripts/bi-e2e-gate.mjs
-9e7a4ca9bc24cb8556cb0c4f0dcc5e98c6bfb4794f6b182e62b524d9ae0f9501  ./scripts/build-public-release.sh
+6890dcf641f901e1adb1c46239948f5f1a09ac66a51e5f63fa36a963e6b810e6  ./scripts/build-public-release.sh
 da2109476338820e2ae5b2b42f720cf2d7c3b359122ee28bcea6fea65e1b1818  ./scripts/daily-poc.mjs
 abab50a97cf7113e2cad4125992fb3178a67877f573e974b128f2494ef1883b8  ./scripts/learning-routing-baseline.mjs
 556f60be292f8984c5a34648ec37f594bf795a9f68e3d3c169844d077d0c65d3  ./scripts/refresh-integrity-data.mjs
@@ -690,4 +690,4 @@ ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77  ./verification
 15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa  ./verification/bi-005-dashboard-readbacks/stale.json
 2655ebc4ad753537910b81838bacdf7ff905013eed9ee929a1bc9e3bced9ff95  ./verification/bi-006-e2e-evidence-index-v1.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
-a7bfb4b03ab4671f25c6dca5fff5b3671218d588254ead9ac3554386253e58ad  ./verification/verification-dag-v2.json
+9250a055beca252a3f6b3b9e6aaf339c786a04d45f45fb89f945c79a8741a288  ./verification/verification-dag-v2.json
