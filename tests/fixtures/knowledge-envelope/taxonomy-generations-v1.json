@@ -1,0 +1,4 @@
+{
+  "priorTaxonomy": {"schemaVersion":"chimpmaera.knowledge/taxonomy/v1","taxonomyId":"cm-taxonomy:universal","generation":1,"priorGeneration":null,"kinds":["CLAIM","OBSERVATION","PROCEDURE","DEFINITION","RELATIONSHIP","UNRESOLVED"],"migrations":[],"compatibility":"STRICT_ADDITIVE_OR_EXPLICIT_RENAME","taxonomyDigest":"10bfca8b451d36e435ce76417126d661524aab7069c8686522d76f78ebc7737a"},
+  "activeTaxonomy": {"schemaVersion":"chimpmaera.knowledge/taxonomy/v1","taxonomyId":"cm-taxonomy:universal","generation":2,"priorGeneration":1,"kinds":["CLAIM","OBSERVATION","PROCEDURE","DEFINITION","RELATIONSHIP","UNRESOLVED","HORTICULTURE_NOTE"],"migrations":[],"compatibility":"STRICT_ADDITIVE_OR_EXPLICIT_RENAME","taxonomyDigest":"b517aedc9b41c2c56b903f4a8bbcb092cb48254602f54900515db1417945405c"}
+}

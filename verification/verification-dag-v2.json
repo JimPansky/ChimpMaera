@@ -342,7 +342,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "6a1e0cb2b92e238b2a9d43cbf7b1833f49501137aed1855b86bf1aa7470d8d23"
+          "sha256": "df2462bd29dac46ff470d310cf23dc7d0c2a1cfc0cf109819434ae4940d5d76d"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -419,7 +419,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "bab061320af285262c2700d94f9ec4fd8103047d5d2a48acc7a5b44d07e2049a"
+          "sha256": "fba60ae8e4ede158c50bd9efde7de27aac167c9234a40c1dd84fd69620cf138c"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -561,17 +561,17 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "cdaee2f8eb032c0625263ae52feccad0cec5ae9881f6c89c4fa950f5e45592e6"
+          "sha256": "508cf7342086b3dd8ee2ecfdf41c6732f7988d384b04ab60a50367766e324ba8"
         },
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "61672e30db09efbbf707eecccebd7483f02c0f8c48f3e011a7bbdbb2cb2baa53"
+          "sha256": "d6e1e69d1f5c87b8f911affe4b0cd68ce489d6c0c7a9f5b9639294f3a3962f7b"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "35fb4d206e0f6e014557c500933f92715d336ccfe16c99c850b0eb8dc1a82744"
+          "sha256": "d1e31bb5bd9028a113434c55d09b57c77e912c65922d694894ca803bf02dd072"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -803,6 +803,67 @@
       "globalInvalidation": false
     },
     {
+      "id": "awi-03-knowledge-envelope",
+      "dependsOn": [],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/knowledge-envelope.ts",
+          "role": "CONTRACT",
+          "sha256": "ac1e17b86a4bf96700e9ad0c17628879323be563e06524158455c5970b81d67c"
+        },
+        {
+          "path": "schemas/contracts/knowledge-envelope-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "f2178937bbadc787c9ac9abb92080d5f880f866f5321f658930d762efeac2365"
+        },
+        {
+          "path": "schemas/contracts/knowledge-taxonomy-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "55a20170e7269124abd86117a06dba3f7f28dd229e3f5c5b8437b7582e4e3b28"
+        },
+        {
+          "path": "tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json",
+          "role": "FIXTURE",
+          "sha256": "aad47c8ec82362920b53503036b47e6ec095c13206caa85621722fdcd6e4976c"
+        },
+        {
+          "path": "tests/fixtures/knowledge-envelope/apple-claims-v1.json",
+          "role": "FIXTURE",
+          "sha256": "aa12eab403df928e03dc1494c18de894e5e1f2a47b1cb51931d0474933e8d6bd"
+        },
+        {
+          "path": "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json",
+          "role": "SECURITY",
+          "sha256": "affe8418d437032cc9d00789247633cacbac77adcea355d6a96a1267c807e6a7"
+        },
+        {
+          "path": "tests/knowledge-envelope.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "716c0acf55a71c7cb2c878803ed3f385f821b142297ed580e9b7db26e16a9bb4"
+        },
+        {
+          "path": "docs/KNOWLEDGE-ENVELOPE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "e7080bf688f1fc4322c735d5f169c83b37ffe6e4368da58e0b2aa90301bc46b1"
+        },
+        {
+          "path": "verification/awi-03-knowledge-envelope-evidence-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "b81903d977822ca156e09d48ddf824dcb17de2552d76cf566aaa9ac5f2bfc58f"
+        }
+      ],
+      "ownedTests": [
+        "npm run knowledge-envelope:test"
+      ],
+      "invariants": [
+        "Knowledge never grants credential, policy, capability, tool, write or execution authority.",
+        "Curated selection denies unresolved, unverified and conflicting knowledge.",
+        "Unsafe taxonomy migration retains the exact prior last-known-good generation."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
       "id": "secure-default-proof",
       "dependsOn": [
         "repository-integrity",
@@ -858,7 +919,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "936e22103e4b4150668b7750d46307b59b38a61f25b92feb07c71ec1aa807a5d"
+          "sha256": "dbbe2228717ed4233311d065ca75d61c2fc71a1c283a4eb6e55e3e08fa24a126"
         },
         {
           "path": "package-lock.json",

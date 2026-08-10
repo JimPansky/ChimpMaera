@@ -1,0 +1,8 @@
+[
+  {"caseId":"tampered-digest","path":"/statement","value":"tampered","rehash":false,"expected":"DIGEST_TAMPERED_DENIED"},
+  {"caseId":"unsupported-kind","path":"/kind","value":"UNKNOWN_KIND","rehash":true,"expected":"KIND_UNSUPPORTED"},
+  {"caseId":"missing-evidence","path":"/attribution","value":[],"rehash":true,"expected":"MISSING_EVIDENCE_DENIED"},
+  {"caseId":"circular-derivation","path":"/derivedFrom","value":["knowledge:apple-pruning"],"rehash":true,"expected":"CIRCULAR_DERIVATION_DENIED"},
+  {"caseId":"authority-capability","path":"/authority/capabilities","value":["capability:execute"],"rehash":true,"expected":"AUTHORITY_DENIED"},
+  {"caseId":"cross-taxonomy","path":"/taxonomy/generation","value":1,"rehash":true,"expected":"TAXONOMY_MISMATCH_DENIED"}
+]
