@@ -12,10 +12,17 @@ TENANT = "tenant:synthetic-zoo"
 DATASET_UUID = "24021830-0040-4000-8000-000000000004"
 DASHBOARD_UUID = "24021830-0050-4000-8000-000000000005"
 DISCOVERY_DASHBOARD_UUID = "24021870-0050-4000-8000-000000000187"
+DISCOVERY_S2_DATASET_UUID = "24021880-0040-4000-8000-000000000188"
+DISCOVERY_S2_DASHBOARD_UUID = "24021880-0050-4000-8000-000000000188"
 DISCOVERY_DATASETS = [
     ("24021870-0040-4000-8000-000000000181", "cm_discovery_inventory", "ChimpMaera Discovery — object inventory", [("object_id","TEXT"),("kind","TEXT"),("schema_name","TEXT"),("name","TEXT"),("parent_name","TEXT"),("type","TEXT"),("classification","TEXT"),("source_digest","TEXT")]),
     ("24021870-0040-4000-8000-000000000182", "cm_discovery_relationships", "ChimpMaera Discovery — relationships and dependencies", [("edge_id","TEXT"),("kind","TEXT"),("from_id","TEXT"),("to_id","TEXT"),("classification","TEXT"),("source_digest","TEXT")]),
     ("24021870-0040-4000-8000-000000000183", "cm_discovery_coverage", "ChimpMaera Discovery — coverage and blind spots", [("coverage_id","TEXT"),("subject","TEXT"),("status","TEXT"),("classification","TEXT"),("detail","TEXT"),("source_digest","TEXT")]),
+]
+DISCOVERY_S2_COLUMNS = [
+    ("domain","TEXT"),("record_type","TEXT"),("source_table","TEXT"),("record_count","INTEGER"),
+    ("total_ht","INTEGER"),("total_tva","INTEGER"),("total_ttc","INTEGER"),("currency_candidate","TEXT"),
+    ("status_scope","TEXT"),("freshness_max","TEXT"),("profile_digest","TEXT"),("approval_id","TEXT"),("source_digest","TEXT"),
 ]
 
 def discovery_projections():
@@ -31,6 +38,21 @@ def discovery_projections():
         assert projection["schemaVersion"] == "chimpmaera.bi/discovery-s1/v1"
     return value
 
+def discovery_s2_projection():
+    source = STATE / "discovery-s2-projections.json"
+    if not source.exists():
+        return None
+    value = json.loads(source.read_text())
+    assert value["schemaVersion"] == "chimpmaera.bi/discovery-s2-superset-projections/v1"
+    projection = value["salesProfile"]
+    assert projection["schemaVersion"] == "chimpmaera.bi/discovery-s2/v1"
+    assert projection["projection"] == "cm_discovery_s2_sales_profile"
+    assert projection["kpis"] == projection["sourceRecomputation"]
+    assert projection["rowSamples"] is False
+    assert len(projection["profileDigest"]) == 64
+    assert len(projection["approvalId"]) > 20
+    return value
+
 def accepted_rows():
     projection = json.loads((STATE / "projection.json").read_text())
     assert projection["schemaVersion"] == "chimpmaera.bi/superset-projection/v1"
@@ -43,6 +65,7 @@ def accepted_rows():
 def atomic_projection():
     rows = accepted_rows()
     discovery = discovery_projections()
+    discovery_s2 = discovery_s2_projection()
     fd, name = tempfile.mkstemp(prefix="semantic-", suffix=".db", dir=STATE)
     os.close(fd)
     conn = sqlite3.connect(name)
@@ -58,8 +81,12 @@ def atomic_projection():
         conn.executemany("INSERT INTO cm_discovery_relationships VALUES (?,?,?,?,?,?)", [(row["edgeId"],row["kind"],row["fromId"],row["toId"],row["classification"],digest) for row in discovery["relationships"]["rows"]])
         conn.execute("CREATE TABLE cm_discovery_coverage (coverage_id TEXT PRIMARY KEY, subject TEXT NOT NULL, status TEXT NOT NULL, classification TEXT NOT NULL, detail TEXT, source_digest TEXT NOT NULL)")
         conn.executemany("INSERT INTO cm_discovery_coverage VALUES (?,?,?,?,?,?)", [(row["coverageId"],row["subject"],row["status"],row["classification"],row["detail"],digest) for row in discovery["coverage"]["rows"]])
+    if discovery_s2:
+        projection = discovery_s2["salesProfile"]
+        conn.execute("CREATE TABLE cm_discovery_s2_sales_profile (domain TEXT NOT NULL, record_type TEXT NOT NULL, source_table TEXT NOT NULL, record_count INTEGER NOT NULL, total_ht INTEGER NOT NULL, total_tva INTEGER NOT NULL, total_ttc INTEGER NOT NULL, currency_candidate TEXT NOT NULL, status_scope TEXT NOT NULL, freshness_max TEXT, profile_digest TEXT NOT NULL, approval_id TEXT NOT NULL, source_digest TEXT NOT NULL)")
+        conn.executemany("INSERT INTO cm_discovery_s2_sales_profile VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", [(row["domain"],row["recordType"],row["sourceTable"],row["recordCount"],row["totalHt"],row["totalTva"],row["totalTtc"],row["currencyCandidate"],row["statusScope"],row["freshnessMax"],row["profileDigest"],row["approvalId"],row["sourceDigest"]) for row in projection["rows"]])
     conn.commit(); conn.close(); os.chmod(name, 0o600); os.replace(name, STATE / "semantic.db")
-    return discovery
+    return {"s1": discovery, "s2": discovery_s2}
 
 def deny_permissions(role):
     forbidden = ("sql lab", "sql query", "database", "dataset", "datasource", "upload", "plugin", "css template", "saved query")
@@ -87,7 +114,9 @@ with app.app_context():
     from superset.models.core import Database
     from superset.models.dashboard import Dashboard
     from superset.models.slice import Slice
-    discovery = atomic_projection()
+    discovery_bundle = atomic_projection()
+    discovery = discovery_bundle["s1"]
+    discovery_s2 = discovery_bundle["s2"]
     sm = app.appbuilder.sm
     admin = sm.find_user(username="cm_admin")
     if not admin:
@@ -186,7 +215,53 @@ with app.app_context():
             remove_legacy_datasource_permission(sm, stale_dataset.perm)
             db.session.delete(stale_dataset)
             db.session.flush()
+    s2_dataset = db.session.query(SqlaTable).filter_by(uuid=DISCOVERY_S2_DATASET_UUID).one_or_none()
+    if discovery_s2:
+        projection = discovery_s2["salesProfile"]
+        if not s2_dataset:
+            s2_dataset = SqlaTable(uuid=DISCOVERY_S2_DATASET_UUID, table_name="cm_discovery_s2_sales_profile", database=database, is_sqllab_view=False, description="READ-ONLY CM-owned aggregate S2 sales profile projection. No ERP row samples, raw customer names, credentials or direct Dolibarr route.")
+            db.session.add(s2_dataset); db.session.flush()
+            s2_dataset.columns = [TableColumn(column_name=name, type=typ, filterable=True, groupby=typ == "TEXT") for name, typ in DISCOVERY_S2_COLUMNS]
+            s2_dataset.metrics = [SqlMetric(metric_name=name, expression=expression, verbose_name=label, description="S2 source recomputation exact Superset readback") for name, expression, label in [
+                ("measure:s2-total-ttc","SUM(total_ttc)","S2 total TTC"),
+                ("measure:s2-record-count","SUM(record_count)","S2 record count"),
+            ]]
+        s2_dataset.description = f"READ-ONLY CM-owned aggregate S2 sales profile projection. Profile digest {projection['profileDigest']}; approval {projection['approvalId']}; no ERP row samples or direct source route."
+        permission = sm.add_permission_view_menu("datasource_access", s2_dataset.perm)
+        remove_legacy_datasource_permission(sm, s2_dataset.perm)
+        if permission and permission not in analyst_role.permissions:
+            sm.add_permission_role(analyst_role, permission)
+        s2_charts = []
+        s2_chart_specs = [
+            ("S2 orders total TTC", "big_number_total", {"metric":"measure:s2-total-ttc","adhoc_filters":[{"clause":"WHERE","comparator":"ORDER","expressionType":"SIMPLE","operator":"==","sqlExpression":None,"subject":"record_type"}]}),
+            ("S2 invoices total TTC", "big_number_total", {"metric":"measure:s2-total-ttc","adhoc_filters":[{"clause":"WHERE","comparator":"INVOICE","expressionType":"SIMPLE","operator":"==","sqlExpression":None,"subject":"record_type"}]}),
+            ("S2 sales profile drill-through", "table", {"all_columns":[name for name,_ in DISCOVERY_S2_COLUMNS],"adhoc_filters":[],"order_by_cols":[],"row_limit":100,"server_pagination":False}),
+        ]
+        for title, viz, params in s2_chart_specs:
+            chart = db.session.query(Slice).filter_by(slice_name=title).one_or_none()
+            payload = {"datasource":f"{s2_dataset.id}__table","viz_type":viz,**params}
+            if not chart:
+                chart = Slice(slice_name=title, viz_type=viz, datasource_type="table", datasource_id=s2_dataset.id)
+                db.session.add(chart)
+            chart.params = json.dumps(payload, sort_keys=True); s2_charts.append(chart)
+        db.session.flush()
+        s2_dashboard = db.session.query(Dashboard).filter_by(uuid=DISCOVERY_S2_DASHBOARD_UUID).one_or_none()
+        if not s2_dashboard:
+            s2_dashboard = Dashboard(uuid=DISCOVERY_S2_DASHBOARD_UUID, dashboard_title="ChimpMaera Dolibarr sales profile starter", slug="chimpmaera-dolibarr-sales-profile-starter", published=True)
+            db.session.add(s2_dashboard)
+        s2_dashboard.description = f"READ-ONLY AGGREGATE PROFILE · NO ROW SAMPLES · NO DIRECT DOLIBARR ROUTE · profile {projection['profileDigest']} · approval {projection['approvalId']}"
+        s2_dashboard.slices = s2_charts
+    else:
+        s2_dashboard = db.session.query(Dashboard).filter_by(uuid=DISCOVERY_S2_DASHBOARD_UUID).one_or_none()
+        if s2_dashboard:
+            for chart in list(s2_dashboard.slices): db.session.delete(chart)
+            db.session.delete(s2_dashboard)
+        for stale_chart in db.session.query(Slice).filter(Slice.slice_name.in_(["S2 orders total TTC","S2 invoices total TTC","S2 sales profile drill-through"])).all():
+            db.session.delete(stale_chart)
+        if s2_dataset:
+            remove_legacy_datasource_permission(sm, s2_dataset.perm)
+            db.session.delete(s2_dataset)
     db.session.commit()
-    marker = {"schemaVersion":"chimpmaera.bi/superset-m0-state/v1","status":"READY","datasetCount":db.session.query(SqlaTable).count(),"baseDatasetCount":1,"discoveryProjectionCount":3 if discovery else 0,"discoverySourceDigest":discovery["sourceDigest"] if discovery else None,"dashboardUuid":DASHBOARD_UUID,"datasetUuid":DATASET_UUID,"rowCount":len(accepted_rows()),"kpis":{"crmAmountMinor":8750000,"erpOrderTotalMinor":8750000,"reconciliationDeltaMinor":0},"modelDigest":"11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f","markings":["LOCAL_SYNTHETIC","NON_PRODUCTION","READ_ONLY","NON_AUTHORITY"]}
+    marker = {"schemaVersion":"chimpmaera.bi/superset-m0-state/v1","status":"READY","datasetCount":db.session.query(SqlaTable).count(),"baseDatasetCount":1,"discoveryProjectionCount":3 if discovery else 0,"s2DiscoveryProjectionCount":1 if discovery_s2 else 0,"discoverySourceDigest":discovery["sourceDigest"] if discovery else None,"s2DiscoveryProfileDigest":discovery_s2["salesProfile"]["profileDigest"] if discovery_s2 else None,"dashboardUuid":DASHBOARD_UUID,"datasetUuid":DATASET_UUID,"rowCount":len(accepted_rows()),"kpis":{"crmAmountMinor":8750000,"erpOrderTotalMinor":8750000,"reconciliationDeltaMinor":0},"modelDigest":"11c9a4c89b8fcee1a528fb6dbf339aa0460d4d8c02412d6330200e03c154913f","markings":["LOCAL_SYNTHETIC","NON_PRODUCTION","READ_ONLY","NON_AUTHORITY"]}
     marker["semanticSha256"] = hashlib.sha256((STATE / "semantic.db").read_bytes()).hexdigest()
     temp = STATE / "accepted.json.tmp"; temp.write_text(json.dumps(marker, sort_keys=True)+"\n"); os.chmod(temp,0o600); os.replace(temp, STATE / "accepted.json")

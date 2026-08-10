@@ -9,6 +9,16 @@
   },
   "principal": "cm_discovery_s1",
   "access": "metadata-only-read-only",
+  "stage2": {
+    "enabled": false,
+    "principal": "cm_discovery_s2",
+    "access": "explicit-column-allowlist-read-only",
+    "domain": "dolibarr-sales-orders-invoices",
+    "maxObjects": 5,
+    "maxColumns": 36,
+    "maxQueries": 80,
+    "queryTimeoutMs": 30000
+  },
   "rowData": false,
   "rowProfiling": false,
   "rawStoredCode": false,

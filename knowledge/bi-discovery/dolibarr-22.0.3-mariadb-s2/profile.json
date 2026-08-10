@@ -1,0 +1,220 @@
+{
+  "budgets": {
+    "maxColumns": 10,
+    "maxDistributionBuckets": 12,
+    "maxObjects": 2,
+    "maxQueries": 10,
+    "rowSamples": false,
+    "timeoutMs": 30000
+  },
+  "execution": {
+    "cancelSafe": true,
+    "elapsedMs": 18,
+    "queryCount": 10,
+    "readOnly": true,
+    "rowSamples": false
+  },
+  "facts": [
+    {
+      "candidate": "TEMPORAL_CANDIDATE",
+      "columnRef": "created_at",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.created_at",
+      "freshnessMaximum": "2026-01-03",
+      "maximum": "2026-01-03",
+      "minimum": "2026-01-02",
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "TEMPORAL"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "gross_amount",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.gross_amount",
+      "freshnessMaximum": null,
+      "maximum": 238,
+      "minimum": 119,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "net_amount",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.net_amount",
+      "freshnessMaximum": null,
+      "maximum": 200,
+      "minimum": 100,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "status_code",
+      "distinctCount": 2,
+      "distribution": [
+        {
+          "count": 1,
+          "value": 1
+        },
+        {
+          "count": 1,
+          "value": 2
+        }
+      ],
+      "evidenceRef": "stage1:invoices.status_code",
+      "freshnessMaximum": null,
+      "maximum": 2,
+      "minimum": 1,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "tax_amount",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.tax_amount",
+      "freshnessMaximum": null,
+      "maximum": 38,
+      "minimum": 19,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "TEMPORAL_CANDIDATE",
+      "columnRef": "created_at",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.created_at",
+      "freshnessMaximum": "2026-01-03",
+      "maximum": "2026-01-03",
+      "minimum": "2026-01-01",
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "TEMPORAL"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "gross_amount",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.gross_amount",
+      "freshnessMaximum": null,
+      "maximum": 357,
+      "minimum": 119,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "net_amount",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.net_amount",
+      "freshnessMaximum": null,
+      "maximum": 300,
+      "minimum": 100,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "LOW_CARDINALITY_CANDIDATE",
+      "columnRef": "status_code",
+      "distinctCount": 2,
+      "distribution": [
+        {
+          "count": 2,
+          "value": 1
+        },
+        {
+          "count": 1,
+          "value": 2
+        }
+      ],
+      "evidenceRef": "stage1:orders.status_code",
+      "freshnessMaximum": null,
+      "maximum": 2,
+      "minimum": 1,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "tax_amount",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.tax_amount",
+      "freshnessMaximum": null,
+      "maximum": 57,
+      "minimum": 19,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    }
+  ],
+  "profileDigest": "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce",
+  "schemaVersion": "chimpmaera.bi/profile-result/v1",
+  "scope": {
+    "scanId": "cmdb:scan:sha256:a6ee331b9b864d675b9f4f5a",
+    "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+    "sourceId": "dolibarr-22.0.3",
+    "tenantId": "fixture-tenant"
+  },
+  "selection": {
+    "objects": [
+      {
+        "columns": [
+          "created_at",
+          "status_code",
+          "net_amount",
+          "tax_amount",
+          "gross_amount"
+        ],
+        "objectRef": "orders"
+      },
+      {
+        "columns": [
+          "created_at",
+          "status_code",
+          "net_amount",
+          "tax_amount",
+          "gross_amount"
+        ],
+        "objectRef": "invoices"
+      }
+    ],
+    "rowSamples": false
+  }
+}

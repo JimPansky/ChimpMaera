@@ -629,7 +629,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "a1523cdc5ed03fc178a58e7196ddbab268bfe6c5692d69f9eeb9df39b26f82fe"
+          "sha256": "9244f1e2e43b13508dc9512f4ed4ed722d3e3af26c76b6ab522a9def2a317acb"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -982,7 +982,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "21f0c044bf9de6129a903b46be28e62ddf0b085510c31dbcd5ca755289736df2"
+          "sha256": "271b025e32c39b8a9e32bcd4e0853c700b731691586e31b9a3c21d572fdd25ef"
         },
         {
           "path": "package-lock.json",

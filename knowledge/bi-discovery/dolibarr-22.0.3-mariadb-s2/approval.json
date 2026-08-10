@@ -1,0 +1,244 @@
+{
+  "approvalId": "approved:sha256:d7dddea1deb2ed92cb0df489c941158696aa648b0ec93f75404e78ef25f13ceb",
+  "decisions": [
+    {
+      "columnRef": "created_at",
+      "disposition": "REVIEW_REQUIRED",
+      "evidenceRef": "stage1:invoices.created_at",
+      "objectRef": "invoices"
+    },
+    {
+      "columnRef": "gross_amount",
+      "disposition": "APPROVED_AGGREGATE",
+      "evidenceRef": "stage1:invoices.gross_amount",
+      "objectRef": "invoices"
+    },
+    {
+      "columnRef": "net_amount",
+      "disposition": "APPROVED_AGGREGATE",
+      "evidenceRef": "stage1:invoices.net_amount",
+      "objectRef": "invoices"
+    },
+    {
+      "columnRef": "status_code",
+      "disposition": "REVIEW_REQUIRED",
+      "evidenceRef": "stage1:invoices.status_code",
+      "objectRef": "invoices"
+    },
+    {
+      "columnRef": "tax_amount",
+      "disposition": "APPROVED_AGGREGATE",
+      "evidenceRef": "stage1:invoices.tax_amount",
+      "objectRef": "invoices"
+    },
+    {
+      "columnRef": "created_at",
+      "disposition": "REVIEW_REQUIRED",
+      "evidenceRef": "stage1:orders.created_at",
+      "objectRef": "orders"
+    },
+    {
+      "columnRef": "gross_amount",
+      "disposition": "APPROVED_AGGREGATE",
+      "evidenceRef": "stage1:orders.gross_amount",
+      "objectRef": "orders"
+    },
+    {
+      "columnRef": "net_amount",
+      "disposition": "APPROVED_AGGREGATE",
+      "evidenceRef": "stage1:orders.net_amount",
+      "objectRef": "orders"
+    },
+    {
+      "columnRef": "status_code",
+      "disposition": "REVIEW_REQUIRED",
+      "evidenceRef": "stage1:orders.status_code",
+      "objectRef": "orders"
+    },
+    {
+      "columnRef": "tax_amount",
+      "disposition": "APPROVED_AGGREGATE",
+      "evidenceRef": "stage1:orders.tax_amount",
+      "objectRef": "orders"
+    }
+  ],
+  "facts": [
+    {
+      "candidate": "TEMPORAL_CANDIDATE",
+      "columnRef": "created_at",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.created_at",
+      "freshnessMaximum": "2026-01-03",
+      "maximum": "2026-01-03",
+      "minimum": "2026-01-02",
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "TEMPORAL"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "gross_amount",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.gross_amount",
+      "freshnessMaximum": null,
+      "maximum": 238,
+      "minimum": 119,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "net_amount",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.net_amount",
+      "freshnessMaximum": null,
+      "maximum": 200,
+      "minimum": 100,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "status_code",
+      "distinctCount": 2,
+      "distribution": [
+        {
+          "count": 1,
+          "value": 1
+        },
+        {
+          "count": 1,
+          "value": 2
+        }
+      ],
+      "evidenceRef": "stage1:invoices.status_code",
+      "freshnessMaximum": null,
+      "maximum": 2,
+      "minimum": 1,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "tax_amount",
+      "distinctCount": 2,
+      "distribution": [],
+      "evidenceRef": "stage1:invoices.tax_amount",
+      "freshnessMaximum": null,
+      "maximum": 38,
+      "minimum": 19,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "invoices",
+      "rowCount": 2,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "TEMPORAL_CANDIDATE",
+      "columnRef": "created_at",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.created_at",
+      "freshnessMaximum": "2026-01-03",
+      "maximum": "2026-01-03",
+      "minimum": "2026-01-01",
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "TEMPORAL"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "gross_amount",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.gross_amount",
+      "freshnessMaximum": null,
+      "maximum": 357,
+      "minimum": 119,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "net_amount",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.net_amount",
+      "freshnessMaximum": null,
+      "maximum": 300,
+      "minimum": 100,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "LOW_CARDINALITY_CANDIDATE",
+      "columnRef": "status_code",
+      "distinctCount": 2,
+      "distribution": [
+        {
+          "count": 2,
+          "value": 1
+        },
+        {
+          "count": 1,
+          "value": 2
+        }
+      ],
+      "evidenceRef": "stage1:orders.status_code",
+      "freshnessMaximum": null,
+      "maximum": 2,
+      "minimum": 1,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    },
+    {
+      "candidate": "UNIQUE_VALUE_CANDIDATE",
+      "columnRef": "tax_amount",
+      "distinctCount": 3,
+      "distribution": [],
+      "evidenceRef": "stage1:orders.tax_amount",
+      "freshnessMaximum": null,
+      "maximum": 57,
+      "minimum": 19,
+      "nullCount": 0,
+      "nullRatio": 0,
+      "objectRef": "orders",
+      "rowCount": 3,
+      "typeFamily": "NUMERIC"
+    }
+  ],
+  "profileDigest": "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce",
+  "reviewDigest": "de621b8005881f62a413f6568d4e5403069ecba2d417d99406f83087e9daca4c",
+  "schemaVersion": "chimpmaera.bi/approved-profile/v1",
+  "scope": {
+    "scanId": "cmdb:scan:sha256:a6ee331b9b864d675b9f4f5a",
+    "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+    "sourceId": "dolibarr-22.0.3",
+    "tenantId": "fixture-tenant"
+  }
+}

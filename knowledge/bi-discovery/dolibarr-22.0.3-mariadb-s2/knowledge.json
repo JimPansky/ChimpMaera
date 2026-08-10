@@ -1,0 +1,37 @@
+{
+  "approvalId": "approved:sha256:d7dddea1deb2ed92cb0df489c941158696aa648b0ec93f75404e78ef25f13ceb",
+  "domain": "sales-orders-invoices",
+  "facts": [
+    {
+      "provenance": [
+        "approved:sha256:d7dddea1deb2ed92cb0df489c941158696aa648b0ec93f75404e78ef25f13ceb"
+      ],
+      "statement": "Orders and invoices are separate reviewed sales document populations in this fixture.",
+      "status": "FIXTURE_DECLARED"
+    },
+    {
+      "provenance": [
+        "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce"
+      ],
+      "statement": "Status meanings beyond the fixture declaration are not inferred.",
+      "status": "UNKNOWN_REVIEW_REQUIRED"
+    }
+  ],
+  "fixtureVersion": "Dolibarr 22.0.3",
+  "profileDigest": "d7342092879471424ec4f03cb6563eaa0f998f01cce4e2e40cd8a83c58d906ce",
+  "recomputation": {
+    "invoices": {
+      "grossAmount": 357,
+      "netAmount": 300,
+      "recordCount": 2,
+      "taxAmount": 57
+    },
+    "orders": {
+      "grossAmount": 714,
+      "netAmount": 600,
+      "recordCount": 3,
+      "taxAmount": 114
+    }
+  },
+  "schemaVersion": "chimpmaera.bi/dolibarr-22.0.3-knowledge/v1"
+}
