@@ -1,0 +1,8 @@
+{
+  "candidateId": "candidate:synthetic-46",
+  "destination": "repo:chimpmaera-synthetic",
+  "content": {
+    "title": "Clarify deterministic local readback",
+    "body": "A synthetic offline check should preserve the accepted content digest.\n\nExpected: exact local readback evidence."
+  }
+}

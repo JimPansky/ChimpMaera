@@ -1,0 +1,9 @@
+[
+  { "caseId": "secret-token", "text": "api_key=syntheticForbiddenValue123" },
+  { "caseId": "private-path", "text": "PRIVATE_PATH_PROBE" },
+  { "caseId": "tenant-user", "text": "tenant_id was included in the input" },
+  { "caseId": "internal-host", "text": "The endpoint was node.internal" },
+  { "caseId": "session-job", "text": "session_id=synthetic-session" },
+  { "caseId": "exploit-markup", "text": "Unsafe markup was <script>synthetic()</script>" },
+  { "caseId": "exploit-traversal", "text": "A synthetic traversal string ../../fixture was present" }
+]

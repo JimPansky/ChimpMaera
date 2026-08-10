@@ -66,6 +66,20 @@ writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEv
 
 const dagPath = "verification/verification-dag-v2.json";
 const dag = JSON.parse(readFileSync(path.join(root, dagPath), "utf8"));
+const intakeNode = dag.nodes.find(({ id }) => id === "intake-001-issue-candidate-v1");
+if (intakeNode === undefined) throw new Error("INTAKE_001_DAG_NODE_MISSING");
+const intakeInputs = [
+  ["packages/contracts/src/issue-candidate.ts", "SECURITY"],
+  ["schemas/contracts/issue-candidate-v1.schema.json", "SCHEMA"],
+  ["tests/fixtures/issue-candidate/positive-v1.json", "FIXTURE"],
+  ["tests/fixtures/issue-candidate/quarantine-v1.json", "FIXTURE"],
+  ["tests/issue-candidate.test.ts", "VALIDATOR"],
+  ["scripts/render-issue-candidate-evidence.mjs", "VALIDATOR"],
+  ["docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md", "DERIVED_EVIDENCE"],
+  ["docs/development/intake-001-issue-46-pdca.md", "DERIVED_EVIDENCE"],
+  ["verification/intake-001-evidence-v1.json", "DERIVED_EVIDENCE"],
+];
+intakeNode.inputs = intakeInputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
 const bi004Node = dag.nodes.find(({ id }) => id === "bi-semantic-reconciliation-v1");
 if (bi004Node === undefined) throw new Error("BI_004_DAG_NODE_MISSING");
 const bi004Inputs = [

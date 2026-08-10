@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 5,
+  "graphVersion": 6,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -16,6 +16,69 @@
     "./scripts/build-public-release.sh --output <isolated-absolute-path>"
   ],
   "nodes": [
+    {
+      "id": "intake-001-issue-candidate-v1",
+      "dependsOn": [
+        "vf-contract-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/issue-candidate.ts",
+          "role": "SECURITY",
+          "sha256": "3b3afd3616d3f3a29170e3764bb6cc398147051fae5bc33e45057627796c532a"
+        },
+        {
+          "path": "schemas/contracts/issue-candidate-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "e442f491bcbde525603b8bf9d4153758af93889138aedcbf64e0ced8ff6940af"
+        },
+        {
+          "path": "tests/fixtures/issue-candidate/positive-v1.json",
+          "role": "FIXTURE",
+          "sha256": "e1555582df11358c74e45053e9a0a70b3daf838fbc7870b6f77633f9726cdec3"
+        },
+        {
+          "path": "tests/fixtures/issue-candidate/quarantine-v1.json",
+          "role": "FIXTURE",
+          "sha256": "6a58ef56d2037c0ad1709c3476373ec1e46bec69e80c07f02db00b367f5e61c9"
+        },
+        {
+          "path": "tests/issue-candidate.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "a6d92272e7784e7e35d745b52ac38588e9be2d03744386f8055064ade3fb85b7"
+        },
+        {
+          "path": "scripts/render-issue-candidate-evidence.mjs",
+          "role": "VALIDATOR",
+          "sha256": "f6cd25472abcfe5ab3e44f180b24b5c7b1373547b4463562bd271db04466e807"
+        },
+        {
+          "path": "docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "437ea30db2ea06e6c1eedae3608f56ff99cddd162fef129bd311f5d856c1a081"
+        },
+        {
+          "path": "docs/development/intake-001-issue-46-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "8bf623fa2941a4cfb572600cbc9623006419e005a1e2b94cc92d4d729a23ea2c"
+        },
+        {
+          "path": "verification/intake-001-evidence-v1.json",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432"
+        }
+      ],
+      "ownedTests": [
+        "npm run issue-candidate:test"
+      ],
+      "invariants": [
+        "Duplicate search and exact owner approval precede one idempotent injected submit and exact readback.",
+        "Private, security and sensitive-shaped content emits zero public bytes and routes fail closed.",
+        "Uncertain effects cannot be resubmitted and retain immutable recovery identities."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
     {
       "id": "bi-e2e-evidence-gate-v1",
       "dependsOn": [
@@ -342,7 +405,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "df2462bd29dac46ff470d310cf23dc7d0c2a1cfc0cf109819434ae4940d5d76d"
+          "sha256": "d55471980b38d4cad59f7ca7ba2a4525b4f210a3e1e67fe891f057f7bd3f6bf4"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -419,7 +482,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "fba60ae8e4ede158c50bd9efde7de27aac167c9234a40c1dd84fd69620cf138c"
+          "sha256": "d8dc9f656ff767e635c85e0d206c4b048c74d90687854b78ef52c9f219be0cc2"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -566,7 +629,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "d6e1e69d1f5c87b8f911affe4b0cd68ce489d6c0c7a9f5b9639294f3a3962f7b"
+          "sha256": "9e7a4ca9bc24cb8556cb0c4f0dcc5e98c6bfb4794f6b182e62b524d9ae0f9501"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -919,7 +982,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "dbbe2228717ed4233311d065ca75d61c2fc71a1c283a4eb6e55e3e08fa24a126"
+          "sha256": "c67d10a5b4381e372faa4c72a1452529ba933e2f71d424141e50adfa4a04ec60"
         },
         {
           "path": "package-lock.json",

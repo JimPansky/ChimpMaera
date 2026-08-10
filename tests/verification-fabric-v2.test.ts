@@ -82,7 +82,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1", "bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "integration-profile-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1", "bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "intake-001-issue-candidate-v1", "integration-profile-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 
@@ -177,8 +177,8 @@ test("unmapped, unsafe, graph and ambiguous changes fail closed", () => {
 
 test("invalid, cyclic and unknown-node graphs are rejected", () => {
   const cyclic = structuredClone(graph()) as VerificationDagV2;
-  const first = cyclic.nodes[0];
-  const dependent = cyclic.nodes[1];
+  const first = cyclic.nodes.find(({ id }) => id === "intake-001-issue-candidate-v1");
+  const dependent = cyclic.nodes.find(({ id }) => id === "vf-contract-v1");
   assert.ok(first && dependent);
   (first.dependsOn as string[]).push(dependent.id);
   assert.equal(validateVerificationDagV2(cyclic), false);

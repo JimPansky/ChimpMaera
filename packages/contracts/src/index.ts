@@ -43,6 +43,7 @@ export * from "./learning-routing-threats.js";
 export * from "./learning-routing-baseline.js";
 export * from "./learning-routing-recommender.js";
 export * from "./signal-release-intake.js";
+export * from "./issue-candidate.js";
 export * from "./operation-event-quality.js";
 export * from "./bi-execution-spine.js";
 export * from "./crm-read-connector.js";

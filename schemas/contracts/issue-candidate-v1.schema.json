@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cm.issue-candidate/v1",
+  "title": "ChimpMaera issue candidate lifecycle v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "candidateId", "parentIssue", "content", "contentDigest", "classification", "route", "redactions", "duplicateSearchDigest", "approvalDigest", "attemptId", "receiptDigest", "readbackDigest", "remote", "state", "recoveryCode", "publicBytesEmitted", "history"],
+  "properties": {
+    "schemaVersion": { "const": "cm.issue-candidate/v1" },
+    "candidateId": { "$ref": "#/$defs/id" },
+    "parentIssue": { "const": 39 },
+    "content": { "$ref": "#/$defs/content" },
+    "contentDigest": { "$ref": "#/$defs/digest" },
+    "classification": { "type": ["string", "null"], "enum": ["PUBLIC", "PRIVATE", "SECURITY", null] },
+    "route": { "type": ["string", "null"], "enum": ["PUBLIC_PREFLIGHT", "PRIVATE_REVIEW", "SECURITY_POLICY", null] },
+    "redactions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,63}$" } },
+    "duplicateSearchDigest": { "$ref": "#/$defs/nullableDigest" },
+    "approvalDigest": { "$ref": "#/$defs/nullableDigest" },
+    "attemptId": { "type": ["string", "null"], "pattern": "^attempt:[a-f0-9]{32}$" },
+    "receiptDigest": { "$ref": "#/$defs/nullableDigest" },
+    "readbackDigest": { "$ref": "#/$defs/nullableDigest" },
+    "remote": { "oneOf": [{ "type": "null" }, { "type": "object", "additionalProperties": false, "required": ["id", "url"], "properties": { "id": { "$ref": "#/$defs/id" }, "url": { "type": "string", "pattern": "^https://example\\.invalid/issues/[a-z0-9._-]+$" } } }] },
+    "state": { "enum": ["observed", "drafted", "sanitized", "classified", "deduplicated", "owner_reviewed", "submitted", "readback_confirmed", "linked", "resolved", "quarantined", "duplicate_blocked", "review_required", "recovery_required"] },
+    "recoveryCode": { "type": ["string", "null"], "enum": ["SUBMIT_PARTIAL", "SUBMIT_TIMEOUT", "RECEIPT_DENIED", "READBACK_MISSING", "READBACK_MISMATCH", "READBACK_AMBIGUOUS", null] },
+    "publicBytesEmitted": { "type": "integer", "minimum": 0 },
+    "history": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/event" } }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "nullableDigest": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "content": { "type": "object", "additionalProperties": false, "required": ["title", "body"], "properties": { "title": { "type": "string", "minLength": 3, "maxLength": 160 }, "body": { "type": "string", "minLength": 3, "maxLength": 20000 } } },
+    "event": { "type": "object", "additionalProperties": false, "required": ["sequence", "state", "code", "atMs", "candidateId", "contentDigest", "approvalDigest", "attemptId", "receiptDigest", "readbackDigest", "previousEventDigest", "eventDigest"], "properties": {
+      "sequence": { "type": "integer", "minimum": 1 }, "state": { "type": "string" }, "code": { "type": "string", "minLength": 1 }, "atMs": { "type": "integer", "minimum": 0 }, "candidateId": { "$ref": "#/$defs/id" }, "contentDigest": { "$ref": "#/$defs/digest" }, "approvalDigest": { "$ref": "#/$defs/nullableDigest" }, "attemptId": { "type": ["string", "null"] }, "receiptDigest": { "$ref": "#/$defs/nullableDigest" }, "readbackDigest": { "$ref": "#/$defs/nullableDigest" }, "previousEventDigest": { "$ref": "#/$defs/nullableDigest" }, "eventDigest": { "$ref": "#/$defs/digest" }
+    } }
+  }
+}
