@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "chimpmaera.db/analyze-profile/v1",
+  "profileId": "synthetic-oracle-structure-map",
+  "engine": "oracle",
+  "mode": "SYNTHETIC",
+  "queryPack": {"version": "v1"},
+  "scope": {"database": "CMSYN", "container": "CMSYNPDB", "schemas": ["CM_APP"]},
+  "policy": {"access": "READ_ONLY", "allowRowSamples": false, "maxQueryTimeoutMs": 5000},
+  "adapter": {"kind": "synthetic", "fixture": "oracle-preflight-v1.json"}
+}

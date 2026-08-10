@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "chimpmaera.verification/db-runtime-evidence/v1",
+  "issue": 192,
+  "slice": "DB-ANALYZER-S1",
+  "observedAt": "2026-08-10T21:15:45Z",
+  "engine": {
+    "product": "Microsoft SQL Server 2022",
+    "edition": "Developer Edition (64-bit)",
+    "version": "16.0.4265.3",
+    "image": "mcr.microsoft.com/mssql/server:2022-latest",
+    "imageDigest": "sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89",
+    "licenseClass": "PROPRIETARY_EXTERNAL_TEST_RUNTIME",
+    "eulaAcceptedForThisLocalDevelopmentTest": true,
+    "eulaUrl": "https://go.microsoft.com/fwlink/?LinkId=746388"
+  },
+  "groundTruth": {
+    "name": "Wide World Importers Full",
+    "sourceUrl": "https://github.com/Microsoft/sql-server-samples/releases/download/wide-world-importers-v1.0/WideWorldImporters-Full.bak",
+    "sourceRepository": "https://github.com/microsoft/sql-server-samples",
+    "sourceRepositoryLicense": "MIT",
+    "backupSha256": "e842bad6ce02f74f166947e559dab1b476edd7eaae3da2ab9e3f522f1dd87124",
+    "backupBytes": 127111168,
+    "databaseUpdateabilityDuringAnalysis": "READ_ONLY"
+  },
+  "isolation": {
+    "publishedEndpoint": "127.0.0.1:11433",
+    "publicExposure": false,
+    "restartPolicy": "no",
+    "credentialSource": "ephemeral environment variable named by profile; value absent from repository, evidence and logs",
+    "rollback": "remove the isolated container and image plus its temporary passwords, restored database files, backup and raw evidence",
+    "rollbackExecuted": true,
+    "rollbackVerified": {
+      "containerRemoved": true,
+      "publishedPortClosed": true,
+      "temporaryRuntimeDirectoryRemoved": true,
+      "imageRemoved": true
+    }
+  },
+  "productAdapter": {
+    "package": "mssql",
+    "version": "12.7.0",
+    "license": "MIT",
+    "runtimePrincipal": "cm_analyzer",
+    "runtimePermissions": [
+      "CONNECT",
+      "VIEW DEFINITION"
+    ],
+    "systemAdministratorUsedForAnalysis": false,
+    "credentialsPersisted": false,
+    "readOnlyIntent": true,
+    "rowSamplesAllowed": false
+  },
+  "result": {
+    "runtimeValidation": "RUNTIME_VALIDATED",
+    "queriesSucceeded": 9,
+    "queriesDenied": 0,
+    "queriesTimedOut": 0,
+    "queriesErrored": 0,
+    "rowCounts": {
+      "mssql.preflight.identity": 1,
+      "mssql.preflight.rights": 2,
+      "mssql.structure.schemas": 21,
+      "mssql.structure.relations": 51,
+      "mssql.structure.columns": 589,
+      "mssql.structure.constraints": 151,
+      "mssql.structure.indexes": 191,
+      "mssql.structure.sequences": 26,
+      "mssql.structure.synonyms": 0
+    },
+    "snapshotSha256": "c2c5978fc78658b0534091e2d42de46b5b54f2582b7e3d6da894b631375319cf",
+    "renderedEvidenceSha256": "bbc895152edd9ce7911aa129c29b659e4340a2435ad691c468e5aac3ac8b25eb",
+    "repeatRunByteIdentical": true,
+    "outputBundle": {
+      "fileCount": 7,
+      "treeSha256": "a588b2a4c3b41f459af9bebaaa5c473109fdd1b96d27543cc4d11628f263ef10",
+      "repeatTreeIdentical": true,
+      "sourceBindingSha256": "4bace9ba7d229534b5b16a47fe37ec2ac2d33a5e762d54090ba7cce7c1c11d8a",
+      "canonicalJsonSha256": "cbc61212c10aa65588484e6376534372c17b21fba8b7d36bec66bdafa6a0222a",
+      "htmlSha256": "ecd137c923675ca594fb85603ecb0f71277d29234aa456ee824bfde22545b8c6",
+      "supersetRows": {
+        "inventory": 1029,
+        "relationships": 98,
+        "coverage": 9
+      },
+      "directSupersetSourceDatabaseConnection": false,
+      "credentialsPresent": false,
+      "rowSamplesPresent": false
+    }
+  },
+  "nonDistribution": {
+    "sqlServerImageBundled": false,
+    "sampleBackupBundled": false,
+    "restoredDatabaseBundled": false,
+    "rawRuntimeExtractBundled": false,
+    "productionOrCustomerDataUsed": false
+  },
+  "nonClaims": [
+    "This proves the frozen nine-query MSSQL Slice 1 structure pack and its canonical JSON, HTML and disconnected Superset projections against one SQL Server 2022 Developer runtime and one WWI database only.",
+    "It does not prove other SQL Server versions, permissions, collations, databases, Oracle runtime behavior, production suitability or public deployment.",
+    "Oracle remains synthetic/preparable until separately authorized runtime evidence exists."
+  ]
+}

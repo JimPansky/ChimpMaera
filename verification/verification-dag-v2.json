@@ -629,7 +629,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "9244f1e2e43b13508dc9512f4ed4ed722d3e3af26c76b6ab522a9def2a317acb"
+          "sha256": "976094705c4859fca9733d343ecf14406dd21128897eb53d78df52240ad1d11a"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -982,12 +982,12 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "271b025e32c39b8a9e32bcd4e0853c700b731691586e31b9a3c21d572fdd25ef"
+          "sha256": "7851a57d00e8518b2ced615062d9cdd8aa0bb73fe720eaa63b8b5546b7777d0a"
         },
         {
           "path": "package-lock.json",
           "role": "TOOLCHAIN",
-          "sha256": "0f6a224183d3d2eb68eebc0c61483c60cb785a93e67259cab264dc54aa2790cf"
+          "sha256": "913ffe4d35a6dd98cc4d20d4cdbe0849f7fef45651f173c8af35f6a9752a7945"
         },
         {
           "path": "tsconfig.json",

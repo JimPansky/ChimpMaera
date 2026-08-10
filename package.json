@@ -22,6 +22,9 @@
   },
   "license": "Apache-2.0",
   "type": "module",
+  "bin": {
+    "cm": "scripts/cm.mjs"
+  },
   "engines": {
     "node": ">=24.14.1 <25",
     "npm": ">=11.11.0 <12"
@@ -46,6 +49,11 @@
     "bi-superset-m0:test": "node --test tests/bi-superset-m0.test.mjs",
     "bi-discovery-s1:test": "node --test tests/bi-discovery-s1.test.mjs",
     "bi-discovery-s2:test": "node --test tests/bi-discovery-s2-core.test.mjs tests/bi-discovery-s2-mariadb-dolibarr.test.mjs tests/bi-discovery-s2.test.mjs",
+    "db-analyzer:test": "node --test tests/db-analyzer-query-pack.test.mjs",
+    "db-analyzer:safety:verify": "node scripts/verify-db-analyzer-safety.mjs",
+    "db-analyzer:drift:verify": "node scripts/verify-db-analyzer-drift.mjs",
+    "db-analyzer:outputs:verify": "node scripts/verify-db-analyzer-outputs.mjs",
+    "db-analyzer:provenance:verify": "node scripts/verify-db-analyzer-provenance.mjs",
     "crm-read:test": "npm run build --silent && node --test dist/tests/crm-read-connector.test.js",
     "erp-read:test": "npm run build --silent && node --test dist/tests/erp-read-connector.test.js",
     "bi-semantic:test": "npm run build --silent && node --test dist/tests/bi-semantic-reconciliation.test.js",
@@ -85,7 +93,8 @@
   },
   "dependencies": {
     "ajv": "8.20.0",
-    "ajv-formats": "3.0.1"
+    "ajv-formats": "3.0.1",
+    "mssql": "12.7.0"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

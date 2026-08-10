@@ -2,12 +2,14 @@
 
 ChimpMaera project-authored work is licensed under Apache License 2.0. The
 pinned JavaScript development/runtime dependency set in `package-lock.json`
-contains:
+includes these direct dependencies and selected transitive components:
 
 | Package | Version | License |
 | --- | ---: | --- |
 | `ajv` | 8.20.0 | MIT |
 | `ajv-formats` | 3.0.1 | MIT |
+| `mssql` | 12.7.0 | MIT |
+| `tedious` (via `mssql`) | 20.0.0 | MIT |
 | `fast-deep-equal` | 3.1.3 | MIT |
 | `fast-uri` | 3.1.4 | BSD-3-Clause |
 | `json-schema-traverse` | 1.0.0 | MIT |
@@ -22,6 +24,12 @@ Bookworm packages including Python, PyYAML, FFmpeg and CA certificates.
 Those components remain under their respective upstream licenses. Building or
 redistributing a container image may require retaining additional notices
 from the resulting image.
+
+The Issue #192 runtime verification uses Microsoft SQL Server Developer and
+Wide World Importers only as external, locally operated test infrastructure.
+Neither the proprietary SQL Server runtime nor the sample database is bundled
+or redistributed with ChimpMaera; its separate provenance and non-distribution
+boundary are recorded under `verification/db-analyzer/`.
 
 The optional voice sample and logo in
 `tools/video-production-reference/assets/reference/` are preserved under the
