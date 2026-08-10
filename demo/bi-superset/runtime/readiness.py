@@ -9,7 +9,11 @@ try:
     row = db.execute("SELECT COUNT(*), SUM(crm_amount_minor), SUM(erp_order_total_minor), SUM(delta_minor) FROM bi004_reconciled_fact").fetchone()
     assert row == (3, 8750000, 8750000, 0)
     marker = json.load(open("/var/lib/chimpmaera-bi/accepted.json", encoding="utf-8"))
-    assert marker["status"] == "READY" and marker["datasetCount"] == 1
+    assert marker["status"] == "READY" and marker["baseDatasetCount"] == 1
+    assert marker["datasetCount"] == 1 + marker["discoveryProjectionCount"]
+    if marker["discoveryProjectionCount"]:
+        assert marker["discoveryProjectionCount"] == 3 and len(marker["discoverySourceDigest"]) == 64
+        for table in ("cm_discovery_inventory", "cm_discovery_relationships", "cm_discovery_coverage"):
+            assert db.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] > 0
 except Exception:
     raise SystemExit(1)
-

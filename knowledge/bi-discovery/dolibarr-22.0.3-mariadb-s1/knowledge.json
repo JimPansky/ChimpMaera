@@ -1,0 +1,52 @@
+{
+  "facts": [
+    {
+      "classification": "DIRECT_TECHNICAL_FACT",
+      "confidence": "HIGH",
+      "evidenceIds": [
+        "extract:constraints:sha256:fba7b0f02c4d2558713ccac7394cadca24be4bfd262f9e1bf1859b0ef3a361c6"
+      ],
+      "id": "cmdb:knowledge:sha256:5abf362c99cdd97b20ec406b",
+      "name": "declared-keys",
+      "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+      "statement": "Native metadata exposes 385 primary keys and 217 declared foreign keys."
+    },
+    {
+      "classification": "DIRECT_TECHNICAL_FACT",
+      "confidence": "HIGH",
+      "evidenceIds": [
+        "extract:columns:sha256:90500c15d15abdb63d0e30ccbb1953482ffe963917729c0449ae5881f2e2ed36",
+        "extract:tables:sha256:7162a721daa8ccde7d4684c477b2f442e34d4108528bcedfa2ce6c5592042d3e"
+      ],
+      "id": "cmdb:knowledge:sha256:7ae148a47cacf2ece08f9c8f",
+      "name": "inventory-summary",
+      "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+      "statement": "Schema dolidb exposes 389 tables, 0 views and 5086 columns."
+    },
+    {
+      "classification": "BOUNDARY_FACT",
+      "confidence": "HIGH",
+      "evidenceIds": [],
+      "id": "cmdb:knowledge:sha256:b961f4f9a44562b83ef23921",
+      "name": "blind-spots",
+      "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+      "statement": "Dynamic SQL, undeclared semantics and stored-code bodies remain explicit blind spots and were not inferred."
+    },
+    {
+      "classification": "DIRECT_TECHNICAL_FACT",
+      "confidence": "HIGH",
+      "evidenceIds": [
+        "extract:events:sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "extract:routines:sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "extract:triggers:sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      ],
+      "id": "cmdb:knowledge:sha256:d952a7e27891957b1fd451ce",
+      "name": "visible-stored-objects",
+      "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9",
+      "statement": "Visible metadata exposes 0 routines, 0 triggers and 0 events; bodies are excluded."
+    }
+  ],
+  "layer": "KNOWLEDGE",
+  "schemaVersion": "chimpmaera.bi/discovery-s1/v1",
+  "sourceDigest": "95fac104078380fe407a55d13f7f724920af0148b721c131d4405a55c6e318b9"
+}

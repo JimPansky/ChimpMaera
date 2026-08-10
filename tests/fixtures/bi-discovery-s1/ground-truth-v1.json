@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "chimpmaera.bi/discovery-s1-ground-truth/v1",
+  "scope": "Curated mandatory structural subset of the pinned Dolibarr 22.0.3 fixture; not a full semantic ground truth.",
+  "mandatoryObjects": [
+    "TABLE|dolidb||llx_commande",
+    "TABLE|dolidb||llx_commandedet",
+    "TABLE|dolidb||llx_societe",
+    "COLUMN|dolidb|llx_commande|rowid",
+    "COLUMN|dolidb|llx_commandedet|fk_commande",
+    "COLUMN|dolidb|llx_societe|rowid",
+    "PRIMARY_KEY|dolidb|llx_commande|PRIMARY",
+    "PRIMARY_KEY|dolidb|llx_commandedet|PRIMARY",
+    "PRIMARY_KEY|dolidb|llx_societe|PRIMARY",
+    "INDEX|dolidb|llx_commandedet|idx_commandedet_fk_commande"
+  ],
+  "mandatoryEdges": [
+    {"kind":"TABLE_HAS_COLUMN","from":["table","dolidb","llx_commandedet"],"to":["column","dolidb","llx_commandedet","fk_commande"]},
+    {"kind":"CONSTRAINT_HAS_COLUMN","from":["primary_key","dolidb","llx_societe","PRIMARY"],"to":["column","dolidb","llx_societe","rowid"]},
+    {"kind":"INDEX_HAS_COLUMN","from":["index","dolidb","llx_commandedet","idx_commandedet_fk_commande"],"to":["column","dolidb","llx_commandedet","fk_commande"]}
+  ]
+}

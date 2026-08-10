@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "chimpmaera.bi/discovery-s1-controlled-drift/v1",
+  "schemaName": "dolidb",
+  "sourceMutation": false,
+  "tables": [
+    {"schemaName":"dolidb","name":"llx_cm_discovery_controlled","tableType":"BASE TABLE","engine":"InnoDB","createOptions":"CONTROLLED_TEST_OVERLAY"}
+  ],
+  "columns": [
+    {"schemaName":"dolidb","tableName":"llx_cm_discovery_controlled","name":"rowid","ordinal":1,"dataType":"integer","columnType":"int(11)","nullable":"NO","characterLength":null,"numericPrecision":10,"numericScale":0,"datetimePrecision":null,"extra":"auto_increment"},
+    {"schemaName":"dolidb","tableName":"llx_cm_discovery_controlled","name":"marker","ordinal":2,"dataType":"varchar","columnType":"varchar(32)","nullable":"NO","characterLength":32,"numericPrecision":null,"numericScale":null,"datetimePrecision":null,"extra":""}
+  ],
+  "indexes": [
+    {"schemaName":"dolidb","tableName":"llx_cm_discovery_controlled","name":"PRIMARY","columnName":"rowid","ordinal":1,"uniqueIndex":true,"indexType":"BTREE","nullable":""}
+  ]
+}
