@@ -7,8 +7,8 @@ import {
   APPLICABILITY_DIMENSIONS_V1, APPLICABILITY_VOCABULARY_V1, CONTRIBUTION_ENVELOPE_SCHEMA_V1,
   KNOWLEDGE_EDITION_SCHEMA_V1, KNOWLEDGE_LKG_POINTER_SCHEMA_V1,
   activateKnowledgeEditionV1, canonicalJson, contributionEnvelopeDigestV1,
-  knowledgeEditionDigestV1, knowledgeLkgPointerDigestV1, qualifyContributionV1,
-  retrieveApplicableKnowledgeV1, validateContributionEnvelopeV1,
+  knowledgeEditionDigestV1, knowledgeLkgPointerDigestV1, qualificationReceiptDigestV1, qualifyContributionV1,
+  retrieveApplicableKnowledgeV1, validateAcceptedContextV1, validateContributionEnvelopeV1, validateQualificationConfigV1, validateQualificationReceiptV1,
   type ApplicabilityDimensionV1, type ApplicabilityScopeV1, type ContributionEnvelopeV1,
   type KnowledgeEditionV1, type KnowledgeEnvelopeV1, type KnowledgeLkgPointerV1, type KnowledgeTaxonomyV1,
 } from "../packages/contracts/src/index.js";
@@ -17,11 +17,12 @@ const sha = (v: string) => createHash("sha256").update(v).digest("hex");
 const value = (v: string, provenance: "DECLARED" | "EVIDENCE_DERIVED" | "INFERRED" = "DECLARED") => ({ state: "VALUE" as const, values: [v], provenance });
 const scope = (overrides: Partial<ApplicabilityScopeV1> = {}): ApplicabilityScopeV1 => Object.fromEntries(APPLICABILITY_DIMENSIONS_V1.map((d) => [d, overrides[d] ?? { state: "NOT_PROVIDED", values: [], provenance: null }])) as unknown as ApplicabilityScopeV1;
 
-function contribution(rawInput: string, statements: readonly string[], overrides: Partial<ApplicabilityScopeV1> = {}, licence: ContributionEnvelopeV1["licence"] = "CC0-1.0"): ContributionEnvelopeV1 {
+function contribution(rawInput: string, statements: readonly string[], overrides: Partial<ApplicabilityScopeV1> = {}, licence: ContributionEnvelopeV1["licence"] = "CC0-1.0", claimOverrides: readonly Partial<ApplicabilityScopeV1>[] = []): ContributionEnvelopeV1 {
   const submissionDigest = sha(rawInput);
+  let cursor = 0;
   const claims = statements.map((statement, index) => {
-    const start = rawInput.indexOf(statement); assert.notEqual(start, -1);
-    return { claimId: `claim:item-${index + 1}`, statement, selector: { encoding: "UTF16_CODE_UNIT_OFFSET" as const, start, end: start + statement.length, exact: statement }, submissionDigest, applicability: scope(overrides), evidenceRefs: ["fixture:purchasing-v1"] };
+    const start = rawInput.indexOf(statement, cursor); assert.notEqual(start, -1); cursor = start + statement.length;
+    return { claimId: `claim:item-${index + 1}`, statement, selector: { encoding: "UTF16_CODE_UNIT_OFFSET" as const, start, end: start + statement.length, exact: statement }, submissionDigest, applicability: scope({ ...overrides, ...claimOverrides[index] }), evidenceRefs: ["fixture:purchasing-v1"] };
   });
   const unsigned = { schemaVersion: CONTRIBUTION_ENVELOPE_SCHEMA_V1, contributionId: "contribution:purchasing-test", rawInput, submissionDigest, licence, dataClassification: "PUBLIC_SYNTHETIC" as const, evidenceRefs: ["fixture:purchasing-v1"], claims };
   return { ...unsigned, contributionDigest: contributionEnvelopeDigestV1(unsigned) };
@@ -42,20 +43,54 @@ test("LKC-QUAL-01 preserves raw bytes, exact selectors, closed states and determ
   assert.equal(a.relations[0]?.kind, "EXACT_DUPLICATE");
   assert.equal(a.claims[0]?.applicability.task_audience_outcome.provenance, "INFERRED");
   assert.equal(a.activation, "NOT_AUTHORIZED");
+  assert.equal(validateQualificationReceiptV1(a, input, config, {}), true);
 });
 
-test("LKC-QUAL-01 targets missing material context and proposes all bounded relation kinds", () => {
-  const statements = ["Every request requires approval.", "Every request requires approval!", "Every request requires approval. Acme context applies.", "Shared purchasing core applies for Acme.", "Shared purchasing core applies for Beta.", "Tier two applies.", "Tier three applies.", "Beta variant applies."];
-  const raw = statements.join("\n");
-  const input = contribution(raw, statements, { domain: value("purchasing"), system_config: { state: "UNKNOWN", values: [], provenance: null }, license: value("CC0-1.0") });
-  const receipt = qualifyContributionV1(input, { configId: "relations-v1", materialDimensions: ["system_config"], supportedEvidencePrefixes: ["fixture:"], optionalModel: "DISABLED" });
-  assert.equal(receipt.outcome, "NEEDS_CONTEXT");
-  assert.deepEqual(receipt.questions.map((q) => q.dimension), ["system_config"]);
-  const kinds = new Set(receipt.relations.map((r) => r.kind));
-  assert.ok(kinds.has("EQUIVALENT")); assert.ok(kinds.has("SUBSUMPTION")); assert.ok(kinds.has("CORE_PLUS_CONTEXTUAL_DELTA")); assert.ok(kinds.has("OVERLAPPING_CONFLICT"));
-  const disjointInput = contribution("Variant A.\nVariant B.", ["Variant A.", "Variant B."], { domain: value("purchasing"), organization_context: value("acme"), system_config: value("v2"), license: value("CC0-1.0") });
-  const changed: any = structuredClone(disjointInput); changed.claims[1].applicability.organization_context = value("beta"); changed.contributionDigest = contributionEnvelopeDigestV1(changed);
-  assert.equal(qualifyContributionV1(changed, { configId: "relations-v1", materialDimensions: [], supportedEvidencePrefixes: ["fixture:"], optionalModel: "DISABLED" }).relations[0]?.kind, "DISJOINT_VARIANT");
+test("LKC-QUAL-01 JSON Schema and runtime reject the same invalid applicability state combinations", () => {
+  const base = contribution("Requests require approval.", ["Requests require approval."], { domain: value("purchasing") });
+  const ajv = new Ajv2020({ strict: true, allErrors: true });
+  const validate = ajv.compile(JSON.parse(readFileSync("schemas/contracts/knowledge-contribution-envelope-v1.schema.json", "utf8")));
+  const probes = [
+    { state: "VALUE", values: [], provenance: null },
+    { state: "UNKNOWN", values: ["purchasing"], provenance: null },
+    { state: "NOT_PROVIDED", values: [], provenance: "DECLARED" },
+    { state: "NOT_PROVIDED", values: [], provenance: "INFERRED" },
+    { state: "NOT_APPLICABLE", values: [], provenance: "INFERRED" },
+    { state: "EXPLICITLY_UNRESTRICTED", values: [], provenance: null },
+    { state: "VALUE", values: ["bad\nvalue"], provenance: "DECLARED" },
+    { state: "VALUE", values: ["duplicate", "duplicate"], provenance: "DECLARED" },
+  ];
+  for (const probe of probes) {
+    const tampered: any = structuredClone(base); tampered.claims[0].applicability.domain = probe; tampered.contributionDigest = contributionEnvelopeDigestV1(tampered);
+    assert.equal(validate(tampered), false, probe.state); assert.equal(validateContributionEnvelopeV1(tampered), false, probe.state);
+  }
+  const validStates = [value("purchasing", "INFERRED"), { state: "UNKNOWN", values: [], provenance: "INFERRED" }, { state: "NOT_PROVIDED", values: [], provenance: null }, { state: "NOT_APPLICABLE", values: [], provenance: "DECLARED" }, { state: "EXPLICITLY_UNRESTRICTED", values: [], provenance: "EVIDENCE_DERIVED" }];
+  for (const state of validStates) {
+    const candidate: any = structuredClone(base); candidate.claims[0].applicability.domain = state; candidate.contributionDigest = contributionEnvelopeDigestV1(candidate);
+    assert.equal(validate(candidate), true, state.state); assert.equal(validateContributionEnvelopeV1(candidate), true, state.state);
+  }
+});
+
+test("LKC-QUAL-01 executable purchasing golden cases produce typed relations, policy exceptions and missing context", () => {
+  const fixture = JSON.parse(readFileSync("tests/fixtures/knowledge-quality/purchasing-v1.json", "utf8"));
+  for (const golden of fixture.relationCases) {
+    const statements = golden.claims.map((claim: any) => claim.statement), raw = statements.join("\n");
+    const perClaim = golden.claims.map((claim: any) => ({ organization_context: value(claim.organization), system_config: value(claim.system) }));
+    const input = contribution(raw, statements, { domain: value("purchasing"), license: value("CC0-1.0") }, "CC0-1.0", perClaim);
+    const receipt = qualifyContributionV1(input, { configId: "golden-relations-v1", materialDimensions: [], supportedEvidencePrefixes: ["fixture:"], optionalModel: "DISABLED" });
+    assert.equal(receipt.relations.length, 1, golden.caseId); const relation = receipt.relations[0]!; assert.deepEqual({ kind: relation.kind, commonCore: relation.commonCore, leftContextualDelta: relation.leftContextualDelta, rightContextualDelta: relation.rightContextualDelta }, golden.expected, golden.caseId);
+    if (golden.caseId === "subsumption") { assert.equal(relation.subsumingClaimId, input.claims[0]!.claimId); assert.equal(relation.subsumedClaimId, input.claims[1]!.claimId); }
+    if (golden.caseId === "unsafe-abstraction-denied") assert.equal(receipt.relations.some((relation) => relation.kind === "CORE_PLUS_CONTEXTUAL_DELTA"), false);
+  }
+  for (const workflow of fixture.workflowCases) {
+    const overrides: any = { domain: value("purchasing"), license: value("CC0-1.0") };
+    for (const [dimension, configured] of Object.entries(workflow.applicability)) overrides[dimension] = value(configured as string);
+    const input = contribution(workflow.statement, [workflow.statement], overrides);
+    const receipt = qualifyContributionV1(input, { configId: "golden-workflow-v1", materialDimensions: workflow.materialDimensions, supportedEvidencePrefixes: ["fixture:"], optionalModel: "DISABLED" });
+    assert.equal(receipt.outcome, workflow.expectedOutcome, workflow.caseId);
+    if (workflow.expectedQuestionDimension) assert.equal(receipt.questions[0]?.dimension, workflow.expectedQuestionDimension);
+    if (workflow.caseId === "policy-exception") assert.deepEqual(receipt.claims[0]!.applicability.prerequisites_constraints_exceptions.values, ["recorded-board-exception"]);
+  }
 });
 
 test("LKC-QUAL-01 quarantines licence, secret, personal data, evidence and model failures without activation", () => {
@@ -65,6 +100,43 @@ test("LKC-QUAL-01 quarantines licence, secret, personal data, evidence and model
   assert.equal(receipt.outcome, "QUARANTINED");
   assert.deepEqual(receipt.quarantine.map((q) => q.reason), ["AMBIGUOUS_LICENCE", "SECRET_DETECTED", "DISALLOWED_PERSONAL_DATA", "UNSUPPORTED_EVIDENCE", "MODEL_OUTPUT_UNAVAILABLE_OR_MALFORMED"]);
   assert.equal(receipt.claims[0]?.selector.exact, raw);
+});
+
+test("LKC-QUAL-01 validates config, accepted context and replaceable model proposals as untrusted input", () => {
+  const input = contribution("Requests require approval.", ["Requests require approval."], { domain: value("purchasing"), license: value("CC0-1.0") });
+  const base = { configId: "adversarial-boundary-v1", materialDimensions: ["domain"] as ApplicabilityDimensionV1[], supportedEvidencePrefixes: ["fixture:"], optionalModel: "DISABLED" as const };
+  assert.equal(validateQualificationConfigV1(base), true); assert.equal(validateAcceptedContextV1({ domain: ["purchasing"] }), true);
+  for (const invalid of [{ ...base, optionalModel: "MAYBE" }, { ...base, materialDimensions: ["domain", "domain"] }, { ...base, supportedEvidencePrefixes: ["fixture:", "fixture:"] }, { ...base, supportedEvidencePrefixes: ["https://remote/"] }]) assert.throws(() => qualifyContributionV1(input, invalid as any), /QUALIFICATION_INPUT_DENIED/);
+  for (const invalid of [{ invented_dimension: ["x"] }, { domain: [] }, { domain: ["x", "x"] }, { domain: [""] }]) assert.throws(() => qualifyContributionV1(input, base, invalid as any), /QUALIFICATION_INPUT_DENIED/);
+  const required = { ...base, materialDimensions: [], optionalModel: "REQUIRED" as const };
+  const marker = qualifyContributionV1(input, required, {}, { status: "VALID" }); assert.equal(marker.outcome, "QUARANTINED"); assert.deepEqual(marker.claims, input.claims);
+  const validModel = { schemaVersion: "chimpmaera.knowledge/model-proposal/v1", status: "PROPOSAL", contributionDigest: input.contributionDigest, proposals: [{ claimId: input.claims[0]!.claimId, dimension: "domain", values: ["purchasing"] }] } as const;
+  assert.equal(qualifyContributionV1(input, required, {}, validModel).outcome, "PROPOSED");
+  const fallback = qualifyContributionV1(input, { ...base, materialDimensions: [], optionalModel: "FALLBACK_DETERMINISTIC" }, {}, { status: "BROKEN" }); assert.equal(fallback.outcome, "PROPOSED"); assert.deepEqual(fallback.claims, input.claims);
+  assert.equal(qualifyContributionV1(input, base, {}, { status: "BROKEN" }).outcome, "PROPOSED");
+});
+
+test("LKC-QUAL-01 receipt validation binds exact contribution, claims, references and outcome semantics", () => {
+  const input = contribution("Requests require approval.\nExceptions require review.", ["Requests require approval.", "Exceptions require review."], { domain: value("purchasing"), system_config: { state: "UNKNOWN", values: [], provenance: null }, license: value("CC0-1.0") });
+  const config = { configId: "receipt-binding-v1", materialDimensions: ["system_config"] as ApplicabilityDimensionV1[], supportedEvidencePrefixes: ["fixture:"], optionalModel: "DISABLED" as const }, context = {};
+  const receipt = qualifyContributionV1(input, config, context); assert.equal(validateQualificationReceiptV1(receipt, input, config, context), true);
+  const mutateAndRehash = (mutate: (value: any) => void) => { const value: any = structuredClone(receipt); mutate(value); value.receiptDigest = qualificationReceiptDigestV1(value); return value; };
+  const probes = [
+    mutateAndRehash((v) => { v.claims[0].claimId = "claim:attacker"; }),
+    mutateAndRehash((v) => { v.claims[0].selector.start += 1; }),
+    mutateAndRehash((v) => { v.claims[0].submissionDigest = "0".repeat(64); }),
+    mutateAndRehash((v) => { v.claims[0].applicability.domain.provenance = null; }),
+    mutateAndRehash((v) => { v.relations[0].leftClaimId = "claim:missing"; }),
+    mutateAndRehash((v) => { v.relations[0].kind = "EQUIVALENT"; }),
+    mutateAndRehash((v) => { v.questions[0].claimIds = ["claim:missing"]; }),
+    mutateAndRehash((v) => { v.questions[0].dimension = "domain"; }),
+    mutateAndRehash((v) => { v.claims[1].claimId = v.claims[0].claimId; }),
+    mutateAndRehash((v) => { v.outcome = "PROPOSED"; }),
+    mutateAndRehash((v) => { v.quarantine = [{ reason: "AMBIGUOUS_LICENCE", detail: "invalid combination" }]; }),
+  ];
+  for (const probe of probes) assert.equal(validateQualificationReceiptV1(probe, input, config, context), false);
+  const other = contribution("Other raw input.", ["Other raw input."], { domain: value("purchasing") });
+  assert.equal(validateQualificationReceiptV1(receipt, other, config, context), false);
 });
 
 test("LKC-QUAL-01 applies scope before ranking, asks for context, and keeps overlap conflicts visible", () => {
@@ -92,11 +164,8 @@ test("LKC-QUAL-01 activates whole immutable editions or reads back exact LKG wit
   const mixed = { ...mixedUnsigned, editionDigest: knowledgeEditionDigestV1(mixedUnsigned) };
   const rolled = activateKnowledgeEditionV1(current, mixed, pointer, taxonomy, [item]);
   assert.equal(rolled.outcome, "ROLLED_BACK"); assert.deepEqual(rolled.active, current); assert.deepEqual(rolled.pointer, pointer);
-});
-
-test("purchasing fixture is bounded, fictional and covers variants, exceptions, duplicates, conflicts and missing context", () => {
-  const fixture = JSON.parse(readFileSync("tests/fixtures/knowledge-quality/purchasing-v1.json", "utf8"));
-  assert.equal(fixture.contributions.length, 6); assert.deepEqual(fixture.expectedRelations, ["EXACT_DUPLICATE","EQUIVALENT","CORE_PLUS_CONTEXTUAL_DELTA","SUBSUMPTION","DISJOINT_VARIANT","OVERLAPPING_CONFLICT"]);
-  assert.equal(fixture.contributions.some((c: any) => c.organization === null && c.system === null), true);
-  assert.match(fixture.contributions[3].text, /exception/); assert.match(fixture.contributions[4].text, /tier-3/);
+  const corruptCurrent = { ...current, editionDigest: "0".repeat(64) };
+  assert.deepEqual(activateKnowledgeEditionV1(corruptCurrent, candidate, pointer, taxonomy, [item]), { outcome: "DENIED_NO_VALID_LKG", active: null, pointer: null, reason: "CURRENT_EDITION_INVALID" });
+  const corruptPointer = { ...pointer, pointerDigest: "0".repeat(64) };
+  assert.deepEqual(activateKnowledgeEditionV1(current, candidate, corruptPointer, taxonomy, [item]), { outcome: "DENIED_NO_VALID_LKG", active: null, pointer: null, reason: "LKG_POINTER_INVALID" });
 });

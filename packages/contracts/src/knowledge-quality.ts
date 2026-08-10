@@ -20,6 +20,11 @@ export type ApplicabilityProvenanceV1 = "DECLARED" | "EVIDENCE_DERIVED" | "INFER
 export type ApplicabilityValueV1 = Readonly<{ state: ApplicabilityStateV1; values: readonly string[]; provenance: ApplicabilityProvenanceV1 | null }>;
 export type ApplicabilityScopeV1 = Readonly<Record<ApplicabilityDimensionV1, ApplicabilityValueV1>>;
 export type RelationKindV1 = "EXACT_DUPLICATE" | "EQUIVALENT" | "CORE_PLUS_CONTEXTUAL_DELTA" | "SUBSUMPTION" | "DISJOINT_VARIANT" | "OVERLAPPING_CONFLICT";
+export interface RelationProposalV1 {
+  readonly leftClaimId: string; readonly rightClaimId: string; readonly kind: RelationKindV1; readonly rationale: string;
+  readonly commonCore: string | null; readonly leftContextualDelta: string | null; readonly rightContextualDelta: string | null;
+  readonly subsumingClaimId: string | null; readonly subsumedClaimId: string | null;
+}
 
 export interface AtomicClaimV1 {
   readonly claimId: string;
@@ -49,7 +54,7 @@ export interface QualificationReceiptV1 {
   readonly acceptedContextDigest: string;
   readonly outcome: "PROPOSED" | "NEEDS_CONTEXT" | "QUARANTINED";
   readonly claims: readonly AtomicClaimV1[];
-  readonly relations: readonly { readonly leftClaimId: string; readonly rightClaimId: string; readonly kind: RelationKindV1; readonly rationale: string }[];
+  readonly relations: readonly RelationProposalV1[];
   readonly questions: readonly { readonly dimension: ApplicabilityDimensionV1; readonly question: string; readonly claimIds: readonly string[] }[];
   readonly quarantine: readonly { readonly reason: "AMBIGUOUS_LICENCE" | "SECRET_DETECTED" | "DISALLOWED_PERSONAL_DATA" | "UNSUPPORTED_EVIDENCE" | "MODEL_OUTPUT_UNAVAILABLE_OR_MALFORMED"; readonly detail: string }[];
   readonly activation: "NOT_AUTHORIZED";
@@ -90,7 +95,7 @@ function validApplicability(v: unknown): v is ApplicabilityScopeV1 {
     if (item.state === "VALUE") return item.values.length > 0 && ["DECLARED", "EVIDENCE_DERIVED", "INFERRED"].includes(item.provenance as string);
     if ((item.values as unknown[]).length !== 0) return false;
     if (["NOT_APPLICABLE", "EXPLICITLY_UNRESTRICTED"].includes(item.state as string)) return ["DECLARED", "EVIDENCE_DERIVED"].includes(item.provenance as string);
-    return item.provenance === null || item.provenance === "INFERRED";
+    return item.state === "UNKNOWN" ? item.provenance === null || item.provenance === "INFERRED" : item.provenance === null;
   });
 }
 function validClaim(v: unknown, raw: string, submissionDigest: string): v is AtomicClaimV1 {
@@ -101,15 +106,41 @@ function validClaim(v: unknown, raw: string, submissionDigest: string): v is Ato
 }
 export function validateContributionEnvelopeV1(v: unknown): v is ContributionEnvelopeV1 {
   if (!exact(v, ["schemaVersion", "contributionId", "rawInput", "submissionDigest", "licence", "dataClassification", "evidenceRefs", "claims", "contributionDigest"]) || v.schemaVersion !== CONTRIBUTION_ENVELOPE_SCHEMA_V1 || !identifier(v.contributionId) || typeof v.rawInput !== "string" || v.rawInput.length < 1 || v.rawInput.length > 32768 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(v.rawInput) || v.submissionDigest !== sha(v.rawInput) || !["CC0-1.0", "CC-BY-4.0", "APACHE-2.0", "OWNER_AUTHORIZED", "UNKNOWN"].includes(v.licence as string) || !["PUBLIC_SYNTHETIC", "OWNER_PRIVATE"].includes(v.dataClassification as string) || !uniqueStrings(v.evidenceRefs, 32) || !Array.isArray(v.claims) || v.claims.length < 1 || v.claims.length > 64 || !hex(v.contributionDigest)) return false;
-  return v.claims.every((claim) => validClaim(claim, v.rawInput as string, v.submissionDigest as string)) && contributionEnvelopeDigestV1(v) === v.contributionDigest;
+  const claimIds = v.claims.map((claim) => plain(claim) ? claim.claimId : undefined);
+  return new Set(claimIds).size === claimIds.length && v.claims.every((claim) => validClaim(claim, v.rawInput as string, v.submissionDigest as string)) && contributionEnvelopeDigestV1(v) === v.contributionDigest;
 }
 
-export function validateQualificationReceiptV1(v: unknown): v is QualificationReceiptV1 {
+export interface QualificationConfigV1 { readonly configId: string; readonly materialDimensions: readonly ApplicabilityDimensionV1[]; readonly supportedEvidencePrefixes: readonly string[]; readonly optionalModel: "DISABLED" | "REQUIRED" | "FALLBACK_DETERMINISTIC" }
+export type AcceptedContextV1 = Readonly<Partial<Record<ApplicabilityDimensionV1, readonly string[]>>>;
+export interface OptionalModelProposalV1 { readonly schemaVersion: "chimpmaera.knowledge/model-proposal/v1"; readonly status: "PROPOSAL"; readonly contributionDigest: string; readonly proposals: readonly { readonly claimId: string; readonly dimension: ApplicabilityDimensionV1; readonly values: readonly string[] }[] }
+
+export function validateQualificationConfigV1(v: unknown): v is QualificationConfigV1 {
+  return exact(v, ["configId", "materialDimensions", "supportedEvidencePrefixes", "optionalModel"]) && bounded(v.configId, 96)
+    && Array.isArray(v.materialDimensions) && v.materialDimensions.length <= APPLICABILITY_DIMENSIONS_V1.length && new Set(v.materialDimensions).size === v.materialDimensions.length && v.materialDimensions.every((d) => APPLICABILITY_DIMENSIONS_V1.includes(d as ApplicabilityDimensionV1))
+    && uniqueStrings(v.supportedEvidencePrefixes, 16) && (v.supportedEvidencePrefixes as string[]).length > 0 && (v.supportedEvidencePrefixes as string[]).every((prefix) => /^[a-z][a-z0-9-]{1,31}:$/.test(prefix))
+    && ["DISABLED", "REQUIRED", "FALLBACK_DETERMINISTIC"].includes(v.optionalModel as string);
+}
+export function validateAcceptedContextV1(v: unknown): v is AcceptedContextV1 {
+  return plain(v) && Object.keys(v).every((key) => APPLICABILITY_DIMENSIONS_V1.includes(key as ApplicabilityDimensionV1) && uniqueStrings(v[key], 16) && (v[key] as unknown[]).length > 0);
+}
+function validateOptionalModelProposalV1(v: unknown, contribution: ContributionEnvelopeV1): v is OptionalModelProposalV1 {
+  if (!exact(v, ["schemaVersion", "status", "contributionDigest", "proposals"]) || v.schemaVersion !== "chimpmaera.knowledge/model-proposal/v1" || v.status !== "PROPOSAL" || v.contributionDigest !== contribution.contributionDigest || !Array.isArray(v.proposals) || v.proposals.length > 64) return false;
+  const claimIds = new Set(contribution.claims.map((claim) => claim.claimId));
+  return v.proposals.every((proposal) => exact(proposal, ["claimId", "dimension", "values"]) && claimIds.has(proposal.claimId as string) && APPLICABILITY_DIMENSIONS_V1.includes(proposal.dimension as ApplicabilityDimensionV1) && uniqueStrings(proposal.values, 16) && (proposal.values as unknown[]).length > 0);
+}
+
+export function validateQualificationReceiptV1(v: unknown, contribution: ContributionEnvelopeV1, config: QualificationConfigV1, acceptedContext: AcceptedContextV1, modelOutput?: unknown): v is QualificationReceiptV1 {
+  if (!validateContributionEnvelopeV1(contribution) || !validateQualificationConfigV1(config) || !validateAcceptedContextV1(acceptedContext)) return false;
   if (!exact(v, ["schemaVersion", "contributionDigest", "configDigest", "acceptedContextDigest", "outcome", "claims", "relations", "questions", "quarantine", "activation", "authorityBoundary", "receiptDigest"]) || v.schemaVersion !== QUALIFICATION_RECEIPT_SCHEMA_V1 || !hex(v.contributionDigest) || !hex(v.configDigest) || !hex(v.acceptedContextDigest) || !["PROPOSED", "NEEDS_CONTEXT", "QUARANTINED"].includes(v.outcome as string) || !Array.isArray(v.claims) || v.claims.length > 64 || !Array.isArray(v.relations) || v.relations.length > 256 || !Array.isArray(v.questions) || v.questions.length > 15 || !Array.isArray(v.quarantine) || v.quarantine.length > 5 || v.activation !== "NOT_AUTHORIZED" || v.authorityBoundary !== KNOWLEDGE_AUTHORITY_BOUNDARY_V1 || !hex(v.receiptDigest)) return false;
-  if (!v.relations.every((r) => exact(r, ["leftClaimId", "rightClaimId", "kind", "rationale"]) && identifier(r.leftClaimId) && identifier(r.rightClaimId) && r.leftClaimId !== r.rightClaimId && ["EXACT_DUPLICATE", "EQUIVALENT", "CORE_PLUS_CONTEXTUAL_DELTA", "SUBSUMPTION", "DISJOINT_VARIANT", "OVERLAPPING_CONFLICT"].includes(r.kind as string) && bounded(r.rationale, 256))) return false;
-  if (!v.questions.every((q) => exact(q, ["dimension", "question", "claimIds"]) && APPLICABILITY_DIMENSIONS_V1.includes(q.dimension as ApplicabilityDimensionV1) && bounded(q.question, 512) && uniqueStrings(q.claimIds, 64))) return false;
+  if (v.contributionDigest !== contribution.contributionDigest || v.configDigest !== sha(config) || v.acceptedContextDigest !== sha(acceptedContext) || canonicalJson(v.claims) !== canonicalJson(contribution.claims)) return false;
+  const claimIds = contribution.claims.map((claim) => claim.claimId), claimIdSet = new Set(claimIds);
+  if (claimIdSet.size !== claimIds.length) return false;
+  if (!v.relations.every((r) => exact(r, ["leftClaimId", "rightClaimId", "kind", "rationale", "commonCore", "leftContextualDelta", "rightContextualDelta", "subsumingClaimId", "subsumedClaimId"]) && claimIdSet.has(r.leftClaimId as string) && claimIdSet.has(r.rightClaimId as string) && r.leftClaimId !== r.rightClaimId && ["EXACT_DUPLICATE", "EQUIVALENT", "CORE_PLUS_CONTEXTUAL_DELTA", "SUBSUMPTION", "DISJOINT_VARIANT", "OVERLAPPING_CONFLICT"].includes(r.kind as string) && bounded(r.rationale, 256) && [r.commonCore, r.leftContextualDelta, r.rightContextualDelta].every((text) => text === null || bounded(text, 2048)) && (r.kind !== "CORE_PLUS_CONTEXTUAL_DELTA" || (bounded(r.commonCore, 2048) && bounded(r.leftContextualDelta, 2048) && bounded(r.rightContextualDelta, 2048))) && (r.kind === "SUBSUMPTION" ? claimIdSet.has(r.subsumingClaimId as string) && claimIdSet.has(r.subsumedClaimId as string) && r.subsumingClaimId !== r.subsumedClaimId : r.subsumingClaimId === null && r.subsumedClaimId === null))) return false;
+  if (!v.questions.every((q) => exact(q, ["dimension", "question", "claimIds"]) && APPLICABILITY_DIMENSIONS_V1.includes(q.dimension as ApplicabilityDimensionV1) && bounded(q.question, 512) && uniqueStrings(q.claimIds, 64) && (q.claimIds as string[]).length > 0 && (q.claimIds as string[]).every((id) => claimIdSet.has(id)))) return false;
   if (!v.quarantine.every((q) => exact(q, ["reason", "detail"]) && ["AMBIGUOUS_LICENCE", "SECRET_DETECTED", "DISALLOWED_PERSONAL_DATA", "UNSUPPORTED_EVIDENCE", "MODEL_OUTPUT_UNAVAILABLE_OR_MALFORMED"].includes(q.reason as string) && bounded(q.detail, 256))) return false;
-  return qualificationReceiptDigestV1(v) === v.receiptDigest;
+  const consistent = v.outcome === "QUARANTINED" ? v.quarantine.length > 0 && v.questions.length === 0 : v.outcome === "NEEDS_CONTEXT" ? v.quarantine.length === 0 && v.questions.length > 0 : v.quarantine.length === 0 && v.questions.length === 0;
+  if (!consistent || qualificationReceiptDigestV1(v) !== v.receiptDigest) return false;
+  return canonicalJson(v) === canonicalJson(qualifyContributionV1(contribution, config, acceptedContext, modelOutput));
 }
 
 export function validateKnowledgeEditionV1(v: unknown): v is KnowledgeEditionV1 {
@@ -119,15 +150,14 @@ export function validateKnowledgeLkgPointerV1(v: unknown): v is KnowledgeLkgPoin
   return exact(v, ["schemaVersion", "pointerId", "editionDigest", "generation", "pointerDigest"]) && v.schemaVersion === KNOWLEDGE_LKG_POINTER_SCHEMA_V1 && identifier(v.pointerId) && hex(v.editionDigest) && Number.isSafeInteger(v.generation) && (v.generation as number) > 0 && hex(v.pointerDigest) && knowledgeLkgPointerDigestV1(v) === v.pointerDigest;
 }
 
-export interface QualificationConfigV1 { readonly configId: string; readonly materialDimensions: readonly ApplicabilityDimensionV1[]; readonly supportedEvidencePrefixes: readonly string[]; readonly optionalModel: "DISABLED" | "REQUIRED" }
-export function qualifyContributionV1(contribution: ContributionEnvelopeV1, config: QualificationConfigV1, acceptedContext: Readonly<Partial<Record<ApplicabilityDimensionV1, readonly string[]>>> = {}, modelOutput?: unknown): QualificationReceiptV1 {
-  if (!validateContributionEnvelopeV1(contribution) || !bounded(config.configId, 96) || !Array.isArray(config.materialDimensions) || config.materialDimensions.some((d) => !APPLICABILITY_DIMENSIONS_V1.includes(d)) || !uniqueStrings(config.supportedEvidencePrefixes, 16)) throw new Error("QUALIFICATION_INPUT_DENIED");
+export function qualifyContributionV1(contribution: ContributionEnvelopeV1, config: QualificationConfigV1, acceptedContext: AcceptedContextV1 = {}, modelOutput?: unknown): QualificationReceiptV1 {
+  if (!validateContributionEnvelopeV1(contribution) || !validateQualificationConfigV1(config) || !validateAcceptedContextV1(acceptedContext)) throw new Error("QUALIFICATION_INPUT_DENIED");
   const quarantine: QualificationReceiptV1["quarantine"][number][] = [];
   if (contribution.licence === "UNKNOWN") quarantine.push({ reason: "AMBIGUOUS_LICENCE", detail: "A supported explicit licence is required." });
   if (/(?:api[_-]?key|password|secret)\s*[:=]\s*\S+/i.test(contribution.rawInput)) quarantine.push({ reason: "SECRET_DETECTED", detail: "Credential-like material is not processed." });
   if (/\b(?:\d{3}-\d{2}-\d{4}|\d{16})\b/.test(contribution.rawInput)) quarantine.push({ reason: "DISALLOWED_PERSONAL_DATA", detail: "Personal or payment identifier pattern detected." });
   if (contribution.evidenceRefs.some((ref) => !config.supportedEvidencePrefixes.some((prefix) => ref.startsWith(prefix)))) quarantine.push({ reason: "UNSUPPORTED_EVIDENCE", detail: "An evidence reference is outside configured namespaces." });
-  if (config.optionalModel === "REQUIRED" && (!plain(modelOutput) || modelOutput.status !== "VALID")) quarantine.push({ reason: "MODEL_OUTPUT_UNAVAILABLE_OR_MALFORMED", detail: "Required optional-model output was unavailable or malformed; deterministic input remains preserved." });
+  if (config.optionalModel === "REQUIRED" && !validateOptionalModelProposalV1(modelOutput, contribution)) quarantine.push({ reason: "MODEL_OUTPUT_UNAVAILABLE_OR_MALFORMED", detail: "Required optional-model output was unavailable or malformed; deterministic input remains preserved." });
   const materialDimensions = config.materialDimensions as readonly ApplicabilityDimensionV1[];
   const questions = materialDimensions.flatMap((dimension) => {
     const claimIds = contribution.claims.filter((claim) => ["UNKNOWN", "NOT_PROVIDED"].includes(claim.applicability[dimension].state) && !(acceptedContext[dimension]?.length)).map((claim) => claim.claimId).sort();
@@ -137,23 +167,25 @@ export function qualifyContributionV1(contribution: ContributionEnvelopeV1, conf
   for (let i = 0; i < contribution.claims.length; i++) for (let j = i + 1; j < contribution.claims.length; j++) {
     const left = contribution.claims[i]!, right = contribution.claims[j]!;
     const normalized = (value: string) => value.trim().toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ");
-    let kind: RelationKindV1 | null = null, rationale = "";
+    let kind: RelationKindV1 | null = null, rationale = "", commonCore: string | null = null, leftContextualDelta: string | null = null, rightContextualDelta: string | null = null, subsumingClaimId: string | null = null, subsumedClaimId: string | null = null;
     if (left.statement.trim().toLowerCase() === right.statement.trim().toLowerCase()) { kind = "EXACT_DUPLICATE"; rationale = "Canonical statements are identical."; }
     else if (normalized(left.statement) === normalized(right.statement)) { kind = "EQUIVALENT"; rationale = "Statements normalize to the same bounded text."; }
-    else if (normalized(left.statement).includes(normalized(right.statement)) || normalized(right.statement).includes(normalized(left.statement))) { kind = "SUBSUMPTION"; rationale = "One statement contains the other without broadening it."; }
+    else if (normalized(left.statement).includes(normalized(right.statement)) || normalized(right.statement).includes(normalized(left.statement))) { const leftBroader = normalized(left.statement).length < normalized(right.statement).length; kind = "SUBSUMPTION"; subsumingClaimId = leftBroader ? left.claimId : right.claimId; subsumedClaimId = leftBroader ? right.claimId : left.claimId; rationale = "The shorter exact assertion is the proposed broader claim; both full statements remain immutable and no scope is broadened."; }
     else {
       const disjoint = ["organization_context", "system_config"].some((d) => {
         const a = left.applicability[d as ApplicabilityDimensionV1], b = right.applicability[d as ApplicabilityDimensionV1];
         return a.state === "VALUE" && b.state === "VALUE" && !a.values.some((v) => b.values.includes(v));
       });
-      const firstLeft = normalized(left.statement).split(" ").slice(0, 5).join(" "), firstRight = normalized(right.statement).split(" ").slice(0, 5).join(" ");
+      const leftSentences = left.statement.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean), rightSentences = right.statement.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+      const sharedSentence = leftSentences.find((sentence) => rightSentences.includes(sentence));
       if (disjoint) { kind = "DISJOINT_VARIANT"; rationale = "Material organization or system scopes are disjoint."; }
-      else if (firstLeft === firstRight) { kind = "CORE_PLUS_CONTEXTUAL_DELTA"; rationale = "Statements share a bounded lexical core and retain contextual deltas."; }
+      else if (sharedSentence && leftSentences.length > 1 && rightSentences.length > 1) { kind = "CORE_PLUS_CONTEXTUAL_DELTA"; commonCore = sharedSentence; leftContextualDelta = leftSentences.filter((s) => normalized(s) !== normalized(sharedSentence)).join(" "); rightContextualDelta = rightSentences.filter((s) => normalized(s) !== normalized(sharedSentence)).join(" "); rationale = "An exact shared sentence is retained as core; both non-empty contextual deltas remain explicit."; }
       else if (left.applicability.domain.state === "VALUE" && right.applicability.domain.state === "VALUE" && left.applicability.domain.values.some((v) => right.applicability.domain.values.includes(v))) { kind = "OVERLAPPING_CONFLICT"; rationale = "Different assertions overlap in the same explicit domain; no default precedence is proposed."; }
     }
-    if (kind) relations.push({ leftClaimId: left.claimId, rightClaimId: right.claimId, kind, rationale });
+    if (kind) relations.push({ leftClaimId: left.claimId, rightClaimId: right.claimId, kind, rationale, commonCore, leftContextualDelta, rightContextualDelta, subsumingClaimId, subsumedClaimId });
   }
-  const unsigned = { schemaVersion: QUALIFICATION_RECEIPT_SCHEMA_V1, contributionDigest: contribution.contributionDigest, configDigest: sha(config), acceptedContextDigest: sha(acceptedContext), outcome: quarantine.length ? "QUARANTINED" : questions.length ? "NEEDS_CONTEXT" : "PROPOSED", claims: contribution.claims, relations, questions, quarantine, activation: "NOT_AUTHORIZED", authorityBoundary: KNOWLEDGE_AUTHORITY_BOUNDARY_V1 } as const;
+  const effectiveQuestions = quarantine.length ? [] : questions;
+  const unsigned = { schemaVersion: QUALIFICATION_RECEIPT_SCHEMA_V1, contributionDigest: contribution.contributionDigest, configDigest: sha(config), acceptedContextDigest: sha(acceptedContext), outcome: quarantine.length ? "QUARANTINED" : effectiveQuestions.length ? "NEEDS_CONTEXT" : "PROPOSED", claims: contribution.claims, relations, questions: effectiveQuestions, quarantine, activation: "NOT_AUTHORIZED", authorityBoundary: KNOWLEDGE_AUTHORITY_BOUNDARY_V1 } as const;
   return { ...unsigned, receiptDigest: qualificationReceiptDigestV1(unsigned) };
 }
 
@@ -176,10 +208,13 @@ export function retrieveApplicableKnowledgeV1(candidates: readonly { envelope: K
   return { outcome: applicable.length ? "SELECTED" : "NO_MATCH", selected: applicable.map(({ envelope }) => envelope), blockedDimensions: [], conflicts: [] };
 }
 
-export function activateKnowledgeEditionV1(current: KnowledgeEditionV1, candidate: KnowledgeEditionV1, pointer: KnowledgeLkgPointerV1, taxonomy: KnowledgeTaxonomyV1, envelopes: readonly KnowledgeEnvelopeV1[]): { outcome: "ACTIVATED" | "ROLLED_BACK"; active: KnowledgeEditionV1; pointer: KnowledgeLkgPointerV1 } {
+export type KnowledgeActivationResultV1 = { outcome: "ACTIVATED" | "ROLLED_BACK"; active: KnowledgeEditionV1; pointer: KnowledgeLkgPointerV1 } | { outcome: "DENIED_NO_VALID_LKG"; active: null; pointer: null; reason: "CURRENT_EDITION_INVALID" | "LKG_POINTER_INVALID" };
+export function activateKnowledgeEditionV1(current: KnowledgeEditionV1, candidate: KnowledgeEditionV1, pointer: KnowledgeLkgPointerV1, taxonomy: KnowledgeTaxonomyV1, envelopes: readonly KnowledgeEnvelopeV1[]): KnowledgeActivationResultV1 {
   const validEdition = (edition: KnowledgeEditionV1) => validateKnowledgeEditionV1(edition) && validateKnowledgeTaxonomyV1(taxonomy) && edition.taxonomy.taxonomyDigest === taxonomy.taxonomyDigest && edition.taxonomy.generation === taxonomy.generation && edition.envelopeDigests.every((digest) => envelopes.some((e) => e.envelopeDigest === digest && validateKnowledgeEnvelopeV1(e, taxonomy).length === 0));
   const pointerValid = validateKnowledgeLkgPointerV1(pointer) && pointer.editionDigest === current.editionDigest && pointer.generation === current.generation;
-  const atomic = pointerValid && validEdition(current) && validEdition(candidate) && candidate.generation === current.generation + 1 && candidate.priorEditionDigest === current.editionDigest;
+  if (!validEdition(current)) return { outcome: "DENIED_NO_VALID_LKG", active: null, pointer: null, reason: "CURRENT_EDITION_INVALID" };
+  if (!pointerValid) return { outcome: "DENIED_NO_VALID_LKG", active: null, pointer: null, reason: "LKG_POINTER_INVALID" };
+  const atomic = validEdition(candidate) && candidate.generation === current.generation + 1 && candidate.priorEditionDigest === current.editionDigest;
   if (!atomic) return { outcome: "ROLLED_BACK", active: current, pointer };
   const nextUnsigned = { schemaVersion: KNOWLEDGE_LKG_POINTER_SCHEMA_V1, pointerId: pointer.pointerId, editionDigest: candidate.editionDigest, generation: candidate.generation } as const;
   return { outcome: "ACTIVATED", active: candidate, pointer: { ...nextUnsigned, pointerDigest: knowledgeLkgPointerDigestV1(nextUnsigned) } };

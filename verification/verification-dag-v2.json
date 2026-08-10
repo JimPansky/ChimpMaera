@@ -982,7 +982,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "09a51b688ec7323bf66406513b3ab460ec35a8c3a53b48f7c23911eed5f86d86"
+          "sha256": "9d06c9d04fc579e61aa59ea2dc6e894016ccb83a524300900d8391a6c499dafc"
         },
         {
           "path": "package-lock.json",

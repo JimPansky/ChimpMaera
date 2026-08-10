@@ -52,6 +52,7 @@
     "bi-e2e:evidence": "npm run build --silent && node scripts/render-bi-e2e-evidence.mjs",
     "knowledge-envelope:test": "npm run build --silent && node --test dist/tests/knowledge-envelope.test.js",
     "knowledge-quality:test": "npm run build --silent && node --test dist/tests/knowledge-quality.test.js && node --test tests/knowledge-quality-api.test.mjs",
+    "knowledge-quality:schema-parity": "npm run build --silent && node --test --test-name-pattern='JSON Schema and runtime' dist/tests/knowledge-quality.test.js",
     "company-data:test": "node --test tests/company-data-pack.test.mjs tests/company-data-graph.test.mjs tests/mapping-registry.test.mjs",
     "supply-chain:verify": "node scripts/verify-supply-chain.mjs",
     "openclaw-runtime-lock:verify": "node scripts/verify-openclaw-agent-runtime-lock.mjs --host-os Linux --host-arch x86_64",
