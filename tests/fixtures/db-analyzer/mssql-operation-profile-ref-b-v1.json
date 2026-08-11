@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "chimpmaera.db/operation-profile-ref/v1",
+  "profileId": "mssql-unknown-b-operation",
+  "registryFile": "source-registry-v1.json",
+  "sourceId": "mssql-unknown-b",
+  "expected": {
+    "engine": "mssql",
+    "scope": { "database": "CM_UNKNOWN_B", "container": null, "schemas": ["sales", "warehouse"] },
+    "policy": { "access": "READ_ONLY", "allowRowSamples": false, "maxQueryTimeoutMs": 5000 },
+    "capabilityPackRef": { "capabilityPackId": "db-analyzer-cross-engine", "capabilityPackVersion": "4.0.0" }
+  }
+}

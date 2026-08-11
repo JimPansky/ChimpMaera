@@ -23,6 +23,7 @@ import {
   deriveProfilingCandidates,
   IDENTITY_CONTRACT_SCHEMA,
   identitySha256,
+  normalizeJsonValue,
   normalizeSql,
   validateAnalyzeProfile,
   validateProfilingQueryManifest,
@@ -32,6 +33,32 @@ import {
 } from '../scripts/lib/db-analyzer/core.mjs';
 import { buildOptionalParserEnrichment } from '../scripts/lib/db-analyzer/parser-enrichment.mjs';
 import { runAnalyzeProfile } from '../scripts/lib/db-analyzer/workflow.mjs';
+import {
+  loadAndResolveOperationProfile,
+  resolveOperationProfile,
+} from '../scripts/lib/db-analyzer/registry.mjs';
+import {
+  applyOperationMigration,
+  applyOperationLifecycleAction,
+  appendOperationHistory,
+  createOperationLifecycleBackup,
+  createOperationLifecycleRecord,
+  createOperationMigrationPlan,
+  createOperationCoordinator,
+  initializeOperationLifecycleStore,
+  readOperationLifecycleStore,
+  recoverStaleOperationLifecycleOwnership,
+  runOperationInvocation,
+  selectLastKnownGoodOperation,
+  validateOperationHistory,
+  validateOperationLifecycleReceipt,
+  validateOperationMigrationReceipt,
+  validateOperationResumeCheckpoint,
+} from '../scripts/lib/db-analyzer/operation.mjs';
+import {
+  buildOperationOutputBundle,
+  writeOperationOutputBundle,
+} from '../scripts/lib/db-analyzer/operation-outputs.mjs';
 import { auditCatalogQuery, auditQueryPackSafety } from '../scripts/lib/db-analyzer/query-safety.mjs';
 import { compareStructuralEvidence } from '../scripts/lib/db-analyzer/drift.mjs';
 import { buildStructureMapOutputs } from '../scripts/lib/db-analyzer/outputs.mjs';
@@ -52,6 +79,1238 @@ const execFileAsync = promisify(execFile);
 const root = path.resolve('query-packs/db-analyzer/v1');
 const forbiddenSql = /\b(?:ALTER|CREATE|DELETE|DROP|EXEC(?:UTE)?|GRANT|INSERT|MERGE|REVOKE|TRUNCATE|UPDATE)\b/i;
 const executableSql = (sql) => sql.replace(/'(?:''|[^'])*'/g, "''");
+
+test('Slice 4 Gate 1 resolves symmetric credential-free source and capability registry profiles deterministically', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-operation-profile-ref-v1.json`);
+    const first = await loadAndResolveOperationProfile(profileFile);
+    const second = await loadAndResolveOperationProfile(profileFile);
+    assert.deepEqual(first, second);
+    assert.equal(first.schemaVersion, 'chimpmaera.db/operation-resolution/v1');
+    assert.equal(first.source.engine, engine);
+    assert.equal(first.source.policy.access, 'READ_ONLY');
+    assert.equal(first.source.policy.allowRowSamples, false);
+    assert.equal(first.source.credentialProvider.kind, 'ENV');
+    assert.match(first.source.credentialProvider.reference, /^CM_DB_/);
+    assert.equal(first.capabilityPack.capabilityPackVersion, '4.0.0');
+    assert.equal(first.capabilityPack.queryPackVersion, 'v1');
+    assert.equal(first.capabilityPack.normalizerVersion, 'v1');
+    assert.equal(first.runtimeValidation, 'NOT_EXECUTED');
+    assert.deepEqual(first.claims, {
+      credentialsResolved: false,
+      runtimeCompatibilityValidated: false,
+      sourceConnected: false,
+    });
+    assert.match(first.resolutionSha256, /^[a-f0-9]{64}$/);
+    assert.doesNotMatch(canonicalJson(first), /password\s*[=:]|secret\s*[=:]|credentialValue/i);
+  }
+});
+
+test('Slice 4 Gate 1 fails closed on embedded secrets, scope drift and capability widening', async () => {
+  const registry = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/source-registry-v1.json'), 'utf8'));
+  const profileRef = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json'), 'utf8'));
+
+  const embeddedSecret = structuredClone(registry);
+  embeddedSecret.sources[0].credentialProvider.value = 'must-not-be-stored';
+  assert.throws(() => resolveOperationProfile({ profileRef, registry: embeddedSecret }), /DB_REGISTRY_CREDENTIAL_PROVIDER_INVALID/);
+
+  const scopeDrift = structuredClone(profileRef);
+  scopeDrift.expected.scope.database = 'OTHER_DATABASE';
+  assert.throws(() => resolveOperationProfile({ profileRef: scopeDrift, registry }), /DB_OPERATION_PROFILE_BINDING_DRIFT/);
+
+  const capabilityWidening = structuredClone(registry);
+  capabilityWidening.sources[0].enabledCapabilities.push('SOURCE_WRITES');
+  assert.throws(() => resolveOperationProfile({ profileRef, registry: capabilityWidening }), /DB_REGISTRY_CAPABILITY_WIDENING_DENIED/);
+
+  const traversal = structuredClone(profileRef);
+  traversal.registryFile = '../source-registry-v1.json';
+  assert.throws(() => resolveOperationProfile({ profileRef: traversal, registry }), /DB_OPERATION_PROFILE_REF_INVALID/);
+});
+
+const operationInvocation = ({ resolution, engine, kind, invocationId = `${engine}-${kind.toLowerCase()}-run-001`, overrides = {} }) => ({
+  schemaVersion: 'chimpmaera.db/operation-invocation/v1',
+  invocationId,
+  requestedAt: '2026-08-11T09:05:00.000Z',
+  trigger: { kind, reference: kind === 'MANUAL' ? 'cli:cm-db-analyze' : 'schedule:synthetic-nightly' },
+  expectedResolutionSha256: resolution.resolutionSha256,
+  controls: { timeoutMs: 100, maxAttempts: 2, retryDelayMs: 0, retryStates: ['TIMEOUT'], ...overrides },
+});
+
+test('Slice 4 Gate 2 uses one deterministic marker-scoped workflow for manual and scheduled invocations', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const resolution = await loadAndResolveOperationProfile(path.resolve(`tests/fixtures/db-analyzer/${engine}-operation-profile-ref-v1.json`));
+    for (const kind of ['MANUAL', 'SCHEDULED']) {
+      const invocation = operationInvocation({ resolution, engine, kind });
+      const executor = async ({ resolution: boundResolution }) => ({
+        state: 'SUCCEEDED',
+        reasonCode: null,
+        resultSha256: identitySha256({ engine, resolutionSha256: boundResolution.resolutionSha256 }),
+      });
+      const first = await runOperationInvocation({ resolution, invocation, coordinator: createOperationCoordinator(), executor });
+      const second = await runOperationInvocation({ resolution, invocation, coordinator: createOperationCoordinator(), executor });
+      assert.deepEqual(first, second);
+      assert.equal(first.schemaVersion, 'chimpmaera.db/operation-run-receipt/v1');
+      assert.equal(first.workflow, 'cm db analyze <profile>');
+      assert.equal(first.invocation.trigger.kind, kind);
+      assert.equal(first.binding.engine, engine);
+      assert.equal(first.binding.resolutionSha256, resolution.resolutionSha256);
+      assert.equal(first.ownership.ownerInvocationId, invocation.invocationId);
+      assert.equal(first.ownership.acquisitionState, 'ACQUIRED');
+      assert.equal(first.ownership.releaseState, 'RELEASED');
+      assert.equal(first.outcome.state, 'SUCCEEDED');
+      assert.equal(first.outcome.attemptsUsed, 1);
+      assert.deepEqual(first.evidenceBoundary, {
+        credentialsResolved: false,
+        runtimeValidation: 'SYNTHETIC_UNVALIDATED',
+        schedulerStarted: false,
+        sourceConnected: false,
+      });
+      assert.equal(first.receiptSha256, identitySha256(Object.fromEntries(
+        Object.entries(first).filter(([key]) => key !== 'receiptSha256'),
+      )));
+      assert.doesNotMatch(canonicalJson(first), /password\s*[=:]|secret\s*[=:]|credentialValue/i);
+    }
+  }
+});
+
+test('Slice 4 Gate 2 enforces concurrency, bounded timeout/retry and resolution binding', async () => {
+  const resolution = await loadAndResolveOperationProfile(path.resolve('tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json'));
+  const coordinator = createOperationCoordinator();
+  let unblock;
+  const blocked = new Promise((resolve) => { unblock = resolve; });
+  const firstInvocation = operationInvocation({ resolution, engine: 'mssql', kind: 'MANUAL' });
+  const firstRun = runOperationInvocation({
+    resolution,
+    invocation: firstInvocation,
+    coordinator,
+    executor: async () => {
+      await blocked;
+      return { state: 'SUCCEEDED', reasonCode: null, resultSha256: identitySha256('first') };
+    },
+  });
+  await Promise.resolve();
+  await assert.rejects(
+    runOperationInvocation({
+      resolution,
+      invocation: operationInvocation({ resolution, engine: 'mssql', kind: 'SCHEDULED' }),
+      coordinator,
+      executor: async () => ({ state: 'SUCCEEDED', reasonCode: null, resultSha256: identitySha256('second') }),
+    }),
+    /DB_OPERATION_CONCURRENCY_DENIED/,
+  );
+  unblock();
+  await firstRun;
+
+  let attempts = 0;
+  const timeoutReceipt = await runOperationInvocation({
+    resolution,
+    invocation: operationInvocation({ resolution, engine: 'mssql', kind: 'SCHEDULED', invocationId: 'mssql-timeout-run-001', overrides: { timeoutMs: 5 } }),
+    coordinator,
+    executor: async ({ signal }) => {
+      attempts += 1;
+      return new Promise((resolve, reject) => {
+        signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { code: 'DB_OPERATION_ATTEMPT_TIMEOUT' })), { once: true });
+      });
+    },
+  });
+  assert.equal(attempts, 2);
+  assert.equal(timeoutReceipt.outcome.state, 'TIMEOUT');
+  assert.equal(timeoutReceipt.outcome.reasonCode, 'DB_OPERATION_ATTEMPT_TIMEOUT');
+  assert.equal(timeoutReceipt.outcome.attemptsUsed, 2);
+  assert.deepEqual(timeoutReceipt.attempts.map((attempt) => attempt.state), ['TIMEOUT', 'TIMEOUT']);
+
+  const drifted = structuredClone(firstInvocation);
+  drifted.expectedResolutionSha256 = '0'.repeat(64);
+  await assert.rejects(
+    runOperationInvocation({ resolution, invocation: drifted, coordinator, executor: async () => ({}) }),
+    /DB_OPERATION_INVOCATION_INVALID/,
+  );
+  const widened = structuredClone(firstInvocation);
+  widened.controls = { ...widened.controls, timeoutMs: resolution.source.policy.maxQueryTimeoutMs + 1, maxAttempts: 4 };
+  await assert.rejects(
+    runOperationInvocation({ resolution, invocation: widened, coordinator, executor: async () => ({}) }),
+    /DB_OPERATION_INVOCATION_INVALID/,
+  );
+});
+
+test('Slice 4 Gate 3 resumes both engines from digest-bound compatible checkpoints deterministically', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const resolution = await loadAndResolveOperationProfile(path.resolve(`tests/fixtures/db-analyzer/${engine}-operation-profile-ref-v1.json`));
+    const invocation = operationInvocation({
+      resolution,
+      engine,
+      kind: 'SCHEDULED',
+      invocationId: `${engine}-resumable-run-001`,
+      overrides: { maxAttempts: 3, retryStates: ['ERROR'] },
+    });
+    const resultSha256 = identitySha256({ engine, result: 'synthetic-resume-ground-truth' });
+    let uninterruptedAttempts = 0;
+    const uninterrupted = await runOperationInvocation({
+      resolution,
+      invocation,
+      coordinator: createOperationCoordinator(),
+      executor: async () => {
+        uninterruptedAttempts += 1;
+        return uninterruptedAttempts === 1
+          ? { state: 'ERROR', reasonCode: 'SYNTHETIC_RESTART_REQUIRED', resultSha256: null }
+          : { state: 'SUCCEEDED', reasonCode: null, resultSha256 };
+      },
+    });
+
+    let checkpoint;
+    await assert.rejects(
+      runOperationInvocation({
+        resolution,
+        invocation,
+        coordinator: createOperationCoordinator(),
+        executor: async () => ({ state: 'ERROR', reasonCode: 'SYNTHETIC_RESTART_REQUIRED', resultSha256: null }),
+        checkpointing: {
+          checkpointedAt: '2026-08-11T09:05:01.000Z',
+          validUntil: '2026-08-12T09:05:01.000Z',
+          sink: async (candidate) => {
+            checkpoint = candidate;
+            throw Object.assign(new Error('synthetic process stop'), { code: 'SYNTHETIC_PROCESS_STOP' });
+          },
+        },
+      }),
+      /synthetic process stop/,
+    );
+    assert.equal(checkpoint.schemaVersion, 'chimpmaera.db/operation-resume-checkpoint/v1');
+    assert.equal(checkpoint.binding.resolutionSha256, resolution.resolutionSha256);
+    assert.equal(checkpoint.binding.engine, engine);
+    assert.equal(checkpoint.binding.capabilityPackVersion, '4.0.0');
+    assert.equal(checkpoint.binding.queryPackVersion, 'v1');
+    assert.equal(checkpoint.binding.normalizerVersion, 'v1');
+    assert.equal(checkpoint.progress.completedAttempts.length, 1);
+    assert.equal(checkpoint.progress.nextAttempt, 2);
+    assert.match(checkpoint.progress.completedAttempts[0].attemptIdentitySha256, /^[a-f0-9]{64}$/);
+    assert.match(checkpoint.checkpointSha256, /^[a-f0-9]{64}$/);
+
+    const resumed = await runOperationInvocation({
+      resolution,
+      invocation,
+      coordinator: createOperationCoordinator(),
+      executor: async ({ attempt }) => {
+        assert.equal(attempt, 2);
+        return { state: 'SUCCEEDED', reasonCode: null, resultSha256 };
+      },
+      resume: { checkpoint, resumedAt: '2026-08-11T10:05:01.000Z' },
+    });
+    const { resume: uninterruptedResume, receiptSha256: uninterruptedReceiptSha256, ...uninterruptedBody } = uninterrupted;
+    const { resume: resumedBinding, receiptSha256: resumedReceiptSha256, ...resumedBody } = resumed;
+    assert.deepEqual(resumedBody, uninterruptedBody);
+    assert.equal(uninterruptedResume, null);
+    assert.equal(resumedBinding.checkpointSha256, checkpoint.checkpointSha256);
+    assert.equal(resumedBinding.resumedAt, '2026-08-11T10:05:01.000Z');
+    assert.notEqual(resumedReceiptSha256, uninterruptedReceiptSha256);
+    assert.deepEqual(resumed.attempts.map(({ attempt, state }) => ({ attempt, state })), [
+      { attempt: 1, state: 'ERROR' },
+      { attempt: 2, state: 'SUCCEEDED' },
+    ]);
+    assert.doesNotMatch(canonicalJson(checkpoint), /password\s*[=:]|secret\s*[=:]|credentialValue/i);
+  }
+});
+
+test('Slice 4 Gate 3 rejects stale, foreign, tampered and capability-widened checkpoints', async () => {
+  const mssql = await loadAndResolveOperationProfile(path.resolve('tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json'));
+  const oracle = await loadAndResolveOperationProfile(path.resolve('tests/fixtures/db-analyzer/oracle-operation-profile-ref-v1.json'));
+  const invocation = operationInvocation({
+    resolution: mssql,
+    engine: 'mssql',
+    kind: 'SCHEDULED',
+    invocationId: 'mssql-checkpoint-negative-001',
+    overrides: { maxAttempts: 3, retryStates: ['ERROR'] },
+  });
+  let checkpoint;
+  await assert.rejects(
+    runOperationInvocation({
+      resolution: mssql,
+      invocation,
+      coordinator: createOperationCoordinator(),
+      executor: async () => ({ state: 'ERROR', reasonCode: 'SYNTHETIC_RESTART_REQUIRED', resultSha256: null }),
+      checkpointing: {
+        checkpointedAt: '2026-08-11T09:05:01.000Z',
+        validUntil: '2026-08-11T10:05:01.000Z',
+        sink: async (candidate) => {
+          checkpoint = candidate;
+          throw new Error('stop-after-checkpoint');
+        },
+      },
+    }),
+    /stop-after-checkpoint/,
+  );
+
+  assert.throws(
+    () => validateOperationResumeCheckpoint({
+      checkpoint,
+      resolution: mssql,
+      invocation,
+      resumedAt: '2026-08-11T10:05:01.001Z',
+    }),
+    /DB_OPERATION_CHECKPOINT_STALE/,
+  );
+
+  const tampered = structuredClone(checkpoint);
+  tampered.progress.completedAttempts[0].reasonCode = 'INVENTED_SUCCESS';
+  assert.throws(
+    () => validateOperationResumeCheckpoint({
+      checkpoint: tampered,
+      resolution: mssql,
+      invocation,
+      resumedAt: '2026-08-11T09:30:00.000Z',
+    }),
+    /DB_OPERATION_CHECKPOINT_TAMPERED/,
+  );
+
+  const foreignInvocation = operationInvocation({
+    resolution: oracle,
+    engine: 'oracle',
+    kind: 'SCHEDULED',
+    invocationId: invocation.invocationId,
+    overrides: { maxAttempts: 3, retryStates: ['ERROR'] },
+  });
+  assert.throws(
+    () => validateOperationResumeCheckpoint({
+      checkpoint,
+      resolution: oracle,
+      invocation: foreignInvocation,
+      resumedAt: '2026-08-11T09:30:00.000Z',
+    }),
+    /DB_OPERATION_CHECKPOINT_FOREIGN/,
+  );
+
+  const widened = structuredClone(checkpoint);
+  widened.binding.enabledCapabilities.push('SOURCE_WRITES');
+  const { checkpointSha256: ignored, ...widenedBody } = widened;
+  widened.checkpointSha256 = identitySha256(widenedBody);
+  assert.throws(
+    () => validateOperationResumeCheckpoint({
+      checkpoint: widened,
+      resolution: mssql,
+      invocation,
+      resumedAt: '2026-08-11T09:30:00.000Z',
+    }),
+    /DB_OPERATION_CHECKPOINT_CAPABILITY_WIDENING_DENIED/,
+  );
+
+  const inventedRuntime = structuredClone(checkpoint);
+  inventedRuntime.evidenceBoundary.sourceConnected = true;
+  const { checkpointSha256: ignoredRuntime, ...inventedRuntimeBody } = inventedRuntime;
+  inventedRuntime.checkpointSha256 = identitySha256(inventedRuntimeBody);
+  assert.throws(
+    () => validateOperationResumeCheckpoint({
+      checkpoint: inventedRuntime,
+      resolution: mssql,
+      invocation,
+      resumedAt: '2026-08-11T09:30:00.000Z',
+    }),
+    /DB_OPERATION_CHECKPOINT_CLAIM_INVALID/,
+  );
+});
+
+test('Slice 4 Gate 4 keeps bounded deterministic rescan/drift history and exact last-known-good evidence', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const resolution = await loadAndResolveOperationProfile(path.resolve(`tests/fixtures/db-analyzer/${engine}-operation-profile-ref-v1.json`));
+    const successfulReceipt = async (invocationId, result) => runOperationInvocation({
+      resolution,
+      invocation: operationInvocation({ resolution, engine, kind: 'SCHEDULED', invocationId }),
+      coordinator: createOperationCoordinator(),
+      executor: async () => ({ state: 'SUCCEEDED', reasonCode: null, resultSha256: identitySha256({ engine, result }) }),
+    });
+    const baseline = await successfulReceipt(`${engine}-history-baseline-001`, 'A');
+    const unchanged = await successfulReceipt(`${engine}-history-unchanged-002`, 'A');
+    const changed = await successfulReceipt(`${engine}-history-changed-003`, 'B');
+    let history = appendOperationHistory({
+      resolution, receipt: baseline, recordedAt: '2026-08-11T11:00:00.000Z', maxEntries: 3,
+    });
+    history = appendOperationHistory({
+      history, resolution, receipt: unchanged, recordedAt: '2026-08-11T11:01:00.000Z', maxEntries: 3,
+    });
+    history = appendOperationHistory({
+      history, resolution, receipt: changed, recordedAt: '2026-08-11T11:02:00.000Z', maxEntries: 3,
+    });
+    assert.deepEqual(history.entries.map(({ drift }) => drift.state), ['BASELINE', 'UNCHANGED', 'CHANGED']);
+
+    const resumableInvocation = operationInvocation({
+      resolution,
+      engine,
+      kind: 'SCHEDULED',
+      invocationId: `${engine}-history-resumed-004`,
+      overrides: { maxAttempts: 3, retryStates: ['ERROR'] },
+    });
+    let checkpoint;
+    await assert.rejects(
+      runOperationInvocation({
+        resolution,
+        invocation: resumableInvocation,
+        coordinator: createOperationCoordinator(),
+        executor: async () => ({ state: 'ERROR', reasonCode: 'SYNTHETIC_RESTART_REQUIRED', resultSha256: null }),
+        checkpointing: {
+          checkpointedAt: '2026-08-11T11:03:00.000Z',
+          validUntil: '2026-08-12T11:03:00.000Z',
+          sink: async (candidate) => {
+            checkpoint = candidate;
+            throw new Error('stop-after-history-checkpoint');
+          },
+        },
+      }),
+      /stop-after-history-checkpoint/,
+    );
+    const resumed = await runOperationInvocation({
+      resolution,
+      invocation: resumableInvocation,
+      coordinator: createOperationCoordinator(),
+      executor: async () => ({ state: 'SUCCEEDED', reasonCode: null, resultSha256: identitySha256({ engine, result: 'C' }) }),
+      resume: { checkpoint, resumedAt: '2026-08-11T11:04:00.000Z' },
+    });
+    history = appendOperationHistory({
+      history,
+      resolution,
+      receipt: resumed,
+      resumeCheckpoint: checkpoint,
+      recordedAt: '2026-08-11T11:05:00.000Z',
+      maxEntries: 3,
+    });
+    const failed = await runOperationInvocation({
+      resolution,
+      invocation: operationInvocation({
+        resolution, engine, kind: 'SCHEDULED', invocationId: `${engine}-history-failed-005`,
+      }),
+      coordinator: createOperationCoordinator(),
+      executor: async () => ({ state: 'ERROR', reasonCode: 'SYNTHETIC_SOURCE_UNAVAILABLE', resultSha256: null }),
+    });
+    history = appendOperationHistory({
+      history, resolution, receipt: failed, recordedAt: '2026-08-11T11:06:00.000Z', maxEntries: 3,
+    });
+    const selected = selectLastKnownGoodOperation({ history, resolution });
+    assert.equal(history.totalEntries, 5);
+    assert.equal(history.entries.length, 3);
+    assert.equal(history.prunedEntries, 2);
+    assert.equal(history.entries.at(-1).receipt.outcome.state, 'ERROR');
+    assert.equal(selected.sequence, 4);
+    assert.equal(selected.receipt.receiptSha256, resumed.receiptSha256);
+    assert.equal(selected.resumeCheckpoint.checkpointSha256, checkpoint.checkpointSha256);
+    assert.equal(selected.drift.state, 'CHANGED');
+    assert.equal(history.lastKnownGoodEntrySha256, selected.entrySha256);
+    assert.deepEqual(
+      history,
+      validateOperationHistory({ history: structuredClone(history), resolution }),
+    );
+    assert.doesNotMatch(canonicalJson(history), /password\s*[=:]|secret\s*[=:]|credentialValue/i);
+  }
+});
+
+test('Slice 4 Gate 4 rejects invented last-known-good, checkpoint drift, foreign history and retention widening', async () => {
+  const mssql = await loadAndResolveOperationProfile(path.resolve('tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json'));
+  const oracle = await loadAndResolveOperationProfile(path.resolve('tests/fixtures/db-analyzer/oracle-operation-profile-ref-v1.json'));
+  const invocation = operationInvocation({
+    resolution: mssql,
+    engine: 'mssql',
+    kind: 'SCHEDULED',
+    invocationId: 'mssql-history-negative-001',
+    overrides: { maxAttempts: 3, retryStates: ['ERROR'] },
+  });
+  let checkpoint;
+  await assert.rejects(
+    runOperationInvocation({
+      resolution: mssql,
+      invocation,
+      coordinator: createOperationCoordinator(),
+      executor: async () => ({ state: 'ERROR', reasonCode: 'SYNTHETIC_RESTART_REQUIRED', resultSha256: null }),
+      checkpointing: {
+        checkpointedAt: '2026-08-11T11:10:00.000Z',
+        validUntil: '2026-08-12T11:10:00.000Z',
+        sink: async (candidate) => {
+          checkpoint = candidate;
+          throw new Error('stop-after-negative-history-checkpoint');
+        },
+      },
+    }),
+    /stop-after-negative-history-checkpoint/,
+  );
+  const receipt = await runOperationInvocation({
+    resolution: mssql,
+    invocation,
+    coordinator: createOperationCoordinator(),
+    executor: async () => ({ state: 'SUCCEEDED', reasonCode: null, resultSha256: identitySha256('history-negative-ground-truth') }),
+    resume: { checkpoint, resumedAt: '2026-08-11T11:11:00.000Z' },
+  });
+  const history = appendOperationHistory({
+    resolution: mssql,
+    receipt,
+    resumeCheckpoint: checkpoint,
+    recordedAt: '2026-08-11T11:12:00.000Z',
+    maxEntries: 3,
+  });
+
+  const invented = structuredClone(history);
+  invented.lastKnownGoodEntrySha256 = null;
+  const { historySha256: ignoredInvented, ...inventedBody } = invented;
+  invented.historySha256 = identitySha256(inventedBody);
+  assert.throws(
+    () => selectLastKnownGoodOperation({ history: invented, resolution: mssql }),
+    /DB_OPERATION_HISTORY_LAST_KNOWN_GOOD_INVALID/,
+  );
+
+  const checkpointDrift = structuredClone(history);
+  checkpointDrift.entries[0].receipt.resume.checkpointSha256 = '0'.repeat(64);
+  const { receiptSha256: ignoredReceipt, ...receiptBody } = checkpointDrift.entries[0].receipt;
+  checkpointDrift.entries[0].receipt.receiptSha256 = identitySha256(receiptBody);
+  const { entrySha256: ignoredEntry, ...entryBody } = checkpointDrift.entries[0];
+  checkpointDrift.entries[0].entrySha256 = identitySha256(entryBody);
+  checkpointDrift.lastKnownGoodEntrySha256 = checkpointDrift.entries[0].entrySha256;
+  const { historySha256: ignoredHistory, ...historyBody } = checkpointDrift;
+  checkpointDrift.historySha256 = identitySha256(historyBody);
+  assert.throws(
+    () => validateOperationHistory({ history: checkpointDrift, resolution: mssql }),
+    /DB_OPERATION_RECEIPT_CHECKPOINT_INVALID/,
+  );
+  assert.throws(
+    () => validateOperationHistory({ history, resolution: oracle }),
+    /DB_OPERATION_HISTORY_FOREIGN|DB_OPERATION_RECEIPT_BINDING_DRIFT/,
+  );
+  assert.throws(
+    () => appendOperationHistory({
+      history,
+      resolution: mssql,
+      receipt,
+      resumeCheckpoint: checkpoint,
+      recordedAt: '2026-08-11T11:13:00.000Z',
+      maxEntries: 4,
+    }),
+    /DB_OPERATION_HISTORY_POLICY_DRIFT/,
+  );
+});
+
+async function operationUpgradeScenario(engine) {
+  const registry = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/source-registry-v1.json'), 'utf8'));
+  const profileRef = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-operation-profile-ref-v1.json`), 'utf8'));
+  const fromResolution = resolveOperationProfile({ profileRef, registry });
+  const upgradedRegistry = structuredClone(registry);
+  upgradedRegistry.registryVersion = '1.1.0';
+  const pack = upgradedRegistry.capabilityPacks[0];
+  pack.capabilityPackVersion = '4.1.0';
+  pack.capabilities.push('OPERATION_LIFECYCLE');
+  for (const registeredSource of upgradedRegistry.sources) {
+    registeredSource.capabilityPackRef.capabilityPackVersion = '4.1.0';
+  }
+  const source = upgradedRegistry.sources.find((candidate) => candidate.engine === engine);
+  source.enabledCapabilities.push('OPERATION_LIFECYCLE');
+  source.scope.schemas.push(engine === 'mssql' ? 'analytics' : 'CM_ANALYTICS');
+  const upgradedProfileRef = structuredClone(profileRef);
+  upgradedProfileRef.expected.scope = structuredClone(source.scope);
+  upgradedProfileRef.expected.capabilityPackRef.capabilityPackVersion = '4.1.0';
+  const toResolution = resolveOperationProfile({ profileRef: upgradedProfileRef, registry: upgradedRegistry });
+  const receipt = await runOperationInvocation({
+    resolution: fromResolution,
+    invocation: operationInvocation({
+      resolution: fromResolution,
+      engine,
+      kind: 'SCHEDULED',
+      invocationId: `${engine}-pre-upgrade-baseline-001`,
+    }),
+    coordinator: createOperationCoordinator(),
+    executor: async () => ({
+      state: 'SUCCEEDED',
+      reasonCode: null,
+      resultSha256: identitySha256({ engine, state: 'pre-upgrade-ground-truth' }),
+    }),
+  });
+  const history = appendOperationHistory({
+    resolution: fromResolution,
+    receipt,
+    recordedAt: '2026-08-11T11:20:00.000Z',
+    maxEntries: 3,
+  });
+  return { fromResolution, toResolution, history };
+}
+
+test('Slice 4 Gate 5 emits exact reviewed schema/capability upgrade drift and migration receipts', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const { fromResolution, toResolution, history } = await operationUpgradeScenario(engine);
+    const plan = createOperationMigrationPlan({
+      fromResolution,
+      toResolution,
+      requestedAt: '2026-08-11T11:21:00.000Z',
+    });
+    assert.equal(plan.source.engine, engine);
+    assert.equal(plan.drift.registryVersion.before, '1.0.0');
+    assert.equal(plan.drift.registryVersion.after, '1.1.0');
+    assert.equal(plan.drift.capabilityPack.versionBefore, '4.0.0');
+    assert.equal(plan.drift.capabilityPack.versionAfter, '4.1.0');
+    assert.deepEqual(plan.drift.capabilityPack.addedCapabilities, ['OPERATION_LIFECYCLE']);
+    assert.deepEqual(plan.drift.capabilityPack.removedCapabilities, []);
+    assert.deepEqual(
+      plan.drift.schemaScope.addedSchemas,
+      [engine === 'mssql' ? 'analytics' : 'CM_ANALYTICS'],
+    );
+    assert.deepEqual(plan.drift.schemaScope.removedSchemas, []);
+    assert.deepEqual(plan.reviewBoundary, {
+      automaticApplicationAllowed: false,
+      reasons: [
+        'CAPABILITY_ENABLEMENT_CHANGE',
+        'CAPABILITY_PACK_VERSION_CHANGE',
+        'REGISTRY_VERSION_CHANGE',
+        'SCHEMA_SCOPE_CHANGE',
+      ],
+      required: true,
+      state: 'PENDING',
+    });
+
+    const input = {
+      plan,
+      fromResolution,
+      toResolution,
+      history,
+      review: {
+        decision: 'APPROVED',
+        reviewedAt: '2026-08-11T11:22:00.000Z',
+        reviewerReference: `synthetic-review:${engine}:001`,
+        reasonCode: 'SYNTHETIC_CONTROLLED_UPGRADE_APPROVED',
+      },
+      appliedAt: '2026-08-11T11:23:00.000Z',
+    };
+    const first = applyOperationMigration(input);
+    const second = applyOperationMigration(input);
+    assert.deepEqual(first, second);
+    assert.equal(first.resolution.resolutionSha256, toResolution.resolutionSha256);
+    assert.equal(first.receipt.transition.driftSha256, plan.drift.driftSha256);
+    assert.equal(first.receipt.priorHistory.historySha256, history.historySha256);
+    assert.equal(first.receipt.rollback.resolutionSha256, fromResolution.resolutionSha256);
+    assert.equal(first.receipt.rollback.lastKnownGoodEntrySha256, history.lastKnownGoodEntrySha256);
+    assert.equal(first.receipt.outcome.state, 'APPLIED_TO_REGISTRY');
+    assert.equal(first.receipt.outcome.newHistoryRequired, true);
+    assert.deepEqual(first.receipt.evidenceBoundary, {
+      priorHistoryRewritten: false,
+      registryPersistenceClaimed: false,
+      runtimeValidation: 'SYNTHETIC_UNVALIDATED',
+      sourceDatabaseWritten: false,
+    });
+    assert.deepEqual(first.receipt, validateOperationMigrationReceipt({
+      receipt: structuredClone(first.receipt), plan, fromResolution, toResolution, history,
+    }));
+    assert.doesNotMatch(canonicalJson({ plan, receipt: first.receipt }), /password\s*[=:]|secret\s*[=:]|credentialValue/i);
+    assert.throws(
+      () => validateOperationHistory({ history, resolution: toResolution }),
+      /DB_OPERATION_HISTORY_FOREIGN|DB_OPERATION_RECEIPT_BINDING_DRIFT/,
+    );
+  }
+});
+
+test('Slice 4 Gate 5 denies unreviewed, tampered, replacement and invented-effect migrations', async () => {
+  const scenario = await operationUpgradeScenario('mssql');
+  const plan = createOperationMigrationPlan({
+    fromResolution: scenario.fromResolution,
+    toResolution: scenario.toResolution,
+    requestedAt: '2026-08-11T11:21:00.000Z',
+  });
+  const input = {
+    ...scenario,
+    plan,
+    review: {
+      decision: 'APPROVED',
+      reviewedAt: '2026-08-11T11:22:00.000Z',
+      reviewerReference: 'synthetic-review:mssql:negative',
+      reasonCode: 'SYNTHETIC_CONTROLLED_UPGRADE_APPROVED',
+    },
+    appliedAt: '2026-08-11T11:23:00.000Z',
+  };
+  assert.throws(
+    () => applyOperationMigration({ ...input, review: { ...input.review, decision: 'REJECTED' } }),
+    /DB_OPERATION_MIGRATION_REVIEW_REQUIRED/,
+  );
+
+  const tamperedPlan = structuredClone(plan);
+  tamperedPlan.drift.schemaScope.addedSchemas.push('invented_schema');
+  assert.throws(
+    () => applyOperationMigration({ ...input, plan: tamperedPlan }),
+    /DB_OPERATION_MIGRATION_PLAN_TAMPERED/,
+  );
+
+  const replacement = structuredClone(scenario.toResolution);
+  replacement.source.adapter.host = 'replacement.example.invalid';
+  const { resolutionSha256: ignoredResolution, ...replacementBody } = replacement;
+  replacement.resolutionSha256 = identitySha256(replacementBody);
+  assert.throws(
+    () => createOperationMigrationPlan({
+      fromResolution: scenario.fromResolution,
+      toResolution: replacement,
+      requestedAt: '2026-08-11T11:21:00.000Z',
+    }),
+    /DB_OPERATION_MIGRATION_REPLACEMENT_DENIED/,
+  );
+
+  const applied = applyOperationMigration(input);
+  const inventedEffect = structuredClone(applied.receipt);
+  inventedEffect.evidenceBoundary.sourceDatabaseWritten = true;
+  const { receiptSha256: ignoredReceipt, ...receiptBody } = inventedEffect;
+  inventedEffect.receiptSha256 = identitySha256(receiptBody);
+  assert.throws(
+    () => validateOperationMigrationReceipt({
+      receipt: inventedEffect,
+      plan,
+      fromResolution: scenario.fromResolution,
+      toResolution: scenario.toResolution,
+      history: scenario.history,
+    }),
+    /DB_OPERATION_MIGRATION_RECEIPT_CLAIM_INVALID/,
+  );
+});
+
+const lifecycleRecordsFor = ({ resolution, history }) => [
+  createOperationLifecycleRecord({
+    resolution,
+    artifactKind: 'RESOLUTION',
+    artifactId: resolution.resolutionSha256,
+    payload: resolution,
+  }),
+  createOperationLifecycleRecord({
+    resolution,
+    artifactKind: 'HISTORY',
+    artifactId: history.historySha256,
+    payload: history,
+  }),
+  createOperationLifecycleRecord({
+    resolution,
+    artifactKind: 'CHECKPOINT',
+    artifactId: 'synthetic-resume-001',
+    payload: { state: 'SYNTHETIC_RESUMABLE', historySha256: history.historySha256 },
+  }),
+  createOperationLifecycleRecord({
+    resolution,
+    artifactKind: 'EVIDENCE',
+    artifactId: 'structure-evidence-001',
+    payload: { state: 'RETAINED', sourceId: resolution.source.sourceId },
+  }),
+  createOperationLifecycleRecord({
+    resolution,
+    artifactKind: 'KNOWLEDGE',
+    artifactId: 'approved-knowledge-001',
+    payload: { state: 'APPROVED', sourceId: resolution.source.sourceId },
+  }),
+  createOperationLifecycleRecord({
+    resolution,
+    artifactKind: 'SUPERSET',
+    artifactId: 'disconnected-superset-001',
+    payload: { state: 'DISCONNECTED', sourceId: resolution.source.sourceId },
+  }),
+];
+
+test('Slice 4 Gate 6 persists marker-scoped backup, reset, restore, removal and rollback symmetrically', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const otherEngine = engine === 'mssql' ? 'oracle' : 'mssql';
+    const scenario = await operationUpgradeScenario(engine);
+    const unrelatedScenario = await operationUpgradeScenario(otherEngine);
+    const records = [
+      ...lifecycleRecordsFor({ resolution: scenario.fromResolution, history: scenario.history }),
+      ...lifecycleRecordsFor({
+        resolution: unrelatedScenario.fromResolution,
+        history: unrelatedScenario.history,
+      }),
+    ];
+    const rootDir = await mkdtemp(path.join(tmpdir(), `cm-db-lifecycle-${engine}-`));
+    try {
+      const initialized = await initializeOperationLifecycleStore({ rootDir, records });
+      assert.equal(initialized.revision, 0);
+      const markerSha256 = records.find((record) => (
+        record.payloadSha256 === identitySha256(scenario.fromResolution)
+      )).markerSha256;
+      const unrelatedBefore = initialized.records.filter((record) => record.markerSha256 !== markerSha256);
+      const backupInput = {
+        rootDir,
+        resolution: scenario.fromResolution,
+        ownerId: `${engine}-lifecycle-owner-001`,
+        createdAt: '2026-08-11T11:30:00.000Z',
+      };
+      const backup = await createOperationLifecycleBackup(backupInput);
+      assert.deepEqual(backup, await createOperationLifecycleBackup(backupInput));
+      assert.equal(backup.records.length, 6);
+      assert.equal(backup.evidenceBoundary.unrelatedRecordsIncluded, false);
+
+      const reset = await applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'RESET',
+        backup,
+        performedAt: '2026-08-11T11:31:00.000Z',
+      });
+      assert.equal(reset.receipt.outcome.state, 'APPLIED');
+      assert.deepEqual(
+        reset.store.records.filter((record) => record.markerSha256 === markerSha256)
+          .map((record) => record.artifactKind),
+        ['EVIDENCE', 'KNOWLEDGE', 'RESOLUTION', 'SUPERSET'],
+      );
+      const repeatedReset = await applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'RESET',
+        backup,
+        performedAt: '2026-08-11T11:31:01.000Z',
+      });
+      assert.equal(repeatedReset.receipt.outcome.state, 'ALREADY_SATISFIED');
+      assert.equal(repeatedReset.store.storeSha256, reset.store.storeSha256);
+
+      const restored = await applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'RESTORE',
+        backup,
+        performedAt: '2026-08-11T11:32:00.000Z',
+      });
+      assert.deepEqual(
+        restored.store.records.filter((record) => record.markerSha256 === markerSha256),
+        backup.records,
+      );
+      const removed = await applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'REMOVE',
+        backup,
+        performedAt: '2026-08-11T11:33:00.000Z',
+      });
+      assert.equal(removed.store.records.some((record) => record.markerSha256 === markerSha256), false);
+      const repeatedRemoval = await applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'REMOVE',
+        backup,
+        performedAt: '2026-08-11T11:33:01.000Z',
+      });
+      assert.equal(repeatedRemoval.receipt.outcome.state, 'ALREADY_SATISFIED');
+      assert.equal(repeatedRemoval.store.storeSha256, removed.store.storeSha256);
+
+      const rolledBack = await applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'ROLLBACK',
+        backup,
+        performedAt: '2026-08-11T11:34:00.000Z',
+      });
+      assert.deepEqual(
+        rolledBack.store.records.filter((record) => record.markerSha256 === markerSha256),
+        backup.records,
+      );
+      assert.deepEqual(
+        rolledBack.store.records.filter((record) => record.markerSha256 !== markerSha256),
+        unrelatedBefore,
+      );
+      assert.equal(rolledBack.receipt.evidenceBoundary.persistenceValidation, 'LOCAL_FILESYSTEM_SYNTHETIC');
+      assert.equal(rolledBack.receipt.evidenceBoundary.sourceDatabaseWritten, false);
+      assert.equal(rolledBack.receipt.evidenceBoundary.unrelatedRecordsChanged, false);
+      assert.deepEqual(
+        validateOperationLifecycleReceipt({
+          receipt: structuredClone(rolledBack.receipt),
+          resolution: scenario.fromResolution,
+          backup,
+        }),
+        rolledBack.receipt,
+      );
+      assert.doesNotMatch(canonicalJson({ backup, receipt: rolledBack.receipt }), /password\s*[=:]|secret\s*[=:]|credentialValue/i);
+      assert.deepEqual(await readOperationLifecycleStore({ rootDir }), rolledBack.store);
+    } finally {
+      await rm(rootDir, { recursive: true, force: true });
+    }
+  }
+});
+
+test('Slice 4 Gate 6 denies secret material, stale backups, tampering and foreign marker ownership', async () => {
+  const scenario = await operationUpgradeScenario('mssql');
+  assert.throws(
+    () => createOperationLifecycleRecord({
+      resolution: scenario.fromResolution,
+      artifactKind: 'EVIDENCE',
+      artifactId: 'secret-negative-001',
+      payload: { password: 'denied' },
+    }),
+    /DB_OPERATION_LIFECYCLE_RECORD_INVALID/,
+  );
+  const records = lifecycleRecordsFor({ resolution: scenario.fromResolution, history: scenario.history });
+  const rootDir = await mkdtemp(path.join(tmpdir(), 'cm-db-lifecycle-negative-'));
+  try {
+    await initializeOperationLifecycleStore({ rootDir, records });
+    const backupInput = {
+      rootDir,
+      resolution: scenario.fromResolution,
+      ownerId: 'mssql-lifecycle-negative-001',
+      createdAt: '2026-08-11T11:40:00.000Z',
+    };
+    const backup = await createOperationLifecycleBackup(backupInput);
+
+    const tamperedBackup = structuredClone(backup);
+    tamperedBackup.records[0].artifactId = 'invented-artifact-001';
+    await assert.rejects(
+      applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'RESTORE',
+        backup: tamperedBackup,
+        performedAt: '2026-08-11T11:41:00.000Z',
+      }),
+      /DB_OPERATION_LIFECYCLE_BACKUP_TAMPERED/,
+    );
+
+    const store = await readOperationLifecycleStore({ rootDir });
+    const extra = createOperationLifecycleRecord({
+      resolution: scenario.fromResolution,
+      artifactKind: 'EVIDENCE',
+      artifactId: 'newer-evidence-002',
+      payload: { state: 'NEWER_THAN_BACKUP' },
+    });
+    const body = normalizeJsonValue({
+      schemaVersion: store.schemaVersion,
+      revision: store.revision + 1,
+      records: [...store.records, extra].sort((left, right) => (
+        `${left.markerSha256}:${left.artifactKind}:${left.artifactId}`
+          .localeCompare(`${right.markerSha256}:${right.artifactKind}:${right.artifactId}`)
+      )),
+    });
+    await writeFile(
+      path.join(rootDir, 'operation-lifecycle-store.json'),
+      `${JSON.stringify({ ...body, storeSha256: identitySha256(body) }, null, 2)}\n`,
+      'utf8',
+    );
+    await assert.rejects(
+      applyOperationLifecycleAction({
+        ...backupInput,
+        action: 'RESET',
+        backup,
+        performedAt: '2026-08-11T11:42:00.000Z',
+      }),
+      /DB_OPERATION_LIFECYCLE_BACKUP_STALE/,
+    );
+
+    await writeFile(
+      path.join(rootDir, '.operation-lifecycle-owner.json'),
+      '{"markerSha256":"foreign","ownerId":"foreign-owner"}\n',
+      'utf8',
+    );
+    await assert.rejects(
+      createOperationLifecycleBackup({ ...backupInput, createdAt: '2026-08-11T11:43:00.000Z' }),
+      /DB_OPERATION_LIFECYCLE_CONCURRENCY_DENIED/,
+    );
+    await rm(path.join(rootDir, '.operation-lifecycle-owner.json'));
+
+    const restored = await applyOperationLifecycleAction({
+      ...backupInput,
+      action: 'RESTORE',
+      backup,
+      performedAt: '2026-08-11T11:44:00.000Z',
+    });
+    const inventedEffect = structuredClone(restored.receipt);
+    inventedEffect.evidenceBoundary.sourceDatabaseWritten = true;
+    const { receiptSha256: ignoredReceipt, ...receiptBody } = inventedEffect;
+    inventedEffect.receiptSha256 = identitySha256(receiptBody);
+    assert.throws(
+      () => validateOperationLifecycleReceipt({
+        receipt: inventedEffect,
+        resolution: scenario.fromResolution,
+        backup,
+      }),
+      /DB_OPERATION_LIFECYCLE_RECEIPT_CLAIM_INVALID/,
+    );
+  } finally {
+    await rm(rootDir, { recursive: true, force: true });
+  }
+});
+
+test('Slice 4 Gate 7 reuses one operation and lifecycle contract for a second database per engine', async () => {
+  const groundTruth = JSON.parse(await readFile(path.resolve(
+    'tests/fixtures/db-analyzer/operation-second-databases-ground-truth-v1.json',
+  ), 'utf8'));
+  assert.equal(groundTruth.schemaVersion, 'chimpmaera.db/operation-second-databases-ground-truth/v1');
+  for (const fixture of groundTruth.databases) {
+    const firstResolution = await loadAndResolveOperationProfile(path.resolve(
+      `tests/fixtures/db-analyzer/${fixture.engine}-operation-profile-ref-v1.json`,
+    ));
+    const secondResolution = await loadAndResolveOperationProfile(path.resolve(
+      `tests/fixtures/db-analyzer/${fixture.profileFile}`,
+    ));
+    assert.equal(secondResolution.source.sourceId, fixture.sourceId);
+    assert.deepEqual(secondResolution.source.scope, fixture.scope);
+    assert.notEqual(secondResolution.source.sourceId, firstResolution.source.sourceId);
+    assert.notEqual(secondResolution.resolutionSha256, firstResolution.resolutionSha256);
+
+    const execute = async (resolution, suffix, syntheticResult) => {
+      const receipt = await runOperationInvocation({
+        resolution,
+        invocation: operationInvocation({
+          resolution,
+          engine: fixture.engine,
+          kind: 'SCHEDULED',
+          invocationId: `${fixture.engine}-${suffix}-reuse-001`,
+        }),
+        coordinator: createOperationCoordinator(),
+        executor: async ({ resolution: boundResolution }) => ({
+          state: 'SUCCEEDED',
+          reasonCode: null,
+          resultSha256: identitySha256({
+            sourceId: boundResolution.source.sourceId,
+            scope: boundResolution.source.scope,
+            syntheticResult,
+          }),
+        }),
+      });
+      return appendOperationHistory({
+        resolution,
+        receipt,
+        recordedAt: '2026-08-11T11:50:00.000Z',
+        maxEntries: 3,
+      });
+    };
+    const firstHistory = await execute(firstResolution, 'unknown-a', {
+      coverageState: 'EXISTING_SYNTHETIC_BASELINE',
+      rowSamplesIncluded: false,
+    });
+    const secondHistory = await execute(secondResolution, 'unknown-b', fixture.syntheticResult);
+    assert.equal(
+      secondHistory.entries[0].receipt.outcome.resultSha256,
+      identitySha256({
+        sourceId: fixture.sourceId,
+        scope: fixture.scope,
+        syntheticResult: fixture.syntheticResult,
+      }),
+    );
+    assert.equal(secondHistory.entries[0].receipt.workflow, 'cm db analyze <profile>');
+
+    const firstRecords = lifecycleRecordsFor({ resolution: firstResolution, history: firstHistory });
+    const secondRecords = lifecycleRecordsFor({ resolution: secondResolution, history: secondHistory });
+    const rootDir = await mkdtemp(path.join(tmpdir(), `cm-db-second-source-${fixture.engine}-`));
+    try {
+      const initialized = await initializeOperationLifecycleStore({
+        rootDir,
+        records: [...firstRecords, ...secondRecords],
+      });
+      const firstMarker = firstRecords[0].markerSha256;
+      const secondMarker = secondRecords[0].markerSha256;
+      assert.notEqual(firstMarker, secondMarker);
+      const firstSourceBefore = initialized.records.filter((record) => record.markerSha256 === firstMarker);
+      const backup = await createOperationLifecycleBackup({
+        rootDir,
+        resolution: secondResolution,
+        ownerId: `${fixture.engine}-second-source-owner-001`,
+        createdAt: '2026-08-11T11:51:00.000Z',
+      });
+      const reset = await applyOperationLifecycleAction({
+        rootDir,
+        resolution: secondResolution,
+        ownerId: `${fixture.engine}-second-source-owner-001`,
+        action: 'RESET',
+        backup,
+        performedAt: '2026-08-11T11:52:00.000Z',
+      });
+      assert.deepEqual(
+        reset.store.records.filter((record) => record.markerSha256 === firstMarker),
+        firstSourceBefore,
+      );
+      assert.deepEqual(
+        reset.store.records.filter((record) => record.markerSha256 === secondMarker)
+          .map((record) => record.artifactKind),
+        ['EVIDENCE', 'KNOWLEDGE', 'RESOLUTION', 'SUPERSET'],
+      );
+      assert.equal(reset.receipt.evidenceBoundary.unrelatedRecordsChanged, false);
+      assert.doesNotMatch(
+        canonicalJson({ secondResolution, secondHistory, backup, receipt: reset.receipt }),
+        /password\s*[=:]|secret\s*[=:]|credentialValue/i,
+      );
+    } finally {
+      await rm(rootDir, { recursive: true, force: true });
+    }
+  }
+});
+
+test('Slice 4 Gate 7 denies cross-source profile and invocation scope drift', async () => {
+  const registry = JSON.parse(await readFile(path.resolve(
+    'tests/fixtures/db-analyzer/source-registry-v1.json',
+  ), 'utf8'));
+  for (const engine of ['mssql', 'oracle']) {
+    const firstProfile = JSON.parse(await readFile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-operation-profile-ref-v1.json`,
+    ), 'utf8'));
+    const secondProfile = JSON.parse(await readFile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-operation-profile-ref-b-v1.json`,
+    ), 'utf8'));
+    const scopeSubstitution = structuredClone(secondProfile);
+    scopeSubstitution.expected.scope = structuredClone(firstProfile.expected.scope);
+    assert.throws(
+      () => resolveOperationProfile({ profileRef: scopeSubstitution, registry }),
+      /DB_OPERATION_PROFILE_BINDING_DRIFT/,
+    );
+
+    const firstResolution = resolveOperationProfile({ profileRef: firstProfile, registry });
+    const secondResolution = resolveOperationProfile({ profileRef: secondProfile, registry });
+    await assert.rejects(
+      runOperationInvocation({
+        resolution: secondResolution,
+        invocation: operationInvocation({
+          resolution: firstResolution,
+          engine,
+          kind: 'SCHEDULED',
+          invocationId: `${engine}-cross-source-denied-001`,
+        }),
+        coordinator: createOperationCoordinator(),
+        executor: async () => ({
+          state: 'SUCCEEDED',
+          reasonCode: null,
+          resultSha256: identitySha256('must-not-run'),
+        }),
+      }),
+      /DB_OPERATION_INVOCATION_INVALID/,
+    );
+  }
+});
+
+test('Slice 4 Gate 8 emits deterministic operational JSON, HTML, knowledge and disconnected Superset results', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const scenario = await operationUpgradeScenario(engine);
+    const records = lifecycleRecordsFor({ resolution: scenario.fromResolution, history: scenario.history });
+    const lifecycleRoot = await mkdtemp(path.join(tmpdir(), `cm-db-operation-output-store-${engine}-`));
+    const outputRoot = await mkdtemp(path.join(tmpdir(), `cm-db-operation-output-files-${engine}-`));
+    try {
+      const lifecycleStore = await initializeOperationLifecycleStore({ rootDir: lifecycleRoot, records });
+      const first = buildOperationOutputBundle({
+        resolution: scenario.fromResolution,
+        history: scenario.history,
+        lifecycleStore,
+      });
+      const second = buildOperationOutputBundle({
+        resolution: scenario.fromResolution,
+        history: scenario.history,
+        lifecycleStore,
+      });
+      assert.deepEqual(first, second);
+      assert.equal(first.summary.source.engine, engine);
+      assert.equal(first.summary.operation.historySha256, scenario.history.historySha256);
+      assert.equal(first.summary.operation.lastKnownGoodEntrySha256, scenario.history.lastKnownGoodEntrySha256);
+      assert.equal(first.summary.evidenceBoundary.runtimeValidation, 'SYNTHETIC_UNVALIDATED');
+      assert.equal(first.summary.evidenceBoundary.productionCompatibilityEstablished, false);
+      assert.equal(first.knowledge.claims.derivedFromBoundEvidenceOnly, true);
+      assert.equal(first.knowledge.claims.businessSemanticsEstablished, false);
+      assert.equal(first.superset.source.directSourceDatabaseConnection, false);
+      assert.equal(first.superset.source.sourceConnection, null);
+      assert.equal(first.superset.source.sourceSql, null);
+      assert.equal(first.superset.dashboard.automaticPublication, false);
+      assert.equal(first.superset.dashboard.drillThroughSourceRoute, null);
+      assert.match(first.html, /Disconnected, read-only operational evidence/);
+      assert.doesNotMatch(
+        canonicalJson(first),
+        /password\s*[=:]|secret\s*[=:]|credentialValue|CM_DB_|localhost|\.\.\//i,
+      );
+
+      const written = await writeOperationOutputBundle({
+        rootDir: outputRoot,
+        resolution: scenario.fromResolution,
+        history: scenario.history,
+        lifecycleStore,
+      });
+      const repeated = await writeOperationOutputBundle({
+        rootDir: outputRoot,
+        resolution: scenario.fromResolution,
+        history: scenario.history,
+        lifecycleStore,
+      });
+      assert.deepEqual(written, repeated);
+      assert.equal(written.relativeDirectory, `source-${scenario.history.source.markerSha256}`);
+      assert.ok(Object.values(written.relativeFiles).every((file) => !path.isAbsolute(file) && !file.includes('..')));
+      for (const [key, file] of Object.entries(written.relativeFiles)) {
+        const persisted = await readFile(path.join(outputRoot, written.relativeDirectory, file), 'utf8');
+        const expectedKey = key === 'manifestJson' ? 'manifestJson' : key;
+        assert.equal(persisted, first[expectedKey]);
+      }
+    } finally {
+      await rm(lifecycleRoot, { recursive: true, force: true });
+      await rm(outputRoot, { recursive: true, force: true });
+    }
+  }
+});
+
+test('Slice 4 Gate 8 denies stale ownership, scoped-path drift, leakage and invented evidence', async () => {
+  const scenario = await operationUpgradeScenario('mssql');
+  const records = lifecycleRecordsFor({ resolution: scenario.fromResolution, history: scenario.history });
+  const lifecycleRoot = await mkdtemp(path.join(tmpdir(), 'cm-db-operation-recovery-'));
+  try {
+    const lifecycleStore = await initializeOperationLifecycleStore({ rootDir: lifecycleRoot, records });
+    const markerFile = path.join(lifecycleRoot, '.operation-lifecycle-owner.json');
+    const ownership = {
+      markerSha256: scenario.history.source.markerSha256,
+      ownerId: 'mssql-crashed-owner-001',
+      acquiredAt: '2026-08-11T10:00:00.000Z',
+    };
+    await writeFile(markerFile, `${JSON.stringify(ownership)}\n`, 'utf8');
+    await assert.rejects(
+      createOperationLifecycleBackup({
+        rootDir: lifecycleRoot,
+        resolution: scenario.fromResolution,
+        ownerId: 'mssql-next-owner-002',
+        createdAt: '2026-08-11T12:00:00.000Z',
+      }),
+      /DB_OPERATION_LIFECYCLE_CONCURRENCY_DENIED/,
+    );
+    await assert.rejects(
+      recoverStaleOperationLifecycleOwnership({
+        rootDir: lifecycleRoot,
+        resolution: scenario.fromResolution,
+        expectedOwnerId: 'foreign-owner-001',
+        observedAt: '2026-08-11T12:00:00.000Z',
+        staleAfterMs: 60_000,
+      }),
+      /DB_OPERATION_LIFECYCLE_RECOVERY_FOREIGN_MARKER/,
+    );
+    const recovery = await recoverStaleOperationLifecycleOwnership({
+      rootDir: lifecycleRoot,
+      resolution: scenario.fromResolution,
+      expectedOwnerId: ownership.ownerId,
+      observedAt: '2026-08-11T12:00:00.000Z',
+      staleAfterMs: 60_000,
+    });
+    assert.equal(recovery.outcome.state, 'STALE_MARKER_REMOVED');
+    assert.equal(recovery.outcome.retryRequired, true);
+    assert.equal(recovery.evidenceBoundary.sourceDatabaseWritten, false);
+    assert.equal(recovery.evidenceBoundary.unrelatedMarkersRemoved, false);
+    await assert.rejects(stat(markerFile), /ENOENT/);
+
+    const freshOwnership = { ...ownership, acquiredAt: '2026-08-11T11:59:30.001Z' };
+    await writeFile(markerFile, `${JSON.stringify(freshOwnership)}\n`, 'utf8');
+    await assert.rejects(
+      recoverStaleOperationLifecycleOwnership({
+        rootDir: lifecycleRoot,
+        resolution: scenario.fromResolution,
+        expectedOwnerId: freshOwnership.ownerId,
+        observedAt: '2026-08-11T12:00:00.000Z',
+        staleAfterMs: 60_000,
+      }),
+      /DB_OPERATION_LIFECYCLE_RECOVERY_MARKER_NOT_STALE/,
+    );
+    await rm(markerFile);
+
+    await assert.rejects(
+      writeOperationOutputBundle({
+        rootDir: 'relative-output-root',
+        resolution: scenario.fromResolution,
+        history: scenario.history,
+        lifecycleStore,
+      }),
+      /DB_OPERATION_OUTPUT_ROOT_INVALID/,
+    );
+    const tamperedHistory = structuredClone(scenario.history);
+    tamperedHistory.entries[0].receipt.outcome.resultSha256 = identitySha256('invented-result');
+    assert.throws(
+      () => buildOperationOutputBundle({
+        resolution: scenario.fromResolution,
+        history: tamperedHistory,
+        lifecycleStore,
+      }),
+      /DB_OPERATION_HISTORY_TAMPERED|DB_OPERATION_HISTORY_ENTRY_TAMPERED/,
+    );
+    const leakingStore = structuredClone(lifecycleStore);
+    leakingStore.records[0].payload = { password: 'denied' };
+    leakingStore.records[0].payloadSha256 = identitySha256(leakingStore.records[0].payload);
+    const { storeSha256: ignoredStoreSha256, ...storeBody } = leakingStore;
+    leakingStore.storeSha256 = identitySha256(storeBody);
+    assert.throws(
+      () => buildOperationOutputBundle({
+        resolution: scenario.fromResolution,
+        history: scenario.history,
+        lifecycleStore: leakingStore,
+      }),
+      /DB_OPERATION_LIFECYCLE_RECORD_INVALID/,
+    );
+  } finally {
+    await rm(lifecycleRoot, { recursive: true, force: true });
+  }
+});
 
 async function loadEngine(engine) {
   const directory = path.join(root, engine);
