@@ -714,9 +714,12 @@ query-packs/db-analyzer/v1/stored-logic-provenance-license-lock.json	query-packs
 scripts/cm.mjs	scripts/cm.mjs	0755
 scripts/lib/db-analyzer/core.mjs	scripts/lib/db-analyzer/core.mjs	0644
 scripts/lib/db-analyzer/drift.mjs	scripts/lib/db-analyzer/drift.mjs	0644
+scripts/lib/db-analyzer/operation-outputs.mjs	scripts/lib/db-analyzer/operation-outputs.mjs	0644
+scripts/lib/db-analyzer/operation.mjs	scripts/lib/db-analyzer/operation.mjs	0644
 scripts/lib/db-analyzer/outputs.mjs	scripts/lib/db-analyzer/outputs.mjs	0644
 scripts/lib/db-analyzer/parser-enrichment.mjs	scripts/lib/db-analyzer/parser-enrichment.mjs	0644
 scripts/lib/db-analyzer/query-safety.mjs	scripts/lib/db-analyzer/query-safety.mjs	0644
+scripts/lib/db-analyzer/registry.mjs	scripts/lib/db-analyzer/registry.mjs	0644
 scripts/lib/db-analyzer/stored-logic-outputs.mjs	scripts/lib/db-analyzer/stored-logic-outputs.mjs	0644
 scripts/lib/db-analyzer/workflow.mjs	scripts/lib/db-analyzer/workflow.mjs	0644
 scripts/verify-db-analyzer-drift.mjs	scripts/verify-db-analyzer-drift.mjs	0644
@@ -739,6 +742,8 @@ tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json	tests/fixtures/db-ana
 tests/fixtures/db-analyzer/mssql-profiling-review-v1.json	tests/fixtures/db-analyzer/mssql-profiling-review-v1.json	0644
 tests/fixtures/db-analyzer/mssql-runtime-wwi-profile-v1.json	tests/fixtures/db-analyzer/mssql-runtime-wwi-profile-v1.json	0644
 tests/fixtures/db-analyzer/mssql-parser-enrichment-v1.json	tests/fixtures/db-analyzer/mssql-parser-enrichment-v1.json	0644
+tests/fixtures/db-analyzer/mssql-operation-profile-ref-b-v1.json	tests/fixtures/db-analyzer/mssql-operation-profile-ref-b-v1.json	0644
+tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json	tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json	0644
 tests/fixtures/db-analyzer/mssql-stored-logic-impact-change-v1.json	tests/fixtures/db-analyzer/mssql-stored-logic-impact-change-v1.json	0644
 tests/fixtures/db-analyzer/mssql-stored-logic-profile-v1.json	tests/fixtures/db-analyzer/mssql-stored-logic-profile-v1.json	0644
 tests/fixtures/db-analyzer/mssql-stored-logic-v1.json	tests/fixtures/db-analyzer/mssql-stored-logic-v1.json	0644
@@ -749,9 +754,13 @@ tests/fixtures/db-analyzer/oracle-profile-v1.json	tests/fixtures/db-analyzer/ora
 tests/fixtures/db-analyzer/oracle-profiling-profile-v1.json	tests/fixtures/db-analyzer/oracle-profiling-profile-v1.json	0644
 tests/fixtures/db-analyzer/oracle-profiling-review-v1.json	tests/fixtures/db-analyzer/oracle-profiling-review-v1.json	0644
 tests/fixtures/db-analyzer/oracle-parser-enrichment-v1.json	tests/fixtures/db-analyzer/oracle-parser-enrichment-v1.json	0644
+tests/fixtures/db-analyzer/operation-second-databases-ground-truth-v1.json	tests/fixtures/db-analyzer/operation-second-databases-ground-truth-v1.json	0644
+tests/fixtures/db-analyzer/oracle-operation-profile-ref-b-v1.json	tests/fixtures/db-analyzer/oracle-operation-profile-ref-b-v1.json	0644
+tests/fixtures/db-analyzer/oracle-operation-profile-ref-v1.json	tests/fixtures/db-analyzer/oracle-operation-profile-ref-v1.json	0644
 tests/fixtures/db-analyzer/oracle-stored-logic-impact-change-v1.json	tests/fixtures/db-analyzer/oracle-stored-logic-impact-change-v1.json	0644
 tests/fixtures/db-analyzer/oracle-stored-logic-profile-v1.json	tests/fixtures/db-analyzer/oracle-stored-logic-profile-v1.json	0644
 tests/fixtures/db-analyzer/oracle-stored-logic-v1.json	tests/fixtures/db-analyzer/oracle-stored-logic-v1.json	0644
+tests/fixtures/db-analyzer/source-registry-v1.json	tests/fixtures/db-analyzer/source-registry-v1.json	0644
 tests/fixtures/db-analyzer/stored-logic-negative-matrix-v1.json	tests/fixtures/db-analyzer/stored-logic-negative-matrix-v1.json	0644
 verification/db-analyzer/gate-6-adversarial-matrix-v1.json	verification/db-analyzer/gate-6-adversarial-matrix-v1.json	0644
 verification/db-analyzer/issue-192-mssql-2022-wwi-runtime-evidence.json	verification/db-analyzer/issue-192-mssql-2022-wwi-runtime-evidence.json	0644

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "chimpmaera.db/operation-second-databases-ground-truth/v1",
+  "databases": [
+    {
+      "engine": "mssql",
+      "profileFile": "mssql-operation-profile-ref-b-v1.json",
+      "sourceId": "mssql-unknown-b",
+      "scope": { "database": "CM_UNKNOWN_B", "container": null, "schemas": ["sales", "warehouse"] },
+      "syntheticResult": { "coverageState": "COMPLETE_SYNTHETIC", "schemaCount": 2, "relationCount": 7, "relationshipCount": 5, "rowSamplesIncluded": false }
+    },
+    {
+      "engine": "oracle",
+      "profileFile": "oracle-operation-profile-ref-b-v1.json",
+      "sourceId": "oracle-unknown-b",
+      "scope": { "database": "CMUNKNOWNB", "container": "CMUNKNOWNBPDB", "schemas": ["CM_SALES", "CM_WAREHOUSE"] },
+      "syntheticResult": { "coverageState": "COMPLETE_SYNTHETIC", "schemaCount": 2, "relationCount": 8, "relationshipCount": 6, "rowSamplesIncluded": false }
+    }
+  ]
+}
