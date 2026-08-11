@@ -469,7 +469,7 @@ c306cea4387030447637dd0449db0ced8e8e76c16d26b65e4ab8de87382372d0  ./query-packs/
 ac4957fcc068fc76a99cd8f76a42144d90c8c593edc401e2218c86f4405d13d4  ./query-packs/db-analyzer/v1/provenance-license-lock.json
 ffcb43b90ae9b628e9d7d863e440f0f478965158a474a2313927e841e75743a9  ./query-packs/db-analyzer/v1/stored-logic-provenance-license-lock.json
 508cf7342086b3dd8ee2ecfdf41c6732f7988d384b04ab60a50367766e324ba8  ./release/governance.json
-8010952cfc8dd05b438719ec54e934b08b91cd1b0dd1870cbb1aa46baf4b895d  ./release/public-files.manifest
+76e21e6a71af26e96913fe82053c838dbee63cc68580c8b1f6357a9f77c96d74  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 ff383ccc0829599d11542109ac3b4f1380719e8c85ce49eabd7938a98ad4e942  ./schemas/contracts/azure-identity-profile-v1.schema.json
@@ -535,7 +535,7 @@ e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8  ./schemas/secu
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
 935305d869c8e4e6ba30e961328e2eda4a4c1b78fc31f68275828894c6a8dfdb  ./scripts/bi-e2e-gate.mjs
-27882806759b04cb6798435a6471cd5a7f0e69062082f668b2c61777acade4d6  ./scripts/build-public-release.sh
+5e3c4da2687a7a3249d6f87565918ee7e3604fffb6b4c1409f5b7b97d62db81f  ./scripts/build-public-release.sh
 fa262192f46bdefa9d3684b434a033e39820cec82ffe38677df76f98a1b30317  ./scripts/cm.mjs
 7387c5b9e412aac78e2ec3b61c465a74e84d3782f104049bc0632c8643c4b05e  ./scripts/collect-bi-discovery-s1.mjs
 da2109476338820e2ae5b2b42f720cf2d7c3b359122ee28bcea6fea65e1b1818  ./scripts/daily-poc.mjs
@@ -553,7 +553,7 @@ b4b233b35f22393ee2159a863a257945b7f6e25066018777eb997fcd32f79ec0  ./scripts/lib/
 8e5e7a769cdc647718632c8a0f738fdf5f7729f2694ea7c2502743d5835735fc  ./scripts/lib/db-analyzer/query-safety.mjs
 8e4f1d9165c67e7ff3c0cea34f1715ef0eb9254062256871deff621c8f4c0cd0  ./scripts/lib/db-analyzer/registry.mjs
 8bd1485296c671719603c964d511124e38f06ed5187ecedd52d70655bcd31e18  ./scripts/lib/db-analyzer/stored-logic-outputs.mjs
-b0ec012156a112ab58292b75a80028c0ec53677bf6cb0d59f5d027258d0ad71c  ./scripts/lib/db-analyzer/workflow.mjs
+8e3f74b8817d1df534bf2e439a1cb944aaef5b80e540763bfbae9929efbf3a1e  ./scripts/lib/db-analyzer/workflow.mjs
 2a7cfda53208342ef9ae10655d0009a8626d168b4c9b7390d255072d81ab7925  ./scripts/publish-bi-discovery-s2-superset.mjs
 233057524cb4f8550f13fe9c50dff21e215f4fcbb8d06800203b27abc79f393f  ./scripts/publish-bi-discovery-superset.mjs
 556f60be292f8984c5a34648ec37f594bf795a9f68e3d3c169844d077d0c65d3  ./scripts/refresh-integrity-data.mjs
@@ -618,7 +618,7 @@ d7460b81e2855d881f6f1a2836ce0a16eb3235497289d097cb122c2e15cf988c  ./tests/builde
 b1c6f1a3f8abc0605e49c9307c69ac255b337af1ec84b3bacd05a5612e972a46  ./tests/company-data-pack.test.mjs
 5b437b3f7feac8d367eeae342c701b33a0e90bc5d4bb7e4f30f5b559f77a0b36  ./tests/crm-read-connector.test.ts
 2dab1af9848d196f4a0c311e99db8411b4bf7345d5bc9f62db35d5b335e4f094  ./tests/daily-poc.test.mjs
-b9d6474169eebbc36cd36f88c6d7a48ffe075bb7609ba68e2768c57d15465fb0  ./tests/db-analyzer-query-pack.test.mjs
+fa32d10bcd60d3026b41fc4d5e2ef649326d64be77f87f9e3011e7ac2202d644  ./tests/db-analyzer-query-pack.test.mjs
 d9157598e660243c1b98552b09c43a05127701f0fe343c1a14c0eb984eaea9cd  ./tests/demo-admin-ai-poc.test.mjs
 2cb4aaad1ca1435c2c0abca543796f21de783ae678eabed1adac308ce1969e2b  ./tests/demo-approval-workbench.test.mjs
 7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74  ./tests/demo-enforcement-gate.test.mjs
@@ -659,6 +659,7 @@ c7e372d7eb0d701f7cde55147bdeadf73d0c8e7202b2f3be49e83e78172db429  ./tests/fixtur
 87e3b70cf7229da269b7f9cc4fe3cae022ed272e8c88ea7fe31e3e630c3ccadd  ./tests/fixtures/crm-read/supported-export-v1.json
 95624ae1cb65b18626bebfe92f9108e644c169ce99f54a1a74a0c555ed177652  ./tests/fixtures/daily-poc/negative-matrix.json
 9a6d624cb5ea593f6b0a48198b5bf52b52ce5ddac355a4660705d47c0d83cbe4  ./tests/fixtures/db-analyzer/mssql-aggregate-results-v1.json
+099eed708b51b1b13b4951f95ab00e5f9c1a9902af46ca6e18d376333b20915a  ./tests/fixtures/db-analyzer/mssql-adventureworks-scope-contract-v1.json
 3f65ca40cb4e068b54e41e5ab102d6b6cebd4f190733e71c7a21efe22ccbda8c  ./tests/fixtures/db-analyzer/mssql-drift-b-v1.json
 34f39fcd208dbfa9e65ae6fac3a9795d53d499a1a996f8a337a04d4e8c023361  ./tests/fixtures/db-analyzer/mssql-operation-profile-ref-b-v1.json
 13f3cf55911ffe4bc94de7ef89e7674024a2fb6fb625fb4a0180ff9f28fdce35  ./tests/fixtures/db-analyzer/mssql-operation-profile-ref-v1.json
@@ -762,7 +763,7 @@ c7c8da99a0f6926cb5c9ee4bff24db6817d752f9ae2c9821baf5479d29f40720  ./tests/poc-se
 8af93f03affd3d690affd018623492d399cf01e64ed4cf48d6d56f8e4c56afd3  ./tests/poc-showcase.test.ts
 4bbdb6acb54291a49e12347f72a9b4b85241e28d639df56fc78c69f050103cc1  ./tests/power-platform-read-connector.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
-ccf5663d5ad20fa4aa3bcd9e279d2607a9397cb45b8127e0c0b2bfb33e420b9b  ./tests/release-governance.test.mjs
+991db8d6b35ab33e093f49c94c87f71f779884c76074698825e14519d48ae038  ./tests/release-governance.test.mjs
 af0f2117460bf2fc8478d9a45c58b17ad1bc6c839a9a0654a325078354fb4990  ./tests/resource-plane-profiles.test.ts
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 74d7c28fbe12bfeab992ed4c108a29ea49fdd1b07d5e8552bed550c3b2002783  ./tests/signal-release-intake.test.ts
@@ -857,4 +858,4 @@ ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77  ./verification
 745b8500a0049391cd1734b2a6b1e96cb015eb990e089f56e92fe8c17c25ef54  ./verification/db-analyzer/issue-192-mssql-2022-wwi-runtime-evidence.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
 e2fa73eb5312982af288d29df015b0dc3e010f3fdba6405ce3b464b4ccece660  ./verification/lkc-qual-01-m0-evidence-v1.json
-6f4a1848fd89c1e96751d8bfc0a9752ca21d8f867109c77b53ab184f5706ebf4  ./verification/verification-dag-v2.json
+847f3ed3d0cd9a94c714af8f8e2d2f830d39c904f88da7e8cdb9c3715691433c  ./verification/verification-dag-v2.json

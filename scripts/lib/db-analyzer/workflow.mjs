@@ -25,6 +25,31 @@ const fail = (code) => {
 
 const readJson = async (file) => JSON.parse(await readFile(file, 'utf8'));
 
+// SQL Server exposes these empty built-in principal schemas through sys.schemas even
+// when an analysis intentionally scopes only application schemas.
+const MSSQL_AMBIENT_PRINCIPAL_SCHEMAS = new Set([
+  'db_accessadmin',
+  'db_backupoperator',
+  'db_datareader',
+  'db_datawriter',
+  'db_ddladmin',
+  'db_denydatareader',
+  'db_denydatawriter',
+  'db_owner',
+  'db_securityadmin',
+  'guest',
+]);
+
+export function normalizeMssqlRuntimeScopeResult({ profile, query, result }) {
+  if (query.id !== 'mssql.structure.schemas' || result.state !== 'SUCCEEDED' || !Array.isArray(result.rows)) return result;
+  const declaredSchemas = new Set(profile.scope.schemas);
+  return {
+    ...result,
+    rows: result.rows.filter((row) => declaredSchemas.has(row?.schema_name)
+      || !MSSQL_AMBIENT_PRINCIPAL_SCHEMAS.has(row?.schema_name)),
+  };
+}
+
 async function runMssqlQueries({ profile, manifest, entries }) {
   const password = process.env[profile.adapter.passwordEnv];
   if (!password) fail('DB_ANALYZE_CREDENTIAL_MISSING');
@@ -51,7 +76,11 @@ async function runMssqlQueries({ profile, manifest, entries }) {
       if (typeof statement !== 'string' || !/^\s*SELECT\b/i.test(statement)) fail('DB_ANALYZE_PACK_POLICY_DENIED');
       try {
         const response = await pool.request().query(statement);
-        results[query.id] = { state: 'SUCCEEDED', reasonCode: null, rows: response.recordset };
+        results[query.id] = normalizeMssqlRuntimeScopeResult({
+          profile,
+          query,
+          result: { state: 'SUCCEEDED', reasonCode: null, rows: response.recordset },
+        });
       } catch (error) {
         results[query.id] = {
           state: error?.code === 'ETIMEOUT' ? 'TIMEOUT' : error?.number === 229 ? 'DENIED' : 'ERROR',
