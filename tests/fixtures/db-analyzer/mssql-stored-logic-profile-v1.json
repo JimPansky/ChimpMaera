@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "chimpmaera.db/analyze-profile/v1",
+  "profileId": "synthetic-mssql-stored-logic",
+  "engine": "mssql",
+  "mode": "SYNTHETIC",
+  "queryPack": {"version": "v1"},
+  "scope": {
+    "database": "CM_SYNTHETIC",
+    "container": null,
+    "schemas": ["dbo"]
+  },
+  "policy": {
+    "access": "READ_ONLY",
+    "allowRowSamples": false,
+    "maxQueryTimeoutMs": 5000,
+    "storedLogic": {
+      "schemaVersion": "chimpmaera.db/stored-logic-policy/v1",
+      "enabled": true,
+      "definitionDisclosure": "HASH_ONLY",
+      "fixture": "mssql-stored-logic-v1.json",
+      "parserEnrichment": {
+        "schemaVersion": "chimpmaera.db/parser-enrichment-policy/v1",
+        "enabled": true,
+        "mode": "OPTIONAL",
+        "onUnavailable": "CONTINUE_NATIVE_ONLY",
+        "fixture": "mssql-parser-enrichment-v1.json"
+      }
+    }
+  },
+  "adapter": {
+    "kind": "synthetic",
+    "fixture": "mssql-preflight-v1.json"
+  }
+}

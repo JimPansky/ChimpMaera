@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "chimpmaera.db/query-manifest/v1",
+  "packId": "chimpmaera.db.stored-logic.oracle",
+  "packVersion": "1.0.0",
+  "engine": "oracle",
+  "queries": [
+    {
+      "id": "oracle.stored-logic.objects",
+      "category": "stored-objects",
+      "file": "stored-logic-objects.sql",
+      "outputColumns": ["schema_name", "object_name", "object_kind", "native_object_id", "parent_schema_name", "parent_object_name", "enablement_state", "definition_visibility", "definition_component_ordinal", "definition_component_hash", "definition_component_hash_algorithm"],
+      "sortKeys": ["schema_name", "object_name", "object_kind", "definition_component_ordinal"],
+      "scopeColumn": "schema_name",
+      "readOnly": true,
+      "cost": "BOUNDED",
+      "timeoutMs": 5000,
+      "privilege": {"minimum": "CREATE SESSION plus metadata visibility for scoped ALL_OBJECTS, ALL_SOURCE and ALL_TRIGGERS rows"},
+      "fallback": {"onDenied": "Record DENIED or PARTIAL; preserve encrypted or invisible definitions as an explicit blind spot"},
+      "provenance": {
+        "sourceType": "OFFICIAL_DICTIONARY_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/ALL_SOURCE.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded SELECT over documented ALL_* views; no third-party query code copied"
+      }
+    },
+    {
+      "id": "oracle.stored-logic.native-dependencies",
+      "category": "stored-dependencies",
+      "file": "stored-logic-native-dependencies.sql",
+      "outputColumns": ["source_schema_name", "source_object_name", "source_object_kind", "target_schema_name", "target_object_name", "target_object_kind", "target_column_name", "column_resolution_state", "target_database_name", "target_server_or_link_name", "resolution_state", "native_dependency_kind", "is_schema_bound", "is_caller_dependent"],
+      "sortKeys": ["source_schema_name", "source_object_name", "source_object_kind", "target_server_or_link_name", "target_database_name", "target_schema_name", "target_object_name", "target_column_name", "native_dependency_kind"],
+      "scopeColumn": "source_schema_name",
+      "readOnly": true,
+      "cost": "BOUNDED",
+      "timeoutMs": 5000,
+      "privilege": {"minimum": "CREATE SESSION plus metadata visibility for scoped ALL_DEPENDENCIES rows"},
+      "fallback": {"onDenied": "Record DENIED or PARTIAL; preserve remote native references as explicit unresolved gaps"},
+      "provenance": {
+        "sourceType": "OFFICIAL_DICTIONARY_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/ALL_DEPENDENCIES.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded SELECT over documented ALL_DEPENDENCIES; no third-party query code copied"
+      }
+    }
+  ]
+}

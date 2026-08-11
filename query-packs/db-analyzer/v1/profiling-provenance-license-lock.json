@@ -81,7 +81,7 @@
   ],
   "dependencyEvidence": {
     "baseLockPath": "query-packs/db-analyzer/v1/provenance-license-lock.json",
-    "baseLockSha256": "888835476c708df46ae6242adf532d0e31e7231ac78dfada613b888cb42f4d75",
+    "baseLockSha256": "ac4957fcc068fc76a99cd8f76a42144d90c8c593edc401e2218c86f4405d13d4",
     "queryBindingSha256": "1b8bac7affe59ae14616dfd0fe993180e85e106b2baa9bd1602d986dc0492380",
     "runtimeDependencyRootCount": 1,
     "runtimeDependencyClosureCount": 72,

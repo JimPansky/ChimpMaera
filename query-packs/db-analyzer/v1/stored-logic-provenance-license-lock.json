@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "chimpmaera.db/stored-logic-provenance-license-lock/v1",
+  "issue": 196,
+  "slice": "DB-ANALYZER-S3",
+  "projectArtifactLicense": {
+    "spdx": "Apache-2.0",
+    "path": "LICENSE",
+    "sha256": "835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07"
+  },
+  "queryArtifacts": [
+    {
+      "queryId": "mssql.stored-logic.objects",
+      "path": "query-packs/db-analyzer/v1/mssql/stored-logic-objects.sql",
+      "normalizedSqlSha256": "eccffa68463a73adab91ddd0e37cde5308bd50d9de852adaf9895a1fe2f682cf",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-sql-modules-transact-sql"
+    },
+    {
+      "queryId": "mssql.stored-logic.native-dependencies",
+      "path": "query-packs/db-analyzer/v1/mssql/stored-logic-native-dependencies.sql",
+      "normalizedSqlSha256": "17a529dd935f36162860636626b1c0ba49fc3fb7cef88a47baaeb26d2005fc00",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-sql-expression-dependencies-transact-sql"
+    },
+    {
+      "queryId": "oracle.stored-logic.objects",
+      "path": "query-packs/db-analyzer/v1/oracle/stored-logic-objects.sql",
+      "normalizedSqlSha256": "c0e0762a1df46bfddd54707c929021381fe2289e6c95208ad91a75318e921757",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/ALL_SOURCE.html"
+    },
+    {
+      "queryId": "oracle.stored-logic.native-dependencies",
+      "path": "query-packs/db-analyzer/v1/oracle/stored-logic-native-dependencies.sql",
+      "normalizedSqlSha256": "d015fff55056a985eb69fcbd37b5c9ba99125713af49767092f41cec51c79546",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/ALL_DEPENDENCIES.html"
+    }
+  ],
+  "parserDependency": {
+    "packageName": "node-sql-parser",
+    "version": "5.4.0",
+    "spdx": "Apache-2.0",
+    "integrity": "sha512-jVe6Z61gPcPjCElPZ6j8llB3wnqGcuQzefim1ERsqIakxnEy5JlzV7XKdO1KmacRG5TKwPc4vJTgSRQ0LfkbFw==",
+    "sourceUrl": "https://github.com/taozhi8833998/node-sql-parser",
+    "dialectContract": "COMMON-SELECT-SUBSET/V1"
+  },
+  "parserDependencyClosure": {
+    "packageLockPath": "package-lock.json",
+    "packageLockSha256": "dbdf4c0047f37844e7df6625ac2e7436343390ae0f9cdba65c359413ef470774",
+    "requiredForNativeCollector": false,
+    "admission": "OPTIONAL_NON_PROMOTING",
+    "allowedSpdx": ["Apache-2.0", "MIT", "Unlicense"],
+    "entries": [
+      {
+        "packagePath": "node_modules/@types/pegjs",
+        "version": "0.10.6",
+        "integrity": "sha512-eLYXDbZWXh2uxf+w8sXS8d6KSoXTswfps6fvCUuVAGN8eRpfe7h9eSRydxiSJvo9Bf+GzifsDOr9TMQlmJdmkw==",
+        "spdx": "MIT"
+      },
+      {
+        "packagePath": "node_modules/big-integer",
+        "version": "1.6.52",
+        "integrity": "sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==",
+        "spdx": "Unlicense"
+      },
+      {
+        "packagePath": "node_modules/node-sql-parser",
+        "version": "5.4.0",
+        "integrity": "sha512-jVe6Z61gPcPjCElPZ6j8llB3wnqGcuQzefim1ERsqIakxnEy5JlzV7XKdO1KmacRG5TKwPc4vJTgSRQ0LfkbFw==",
+        "spdx": "Apache-2.0"
+      }
+    ],
+    "closureSha256": "3ecccf156855a1906c4ab43e5470dc8d1def9361da0b3f3a8b1215256831355c",
+    "noticePath": "THIRD_PARTY_NOTICES.md"
+  },
+  "boundaries": {
+    "nativeCollector": "Runs without node-sql-parser and remains authoritative for PROVEN_NATIVE edges.",
+    "parser": "Optional common SELECT subset only; emits INFERRED_PARSER or explicit blind spots and can never promote evidence to proven.",
+    "disclosure": "Synthetic parser inputs may contain fixture SQL, but canonical analyzer evidence contains hashes and relationships only; no raw stored definitions are emitted."
+  }
+}

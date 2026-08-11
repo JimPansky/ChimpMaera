@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "chimpmaera.db/stored-logic-negative-matrix/v1",
+  "engines": [
+    "mssql",
+    "oracle"
+  ],
+  "nativeCoverageCases": [
+    {
+      "caseId": "permission-denied",
+      "state": "DENIED",
+      "reasonCode": "DB_METADATA_PERMISSION_DENIED",
+      "retainRows": 0,
+      "expectedImpactDenial": "DB_STORED_LOGIC_IMPACT_COVERAGE_INCOMPLETE"
+    },
+    {
+      "caseId": "partial-visibility",
+      "state": "PARTIAL",
+      "reasonCode": "DB_METADATA_PARTIAL_VISIBILITY",
+      "retainRows": 1,
+      "expectedImpactDenial": "DB_STORED_LOGIC_IMPACT_COVERAGE_INCOMPLETE"
+    },
+    {
+      "caseId": "timeout",
+      "state": "TIMEOUT",
+      "reasonCode": "DB_METADATA_QUERY_TIMEOUT",
+      "retainRows": 0,
+      "expectedImpactDenial": "DB_STORED_LOGIC_IMPACT_COVERAGE_INCOMPLETE"
+    }
+  ],
+  "integrityCases": [
+    {
+      "caseId": "stored-evidence-tamper",
+      "expectedDenial": "DB_STORED_LOGIC_EVIDENCE_TAMPERED"
+    },
+    {
+      "caseId": "parser-proof-promotion",
+      "expectedDenial": "DB_STORED_LOGIC_LINEAGE_TAMPERED"
+    },
+    {
+      "caseId": "impact-report-tamper",
+      "expectedDenial": "DB_STORED_LOGIC_IMPACT_REPORT_TAMPERED"
+    }
+  ],
+  "nonInventionCases": [
+    "encrypted-or-invisible-definition",
+    "unsupported-syntax-blind-spot",
+    "dynamic-sql-blind-spot",
+    "parser-inference-not-impact-proof"
+  ]
+}

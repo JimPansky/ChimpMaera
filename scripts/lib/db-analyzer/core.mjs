@@ -38,6 +38,13 @@ export const COVERAGE_STATES = Object.freeze([
   'ERROR',
 ]);
 export const COVERAGE_LEDGER_SCHEMA = 'chimpmaera.db/coverage-ledger/v1';
+export const STORED_LOGIC_EVIDENCE_SCHEMA = 'chimpmaera.db/stored-logic-evidence/v1';
+export const STORED_LOGIC_DEFINITION_FINGERPRINT = 'CM-CANONICAL-SHA-256-OF-NATIVE-COMPONENTS/V1';
+export const STORED_LOGIC_POLICY_SCHEMA = 'chimpmaera.db/stored-logic-policy/v1';
+export const PARSER_ENRICHMENT_POLICY_SCHEMA = 'chimpmaera.db/parser-enrichment-policy/v1';
+export const PARSER_ENRICHMENT_EVIDENCE_SCHEMA = 'chimpmaera.db/parser-enrichment-evidence/v1';
+export const STORED_LOGIC_LINEAGE_EVIDENCE_SCHEMA = 'chimpmaera.db/stored-logic-lineage-evidence/v1';
+export const STORED_LOGIC_IMPACT_REPORT_SCHEMA = 'chimpmaera.db/stored-logic-impact-report/v1';
 const COVERAGE_VISIBILITY = Object.freeze({
   SUCCEEDED: 'VISIBLE_COMPLETE',
   PARTIAL: 'VISIBLE_PARTIAL',
@@ -46,7 +53,7 @@ const COVERAGE_VISIBILITY = Object.freeze({
   TIMEOUT: 'UNKNOWN',
   ERROR: 'UNKNOWN',
 });
-const QUERY_CATEGORIES = new Set(['preflight', 'schemas', 'relations', 'columns', 'constraints', 'indexes', 'sequences', 'synonyms']);
+const QUERY_CATEGORIES = new Set(['preflight', 'schemas', 'relations', 'columns', 'constraints', 'indexes', 'sequences', 'synonyms', 'stored-objects', 'stored-dependencies']);
 
 const fail = (code) => {
   const error = new Error(code);
@@ -250,6 +257,31 @@ function validateProfilingPolicy(profile) {
   return profiling;
 }
 
+function validateStoredLogicPolicy(profile) {
+  const storedLogic = profile.policy.storedLogic;
+  const keys = ['schemaVersion', 'enabled', 'definitionDisclosure', 'fixture'];
+  if (storedLogic && Object.hasOwn(storedLogic, 'parserEnrichment')) keys.push('parserEnrichment');
+  if (!hasExactKeys(storedLogic, keys)
+    || storedLogic.schemaVersion !== STORED_LOGIC_POLICY_SCHEMA
+    || storedLogic.enabled !== true
+    || storedLogic.definitionDisclosure !== 'HASH_ONLY') fail('DB_STORED_LOGIC_POLICY_INVALID');
+  if (profile.mode === 'SYNTHETIC') {
+    if (typeof storedLogic.fixture !== 'string' || pathLike(storedLogic.fixture)) fail('DB_STORED_LOGIC_FIXTURE_INVALID');
+  } else if (storedLogic.fixture !== null) fail('DB_STORED_LOGIC_FIXTURE_INVALID');
+  if (Object.hasOwn(storedLogic, 'parserEnrichment')) {
+    const enrichment = storedLogic.parserEnrichment;
+    if (!hasExactKeys(enrichment, ['schemaVersion', 'enabled', 'mode', 'onUnavailable', 'fixture'])
+      || enrichment.schemaVersion !== PARSER_ENRICHMENT_POLICY_SCHEMA
+      || enrichment.enabled !== true
+      || enrichment.mode !== 'OPTIONAL'
+      || enrichment.onUnavailable !== 'CONTINUE_NATIVE_ONLY') fail('DB_PARSER_POLICY_INVALID');
+    if (profile.mode === 'SYNTHETIC') {
+      if (typeof enrichment.fixture !== 'string' || pathLike(enrichment.fixture)) fail('DB_PARSER_FIXTURE_INVALID');
+    } else if (enrichment.fixture !== null) fail('DB_PARSER_FIXTURE_INVALID');
+  }
+  return storedLogic;
+}
+
 export function validateAnalyzeProfile(profile) {
   if (profile?.schemaVersion !== ANALYZE_PROFILE_SCHEMA) fail('DB_ANALYZE_PROFILE_SCHEMA_INVALID');
   if (!hasExactKeys(profile, ['schemaVersion', 'profileId', 'engine', 'mode', 'queryPack', 'scope', 'policy', 'adapter'])) fail('DB_ANALYZE_PROFILE_FIELDS_INVALID');
@@ -263,13 +295,14 @@ export function validateAnalyzeProfile(profile) {
     || !Array.isArray(profile.scope.schemas) || profile.scope.schemas.length === 0
     || profile.scope.schemas.some((schema) => typeof schema !== 'string' || schema.length === 0)
     || new Set(profile.scope.schemas).size !== profile.scope.schemas.length) fail('DB_ANALYZE_PROFILE_SCOPE_INVALID');
-  const policyKeys = profile.policy && Object.hasOwn(profile.policy, 'profiling')
-    ? ['access', 'allowRowSamples', 'maxQueryTimeoutMs', 'profiling']
-    : ['access', 'allowRowSamples', 'maxQueryTimeoutMs'];
+  const policyKeys = ['access', 'allowRowSamples', 'maxQueryTimeoutMs'];
+  if (profile.policy && Object.hasOwn(profile.policy, 'profiling')) policyKeys.push('profiling');
+  if (profile.policy && Object.hasOwn(profile.policy, 'storedLogic')) policyKeys.push('storedLogic');
   if (!hasExactKeys(profile.policy, policyKeys)
     || profile.policy.access !== 'READ_ONLY' || profile.policy.allowRowSamples !== false
     || !Number.isInteger(profile.policy.maxQueryTimeoutMs) || profile.policy.maxQueryTimeoutMs < 1) fail('DB_ANALYZE_PROFILE_POLICY_INVALID');
   if (Object.hasOwn(profile.policy, 'profiling')) validateProfilingPolicy(profile);
+  if (Object.hasOwn(profile.policy, 'storedLogic')) validateStoredLogicPolicy(profile);
   if (profile.mode === 'SYNTHETIC') {
     if (!hasExactKeys(profile.adapter, ['kind', 'fixture']) || profile.adapter.kind !== 'synthetic'
       || typeof profile.adapter.fixture !== 'string' || pathLike(profile.adapter.fixture)) fail('DB_ANALYZE_PROFILE_ADAPTER_INVALID');
@@ -889,7 +922,7 @@ function buildCoverageLedger(extracts) {
   };
 }
 
-export function buildPreflightEvidence({ manifest, sqlByQueryId, resultSets, profileContext, profilingEvidence }) {
+export function buildPreflightEvidence({ manifest, sqlByQueryId, resultSets, profileContext, profilingEvidence, storedLogicEvidence }) {
   validateQueryManifest(manifest);
   const synthetic = resultSets?.schemaVersion === 'chimpmaera.db/synthetic-query-results/v1' && resultSets.runtimeValidated === false;
   const runtime = resultSets?.schemaVersion === 'chimpmaera.db/runtime-query-results/v1' && resultSets.runtimeValidated === true;
@@ -926,9 +959,795 @@ export function buildPreflightEvidence({ manifest, sqlByQueryId, resultSets, pro
     ...(resultSets.observedAt === undefined ? {} : { observedAt: resultSets.observedAt }),
     ...(profileContext === undefined ? {} : { profile: profileContext }),
     ...(profilingEvidence === undefined ? {} : { profiling: profilingEvidence }),
+    ...(storedLogicEvidence === undefined ? {} : { storedLogic: storedLogicEvidence }),
     coverage: coverageLedger.stateCounts,
     coverageLedger,
     extracts,
   });
   return { ...body, snapshotSha256: identitySha256(body) };
+}
+
+const storedLogicKey = (row) => canonicalJson({
+  schemaName: row.schema_name,
+  objectName: row.object_name,
+  objectKind: row.object_kind,
+});
+
+export function buildStoredLogicEvidence({ manifest, sqlByQueryId, resultSets, profileContext }) {
+  validateQueryManifest(manifest);
+  if (manifest.queries.length !== 2
+    || manifest.queries[0].category !== 'stored-objects'
+    || manifest.queries[1].category !== 'stored-dependencies') {
+    fail('DB_STORED_LOGIC_MANIFEST_INVALID');
+  }
+  const source = buildPreflightEvidence({ manifest, sqlByQueryId, resultSets, profileContext });
+  const rows = source.extracts.find(({ category }) => category === 'stored-objects')?.rows ?? [];
+  const groups = new Map();
+  for (const row of rows) {
+    if (!['PROCEDURE', 'FUNCTION', 'TRIGGER'].includes(row.object_kind)
+      || !validScopedName(row.schema_name) || !validScopedName(row.object_name)
+      || typeof row.native_object_id !== 'string' || row.native_object_id.length === 0
+      || !['ENABLED', 'DISABLED', 'NOT_APPLICABLE'].includes(row.enablement_state)
+      || !['VISIBLE_HASHED', 'ENCRYPTED_OR_INVISIBLE'].includes(row.definition_visibility)
+      || !((row.parent_schema_name === null && row.parent_object_name === null)
+        || (validScopedName(row.parent_schema_name) && validScopedName(row.parent_object_name)))) {
+      fail('DB_STORED_LOGIC_OBJECT_INVALID');
+    }
+    const visible = row.definition_visibility === 'VISIBLE_HASHED';
+    if ((visible && (!Number.isInteger(row.definition_component_ordinal) || row.definition_component_ordinal < 1
+      || !/^[a-f0-9]{64}$/.test(row.definition_component_hash ?? '')
+      || typeof row.definition_component_hash_algorithm !== 'string' || row.definition_component_hash_algorithm.length === 0))
+      || (!visible && (row.definition_component_ordinal !== null || row.definition_component_hash !== null
+        || row.definition_component_hash_algorithm !== null))) {
+      fail('DB_STORED_LOGIC_DEFINITION_INVALID');
+    }
+    const key = storedLogicKey(row);
+    const group = groups.get(key) ?? {
+      metadata: {
+        schemaName: row.schema_name,
+        objectName: row.object_name,
+        objectKind: row.object_kind,
+        nativeObjectId: row.native_object_id,
+        parentSchemaName: row.parent_schema_name,
+        parentObjectName: row.parent_object_name,
+        enablementState: row.enablement_state,
+        definitionVisibility: row.definition_visibility,
+      },
+      algorithm: row.definition_component_hash_algorithm,
+      components: [],
+    };
+    if (canonicalJson(group.metadata) !== canonicalJson({
+      schemaName: row.schema_name,
+      objectName: row.object_name,
+      objectKind: row.object_kind,
+      nativeObjectId: row.native_object_id,
+      parentSchemaName: row.parent_schema_name,
+      parentObjectName: row.parent_object_name,
+      enablementState: row.enablement_state,
+      definitionVisibility: row.definition_visibility,
+    }) || group.algorithm !== row.definition_component_hash_algorithm) fail('DB_STORED_LOGIC_OBJECT_CONFLICT');
+    if (visible) group.components.push({ ordinal: row.definition_component_ordinal, sha256: row.definition_component_hash });
+    groups.set(key, group);
+  }
+  const objects = [...groups.values()].map((group) => {
+    group.components.sort((left, right) => left.ordinal - right.ordinal);
+    if (new Set(group.components.map(({ ordinal }) => ordinal)).size !== group.components.length) {
+      fail('DB_STORED_LOGIC_DEFINITION_INVALID');
+    }
+    const visible = group.metadata.definitionVisibility === 'VISIBLE_HASHED';
+    if (visible && (group.components.length === 0
+      || group.components.some(({ ordinal }, index) => ordinal !== index + 1))) {
+      fail('DB_STORED_LOGIC_DEFINITION_INVALID');
+    }
+    const objectIdentitySha256 = identitySha256({
+      engine: manifest.engine,
+      scope: profileContext?.scope ?? null,
+      schemaName: group.metadata.schemaName,
+      objectName: group.metadata.objectName,
+      objectKind: group.metadata.objectKind,
+    });
+    const object = normalizeJsonValue({
+      ...group.metadata,
+      objectIdentitySha256,
+      definitionComponentCount: group.components.length,
+      definitionComponentHashAlgorithm: group.algorithm,
+      definitionFingerprintAlgorithm: visible ? STORED_LOGIC_DEFINITION_FINGERPRINT : null,
+      definitionFingerprintSha256: visible ? identitySha256({
+        contract: STORED_LOGIC_DEFINITION_FINGERPRINT,
+        nativeAlgorithm: group.algorithm,
+        components: group.components,
+      }) : null,
+    });
+    return { ...object, objectSha256: identitySha256(object) };
+  }).sort((left, right) => compareRows(['schemaName', 'objectName', 'objectKind'])(left, right));
+  const typeCounts = Object.fromEntries(['PROCEDURE', 'FUNCTION', 'TRIGGER']
+    .map((kind) => [kind, objects.filter((object) => object.objectKind === kind).length]));
+  const objectByKey = new Map(objects.map((object) => [canonicalJson({
+    schemaName: object.schemaName,
+    objectName: object.objectName,
+    objectKind: object.objectKind,
+  }), object]));
+  const dependencyRows = source.extracts.find(({ category }) => category === 'stored-dependencies')?.rows ?? [];
+  const edges = [];
+  const edgeHashes = new Set();
+  const columnEdges = [];
+  const gaps = [];
+  for (const row of dependencyRows) {
+    if (!['PROCEDURE', 'FUNCTION', 'TRIGGER'].includes(row.source_object_kind)
+      || !validScopedName(row.source_schema_name) || !validScopedName(row.source_object_name)
+      || !['RESOLVED', 'UNRESOLVED'].includes(row.resolution_state)
+      || !['PROVEN', 'NOT_PROVEN'].includes(row.column_resolution_state)
+      || typeof row.native_dependency_kind !== 'string' || row.native_dependency_kind.length === 0
+      || ![true, false, null].includes(row.is_schema_bound)
+      || ![true, false, null].includes(row.is_caller_dependent)
+      || !((row.target_server_or_link_name === null) || validScopedName(row.target_server_or_link_name))
+      || !((row.target_database_name === null) || validScopedName(row.target_database_name))
+      || !((row.target_column_name === null) || validScopedName(row.target_column_name))) {
+      fail('DB_STORED_LOGIC_DEPENDENCY_INVALID');
+    }
+    const sourceObject = objectByKey.get(canonicalJson({
+      schemaName: row.source_schema_name,
+      objectName: row.source_object_name,
+      objectKind: row.source_object_kind,
+    }));
+    if (!sourceObject) fail('DB_STORED_LOGIC_DEPENDENCY_SOURCE_INVALID');
+    const resolved = row.resolution_state === 'RESOLVED';
+    if ((resolved && (!validScopedName(row.target_schema_name)
+      || !validScopedName(row.target_object_name)
+      || !validScopedName(row.target_object_kind)
+      || row.target_database_name !== null
+      || row.target_server_or_link_name !== null))
+      || (!resolved && (!validScopedName(row.target_object_name)
+        || (row.target_schema_name !== null && !validScopedName(row.target_schema_name))
+        || (row.target_object_kind !== null && !validScopedName(row.target_object_kind))))
+      || (row.column_resolution_state === 'PROVEN' && (!resolved || !validScopedName(row.target_column_name)))
+      || (row.column_resolution_state === 'NOT_PROVEN' && row.target_column_name !== null)) {
+      fail('DB_STORED_LOGIC_DEPENDENCY_INVALID');
+    }
+    const common = normalizeJsonValue({
+      sourceObjectIdentitySha256: sourceObject.objectIdentitySha256,
+      sourceSchemaName: row.source_schema_name,
+      sourceObjectName: row.source_object_name,
+      sourceObjectKind: row.source_object_kind,
+      targetSchemaName: row.target_schema_name,
+      targetObjectName: row.target_object_name,
+      targetObjectKind: row.target_object_kind,
+      targetDatabaseName: row.target_database_name,
+      targetServerOrLinkName: row.target_server_or_link_name,
+      nativeDependencyKind: row.native_dependency_kind,
+      isSchemaBound: row.is_schema_bound,
+      isCallerDependent: row.is_caller_dependent,
+    });
+    if (resolved) {
+      const edge = normalizeJsonValue({
+        ...common,
+        proofState: 'PROVEN_NATIVE',
+        targetObjectIdentitySha256: identitySha256({
+          engine: manifest.engine,
+          scope: profileContext?.scope ?? null,
+          schemaName: row.target_schema_name,
+          objectName: row.target_object_name,
+          objectKind: row.target_object_kind,
+        }),
+      });
+      const edgeSha256 = identitySha256(edge);
+      if (!edgeHashes.has(edgeSha256)) {
+        edges.push({ ...edge, edgeSha256 });
+        edgeHashes.add(edgeSha256);
+      }
+      if (row.column_resolution_state === 'PROVEN') {
+        const columnEdge = normalizeJsonValue({
+          sourceObjectIdentitySha256: sourceObject.objectIdentitySha256,
+          sourceSchemaName: row.source_schema_name,
+          sourceObjectName: row.source_object_name,
+          sourceObjectKind: row.source_object_kind,
+          targetSchemaName: row.target_schema_name,
+          targetObjectName: row.target_object_name,
+          targetObjectKind: row.target_object_kind,
+          targetColumnName: row.target_column_name,
+          targetColumnIdentitySha256: identitySha256({
+            engine: manifest.engine,
+            scope: profileContext?.scope ?? null,
+            schemaName: row.target_schema_name,
+            objectName: row.target_object_name,
+            objectKind: row.target_object_kind,
+            columnName: row.target_column_name,
+          }),
+          nativeDependencyKind: row.native_dependency_kind,
+          granularity: 'TARGET_COLUMN',
+          proofState: 'PROVEN_NATIVE_COLUMN',
+        });
+        columnEdges.push({ ...columnEdge, edgeSha256: identitySha256(columnEdge) });
+      }
+    } else {
+      const gap = normalizeJsonValue({
+        ...common,
+        gapState: 'UNRESOLVED_NATIVE_REFERENCE',
+      });
+      gaps.push({ ...gap, gapSha256: identitySha256(gap) });
+    }
+  }
+  if (new Set(columnEdges.map(({ edgeSha256 }) => edgeSha256)).size !== columnEdges.length
+    || new Set(gaps.map(({ gapSha256 }) => gapSha256)).size !== gaps.length) {
+    fail('DB_STORED_LOGIC_DEPENDENCY_DUPLICATE');
+  }
+  edges.sort(compareRows(['sourceSchemaName', 'sourceObjectName', 'sourceObjectKind', 'targetSchemaName', 'targetObjectName', 'targetObjectKind', 'nativeDependencyKind']));
+  columnEdges.sort(compareRows(['sourceSchemaName', 'sourceObjectName', 'sourceObjectKind', 'targetSchemaName', 'targetObjectName', 'targetObjectKind', 'targetColumnName', 'nativeDependencyKind']));
+  gaps.sort(compareRows(['sourceSchemaName', 'sourceObjectName', 'sourceObjectKind', 'targetServerOrLinkName', 'targetDatabaseName', 'targetSchemaName', 'targetObjectName', 'nativeDependencyKind']));
+  const body = normalizeJsonValue({
+    schemaVersion: STORED_LOGIC_EVIDENCE_SCHEMA,
+    packId: manifest.packId,
+    packVersion: manifest.packVersion,
+    engine: manifest.engine,
+    runtimeValidation: source.runtimeValidation,
+    scope: profileContext?.scope ?? null,
+    identityContract: IDENTITY_CONTRACT,
+    definitionFingerprintContract: STORED_LOGIC_DEFINITION_FINGERPRINT,
+    coverage: source.coverage,
+    coverageLedger: source.coverageLedger,
+    queryBindings: source.extracts.map(({ queryId, category, querySha256, state, reasonCode }) => ({
+      queryId, category, querySha256, state, reasonCode,
+    })),
+    summary: {
+      objectCount: objects.length,
+      typeCounts,
+      visibleHashedObjects: objects.filter((object) => object.definitionVisibility === 'VISIBLE_HASHED').length,
+      encryptedOrInvisibleObjects: objects.filter((object) => object.definitionVisibility === 'ENCRYPTED_OR_INVISIBLE').length,
+      provenNativeDependencyEdges: edges.length,
+      provenNativeColumnEdges: columnEdges.length,
+      unresolvedNativeDependencyGaps: gaps.length,
+      rawDefinitionsIncluded: false,
+    },
+    objects,
+    nativeDependencies: {
+      edges,
+      columnEdges,
+      gaps,
+    },
+    parserEnrichment: emptyParserEnrichmentEvidence(),
+  });
+  const withLineage = normalizeJsonValue({ ...body, lineage: buildStoredLogicLineageEvidence(body) });
+  return { ...withLineage, storedLogicSha256: identitySha256(withLineage) };
+}
+
+export function buildStoredLogicLineageEvidence(storedLogicEvidence) {
+  const relationships = [];
+  const blindSpots = [];
+  const addRelationship = (relationship) => {
+    const normalized = normalizeJsonValue(relationship);
+    relationships.push({ ...normalized, relationshipSha256: identitySha256(normalized) });
+  };
+  const addBlindSpot = (blindSpot) => {
+    const normalized = normalizeJsonValue(blindSpot);
+    blindSpots.push({ ...normalized, blindSpotSha256: identitySha256(normalized) });
+  };
+  const provenColumnObjectPairs = new Set(storedLogicEvidence.nativeDependencies.columnEdges.map((edge) => canonicalJson({
+    sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+    targetObjectIdentitySha256: edge.targetColumnIdentitySha256,
+  })));
+  const columnTargets = new Set(storedLogicEvidence.nativeDependencies.columnEdges.map((edge) => canonicalJson({
+    sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+    targetSchemaName: edge.targetSchemaName,
+    targetObjectName: edge.targetObjectName,
+    targetObjectKind: edge.targetObjectKind,
+  })));
+  for (const edge of storedLogicEvidence.nativeDependencies.edges) {
+    addRelationship({
+      relationshipClass: 'PROVEN_OBJECT_NATIVE',
+      granularity: 'OBJECT',
+      proofState: 'PROVEN_NATIVE',
+      sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+      targetIdentitySha256: edge.targetObjectIdentitySha256,
+      targetSchemaName: edge.targetSchemaName,
+      targetObjectName: edge.targetObjectName,
+      targetObjectKind: edge.targetObjectKind,
+      evidenceKind: 'NATIVE_CATALOG',
+      evidenceSha256: edge.edgeSha256,
+    });
+    const pair = canonicalJson({
+      sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+      targetSchemaName: edge.targetSchemaName,
+      targetObjectName: edge.targetObjectName,
+      targetObjectKind: edge.targetObjectKind,
+    });
+    if (!columnTargets.has(pair)) {
+      addBlindSpot({
+        blindSpotClass: 'COLUMN_RELATIONSHIP_UNKNOWN',
+        sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+        evidenceKind: 'NATIVE_CATALOG',
+        evidenceSha256: edge.edgeSha256,
+      });
+    }
+  }
+  for (const edge of storedLogicEvidence.nativeDependencies.columnEdges) {
+    addRelationship({
+      relationshipClass: 'PROVEN_COLUMN_NATIVE',
+      granularity: 'TARGET_COLUMN',
+      proofState: 'PROVEN_NATIVE_COLUMN',
+      sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+      targetIdentitySha256: edge.targetColumnIdentitySha256,
+      targetSchemaName: edge.targetSchemaName,
+      targetObjectName: edge.targetObjectName,
+      targetObjectKind: edge.targetObjectKind,
+      targetColumnName: edge.targetColumnName,
+      evidenceKind: 'NATIVE_CATALOG',
+      evidenceSha256: edge.edgeSha256,
+    });
+  }
+  for (const edge of storedLogicEvidence.parserEnrichment.edges) {
+    addRelationship({
+      relationshipClass: 'INFERRED_OBJECT_PARSER',
+      granularity: 'OBJECT',
+      proofState: 'INFERRED_PARSER',
+      sourceObjectIdentitySha256: edge.sourceObjectIdentitySha256,
+      targetIdentitySha256: null,
+      targetSchemaName: edge.targetSchemaName,
+      targetObjectName: edge.targetObjectName,
+      targetObjectKind: edge.targetObjectKind,
+      evidenceKind: 'OPTIONAL_PARSER',
+      evidenceSha256: edge.edgeSha256,
+    });
+  }
+  for (const gap of storedLogicEvidence.nativeDependencies.gaps) {
+    addBlindSpot({
+      blindSpotClass: 'UNKNOWN_NATIVE_RELATIONSHIP',
+      sourceObjectIdentitySha256: gap.sourceObjectIdentitySha256,
+      evidenceKind: 'NATIVE_CATALOG',
+      evidenceSha256: gap.gapSha256,
+    });
+  }
+  for (const gap of storedLogicEvidence.parserEnrichment.gaps) {
+    addBlindSpot({
+      blindSpotClass: gap.gapState === 'DYNAMIC_SQL_BLIND_SPOT'
+        ? 'DYNAMIC_RELATIONSHIP_UNKNOWN'
+        : 'UNSUPPORTED_RELATIONSHIP_UNKNOWN',
+      sourceObjectIdentitySha256: gap.sourceObjectIdentitySha256,
+      evidenceKind: 'OPTIONAL_PARSER',
+      evidenceSha256: gap.gapSha256,
+    });
+  }
+  relationships.sort(compareRows(['relationshipClass', 'sourceObjectIdentitySha256', 'targetSchemaName', 'targetObjectName', 'targetObjectKind', 'targetColumnName', 'evidenceSha256']));
+  blindSpots.sort(compareRows(['blindSpotClass', 'sourceObjectIdentitySha256', 'evidenceSha256']));
+  if (new Set(relationships.map(({ relationshipSha256 }) => relationshipSha256)).size !== relationships.length
+    || new Set(blindSpots.map(({ blindSpotSha256 }) => blindSpotSha256)).size !== blindSpots.length
+    || provenColumnObjectPairs.size !== storedLogicEvidence.nativeDependencies.columnEdges.length) {
+    fail('DB_STORED_LOGIC_LINEAGE_DUPLICATE');
+  }
+  const relationshipClassCounts = Object.fromEntries([
+    'PROVEN_OBJECT_NATIVE', 'PROVEN_COLUMN_NATIVE', 'INFERRED_OBJECT_PARSER',
+  ].map((relationshipClass) => [relationshipClass, relationships.filter((entry) => entry.relationshipClass === relationshipClass).length]));
+  const body = normalizeJsonValue({
+    schemaVersion: STORED_LOGIC_LINEAGE_EVIDENCE_SCHEMA,
+    summary: {
+      relationshipCount: relationships.length,
+      relationshipClassCounts,
+      blindSpotCount: blindSpots.length,
+      rawDefinitionsIncluded: false,
+      promotionPolicy: 'CLASS_PRESERVING_NO_PROMOTION',
+    },
+    relationships,
+    blindSpots,
+  });
+  return { ...body, lineageSha256: identitySha256(body) };
+}
+
+function verifyKnowledgeAndSupersetBinding(knowledgePack, supersetResult) {
+  if (!hasExactKeys(knowledgePack ?? {}, [
+    'schemaVersion', 'state', 'scope', 'source', 'authority', 'claims', 'summary', 'entries', 'knowledgePackSha256',
+  ]) || knowledgePack.schemaVersion !== PROFILING_KNOWLEDGE_PACK_SCHEMA
+    || knowledgePack.state !== 'CURATED_SYNTHETIC_FIXTURE'
+    || !/^[a-f0-9]{64}$/.test(knowledgePack.knowledgePackSha256 ?? '')) {
+    fail('DB_STORED_LOGIC_IMPACT_BI_SOURCE_INVALID');
+  }
+  const { knowledgePackSha256, ...knowledgeBody } = knowledgePack;
+  if (identitySha256(knowledgeBody) !== knowledgePackSha256
+    || knowledgePack.authority?.productionAuthority !== false
+    || knowledgePack.authority?.externalPublicationAuthority !== false
+    || knowledgePack.authority?.directSourceDatabaseAccess !== false
+    || knowledgePack.claims?.semanticTruthEstablished !== false
+    || knowledgePack.claims?.rowSamplesIncluded !== false
+    || !Array.isArray(knowledgePack.entries)
+    || knowledgePack.entries.length !== knowledgePack.summary?.knowledgeEntryCount
+    || !/^[a-f0-9]{64}$/.test(knowledgePack.source?.structureSnapshotSha256 ?? '')) {
+    fail('DB_STORED_LOGIC_IMPACT_BI_SOURCE_TAMPERED');
+  }
+  const expectedSuperset = buildProfilingSupersetResult({ knowledgePack });
+  if (canonicalJson(expectedSuperset) !== canonicalJson(supersetResult)
+    || supersetResult.dataset?.sourceConnection !== null
+    || supersetResult.dataset?.sourceSql !== null
+    || supersetResult.dashboard?.drillThrough?.sourceRoute !== null) {
+    fail('DB_STORED_LOGIC_IMPACT_BI_SOURCE_TAMPERED');
+  }
+}
+
+function comparableScope(storedLogicEvidence) {
+  return normalizeJsonValue({
+    engine: storedLogicEvidence.engine,
+    database: storedLogicEvidence.scope?.database ?? null,
+    container: storedLogicEvidence.scope?.container ?? null,
+    schemas: storedLogicEvidence.scope?.schemas ?? [],
+  });
+}
+
+export function buildStoredLogicImpactReport({ before, after, knowledgePack, supersetResult }) {
+  verifyStoredLogicEvidence(before);
+  verifyStoredLogicEvidence(after);
+  if (before.coverageLedger?.allComplete !== true || after.coverageLedger?.allComplete !== true
+    || before.coverageLedger?.totalQueries !== 2 || after.coverageLedger?.totalQueries !== 2
+    || before.queryBindings?.some(({ state }) => state !== 'SUCCEEDED')
+    || after.queryBindings?.some(({ state }) => state !== 'SUCCEEDED')) {
+    fail('DB_STORED_LOGIC_IMPACT_COVERAGE_INCOMPLETE');
+  }
+  verifyKnowledgeAndSupersetBinding(knowledgePack, supersetResult);
+  const evidenceScope = comparableScope(before);
+  const afterScope = comparableScope(after);
+  const biScope = normalizeJsonValue({
+    engine: knowledgePack.scope?.engine,
+    database: knowledgePack.scope?.database ?? null,
+    container: knowledgePack.scope?.container ?? null,
+    schemas: knowledgePack.scope?.schemas ?? [],
+  });
+  if (canonicalJson(evidenceScope) !== canonicalJson(afterScope)
+    || canonicalJson(evidenceScope) !== canonicalJson(biScope)
+    || before.packId !== after.packId
+    || before.packVersion !== after.packVersion
+    || before.runtimeValidation !== after.runtimeValidation) {
+    fail('DB_STORED_LOGIC_IMPACT_SCOPE_INVALID');
+  }
+
+  const beforeObjects = new Map(before.objects.map((object) => [object.objectIdentitySha256, object]));
+  const afterObjects = new Map(after.objects.map((object) => [object.objectIdentitySha256, object]));
+  const allObjectIdentities = [...new Set([...beforeObjects.keys(), ...afterObjects.keys()])].sort();
+  const changedObjects = [];
+  for (const objectIdentitySha256 of allObjectIdentities) {
+    const previous = beforeObjects.get(objectIdentitySha256);
+    const current = afterObjects.get(objectIdentitySha256);
+    if (previous?.objectSha256 === current?.objectSha256) continue;
+    const reference = current ?? previous;
+    const changeType = previous === undefined ? 'ADDED' : current === undefined ? 'REMOVED' : 'MODIFIED';
+    const change = normalizeJsonValue({
+      objectIdentitySha256,
+      schemaName: reference.schemaName,
+      objectName: reference.objectName,
+      objectKind: reference.objectKind,
+      changeType,
+      beforeObjectSha256: previous?.objectSha256 ?? null,
+      afterObjectSha256: current?.objectSha256 ?? null,
+      beforeDefinitionFingerprintSha256: previous?.definitionFingerprintSha256 ?? null,
+      afterDefinitionFingerprintSha256: current?.definitionFingerprintSha256 ?? null,
+    });
+    changedObjects.push({ ...change, changeSha256: identitySha256(change) });
+  }
+  if (changedObjects.length === 0) fail('DB_STORED_LOGIC_IMPACT_NO_CHANGE_DENIED');
+
+  const changedIdentities = new Set(changedObjects.map(({ objectIdentitySha256 }) => objectIdentitySha256));
+  const nativeRelationships = [...before.lineage.relationships, ...after.lineage.relationships]
+    .filter((relationship) => changedIdentities.has(relationship.sourceObjectIdentitySha256)
+      && ['PROVEN_OBJECT_NATIVE', 'PROVEN_COLUMN_NATIVE'].includes(relationship.relationshipClass));
+  const relationshipBySha = new Map(nativeRelationships.map((relationship) => [relationship.relationshipSha256, relationship]));
+  const exactRelationships = [...relationshipBySha.values()].sort(compareRows([
+    'sourceObjectIdentitySha256', 'relationshipClass', 'targetSchemaName', 'targetObjectName', 'targetColumnName',
+  ]));
+  const affectedBiByCandidate = new Map();
+  for (const relationship of exactRelationships) {
+    for (const entry of knowledgePack.entries) {
+      if (entry.target.schemaName !== relationship.targetSchemaName
+        || entry.target.relationName !== relationship.targetObjectName
+        || (relationship.relationshipClass === 'PROVEN_COLUMN_NATIVE'
+          && entry.target.columnName !== relationship.targetColumnName)) continue;
+      const impactClass = relationship.relationshipClass === 'PROVEN_COLUMN_NATIVE'
+        ? 'AFFECTED_NATIVE_COLUMN'
+        : 'POTENTIALLY_AFFECTED_NATIVE_OBJECT';
+      const candidate = normalizeJsonValue({
+        candidateSha256: entry.candidateSha256,
+        candidateType: entry.candidateType,
+        target: entry.target,
+        reviewState: entry.reviewState,
+        impactClass,
+        sourceObjectIdentitySha256: relationship.sourceObjectIdentitySha256,
+        relationshipSha256: relationship.relationshipSha256,
+      });
+      const existing = affectedBiByCandidate.get(entry.candidateSha256);
+      if (existing === undefined
+        || (existing.impactClass === 'POTENTIALLY_AFFECTED_NATIVE_OBJECT'
+          && impactClass === 'AFFECTED_NATIVE_COLUMN')) {
+        affectedBiByCandidate.set(entry.candidateSha256, {
+          ...candidate,
+          impactSha256: identitySha256(candidate),
+        });
+      }
+    }
+  }
+  const affectedBi = [...affectedBiByCandidate.values()].sort(compareRows(['candidateSha256']));
+  const changedBlindSpots = [...before.lineage.blindSpots, ...after.lineage.blindSpots]
+    .filter((blindSpot) => changedIdentities.has(blindSpot.sourceObjectIdentitySha256));
+  const blindSpotBySha = new Map(changedBlindSpots.map((blindSpot) => [blindSpot.blindSpotSha256, blindSpot]));
+  const impactBlindSpots = [...blindSpotBySha.values()].sort(compareRows([
+    'sourceObjectIdentitySha256', 'blindSpotClass', 'blindSpotSha256',
+  ]));
+  const body = normalizeJsonValue({
+    schemaVersion: STORED_LOGIC_IMPACT_REPORT_SCHEMA,
+    engine: before.engine,
+    runtimeValidation: before.runtimeValidation,
+    scope: before.scope,
+    source: {
+      beforeStoredLogicSha256: before.storedLogicSha256,
+      afterStoredLogicSha256: after.storedLogicSha256,
+      structureSnapshotSha256: knowledgePack.source.structureSnapshotSha256,
+      knowledgePackSha256: knowledgePack.knowledgePackSha256,
+      supersetResultSha256: supersetResult.supersetResultSha256,
+    },
+    policy: {
+      affectedBiRule: 'EXACT_APPROVED_IDENTITIES_MATCHED_BY_PROVEN_NATIVE_TARGET/V1',
+      inferredParserPromotionAllowed: false,
+      rawDefinitionsIncluded: false,
+      sourceRoutesIncluded: false,
+      reviewRequired: true,
+    },
+    summary: {
+      changedObjectCount: changedObjects.length,
+      provenNativeRelationshipCount: exactRelationships.length,
+      affectedApprovedBiCount: affectedBi.length,
+      impactBlindSpotCount: impactBlindSpots.length,
+    },
+    changedObjects,
+    provenNativeRelationships: exactRelationships,
+    affectedBi,
+    impactBlindSpots,
+    authority: {
+      productionAuthority: false,
+      automaticPublication: false,
+      directSourceDatabaseAccess: false,
+    },
+  });
+  if (/source_text|definition_text|raw_definition|CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER)|password|credential/i.test(canonicalJson(body))) {
+    fail('DB_STORED_LOGIC_IMPACT_UNSAFE_MATERIAL_DENIED');
+  }
+  return { ...body, impactReportSha256: identitySha256(body) };
+}
+
+export function verifyStoredLogicImpactReport(report, sources) {
+  if (!hasExactKeys(report ?? {}, [
+    'schemaVersion', 'engine', 'runtimeValidation', 'scope', 'source', 'policy', 'summary', 'changedObjects',
+    'provenNativeRelationships', 'affectedBi', 'impactBlindSpots', 'authority', 'impactReportSha256',
+  ]) || report.schemaVersion !== STORED_LOGIC_IMPACT_REPORT_SCHEMA
+    || !/^[a-f0-9]{64}$/.test(report.impactReportSha256 ?? '')) {
+    fail('DB_STORED_LOGIC_IMPACT_REPORT_INVALID');
+  }
+  const expected = buildStoredLogicImpactReport(sources);
+  if (canonicalJson(expected) !== canonicalJson(report)) fail('DB_STORED_LOGIC_IMPACT_REPORT_TAMPERED');
+  return report;
+}
+
+function emptyParserEnrichmentEvidence() {
+  const body = normalizeJsonValue({
+    schemaVersion: PARSER_ENRICHMENT_EVIDENCE_SCHEMA,
+    state: 'NOT_REQUESTED',
+    optional: true,
+    parser: null,
+    summary: {
+      parsedObjectCount: 0,
+      inferredEdgeCount: 0,
+      blindSpotGapCount: 0,
+      rawDefinitionsIncluded: false,
+    },
+    edges: [],
+    gaps: [],
+  });
+  return { ...body, enrichmentSha256: identitySha256(body) };
+}
+
+export function attachParserEnrichmentEvidence(storedLogicEvidence, parserEnrichment) {
+  verifyStoredLogicEvidence(storedLogicEvidence);
+  verifyParserEnrichmentEvidence(parserEnrichment, storedLogicEvidence);
+  const { storedLogicSha256: ignored, lineage: ignoredLineage, ...body } = storedLogicEvidence;
+  const nextBase = normalizeJsonValue({ ...body, parserEnrichment });
+  const next = normalizeJsonValue({ ...nextBase, lineage: buildStoredLogicLineageEvidence(nextBase) });
+  return { ...next, storedLogicSha256: identitySha256(next) };
+}
+
+function verifyParserEnrichmentEvidence(enrichment, storedLogicEvidence) {
+  if (!hasExactKeys(enrichment, [
+    'schemaVersion', 'state', 'optional', 'parser', 'summary', 'edges', 'gaps', 'enrichmentSha256',
+  ]) || enrichment.schemaVersion !== PARSER_ENRICHMENT_EVIDENCE_SCHEMA
+    || !['NOT_REQUESTED', 'SUCCEEDED', 'PARTIAL', 'UNAVAILABLE'].includes(enrichment.state)
+    || enrichment.optional !== true
+    || !Array.isArray(enrichment.edges) || !Array.isArray(enrichment.gaps)
+    || !/^[a-f0-9]{64}$/.test(enrichment.enrichmentSha256 ?? '')) fail('DB_PARSER_EVIDENCE_INVALID');
+  const { enrichmentSha256, ...body } = enrichment;
+  if (identitySha256(body) !== enrichmentSha256) fail('DB_PARSER_EVIDENCE_TAMPERED');
+  if (!hasExactKeys(enrichment.summary, [
+    'parsedObjectCount', 'inferredEdgeCount', 'blindSpotGapCount', 'rawDefinitionsIncluded',
+  ]) || !Number.isInteger(enrichment.summary.parsedObjectCount) || enrichment.summary.parsedObjectCount < 0
+    || enrichment.summary.inferredEdgeCount !== enrichment.edges.length
+    || enrichment.summary.blindSpotGapCount !== enrichment.gaps.length
+    || enrichment.summary.rawDefinitionsIncluded !== false) fail('DB_PARSER_EVIDENCE_INVALID');
+  if (enrichment.state === 'NOT_REQUESTED') {
+    if (enrichment.parser !== null || enrichment.edges.length !== 0 || enrichment.gaps.length !== 0) fail('DB_PARSER_EVIDENCE_INVALID');
+    return enrichment;
+  }
+  if (!hasExactKeys(enrichment.parser, [
+    'packageName', 'version', 'spdx', 'integrity', 'sourceUrl', 'dialectContract',
+    'requiredForNativeCollector', 'promotionPolicy',
+  ]) || enrichment.parser.packageName !== 'node-sql-parser'
+    || enrichment.parser.version !== '5.4.0'
+    || enrichment.parser.spdx !== 'Apache-2.0'
+    || enrichment.parser.requiredForNativeCollector !== false
+    || enrichment.parser.promotionPolicy !== 'NEVER_PROVEN') fail('DB_PARSER_EVIDENCE_INVALID');
+  const knownIdentities = new Set(storedLogicEvidence.objects.map(({ objectIdentitySha256 }) => objectIdentitySha256));
+  for (const edge of enrichment.edges) {
+    if (!hasExactKeys(edge, [
+      'sourceObjectIdentitySha256', 'sourceSchemaName', 'sourceObjectName', 'sourceObjectKind',
+      'sourceTextSha256', 'parserContractSha256', 'targetSchemaName', 'targetObjectName',
+      'targetObjectKind', 'proofState', 'edgeSha256',
+    ]) || edge.proofState !== 'INFERRED_PARSER' || edge.targetObjectKind !== 'RELATION_UNKNOWN'
+      || !knownIdentities.has(edge.sourceObjectIdentitySha256)) fail('DB_PARSER_EVIDENCE_INVALID');
+    const { edgeSha256, ...edgeBody } = edge;
+    if (edgeSha256 !== identitySha256(edgeBody)) fail('DB_PARSER_EVIDENCE_TAMPERED');
+  }
+  for (const gap of enrichment.gaps) {
+    if (!hasExactKeys(gap, [
+      'sourceObjectIdentitySha256', 'sourceSchemaName', 'sourceObjectName', 'sourceObjectKind',
+      'sourceTextSha256', 'parserContractSha256', 'gapState', 'gapSha256',
+    ]) || !['DYNAMIC_SQL_BLIND_SPOT', 'UNSUPPORTED_SYNTAX_BLIND_SPOT'].includes(gap.gapState)
+      || !knownIdentities.has(gap.sourceObjectIdentitySha256)) fail('DB_PARSER_EVIDENCE_INVALID');
+    const { gapSha256, ...gapBody } = gap;
+    if (gapSha256 !== identitySha256(gapBody)) fail('DB_PARSER_EVIDENCE_TAMPERED');
+  }
+  if (/"(?:sourceText|source_text|rawDefinition|raw_definition)"\s*:|CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER)/i.test(canonicalJson(enrichment))) {
+    fail('DB_PARSER_EVIDENCE_INVALID');
+  }
+  return enrichment;
+}
+
+export function verifyStoredLogicEvidence(evidence) {
+  if (!hasExactKeys(evidence, [
+    'schemaVersion', 'packId', 'packVersion', 'engine', 'runtimeValidation', 'scope', 'identityContract',
+    'definitionFingerprintContract', 'coverage', 'coverageLedger', 'queryBindings', 'summary', 'objects', 'nativeDependencies', 'parserEnrichment',
+    'lineage',
+    'storedLogicSha256',
+  ]) || evidence.schemaVersion !== STORED_LOGIC_EVIDENCE_SCHEMA
+    || !['mssql', 'oracle'].includes(evidence.engine)
+    || !Array.isArray(evidence.objects)
+    || !/^[a-f0-9]{64}$/.test(evidence.storedLogicSha256 ?? '')) {
+    fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+  }
+  const { storedLogicSha256, ...body } = evidence;
+  if (identitySha256(body) !== storedLogicSha256) fail('DB_STORED_LOGIC_EVIDENCE_TAMPERED');
+  const identities = new Set();
+  for (const object of evidence.objects) {
+    if (!hasExactKeys(object, [
+      'schemaName', 'objectName', 'objectKind', 'nativeObjectId', 'parentSchemaName', 'parentObjectName',
+      'enablementState', 'definitionVisibility', 'objectIdentitySha256', 'definitionComponentCount',
+      'definitionComponentHashAlgorithm', 'definitionFingerprintAlgorithm', 'definitionFingerprintSha256',
+      'objectSha256',
+    ])) fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+    const { objectSha256, ...objectBody } = object;
+    const expectedIdentity = identitySha256({
+      engine: evidence.engine,
+      scope: evidence.scope,
+      schemaName: object.schemaName,
+      objectName: object.objectName,
+      objectKind: object.objectKind,
+    });
+    if (object.objectIdentitySha256 !== expectedIdentity
+      || objectSha256 !== identitySha256(objectBody)
+      || identities.has(object.objectIdentitySha256)) fail('DB_STORED_LOGIC_EVIDENCE_TAMPERED');
+    identities.add(object.objectIdentitySha256);
+  }
+  const expectedTypeCounts = Object.fromEntries(['PROCEDURE', 'FUNCTION', 'TRIGGER']
+    .map((kind) => [kind, evidence.objects.filter((object) => object.objectKind === kind).length]));
+  if (!hasExactKeys(evidence.nativeDependencies ?? {}, ['edges', 'columnEdges', 'gaps'])
+    || !Array.isArray(evidence.nativeDependencies.edges)
+    || !Array.isArray(evidence.nativeDependencies.columnEdges)
+    || !Array.isArray(evidence.nativeDependencies.gaps)) fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+  const edgeIdentities = new Set();
+  for (const edge of evidence.nativeDependencies.edges) {
+    if (!hasExactKeys(edge, [
+      'sourceObjectIdentitySha256', 'sourceSchemaName', 'sourceObjectName', 'sourceObjectKind',
+      'targetSchemaName', 'targetObjectName', 'targetObjectKind', 'targetDatabaseName',
+      'targetServerOrLinkName', 'nativeDependencyKind', 'isSchemaBound', 'isCallerDependent',
+      'proofState', 'targetObjectIdentitySha256', 'edgeSha256',
+    ]) || edge.proofState !== 'PROVEN_NATIVE') fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+    const { edgeSha256, ...edgeBody } = edge;
+    const expectedSourceIdentity = identitySha256({
+      engine: evidence.engine,
+      scope: evidence.scope,
+      schemaName: edge.sourceSchemaName,
+      objectName: edge.sourceObjectName,
+      objectKind: edge.sourceObjectKind,
+    });
+    const expectedTargetIdentity = identitySha256({
+      engine: evidence.engine,
+      scope: evidence.scope,
+      schemaName: edge.targetSchemaName,
+      objectName: edge.targetObjectName,
+      objectKind: edge.targetObjectKind,
+    });
+    if (edgeSha256 !== identitySha256(edgeBody)
+      || edgeIdentities.has(edgeSha256)
+      || edge.sourceObjectIdentitySha256 !== expectedSourceIdentity
+      || edge.targetObjectIdentitySha256 !== expectedTargetIdentity
+      || !identities.has(edge.sourceObjectIdentitySha256)
+      || !['PROCEDURE', 'FUNCTION', 'TRIGGER'].includes(edge.sourceObjectKind)
+      || !validScopedName(edge.targetObjectKind)
+      || edge.targetDatabaseName !== null
+      || edge.targetServerOrLinkName !== null) {
+      fail('DB_STORED_LOGIC_EVIDENCE_TAMPERED');
+    }
+    edgeIdentities.add(edgeSha256);
+  }
+  const columnEdgeIdentities = new Set();
+  for (const edge of evidence.nativeDependencies.columnEdges) {
+    if (!hasExactKeys(edge, [
+      'sourceObjectIdentitySha256', 'sourceSchemaName', 'sourceObjectName', 'sourceObjectKind',
+      'targetSchemaName', 'targetObjectName', 'targetObjectKind', 'targetColumnName',
+      'targetColumnIdentitySha256', 'nativeDependencyKind', 'granularity', 'proofState', 'edgeSha256',
+    ]) || edge.granularity !== 'TARGET_COLUMN' || edge.proofState !== 'PROVEN_NATIVE_COLUMN') {
+      fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+    }
+    const { edgeSha256, ...edgeBody } = edge;
+    const expectedSourceIdentity = identitySha256({
+      engine: evidence.engine, scope: evidence.scope, schemaName: edge.sourceSchemaName,
+      objectName: edge.sourceObjectName, objectKind: edge.sourceObjectKind,
+    });
+    const expectedColumnIdentity = identitySha256({
+      engine: evidence.engine, scope: evidence.scope, schemaName: edge.targetSchemaName,
+      objectName: edge.targetObjectName, objectKind: edge.targetObjectKind, columnName: edge.targetColumnName,
+    });
+    if (edgeSha256 !== identitySha256(edgeBody)
+      || columnEdgeIdentities.has(edgeSha256)
+      || edge.sourceObjectIdentitySha256 !== expectedSourceIdentity
+      || edge.targetColumnIdentitySha256 !== expectedColumnIdentity
+      || !identities.has(edge.sourceObjectIdentitySha256)
+      || !validScopedName(edge.targetColumnName)) fail('DB_STORED_LOGIC_EVIDENCE_TAMPERED');
+    columnEdgeIdentities.add(edgeSha256);
+  }
+  const gapIdentities = new Set();
+  for (const gap of evidence.nativeDependencies.gaps) {
+    if (!hasExactKeys(gap, [
+      'sourceObjectIdentitySha256', 'sourceSchemaName', 'sourceObjectName', 'sourceObjectKind',
+      'targetSchemaName', 'targetObjectName', 'targetObjectKind', 'targetDatabaseName',
+      'targetServerOrLinkName', 'nativeDependencyKind', 'isSchemaBound', 'isCallerDependent',
+      'gapState', 'gapSha256',
+    ]) || gap.gapState !== 'UNRESOLVED_NATIVE_REFERENCE') fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+    const { gapSha256, ...gapBody } = gap;
+    const expectedSourceIdentity = identitySha256({
+      engine: evidence.engine,
+      scope: evidence.scope,
+      schemaName: gap.sourceSchemaName,
+      objectName: gap.sourceObjectName,
+      objectKind: gap.sourceObjectKind,
+    });
+    if (gapSha256 !== identitySha256(gapBody)
+      || gapIdentities.has(gapSha256)
+      || gap.sourceObjectIdentitySha256 !== expectedSourceIdentity
+      || !identities.has(gap.sourceObjectIdentitySha256)
+      || !['PROCEDURE', 'FUNCTION', 'TRIGGER'].includes(gap.sourceObjectKind)
+      || !validScopedName(gap.targetObjectName)
+      || (gap.targetSchemaName !== null && !validScopedName(gap.targetSchemaName))
+      || (gap.targetObjectKind !== null && !validScopedName(gap.targetObjectKind))) {
+      fail('DB_STORED_LOGIC_EVIDENCE_TAMPERED');
+    }
+    gapIdentities.add(gapSha256);
+  }
+  verifyParserEnrichmentEvidence(evidence.parserEnrichment, evidence);
+  if (canonicalJson(buildStoredLogicLineageEvidence(evidence)) !== canonicalJson(evidence.lineage)) {
+    fail('DB_STORED_LOGIC_LINEAGE_TAMPERED');
+  }
+  if (!hasExactKeys(evidence.summary ?? {}, [
+    'objectCount', 'typeCounts', 'visibleHashedObjects', 'encryptedOrInvisibleObjects',
+    'provenNativeDependencyEdges', 'provenNativeColumnEdges', 'unresolvedNativeDependencyGaps', 'rawDefinitionsIncluded',
+  ]) || evidence.summary.objectCount !== evidence.objects.length
+    || canonicalJson(evidence.summary.typeCounts) !== canonicalJson(expectedTypeCounts)
+    || evidence.summary.visibleHashedObjects !== evidence.objects.filter((object) => object.definitionVisibility === 'VISIBLE_HASHED').length
+    || evidence.summary.encryptedOrInvisibleObjects !== evidence.objects.filter((object) => object.definitionVisibility === 'ENCRYPTED_OR_INVISIBLE').length
+    || evidence.summary.provenNativeDependencyEdges !== evidence.nativeDependencies.edges.length
+    || evidence.summary.provenNativeColumnEdges !== evidence.nativeDependencies.columnEdges.length
+    || evidence.summary.unresolvedNativeDependencyGaps !== evidence.nativeDependencies.gaps.length
+    || evidence.summary.rawDefinitionsIncluded !== false
+    || /source_text|definition_text|raw_definition|CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER)/i.test(canonicalJson(evidence))) {
+    fail('DB_STORED_LOGIC_EVIDENCE_INVALID');
+  }
+  return evidence;
 }

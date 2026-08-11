@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "chimpmaera.db/synthetic-stored-logic-change/v1",
+  "engine": "mssql",
+  "changeId": "controlled-rollup-definition-change-v1",
+  "object": {
+    "schemaName": "dbo",
+    "objectName": "cm_refresh_customer_rollup",
+    "objectKind": "PROCEDURE",
+    "definitionComponentOrdinal": 1,
+    "afterDefinitionComponentHash": "c5d310b43dee790d6a370280db107e7517796da488e9cbeb006338d6dee39c65"
+  },
+  "expected": {
+    "changedObjectCount": 1,
+    "affectedApprovedBiCandidateSha256": [
+      "4f40dc0631f35a2e31dbb4ffcd08d09575f3fe57d1cb1ad854f3d78169a2dca2",
+      "631ae421845b0bf90480703a6d0abfb960359a4e40df0a71ee5f1aeb5a6226f7",
+      "74ae63f9b643ee268a3c73ae9431bca7bc32238a753520fab9558d029f4756c1",
+      "a0fdaeeac012e45294a8aa7a6cdb75ea5b3c71df4e050813920841814d008831",
+      "b9bb7862f862285374f7701e18258c6f1a088c7795bc8bbf16a2e5b8888550a9",
+      "c570d3f13511ec13d105f1c015665520df19f0f2412134a90a9d7267eb2e4334",
+      "e0add2d96b1965d1815bd01b87e05d1222a237bba9a8d99da574d6dbb121ed91",
+      "e104fc308a457045d6eee2b5f956e7a2a603371b6c7d747fb0451caef549cec4",
+      "f59a41305a5c2ba3a733fb58c0cacc5ed6191ff2a6e82118c34b580df4dab565",
+      "fb317a41325a478edda09bc93035476ebe10e6a66cb63ea10f149550d7eacfcf"
+    ]
+  }
+}

@@ -129,7 +129,7 @@
   ],
   "runtimeDependencySbom": {
     "packageLockPath": "package-lock.json",
-    "packageLockSha256": "913ffe4d35a6dd98cc4d20d4cdbe0849f7fef45651f173c8af35f6a9752a7945",
+    "packageLockSha256": "dbdf4c0047f37844e7df6625ac2e7436343390ae0f9cdba65c359413ef470774",
     "lockfileVersion": 3,
     "allowedSpdx": ["0BSD", "Apache-2.0", "BSD-3-Clause", "ISC", "MIT"],
     "roots": [

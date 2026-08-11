@@ -60,6 +60,7 @@
     "db-analyzer:profiling-review:verify": "node scripts/verify-db-analyzer-profiling-review.mjs",
     "db-analyzer:knowledge:verify": "node scripts/verify-db-analyzer-knowledge.mjs",
     "db-analyzer:superset-result:verify": "node scripts/verify-db-analyzer-superset-result.mjs",
+    "db-analyzer:stored-logic-outputs:verify": "node scripts/verify-db-analyzer-stored-logic-outputs.mjs",
     "crm-read:test": "npm run build --silent && node --test dist/tests/crm-read-connector.test.js",
     "erp-read:test": "npm run build --silent && node --test dist/tests/erp-read-connector.test.js",
     "bi-semantic:test": "npm run build --silent && node --test dist/tests/bi-semantic-reconciliation.test.js",
@@ -106,5 +107,8 @@
     "@types/node": "24.10.1",
     "typescript": "5.9.3",
     "vitepress": "1.6.4"
+  },
+  "optionalDependencies": {
+    "node-sql-parser": "5.4.0"
   }
 }

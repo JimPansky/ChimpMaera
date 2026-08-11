@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "chimpmaera.db/parser-enrichment-input/v1",
+  "engine": "oracle",
+  "objects": [
+    {
+      "sourceSchemaName": "CM_APP",
+      "sourceObjectName": "CM_REFRESH_CUSTOMER_ROLLUP",
+      "sourceObjectKind": "PROCEDURE",
+      "sourceText": "SELECT o.CUSTOMER_ID FROM CM_APP.ORDERS o JOIN CM_REPORTING.CUSTOMER_SCORES s ON s.CUSTOMER_ID = o.CUSTOMER_ID"
+    },
+    {
+      "sourceSchemaName": "CM_APP",
+      "sourceObjectName": "CM_ORDERS_AUDIT_DISABLED",
+      "sourceObjectKind": "TRIGGER",
+      "sourceText": "EXECUTE IMMEDIATE 'SELECT * FROM CM_APP.AUDIT_SHADOW'"
+    },
+    {
+      "sourceSchemaName": "CM_APP",
+      "sourceObjectName": "CM_CUSTOMER_RISK",
+      "sourceObjectKind": "FUNCTION",
+      "sourceText": "RETURN (SELECT MAX(SCORE) FROM CM_APP.CUSTOMER_SCORES)"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "chimpmaera.db/parser-enrichment-input/v1",
+  "engine": "mssql",
+  "objects": [
+    {
+      "sourceSchemaName": "dbo",
+      "sourceObjectName": "cm_refresh_customer_rollup",
+      "sourceObjectKind": "PROCEDURE",
+      "sourceText": "SELECT o.customer_id FROM dbo.orders AS o JOIN reporting.customer_scores AS s ON s.customer_id = o.customer_id"
+    },
+    {
+      "sourceSchemaName": "dbo",
+      "sourceObjectName": "cm_orders_audit_disabled",
+      "sourceObjectKind": "TRIGGER",
+      "sourceText": "EXEC(sp_executesql N'SELECT * FROM dbo.audit_shadow')"
+    },
+    {
+      "sourceSchemaName": "dbo",
+      "sourceObjectName": "cm_customer_risk",
+      "sourceObjectKind": "FUNCTION",
+      "sourceText": "RETURN (SELECT MAX(score) FROM dbo.customer_scores)"
+    }
+  ]
+}

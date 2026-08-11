@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "chimpmaera.db/synthetic-query-results/v1",
+  "engine": "mssql",
+  "runtimeValidated": false,
+  "observedAt": null,
+  "results": {
+    "mssql.stored-logic.objects": {
+      "state": "SUCCEEDED",
+      "rows": [
+        {
+          "schema_name": "dbo",
+          "object_name": "cm_refresh_customer_rollup",
+          "object_kind": "PROCEDURE",
+          "native_object_id": "210001",
+          "parent_schema_name": null,
+          "parent_object_name": null,
+          "enablement_state": "NOT_APPLICABLE",
+          "definition_visibility": "VISIBLE_HASHED",
+          "definition_component_ordinal": 1,
+          "definition_component_hash": "8040db5c90eb778d3c089eab2de1a03acc22bf2ef30d36c37f4ca901e94d954b",
+          "definition_component_hash_algorithm": "SHA-256/MSSQL-NVARCHAR-UTF16LE"
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "cm_customer_risk",
+          "object_kind": "FUNCTION",
+          "native_object_id": "210002",
+          "parent_schema_name": null,
+          "parent_object_name": null,
+          "enablement_state": "NOT_APPLICABLE",
+          "definition_visibility": "VISIBLE_HASHED",
+          "definition_component_ordinal": 1,
+          "definition_component_hash": "2b0d73ce1dc1fe31acfcf6d04066438130783924ceda23123e35f7b3c5d950ca",
+          "definition_component_hash_algorithm": "SHA-256/MSSQL-NVARCHAR-UTF16LE"
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "cm_orders_audit",
+          "object_kind": "TRIGGER",
+          "native_object_id": "210003",
+          "parent_schema_name": "dbo",
+          "parent_object_name": "orders",
+          "enablement_state": "ENABLED",
+          "definition_visibility": "VISIBLE_HASHED",
+          "definition_component_ordinal": 1,
+          "definition_component_hash": "4de13b8995c5691633a486571602c20081ef29ef2dacb3c19f03ee026c48e88e",
+          "definition_component_hash_algorithm": "SHA-256/MSSQL-NVARCHAR-UTF16LE"
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "cm_orders_audit_disabled",
+          "object_kind": "TRIGGER",
+          "native_object_id": "210004",
+          "parent_schema_name": "dbo",
+          "parent_object_name": "orders",
+          "enablement_state": "DISABLED",
+          "definition_visibility": "VISIBLE_HASHED",
+          "definition_component_ordinal": 1,
+          "definition_component_hash": "292aed3a568fccdb30e8e0117118c1af254efe67f5e3047dcfc46ea7a1eae955",
+          "definition_component_hash_algorithm": "SHA-256/MSSQL-NVARCHAR-UTF16LE"
+        },
+        {
+          "schema_name": "dbo",
+          "object_name": "cm_encrypted_risk",
+          "object_kind": "PROCEDURE",
+          "native_object_id": "210005",
+          "parent_schema_name": null,
+          "parent_object_name": null,
+          "enablement_state": "NOT_APPLICABLE",
+          "definition_visibility": "ENCRYPTED_OR_INVISIBLE",
+          "definition_component_ordinal": null,
+          "definition_component_hash": null,
+          "definition_component_hash_algorithm": null
+        }
+      ]
+    },
+    "mssql.stored-logic.native-dependencies": {
+      "state": "SUCCEEDED",
+      "rows": [
+        {
+          "source_schema_name": "dbo",
+          "source_object_name": "cm_refresh_customer_rollup",
+          "source_object_kind": "PROCEDURE",
+          "target_schema_name": "dbo",
+          "target_object_name": "orders",
+          "target_object_kind": "TABLE",
+          "target_column_name": "customer_id",
+          "column_resolution_state": "PROVEN",
+          "target_database_name": null,
+          "target_server_or_link_name": null,
+          "resolution_state": "RESOLVED",
+          "native_dependency_kind": "OBJECT_OR_COLUMN",
+          "is_schema_bound": false,
+          "is_caller_dependent": false
+        },
+        {
+          "source_schema_name": "dbo",
+          "source_object_name": "cm_customer_risk",
+          "source_object_kind": "FUNCTION",
+          "target_schema_name": "dbo",
+          "target_object_name": "customers",
+          "target_object_kind": "TABLE",
+          "target_column_name": null,
+          "column_resolution_state": "NOT_PROVEN",
+          "target_database_name": null,
+          "target_server_or_link_name": null,
+          "resolution_state": "RESOLVED",
+          "native_dependency_kind": "OBJECT_OR_COLUMN",
+          "is_schema_bound": true,
+          "is_caller_dependent": false
+        },
+        {
+          "source_schema_name": "dbo",
+          "source_object_name": "cm_orders_audit",
+          "source_object_kind": "TRIGGER",
+          "target_schema_name": "dbo",
+          "target_object_name": "audit_log",
+          "target_object_kind": "TABLE",
+          "target_column_name": null,
+          "column_resolution_state": "NOT_PROVEN",
+          "target_database_name": null,
+          "target_server_or_link_name": null,
+          "resolution_state": "RESOLVED",
+          "native_dependency_kind": "OBJECT_OR_COLUMN",
+          "is_schema_bound": false,
+          "is_caller_dependent": false
+        },
+        {
+          "source_schema_name": "dbo",
+          "source_object_name": "cm_refresh_customer_rollup",
+          "source_object_kind": "PROCEDURE",
+          "target_schema_name": "reporting",
+          "target_object_name": "missing_rollup",
+          "target_object_kind": null,
+          "target_column_name": null,
+          "column_resolution_state": "NOT_PROVEN",
+          "target_database_name": "CM_REMOTE",
+          "target_server_or_link_name": "CM_LINK",
+          "resolution_state": "UNRESOLVED",
+          "native_dependency_kind": "OBJECT_OR_COLUMN",
+          "is_schema_bound": false,
+          "is_caller_dependent": false
+        }
+      ]
+    }
+  }
+}
