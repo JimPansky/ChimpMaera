@@ -3,9 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import {
+  buildAggregateProfilingEvidence,
   buildPreflightEvidence,
   canonicalJson,
   validateAnalyzeProfile,
+  validateProfilingQueryManifest,
   validateQueryManifest,
 } from './core.mjs';
 import { auditQueryPackSafety } from './query-safety.mjs';
@@ -72,9 +74,16 @@ function assertScope(profile, evidence) {
 }
 
 export async function runAnalyzeProfile(profileFile, options = {}) {
+  if (options.signal !== undefined && typeof options.signal?.aborted !== 'boolean') fail('DB_ANALYZE_CANCELLATION_INVALID');
+  const assertActive = () => {
+    if (options.signal?.aborted) fail('DB_ANALYZE_CANCELLED');
+  };
+  assertActive();
   const repositoryRoot = path.resolve(options.repositoryRoot ?? REPOSITORY_ROOT);
   const resolvedProfile = path.resolve(profileFile);
   const profile = validateAnalyzeProfile(await readJson(resolvedProfile));
+  assertActive();
+  if (profile.mode === 'RUNTIME' && profile.policy.profiling !== undefined) fail('DB_PROFILING_RUNTIME_NOT_AUTHORIZED');
   const packDirectory = path.join(repositoryRoot, 'query-packs', 'db-analyzer', profile.queryPack.version, profile.engine);
   const manifest = validateQueryManifest(await readJson(path.join(packDirectory, 'manifest.json')));
   if (manifest.engine !== profile.engine || manifest.queries.some((query) => query.timeoutMs > profile.policy.maxQueryTimeoutMs)) fail('DB_ANALYZE_PACK_POLICY_DENIED');
@@ -84,10 +93,27 @@ export async function runAnalyzeProfile(profileFile, options = {}) {
   const resultSets = profile.mode === 'SYNTHETIC'
     ? await readJson(path.join(path.dirname(resolvedProfile), profile.adapter.fixture))
     : await runMssqlQueries({ profile, manifest, entries });
+  assertActive();
+  let profilingEvidence;
+  if (profile.policy.profiling !== undefined) {
+    const profilingManifest = validateProfilingQueryManifest(await readJson(path.join(packDirectory, 'profiling-manifest.json')));
+    const profilingEntries = await Promise.all(profilingManifest.queries
+      .map(async (query) => [query.id, await readFile(path.join(packDirectory, query.file), 'utf8')]));
+    const profilingSqlByQueryId = Object.fromEntries(profilingEntries);
+    validateProfilingQueryManifest(profilingManifest, profilingSqlByQueryId);
+    profilingEvidence = buildAggregateProfilingEvidence({
+      profile,
+      profilingManifest,
+      profilingSqlByQueryId,
+      resultSets: await readJson(path.join(path.dirname(resolvedProfile), profile.policy.profiling.aggregateFixture)),
+    });
+  }
+  assertActive();
   const evidence = buildPreflightEvidence({
     manifest,
     sqlByQueryId: Object.fromEntries(entries),
     resultSets,
+    profilingEvidence,
     profileContext: {
       profileId: profile.profileId,
       mode: profile.mode,

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "chimpmaera.db/profiling-provenance-license-lock/v1",
+  "issue": 194,
+  "slice": "DB-ANALYZER-S2",
+  "projectArtifactLicense": {
+    "spdx": "Apache-2.0",
+    "path": "LICENSE",
+    "sha256": "835083c307550077500f6817fa1d3ecbcb5f559d41029ff34f2ccacf5c3bbe07"
+  },
+  "sourcePolicy": {
+    "queryAuthorship": "CHIMPMAERA_PROJECT_AUTHORED",
+    "officialDocumentationUse": "REFERENCE_ONLY",
+    "copiedOrAdaptedSources": [],
+    "copiedOrAdaptedSourceRequirement": "Repository URL, immutable 40-character commit, SPDX identifier, notice data and change marker are mandatory before admission"
+  },
+  "officialReferenceTerms": {
+    "mssql": "https://learn.microsoft.com/en-us/legal/termsofuse",
+    "oracle": "https://www.oracle.com/legal/terms.html"
+  },
+  "queryArtifacts": [
+    {
+      "queryId": "mssql.profiling.numeric-aggregate",
+      "path": "query-packs/db-analyzer/v1/mssql/profile-numeric-aggregate.sql",
+      "normalizedSqlSha256": "7f83aeb9b67454a27db7e004e80c0c937427b1575ba26264ce29cb4c25686ac1",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/t-sql/functions/aggregate-functions-transact-sql"
+    },
+    {
+      "queryId": "mssql.profiling.temporal-aggregate",
+      "path": "query-packs/db-analyzer/v1/mssql/profile-temporal-aggregate.sql",
+      "normalizedSqlSha256": "c310d0d9060bc99302d29bbac3b827ac0436613c2141fb262ef357ee91e359ee",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql"
+    },
+    {
+      "queryId": "mssql.profiling.category-aggregate",
+      "path": "query-packs/db-analyzer/v1/mssql/profile-category-aggregate.sql",
+      "normalizedSqlSha256": "5d505cdb260cab8fe3b711ab05cdaefdd35aa84aa98e4341de04d55759a466e0",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/t-sql/functions/count-transact-sql"
+    },
+    {
+      "queryId": "mssql.profiling.text-aggregate",
+      "path": "query-packs/db-analyzer/v1/mssql/profile-text-aggregate.sql",
+      "normalizedSqlSha256": "5d505cdb260cab8fe3b711ab05cdaefdd35aa84aa98e4341de04d55759a466e0",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/t-sql/functions/count-transact-sql"
+    },
+    {
+      "queryId": "mssql.profiling.boolean-aggregate",
+      "path": "query-packs/db-analyzer/v1/mssql/profile-boolean-aggregate.sql",
+      "normalizedSqlSha256": "5d505cdb260cab8fe3b711ab05cdaefdd35aa84aa98e4341de04d55759a466e0",
+      "officialReferenceUrl": "https://learn.microsoft.com/en-us/sql/t-sql/functions/count-transact-sql"
+    },
+    {
+      "queryId": "oracle.profiling.numeric-aggregate",
+      "path": "query-packs/db-analyzer/v1/oracle/profile-numeric-aggregate.sql",
+      "normalizedSqlSha256": "8766cb41272d09371b225abad7aaec3fefc783d74e78c53ba1304246c07f6205",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Aggregate-Functions.html"
+    },
+    {
+      "queryId": "oracle.profiling.temporal-aggregate",
+      "path": "query-packs/db-analyzer/v1/oracle/profile-temporal-aggregate.sql",
+      "normalizedSqlSha256": "96c61d549ca64e286bcc3433243f34b401a8f102fbd1576c9dbdcd09b05886d9",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Format-Models.html"
+    },
+    {
+      "queryId": "oracle.profiling.category-aggregate",
+      "path": "query-packs/db-analyzer/v1/oracle/profile-category-aggregate.sql",
+      "normalizedSqlSha256": "10c09593ac5f9790c0f960c883cdedff812a834bc1c48c82b3f983ed6b14aa95",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html"
+    },
+    {
+      "queryId": "oracle.profiling.text-aggregate",
+      "path": "query-packs/db-analyzer/v1/oracle/profile-text-aggregate.sql",
+      "normalizedSqlSha256": "10c09593ac5f9790c0f960c883cdedff812a834bc1c48c82b3f983ed6b14aa95",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html"
+    },
+    {
+      "queryId": "oracle.profiling.boolean-aggregate",
+      "path": "query-packs/db-analyzer/v1/oracle/profile-boolean-aggregate.sql",
+      "normalizedSqlSha256": "10c09593ac5f9790c0f960c883cdedff812a834bc1c48c82b3f983ed6b14aa95",
+      "officialReferenceUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html"
+    }
+  ],
+  "dependencyEvidence": {
+    "baseLockPath": "query-packs/db-analyzer/v1/provenance-license-lock.json",
+    "baseLockSha256": "888835476c708df46ae6242adf532d0e31e7231ac78dfada613b888cb42f4d75",
+    "queryBindingSha256": "1b8bac7affe59ae14616dfd0fe993180e85e106b2baa9bd1602d986dc0492380",
+    "runtimeDependencyRootCount": 1,
+    "runtimeDependencyClosureCount": 72,
+    "runtimeDependencyClosureSha256": "aae7b816a4c2215c7d289fe66d655e09d831fdf7454fec7d3572bc6d18f10738",
+    "runtimeDependencyLicenses": ["0BSD", "Apache-2.0", "BSD-3-Clause", "ISC", "MIT"],
+    "newRequiredRuntimeDependencies": []
+  },
+  "runtimeBoundaries": {
+    "profiling": "Profiling runtime execution is denied for Slice 2 until issue-specific runtime authorization exists; static and synthetic verification only.",
+    "oracle": "No Oracle runtime capability or Oracle driver dependency is claimed.",
+    "disclosure": "No credentials, connection strings, row samples or label distributions may appear in query templates or provenance evidence."
+  }
+}

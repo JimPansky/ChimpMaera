@@ -9,11 +9,19 @@ import { promisify } from 'node:util';
 
 import {
   buildPreflightEvidence,
+  buildAggregateProfilingEvidence,
+  buildProfilingKnowledgePack,
+  buildProfilingSupersetResult,
+  buildProfilingCoverageLedger,
+  authorizeProfilingProjection,
   canonicalJson,
+  compileProfilingQuery,
   COVERAGE_LEDGER_SCHEMA,
+  deriveProfilingCandidates,
   IDENTITY_CONTRACT_SCHEMA,
   normalizeSql,
   validateAnalyzeProfile,
+  validateProfilingQueryManifest,
   validateQueryManifest,
 } from '../scripts/lib/db-analyzer/core.mjs';
 import { runAnalyzeProfile } from '../scripts/lib/db-analyzer/workflow.mjs';
@@ -22,6 +30,12 @@ import { compareStructuralEvidence } from '../scripts/lib/db-analyzer/drift.mjs'
 import { buildStructureMapOutputs } from '../scripts/lib/db-analyzer/outputs.mjs';
 import { verifyDbAnalyzerDrift } from '../scripts/verify-db-analyzer-drift.mjs';
 import { verifyDbAnalyzerOutputs } from '../scripts/verify-db-analyzer-outputs.mjs';
+import { verifyDbAnalyzerProfilingProvenance } from '../scripts/verify-db-analyzer-profiling-provenance.mjs';
+import { verifyDbAnalyzerCandidates } from '../scripts/verify-db-analyzer-candidates.mjs';
+import { verifyDbAnalyzerProfilingCoverage } from '../scripts/verify-db-analyzer-profiling-coverage.mjs';
+import { verifyDbAnalyzerProfilingReview } from '../scripts/verify-db-analyzer-profiling-review.mjs';
+import { verifyDbAnalyzerKnowledge } from '../scripts/verify-db-analyzer-knowledge.mjs';
+import { verifyDbAnalyzerSupersetResult } from '../scripts/verify-db-analyzer-superset-result.mjs';
 import { verifyDbAnalyzerProvenance } from '../scripts/verify-db-analyzer-provenance.mjs';
 import { verifyDbAnalyzerSafety } from '../scripts/verify-db-analyzer-safety.mjs';
 
@@ -37,6 +51,14 @@ async function loadEngine(engine) {
   const fixture = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-preflight-v1.json`), 'utf8'));
   const sqlByQueryId = Object.fromEntries(await Promise.all(manifest.queries.map(async (query) => [query.id, await readFile(path.join(directory, query.file), 'utf8')])));
   return { directory, manifest, fixture, sqlByQueryId };
+}
+
+async function loadProfilingEngine(engine) {
+  const directory = path.join(root, engine);
+  const manifest = JSON.parse(await readFile(path.join(directory, 'profiling-manifest.json'), 'utf8'));
+  const sqlByQueryId = Object.fromEntries(await Promise.all(manifest.queries
+    .map(async (query) => [query.id, await readFile(path.join(directory, query.file), 'utf8')])));
+  return { directory, manifest, sqlByQueryId };
 }
 
 test('MSSQL and Oracle structure manifests are symmetric, provenance-bound and SELECT-only', async () => {
@@ -342,6 +364,246 @@ test('one profile workflow emits scoped read-only preflight evidence for both en
   }
 });
 
+test('Slice 2 profiling policy is opt-in, symmetric, deterministic and emits no row samples', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-profiling-profile-v1.json`);
+    const first = await runAnalyzeProfile(profileFile);
+    const second = await runAnalyzeProfile(profileFile);
+    assert.deepEqual(first, second);
+    assert.equal(first.profile.policy.profiling.schemaVersion, 'chimpmaera.db/profiling-policy/v1');
+    assert.equal(first.profile.policy.profiling.enabled, true);
+    assert.equal(first.profile.policy.profiling.disclosure.allowRowSamples, false);
+    assert.equal(first.profile.policy.profiling.disclosure.allowLabelDistributions, false);
+    assert.equal(first.profiling.runtimeValidation, 'SYNTHETIC_UNVALIDATED');
+    assert.equal(first.profiling.factCount, 6);
+    assert.equal(first.profiling.queryPack.queryCount, 5);
+    assert.equal(first.profiling.queryPack.plannedQueryCount, 6);
+    assert.equal(first.profiling.queryPlan.length, 6);
+    assert.deepEqual(first.profiling.queryPlan.map((entry) => entry.typeFamily), ['TEMPORAL', 'TEXT', 'BOOLEAN', 'NUMERIC', 'NUMERIC', 'CATEGORY']);
+    assert.equal(first.profiling.queryPlan.find((entry) => entry.typeFamily === 'TEMPORAL').outputColumns.join(','), 'rowCount,nullCount,distinctCount,minimum,maximum,freshnessMaximum');
+    assert.ok(first.profiling.queryPlan.filter((entry) => entry.typeFamily === 'NUMERIC').every((entry) => entry.outputColumns.join(',') === 'rowCount,nullCount,distinctCount,minimum,maximum'));
+    assert.ok(first.profiling.queryPlan.filter((entry) => ['CATEGORY', 'TEXT', 'BOOLEAN'].includes(entry.typeFamily))
+      .every((entry) => entry.outputColumns.join(',') === 'rowCount,nullCount,distinctCount'));
+    assert.match(first.profiling.policySha256, /^[a-f0-9]{64}$/);
+    assert.match(first.profiling.aggregateSha256, /^[a-f0-9]{64}$/);
+    assert.equal(first.profiling.candidates.publicationState, 'REVIEW_REQUIRED');
+    assert.match(first.profiling.candidates.candidateSetSha256, /^[a-f0-9]{64}$/);
+    assert.ok(first.profiling.facts.every((fact) => fact.distribution === null));
+    const temporalFact = first.profiling.facts.find((fact) => fact.typeFamily === 'TEMPORAL');
+    assert.equal(temporalFact.freshnessMaximum, temporalFact.maximum);
+    assert.match(temporalFact.freshnessMaximum, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{7}$/);
+    assert.doesNotMatch(canonicalJson(first.profiling), /rowSample|sampleValue|sample_value/i);
+  }
+});
+
+test('Slice 2 Gate 4 derives only evidence-bound review candidates for both engines', async () => {
+  const evidence = await verifyDbAnalyzerCandidates({ root: path.resolve('.') });
+  assert.equal(evidence.status, 'PASS');
+  assert.equal(evidence.deterministic, true);
+  assert.equal(evidence.exactRecomputation, true);
+  assert.equal(evidence.applicationSpecificRules, false);
+  assert.equal(evidence.inventedSemanticClaims, 0);
+  assert.equal(evidence.tamperProbesPassed, 2);
+  assert.equal(evidence.engines.length, 2);
+  for (const engine of evidence.engines) {
+    assert.deepEqual(engine.candidateTypes, ['AMOUNT', 'CATEGORY', 'KEY', 'TIME']);
+    assert.equal(engine.semanticCandidateCount, 5);
+    assert.equal(engine.qualityCandidateCount, 6);
+    assert.match(engine.candidateSetSha256, /^[a-f0-9]{64}$/);
+  }
+});
+
+test('Slice 2 Gate 4 candidate recomputation denies changed aggregate facts and cannot publish semantic truth', async () => {
+  const evidence = await runAnalyzeProfile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json'));
+  const { candidates, ...aggregate } = evidence.profiling;
+  assert.deepEqual(deriveProfilingCandidates(aggregate), candidates);
+  const all = [...candidates.semanticCandidates, ...candidates.qualityCandidates];
+  assert.ok(all.every((candidate) => candidate.classificationState === 'UNKNOWN'));
+  assert.ok(all.every((candidate) => candidate.reviewState === 'REVIEW_REQUIRED'));
+  assert.ok(all.every((candidate) => candidate.semanticClaim === 'NOT_ESTABLISHED'));
+  const tampered = structuredClone(aggregate);
+  tampered.facts.find((fact) => fact.columnName === 'quantity').nullCount = 0;
+  assert.throws(() => deriveProfilingCandidates(tampered), /DB_PROFILING_CANDIDATE_SOURCE_TAMPERED/);
+});
+
+test('Slice 2 Gate 5 preserves negative coverage and review-required states symmetrically', async () => {
+  const evidence = await verifyDbAnalyzerProfilingCoverage({ root: path.resolve('.') });
+  assert.equal(evidence.status, 'PASS');
+  assert.equal(evidence.deterministic, true);
+  assert.equal(evidence.unsafeMaterialRetained, false);
+  assert.equal(evidence.denialProbeCount, 8);
+  assert.deepEqual(evidence.statesPreserved, ['PARTIAL', 'DENIED', 'UNSUPPORTED', 'TIMEOUT', 'TAMPER', 'REVIEW_REQUIRED']);
+  for (const engine of evidence.engines) {
+    assert.deepEqual(engine.stateCounts, { SUCCEEDED: 1, PARTIAL: 1, DENIED: 1, UNSUPPORTED: 1, TIMEOUT: 1, TAMPER: 1 });
+    assert.equal(engine.publicationState, 'REVIEW_REQUIRED');
+    assert.equal(engine.deniedDisclosureProbes, 4);
+  }
+});
+
+test('Slice 2 Gate 5 coverage denies malformed, duplicate and unbound attempts', async () => {
+  const profile = validateAnalyzeProfile(JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json'), 'utf8')));
+  const target = { schemaName: 'dbo', relationName: 'orders', columnName: 'order_id', typeFamily: 'NUMERIC' };
+  const attempt = { ...target, state: 'DENIED', reasonCode: 'DB_PROFILE_PERMISSION_DENIED', factSha256: null };
+  const duplicate = [attempt, structuredClone(attempt)];
+  assert.throws(() => buildProfilingCoverageLedger({ profile, attempts: duplicate }), /DB_PROFILING_COVERAGE_SCOPE_INVALID/);
+  assert.throws(() => buildProfilingCoverageLedger({ profile, attempts: [{ ...attempt, extra: true }] }), /DB_PROFILING_COVERAGE_TAMPERED/);
+  assert.throws(() => buildProfilingCoverageLedger({ profile, attempts: [{ ...attempt, state: 'PARTIAL' }] }), /DB_PROFILING_COVERAGE_TAMPERED/);
+});
+
+test('Slice 2 Gate 6 binds immutable synthetic human-review receipts for both engines', async () => {
+  const evidence = await verifyDbAnalyzerProfilingReview({ root: path.resolve('.') });
+  assert.equal(evidence.status, 'PASS');
+  assert.equal(evidence.deterministic, true);
+  assert.equal(evidence.denialProbeCount, 8);
+  assert.equal(evidence.analyzerMayIssueReceipt, false);
+  assert.equal(evidence.externalPublicationAuthority, false);
+  assert.deepEqual(evidence.deniedConditions, ['STALE_ANALYSIS', 'STRUCTURE_DRIFT', 'FOREIGN_SCOPE', 'POST_REVIEW_MUTATION']);
+  assert.equal(evidence.engines.length, 2);
+  assert.ok(evidence.engines.every((engine) => engine.approvedCandidates === 10
+    && engine.rejectedCandidates === 1 && engine.productionAuthority === false));
+});
+
+test('Slice 2 Gate 6 rejects incomplete review coverage even with a recomputed receipt digest', async () => {
+  const evidence = await runAnalyzeProfile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json'));
+  const receipt = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-review-v1.json'), 'utf8'));
+  receipt.decisions.pop();
+  const { receiptSha256: _previous, ...body } = receipt;
+  receipt.receiptSha256 = createHash('sha256').update(canonicalJson(body)).digest('hex');
+  assert.throws(() => authorizeProfilingProjection({ evidence, receipt }), /DB_PROFILING_REVIEW_DECISIONS_INCOMPLETE/);
+});
+
+test('Slice 2 aggregate templates cover supported non-label families symmetrically and identifier-safely', async () => {
+  const manifests = [];
+  for (const engine of ['mssql', 'oracle']) {
+    const { manifest, sqlByQueryId } = await loadProfilingEngine(engine);
+    validateProfilingQueryManifest(manifest, sqlByQueryId);
+    manifests.push(manifest);
+    const plan = compileProfilingQuery({
+      manifest,
+      sqlByQueryId,
+      target: { schemaName: 'scope name', relationName: 'orders; DROP TABLE audit', columnName: 'net]"amount', typeFamily: 'NUMERIC' },
+    });
+    assert.match(plan.querySha256, /^[a-f0-9]{64}$/);
+    assert.equal(plan.timeoutMs, 1000);
+    assert.equal(manifest.queries[0].readOnly, true);
+    assert.equal(manifest.queries[0].aggregateOnly, true);
+    assert.equal(manifest.queries[0].rowSamples, false);
+    assert.equal(manifest.queries[0].labelDistributions, false);
+    const temporalPlan = compileProfilingQuery({
+      manifest,
+      sqlByQueryId,
+      target: { schemaName: 'scope name', relationName: 'orders; DROP TABLE audit', columnName: 'created]"at', typeFamily: 'TEMPORAL' },
+    });
+    assert.match(temporalPlan.querySha256, /^[a-f0-9]{64}$/);
+    assert.equal(temporalPlan.timeoutMs, 1000);
+    assert.deepEqual(temporalPlan.outputColumns, ['rowCount', 'nullCount', 'distinctCount', 'minimum', 'maximum', 'freshnessMaximum']);
+    for (const typeFamily of ['CATEGORY', 'TEXT', 'BOOLEAN']) {
+      const cardinalityPlan = compileProfilingQuery({
+        manifest,
+        sqlByQueryId,
+        target: { schemaName: 'scope name', relationName: 'orders; DROP TABLE audit', columnName: `${typeFamily.toLowerCase()}]"value`, typeFamily },
+      });
+      assert.match(cardinalityPlan.querySha256, /^[a-f0-9]{64}$/);
+      assert.equal(cardinalityPlan.timeoutMs, 1000);
+      assert.deepEqual(cardinalityPlan.outputColumns, ['rowCount', 'nullCount', 'distinctCount']);
+    }
+  }
+  assert.deepEqual(manifests.map(({ queries }) => queries.map(({ typeFamilies }) => typeFamilies)), [
+    [['NUMERIC'], ['TEMPORAL'], ['CATEGORY'], ['TEXT'], ['BOOLEAN']],
+    [['NUMERIC'], ['TEMPORAL'], ['CATEGORY'], ['TEXT'], ['BOOLEAN']],
+  ]);
+  assert.deepEqual(manifests.map(({ queries }) => queries.map(({ category }) => category)), [
+    ['numeric-aggregate', 'temporal-aggregate', 'category-aggregate', 'text-aggregate', 'boolean-aggregate'],
+    ['numeric-aggregate', 'temporal-aggregate', 'category-aggregate', 'text-aggregate', 'boolean-aggregate'],
+  ]);
+});
+
+test('Slice 2 aggregate query pack fails closed on template tamper and unsupported families', async () => {
+  const { manifest, sqlByQueryId } = await loadProfilingEngine('mssql');
+  const tampered = structuredClone(sqlByQueryId);
+  tampered[manifest.queries[0].id] += '\nDELETE FROM dbo.orders;\n';
+  assert.throws(() => validateProfilingQueryManifest(manifest, tampered), /DB_PROFILING_QUERY_TEMPLATE_DENIED/);
+  assert.throws(
+    () => compileProfilingQuery({
+      manifest,
+      sqlByQueryId,
+      target: { schemaName: 'dbo', relationName: 'orders', columnName: 'payload', typeFamily: 'OTHER' },
+    }),
+    /DB_PROFILING_TYPE_FAMILY_UNSUPPORTED/,
+  );
+});
+
+test('Slice 2 profiling policy fails closed on scope, budget, timeout, cancellation and disclosure violations', async () => {
+  const base = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json'), 'utf8'));
+  const cases = [
+    ['scope', (profile) => { profile.policy.profiling.scope[0].schemaName = 'outside_scope'; }, /DB_PROFILING_SCOPE_INVALID/],
+    ['relation budget', (profile) => { profile.policy.profiling.budgets.maxRelations = 0; }, /DB_PROFILING_BUDGET_INVALID/],
+    ['column budget', (profile) => { profile.policy.profiling.budgets.maxColumns = 1; }, /DB_PROFILING_BUDGET_INVALID/],
+    ['query budget', (profile) => { profile.policy.profiling.budgets.maxQueries = 1; }, /DB_PROFILING_BUDGET_INVALID/],
+    ['timeout budget', (profile) => { profile.policy.profiling.budgets.maxQueryTimeoutMs = 5001; }, /DB_PROFILING_BUDGET_INVALID/],
+    ['cancellation', (profile) => { profile.policy.profiling.cancellation.onAbort = 'CONTINUE'; }, /DB_PROFILING_CANCELLATION_INVALID/],
+    ['row samples', (profile) => { profile.policy.profiling.disclosure.allowRowSamples = true; }, /DB_PROFILING_DISCLOSURE_DENIED/],
+    ['label distributions', (profile) => { profile.policy.profiling.disclosure.allowLabelDistributions = true; }, /DB_PROFILING_DISCLOSURE_DENIED/],
+    ['write access', (profile) => { profile.policy.access = 'READ_WRITE'; }, /DB_ANALYZE_PROFILE_POLICY_INVALID/],
+  ];
+  for (const [label, mutate, expected] of cases) {
+    const profile = structuredClone(base);
+    mutate(profile);
+    assert.throws(() => validateAnalyzeProfile(profile), expected, label);
+  }
+});
+
+test('Slice 2 aggregate ground truth denies cross-scope, budget and distribution leakage', async () => {
+  const profile = validateAnalyzeProfile(JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json'), 'utf8')));
+  const fixture = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-aggregate-results-v1.json'), 'utf8'));
+  const { manifest, sqlByQueryId } = await loadProfilingEngine('mssql');
+  const build = (resultSets) => buildAggregateProfilingEvidence({
+    profile,
+    resultSets,
+    profilingManifest: manifest,
+    profilingSqlByQueryId: sqlByQueryId,
+  });
+  const crossScope = structuredClone(fixture);
+  crossScope.facts[0].schemaName = 'outside_scope';
+  assert.throws(() => build(crossScope), /DB_PROFILING_RESULT_INVALID/);
+  const overBudget = structuredClone(fixture);
+  overBudget.facts.push({ ...overBudget.facts[0], columnName: 'third_column' });
+  assert.throws(() => build(overBudget), /DB_PROFILING_BUDGET_EXCEEDED/);
+  const leaking = structuredClone(fixture);
+  leaking.facts[0].distribution = [{ label: 'customer-value', count: 1 }];
+  assert.throws(() => build(leaking), /DB_PROFILING_DISTRIBUTION_DENIED/);
+  const unsupported = structuredClone(fixture);
+  unsupported.facts[0].typeFamily = 'OTHER';
+  assert.throws(() => build(unsupported), /DB_PROFILING_RESULT_INVALID/);
+  const inventedFreshness = structuredClone(fixture);
+  inventedFreshness.facts.find((fact) => fact.typeFamily === 'TEMPORAL').freshnessMaximum = '2026-08-11T00:00:00.000000000';
+  assert.throws(() => build(inventedFreshness), /DB_PROFILING_RESULT_INVALID/);
+});
+
+test('Slice 2 runtime profiling fails before credentials or a database connection are used', async () => {
+  const temporary = await mkdtemp(path.join(tmpdir(), 'cm-db-profile-runtime-denial-'));
+  try {
+    const profile = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-runtime-wwi-profile-v1.json'), 'utf8'));
+    const synthetic = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json'), 'utf8'));
+    profile.policy.profiling = structuredClone(synthetic.policy.profiling);
+    profile.policy.profiling.aggregateFixture = null;
+    const profileFile = path.join(temporary, 'runtime-profile.json');
+    await writeFile(profileFile, canonicalJson(profile));
+    await assert.rejects(() => runAnalyzeProfile(profileFile), /DB_PROFILING_RUNTIME_NOT_AUTHORIZED/);
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+});
+
+test('Slice 2 profiling honors fail-closed workflow cancellation', async () => {
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(
+    () => runAnalyzeProfile(path.resolve('tests/fixtures/db-analyzer/oracle-profiling-profile-v1.json'), { signal: controller.signal }),
+    /DB_ANALYZE_CANCELLED/,
+  );
+});
+
 test('runtime profile keeps credentials in the environment and fails closed when absent', async () => {
   const profileFile = path.resolve('tests/fixtures/db-analyzer/mssql-runtime-wwi-profile-v1.json');
   const profile = validateAnalyzeProfile(JSON.parse(await readFile(profileFile, 'utf8')));
@@ -540,5 +802,136 @@ test('Gate 3 provenance and runtime dependency SBOM fail closed on query or lice
     );
   } finally {
     await rm(temporary, { recursive: true, force: true });
+  }
+});
+
+test('Slice 2 Gate 3 binds every profiling template to provenance, SELECT-only safety and the permissive dependency closure', async () => {
+  const verified = await verifyDbAnalyzerProfilingProvenance({ root: path.resolve('.') });
+  assert.equal(verified.status, 'PASS');
+  assert.equal(verified.issue, 194);
+  assert.equal(verified.queryArtifactCount, 10);
+  assert.equal(verified.staticSelectOnlyCount, 10);
+  assert.equal(verified.copiedOrAdaptedSourceCount, 0);
+  assert.equal(verified.newRequiredRuntimeDependencyCount, 0);
+  assert.equal(verified.runtimeDependencyClosureCount, 72);
+  assert.deepEqual(verified.runtimeDependencyLicenses, ['0BSD', 'Apache-2.0', 'BSD-3-Clause', 'ISC', 'MIT']);
+  assert.equal(verified.runtimeValidation, 'NOT_AUTHORIZED');
+});
+
+test('Slice 2 Gate 3 fails closed on profiling query tamper and digest-aware sample leakage', async () => {
+  const temporary = await mkdtemp(path.join(tmpdir(), 'cm-db-profiling-provenance-'));
+  try {
+    await cp(path.resolve('query-packs/db-analyzer/v1'), path.join(temporary, 'query-packs/db-analyzer/v1'), { recursive: true });
+    await cp(path.resolve('package.json'), path.join(temporary, 'package.json'));
+    await cp(path.resolve('package-lock.json'), path.join(temporary, 'package-lock.json'));
+    await cp(path.resolve('LICENSE'), path.join(temporary, 'LICENSE'));
+    await cp(path.resolve('THIRD_PARTY_NOTICES.md'), path.join(temporary, 'THIRD_PARTY_NOTICES.md'));
+
+    const queryPath = path.join(temporary, 'query-packs/db-analyzer/v1/mssql/profile-category-aggregate.sql');
+    const original = await readFile(queryPath, 'utf8');
+    await writeFile(queryPath, `${original}\n-- tamper\n`);
+    await assert.rejects(
+      () => verifyDbAnalyzerProfilingProvenance({ root: temporary }),
+      /DB_PROFILING_QUERY_MANIFEST_INVALID|DB_PROFILING_QUERY_TEMPLATE_DENIED|DB_PROFILING_QUERY_COMMENT_DENIED|DB_PROFILING_QUERY_DIGEST_DRIFT_DENIED/,
+    );
+
+    const leaking = 'SELECT {{COLUMN}} AS [sampleValue] FROM {{SCHEMA}}.{{RELATION}};\n';
+    const digest = createHash('sha256').update(normalizeSql(leaking)).digest('hex');
+    await writeFile(queryPath, leaking);
+    const manifestPath = path.join(temporary, 'query-packs/db-analyzer/v1/mssql/profiling-manifest.json');
+    const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+    const entry = manifest.queries.find(({ id }) => id === 'mssql.profiling.category-aggregate');
+    entry.templateSha256 = digest;
+    entry.outputColumns = ['sampleValue'];
+    await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+    const lockPath = path.join(temporary, 'query-packs/db-analyzer/v1/profiling-provenance-license-lock.json');
+    const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+    lock.queryArtifacts.find(({ queryId }) => queryId === entry.id).normalizedSqlSha256 = digest;
+    await writeFile(lockPath, `${JSON.stringify(lock, null, 2)}\n`);
+    await assert.rejects(
+      () => verifyDbAnalyzerProfilingProvenance({ root: temporary }),
+      /DB_PROFILING_QUERY_MANIFEST_INVALID|DB_PROFILING_QUERY_LEAKAGE_DENIED/,
+    );
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+});
+
+test('Slice 2 Gate 7 emits only exact receipt-approved digests in deterministic non-authoritative knowledge packs', async () => {
+  const verified = await verifyDbAnalyzerKnowledge({ root: path.resolve('.') });
+  assert.equal(verified.status, 'PASS');
+  assert.equal(verified.deterministic, true);
+  assert.equal(verified.exactReceiptApprovedDigestsOnly, true);
+  assert.equal(verified.inventedSemanticClaims, 0);
+  assert.equal(verified.externalPublicationAuthority, false);
+  assert.equal(verified.directSourceDatabaseAccess, false);
+  assert.equal(verified.denialProbeCount, 4);
+  assert.deepEqual(verified.engines.map(({ engine }) => engine), ['mssql', 'oracle']);
+  assert.ok(verified.engines.every((engine) => engine.approvedCandidateCount === 10
+    && engine.emittedEntryCount === 10
+    && engine.rejectedCandidateCount === 1
+    && engine.rejectedCandidatesEmitted === 0
+    && engine.runtimeValidation === 'SYNTHETIC_UNVALIDATED'));
+});
+
+test('Slice 2 Gate 7 binds knowledge content to the exact evidence and immutable review receipt', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profile = path.resolve(`tests/fixtures/db-analyzer/${engine}-profiling-profile-v1.json`);
+    const receipt = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-profiling-review-v1.json`), 'utf8'));
+    const evidence = await runAnalyzeProfile(profile);
+    const knowledge = buildProfilingKnowledgePack({ evidence, receipt });
+    const approved = receipt.decisions
+      .filter((decision) => decision.disposition === 'APPROVED')
+      .map((decision) => decision.candidateSha256)
+      .sort();
+    assert.deepEqual(knowledge.entries.map((entry) => entry.candidateSha256), approved);
+    assert.equal(knowledge.source.receiptSha256, receipt.receiptSha256);
+    assert.equal(knowledge.authority.productionAuthority, false);
+    assert.equal(knowledge.claims.semanticTruthEstablished, false);
+
+    const tampered = structuredClone(receipt);
+    tampered.evidence.candidateSetSha256 = '0'.repeat(64);
+    assert.throws(
+      () => buildProfilingKnowledgePack({ evidence, receipt: tampered }),
+      /DB_PROFILING_REVIEW_RECEIPT_INVALID|DB_PROFILING_REVIEW_RECEIPT_TAMPERED/,
+    );
+  }
+});
+
+test('Slice 2 Gate 8 emits deterministic disconnected curated Superset results bound to exact knowledge packs', async () => {
+  const verified = await verifyDbAnalyzerSupersetResult({ root: path.resolve('.') });
+  assert.equal(verified.status, 'PASS');
+  assert.equal(verified.deterministic, true);
+  assert.equal(verified.exactKnowledgePackBinding, true);
+  assert.equal(verified.embeddedDisconnectedDataset, true);
+  assert.equal(verified.automaticPublication, false);
+  assert.equal(verified.directSourceDatabaseAccess, false);
+  assert.equal(verified.denialProbeCount, 4);
+  assert.deepEqual(verified.engines.map(({ engine }) => engine), ['mssql', 'oracle']);
+  assert.ok(verified.engines.every((engine) => engine.curatedRowCount === 10
+    && engine.chartCount === 2
+    && engine.runtimeValidation === 'SYNTHETIC_UNVALIDATED'));
+});
+
+test('Slice 2 Gate 8 denies knowledge drift and exposes no source database route', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profile = path.resolve(`tests/fixtures/db-analyzer/${engine}-profiling-profile-v1.json`);
+    const receipt = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-profiling-review-v1.json`), 'utf8'));
+    const evidence = await runAnalyzeProfile(profile);
+    const knowledgePack = buildProfilingKnowledgePack({ evidence, receipt });
+    const result = buildProfilingSupersetResult({ knowledgePack });
+    assert.equal(result.source.knowledgePackSha256, knowledgePack.knowledgePackSha256);
+    assert.equal(result.dataset.sourceConnection, null);
+    assert.equal(result.dataset.sourceSql, null);
+    assert.equal(result.dashboard.drillThrough.sourceRoute, null);
+    assert.equal(result.authority.automaticPublication, false);
+    assert.equal(result.claims.semanticTruthEstablished, false);
+
+    const tampered = structuredClone(knowledgePack);
+    tampered.entries[0].signals.push('POST_APPROVAL_MUTATION');
+    assert.throws(
+      () => buildProfilingSupersetResult({ knowledgePack: tampered }),
+      /DB_PROFILING_SUPERSET_SOURCE_TAMPERED/,
+    );
   }
 });
