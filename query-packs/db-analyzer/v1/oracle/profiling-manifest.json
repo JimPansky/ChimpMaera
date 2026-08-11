@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "chimpmaera.db/profiling-query-manifest/v1",
+  "packId": "chimpmaera.db.data-understanding.oracle",
+  "packVersion": "1.0.0",
+  "engine": "oracle",
+  "queries": [
+    {
+      "id": "oracle.profiling.numeric-aggregate",
+      "category": "numeric-aggregate",
+      "file": "profile-numeric-aggregate.sql",
+      "templateSha256": "8766cb41272d09371b225abad7aaec3fefc783d74e78c53ba1304246c07f6205",
+      "typeFamilies": ["NUMERIC"],
+      "nativeTypes": ["NUMBER", "FLOAT", "BINARY_FLOAT", "BINARY_DOUBLE"],
+      "outputColumns": ["rowCount", "nullCount", "distinctCount", "minimum", "maximum"],
+      "sortKeys": [],
+      "readOnly": true,
+      "aggregateOnly": true,
+      "rowSamples": false,
+      "labelDistributions": false,
+      "cost": "BOUNDED_SCAN",
+      "timeoutMs": 1000,
+      "privilege": {"minimum": "SELECT on the explicitly allowlisted relation and column"},
+      "fallback": {"onDenied": "Record DENIED or TIMEOUT; do not infer zero rows, nulls, distinct values or extrema"},
+      "provenance": {
+        "sourceType": "OFFICIAL_AGGREGATE_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Aggregate-Functions.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded aggregate SELECT template; no third-party query code copied"
+      }
+    },
+    {
+      "id": "oracle.profiling.temporal-aggregate",
+      "category": "temporal-aggregate",
+      "file": "profile-temporal-aggregate.sql",
+      "templateSha256": "96c61d549ca64e286bcc3433243f34b401a8f102fbd1576c9dbdcd09b05886d9",
+      "typeFamilies": ["TEMPORAL"],
+      "nativeTypes": ["DATE", "TIMESTAMP"],
+      "outputColumns": ["rowCount", "nullCount", "distinctCount", "minimum", "maximum", "freshnessMaximum"],
+      "sortKeys": [],
+      "readOnly": true,
+      "aggregateOnly": true,
+      "rowSamples": false,
+      "labelDistributions": false,
+      "cost": "BOUNDED_SCAN",
+      "timeoutMs": 1000,
+      "privilege": {"minimum": "SELECT on the explicitly allowlisted relation and column"},
+      "fallback": {"onDenied": "Record DENIED or TIMEOUT; do not infer temporal range or freshness"},
+      "provenance": {
+        "sourceType": "OFFICIAL_AGGREGATE_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Format-Models.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded temporal aggregate SELECT template; no third-party query code copied"
+      }
+    },
+    {
+      "id": "oracle.profiling.category-aggregate",
+      "category": "category-aggregate",
+      "file": "profile-category-aggregate.sql",
+      "templateSha256": "10c09593ac5f9790c0f960c883cdedff812a834bc1c48c82b3f983ed6b14aa95",
+      "typeFamilies": ["CATEGORY"],
+      "nativeTypes": ["CHAR", "VARCHAR2", "NCHAR", "NVARCHAR2"],
+      "outputColumns": ["rowCount", "nullCount", "distinctCount"],
+      "sortKeys": [],
+      "readOnly": true,
+      "aggregateOnly": true,
+      "rowSamples": false,
+      "labelDistributions": false,
+      "cost": "BOUNDED_SCAN",
+      "timeoutMs": 1000,
+      "privilege": {"minimum": "SELECT on the explicitly allowlisted relation and column"},
+      "fallback": {"onDenied": "Record DENIED or TIMEOUT; do not infer cardinality or reveal labels"},
+      "provenance": {
+        "sourceType": "OFFICIAL_AGGREGATE_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded category cardinality SELECT template; no third-party query code copied"
+      }
+    },
+    {
+      "id": "oracle.profiling.text-aggregate",
+      "category": "text-aggregate",
+      "file": "profile-text-aggregate.sql",
+      "templateSha256": "10c09593ac5f9790c0f960c883cdedff812a834bc1c48c82b3f983ed6b14aa95",
+      "typeFamilies": ["TEXT"],
+      "nativeTypes": ["CHAR", "VARCHAR2", "NCHAR", "NVARCHAR2"],
+      "outputColumns": ["rowCount", "nullCount", "distinctCount"],
+      "sortKeys": [],
+      "readOnly": true,
+      "aggregateOnly": true,
+      "rowSamples": false,
+      "labelDistributions": false,
+      "cost": "BOUNDED_SCAN",
+      "timeoutMs": 1000,
+      "privilege": {"minimum": "SELECT on the explicitly allowlisted relation and column"},
+      "fallback": {"onDenied": "Record DENIED or TIMEOUT; do not infer cardinality or reveal text"},
+      "provenance": {
+        "sourceType": "OFFICIAL_AGGREGATE_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded text cardinality SELECT template; no third-party query code copied"
+      }
+    },
+    {
+      "id": "oracle.profiling.boolean-aggregate",
+      "category": "boolean-aggregate",
+      "file": "profile-boolean-aggregate.sql",
+      "templateSha256": "10c09593ac5f9790c0f960c883cdedff812a834bc1c48c82b3f983ed6b14aa95",
+      "typeFamilies": ["BOOLEAN"],
+      "nativeTypes": ["BOOLEAN"],
+      "outputColumns": ["rowCount", "nullCount", "distinctCount"],
+      "sortKeys": [],
+      "readOnly": true,
+      "aggregateOnly": true,
+      "rowSamples": false,
+      "labelDistributions": false,
+      "cost": "BOUNDED_SCAN",
+      "timeoutMs": 1000,
+      "privilege": {"minimum": "SELECT on the explicitly allowlisted relation and column"},
+      "fallback": {"onDenied": "Record DENIED or TIMEOUT; do not infer boolean cardinality"},
+      "provenance": {
+        "sourceType": "OFFICIAL_AGGREGATE_API_REFERENCE",
+        "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/COUNT.html",
+        "spdx": "Apache-2.0",
+        "copiedCode": false,
+        "changeMarker": "CM-authored bounded boolean cardinality SELECT template; no third-party query code copied"
+      }
+    }
+  ]
+}

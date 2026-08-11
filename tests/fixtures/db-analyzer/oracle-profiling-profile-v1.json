@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "chimpmaera.db/analyze-profile/v1",
+  "profileId": "synthetic-oracle-data-understanding",
+  "engine": "oracle",
+  "mode": "SYNTHETIC",
+  "queryPack": {"version": "v1"},
+  "scope": {"database": "CMSYN", "container": "CMSYNPDB", "schemas": ["CM_APP"]},
+  "policy": {
+    "access": "READ_ONLY",
+    "allowRowSamples": false,
+    "maxQueryTimeoutMs": 5000,
+    "profiling": {
+      "schemaVersion": "chimpmaera.db/profiling-policy/v1",
+      "enabled": true,
+      "scope": [{"schemaName": "CM_APP", "relationName": "ORDERS", "columns": ["ORDER_ID", "QUANTITY", "CREATED_AT", "STATUS", "DESCRIPTION", "IS_PRIORITY"]}],
+      "budgets": {"maxRelations": 1, "maxColumns": 6, "maxQueries": 6, "maxDistributionBuckets": 0, "maxQueryTimeoutMs": 1000},
+      "disclosure": {"allowRowSamples": false, "allowLabelDistributions": false, "maxLabelCardinality": 0, "sensitiveTargets": []},
+      "cancellation": {"onTimeout": "FAIL_CLOSED", "onAbort": "FAIL_CLOSED"},
+      "aggregateFixture": "oracle-aggregate-results-v1.json"
+    }
+  },
+  "adapter": {"kind": "synthetic", "fixture": "oracle-preflight-v1.json"}
+}
