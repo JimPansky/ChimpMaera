@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "chimpmaera.db/analyze-profile/v1",
+  "profileId": "synthetic-oracle-stored-logic",
+  "engine": "oracle",
+  "mode": "SYNTHETIC",
+  "queryPack": {"version": "v1"},
+  "scope": {
+    "database": "CMSYN",
+    "container": "CMSYNPDB",
+    "schemas": ["CM_APP"]
+  },
+  "policy": {
+    "access": "READ_ONLY",
+    "allowRowSamples": false,
+    "maxQueryTimeoutMs": 5000,
+    "storedLogic": {
+      "schemaVersion": "chimpmaera.db/stored-logic-policy/v1",
+      "enabled": true,
+      "definitionDisclosure": "HASH_ONLY",
+      "fixture": "oracle-stored-logic-v1.json",
+      "parserEnrichment": {
+        "schemaVersion": "chimpmaera.db/parser-enrichment-policy/v1",
+        "enabled": true,
+        "mode": "OPTIONAL",
+        "onUnavailable": "CONTINUE_NATIVE_ONLY",
+        "fixture": "oracle-parser-enrichment-v1.json"
+      }
+    }
+  },
+  "adapter": {
+    "kind": "synthetic",
+    "fixture": "oracle-preflight-v1.json"
+  }
+}

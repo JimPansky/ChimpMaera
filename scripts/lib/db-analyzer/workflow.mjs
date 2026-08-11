@@ -3,13 +3,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import {
+  attachParserEnrichmentEvidence,
   buildAggregateProfilingEvidence,
   buildPreflightEvidence,
+  buildStoredLogicEvidence,
   canonicalJson,
   validateAnalyzeProfile,
   validateProfilingQueryManifest,
   validateQueryManifest,
 } from './core.mjs';
+import { buildOptionalParserEnrichment } from './parser-enrichment.mjs';
 import { auditQueryPackSafety } from './query-safety.mjs';
 
 const REPOSITORY_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -84,6 +87,7 @@ export async function runAnalyzeProfile(profileFile, options = {}) {
   const profile = validateAnalyzeProfile(await readJson(resolvedProfile));
   assertActive();
   if (profile.mode === 'RUNTIME' && profile.policy.profiling !== undefined) fail('DB_PROFILING_RUNTIME_NOT_AUTHORIZED');
+  if (profile.mode === 'RUNTIME' && profile.policy.storedLogic !== undefined) fail('DB_STORED_LOGIC_RUNTIME_NOT_AUTHORIZED');
   const packDirectory = path.join(repositoryRoot, 'query-packs', 'db-analyzer', profile.queryPack.version, profile.engine);
   const manifest = validateQueryManifest(await readJson(path.join(packDirectory, 'manifest.json')));
   if (manifest.engine !== profile.engine || manifest.queries.some((query) => query.timeoutMs > profile.policy.maxQueryTimeoutMs)) fail('DB_ANALYZE_PACK_POLICY_DENIED');
@@ -108,12 +112,46 @@ export async function runAnalyzeProfile(profileFile, options = {}) {
       resultSets: await readJson(path.join(path.dirname(resolvedProfile), profile.policy.profiling.aggregateFixture)),
     });
   }
+  let storedLogicEvidence;
+  if (profile.policy.storedLogic !== undefined) {
+    const storedLogicManifest = validateQueryManifest(await readJson(path.join(packDirectory, 'stored-logic-manifest.json')));
+    if (storedLogicManifest.engine !== profile.engine
+      || storedLogicManifest.queries.some((query) => query.timeoutMs > profile.policy.maxQueryTimeoutMs)) {
+      fail('DB_ANALYZE_PACK_POLICY_DENIED');
+    }
+    const storedLogicEntries = await Promise.all(storedLogicManifest.queries
+      .map(async (query) => [query.id, await readFile(path.join(packDirectory, query.file), 'utf8')]));
+    const storedLogicSqlByQueryId = Object.fromEntries(storedLogicEntries);
+    auditQueryPackSafety({ manifest: storedLogicManifest, sqlByQueryId: storedLogicSqlByQueryId });
+    storedLogicEvidence = buildStoredLogicEvidence({
+      manifest: storedLogicManifest,
+      sqlByQueryId: storedLogicSqlByQueryId,
+      resultSets: await readJson(path.join(path.dirname(resolvedProfile), profile.policy.storedLogic.fixture)),
+      profileContext: {
+        profileId: profile.profileId,
+        mode: profile.mode,
+        scope: profile.scope,
+        policy: profile.policy,
+        adapter: profile.adapter.kind,
+      },
+    });
+    if (profile.policy.storedLogic.parserEnrichment !== undefined) {
+      const storedLogicLock = await readJson(path.join(packDirectory, '..', 'stored-logic-provenance-license-lock.json'));
+      const parserEnrichment = await buildOptionalParserEnrichment({
+        storedLogicEvidence,
+        sourceFixture: await readJson(path.join(path.dirname(resolvedProfile), profile.policy.storedLogic.parserEnrichment.fixture)),
+        parserLock: storedLogicLock.parserDependency,
+      });
+      storedLogicEvidence = attachParserEnrichmentEvidence(storedLogicEvidence, parserEnrichment);
+    }
+  }
   assertActive();
   const evidence = buildPreflightEvidence({
     manifest,
     sqlByQueryId: Object.fromEntries(entries),
     resultSets,
     profilingEvidence,
+    storedLogicEvidence,
     profileContext: {
       profileId: profile.profileId,
       mode: profile.mode,

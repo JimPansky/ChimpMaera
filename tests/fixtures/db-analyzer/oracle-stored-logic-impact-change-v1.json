@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "chimpmaera.db/synthetic-stored-logic-change/v1",
+  "engine": "oracle",
+  "changeId": "controlled-rollup-definition-change-v1",
+  "object": {
+    "schemaName": "CM_APP",
+    "objectName": "CM_REFRESH_CUSTOMER_ROLLUP",
+    "objectKind": "PROCEDURE",
+    "definitionComponentOrdinal": 1,
+    "afterDefinitionComponentHash": "ccb27a2de5590c6da7402cf768cfcc59e2e82b43a3239b6adfb172807e0935d4"
+  },
+  "expected": {
+    "changedObjectCount": 1,
+    "affectedApprovedBiCandidateSha256": [
+      "001bc3ae583c16b4575d6aa29acaf37d3fad63c1c7f107cd9354034004f3520d",
+      "095305607740f956906954e91f15611d4e4027b2597ee1dd0718296ae4d562ea",
+      "1fa6ddee56e94fed7c0ebd4a9bfb6160088bbaf6d9c1f182c215a0c87877dc9c",
+      "2b6e8d5b576fa463a50aa08abcf05f5ac814a06bcfa0230de0f01d9e7667a7e5",
+      "666aafe7ccbae3fa376a07727d3592bb3ab9dde050448cfe8acf3aa1e873d161",
+      "7e8516ce51891e40e11955f2fd92d41be1c66ff2feff20af262c3f01d43c5df1",
+      "a151edfc83a2371bfd23a8ca090ac5ab0e6b97d9c82cf009cb1cc7eeee723e75",
+      "c985a4fdeb1889618d95136508678a291f186f04ab59bc86bd1a7a8d3a1c6e88",
+      "cfbd6dc7a6d398789ade05845a176142ddfd70ce9a3b8208eceb365f70317612",
+      "f1794043957f0c925c0fc0bcf9c2c336b9902193562d5e8df4be9571ea6d0409"
+    ]
+  }
+}

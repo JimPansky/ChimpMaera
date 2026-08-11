@@ -9,6 +9,9 @@ includes these direct dependencies and selected transitive components:
 | `ajv` | 8.20.0 | MIT |
 | `ajv-formats` | 3.0.1 | MIT |
 | `mssql` | 12.7.0 | MIT |
+| `node-sql-parser` (optional) | 5.4.0 | Apache-2.0 |
+| `@types/pegjs` (via optional `node-sql-parser`) | 0.10.6 | MIT |
+| `big-integer` (via optional `node-sql-parser`) | 1.6.52 | Unlicense |
 | `tedious` (via `mssql`) | 20.0.0 | MIT |
 | `fast-deep-equal` | 3.1.3 | MIT |
 | `fast-uri` | 3.1.4 | BSD-3-Clause |

@@ -8,7 +8,10 @@ import test from 'node:test';
 import { promisify } from 'node:util';
 
 import {
+  attachParserEnrichmentEvidence,
   buildPreflightEvidence,
+  buildStoredLogicImpactReport,
+  buildStoredLogicEvidence,
   buildAggregateProfilingEvidence,
   buildProfilingKnowledgePack,
   buildProfilingSupersetResult,
@@ -19,13 +22,17 @@ import {
   COVERAGE_LEDGER_SCHEMA,
   deriveProfilingCandidates,
   IDENTITY_CONTRACT_SCHEMA,
+  identitySha256,
   normalizeSql,
   validateAnalyzeProfile,
   validateProfilingQueryManifest,
   validateQueryManifest,
+  verifyStoredLogicImpactReport,
+  verifyStoredLogicEvidence,
 } from '../scripts/lib/db-analyzer/core.mjs';
+import { buildOptionalParserEnrichment } from '../scripts/lib/db-analyzer/parser-enrichment.mjs';
 import { runAnalyzeProfile } from '../scripts/lib/db-analyzer/workflow.mjs';
-import { auditCatalogQuery } from '../scripts/lib/db-analyzer/query-safety.mjs';
+import { auditCatalogQuery, auditQueryPackSafety } from '../scripts/lib/db-analyzer/query-safety.mjs';
 import { compareStructuralEvidence } from '../scripts/lib/db-analyzer/drift.mjs';
 import { buildStructureMapOutputs } from '../scripts/lib/db-analyzer/outputs.mjs';
 import { verifyDbAnalyzerDrift } from '../scripts/verify-db-analyzer-drift.mjs';
@@ -36,6 +43,7 @@ import { verifyDbAnalyzerProfilingCoverage } from '../scripts/verify-db-analyzer
 import { verifyDbAnalyzerProfilingReview } from '../scripts/verify-db-analyzer-profiling-review.mjs';
 import { verifyDbAnalyzerKnowledge } from '../scripts/verify-db-analyzer-knowledge.mjs';
 import { verifyDbAnalyzerSupersetResult } from '../scripts/verify-db-analyzer-superset-result.mjs';
+import { verifyDbAnalyzerStoredLogicOutputs } from '../scripts/verify-db-analyzer-stored-logic-outputs.mjs';
 import { verifyDbAnalyzerProvenance } from '../scripts/verify-db-analyzer-provenance.mjs';
 import { verifyDbAnalyzerSafety } from '../scripts/verify-db-analyzer-safety.mjs';
 
@@ -61,6 +69,15 @@ async function loadProfilingEngine(engine) {
   return { directory, manifest, sqlByQueryId };
 }
 
+async function loadStoredLogicEngine(engine) {
+  const directory = path.join(root, engine);
+  const manifest = JSON.parse(await readFile(path.join(directory, 'stored-logic-manifest.json'), 'utf8'));
+  const fixture = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-v1.json`), 'utf8'));
+  const sqlByQueryId = Object.fromEntries(await Promise.all(manifest.queries
+    .map(async (query) => [query.id, await readFile(path.join(directory, query.file), 'utf8')])));
+  return { directory, manifest, fixture, sqlByQueryId };
+}
+
 test('MSSQL and Oracle structure manifests are symmetric, provenance-bound and SELECT-only', async () => {
   for (const engine of ['mssql', 'oracle']) {
     const { manifest, sqlByQueryId } = await loadEngine(engine);
@@ -76,6 +93,559 @@ test('MSSQL and Oracle structure manifests are symmetric, provenance-bound and S
       assert.equal(query.provenance.copiedCode, false);
     }
   }
+});
+
+test('Slice 3 Gate 1 workflow emits symmetric deterministic stored-object inventory hashes and typed coverage', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const input = await loadStoredLogicEngine(engine);
+    validateQueryManifest(input.manifest);
+    assert.equal(input.manifest.queries.length, 2);
+    assert.equal(input.manifest.queries[0].category, 'stored-objects');
+    assert.deepEqual(input.manifest.queries.map(({ category }) => category), ['stored-objects', 'stored-dependencies']);
+    assert.ok(input.manifest.queries.every(({ provenance }) => provenance.spdx === 'Apache-2.0'));
+    const audit = auditQueryPackSafety({ manifest: input.manifest, sqlByQueryId: input.sqlByQueryId });
+    assert.equal(audit.queryCount, 2);
+    assert.equal(audit.zeroMutatingStatements, true);
+    assert.equal(audit.zeroRowSamples, true);
+
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`);
+    const first = await runAnalyzeProfile(profileFile);
+    const second = await runAnalyzeProfile(profileFile);
+    assert.deepEqual(first, second);
+    assert.equal(first.storedLogic.schemaVersion, 'chimpmaera.db/stored-logic-evidence/v1');
+    assert.equal(first.storedLogic.runtimeValidation, 'SYNTHETIC_UNVALIDATED');
+    assert.equal(first.storedLogic.coverageLedger.totalQueries, 2);
+    assert.equal(first.storedLogic.coverageLedger.stateCounts.SUCCEEDED, 2);
+    assert.equal(first.storedLogic.summary.objectCount, 5);
+    assert.deepEqual(first.storedLogic.summary.typeCounts, engine === 'mssql'
+      ? { FUNCTION: 1, PROCEDURE: 2, TRIGGER: 2 }
+      : { FUNCTION: 2, PROCEDURE: 1, TRIGGER: 2 });
+    assert.equal(first.storedLogic.summary.rawDefinitionsIncluded, false);
+    assert.equal(first.storedLogic.summary.visibleHashedObjects, 4);
+    assert.equal(first.storedLogic.summary.encryptedOrInvisibleObjects, 1);
+    assert.equal(first.storedLogic.summary.provenNativeDependencyEdges, 3);
+    assert.equal(first.storedLogic.summary.provenNativeColumnEdges, engine === 'mssql' ? 1 : 0);
+    assert.equal(first.storedLogic.summary.unresolvedNativeDependencyGaps, 1);
+    assert.equal(first.storedLogic.objects.filter(({ enablementState }) => enablementState === 'DISABLED').length, 1);
+    assert.ok(first.storedLogic.objects.every((object) => /^[a-f0-9]{64}$/.test(object.objectIdentitySha256)
+      && /^[a-f0-9]{64}$/.test(object.objectSha256)));
+    assert.ok(first.storedLogic.objects.filter(({ definitionVisibility }) => definitionVisibility === 'VISIBLE_HASHED')
+      .every((object) => /^[a-f0-9]{64}$/.test(object.definitionFingerprintSha256)));
+    assert.ok(first.storedLogic.objects.filter(({ definitionVisibility }) => definitionVisibility === 'ENCRYPTED_OR_INVISIBLE')
+      .every((object) => object.definitionFingerprintSha256 === null
+        && object.definitionFingerprintAlgorithm === null
+        && object.definitionComponentCount === 0));
+    assert.equal(verifyStoredLogicEvidence(first.storedLogic), first.storedLogic);
+    assert.doesNotMatch(canonicalJson(first.storedLogic), /source_text|definition_text|raw_definition|CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER)/i);
+    assert.match(first.snapshotSha256, /^[a-f0-9]{64}$/);
+  }
+});
+
+test('Slice 3 Gate 2 stored-object identity, visibility, enablement and hashes fail closed without invention', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const input = await loadStoredLogicEngine(engine);
+    const profile = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`), 'utf8'));
+    const profileContext = {
+      profileId: profile.profileId,
+      mode: profile.mode,
+      scope: profile.scope,
+      policy: profile.policy,
+      adapter: profile.adapter.kind,
+    };
+    const build = (fixture) => buildStoredLogicEvidence({
+      ...input,
+      resultSets: fixture,
+      profileContext,
+    });
+    const baseline = build(input.fixture);
+    verifyStoredLogicEvidence(baseline);
+
+    const reordered = structuredClone(input.fixture);
+    reordered.results[`${engine}.stored-logic.objects`].rows.reverse();
+    assert.deepEqual(build(reordered), baseline);
+
+    const conflict = structuredClone(input.fixture);
+    const conflictRow = structuredClone(conflict.results[`${engine}.stored-logic.objects`].rows[0]);
+    conflictRow.native_object_id = `${conflictRow.native_object_id}-conflict`;
+    conflict.results[`${engine}.stored-logic.objects`].rows.push(conflictRow);
+    assert.throws(() => build(conflict), /DB_STORED_LOGIC_OBJECT_CONFLICT/);
+
+    const crossScope = structuredClone(input.fixture);
+    crossScope.results[`${engine}.stored-logic.objects`].rows[0].schema_name = engine === 'mssql' ? 'outside' : 'OUTSIDE';
+    assert.throws(() => build(crossScope), /DB_QUERY_RESULT_SCOPE_INVALID/);
+
+    const componentGap = structuredClone(input.fixture);
+    componentGap.results[`${engine}.stored-logic.objects`].rows[0].definition_component_ordinal = 2;
+    assert.throws(() => build(componentGap), /DB_STORED_LOGIC_DEFINITION_INVALID/);
+
+    const tampered = structuredClone(baseline);
+    tampered.objects[0].definitionFingerprintSha256 = '0'.repeat(64);
+    assert.throws(() => verifyStoredLogicEvidence(tampered), /DB_STORED_LOGIC_EVIDENCE_TAMPERED/);
+
+    const denied = structuredClone(input.fixture);
+    denied.results[`${engine}.stored-logic.objects`] = {
+      state: 'DENIED',
+      reasonCode: 'DB_METADATA_PERMISSION_DENIED',
+      rows: [],
+    };
+    denied.results[`${engine}.stored-logic.native-dependencies`] = {
+      state: 'DENIED',
+      reasonCode: 'DB_METADATA_PERMISSION_DENIED',
+      rows: [],
+    };
+    const deniedEvidence = build(denied);
+    assert.equal(deniedEvidence.summary.objectCount, 0);
+    assert.deepEqual(deniedEvidence.objects, []);
+    assert.equal(deniedEvidence.coverageLedger.entries[0].emptyInterpretation, 'NOT_CLAIMED');
+    verifyStoredLogicEvidence(deniedEvidence);
+  }
+});
+
+test('Slice 3 Gate 1 stored-object coverage preserves denial without inventing objects', async () => {
+  const input = await loadStoredLogicEngine('oracle');
+  const denied = structuredClone(input.fixture);
+  denied.results['oracle.stored-logic.objects'] = {
+    state: 'DENIED',
+    reasonCode: 'DB_METADATA_PERMISSION_DENIED',
+    rows: [],
+  };
+  denied.results['oracle.stored-logic.native-dependencies'] = {
+    state: 'DENIED',
+    reasonCode: 'DB_METADATA_PERMISSION_DENIED',
+    rows: [],
+  };
+  const evidence = buildStoredLogicEvidence({
+    ...input,
+    resultSets: denied,
+    profileContext: {
+      profileId: 'synthetic-oracle-structure-map',
+      mode: 'SYNTHETIC',
+      scope: { database: 'CMSYN', container: 'CMSYNPDB', schemas: ['CM_APP'] },
+      policy: { access: 'READ_ONLY', allowRowSamples: false, maxQueryTimeoutMs: 5000 },
+      adapter: 'synthetic',
+    },
+  });
+  assert.equal(evidence.coverageLedger.stateCounts.DENIED, 2);
+  assert.equal(evidence.coverageLedger.entries[0].visibility, 'INVISIBLE');
+  assert.equal(evidence.coverageLedger.entries[0].emptyInterpretation, 'NOT_CLAIMED');
+  assert.equal(evidence.summary.objectCount, 0);
+  assert.deepEqual(evidence.objects, []);
+});
+
+test('Slice 3 Gate 3 native dependencies produce exact proven edges and explicit unresolved gaps', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const input = await loadStoredLogicEngine(engine);
+    const profile = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`), 'utf8'));
+    const profileContext = {
+      profileId: profile.profileId,
+      mode: profile.mode,
+      scope: profile.scope,
+      policy: profile.policy,
+      adapter: profile.adapter.kind,
+    };
+    const build = (fixture) => buildStoredLogicEvidence({ ...input, resultSets: fixture, profileContext });
+    const baseline = build(input.fixture);
+    assert.equal(baseline.nativeDependencies.edges.length, 3);
+    assert.equal(baseline.nativeDependencies.gaps.length, 1);
+    assert.ok(baseline.nativeDependencies.edges.every(({ proofState, edgeSha256, sourceObjectIdentitySha256, targetObjectIdentitySha256 }) =>
+      proofState === 'PROVEN_NATIVE'
+      && /^[a-f0-9]{64}$/.test(edgeSha256)
+      && /^[a-f0-9]{64}$/.test(sourceObjectIdentitySha256)
+      && /^[a-f0-9]{64}$/.test(targetObjectIdentitySha256)));
+    assert.ok(baseline.nativeDependencies.gaps.every(({ gapState, gapSha256 }) =>
+      gapState === 'UNRESOLVED_NATIVE_REFERENCE' && /^[a-f0-9]{64}$/.test(gapSha256)));
+    assert.deepEqual(baseline.nativeDependencies.edges.map(({ sourceObjectName, targetObjectName }) =>
+      [sourceObjectName, targetObjectName]), engine === 'mssql'
+      ? [['cm_customer_risk', 'customers'], ['cm_orders_audit', 'audit_log'], ['cm_refresh_customer_rollup', 'orders']]
+      : [['CM_CUSTOMER_RISK', 'CUSTOMERS'], ['CM_ORDERS_AUDIT', 'AUDIT_LOG'], ['CM_REFRESH_CUSTOMER_ROLLUP', 'ORDERS']]);
+
+    const reordered = structuredClone(input.fixture);
+    reordered.results[`${engine}.stored-logic.native-dependencies`].rows.reverse();
+    assert.deepEqual(build(reordered), baseline);
+
+    const inventedSource = structuredClone(input.fixture);
+    inventedSource.results[`${engine}.stored-logic.native-dependencies`].rows[0].source_object_name = engine === 'mssql' ? 'cm_invented' : 'CM_INVENTED';
+    assert.throws(() => build(inventedSource), /DB_STORED_LOGIC_DEPENDENCY_SOURCE_INVALID/);
+
+    const contradictory = structuredClone(input.fixture);
+    contradictory.results[`${engine}.stored-logic.native-dependencies`].rows[0].resolution_state = 'RESOLVED';
+    contradictory.results[`${engine}.stored-logic.native-dependencies`].rows[0].target_server_or_link_name = engine === 'mssql' ? 'CM_LINK' : 'CM_REMOTE_LINK';
+    assert.throws(() => build(contradictory), /DB_STORED_LOGIC_DEPENDENCY_INVALID/);
+
+    const tampered = structuredClone(baseline);
+    tampered.nativeDependencies.edges[0].targetObjectIdentitySha256 = '0'.repeat(64);
+    assert.throws(() => verifyStoredLogicEvidence(tampered), /DB_STORED_LOGIC_EVIDENCE_TAMPERED/);
+
+    const denied = structuredClone(input.fixture);
+    denied.results[`${engine}.stored-logic.native-dependencies`] = {
+      state: 'DENIED',
+      reasonCode: 'DB_METADATA_PERMISSION_DENIED',
+      rows: [],
+    };
+    const deniedEvidence = build(denied);
+    assert.deepEqual(deniedEvidence.nativeDependencies, { edges: [], columnEdges: [], gaps: [] });
+    assert.equal(deniedEvidence.coverageLedger.entries.find(({ queryId }) => queryId.endsWith('native-dependencies')).emptyInterpretation, 'NOT_CLAIMED');
+    verifyStoredLogicEvidence(deniedEvidence);
+  }
+});
+
+test('Slice 3 Gate 4 optional parser enrichment is pinned, bounded and never promotes inferred edges', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`);
+    const first = await runAnalyzeProfile(profileFile);
+    const second = await runAnalyzeProfile(profileFile);
+    assert.deepEqual(first, second);
+    const enrichment = first.storedLogic.parserEnrichment;
+    assert.equal(enrichment.state, 'PARTIAL');
+    assert.equal(enrichment.optional, true);
+    assert.equal(enrichment.parser.requiredForNativeCollector, false);
+    assert.equal(enrichment.parser.promotionPolicy, 'NEVER_PROVEN');
+    assert.equal(enrichment.parser.dialectContract, 'COMMON-SELECT-SUBSET/V1');
+    assert.equal(enrichment.summary.parsedObjectCount, 1);
+    assert.equal(enrichment.summary.inferredEdgeCount, 2);
+    assert.equal(enrichment.summary.blindSpotGapCount, 2);
+    assert.equal(enrichment.summary.rawDefinitionsIncluded, false);
+    assert.ok(enrichment.edges.every(({ proofState }) => proofState === 'INFERRED_PARSER'));
+    assert.ok(first.storedLogic.nativeDependencies.edges.every(({ proofState }) => proofState === 'PROVEN_NATIVE'));
+    assert.deepEqual(new Set(enrichment.gaps.map(({ gapState }) => gapState)), new Set([
+      'DYNAMIC_SQL_BLIND_SPOT',
+      'UNSUPPORTED_SYNTAX_BLIND_SPOT',
+    ]));
+    assert.doesNotMatch(canonicalJson(enrichment), /"(?:sourceText|source_text|rawDefinition|raw_definition)"\s*:/i);
+    verifyStoredLogicEvidence(first.storedLogic);
+
+    const tampered = structuredClone(first.storedLogic);
+    tampered.parserEnrichment.edges[0].proofState = 'PROVEN_NATIVE';
+    assert.throws(() => verifyStoredLogicEvidence(tampered), /DB_STORED_LOGIC_EVIDENCE_TAMPERED|DB_PARSER_EVIDENCE_INVALID/);
+  }
+});
+
+test('Slice 3 Gate 4 native collection remains runnable when parser enrichment is absent or unavailable', async () => {
+  const engine = 'mssql';
+  const input = await loadStoredLogicEngine(engine);
+  const profile = JSON.parse(await readFile(path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`), 'utf8'));
+  const native = buildStoredLogicEvidence({
+    ...input,
+    resultSets: input.fixture,
+    profileContext: {
+      profileId: profile.profileId,
+      mode: profile.mode,
+      scope: profile.scope,
+      policy: profile.policy,
+      adapter: profile.adapter.kind,
+    },
+  });
+  assert.equal(native.parserEnrichment.state, 'NOT_REQUESTED');
+  assert.equal(native.nativeDependencies.edges.length, 3);
+  verifyStoredLogicEvidence(native);
+
+  const sourceFixture = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-parser-enrichment-v1.json'), 'utf8'));
+  const lock = JSON.parse(await readFile(path.resolve('query-packs/db-analyzer/v1/stored-logic-provenance-license-lock.json'), 'utf8'));
+  const unavailable = await buildOptionalParserEnrichment({
+    storedLogicEvidence: native,
+    sourceFixture,
+    parserLock: lock.parserDependency,
+    loadParser: async () => { throw new Error('synthetic parser absence'); },
+  });
+  assert.equal(unavailable.state, 'UNAVAILABLE');
+  const attached = attachParserEnrichmentEvidence(native, unavailable);
+  assert.equal(attached.nativeDependencies.edges.length, 3);
+  assert.equal(attached.parserEnrichment.summary.inferredEdgeCount, 0);
+  verifyStoredLogicEvidence(attached);
+});
+
+test('Slice 3 Gate 4 parser provenance binds optional dependency closure and every stored-logic query', async () => {
+  const lockPath = path.resolve('query-packs/db-analyzer/v1/stored-logic-provenance-license-lock.json');
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+  const packageLockText = await readFile(path.resolve('package-lock.json'), 'utf8');
+  const packageLock = JSON.parse(packageLockText);
+  assert.equal(lock.schemaVersion, 'chimpmaera.db/stored-logic-provenance-license-lock/v1');
+  assert.equal(lock.issue, 196);
+  assert.equal(lock.parserDependency.packageName, 'node-sql-parser');
+  assert.equal(lock.parserDependency.version, '5.4.0');
+  assert.equal(lock.parserDependency.spdx, 'Apache-2.0');
+  assert.equal(packageLock.packages[''].optionalDependencies['node-sql-parser'], '5.4.0');
+  assert.equal(lock.parserDependencyClosure.packageLockSha256, createHash('sha256').update(packageLockText).digest('hex'));
+  assert.equal(lock.parserDependencyClosure.requiredForNativeCollector, false);
+  assert.equal(lock.parserDependencyClosure.admission, 'OPTIONAL_NON_PROMOTING');
+  for (const dependency of lock.parserDependencyClosure.entries) {
+    const pinned = packageLock.packages[dependency.packagePath];
+    assert.equal(pinned.version, dependency.version);
+    assert.equal(pinned.integrity, dependency.integrity);
+    assert.equal(pinned.license, dependency.spdx);
+    assert.ok(lock.parserDependencyClosure.allowedSpdx.includes(dependency.spdx));
+  }
+  assert.equal(createHash('sha256').update(canonicalJson(lock.parserDependencyClosure.entries)).digest('hex'), lock.parserDependencyClosure.closureSha256);
+  for (const artifact of lock.queryArtifacts) {
+    const sql = await readFile(path.resolve(artifact.path), 'utf8');
+    assert.equal(createHash('sha256').update(normalizeSql(sql)).digest('hex'), artifact.normalizedSqlSha256);
+  }
+  assert.equal(lock.queryArtifacts.length, 4);
+});
+
+test('Slice 3 Gate 5 keeps proven object and limited-column lineage distinct from inferred, dynamic and unknown classes', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`);
+    const first = await runAnalyzeProfile(profileFile);
+    const second = await runAnalyzeProfile(profileFile);
+    assert.deepEqual(first, second);
+    const { lineage } = first.storedLogic;
+    assert.equal(lineage.schemaVersion, 'chimpmaera.db/stored-logic-lineage-evidence/v1');
+    assert.equal(lineage.summary.promotionPolicy, 'CLASS_PRESERVING_NO_PROMOTION');
+    assert.equal(lineage.summary.relationshipClassCounts.PROVEN_OBJECT_NATIVE, 3);
+    assert.equal(lineage.summary.relationshipClassCounts.PROVEN_COLUMN_NATIVE, engine === 'mssql' ? 1 : 0);
+    assert.equal(lineage.summary.relationshipClassCounts.INFERRED_OBJECT_PARSER, 2);
+    assert.equal(lineage.summary.relationshipCount, engine === 'mssql' ? 6 : 5);
+    assert.equal(lineage.summary.blindSpotCount, engine === 'mssql' ? 5 : 6);
+    assert.equal(lineage.summary.rawDefinitionsIncluded, false);
+    assert.ok(lineage.relationships.every(({ relationshipClass, proofState, relationshipSha256 }) =>
+      /^[a-f0-9]{64}$/.test(relationshipSha256)
+      && ((relationshipClass === 'PROVEN_OBJECT_NATIVE' && proofState === 'PROVEN_NATIVE')
+        || (relationshipClass === 'PROVEN_COLUMN_NATIVE' && proofState === 'PROVEN_NATIVE_COLUMN')
+        || (relationshipClass === 'INFERRED_OBJECT_PARSER' && proofState === 'INFERRED_PARSER'))));
+    assert.deepEqual(new Set(lineage.blindSpots.map(({ blindSpotClass }) => blindSpotClass)), new Set([
+      'COLUMN_RELATIONSHIP_UNKNOWN',
+      'DYNAMIC_RELATIONSHIP_UNKNOWN',
+      'UNKNOWN_NATIVE_RELATIONSHIP',
+      'UNSUPPORTED_RELATIONSHIP_UNKNOWN',
+    ]));
+    assert.doesNotMatch(canonicalJson(lineage), /source_text|definition_text|raw_definition|CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER)/i);
+    verifyStoredLogicEvidence(first.storedLogic);
+
+    const promoted = structuredClone(first.storedLogic);
+    const inferred = promoted.lineage.relationships.find(({ relationshipClass }) => relationshipClass === 'INFERRED_OBJECT_PARSER');
+    inferred.relationshipClass = 'PROVEN_OBJECT_NATIVE';
+    inferred.proofState = 'PROVEN_NATIVE';
+    const { relationshipSha256: ignoredRelationshipSha, ...relationshipBody } = inferred;
+    inferred.relationshipSha256 = identitySha256(relationshipBody);
+    const { lineageSha256: ignoredLineageSha, ...lineageBody } = promoted.lineage;
+    promoted.lineage.lineageSha256 = identitySha256(lineageBody);
+    const { storedLogicSha256: ignoredStoredSha, ...storedBody } = promoted;
+    promoted.storedLogicSha256 = identitySha256(storedBody);
+    assert.throws(() => verifyStoredLogicEvidence(promoted), /DB_STORED_LOGIC_LINEAGE_TAMPERED/);
+  }
+
+  const input = await loadStoredLogicEngine('mssql');
+  const profile = JSON.parse(await readFile(path.resolve('tests/fixtures/db-analyzer/mssql-stored-logic-profile-v1.json'), 'utf8'));
+  const twoColumns = structuredClone(input.fixture);
+  const secondColumn = structuredClone(twoColumns.results['mssql.stored-logic.native-dependencies'].rows[0]);
+  secondColumn.target_column_name = 'order_id';
+  twoColumns.results['mssql.stored-logic.native-dependencies'].rows.push(secondColumn);
+  const multiColumnEvidence = buildStoredLogicEvidence({
+    ...input,
+    resultSets: twoColumns,
+    profileContext: {
+      profileId: profile.profileId,
+      mode: profile.mode,
+      scope: profile.scope,
+      policy: profile.policy,
+      adapter: profile.adapter.kind,
+    },
+  });
+  assert.equal(multiColumnEvidence.nativeDependencies.edges.length, 3);
+  assert.equal(multiColumnEvidence.nativeDependencies.columnEdges.length, 2);
+  assert.equal(multiColumnEvidence.lineage.summary.relationshipClassCounts.PROVEN_OBJECT_NATIVE, 3);
+  assert.equal(multiColumnEvidence.lineage.summary.relationshipClassCounts.PROVEN_COLUMN_NATIVE, 2);
+  verifyStoredLogicEvidence(multiColumnEvidence);
+});
+
+test('Slice 3 Gate 6 controlled A/B change yields exact affected object and approved BI identities', async () => {
+  for (const engine of ['mssql', 'oracle']) {
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`);
+    const before = (await runAnalyzeProfile(profileFile)).storedLogic;
+    const input = await loadStoredLogicEngine(engine);
+    const profile = JSON.parse(await readFile(profileFile, 'utf8'));
+    const change = JSON.parse(await readFile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-stored-logic-impact-change-v1.json`,
+    ), 'utf8'));
+    const changedFixture = structuredClone(input.fixture);
+    const changedRow = changedFixture.results[`${engine}.stored-logic.objects`].rows.find((row) =>
+      row.schema_name === change.object.schemaName
+      && row.object_name === change.object.objectName
+      && row.object_kind === change.object.objectKind
+      && row.definition_component_ordinal === change.object.definitionComponentOrdinal);
+    assert.ok(changedRow);
+    changedRow.definition_component_hash = change.object.afterDefinitionComponentHash;
+    let after = buildStoredLogicEvidence({
+      ...input,
+      resultSets: changedFixture,
+      profileContext: {
+        profileId: profile.profileId,
+        mode: profile.mode,
+        scope: profile.scope,
+        policy: profile.policy,
+        adapter: profile.adapter.kind,
+      },
+    });
+    const parserFixture = JSON.parse(await readFile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-parser-enrichment-v1.json`,
+    ), 'utf8'));
+    const parserLock = JSON.parse(await readFile(path.resolve(
+      'query-packs/db-analyzer/v1/stored-logic-provenance-license-lock.json',
+    ), 'utf8'));
+    after = attachParserEnrichmentEvidence(after, await buildOptionalParserEnrichment({
+      storedLogicEvidence: after,
+      sourceFixture: parserFixture,
+      parserLock: parserLock.parserDependency,
+    }));
+
+    const profilingEvidence = await runAnalyzeProfile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-profiling-profile-v1.json`,
+    ));
+    const receipt = JSON.parse(await readFile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-profiling-review-v1.json`,
+    ), 'utf8'));
+    const knowledgePack = buildProfilingKnowledgePack({ evidence: profilingEvidence, receipt });
+    const supersetResult = buildProfilingSupersetResult({ knowledgePack });
+    const sources = { before, after, knowledgePack, supersetResult };
+    const first = buildStoredLogicImpactReport(sources);
+    const second = buildStoredLogicImpactReport(sources);
+    assert.deepEqual(first, second);
+    assert.equal(first.schemaVersion, 'chimpmaera.db/stored-logic-impact-report/v1');
+    assert.equal(first.summary.changedObjectCount, change.expected.changedObjectCount);
+    assert.equal(first.changedObjects[0].objectName, change.object.objectName);
+    assert.equal(first.changedObjects[0].changeType, 'MODIFIED');
+    assert.notEqual(first.changedObjects[0].beforeDefinitionFingerprintSha256,
+      first.changedObjects[0].afterDefinitionFingerprintSha256);
+    assert.deepEqual(first.affectedBi.map(({ candidateSha256 }) => candidateSha256),
+      change.expected.affectedApprovedBiCandidateSha256);
+    assert.ok(first.affectedBi.every(({ impactClass, reviewState }) =>
+      impactClass === 'POTENTIALLY_AFFECTED_NATIVE_OBJECT'
+      && reviewState === 'APPROVED_BY_BOUND_RECEIPT'));
+    assert.ok(first.provenNativeRelationships.every(({ relationshipClass }) =>
+      ['PROVEN_OBJECT_NATIVE', 'PROVEN_COLUMN_NATIVE'].includes(relationshipClass)));
+    assert.equal(first.policy.inferredParserPromotionAllowed, false);
+    assert.equal(first.policy.rawDefinitionsIncluded, false);
+    assert.equal(first.policy.sourceRoutesIncluded, false);
+    assert.equal(first.authority.directSourceDatabaseAccess, false);
+    assert.equal(first.source.structureSnapshotSha256, knowledgePack.source.structureSnapshotSha256);
+    assert.equal(first.source.knowledgePackSha256, knowledgePack.knowledgePackSha256);
+    assert.equal(first.source.supersetResultSha256, supersetResult.supersetResultSha256);
+    assert.doesNotMatch(canonicalJson(first),
+      /source_text|definition_text|raw_definition|CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER)|password|credential/i);
+    assert.equal(verifyStoredLogicImpactReport(first, sources), first);
+
+    assert.throws(() => buildStoredLogicImpactReport({ ...sources, after: before }),
+      /DB_STORED_LOGIC_IMPACT_NO_CHANGE_DENIED/);
+    const tamperedKnowledge = structuredClone(knowledgePack);
+    tamperedKnowledge.entries[0].target.relationName = `${tamperedKnowledge.entries[0].target.relationName}_invented`;
+    assert.throws(() => buildStoredLogicImpactReport({ ...sources, knowledgePack: tamperedKnowledge }),
+      /DB_STORED_LOGIC_IMPACT_BI_SOURCE_TAMPERED/);
+    const tamperedReport = structuredClone(first);
+    tamperedReport.affectedBi = [];
+    const { impactReportSha256: ignoredImpactSha, ...impactBody } = tamperedReport;
+    tamperedReport.impactReportSha256 = identitySha256(impactBody);
+    assert.throws(() => verifyStoredLogicImpactReport(tamperedReport, sources),
+      /DB_STORED_LOGIC_IMPACT_REPORT_TAMPERED/);
+  }
+});
+
+test('Slice 3 Gate 7 fail-closes native coverage, integrity and no-invention probes symmetrically', async () => {
+  const matrix = JSON.parse(await readFile(path.resolve(
+    'tests/fixtures/db-analyzer/stored-logic-negative-matrix-v1.json',
+  ), 'utf8'));
+  assert.equal(matrix.schemaVersion, 'chimpmaera.db/stored-logic-negative-matrix/v1');
+  assert.deepEqual(matrix.engines, ['mssql', 'oracle']);
+  assert.equal(matrix.nativeCoverageCases.length, 3);
+  assert.equal(matrix.integrityCases.length, 3);
+  assert.equal(matrix.nonInventionCases.length, 4);
+
+  for (const engine of matrix.engines) {
+    const input = await loadStoredLogicEngine(engine);
+    const profileFile = path.resolve(`tests/fixtures/db-analyzer/${engine}-stored-logic-profile-v1.json`);
+    const profile = JSON.parse(await readFile(profileFile, 'utf8'));
+    const before = (await runAnalyzeProfile(profileFile)).storedLogic;
+    const profileContext = {
+      profileId: profile.profileId,
+      mode: profile.mode,
+      scope: profile.scope,
+      policy: profile.policy,
+      adapter: profile.adapter.kind,
+    };
+    const profilingEvidence = await runAnalyzeProfile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-profiling-profile-v1.json`,
+    ));
+    const receipt = JSON.parse(await readFile(path.resolve(
+      `tests/fixtures/db-analyzer/${engine}-profiling-review-v1.json`,
+    ), 'utf8'));
+    const knowledgePack = buildProfilingKnowledgePack({ evidence: profilingEvidence, receipt });
+    const supersetResult = buildProfilingSupersetResult({ knowledgePack });
+
+    for (const probe of matrix.nativeCoverageCases) {
+      const resultSets = structuredClone(input.fixture);
+      const queryId = `${engine}.stored-logic.native-dependencies`;
+      resultSets.results[queryId] = {
+        state: probe.state,
+        reasonCode: probe.reasonCode,
+        rows: resultSets.results[queryId].rows.slice(0, probe.retainRows),
+      };
+      const incomplete = buildStoredLogicEvidence({
+        ...input,
+        resultSets,
+        profileContext,
+      });
+      assert.equal(incomplete.coverageLedger.allComplete, false, `${engine}:${probe.caseId}`);
+      assert.equal(incomplete.coverageLedger.entries
+        .find(({ queryId: id }) => id === queryId).emptyInterpretation, 'NOT_CLAIMED');
+      assert.throws(
+        () => buildStoredLogicImpactReport({ before, after: incomplete, knowledgePack, supersetResult }),
+        new RegExp(probe.expectedImpactDenial),
+        `${engine}:${probe.caseId}`,
+      );
+    }
+
+    const encrypted = before.objects.find(({ definitionVisibility }) =>
+      definitionVisibility === 'ENCRYPTED_OR_INVISIBLE');
+    assert.ok(encrypted, `${engine}:encrypted-or-invisible-definition`);
+    assert.equal(encrypted.definitionFingerprintSha256, null);
+    assert.equal(encrypted.definitionComponentCount, 0);
+    assert.ok(before.lineage.blindSpots.some(({ blindSpotClass }) =>
+      blindSpotClass === 'UNSUPPORTED_RELATIONSHIP_UNKNOWN'));
+    assert.ok(before.lineage.blindSpots.some(({ blindSpotClass }) =>
+      blindSpotClass === 'DYNAMIC_RELATIONSHIP_UNKNOWN'));
+    assert.ok(before.lineage.relationships
+      .filter(({ relationshipClass }) => relationshipClass === 'INFERRED_OBJECT_PARSER')
+      .every(({ proofState }) => proofState === 'INFERRED_PARSER'));
+
+    const evidenceTamper = structuredClone(before);
+    evidenceTamper.objects[0].definitionFingerprintSha256 = '0'.repeat(64);
+    assert.throws(() => verifyStoredLogicEvidence(evidenceTamper), /DB_STORED_LOGIC_EVIDENCE_TAMPERED/);
+
+    const promoted = structuredClone(before);
+    const inferred = promoted.lineage.relationships.find(({ relationshipClass }) =>
+      relationshipClass === 'INFERRED_OBJECT_PARSER');
+    inferred.relationshipClass = 'PROVEN_OBJECT_NATIVE';
+    inferred.proofState = 'PROVEN_NATIVE';
+    const { relationshipSha256: ignoredRelationshipSha, ...relationshipBody } = inferred;
+    inferred.relationshipSha256 = identitySha256(relationshipBody);
+    const { lineageSha256: ignoredLineageSha, ...lineageBody } = promoted.lineage;
+    promoted.lineage.lineageSha256 = identitySha256(lineageBody);
+    const { storedLogicSha256: ignoredStoredSha, ...storedBody } = promoted;
+    promoted.storedLogicSha256 = identitySha256(storedBody);
+    assert.throws(() => verifyStoredLogicEvidence(promoted), /DB_STORED_LOGIC_LINEAGE_TAMPERED/);
+  }
+});
+
+test('Slice 3 Gate 8 emits deterministic source-bound JSON, HTML and disconnected Superset projections', async () => {
+  const verified = await verifyDbAnalyzerStoredLogicOutputs({ root: path.resolve('.') });
+  assert.equal(verified.status, 'PASS');
+  assert.equal(verified.deterministic, true);
+  assert.equal(verified.exactSourceBinding, true);
+  assert.equal(verified.canonicalJson, true);
+  assert.equal(verified.html, true);
+  assert.equal(verified.disconnectedSupersetProjections, true);
+  assert.equal(verified.rawDefinitionsIncluded, false);
+  assert.equal(verified.sourceRoutesIncluded, false);
+  assert.equal(verified.automaticPublication, false);
+  assert.equal(verified.directSourceDatabaseAccess, false);
+  assert.equal(verified.denialProbeCount, 4);
+  assert.deepEqual(verified.engines.map(({ engine }) => engine), ['mssql', 'oracle']);
+  assert.ok(verified.engines.every((engine) => engine.storedObjectCount === 5
+    && engine.lineageRelationshipCount >= 5
+    && engine.blindSpotCount >= 5
+    && engine.impactRowCount === 11
+    && engine.reviewRequired === true
+    && engine.runtimeValidation === 'SYNTHETIC_UNVALIDATED'));
 });
 
 test('Gate 6 static and adversarial matrix proves read-only catalog access and fail-closed outcomes', async () => {
