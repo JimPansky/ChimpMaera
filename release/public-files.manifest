@@ -736,6 +736,7 @@ scripts/verify-db-analyzer-stored-logic-outputs.mjs	scripts/verify-db-analyzer-s
 tests/db-analyzer-query-pack.test.mjs	tests/db-analyzer-query-pack.test.mjs	0644
 tests/fixtures/db-analyzer/mssql-drift-b-v1.json	tests/fixtures/db-analyzer/mssql-drift-b-v1.json	0644
 tests/fixtures/db-analyzer/mssql-aggregate-results-v1.json	tests/fixtures/db-analyzer/mssql-aggregate-results-v1.json	0644
+tests/fixtures/db-analyzer/mssql-adventureworks-scope-contract-v1.json	tests/fixtures/db-analyzer/mssql-adventureworks-scope-contract-v1.json	0644
 tests/fixtures/db-analyzer/mssql-preflight-v1.json	tests/fixtures/db-analyzer/mssql-preflight-v1.json	0644
 tests/fixtures/db-analyzer/mssql-profile-v1.json	tests/fixtures/db-analyzer/mssql-profile-v1.json	0644
 tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json	tests/fixtures/db-analyzer/mssql-profiling-profile-v1.json	0644

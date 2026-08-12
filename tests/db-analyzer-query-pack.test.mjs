@@ -32,7 +32,10 @@ import {
   verifyStoredLogicEvidence,
 } from '../scripts/lib/db-analyzer/core.mjs';
 import { buildOptionalParserEnrichment } from '../scripts/lib/db-analyzer/parser-enrichment.mjs';
-import { runAnalyzeProfile } from '../scripts/lib/db-analyzer/workflow.mjs';
+import {
+  normalizeMssqlRuntimeScopeResult,
+  runAnalyzeProfile,
+} from '../scripts/lib/db-analyzer/workflow.mjs';
 import {
   loadAndResolveOperationProfile,
   resolveOperationProfile,
@@ -2503,6 +2506,93 @@ test('schema and relation ground truth is normalized without cross-scope inventi
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
+});
+
+test('MSSQL runtime scope semantics ignore undeclared ambient principal schemas and reject genuine scope drift', async () => {
+  const captured = JSON.parse(await readFile(path.resolve(
+    'tests/fixtures/db-analyzer/mssql-adventureworks-scope-contract-v1.json',
+  ), 'utf8'));
+  const manifest = JSON.parse(await readFile(path.resolve('query-packs/db-analyzer/v1/mssql/manifest.json'), 'utf8'));
+  const sqlByQueryId = Object.fromEntries(await Promise.all(manifest.queries.map(async (query) => [
+    query.id,
+    await readFile(path.resolve('query-packs/db-analyzer/v1/mssql', query.file), 'utf8'),
+  ])));
+  const profileContext = {
+    profileId: 'runtime-mssql-adventureworks2022',
+    mode: 'RUNTIME',
+    scope: { database: captured.database, container: null, schemas: captured.declaredSchemas },
+    policy: { access: 'READ_ONLY', allowRowSamples: false, maxQueryTimeoutMs: 10000 },
+    adapter: 'mssql',
+  };
+  const profile = { engine: 'mssql', scope: profileContext.scope };
+  const results = Object.fromEntries(manifest.queries.map((query) => [
+    query.id,
+    { state: 'SUCCEEDED', reasonCode: null, rows: [] },
+  ]));
+  results['mssql.preflight.identity'].rows = [{
+    engine: 'mssql',
+    engine_version: '16.0.4265.3',
+    engine_edition: 'Developer Edition (64-bit)',
+    database_name: captured.database,
+    container_name: null,
+    compatibility_level: 160,
+  }];
+  results['mssql.structure.schemas'].rows = captured.schemaRows;
+  const resultSets = {
+    schemaVersion: 'chimpmaera.db/runtime-query-results/v1',
+    engine: 'mssql',
+    runtimeValidated: true,
+    results,
+  };
+
+  assert.throws(
+    () => buildPreflightEvidence({ manifest, sqlByQueryId, resultSets, profileContext }),
+    /DB_QUERY_RESULT_SCOPE_INVALID/,
+  );
+
+  const schemaQuery = manifest.queries.find((query) => query.id === 'mssql.structure.schemas');
+  const normalized = normalizeMssqlRuntimeScopeResult({
+    profile,
+    query: schemaQuery,
+    result: resultSets.results[schemaQuery.id],
+  });
+  assert.deepEqual(normalized, normalizeMssqlRuntimeScopeResult({
+    profile,
+    query: schemaQuery,
+    result: resultSets.results[schemaQuery.id],
+  }));
+  const repairedResultSets = structuredClone(resultSets);
+  repairedResultSets.results[schemaQuery.id] = normalized;
+  const repaired = buildPreflightEvidence({ manifest, sqlByQueryId, resultSets: repairedResultSets, profileContext });
+  assert.deepEqual(
+    repaired.extracts.find((entry) => entry.queryId === schemaQuery.id).rows.map((row) => row.schema_name),
+    ['HumanResources', 'dbo'],
+  );
+
+  const driftedResultSets = structuredClone(resultSets);
+  driftedResultSets.results[schemaQuery.id] = normalizeMssqlRuntimeScopeResult({
+    profile,
+    query: schemaQuery,
+    result: {
+      ...resultSets.results[schemaQuery.id],
+      rows: [...captured.schemaRows, captured.genuinelyOutOfScopeRow],
+    },
+  });
+  assert.throws(
+    () => buildPreflightEvidence({ manifest, sqlByQueryId, resultSets: driftedResultSets, profileContext }),
+    /DB_QUERY_RESULT_SCOPE_INVALID/,
+  );
+
+  const explicitlyDeclared = structuredClone(profile);
+  explicitlyDeclared.scope.schemas = captured.capturedExpandedSchemas;
+  assert.deepEqual(
+    normalizeMssqlRuntimeScopeResult({
+      profile: explicitlyDeclared,
+      query: schemaQuery,
+      result: resultSets.results[schemaQuery.id],
+    }).rows,
+    captured.schemaRows,
+  );
 });
 
 test('column ground truth preserves types, defaults and native generated-column evidence', async () => {
