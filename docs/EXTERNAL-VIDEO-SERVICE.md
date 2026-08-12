@@ -38,7 +38,7 @@ The separated artifact for this increment is:
 
 - `chimpmaera-video-reference-2026.08.02-v2.tar.gz`
 - SHA-256: `6aed9a5ded7341ea636c3de9f2bb99115501211024a7d51cb077edb1a33a6919`
-- Sidecar SHA-256: `294110c4f988a762773084a900bf7e3f4044322a8b36040b48d80e100bbe9404`
+- Sidecar SHA-256: `33f36067e322080af3e41aa64236799caf74532b41d80d4aca85cb435598f7a5`
 
 Clean-room evidence for the artifact before pruning:
 

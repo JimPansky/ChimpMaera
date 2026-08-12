@@ -15,6 +15,39 @@ Install Docker Engine with Docker Compose v2 and the local command-line tools
 `jq`, `curl`, OpenSSL and `sha256sum`. The demo targets Linux x86_64 and uses
 only loopback service bindings.
 
+## Get the source
+
+### Verified Latest release archive
+
+The current Latest release has a release-bound archive and SHA-256 sidecar.
+Download both exact public assets and verify the sidecar before extraction:
+
+```sh
+release=v0.2.0-poc.20260814.1
+archive=cm-product-increment-rc-20260814-video-separation.tar.gz
+base=https://github.com/JimPansky/ChimpMaera/releases/download/$release
+curl -fLO "$base/$archive"
+curl -fLO "$base/$archive.sha256"
+sha256sum -c "$archive.sha256"
+tar -xzf "$archive"
+cd cm-product-increment-rc-20260814-video-separation
+```
+
+The sidecar owns the expected digest; do not substitute a checksum copied from
+unverified prose. Check [Latest](https://github.com/JimPansky/ChimpMaera/releases/latest)
+before using these release-bound names.
+
+### Contributor checkout
+
+For development against public `main`, keep that source identity distinct from
+released evidence:
+
+```sh
+git clone https://github.com/JimPansky/ChimpMaera.git
+cd ChimpMaera
+git switch main
+```
+
 ## Verify the source candidate
 
 With Node.js 24 and npm 11, dependencies can be prepared from a populated
@@ -66,4 +99,4 @@ or filesystem deletion commands.
 
 Cleanup is not provider Rollback or authority Revoke. The distinction is
 defined by
-[CM-CAN-13](CANON.md#cm-can-13--revocation-rollback-and-cleanup-are-distinct).
+[CM-CAN-13](CANON.md).

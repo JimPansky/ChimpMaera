@@ -624,7 +624,7 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "b07567530f420318fb5b93841be8dfbc84c50499889a99e9cbccf504a0dfe3e0"
+          "sha256": "468913e32cd80ef50b08f80e52803cad791ace57fb3dfcf00043118900d04c73"
         },
         {
           "path": "scripts/build-public-release.sh",
@@ -634,7 +634,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "5a7056431bbc1684edb0bb229578463271a411c86f5ea79ff8af4ac7a86e3ed8"
+          "sha256": "ee480692a3998dc1b4143d642848b2f086fede55cd91396771123b5827b633bc"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -1029,7 +1029,7 @@
         {
           "path": "docs/EXTERNAL-VIDEO-SERVICE.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "594de279cf57bf476bcfa92ffc15eb69aaf8c67fd67faacd703ff2beae6d9580"
+          "sha256": "f549703621ad6b8554d9712dd7f8d304a7883b8652f8ab5c6c57c714abab6957"
         }
       ],
       "ownedTests": [

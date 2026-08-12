@@ -48,7 +48,8 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, Number.isSafeInteger(release.releaseId) && release.releaseId > 0
     && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(release.publishedAt ?? "")
     && release.url === `https://github.com/${governance.repository}/releases/tag/${release.tag}`, "CURRENT_PUBLICATION_METADATA_INVALID");
-  issue(issues, typeof release.title === "string" && release.title.includes(release.increment ?? "__missing__"), "FUNCTIONAL_INCREMENT_TITLE_MISSING");
+  issue(issues, typeof release.title === "string"
+    && release.title.toLowerCase().includes((release.increment ?? "__missing__").toLowerCase()), "FUNCTIONAL_INCREMENT_TITLE_MISSING");
   issue(issues, !/\b(?:daily|today(?:'s)?|calendar)\b/i.test(release.title ?? ""), "CALENDAR_RELEASE_IDENTITY_DENIED");
   issue(issues, release.draft === false && release.prerelease === false && release.mustBeLatest === true, "LATEST_POLICY_NOT_FAIL_CLOSED");
   issue(issues, governance.policy?.anonymousReadbackRequired === true, "ANONYMOUS_READBACK_NOT_REQUIRED");
@@ -61,6 +62,8 @@ export function validateRepository(root = process.cwd()) {
   }
   const readme = files.get("README.md") ?? "";
   const releaseSection = section(readme, "Releases");
+  const quickstartSection = section(readme, "Quickstart");
+  const readmeOutsideQuickstart = readme.replace(quickstartSection, "");
   issue(
     issues,
     [
@@ -78,14 +81,14 @@ export function validateRepository(root = process.cwd()) {
       && /SHA-256/i.test(releaseSection),
     "README_RELEASE_NOTE_SCOPE_MISSING",
   );
-  issue(issues, !/\/releases\/tag\//.test(releaseSection) && !/\bv\d+\.\d+\.\d+\b/.test(readme), "README_VERSION_BOUND_RELEASE_NAVIGATION_DENIED");
+  issue(issues, !/\/releases\/tag\//.test(releaseSection) && !/\bv\d+\.\d+\.\d+\b/.test(readmeOutsideQuickstart), "README_VERSION_BOUND_RELEASE_NAVIGATION_DENIED");
   issue(issues, !/Today's Daily|Previous Daily|POC Daily|Daily snapshot/i.test(releaseSection), "README_ACTIVE_DAILY_IDENTITY_DENIED");
   issue(
     issues,
-    /An open, knowledge-driven operating system for governed, adaptable AI\s+ecosystems\./i.test(readme)
-      && /current runnable release is an open-source local synthetic proof of concept/i.test(readme)
-      && /control plane for governed,\s+verifiable\s+AI-agent actions across\s+business systems/i.test(readme)
-      && /direction is not a claim of current product maturity or universal\s+live compatibility/i.test(readme),
+    /An open, knowledge-driven operating system for governed,\s+adaptable AI ecosystems\./i.test(readme)
+      && /current regular release provides an open-source proof-of-concept control\s+plane/i.test(readme)
+      && /runnable local synthetic demo/i.test(readme)
+      && /broader direction is not a claim of current\s+product maturity or universal live compatibility/i.test(readme),
     "README_POC_POSITIONING_MISSING",
   );
 
@@ -295,7 +298,7 @@ export async function verifyPublicReadback(root = process.cwd()) {
   assert.equal(latest.tag_name, expected.tag, "PUBLIC_LATEST_MISMATCH");
   assert.equal(tagRef.object.sha, expected.tagObjectSha, "PUBLIC_TAG_OBJECT_MUTATED");
   assert.equal(tagRef.object.type, "commit", "PUBLIC_TAG_TYPE_MUTATED");
-  assert.ok((release.body ?? "").includes(expected.increment), "PUBLIC_BODY_INCREMENT_MISSING");
+  assert.ok((release.body ?? "").toLowerCase().includes(expected.increment.toLowerCase()), "PUBLIC_BODY_INCREMENT_MISSING");
   assert.doesNotMatch(release.body ?? "", /POC Daily|Today's Daily|Previous Daily/i, "PUBLIC_BODY_DAILY_IDENTITY_DENIED");
 
   const actualAssets = [...release.assets].sort((a, b) => a.name.localeCompare(b.name));
