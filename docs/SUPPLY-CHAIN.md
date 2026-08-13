@@ -7,17 +7,16 @@ declarations:
 npm run supply-chain:verify
 ```
 
-The BI-001 foundation has a separate complete local-input lock and focused gate:
+The former embedded BI Docker foundation has been replaced by an external
+service boundary. Validate the CM-side adapter with:
 
 ```sh
-npm run bi-foundation:test
+npm run external-bi-service:test
 ```
 
-Its sole base is the same digest-pinned Node 24.14.1 declaration already used by
-the repository. The lock binds all Compose, lifecycle, configuration, service,
-Dockerfile and verifier bytes. This proves checked-in declaration consistency,
-not registry signatures, current vulnerability status, SBOM completeness or
-reproducible construction.
+The standalone runtime is released and operated from
+`JimPansky/Superset_BI_Agent`; CM does not carry its Dockerfiles, Compose files,
+volumes or secrets.
 
 It compares the versioned artifact lock with Dockerfile and Compose image
 references, requires npm lock integrity fields, requires full commit SHAs for

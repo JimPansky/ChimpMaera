@@ -8,4 +8,4 @@ cm_bd_require_demo
 cm_bd_root_sql "DROP USER IF EXISTS 'cm_discovery_s2'@'%'; FLUSH PRIVILEGES;"
 rm -rf -- "$cm_bd_s2_state/latest"
 rm -- "$cm_bd_s2_state/discovery-s2-password" "$cm_bd_s2_marker"
-printf 'BI-DISCOVERY-S2 marker-owned profiling principal and artifacts removed; ERP and Superset state preserved.\n'
+printf 'BI-DISCOVERY-S2 marker-owned profiling principal and artifacts removed; ERP and external BI state preserved.\n'

@@ -113,6 +113,10 @@ Status labels used here:
   validates a closed public-synthetic contract and simulated receipts. It does
   not independently prove formula/result bytes, run a query engine or dashboard,
   contact a provider, or grant authority.
+- **Released contract / optional external subsystem:** [External BI service](EXTERNAL-BI-SERVICE.md)
+  documents how CM points at a separately deployed
+  `JimPansky/Superset_BI_Agent` Docker service. CM does not vendor, start or own
+  that BI runtime.
 - **Planned:** generic live connectors, production reversible-write onboarding,
   executable BI packs/runtimes and broader resource-plane profiles.
 
@@ -129,6 +133,7 @@ Status labels used here:
 | Power Platform five-read connector | **Released / external evidence required** | Five closed `cm.discovery.read` operations; no import, live Gateway/tenant, DLP or certification proof; `cm.operator.read` is future separate admin scope |
 | Extension assurance profiles | **Released / locally validated** | Closed synthetic contract and eight hard-fail gates; no third-party scan, badge, acceptance, activation, authority, certification or production proof |
 | Minimized agent-work event contract | **Released / locally validated** | Closed synthetic consent/retention/deletion record only; no collection, telemetry, training, ingestion or production proof |
+| External Superset_BI_Agent service boundary | **Released contract / optional external subsystem** | CM-side configuration and readback contract only; BI runtime remains independently released and operated |
 | Arbitrary-system onboarding and writes | **Planned** | Blueprint only beyond the bundled synthetic path |
 | Knowledge-driven Operating System | **Current product category; broad live realization planned** | Released local-synthetic foundation only; arbitrary live adaptation and production maturity remain unproven |
 

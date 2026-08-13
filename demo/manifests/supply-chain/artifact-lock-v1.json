@@ -8,7 +8,6 @@
       "reference": "node:24.14.1-bookworm-slim@sha256:e484ae3f1e3c378021c967fd42254f343c302a9263e412280eac32bf5bca7008",
       "locations": [
         { "path": "demo/chimpmaera.Dockerfile", "kind": "FROM", "occurrences": 2 },
-        { "path": "demo/bi-foundation/service.Dockerfile", "kind": "FROM", "occurrences": 1 },
         { "path": "demo/openclaw-agent/gateway.Dockerfile", "kind": "FROM", "occurrences": 1 },
         { "path": "demo/builder-agent/gateway.Dockerfile", "kind": "FROM", "occurrences": 1 },
         { "path": "demo/model-access-broker/broker.Dockerfile", "kind": "FROM", "occurrences": 1 },
@@ -71,11 +70,6 @@
     }
   ],
   "localBuildTags": [
-    {
-      "reference": "chimpmaera/bi001-foundation:local",
-      "composePath": "demo/bi-foundation/compose.yaml",
-      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
-    },
     {
       "reference": "chimpmaera/bld001-builder-agent:local",
       "composePath": "demo/builder-agent/compose.yaml",
@@ -161,13 +155,11 @@
     "manifestPath": "release/public-files.manifest",
     "requiredPaths": [
       "demo/builder-agent/compose.yaml",
-      "demo/bi-foundation/compose.yaml",
-      "demo/manifests/supply-chain/bi-foundation-lock-v1.json",
       "demo/builder-agent/builder-core.mjs",
       "demo/builder-agent/runtime-contract-second-system-v1.json",
       "demo/builder-agent/runtime-contract-v1.json",
       "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
-      "docs/BI-FOUNDATION-OPERATOR-GUIDE.md",
+      "docs/EXTERNAL-BI-SERVICE.md",
       "docs/BUILDER-CONFIGURATION-DEFAULTS.md",
       "docs/SYSTEM-ADVISOR-GUIDE.md",
       "examples/builder-agent/contribution-bundle-v1.json",
@@ -187,7 +179,6 @@
       "packages/contracts/src/skill-admission.ts",
       "packages/contracts/src/policy-evaluator.ts",
       "scripts/verify-supply-chain.mjs",
-      "scripts/verify-bi-foundation.mjs",
       "tests/demo-approval-workbench.test.mjs",
       "tests/builder-agent-runtime.test.mjs",
       "tests/builder-contribution-bundle.test.ts",
@@ -195,7 +186,7 @@
       "tests/demo-paperless-ngx-zoo-adapter.test.mjs",
       "tests/demo-policy-evaluator.test.mjs",
       "tests/demo-policy-generation-fence.test.mjs",
-      "tests/bi-foundation.test.mjs",
+      "tests/external-bi-service.test.ts",
       "tests/managed-skill-lifecycle-runtime.test.mjs",
       "tests/skill-admission.test.ts",
       "tests/supply-chain-verifier.test.mjs"
