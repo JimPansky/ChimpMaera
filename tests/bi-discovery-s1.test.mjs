@@ -91,13 +91,15 @@ test('artifact verification rejects checksum path traversal and manifest rebindi
 
 test('lifecycle is explicit, marker-scoped and gives Superset no MariaDB route', async ()=>{
   const config=JSON.parse(await readFile('demo/bi-discovery/config.example.json','utf8')); assert.equal(config.enabled,false); assert.equal(config.supersetDirectSourceAccess,false);
-  const setup=await readFile('demo/bi-discovery/setup.sh','utf8'),lib=await readFile('demo/bi-discovery/lib.sh','utf8'),reset=await readFile('demo/bi-discovery/reset.sh','utf8'),supersetCompose=await readFile('demo/bi-superset/compose.yaml','utf8');
+  const setup=await readFile('demo/bi-discovery/setup.sh','utf8'),lib=await readFile('demo/bi-discovery/lib.sh','utf8'),external=await readFile('docs/EXTERNAL-BI-SERVICE.md','utf8');
   assert.match(setup,/cm_bd_provision_principal/); assert.doesNotMatch(setup,/root_sql.*IDENTIFIED BY/); assert.match(lib,/GRANT EVENT, REFERENCES, SHOW VIEW, TRIGGER/); assert.doesNotMatch(lib,/GRANT SELECT|GRANT ALL|GRANT EXECUTE/);
-  assert.match(reset,/ambiguous Superset projection ownership/); assert.match(reset,/DROP USER IF EXISTS/); assert.match(reset,/tampered Superset projection denied/); assert.doesNotMatch(supersetCompose,/doli_db_net|doli-db|dolidb|MARIADB/);
+  assert.match(external,/does not vendor/); assert.match(external,/does not call[\s\S]{0,80}external analyze, publish or internal materialization\s+routes/); assert.doesNotMatch(external,/doli_db_net|doli-db|dolidb|MARIADB/);
 });
 
-test('Superset bootstrap owns exactly three discovery datasets and preserves M0 default path', async ()=>{
-  const bootstrap=await readFile('demo/bi-superset/runtime/bootstrap.py','utf8'),readiness=await readFile('demo/bi-superset/runtime/readiness.py','utf8');
-  for (const table of ['cm_discovery_inventory','cm_discovery_relationships','cm_discovery_coverage']) { assert.ok(bootstrap.includes(table)); assert.ok(readiness.includes(table)); }
-  assert.match(bootstrap,/DISCOVERY_DATASETS = \[/); assert.match(bootstrap,/no ERP row data, credentials or stored code/i); assert.match(readiness,/datasetCount.*discoveryProjectionCount/);
+test('CM discovery projections remain local artifacts and external BI publication is non-mutating', async (t)=>{
+  const temp=await mkdtemp(path.join(tmpdir(),'cm-bi-discovery-publish-')); t.after(()=>rm(temp,{recursive:true,force:true}));
+  assert.equal(scan(temp).status,0);
+  const result=spawnSync(process.execPath,['scripts/publish-bi-discovery-superset.mjs','--pack',temp],{encoding:'utf8',timeout:30_000});
+  assert.equal(result.status,0,result.stderr);
+  assert.match(result.stdout,/CM no longer owns a Superset runtime/);
 });

@@ -38,7 +38,7 @@ process that can modify memory after validation or a real provider transport.
 
 ## Verify and roll back
 
-Run `npm run crm-read:test`, `npm run bi-foundation:test`, and the repository
+Run `npm run crm-read:test`, `npm run external-bi-service:test`, and the repository
 integrity/release gates required by the delivery. Evidence is bound to file
 digests and the containing DCO-signed commit; it does not predeclare a future
 SHA.

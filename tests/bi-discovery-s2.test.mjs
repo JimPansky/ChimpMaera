@@ -20,12 +20,11 @@ test('persisted S2 knowledge pack is provenance-bound and row-sample free', asyn
   assert.doesNotMatch(await readFile('knowledge/bi-discovery/dolibarr-22.0.3-mariadb-s2/normalized-profile.json', 'utf8'), /llx_|dolidb|SELECT |row_sample/i);
 });
 
-test('S2 Superset bootstrap exposes one aggregate dataset and no Dolibarr source route', async () => {
-  const bootstrap = await readFile('demo/bi-superset/runtime/bootstrap.py', 'utf8');
-  const readiness = await readFile('demo/bi-superset/runtime/readiness.py', 'utf8');
-  assert.match(bootstrap, /cm_discovery_s2_sales_profile/);
-  assert.match(bootstrap, /ChimpMaera Dolibarr sales profile starter/);
-  assert.match(bootstrap, /discovery-s2-projections/);
-  assert.match(readiness, /s2DiscoveryProjectionCount/);
-  assert.doesNotMatch(await readFile('demo/bi-superset/compose.yaml', 'utf8'), /doli_db_net|doli-db|dolidb|MARIADB/);
+test('S2 aggregate projection remains source-route free and external BI publication is non-mutating', async () => {
+  const result = spawnSync(process.execPath, ['scripts/publish-bi-discovery-s2-superset.mjs', '--pack', 'knowledge/bi-discovery/dolibarr-22.0.3-mariadb-s2'], { encoding:'utf8', timeout:30_000 });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /CM no longer owns a Superset runtime/);
+  const external = await readFile('docs/EXTERNAL-BI-SERVICE.md', 'utf8');
+  assert.match(external, /Superset_BI_Agent/);
+  assert.doesNotMatch(external, /doli_db_net|doli-db|dolidb|MARIADB/);
 });

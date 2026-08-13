@@ -48,6 +48,13 @@ Success prints `READY_VERIFIED` and three loopback URLs. Keep the generated
 credentials local. The guided demo also exercises the deterministic Admin-AI
 preview path for permitted, denied and escalation outcomes.
 
+## Optional external BI service
+
+BI is no longer embedded in the CM demo stack. To use the standalone BI
+subsystem, run Superset_BI_Agent from its own release checkout, then point CM at
+its loopback URLs with `BI_AGENT_BASE_URL` and `SUPERSET_BASE_URL`. See
+[External BI service contract](EXTERNAL-BI-SERVICE.md).
+
 ## Stop and remove owned state
 
 ```sh

@@ -51,7 +51,7 @@ Run focused verification with:
 npm ci --ignore-scripts --no-audit --no-fund
 npm run erp-read:test
 npm run crm-read:test
-npm run bi-foundation:test
+npm run external-bi-service:test
 npm run lint
 npm run release-governance:verify
 npm run supply-chain:verify
