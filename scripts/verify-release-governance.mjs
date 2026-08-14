@@ -191,7 +191,7 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /CM-REL-014/.test(capabilityRow("Extension assurance profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-014");
   issue(issues, /CM-REL-015/.test(capabilityRow("Minimized agent-work event contract")), "CAPABILITY_MAPPING_INVALID:CM-REL-015");
   issue(issues, /CM-REL-005/.test(capabilityRow("Update, migration, and Doctor contracts")), "CAPABILITY_MAPPING_INVALID:CM-REL-005");
-  issue(issues, /CM-REL-016/.test(capabilityRow("VIDEO-M2 template authoring")), "CAPABILITY_MAPPING_INVALID:CM-REL-016");
+  issue(issues, /CM-REL-016/.test(capabilityRow("External Video Service boundary")), "CAPABILITY_MAPPING_INVALID:CM-REL-016");
   issue(issues, /CM-REL-017/.test(capabilityRow("ASF-INTAKE-2 signal release intake")), "CAPABILITY_MAPPING_INVALID:CM-REL-017");
   issue(issues, /CM-REL-018/.test(capabilityRow("INT-PROFILE-001 integration profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-018");
 
@@ -203,8 +203,8 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /RELEASED LOCAL-SYNTHETIC AUTHORING\/VALIDATION CONTRACT/.test(connectionGuide) && /PLANNED LIVE REALIZATION/.test(connectionGuide), "CONNECTION_MATURITY_BOUNDARY_MISSING");
   issue(issues, /five-operation Power\s+Platform read connector bind exactly `cm\.discovery\.read`/.test(connectionGuide) && /`cm\.operator\.read` is reserved for a future separate administrative-read\s+Profile/.test(connectionGuide), "CONNECTION_AZURE_SCOPE_BOUNDARY_MISSING");
 
-  const processHardening = read(root, "tools/video-production-reference/docs/PROCESS-HARDENING-EVIDENCE.md");
-  issue(issues, /Historical pre-approval snapshot/.test(processHardening) && /No later canonical\s+exact-revision production approval outcome is recorded/.test(processHardening), "PROCESS_HARDENING_HISTORY_STATUS_MISSING");
+  const externalVideo = read(root, "docs/EXTERNAL-VIDEO-SERVICE.md");
+  issue(issues, /SHA-256-pinned external artifact|SHA-256-pinned artifact/.test(externalVideo) && /does not claim video publication/.test(externalVideo), "EXTERNAL_VIDEO_BOUNDARY_MISSING");
 
   const limitations = files.get("docs/KNOWN-LIMITATIONS.md") ?? "";
   issue(issues, limitations.includes(release.tag), "LIMITATIONS_CURRENT_RELEASE_MISSING");
@@ -222,7 +222,7 @@ export function validateRepository(root = process.cwd()) {
   const publicManifest = read(root, "release/public-files.manifest");
   const publicPaths = new Set(publicManifest.trim().split("\n").map((line) => line.split("\t")[0]));
   issue(issues, Array.isArray(governance.claimEvidence) && governance.claimEvidence.length > 0, "CLAIM_EVIDENCE_MAPPING_MISSING");
-  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "AWI-03 Universal Knowledge Envelope", "VIDEO-M2 Template Authoring", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles", "VOICE-M0 Local PTT"]);
+  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "AWI-03 Universal Knowledge Envelope", "External Video Service", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles", "VOICE-M0 Local PTT"]);
   const observedComponents = new Set();
   for (const mapping of governance.claimEvidence ?? []) {
     issue(issues, /^CM-REL-\d{3}$/.test(mapping.claimId ?? ""), `CLAIM_ID_INVALID:${mapping.claimId ?? "missing"}`);

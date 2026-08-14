@@ -134,8 +134,6 @@ content_quality_patterns["unsuitable_public_invitation"] = re.compile(
 disallowed_exact = {
     ".github/funding.yml",
     "docs/canon.de.md",
-    "tools/video-production-reference/dockerfile.gpu",
-    "tools/video-production-reference/compose.gpu.yaml",
 }
 
 for line_number, raw in enumerate(manifest.read_text("utf-8").splitlines(), 1):
@@ -191,7 +189,7 @@ for line_number, raw in enumerate(manifest.read_text("utf-8").splitlines(), 1):
         raise SystemExit(f"PRIVILEGED_SOURCE_MODE:{line_number}")
     total_bytes += metadata.st_size
 
-if count != 735:
+if count != 672:
     raise SystemExit("MANIFEST_FILE_COUNT")
 if total_bytes > 100 * 1024 * 1024:
     raise SystemExit("MANIFEST_BYTE_LIMIT")

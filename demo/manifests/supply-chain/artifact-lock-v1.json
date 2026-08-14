@@ -51,14 +51,6 @@
         { "path": "demo/compose.yaml", "kind": "IMAGE", "occurrences": 1 }
       ],
       "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
-    },
-    {
-      "artifactId": "video-reference-debian",
-      "reference": "debian:bookworm-slim@sha256:63a496b5d3b99214b39f5ed70eb71a61e590a77979c79cbee4faf991f8c0783e",
-      "locations": [
-        { "path": "tools/video-production-reference/Dockerfile", "kind": "FROM", "occurrences": 1 }
-      ],
-      "verification": "DECLARATION_PINNED_SIGNATURE_NOT_VERIFIED"
     }
   ],
   "runtimeResolvedImages": [
@@ -119,11 +111,6 @@
       "reference": "chimpmaera/aas037-skill-manager:local",
       "composePath": "demo/managed-skill-lifecycle/compose.yaml",
       "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
-    },
-    {
-      "reference": "chimpmaera/video-production-reference:2026-08-02-v2",
-      "composePath": "tools/video-production-reference/compose.yaml",
-      "requirement": "LOCAL_BUILD_NOT_REGISTRY_INPUT"
     }
   ],
   "npm": {
@@ -133,10 +120,7 @@
   },
   "ci": {
     "workflowPath": ".github/workflows/ci.yml",
-    "additionalWorkflowPaths": [
-      ".github/workflows/video-deep-audit.yml"
-    ],
-    "buildkitImage": "moby/buildkit@sha256:2f5adac4ecd194d9f8c10b7b5d7bceb5186853db1b26e5abd3a657af0b7e26ec",
+    "additionalWorkflowPaths": [],
     "actionsRequireFullCommitSha": true,
     "dockerCompose": {
       "version": "v2.40.3",
@@ -144,7 +128,8 @@
       "url": "https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-x86_64",
       "sha256": "dba9d98e1ba5bfe11d88c99b9bd32fc4a0624a30fafe68eea34d61a3e42fd372",
       "verification": "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
-    }
+    },
+    "externalVideoServiceScript": "external-video-service:test"
   },
   "runtimeClosure": {
     "directory": "demo/runtime",

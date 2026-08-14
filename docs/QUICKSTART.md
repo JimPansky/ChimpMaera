@@ -26,11 +26,11 @@ npm run lint
 npm test
 ```
 
-The video reference has a lightweight synthetic smoke that does not build a
+The external video boundary has a lightweight contract check that does not build a
 GPU image or download a model:
 
 ```sh
-npm run video:smoke
+npm run external-video-service:test
 ```
 
 ## Run the playable demo

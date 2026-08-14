@@ -35,10 +35,12 @@ The installer creates random local secrets as Docker Compose file-backed
 secrets. No credential is bundled in the release. The installer journal and
 semantic readback live only in generated local state directories.
 
-The optional `tools/video-production-reference/` component is independent of
-the CRM/ERP runtime. Its default path validates versioned jobs and can perform
-a synthetic CPU-only smoke without models, GPU activation or public side
-effects.
+The optional video-production reference is separated from the CM source tree as
+a SHA-256-pinned external artifact. CM validates only the selected artifact
+URL, version, contract and digest through the
+[External Video Service Boundary](EXTERNAL-VIDEO-SERVICE.md). CM does not own
+video Docker, job assets, render outputs, upload routes, model weights, GPU
+activation or public side effects.
 
 The `SAFE_GUIDED` effect path follows the Canon's separation: the seed path forms typed
 requests without provider credentials; the ChimpMaera runtime gate performs

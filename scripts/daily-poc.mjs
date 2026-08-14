@@ -525,7 +525,7 @@ function buildCoreArtifacts(manifest, manifestDigest, facts, previous, videoStat
     candidateVersion: manifest.targetVersion,
     sourceManifestSha256: manifestDigest,
     targetContract: manifest.video.rendererContract,
-    adapter: "tools/video-production-reference/bin/cm-video",
+    adapter: "external cm.video/v1 artifact",
     renderDefault: false,
     publicActions: "forbidden",
     status: videoStatus,
@@ -627,7 +627,7 @@ function videoPreflight(manifest, renderRequested, approval, rendererPath) {
   const issues = [];
   if (approval !== `LOCAL_RENDER:${manifest.targetVersion}`) issues.push("LOCAL_VIDEO_RENDER_APPROVAL_MISSING");
   if (!assetsReady) issues.push("VIDEO_RENDERER_PREREQUISITES_UNSATISFIED");
-  if (!existsSync(rendererPath ?? join(REPO_ROOT, "tools", "video-production-reference", "bin", "cm-video"))) {
+  if (!rendererPath || !existsSync(rendererPath)) {
     issues.push("VIDEO_RENDERER_UNAVAILABLE");
   }
   return { status: issues.length ? "BLOCKED" : "READY_FOR_CLOSED_ADAPTER", issues };

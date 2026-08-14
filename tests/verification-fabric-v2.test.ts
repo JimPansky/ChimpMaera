@@ -86,11 +86,11 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   }
 });
 
-test("media audience-learning changes select the bounded video owner", () => {
-  const result = plan(["tools/video-production-reference/schemas/learning-record.schema.json"]);
+test("external video service changes select the bounded video owner", () => {
+  const result = plan(["packages/contracts/src/external-video-service.ts"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
   assert.deepEqual(result.selectedNodes, ["know-media-m1-audience-learning-v1"]);
-  assert.deepEqual(result.selectedTests, ["npm run video:test"]);
+  assert.deepEqual(result.selectedTests, ["npm run external-video-service:test"]);
 });
 
 test("learning-routing changes select the complete foundation and downstream integrity gates", () => {

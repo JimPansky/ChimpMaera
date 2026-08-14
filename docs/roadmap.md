@@ -30,7 +30,7 @@ own shipped scope.
   and its six-axis lock, canonical digest and fail-closed preview gates. Issue
   [#59](https://github.com/JimPansky/ChimpMaera/issues/59) retains delivery
   history, while release governance owns shipped status.
-- Reproduce the released [VIDEO-M2 template and segment authoring guide](../tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md)
+- Reproduce the separated [External Video Service Boundary](EXTERNAL-VIDEO-SERVICE.md)
   and its deterministic local reference-closure checks. Issue
   [#64](https://github.com/JimPansky/ChimpMaera/issues/64) retains delivery
   history, while release governance owns shipped status.

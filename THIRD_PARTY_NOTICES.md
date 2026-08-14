@@ -34,8 +34,6 @@ Neither the proprietary SQL Server runtime nor the sample database is bundled
 or redistributed with ChimpMaera; its separate provenance and non-distribution
 boundary are recorded under `verification/db-analyzer/`.
 
-The optional voice sample and logo in
-`tools/video-production-reference/assets/reference/` are preserved under the
-conservative boundary in `MEDIA-LICENSE.md`. Apache-2.0 grants no trademark,
-word-mark, logo or endorsement rights. See the tool's `ASSET-USAGE.md` for the
-asset boundary.
+Separated external video artifacts carry their own media-license boundary.
+Apache-2.0 grants no trademark, word-mark, logo, endorsement or broader media
+grant for those assets.
