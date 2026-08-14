@@ -166,8 +166,8 @@ Videos illustrate the approach; release evidence remains in the repository
 and release pages.
 
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference media follows
-[MEDIA-LICENSE.md](MEDIA-LICENSE.md); Apache-2.0 grants no trademark rights.
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). External media artifacts keep
+their own license boundary; Apache-2.0 grants no trademark rights.
 [CITATION.cff](CITATION.cff) provides citation metadata. Community conduct and
 the Developer Certificate of Origin are defined in
 [CONTRIBUTING.md](CONTRIBUTING.md).

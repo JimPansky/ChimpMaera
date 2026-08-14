@@ -4,8 +4,9 @@
 from one canonical manifest and a clean frozen Git source. It never publishes.
 The manifest is the only editorial source for release notes, demo instructions,
 claims, non-claims, the README pointer, evidence indexes and video inputs.
-Author reusable templates and release-specific segments through the
-[template and segment authoring guide](../tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md).
+Author reusable templates and release-specific segments through the separated
+video reference artifact described in the
+[External Video Service Boundary](EXTERNAL-VIDEO-SERVICE.md).
 
 ## Version and title policy
 
@@ -96,12 +97,12 @@ For a blocked run:
 
 ## Video boundary
 
-The generated `video-adapter.json` targets the existing `cm.video/v1` contract
-at `tools/video-production-reference/`. Render defaults to off. `--render-video`
-requires all assets to be accepted and hash-locked, the renderer to exist, and
-the exact `LOCAL_RENDER:<candidate-version>` binding. Missing prerequisites
-produce `BLOCKED`; no silent renderer or asset fallback exists. The adapter has
-no upload or publication capability.
+The generated `video-adapter.json` targets the external `cm.video/v1` artifact
+contract. Render defaults to off. `--render-video` requires accepted and
+hash-locked assets, an explicitly configured external renderer path, and the
+exact `LOCAL_RENDER:<candidate-version>` binding. Missing prerequisites produce
+`BLOCKED`; no silent renderer or asset fallback exists. The adapter has no
+upload or publication capability.
 
 ## CI boundary
 

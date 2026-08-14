@@ -75,10 +75,10 @@ needs no runtime cleanup.
 not build a GPU image or download a model.
 
 ```sh
-npm run video:smoke
+npm run external-video-service:test
 ```
 
 **Expected result:** the synthetic reference validates publication-copy and
 scene/audio parity gates. It does not upload, publish, activate a watcher, or
 prove production video behavior. See the
-[video reference](../tools/video-production-reference/README.md) for scope.
+[External Video Service Boundary](EXTERNAL-VIDEO-SERVICE.md) for scope.

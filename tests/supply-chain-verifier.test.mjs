@@ -28,9 +28,7 @@ async function fixture() {
   const files = new Set([
     lockPath,
     "demo/chimpmaera.Dockerfile",
-    "tools/video-production-reference/Dockerfile",
     "demo/compose.yaml",
-    "tools/video-production-reference/compose.yaml",
     "demo/install.sh",
     "package.json",
     "package-lock.json",
@@ -80,7 +78,7 @@ test("real repository declarations produce a bounded PASS report", async () => {
     "OCI_DECLARATIONS_PINNED",
     "OPENCLAW_REFERENCE_ADAPTER_LOCK_VERIFIED",
     "NPM_LOCK_INTEGRITY_DECLARED",
-    "CI_ACTIONS_NPM_AND_COMPOSE_PINNED",
+    "CI_ACTIONS_NPM_COMPOSE_AND_EXTERNAL_VIDEO_BOUNDARY_PINNED",
     "RUNTIME_COPY_CLOSURE_VERIFIED",
     "PUBLIC_RELEASE_CRITICAL_CLOSURE_VERIFIED",
     "RUNTIME_POSTURE_AND_PAPERLESS_NON_CLAIM_VERIFIED",
@@ -137,6 +135,14 @@ test("mutable OCI, npm integrity, CI ref, runtime omission and release omission 
         `CM_COMPOSE_SHA256: ${"0".repeat(64)}`,
       ),
       /SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED/,
+    ],
+    [
+      ".github/workflows/ci.yml",
+      (source) => source.replace(
+        /npm run external-video-service:test/,
+        "npm run test",
+      ),
+      /SUPPLY_CHAIN_CI_EXTERNAL_VIDEO_BOUNDARY_INVALID_DENIED/,
     ],
     [
       "demo/chimpmaera.Dockerfile",

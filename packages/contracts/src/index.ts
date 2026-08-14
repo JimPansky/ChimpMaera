@@ -52,5 +52,6 @@ export * from "./erp-read-connector.js";
 export * from "./bi-semantic-reconciliation.js";
 export * from "./bi-dashboard.js";
 export * from "./external-bi-service.js";
+export * from "./external-video-service.js";
 export * from "./integration-profile.js";
 export * from "./voice-local-ptt.js";

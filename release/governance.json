@@ -81,212 +81,857 @@
     {
       "claimId": "CM-REL-001",
       "claim": "v0.2.0-poc.20260809.1 is the current regular Latest release.",
-      "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
+      "evidencePaths": [
+        "README.md",
+        "docs/RELEASE-GOVERNANCE.md",
+        "release/governance.json"
+      ],
+      "nonClaims": [
+        "A tag or draft alone is not public release evidence.",
+        "Calendar cadence does not determine release status."
+      ]
     },
     {
       "claimId": "CM-REL-002",
       "claim": "The increment contains governed validation for local synthetic company data.",
-      "evidencePaths": ["docs/COMPANY-DATA-VALIDATION.md", "docs/SECURITY-ASSURANCE.md", "docs/KNOWN-LIMITATIONS.md"],
-      "nonClaims": ["No production-data fitness is claimed.", "No universal ETL, MDM or system-of-record capability is claimed.", "No security certification is claimed."]
+      "evidencePaths": [
+        "docs/COMPANY-DATA-VALIDATION.md",
+        "docs/SECURITY-ASSURANCE.md",
+        "docs/KNOWN-LIMITATIONS.md"
+      ],
+      "nonClaims": [
+        "No production-data fitness is claimed.",
+        "No universal ETL, MDM or system-of-record capability is claimed.",
+        "No security certification is claimed."
+      ]
     },
     {
       "claimId": "CM-REL-003",
       "claim": "Published release assets are bound to an explicit manifest, byte sizes and SHA-256 digests.",
-      "evidencePaths": ["docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["Repository tests do not replace anonymous public asset readback.", "Release metadata edits do not authorize tag or asset replacement."]
+      "evidencePaths": [
+        "docs/RELEASE-GOVERNANCE.md",
+        "release/governance.json"
+      ],
+      "nonClaims": [
+        "Repository tests do not replace anonymous public asset readback.",
+        "Release metadata edits do not authorize tag or asset replacement."
+      ]
     },
     {
       "claimId": "CM-REL-010",
-      "claim": "The local video-production reference enforces governed audience copy across publication surfaces and requires content-driven Daily duration with exact scene/audio parity.",
-      "evidencePaths": ["tools/video-production-reference/README.md", "tools/video-production-reference/docs/ARCHITECTURE.md", "tools/video-production-reference/qa-gates.yaml", "tools/video-production-reference/tests/test_cm_video.py"],
-      "nonClaims": ["No upload, publication, watcher/worker activation or production video behavior is included.", "This is not a universal media studio and does not remove editorial review.", "VIDEO-M2 M0-M4 remain governed separately in issue #64."]
+      "claim": "The video-production reference is separated from CM as a hash-pinned external artifact; CM retains only artifact readback and non-authority boundaries.",
+      "evidencePaths": [
+        "docs/EXTERNAL-VIDEO-SERVICE.md",
+        "packages/contracts/src/external-video-service.ts",
+        "tests/external-video-service.test.ts"
+      ],
+      "nonClaims": [
+        "No embedded video Docker runtime, renderer, upload, publication, watcher/worker activation or production video behavior is included.",
+        "The external artifact is not a universal media studio and does not remove editorial review.",
+        "CM does not forward credentials or own video job/assets/output paths."
+      ]
     },
     {
       "claimId": "CM-REL-009",
       "claim": "The public first screen identifies the current local proof of concept, separates broader direction from shipped maturity, and routes readers to capabilities, evidence and limitations.",
-      "evidencePaths": ["README.md", "docs/README.md", "docs/DISCOVERABILITY-BASELINE.md", "docs/VISIBILITY-CHANNEL-MATRIX.md"],
-      "nonClaims": ["No search-ranking or adoption improvement is claimed.", "Knowledge-driven Operating System is the current product category; broad live-system realization remains direction, not current shipped maturity.", "Documentation does not prove production readiness or live-system compatibility."]
+      "evidencePaths": [
+        "README.md",
+        "docs/README.md",
+        "docs/DISCOVERABILITY-BASELINE.md",
+        "docs/VISIBILITY-CHANNEL-MATRIX.md"
+      ],
+      "nonClaims": [
+        "No search-ranking or adoption improvement is claimed.",
+        "Knowledge-driven Operating System is the current product category; broad live-system realization remains direction, not current shipped maturity.",
+        "Documentation does not prove production readiness or live-system compatibility."
+      ]
     },
     {
       "claimId": "CM-REL-004",
       "component": "Verification Fabric",
       "claim": "ChimpMaera ships digest-bound Verification Fabric contracts plus a Shadow-only Evidence-DAG impact planner that explains selected verification nodes while keeping the complete suite authoritative.",
       "userValue": "Maintainers get an auditable verification vocabulary and deterministic impact plan; uncertainty falls back to full validation instead of silently omitting checks.",
-      "includedBytes": ["packages/contracts/src/verification-fabric.ts", "packages/contracts/src/verification-fabric-v2.ts", "schemas/contracts/verification-fabric-bundle-v1.schema.json", "schemas/contracts/verification-evidence-dag-v2.schema.json", "schemas/contracts/verification-attestation-v2.schema.json", "tests/fixtures/verification-fabric/positive-bundle-v1.json", "tests/fixtures/verification-fabric/negative-matrix-v1.json", "verification/verification-dag-v2.json", "scripts/verification-plan.mjs", "scripts/verification-shadow.mjs"],
-      "functionalProof": {"testPaths": ["tests/verification-fabric.test.ts", "tests/verification-fabric-v2.test.ts"], "result": "PASS 16/16: v1 contract bundles and v2 Evidence-DAG plans verify; a real release-branch Shadow run executed the authoritative 304/304 comparator."},
-      "safetyProof": {"testPaths": ["tests/verification-fabric.test.ts", "tests/verification-fabric-v2.test.ts", "tests/fixtures/verification-fabric/negative-matrix-v1.json"], "result": "PASS 13/13 v2 selector/mutation probes plus v1 negatives: central, unmapped, unsafe, ambiguous, invalid, cyclic, drifting and selector-failure inputs over-select or FULL_FALLBACK."},
-      "evidencePaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md", "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"],
-      "nonClaims": ["Shadow-only local deterministic proof; activation progress is tracked in issue #34 and the evidence gate remains unmet. No authoritative incremental skipping, result reuse, latency SLO, production readiness, security certification or external authority is proven."],
-      "traceability": {"issues": [40, 69], "pullRequests": [70, 71], "sourceCommits": ["7f35f0033dfc6429ea7f8d2f67af16aeabcc0736", "b30411555e451d2b3040a2c5d635f23cdcc293b5"], "pdcaPaths": ["docs/development/vf-001-verification-fabric-contracts-pdca.md", "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/verification-fabric.ts",
+        "packages/contracts/src/verification-fabric-v2.ts",
+        "schemas/contracts/verification-fabric-bundle-v1.schema.json",
+        "schemas/contracts/verification-evidence-dag-v2.schema.json",
+        "schemas/contracts/verification-attestation-v2.schema.json",
+        "tests/fixtures/verification-fabric/positive-bundle-v1.json",
+        "tests/fixtures/verification-fabric/negative-matrix-v1.json",
+        "verification/verification-dag-v2.json",
+        "scripts/verification-plan.mjs",
+        "scripts/verification-shadow.mjs"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/verification-fabric.test.ts",
+          "tests/verification-fabric-v2.test.ts"
+        ],
+        "result": "PASS 16/16: v1 contract bundles and v2 Evidence-DAG plans verify; a real release-branch Shadow run executed the authoritative 304/304 comparator."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/verification-fabric.test.ts",
+          "tests/verification-fabric-v2.test.ts",
+          "tests/fixtures/verification-fabric/negative-matrix-v1.json"
+        ],
+        "result": "PASS 13/13 v2 selector/mutation probes plus v1 negatives: central, unmapped, unsafe, ambiguous, invalid, cyclic, drifting and selector-failure inputs over-select or FULL_FALLBACK."
+      },
+      "evidencePaths": [
+        "docs/development/vf-001-verification-fabric-contracts-pdca.md",
+        "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md",
+        "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+      ],
+      "nonClaims": [
+        "Shadow-only local deterministic proof; activation progress is tracked in issue #34 and the evidence gate remains unmet. No authoritative incremental skipping, result reuse, latency SLO, production readiness, security certification or external authority is proven."
+      ],
+      "traceability": {
+        "issues": [
+          40,
+          69
+        ],
+        "pullRequests": [
+          70,
+          71
+        ],
+        "sourceCommits": [
+          "7f35f0033dfc6429ea7f8d2f67af16aeabcc0736",
+          "b30411555e451d2b3040a2c5d635f23cdcc293b5"
+        ],
+        "pdcaPaths": [
+          "docs/development/vf-001-verification-fabric-contracts-pdca.md",
+          "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md",
+          "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-005",
       "component": "Update/Doctor",
       "claim": "ChimpMaera ships immutable six-axis update, migration and Doctor contracts plus read-only diagnostics that make compatibility and maintenance previews inspectable without granting execution authority.",
       "userValue": "Operators can verify exact Core, Pack, Adapter, Policy, Schema and Generation identities, compatibility, plans, reports and receipts before any state-changing maintenance is considered.",
-      "includedBytes": ["packages/contracts/src/update-doctor.ts", "packages/contracts/src/maintenance-contract-freeze.ts", "schemas/contracts/doctor-report-v1.schema.json", "schemas/contracts/update-lock-profile-v1.schema.json", "schemas/contracts/update-operation-contract-v1.schema.json", "schemas/contracts/maintenance-installation-lock-v1.schema.json", "schemas/contracts/maintenance-compatibility-profile-v1.schema.json", "schemas/contracts/maintenance-operation-contract-v1.schema.json", "schemas/contracts/maintenance-doctor-report-v1.schema.json", "tests/fixtures/update-doctor/positive-contract-bundle-v1.json", "tests/fixtures/update-doctor/negative-matrix-v1-v2.json", "tests/fixtures/update-doctor/positive-maintenance-contract-freeze-v1.json", "tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json"],
-      "functionalProof": {"testPaths": ["tests/update-doctor.test.ts", "tests/update-doctor-core.test.ts", "tests/update-doctor-compose-adapter.test.ts", "tests/maintenance-contract-freeze.test.ts"], "result": "PASS: legacy check-only diagnostics plus the additive 5/5 contract-freeze suite verify six explicit axes, closed schemas, exact bindings and 100/100 canonical reorderings."},
-      "safetyProof": {"testPaths": ["tests/update-doctor.test.ts", "tests/maintenance-contract-freeze.test.ts", "tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json"], "result": "PASS 10/10 additive negatives: unsupported versions, unknown fields, mutable targets, digest drift, hidden authority, unresolved compatibility, execution/mutation claims and disclosure channels deny deterministically."},
-      "evidencePaths": ["docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md", "docs/development/ud-001-update-doctor-contracts-pdca.md", "docs/development/ud-001-contract-freeze-20260804-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic contract proof only; no discovery, network or Docker access, update apply, repair, migration execution, owner-state mutation, deployment or production readiness is proven."],
-      "traceability": {"issues": [59], "pullRequests": [112, 113], "sourceCommits": ["6278650170661f1518fbe5fefa94dfe0f4364632", "cbc81c8da4cf2d995f386854e8def29dbad61c77"], "pdcaPaths": ["docs/development/ud-001-update-doctor-contracts-pdca.md", "docs/development/ud-001-contract-freeze-20260804-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/update-doctor.ts",
+        "packages/contracts/src/maintenance-contract-freeze.ts",
+        "schemas/contracts/doctor-report-v1.schema.json",
+        "schemas/contracts/update-lock-profile-v1.schema.json",
+        "schemas/contracts/update-operation-contract-v1.schema.json",
+        "schemas/contracts/maintenance-installation-lock-v1.schema.json",
+        "schemas/contracts/maintenance-compatibility-profile-v1.schema.json",
+        "schemas/contracts/maintenance-operation-contract-v1.schema.json",
+        "schemas/contracts/maintenance-doctor-report-v1.schema.json",
+        "tests/fixtures/update-doctor/positive-contract-bundle-v1.json",
+        "tests/fixtures/update-doctor/negative-matrix-v1-v2.json",
+        "tests/fixtures/update-doctor/positive-maintenance-contract-freeze-v1.json",
+        "tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/update-doctor.test.ts",
+          "tests/update-doctor-core.test.ts",
+          "tests/update-doctor-compose-adapter.test.ts",
+          "tests/maintenance-contract-freeze.test.ts"
+        ],
+        "result": "PASS: legacy check-only diagnostics plus the additive 5/5 contract-freeze suite verify six explicit axes, closed schemas, exact bindings and 100/100 canonical reorderings."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/update-doctor.test.ts",
+          "tests/maintenance-contract-freeze.test.ts",
+          "tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.json"
+        ],
+        "result": "PASS 10/10 additive negatives: unsupported versions, unknown fields, mutable targets, digest drift, hidden authority, unresolved compatibility, execution/mutation claims and disclosure channels deny deterministically."
+      },
+      "evidencePaths": [
+        "docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md",
+        "docs/development/ud-001-update-doctor-contracts-pdca.md",
+        "docs/development/ud-001-contract-freeze-20260804-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic contract proof only; no discovery, network or Docker access, update apply, repair, migration execution, owner-state mutation, deployment or production readiness is proven."
+      ],
+      "traceability": {
+        "issues": [
+          59
+        ],
+        "pullRequests": [
+          112,
+          113
+        ],
+        "sourceCommits": [
+          "6278650170661f1518fbe5fefa94dfe0f4364632",
+          "cbc81c8da4cf2d995f386854e8def29dbad61c77"
+        ],
+        "pdcaPaths": [
+          "docs/development/ud-001-update-doctor-contracts-pdca.md",
+          "docs/development/ud-001-contract-freeze-20260804-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-006",
       "component": "HMI/Harness Multitool",
       "claim": "ChimpMaera ships an authority-free HMI/Harness multitool for bounded generation, disclosure-safe discover/explain payloads and digest-bound contribution preparation that cannot publish or write externally.",
       "userValue": "Users can inspect supported operations, explanations and a canonical contribution preflight without the interface silently acquiring submission, publication or execution rights.",
-      "includedBytes": ["packages/contracts/src/hmi-core.ts", "packages/contracts/src/hmi-harness-adapter.ts", "packages/contracts/src/hmi-disclosure-safety.ts", "packages/contracts/src/hmi-discover-payload.ts", "packages/contracts/src/hmi-explain-payload.ts", "packages/contracts/src/hmi-contribute-preflight.ts", "schemas/contracts/hmi-generation-bundle-v1.schema.json", "schemas/contracts/hmi-discover-payload-v1.schema.json", "schemas/contracts/hmi-explain-payload-v1.schema.json", "schemas/contracts/hmi-contribute-preflight-v1.schema.json", "tests/fixtures/hmi/positive-generation-v1.json", "tests/fixtures/hmi/adapter-golden-v1.json", "tests/fixtures/hmi/positive-discover-payload-v1.json", "tests/fixtures/hmi/positive-explain-payload-v1.json", "tests/fixtures/hmi/positive-contribute-preflight-v1.json", "tests/fixtures/hmi/negative-matrix-v1.json"],
-      "functionalProof": {"testPaths": ["tests/hmi-core.test.ts", "tests/hmi-harness-adapter.test.ts", "tests/hmi-disclosure-safety.test.ts", "tests/hmi-discover-payload.test.ts", "tests/hmi-explain-payload.test.ts", "tests/hmi-contribute-preflight.test.ts", "tests/hmi-post-explain-consistency.test.ts", "tests/hmi-post-contribute-consistency.test.ts"], "result": "PASS 42/42: focused HMI suites include 7/7 contribution-preflight and 4/4 post-contribution cross-contract probes."},
-      "safetyProof": {"testPaths": ["tests/hmi-disclosure-safety.test.ts", "tests/hmi-contribute-preflight.test.ts", "tests/hmi-post-explain-consistency.test.ts", "tests/hmi-post-contribute-consistency.test.ts", "tests/fixtures/hmi/negative-matrix-v1.json"], "result": "PASS: stale bindings, invented provenance, selector/capability widening, authority fields and submission/publication effects deny deterministically."},
-      "evidencePaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md", "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md", "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md", "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"],
-      "nonClaims": ["Preparation/preflight over local deterministic synthetic data only; no issue submission, publication, external write, live harness, route, credential, planning, validation, handoff, runtime authority or production UI is proven."],
-      "traceability": {"issues": [42], "pullRequests": [71], "sourceCommits": ["499f04c99fe4edbe896c778eeffab3d47204ab81", "f7a66ce7a449f122bfbacc986d4c9ac6f99bd35a", "dccd2cf1f6b1dc4b49b9fb93d3f1cb4bec947697", "b68019917fe2773f9b87e93525c47a2bd249f4c5", "b30411555e451d2b3040a2c5d635f23cdcc293b5"], "pdcaPaths": ["docs/development/hmi-008-post-explain-consistency-audit-pdca.md", "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md", "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md", "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md", "docs/development/2026-08-03-verification-hmi-release-handoff.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/hmi-core.ts",
+        "packages/contracts/src/hmi-harness-adapter.ts",
+        "packages/contracts/src/hmi-disclosure-safety.ts",
+        "packages/contracts/src/hmi-discover-payload.ts",
+        "packages/contracts/src/hmi-explain-payload.ts",
+        "packages/contracts/src/hmi-contribute-preflight.ts",
+        "schemas/contracts/hmi-generation-bundle-v1.schema.json",
+        "schemas/contracts/hmi-discover-payload-v1.schema.json",
+        "schemas/contracts/hmi-explain-payload-v1.schema.json",
+        "schemas/contracts/hmi-contribute-preflight-v1.schema.json",
+        "tests/fixtures/hmi/positive-generation-v1.json",
+        "tests/fixtures/hmi/adapter-golden-v1.json",
+        "tests/fixtures/hmi/positive-discover-payload-v1.json",
+        "tests/fixtures/hmi/positive-explain-payload-v1.json",
+        "tests/fixtures/hmi/positive-contribute-preflight-v1.json",
+        "tests/fixtures/hmi/negative-matrix-v1.json"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/hmi-core.test.ts",
+          "tests/hmi-harness-adapter.test.ts",
+          "tests/hmi-disclosure-safety.test.ts",
+          "tests/hmi-discover-payload.test.ts",
+          "tests/hmi-explain-payload.test.ts",
+          "tests/hmi-contribute-preflight.test.ts",
+          "tests/hmi-post-explain-consistency.test.ts",
+          "tests/hmi-post-contribute-consistency.test.ts"
+        ],
+        "result": "PASS 42/42: focused HMI suites include 7/7 contribution-preflight and 4/4 post-contribution cross-contract probes."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/hmi-disclosure-safety.test.ts",
+          "tests/hmi-contribute-preflight.test.ts",
+          "tests/hmi-post-explain-consistency.test.ts",
+          "tests/hmi-post-contribute-consistency.test.ts",
+          "tests/fixtures/hmi/negative-matrix-v1.json"
+        ],
+        "result": "PASS: stale bindings, invented provenance, selector/capability widening, authority fields and submission/publication effects deny deterministically."
+      },
+      "evidencePaths": [
+        "docs/development/hmi-008-post-explain-consistency-audit-pdca.md",
+        "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md",
+        "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md",
+        "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md",
+        "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+      ],
+      "nonClaims": [
+        "Preparation/preflight over local deterministic synthetic data only; no issue submission, publication, external write, live harness, route, credential, planning, validation, handoff, runtime authority or production UI is proven."
+      ],
+      "traceability": {
+        "issues": [
+          42
+        ],
+        "pullRequests": [
+          71
+        ],
+        "sourceCommits": [
+          "499f04c99fe4edbe896c778eeffab3d47204ab81",
+          "f7a66ce7a449f122bfbacc986d4c9ac6f99bd35a",
+          "dccd2cf1f6b1dc4b49b9fb93d3f1cb4bec947697",
+          "b68019917fe2773f9b87e93525c47a2bd249f4c5",
+          "b30411555e451d2b3040a2c5d635f23cdcc293b5"
+        ],
+        "pdcaPaths": [
+          "docs/development/hmi-008-post-explain-consistency-audit-pdca.md",
+          "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md",
+          "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md",
+          "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md",
+          "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-007",
       "component": "Azure/Entra Identity Contract",
       "claim": "ChimpMaera ships a closed Microsoft Entra delegated identity profile that describes single-tenant Authorization Code plus PKCE authentication without granting product authority.",
       "userValue": "Integrators get an auditable identity boundary with fixed issuer, audience, tenant and delegated-scope expectations before any live tenant setup.",
-      "includedBytes": ["packages/contracts/src/azure-identity-profile.ts", "schemas/contracts/azure-identity-profile-v1.schema.json", "tests/fixtures/azure-identity/positive-profile-v1.json", "tests/fixtures/azure-identity/negative-matrix-v1.json"],
-      "functionalProof": {"testPaths": ["tests/azure-identity-profile.test.ts"], "result": "PASS 4/4: the synthetic delegated single-tenant profile verifies with canonical digest stability."},
-      "safetyProof": {"testPaths": ["tests/azure-identity-profile.test.ts", "tests/fixtures/azure-identity/negative-matrix-v1.json"], "result": "PASS: broad/application permissions, tenant substitution, unsafe credentials and authority-bearing variants are denied."},
-      "evidencePaths": ["docs/development/azid-001-authority-free-azure-identity-profile-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic proof only; no live Microsoft Entra tenant, registration, consent, OBO flow, token validation, Conditional Access, DLP or production compatibility is proven."],
-      "traceability": {"pdcaPaths": ["docs/development/azid-001-authority-free-azure-identity-profile-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/azure-identity-profile.ts",
+        "schemas/contracts/azure-identity-profile-v1.schema.json",
+        "tests/fixtures/azure-identity/positive-profile-v1.json",
+        "tests/fixtures/azure-identity/negative-matrix-v1.json"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/azure-identity-profile.test.ts"
+        ],
+        "result": "PASS 4/4: the synthetic delegated single-tenant profile verifies with canonical digest stability."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/azure-identity-profile.test.ts",
+          "tests/fixtures/azure-identity/negative-matrix-v1.json"
+        ],
+        "result": "PASS: broad/application permissions, tenant substitution, unsafe credentials and authority-bearing variants are denied."
+      },
+      "evidencePaths": [
+        "docs/development/azid-001-authority-free-azure-identity-profile-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic proof only; no live Microsoft Entra tenant, registration, consent, OBO flow, token validation, Conditional Access, DLP or production compatibility is proven."
+      ],
+      "traceability": {
+        "pdcaPaths": [
+          "docs/development/azid-001-authority-free-azure-identity-profile-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-008",
       "component": "Power Platform Read Connector",
       "claim": "ChimpMaera ships a closed authority-free Power Platform read connector contract with five bounded operations, required readback and receipt binding.",
       "userValue": "Integrators can evaluate a precise read-only connector surface without generic invocation, write targets or false-success shortcuts.",
-      "includedBytes": ["packages/contracts/src/power-platform-read-connector.ts", "schemas/contracts/power-platform-read-connector-v1.schema.json", "tests/fixtures/power-platform/positive-read-connector-v1.json", "tests/fixtures/power-platform/negative-matrix-v1.json"],
-      "functionalProof": {"testPaths": ["tests/power-platform-read-connector.test.ts"], "result": "PASS 4/4: the five-operation synthetic read connector verifies with identity and Verification Fabric bindings."},
-      "safetyProof": {"testPaths": ["tests/power-platform-read-connector.test.ts", "tests/fixtures/power-platform/negative-matrix-v1.json"], "result": "PASS: open targets, broad scopes, mutation escape, generic invocation, optional readback, false success and credentials are denied."},
-      "evidencePaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic proof only; no live Power Platform import, tenant compatibility, Entra consent, OBO, DLP, Gateway integration, certification or production behavior is proven."],
-      "traceability": {"pdcaPaths": ["docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/power-platform-read-connector.ts",
+        "schemas/contracts/power-platform-read-connector-v1.schema.json",
+        "tests/fixtures/power-platform/positive-read-connector-v1.json",
+        "tests/fixtures/power-platform/negative-matrix-v1.json"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/power-platform-read-connector.test.ts"
+        ],
+        "result": "PASS 4/4: the five-operation synthetic read connector verifies with identity and Verification Fabric bindings."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/power-platform-read-connector.test.ts",
+          "tests/fixtures/power-platform/negative-matrix-v1.json"
+        ],
+        "result": "PASS: open targets, broad scopes, mutation escape, generic invocation, optional readback, false success and credentials are denied."
+      },
+      "evidencePaths": [
+        "docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic proof only; no live Power Platform import, tenant compatibility, Entra consent, OBO, DLP, Gateway integration, certification or production behavior is proven."
+      ],
+      "traceability": {
+        "pdcaPaths": [
+          "docs/development/ppread-001-authority-free-power-platform-read-connector-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-012",
       "component": "Resource-Plane Profiles M0",
       "claim": "ChimpMaera ships an authority-free compiler for exactly seven closed resource planes with SAFE_GUIDED, CUSTOM and explicit dangerous FULL_CONTROL planning views plus a digest-bound Effective-Rights-Diff.",
       "userValue": "Operators can compare a requested resource profile against the SAFE_GUIDED baseline before any runtime activation, while host, assignment and current-constraint ceilings remain explicit and binding.",
-      "includedBytes": ["packages/contracts/src/resource-plane-profiles.ts", "schemas/contracts/resource-plane-profile-input-v1.schema.json", "schemas/contracts/resource-plane-plan-v1.schema.json", "tests/resource-plane-profiles.test.ts", "docs/RESOURCE-PLANE-PROFILES.md"],
-      "functionalProof": {"testPaths": ["tests/resource-plane-profiles.test.ts"], "result": "PASS 7/7: all seven planes, three profiles, both schemas, canonical ordering, ceiling behavior and Effective-Rights-Diff verify."},
-      "safetyProof": {"testPaths": ["tests/resource-plane-profiles.test.ts"], "result": "PASS: 11 malformed input cases plus rehashed hidden-field and inconsistent-diff forgeries deny; output exposes zero runtime activation or authority-bearing material."},
-      "evidencePaths": ["docs/RESOURCE-PLANE-PROFILES.md", "docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"],
-      "nonClaims": ["Declarative local deterministic plan only; no runtime activation, host permission change, command, credential, lease, provider binding or executable authority is included.", "No real filesystem, network, process, Docker, secret, model/tool, device, tenant, provider, security-certification or production fitness is proven.", "FULL_CONTROL maps to the dangerous FULL_CONTROL_LAB alias and does not inherit SAFE_GUIDED or broad governed-profile claims."],
-      "traceability": {"issues": [], "pullRequests": [94, 96, 97], "sourceCommits": ["8d5425b260fce6bcf04078643346e8e65000f7f4", "ff8a2f5dff315b0591ae23bf3661edc862dd1654", "1f98310d4e1a3541adf2619fda5d0cd0efa2dded"], "pdcaPaths": ["docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/resource-plane-profiles.ts",
+        "schemas/contracts/resource-plane-profile-input-v1.schema.json",
+        "schemas/contracts/resource-plane-plan-v1.schema.json",
+        "tests/resource-plane-profiles.test.ts",
+        "docs/RESOURCE-PLANE-PROFILES.md"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/resource-plane-profiles.test.ts"
+        ],
+        "result": "PASS 7/7: all seven planes, three profiles, both schemas, canonical ordering, ceiling behavior and Effective-Rights-Diff verify."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/resource-plane-profiles.test.ts"
+        ],
+        "result": "PASS: 11 malformed input cases plus rehashed hidden-field and inconsistent-diff forgeries deny; output exposes zero runtime activation or authority-bearing material."
+      },
+      "evidencePaths": [
+        "docs/RESOURCE-PLANE-PROFILES.md",
+        "docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"
+      ],
+      "nonClaims": [
+        "Declarative local deterministic plan only; no runtime activation, host permission change, command, credential, lease, provider binding or executable authority is included.",
+        "No real filesystem, network, process, Docker, secret, model/tool, device, tenant, provider, security-certification or production fitness is proven.",
+        "FULL_CONTROL maps to the dangerous FULL_CONTROL_LAB alias and does not inherit SAFE_GUIDED or broad governed-profile claims."
+      ],
+      "traceability": {
+        "issues": [],
+        "pullRequests": [
+          94,
+          96,
+          97
+        ],
+        "sourceCommits": [
+          "8d5425b260fce6bcf04078643346e8e65000f7f4",
+          "ff8a2f5dff315b0591ae23bf3661edc862dd1654",
+          "1f98310d4e1a3541adf2619fda5d0cd0efa2dded"
+        ],
+        "pdcaPaths": [
+          "docs/development/rpp-001-resource-plane-profiles-m0-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-013",
       "component": "ADD to REPLACE Adaptability Benchmark M0",
       "claim": "ChimpMaera ships a reproducible local-synthetic benchmark for ADD and Provider A to Provider B replacement through an unchanged target-neutral Builder core and consumer, with rollback and zero-residue evidence.",
       "userValue": "Operators can inspect exact measured adaptation mechanics, reuse, readback and cleanup evidence without treating process timings as provider or engineering-speed proof.",
-      "includedBytes": ["benchmarks/adaptability-m0/README.md", "benchmarks/adaptability-m0/run.mjs", "benchmarks/adaptability-m0/records/adb-001-m0-local-20260804.json", "benchmarks/adaptability-m0/ai-blind/participant-input.json", "benchmarks/adaptability-m0/ai-blind/evaluate.mjs", "schemas/adaptability-benchmark-result-v1.schema.json", "tests/adaptability-benchmark-m0.test.mjs"],
-      "functionalProof": {"testPaths": ["tests/adaptability-benchmark-m0.test.mjs"], "result": "PASS 5/5: ADD 1 to 2 providers and Provider A to B replacement preserve the frozen core and consumer while measuring cold/warm, edit, LOC, retry, reuse, readback, rollback and residue fields."},
-      "safetyProof": {"testPaths": ["tests/adaptability-benchmark-m0.test.mjs"], "result": "PASS: provider-binding mismatch denies with zero drift and zero receipt; rollback/reset leave zero target drift, receipt residue and external residue."},
-      "evidencePaths": ["benchmarks/adaptability-m0/README.md", "docs/development/adb-001-adaptability-benchmark-m0-pdca.md"],
-      "nonClaims": ["Local in-process synthetic observations only; no live provider, tenant, production compatibility, universal adaptability, engineering-time or comparative speed claim is included.", "The AI-blind bundle is prepared but has not been run; no blind result, participant performance or evaluator-isolation claim is included."],
-      "traceability": {"issues": [], "pullRequests": [99, 100], "sourceCommits": ["6ccd9100de386398c9b0208ee98bcd1b4c0ac972", "1256868627f97d849e86e53adb16e6a8a33c7a71"], "pdcaPaths": ["docs/development/adb-001-adaptability-benchmark-m0-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "benchmarks/adaptability-m0/README.md",
+        "benchmarks/adaptability-m0/run.mjs",
+        "benchmarks/adaptability-m0/records/adb-001-m0-local-20260804.json",
+        "benchmarks/adaptability-m0/ai-blind/participant-input.json",
+        "benchmarks/adaptability-m0/ai-blind/evaluate.mjs",
+        "schemas/adaptability-benchmark-result-v1.schema.json",
+        "tests/adaptability-benchmark-m0.test.mjs"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/adaptability-benchmark-m0.test.mjs"
+        ],
+        "result": "PASS 5/5: ADD 1 to 2 providers and Provider A to B replacement preserve the frozen core and consumer while measuring cold/warm, edit, LOC, retry, reuse, readback, rollback and residue fields."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/adaptability-benchmark-m0.test.mjs"
+        ],
+        "result": "PASS: provider-binding mismatch denies with zero drift and zero receipt; rollback/reset leave zero target drift, receipt residue and external residue."
+      },
+      "evidencePaths": [
+        "benchmarks/adaptability-m0/README.md",
+        "docs/development/adb-001-adaptability-benchmark-m0-pdca.md"
+      ],
+      "nonClaims": [
+        "Local in-process synthetic observations only; no live provider, tenant, production compatibility, universal adaptability, engineering-time or comparative speed claim is included.",
+        "The AI-blind bundle is prepared but has not been run; no blind result, participant performance or evaluator-isolation claim is included."
+      ],
+      "traceability": {
+        "issues": [],
+        "pullRequests": [
+          99,
+          100
+        ],
+        "sourceCommits": [
+          "6ccd9100de386398c9b0208ee98bcd1b4c0ac972",
+          "1256868627f97d849e86e53adb16e6a8a33c7a71"
+        ],
+        "pdcaPaths": [
+          "docs/development/adb-001-adaptability-benchmark-m0-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-014",
       "component": "Extension Assurance Profiles",
       "claim": "ChimpMaera ships a closed local-synthetic assurance profile for exact extension and connector digests with eight universal hard-fail gates, finite evidence expiry, retest triggers, false-result tracking and private security routing.",
       "userValue": "Maintainers can compare bounded assurance evidence with deterministic fail-closed results without turning a profile into a scan, trust badge, acceptance decision or authority grant.",
-      "includedBytes": ["packages/contracts/src/extension-assurance-profile.ts", "schemas/contracts/extension-assurance-profile-v1.schema.json", "tests/fixtures/extension-assurance/positive-profile-v1.json", "tests/fixtures/extension-assurance/negative-matrix-v1.json", "tests/extension-assurance-profile.test.ts", "docs/EXTENSION-ASSURANCE-PROFILES.md"],
-      "functionalProof": {"testPaths": ["tests/extension-assurance-profile.test.ts"], "result": "PASS 5/5: the closed schema, exact digest, 100 canonical reorderings, expiry/retest behavior and fixed public projection verify."},
-      "safetyProof": {"testPaths": ["tests/extension-assurance-profile.test.ts", "tests/fixtures/extension-assurance/negative-matrix-v1.json"], "result": "PASS: all eight universal hard fails, missing or not-run required gates, unsafe routing, missing triggers, unknown fields and digest drift deny; stale, changed-subject and confirmed-false-negative evidence require retest; seeded disclosure bytes emitted: zero."},
-      "evidencePaths": ["docs/EXTENSION-ASSURANCE-PROFILES.md", "docs/development/etl-01-extension-assurance-profile-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic profile evidence only; no third-party scan, extension acceptance, trust badge, installation, activation, marketplace publication, vulnerability disclosure, runtime authority, certification or production fitness is proven."],
-      "traceability": {"issues": [45], "pullRequests": [104, 105], "sourceCommits": ["79d2120fab0128d966f3c868133b0151663c947e", "f285c7350922682817e4400ad6d86720458b53f0"], "pdcaPaths": ["docs/development/etl-01-extension-assurance-profile-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/extension-assurance-profile.ts",
+        "schemas/contracts/extension-assurance-profile-v1.schema.json",
+        "tests/fixtures/extension-assurance/positive-profile-v1.json",
+        "tests/fixtures/extension-assurance/negative-matrix-v1.json",
+        "tests/extension-assurance-profile.test.ts",
+        "docs/EXTENSION-ASSURANCE-PROFILES.md"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/extension-assurance-profile.test.ts"
+        ],
+        "result": "PASS 5/5: the closed schema, exact digest, 100 canonical reorderings, expiry/retest behavior and fixed public projection verify."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/extension-assurance-profile.test.ts",
+          "tests/fixtures/extension-assurance/negative-matrix-v1.json"
+        ],
+        "result": "PASS: all eight universal hard fails, missing or not-run required gates, unsafe routing, missing triggers, unknown fields and digest drift deny; stale, changed-subject and confirmed-false-negative evidence require retest; seeded disclosure bytes emitted: zero."
+      },
+      "evidencePaths": [
+        "docs/EXTENSION-ASSURANCE-PROFILES.md",
+        "docs/development/etl-01-extension-assurance-profile-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic profile evidence only; no third-party scan, extension acceptance, trust badge, installation, activation, marketplace publication, vulnerability disclosure, runtime authority, certification or production fitness is proven."
+      ],
+      "traceability": {
+        "issues": [
+          45
+        ],
+        "pullRequests": [
+          104,
+          105
+        ],
+        "sourceCommits": [
+          "79d2120fab0128d966f3c868133b0151663c947e",
+          "f285c7350922682817e4400ad6d86720458b53f0"
+        ],
+        "pdcaPaths": [
+          "docs/development/etl-01-extension-assurance-profile-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-015",
       "component": "Minimized Agent-Work Event Contract",
       "claim": "ChimpMaera ships a closed authority-free agent-work record contract with classified pseudonymous fields, digest-bound sources, explicit consent purposes, finite retention, deletion requests and payload-free deleted tombstones.",
       "userValue": "Maintainers can validate minimized synthetic work-event lifecycle and public-readback decisions without enabling collection, telemetry, training or ingestion.",
-      "includedBytes": ["packages/contracts/src/agent-work-event.ts", "schemas/contracts/agent-work-event-record-v1.schema.json", "tests/fixtures/agent-work-intelligence/positive-public-event-v1.json", "tests/fixtures/agent-work-intelligence/negative-matrix-v1.json", "tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json", "tests/agent-work-event.test.ts", "docs/AGENT-WORK-EVENT-CONTRACT.md"],
-      "functionalProof": {"testPaths": ["tests/agent-work-event.test.ts"], "result": "PASS 6/6: the closed schema, 29 field classifications, exact digest, 100 canonical reorderings and seven retention/deletion/readback lifecycle cases verify."},
-      "safetyProof": {"testPaths": ["tests/agent-work-event.test.ts", "tests/fixtures/agent-work-intelligence/negative-matrix-v1.json", "tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json"], "result": "PASS: all 16 prohibited fields and 11 named identity, consent, retention, schema and digest negatives deny; deleted records cannot read back; five seeded sensitive values emit zero matching public bytes."},
-      "evidencePaths": ["docs/AGENT-WORK-EVENT-CONTRACT.md", "docs/development/awi-01-minimized-event-contract-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic contract evidence only; no event collection, telemetry, external monitoring, dashboard, model training, production ingestion, runtime activation, privacy certification, legal basis determination or production fitness is proven."],
-      "traceability": {"issues": [43], "pullRequests": [109, 110], "sourceCommits": ["5b041534b73dd6230e0279804fea5381e7941dad", "214b58d87ebfe91178f416ee26b8e89aa0447b76"], "pdcaPaths": ["docs/development/awi-01-minimized-event-contract-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/agent-work-event.ts",
+        "schemas/contracts/agent-work-event-record-v1.schema.json",
+        "tests/fixtures/agent-work-intelligence/positive-public-event-v1.json",
+        "tests/fixtures/agent-work-intelligence/negative-matrix-v1.json",
+        "tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json",
+        "tests/agent-work-event.test.ts",
+        "docs/AGENT-WORK-EVENT-CONTRACT.md"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/agent-work-event.test.ts"
+        ],
+        "result": "PASS 6/6: the closed schema, 29 field classifications, exact digest, 100 canonical reorderings and seven retention/deletion/readback lifecycle cases verify."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/agent-work-event.test.ts",
+          "tests/fixtures/agent-work-intelligence/negative-matrix-v1.json",
+          "tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json"
+        ],
+        "result": "PASS: all 16 prohibited fields and 11 named identity, consent, retention, schema and digest negatives deny; deleted records cannot read back; five seeded sensitive values emit zero matching public bytes."
+      },
+      "evidencePaths": [
+        "docs/AGENT-WORK-EVENT-CONTRACT.md",
+        "docs/development/awi-01-minimized-event-contract-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic contract evidence only; no event collection, telemetry, external monitoring, dashboard, model training, production ingestion, runtime activation, privacy certification, legal basis determination or production fitness is proven."
+      ],
+      "traceability": {
+        "issues": [
+          43
+        ],
+        "pullRequests": [
+          109,
+          110
+        ],
+        "sourceCommits": [
+          "5b041534b73dd6230e0279804fea5381e7941dad",
+          "214b58d87ebfe91178f416ee26b8e89aa0447b76"
+        ],
+        "pdcaPaths": [
+          "docs/development/awi-01-minimized-event-contract-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-016",
-      "component": "VIDEO-M2 Template Authoring",
-      "claim": "ChimpMaera ships a governed M0 guide for immutable video templates and release-specific segments plus deterministic closure checks for documented local references and declared asset digests.",
-      "userValue": "Editors can version, validate, supersede and roll back bounded template or segment changes without editing generated evidence or silently widening claims.",
-      "includedBytes": ["tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md", "tools/video-production-reference/scripts/verify_reference_closure.py", "tools/video-production-reference/tests/test_reference_closure.py"],
-      "functionalProof": {"testPaths": ["tools/video-production-reference/tests/test_reference_closure.py"], "result": "PASS 2/2 focused closure tests: the documented reference tree resolves deterministically and a missing referenced runtime file fails closed."},
-      "safetyProof": {"testPaths": ["tools/video-production-reference/tests/test_reference_closure.py"], "result": "PASS: path escape, symlink, missing-reference and declared asset-digest checks remain fail closed; authoring guidance keeps rendering and public actions separately gated."},
-      "evidencePaths": ["tools/video-production-reference/docs/TEMPLATE-SEGMENT-AUTHORING.md", "tools/video-production-reference/README.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"],
-      "nonClaims": ["Documentation and local deterministic reference closure only; no template selection, rendering, assembly, upload, publication, watcher or worker activation, production video behavior, universal media-studio capability or removal of human editorial review is proven."],
-      "traceability": {"issues": [64], "pullRequests": [142, 145], "sourceCommits": ["2e66f124f24ae40d58287c541434bea289192cff", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "component": "External Video Service",
+      "claim": "ChimpMaera ships a fail-closed external video artifact boundary with expected cm.video/v1 version, SHA-256 artifact pinning and disabled-by-default configuration.",
+      "userValue": "Maintainers can keep video Docker and media assets outside the CM source tree while preserving auditable artifact readback, rollback and release evidence.",
+      "includedBytes": [
+        "packages/contracts/src/external-video-service.ts",
+        "tests/external-video-service.test.ts",
+        "docs/EXTERNAL-VIDEO-SERVICE.md"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/external-video-service.test.ts"
+        ],
+        "result": "PASS focused external-video-service probes: disabled config, safe archive URL, version pin, SHA-256 readback, unavailable/tampered artifact denial and no credential headers."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/external-video-service.test.ts"
+        ],
+        "result": "PASS: unsafe URLs, missing digests, timeout drift, version drift, render, Docker-run, upload and publication intents fail closed before any CM-owned effect."
+      },
+      "evidencePaths": [
+        "docs/EXTERNAL-VIDEO-SERVICE.md",
+        "packages/contracts/src/external-video-service.ts",
+        "tests/external-video-service.test.ts"
+      ],
+      "nonClaims": [
+        "No embedded renderer, Docker ownership, template selection, rendering, assembly, upload, publication, watcher or worker activation, production video behavior, universal media-studio capability or removal of human editorial review is proven."
+      ],
+      "traceability": {
+        "issues": [
+          64
+        ],
+        "pullRequests": [
+          142,
+          145
+        ],
+        "sourceCommits": [
+          "2e66f124f24ae40d58287c541434bea289192cff",
+          "a931a10a56039b51ac7120ee507c8dc9c7c045eb"
+        ],
+        "pdcaPaths": [
+          "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256",
+        "externalArtifact": "chimpmaera-video-reference-2026.08.02-v2.tar.gz",
+        "externalArtifactSha256": "6aed9a5ded7341ea636c3de9f2bb99115501211024a7d51cb077edb1a33a6919"
+      }
     },
     {
       "claimId": "CM-REL-017",
       "component": "ASF-INTAKE-2 Signal Release Intake",
       "claim": "ChimpMaera ships a pure closed signal-to-release intake contract that yields a pre-candidate only when all nine gates pass and otherwise returns stable ordered rejection reasons.",
       "userValue": "Maintainers can make a deterministic local pre-candidate decision without the intake contract monitoring sources, posting content, merging code or creating a release.",
-      "includedBytes": ["packages/contracts/src/signal-release-intake.ts", "tests/fixtures/signal-release-intake/positive-v1.json", "tests/fixtures/signal-release-intake/rejections-v1.json", "tests/signal-release-intake.test.ts"],
-      "functionalProof": {"testPaths": ["tests/signal-release-intake.test.ts"], "result": "PASS 4/4: all nine gates produce a pre-candidate, each single-gate rejection is exact, combined denials retain canonical order and 100 replays are deterministic."},
-      "safetyProof": {"testPaths": ["tests/signal-release-intake.test.ts", "tests/fixtures/signal-release-intake/rejections-v1.json"], "result": "PASS: missing, extra and malformed fields deny; the returned authority boundary explicitly excludes monitoring, posting and release authority."},
-      "evidencePaths": ["packages/contracts/src/signal-release-intake.ts", "tests/signal-release-intake.test.ts", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic decision only; no monitoring, collection, telemetry, external read, content moderation service, posting, issue or PR creation, merge, tag, release publication, deployment or runtime activation is included or authorized."],
-      "traceability": {"issues": [56], "pullRequests": [143, 145], "sourceCommits": ["9e5f9ec6d83448b196e45443ae88e08c90c910b7", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/signal-release-intake.ts",
+        "tests/fixtures/signal-release-intake/positive-v1.json",
+        "tests/fixtures/signal-release-intake/rejections-v1.json",
+        "tests/signal-release-intake.test.ts"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/signal-release-intake.test.ts"
+        ],
+        "result": "PASS 4/4: all nine gates produce a pre-candidate, each single-gate rejection is exact, combined denials retain canonical order and 100 replays are deterministic."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/signal-release-intake.test.ts",
+          "tests/fixtures/signal-release-intake/rejections-v1.json"
+        ],
+        "result": "PASS: missing, extra and malformed fields deny; the returned authority boundary explicitly excludes monitoring, posting and release authority."
+      },
+      "evidencePaths": [
+        "packages/contracts/src/signal-release-intake.ts",
+        "tests/signal-release-intake.test.ts",
+        "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic decision only; no monitoring, collection, telemetry, external read, content moderation service, posting, issue or PR creation, merge, tag, release publication, deployment or runtime activation is included or authorized."
+      ],
+      "traceability": {
+        "issues": [
+          56
+        ],
+        "pullRequests": [
+          143,
+          145
+        ],
+        "sourceCommits": [
+          "9e5f9ec6d83448b196e45443ae88e08c90c910b7",
+          "a931a10a56039b51ac7120ee507c8dc9c7c045eb"
+        ],
+        "pdcaPaths": [
+          "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-018",
       "component": "INT-PROFILE-001 Integration Profiles",
       "claim": "ChimpMaera ships a closed local-synthetic integration-profile description contract for five bounded variants with digest-stable evaluation, exact existing-contract references, lifecycle fallback and typed override denial.",
       "userValue": "Integrators can evaluate narrow Power Apps, Power BI, mailbox-style, local-knowledge and issue-candidate reference profiles without granting authority or activating a connector route.",
-      "includedBytes": ["packages/contracts/src/integration-profile.ts", "schemas/contracts/integration-profile-v1.schema.json", "tests/fixtures/integration-profile/positive-variants-v1.json", "tests/fixtures/integration-profile/negative-probes-v1.json", "tests/integration-profile.test.ts", "docs/INTEGRATION-PROFILES.md"],
-      "functionalProof": {"testPaths": ["tests/integration-profile.test.ts"], "result": "PASS 6/6: five strict synthetic variants conform and their canonical digests survive 100 object-key reorderings per variant."},
-      "safetyProof": {"testPaths": ["tests/integration-profile.test.ts", "tests/fixtures/integration-profile/negative-probes-v1.json"], "result": "PASS: nine named fail-closed probes plus unknown fields, route drift, digest forgery, malformed primitives and variant/class crossover deny without exposing credential, provider or real-tenant material."},
-      "evidencePaths": ["docs/INTEGRATION-PROFILES.md", "docs/development/int-profile-001-contract-slice-pdca.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic description evidence only; no real tenant, provider, credential, connector import, live mailbox or Power Platform compatibility, tenant isolation, external write, issue creation, generic proxy, deployment, production readiness, runtime activation or universal compatibility is proven."],
-      "traceability": {"issues": [60], "pullRequests": [144, 145], "sourceCommits": ["cd832fe6337b7e6023aab3a274e231855f0b0d0b", "a931a10a56039b51ac7120ee507c8dc9c7c045eb"], "pdcaPaths": ["docs/development/int-profile-001-contract-slice-pdca.md", "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/integration-profile.ts",
+        "schemas/contracts/integration-profile-v1.schema.json",
+        "tests/fixtures/integration-profile/positive-variants-v1.json",
+        "tests/fixtures/integration-profile/negative-probes-v1.json",
+        "tests/integration-profile.test.ts",
+        "docs/INTEGRATION-PROFILES.md"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/integration-profile.test.ts"
+        ],
+        "result": "PASS 6/6: five strict synthetic variants conform and their canonical digests survive 100 object-key reorderings per variant."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/integration-profile.test.ts",
+          "tests/fixtures/integration-profile/negative-probes-v1.json"
+        ],
+        "result": "PASS: nine named fail-closed probes plus unknown fields, route drift, digest forgery, malformed primitives and variant/class crossover deny without exposing credential, provider or real-tenant material."
+      },
+      "evidencePaths": [
+        "docs/INTEGRATION-PROFILES.md",
+        "docs/development/int-profile-001-contract-slice-pdca.md",
+        "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic description evidence only; no real tenant, provider, credential, connector import, live mailbox or Power Platform compatibility, tenant isolation, external write, issue creation, generic proxy, deployment, production readiness, runtime activation or universal compatibility is proven."
+      ],
+      "traceability": {
+        "issues": [
+          60
+        ],
+        "pullRequests": [
+          144,
+          145
+        ],
+        "sourceCommits": [
+          "cd832fe6337b7e6023aab3a274e231855f0b0d0b",
+          "a931a10a56039b51ac7120ee507c8dc9c7c045eb"
+        ],
+        "pdcaPaths": [
+          "docs/development/int-profile-001-contract-slice-pdca.md",
+          "docs/development/governed-integration-foundations-v1-release-binding-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-019",
       "component": "VOICE-M0 Local PTT",
       "claim": "ChimpMaera ships a removable default-off local push-to-talk contract with bounded whisper.cpp and llama.cpp/Qwen3-TTS adapters, exact schemas, ephemeral media handling and authority-free governed-input proposals.",
       "userValue": "Operators can add locally controlled German or English voice input/output without giving transcripts approval, tool, effect or Gateway-bypass authority.",
-      "includedBytes": ["packages/contracts/src/voice-local-ptt.ts", "schemas/contracts/voice-config-v1.schema.json", "schemas/contracts/voice-stt-v1.schema.json", "schemas/contracts/voice-tts-v1.schema.json", "schemas/contracts/voice-turn-v1.schema.json", "schemas/contracts/voice-receipt-v1.schema.json", "tests/voice-local-ptt.test.ts", "docs/VOICE-LOCAL-PTT.md"],
-      "functionalProof": {"testPaths": ["tests/voice-local-ptt.test.ts"], "result": "PASS 5/5: exact contracts, local adapter execution, STT/TTS composition, receipts and cleanup verify deterministically."},
-      "safetyProof": {"testPaths": ["tests/voice-local-ptt.test.ts"], "result": "PASS: default-off, config/artifact validation, unsupported input, authority smuggling, timeout, output overflow, malformed WAV, correlation and digest drift fail closed."},
-      "evidencePaths": ["docs/VOICE-LOCAL-PTT.md", "docs/development/voice-m0-issue-157-pdca.md"],
-      "nonClaims": ["Local deterministic synthetic tests and one separately operated German probe only; no generated media or model bytes, production readiness, universal accuracy/latency, speaker identity, consent enforcement, hostile-host sandboxing or other-language/model compatibility is proven."],
-      "traceability": {"issues": [157], "pullRequests": [], "sourceCommits": [], "pdcaPaths": ["docs/development/voice-m0-issue-157-pdca.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/voice-local-ptt.ts",
+        "schemas/contracts/voice-config-v1.schema.json",
+        "schemas/contracts/voice-stt-v1.schema.json",
+        "schemas/contracts/voice-tts-v1.schema.json",
+        "schemas/contracts/voice-turn-v1.schema.json",
+        "schemas/contracts/voice-receipt-v1.schema.json",
+        "tests/voice-local-ptt.test.ts",
+        "docs/VOICE-LOCAL-PTT.md"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/voice-local-ptt.test.ts"
+        ],
+        "result": "PASS 5/5: exact contracts, local adapter execution, STT/TTS composition, receipts and cleanup verify deterministically."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/voice-local-ptt.test.ts"
+        ],
+        "result": "PASS: default-off, config/artifact validation, unsupported input, authority smuggling, timeout, output overflow, malformed WAV, correlation and digest drift fail closed."
+      },
+      "evidencePaths": [
+        "docs/VOICE-LOCAL-PTT.md",
+        "docs/development/voice-m0-issue-157-pdca.md"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic tests and one separately operated German probe only; no generated media or model bytes, production readiness, universal accuracy/latency, speaker identity, consent enforcement, hostile-host sandboxing or other-language/model compatibility is proven."
+      ],
+      "traceability": {
+        "issues": [
+          157
+        ],
+        "pullRequests": [],
+        "sourceCommits": [],
+        "pdcaPaths": [
+          "docs/development/voice-m0-issue-157-pdca.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-021",
       "component": "AWI-03 Universal Knowledge Envelope",
       "claim": "ChimpMaera ships a strict local-synthetic attributable knowledge envelope with governed taxonomy generations, conflict-preserving deterministic selection and authority-free read-only explanation.",
       "userValue": "Maintainers can retain unresolved domain-neutral knowledge and exact citations while curated selection fails closed and bounded exploratory results remain visibly unresolved.",
-      "includedBytes": ["packages/contracts/src/knowledge-envelope.ts", "schemas/contracts/knowledge-envelope-v1.schema.json", "schemas/contracts/knowledge-taxonomy-v1.schema.json", "tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json", "tests/fixtures/knowledge-envelope/apple-claims-v1.json", "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json", "tests/knowledge-envelope.test.ts", "docs/KNOWLEDGE-ENVELOPE.md", "docs/AWI-03-EVIDENCE.md", "verification/awi-03-knowledge-envelope-evidence-v1.json"],
-      "functionalProof": {"testPaths": ["tests/knowledge-envelope.test.ts"], "result": "PASS 7/7: four immutable attributable apple envelopes, exact curated/exploratory selection, read-only HMI explanation, 100 taxonomy digest replays and 100 order-independent selection replays verify."},
-      "safetyProof": {"testPaths": ["tests/knowledge-envelope.test.ts", "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json"], "result": "PASS: six retained envelope adversaries, four policy denials and unsafe migration fail closed or retain explicit unresolved state; all six authority classes remain empty."},
-      "evidencePaths": ["docs/KNOWLEDGE-ENVELOPE.md", "docs/AWI-03-EVIDENCE.md", "verification/awi-03-knowledge-envelope-evidence-v1.json"],
-      "nonClaims": ["Local deterministic synthetic default-off evidence only; no global truth, corpus completeness, production storage/retrieval, online enrichment, live model/provider, production taxonomy governance, licence determination, certification, deployment, availability, performance/SLA, autonomous acceptance or execution authority is proven."],
-      "traceability": {"issues": [44], "pullRequests": [], "sourceCommits": [], "pdcaPaths": ["docs/AWI-03-EVIDENCE.md"], "publicManifest": "release/public-files.manifest", "releaseCommitBinding": "currentRelease.tagObjectSha", "assetChecksumBinding": "currentRelease.assets[].sha256"}
+      "includedBytes": [
+        "packages/contracts/src/knowledge-envelope.ts",
+        "schemas/contracts/knowledge-envelope-v1.schema.json",
+        "schemas/contracts/knowledge-taxonomy-v1.schema.json",
+        "tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json",
+        "tests/fixtures/knowledge-envelope/apple-claims-v1.json",
+        "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json",
+        "tests/knowledge-envelope.test.ts",
+        "docs/KNOWLEDGE-ENVELOPE.md",
+        "docs/AWI-03-EVIDENCE.md",
+        "verification/awi-03-knowledge-envelope-evidence-v1.json"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tests/knowledge-envelope.test.ts"
+        ],
+        "result": "PASS 7/7: four immutable attributable apple envelopes, exact curated/exploratory selection, read-only HMI explanation, 100 taxonomy digest replays and 100 order-independent selection replays verify."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tests/knowledge-envelope.test.ts",
+          "tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json"
+        ],
+        "result": "PASS: six retained envelope adversaries, four policy denials and unsafe migration fail closed or retain explicit unresolved state; all six authority classes remain empty."
+      },
+      "evidencePaths": [
+        "docs/KNOWLEDGE-ENVELOPE.md",
+        "docs/AWI-03-EVIDENCE.md",
+        "verification/awi-03-knowledge-envelope-evidence-v1.json"
+      ],
+      "nonClaims": [
+        "Local deterministic synthetic default-off evidence only; no global truth, corpus completeness, production storage/retrieval, online enrichment, live model/provider, production taxonomy governance, licence determination, certification, deployment, availability, performance/SLA, autonomous acceptance or execution authority is proven."
+      ],
+      "traceability": {
+        "issues": [
+          44
+        ],
+        "pullRequests": [],
+        "sourceCommits": [],
+        "pdcaPaths": [
+          "docs/AWI-03-EVIDENCE.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
+      }
     },
     {
       "claimId": "CM-REL-011",
       "claim": "ChimpMaera ships a directly runnable, closed and digest-bound repository proof for the local synthetic SAFE_GUIDED secure-default path.",
-      "evidencePaths": ["docs/SECURE-DEFAULT-PROOF.md", "security/secure-default-proof-v1.json", "security/secure-default-proof-evidence-v1.json"],
-      "nonClaims": ["No production readiness, universal security, hostile-host resistance, certification or live-provider/tenant compatibility is claimed.", "FULL_CONTROL_LAB and RAMPAGE do not inherit SAFE_GUIDED claims.", "The proof reuses Verification Fabric v2 but does not authorize incremental test skipping."]
+      "evidencePaths": [
+        "docs/SECURE-DEFAULT-PROOF.md",
+        "security/secure-default-proof-v1.json",
+        "security/secure-default-proof-evidence-v1.json"
+      ],
+      "nonClaims": [
+        "No production readiness, universal security, hostile-host resistance, certification or live-provider/tenant compatibility is claimed.",
+        "FULL_CONTROL_LAB and RAMPAGE do not inherit SAFE_GUIDED claims.",
+        "The proof reuses Verification Fabric v2 but does not authorize incremental test skipping."
+      ]
     },
     {
       "claimId": "CM-REL-020",
       "claim": "The default-off OpenClaw reference adapter includes one local-synthetic M1.4 CRM request path with sanitized digest-bound readback and duplicate-safe recovery evidence.",
-      "evidencePaths": ["docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md", "security/openclaw-m1.4-evidence-v1.json", "tests/openclaw-m1.4-gateway-e2e.test.mjs"],
-      "nonClaims": ["No live provider, credential, production identity, distributed replay store, production readiness, external tenant compatibility or security certification is claimed."]
+      "evidencePaths": [
+        "docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md",
+        "security/openclaw-m1.4-evidence-v1.json",
+        "tests/openclaw-m1.4-gateway-e2e.test.mjs"
+      ],
+      "nonClaims": [
+        "No live provider, credential, production identity, distributed replay store, production readiness, external tenant compatibility or security certification is claimed."
+      ]
     }
   ]
 }

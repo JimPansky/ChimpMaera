@@ -42,7 +42,7 @@ test("public release builder binds its exact file count to the manifest", () => 
   const binding = builder.match(/^if count != (\d+):$/m);
   assert.ok(binding, "PUBLIC_MANIFEST_EXACT_COUNT_BINDING_MISSING");
   assert.equal(Number(binding[1]), count);
-  assert.equal(count, 735);
+  assert.equal(count, 672);
   assert.doesNotMatch(builder, /if count\s*(?:>|>=|<|<=)\s*\d+/);
 });
 
@@ -118,7 +118,7 @@ test("release governance negative probes fail closed", async (t) => {
     ["extension assurance release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-014", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-014` release binding]", "[`CM-REL-013` release binding]")],
     ["agent-work event release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-015", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-015` release binding]", "[`CM-REL-014` release binding]")],
     ["maintenance contract release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-005", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-005` release binding]", "[`CM-REL-004` release binding]")],
-    ["VIDEO-M2 release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-016", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-016` release binding]", "[`CM-REL-015` release binding]")],
+    ["External video release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-016", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-016` release binding]", "[`CM-REL-015` release binding]")],
     ["ASF intake release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-017", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-017` release binding]", "[`CM-REL-016` release binding]")],
     ["integration profile release evidence misbound", "CAPABILITY_MAPPING_INVALID:CM-REL-018", (root) => replace(root, "docs/capabilities.md", "[`CM-REL-018` release binding]", "[`CM-REL-017` release binding]")],
     ["stale limitation version", "LIMITATIONS_STALE_V01_BINDING_DENIED", (root) => replace(root, "docs/KNOWN-LIMITATIONS.md", "The current local demo", "The v0.1 demo")],

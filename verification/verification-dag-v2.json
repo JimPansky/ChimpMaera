@@ -405,7 +405,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "70cf43abf6504c125217b15be9a990c022bb71500235685bd08a3dfd5fae7021"
+          "sha256": "ed025c648aaf16892edcc0dc2ca703b16e0a3f333d4f683b1824e8fcd5e3c4f1"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -482,7 +482,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "090363afa5eb7d6045f4651f99a954779ba1500a8aa7852bd2c1715b0ff834f6"
+          "sha256": "d00eaca4579994a2047f60119d28ff8f2ca95baa6b7ff82b03059910654a4fa2"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -624,22 +624,22 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "508cf7342086b3dd8ee2ecfdf41c6732f7988d384b04ab60a50367766e324ba8"
+          "sha256": "b07567530f420318fb5b93841be8dfbc84c50499889a99e9cbccf504a0dfe3e0"
         },
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "30062d6cbe1f0958646ed8f30c7f3385ddb1f1ca487c67ab3fc85bc96472ab0c"
+          "sha256": "e32d9d1b7045be23ca674ef92b4c595f6bcbc23566c4b0e7e54fdc6efd8eea75"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "d1e31bb5bd9028a113434c55d09b57c77e912c65922d694894ca803bf02dd072"
+          "sha256": "5a7056431bbc1684edb0bb229578463271a411c86f5ea79ff8af4ac7a86e3ed8"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
           "role": "SECURITY",
-          "sha256": "031c8b699854b3c699fa754523df9a65cc57bc10fde7c73d6874a00fb83dd89b"
+          "sha256": "1d03380cb0f6d5c1c51eacce009f8ca312af1c0a4599d4189a11ad0e30d75641"
         }
       ],
       "ownedTests": [
@@ -982,7 +982,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "76873f1caf13b6625d1dbca26262ba825f98c18bcf3a1479c3ad2dfff1614fdd"
+          "sha256": "b3f5e1b2a517d6102852558d734b3f3badba1b889e8cd9c1f52358fcb724bf04"
         },
         {
           "path": "package-lock.json",
@@ -997,7 +997,7 @@
         {
           "path": ".github/workflows/ci.yml",
           "role": "ENVIRONMENT",
-          "sha256": "b9f4fa3851d4d104dd0155f149b50d8d5de5873077958a4ab46fdf2deb126ff2"
+          "sha256": "1e65bb9ebb3c5ced4b871a0523d830a6de724743c27872a7538b8f13c448d92e"
         }
       ],
       "ownedTests": [
@@ -1017,63 +1017,23 @@
       ],
       "inputs": [
         {
-          "path": "tools/video-production-reference/src/cm_video_ref/visual_governance.py",
+          "path": "packages/contracts/src/external-video-service.ts",
           "role": "CONTRACT",
-          "sha256": "980be1f44bbfc0cc4d3c60121047aebba05967e6ccbc199a71da85cf03edb00a"
+          "sha256": "abf4ca5ddafdfafebffc5727f9ee8f8db075343446bbdba02851de3b4aa30cdf"
         },
         {
-          "path": "tools/video-production-reference/schemas/audience-discovery-canvas.schema.json",
-          "role": "SCHEMA",
-          "sha256": "1eec2f454b6823cda4097a37183a4d03695035d46f51b89b01512c2c8ba7e3e1"
-        },
-        {
-          "path": "tools/video-production-reference/schemas/learning-record.schema.json",
-          "role": "SCHEMA",
-          "sha256": "e5d6153a7363e912346675c6ffa9fae4ab4e08642cfb3f82e513e7b7dd1c92b5"
-        },
-        {
-          "path": "tools/video-production-reference/schemas/media-learning-event.schema.json",
-          "role": "SCHEMA",
-          "sha256": "f684dd97796743cb6ffc7e965247a24c9c124e82534cd99f40663ddc976ef04c"
-        },
-        {
-          "path": "tools/video-production-reference/templates/audience-discovery-canvas-v1.json",
-          "role": "FIXTURE",
-          "sha256": "6dc7542e375e87dc63111d596eb1c05cb43be9119d08ab3c1a3ba53b21b738bf"
-        },
-        {
-          "path": "tools/video-production-reference/fixtures/audience-adaptation-proof-v1.json",
-          "role": "FIXTURE",
-          "sha256": "db1e545bfc962aed2e967de48833e6b511ce894d4e283c8c081e1ddcb436234a"
-        },
-        {
-          "path": "tools/video-production-reference/fixtures/privacy-safe-feedback-routes-v1.json",
-          "role": "FIXTURE",
-          "sha256": "e771e65ecdff64ae94680a02df799ab371338fc39a7b27fc6fd47da8e3b048b6"
-        },
-        {
-          "path": "tools/video-production-reference/fixtures/video-governance-learning-records.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "3985b92335c2ac5e3cb1c67dc7618a9275ed05b9aea43d60c223ba9661a6a54c"
-        },
-        {
-          "path": "tools/video-production-reference/fixtures/rejected-slide-decks-2026-08-03.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "c2c4b22645b1fa8f45510853368b266e8553791a97208ec6fece9dc4bcbdcf81"
-        },
-        {
-          "path": "tools/video-production-reference/tests/test_visual_governance.py",
+          "path": "tests/external-video-service.test.ts",
           "role": "VALIDATOR",
-          "sha256": "4e57235108c3a35589d8c977674a7e5e3d55940cf51d48fa647ff8f70a82737c"
+          "sha256": "d03508be8ddc9f3eb5dd828b0429b1ed4a68dcf342888b765d55fed16140e116"
         },
         {
-          "path": "tools/video-production-reference/docs/AUDIENCE-DISCOVERY.md",
+          "path": "docs/EXTERNAL-VIDEO-SERVICE.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "522cd1fb8874990b17ede9040f9d87ad61c3af74828515327436687324d03277"
+          "sha256": "594de279cf57bf476bcfa92ffc15eb69aaf8c67fd67faacd703ff2beae6d9580"
         }
       ],
       "ownedTests": [
-        "npm run video:test"
+        "npm run external-video-service:test"
       ],
       "invariants": [
         "Audience assumptions retain observed, sourced, hypothesis and editorial-decision types with provenance, scope, confidence and non-stale review dates.",

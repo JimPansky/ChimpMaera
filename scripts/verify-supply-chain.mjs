@@ -126,7 +126,6 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     "demo/model-access-broker/provider.Dockerfile",
     "demo/managed-skill-lifecycle/manager.Dockerfile",
     "demo/managed-skill-lifecycle/openclaw.Dockerfile",
-    "tools/video-production-reference/Dockerfile",
   ]) {
     const source = await read(dockerfilePath);
     for (const match of source.matchAll(/^FROM\s+(\S+)/gm)) {
@@ -143,7 +142,6 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
     "demo/openclaw-agent/compose.yaml",
     "demo/model-access-broker/compose.yaml",
     "demo/managed-skill-lifecycle/compose.yaml",
-    "tools/video-production-reference/compose.yaml",
   ]) {
     const source = await read(composePath);
     for (const match of source.matchAll(/^\s+image:\s+(.+)$/gm)) {
@@ -196,9 +194,10 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
   );
   const npmVersion = lock.npm.packageManager.replace(/^npm@/, "");
   const composeTool = lock.ci.dockerCompose;
+  const externalVideoServiceScript = lock.ci.externalVideoServiceScript;
   assert(
-    /^moby\/buildkit@sha256:[a-f0-9]{64}$/.test(lock.ci.buildkitImage ?? ""),
-    "SUPPLY_CHAIN_CI_BUILDKIT_IMAGE_INVALID_DENIED",
+    externalVideoServiceScript === "external-video-service:test",
+    "SUPPLY_CHAIN_CI_EXTERNAL_VIDEO_BOUNDARY_INVALID_DENIED",
   );
   for (const workflowPath of workflowPaths) {
     const workflow = await read(workflowPath);
@@ -212,26 +211,31 @@ export async function verifySupplyChain({ root = process.cwd() } = {}) {
       workflow.includes(`npm install --global npm@${npmVersion}`),
       "SUPPLY_CHAIN_CI_NPM_VERSION_DRIFT_DENIED",
     );
-    assert(
-      workflow.split(lock.ci.buildkitImage).length - 1 === 1
-      && workflow.includes("--driver docker-container")
-      && workflow.includes("--driver-opt image="),
-      "SUPPLY_CHAIN_CI_BUILDKIT_IMAGE_INVALID_DENIED",
-    );
-    assert(
-      /^v\d+\.\d+\.\d+$/.test(composeTool?.version)
-      && composeTool.platform === "linux-x86_64"
-      && composeTool.url === `https://github.com/docker/compose/releases/download/${composeTool.version}/docker-compose-${composeTool.platform}`
-      && /^[a-f0-9]{64}$/.test(composeTool.sha256)
-      && composeTool.verification === "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
-      && workflow.split(composeTool.url).length - 1 === 1
-      && workflow.split(composeTool.sha256).length - 1 === 1
-      && workflow.includes("sha256sum --check -")
-      && workflow.includes("DOCKER_CONFIG="),
-      "SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED",
-    );
+    if (workflowPath === lock.ci.workflowPath) {
+      assert(
+        /^v\d+\.\d+\.\d+$/.test(composeTool?.version)
+        && composeTool.platform === "linux-x86_64"
+        && composeTool.url === `https://github.com/docker/compose/releases/download/${composeTool.version}/docker-compose-${composeTool.platform}`
+        && /^[a-f0-9]{64}$/.test(composeTool.sha256)
+        && composeTool.verification === "DOWNLOAD_DIGEST_PINNED_SIGNATURE_NOT_VERIFIED"
+        && workflow.split(composeTool.url).length - 1 === 1
+        && workflow.split(composeTool.sha256).length - 1 === 1
+        && workflow.includes("sha256sum --check -")
+        && workflow.includes("DOCKER_CONFIG="),
+        "SUPPLY_CHAIN_CI_COMPOSE_TOOL_INVALID_DENIED",
+      );
+    }
+    if (workflowPath === lock.ci.workflowPath) {
+      assert(
+        workflow.includes(`npm run ${externalVideoServiceScript}`)
+        && !workflow.includes("npm run video:smoke")
+        && !workflow.includes("tools/video-production-reference")
+        && !workflow.includes("docker buildx create"),
+        "SUPPLY_CHAIN_CI_EXTERNAL_VIDEO_BOUNDARY_INVALID_DENIED",
+      );
+    }
   }
-  checks.push("CI_ACTIONS_NPM_AND_COMPOSE_PINNED");
+  checks.push("CI_ACTIONS_NPM_COMPOSE_AND_EXTERNAL_VIDEO_BOUNDARY_PINNED");
 
   const runtimeDirectory = await safeRootEntry(
     resolvedRoot,

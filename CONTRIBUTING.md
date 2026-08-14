@@ -47,8 +47,7 @@ The complete local check set is:
     npm run release-governance:verify
     npm run lint
     npm test
-    npm run video:test
-    python3 -m unittest discover -s tools/video-production-reference/tests
+    npm run external-video-service:test
     sha256sum --check SHA256SUMS
 
 Evidence should identify the exact tested commit and relevant versions or
