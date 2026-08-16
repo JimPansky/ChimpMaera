@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "chimpmaera.external-bi-service/clean-room-fixture/v1",
+  "biAgentBaseUrl": "http://127.0.0.1:28790",
+  "unreachableBiAgentBaseUrl": "http://127.0.0.1:28791",
+  "expectedProductVersion": "v0.8.0",
+  "expectedContractVersion": "2.0.0",
+  "requiredCapabilities": [
+    "bi.status.read",
+    "bi.discovery.run",
+    "bi.analysis.run",
+    "bi.graph.adaptive-v1.plan",
+    "bi.preview.create",
+    "bi.readback.read"
+  ],
+  "expectedOutcome": "VERIFIED",
+  "expectedDirectSupersetAccessByCm": false,
+  "expectedSupersetReadback": "NOT_APPLIED"
+}

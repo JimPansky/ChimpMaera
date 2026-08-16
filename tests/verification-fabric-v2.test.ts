@@ -82,7 +82,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1", "bi-execution-spine-v1", "bi-semantic-reconciliation-v1", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["external-bi-service-v2", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 
@@ -107,34 +107,11 @@ test("integration profile changes select the bounded owner and downstream integr
   assert.ok(result.selectedTests.includes("npm run integration-profile:test"));
 });
 
-test("BI execution spine changes select the bounded owner and downstream integrity gates", () => {
-  const result = plan(["packages/contracts/src/bi-execution-spine.ts"]);
+test("external BI v2 client changes select only the thin client and downstream integrity gates", () => {
+  const result = plan(["packages/contracts/src/external-bi-service.ts"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["bi-execution-spine-v1", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof"]);
-  assert.ok(result.selectedTests.includes("npm run bi-execution-spine:test"));
-});
-
-test("BI semantic reconciliation changes select the bounded owner and integrity gates", () => {
-  const result = plan(["packages/contracts/src/bi-semantic-reconciliation.ts"]);
-  assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1", "bi-semantic-reconciliation-v1"]);
-  assert.ok(result.selectedTests.includes("npm run bi-semantic:test"));
-  assert.ok(result.selectedTests.includes("npm run bi-dashboard:test"));
-});
-
-test("BI dashboard changes select only the bounded dashboard owner and integrity gates", () => {
-  const result = plan(["packages/contracts/src/bi-dashboard.ts"]);
-  assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["bi-dashboard-readback-v1", "bi-e2e-evidence-gate-v1"]);
-  assert.ok(result.selectedTests.includes("npm run bi-dashboard:test"));
-  assert.ok(result.selectedTests.includes("npm run bi-e2e:test"));
-});
-
-test("BI E2E gate changes select only the evidence owner", () => {
-  const result = plan(["scripts/bi-e2e-gate.mjs"]);
-  assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["bi-e2e-evidence-gate-v1"]);
-  assert.ok(result.selectedTests.includes("npm run bi-e2e:test"));
+  assert.deepEqual(result.selectedNodes, ["external-bi-service-v2", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof"]);
+  assert.ok(result.selectedTests.includes("npm run external-bi-service:test"));
 });
 
 test("both canonical JSON implementations invalidate the M1.4 node and secure-default closure", () => {

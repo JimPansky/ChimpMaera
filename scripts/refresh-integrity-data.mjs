@@ -80,46 +80,16 @@ const intakeInputs = [
   ["verification/intake-001-evidence-v1.json", "DERIVED_EVIDENCE"],
 ];
 intakeNode.inputs = intakeInputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
-const bi004Node = dag.nodes.find(({ id }) => id === "bi-semantic-reconciliation-v1");
-if (bi004Node === undefined) throw new Error("BI_004_DAG_NODE_MISSING");
-const bi004Inputs = [
-  ["packages/contracts/src/bi-semantic-reconciliation.ts", "CONTRACT"],
-  ["schemas/contracts/bi-semantic-model-v1.schema.json", "SCHEMA"],
-  ["tests/fixtures/bi-semantic/model-v1.json", "FIXTURE"],
-  ["tests/fixtures/bi-semantic/positive-reconciliation-v1.json", "FIXTURE"],
-  ["tests/bi-semantic-reconciliation.test.ts", "VALIDATOR"],
-  ["docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md", "DERIVED_EVIDENCE"],
-  ["docs/development/bi-004-semantic-reconciliation-pdca.md", "DERIVED_EVIDENCE"],
-  ["verification/bi-004-semantic-reconciliation-evidence-v1.json", "DERIVED_EVIDENCE"],
+const externalBiNode = dag.nodes.find(({ id }) => id === "external-bi-service-v2");
+if (externalBiNode === undefined) throw new Error("EXTERNAL_BI_V2_DAG_NODE_MISSING");
+const externalBiInputs = [
+  ["packages/contracts/src/external-bi-service.ts", "CONTRACT"],
+  ["tests/external-bi-service.test.ts", "VALIDATOR"],
+  ["tests/fixtures/external-bi-service-v2-clean-room.json", "FIXTURE"],
+  ["scripts/verify-external-bi-service-v2-clean-room.mjs", "VALIDATOR"],
+  ["docs/EXTERNAL-BI-SERVICE.md", "DERIVED_EVIDENCE"],
 ];
-bi004Node.inputs = bi004Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
-const bi005Node = dag.nodes.find(({ id }) => id === "bi-dashboard-readback-v1");
-if (bi005Node === undefined) throw new Error("BI_005_DAG_NODE_MISSING");
-const bi005Inputs = [
-  ["packages/contracts/src/bi-dashboard.ts", "CONTRACT"],
-  ["schemas/contracts/bi-dashboard-v1.schema.json", "SCHEMA"],
-  ["tests/fixtures/bi-dashboard/dashboard-set-v1.json", "FIXTURE"],
-  ["tests/fixtures/bi-dashboard/request-v1.json", "FIXTURE"],
-  ["tests/fixtures/bi-dashboard/negative-probes-v1.json", "FIXTURE"],
-  ["tests/bi-dashboard.test.ts", "VALIDATOR"],
-  ["scripts/render-bi-dashboard-evidence.mjs", "VALIDATOR"],
-  ["docs/BI-DASHBOARD-READBACK-GUIDE.md", "DERIVED_EVIDENCE"],
-  ["docs/development/bi-005-dashboard-readback-pdca.md", "DERIVED_EVIDENCE"],
-  ["verification/bi-005-dashboard-evidence-v1.json", "DERIVED_EVIDENCE"],
-  ...["normal", "empty", "stale", "conflict", "denied", "error"].map((state) => [`verification/bi-005-dashboard-readbacks/${state}.json`, "DERIVED_EVIDENCE"]),
-];
-bi005Node.inputs = bi005Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
-const bi006Node = dag.nodes.find(({ id }) => id === "bi-e2e-evidence-gate-v1");
-if (bi006Node === undefined) throw new Error("BI_006_DAG_NODE_MISSING");
-const bi006Inputs = [
-  ["scripts/bi-e2e-gate.mjs", "VALIDATOR"],
-  ["scripts/render-bi-e2e-evidence.mjs", "VALIDATOR"],
-  ["tests/bi-e2e-gate.test.mjs", "VALIDATOR"],
-  ["docs/BI-E2E-EVIDENCE-GATE.md", "DERIVED_EVIDENCE"],
-  ["docs/development/bi-006-e2e-evidence-gate-pdca.md", "DERIVED_EVIDENCE"],
-  ["verification/bi-006-e2e-evidence-index-v1.json", "DERIVED_EVIDENCE"],
-];
-bi006Node.inputs = bi006Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
+externalBiNode.inputs = externalBiInputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
 let mediaNode = dag.nodes.find(({ id }) => id === "know-media-m1-audience-learning-v1");
 if (mediaNode === undefined) {
   mediaNode = {

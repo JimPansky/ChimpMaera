@@ -189,7 +189,7 @@ for line_number, raw in enumerate(manifest.read_text("utf-8").splitlines(), 1):
         raise SystemExit(f"PRIVILEGED_SOURCE_MODE:{line_number}")
     total_bytes += metadata.st_size
 
-if count != 672:
+if count != 504:
     raise SystemExit("MANIFEST_FILE_COUNT")
 if total_bytes > 100 * 1024 * 1024:
     raise SystemExit("MANIFEST_BYTE_LIMIT")
@@ -201,6 +201,8 @@ repository_only_files = {
     "SHA256SUMS",
 }
 repository_only_prefixes = (
+    "archive/cm-bi-legacy-v1/",
+    "docs/development/cm-bi-ownership-migration-v2-prepared.md",
     "docs/DAILY-POC-",
     "docs/development/daily-poc-",
     "docs/development/evidence/",
