@@ -22,9 +22,6 @@
   },
   "license": "Apache-2.0",
   "type": "module",
-  "bin": {
-    "cm": "scripts/cm.mjs"
-  },
   "engines": {
     "node": ">=24.14.1 <25",
     "npm": ">=11.11.0 <12"
@@ -36,38 +33,18 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "tsc -p tsconfig.json --noEmit",
-    "pretest": "npm run issue-candidate:test && npm run knowledge-envelope:test && npm run knowledge-quality:test && node --test tests/secure-default-proof.test.mjs && npm run learning-routing:test && npm run voice:test && npm run external-bi-service:test && npm run external-video-service:test && npm run bi-e2e:test && npm run bi-discovery-s1:test && npm run bi-discovery-s2:test",
-    "test": "npm run build && node --test tests/bi-discovery-s1.test.mjs tests/bi-discovery-s2.test.mjs dist/tests/maintenance-contract-freeze.test.js dist/tests/development-worker.test.js dist/tests/development-worker-m3.test.js tests/demo-enforcement-gate.test.mjs tests/demo-admin-ai-poc.test.mjs tests/demo-policy-evaluator.test.mjs tests/demo-policy-generation-fence.test.mjs tests/demo-policy-lifecycle.test.mjs tests/demo-approval-workbench.test.mjs tests/demo-paperless-ngx-zoo-adapter.test.mjs tests/demo-local-egress-policy.test.mjs tests/canonical-json-runtime-parity.test.mjs tests/openclaw-agent-runtime-lock.test.mjs tests/openclaw-agent-runtime.test.mjs tests/openclaw-gateway-identity-network.test.mjs tests/openclaw-gateway-state.test.mjs tests/openclaw-m1.4-gateway-e2e.test.mjs tests/openclaw-mind-store.test.mjs tests/builder-agent-runtime.test.mjs tests/builder-reuse-conformance.test.mjs tests/adaptability-benchmark-m0.test.mjs tests/model-access-broker-runtime.test.mjs tests/managed-skill-lifecycle-runtime.test.mjs tests/supply-chain-verifier.test.mjs tests/daily-poc.test.mjs tests/company-data-pack.test.mjs tests/company-data-graph.test.mjs tests/mapping-registry.test.mjs dist/tests/builder-authority.test.js dist/tests/resource-plane-profiles.test.js dist/tests/builder-discovery.test.js dist/tests/builder-capability-resolution.test.js dist/tests/builder-integration-plan.test.js dist/tests/builder-quality-evidence.test.js dist/tests/builder-contribution-bundle.test.js dist/tests/verification-fabric.test.js dist/tests/extension-assurance-profile.test.js dist/tests/agent-work-event.test.js dist/tests/verification-fabric-v2.test.js dist/tests/update-doctor.test.js dist/tests/update-doctor-core.test.js dist/tests/update-doctor-compose-adapter.test.js dist/tests/hmi-core.test.js dist/tests/hmi-harness-adapter.test.js dist/tests/hmi-disclosure-safety.test.js dist/tests/hmi-discover-payload.test.js dist/tests/hmi-contribute-preflight.test.js dist/tests/hmi-post-explain-consistency.test.js dist/tests/hmi-post-contribute-consistency.test.js dist/tests/azure-identity-profile.test.js dist/tests/power-platform-read-connector.test.js dist/tests/capability-catalogue.test.js dist/tests/effective-rights.test.js dist/tests/injection-trust-boundary.test.js dist/tests/model-access-broker.test.js dist/tests/skill-admission.test.js dist/tests/skill-bundle.test.js dist/tests/protected-audit-timeline.test.js dist/tests/operation-event-quality.test.js dist/tests/bi-execution-spine.test.js dist/tests/bi-semantic-reconciliation.test.js dist/tests/integration-profile.test.js dist/tests/demo-fixture-manifest.test.js dist/tests/poc-showcase.test.js dist/tests/poc-showcase-e2e.test.js dist/tests/poc-guided-demo-bootstrap.test.js dist/tests/poc-setup-compatibility-planner.test.js dist/tests/poc-early-admin-ai-setup.test.js",
+    "pretest": "npm run issue-candidate:test && npm run knowledge-envelope:test && npm run knowledge-quality:test && node --test tests/secure-default-proof.test.mjs && npm run learning-routing:test && npm run voice:test && npm run external-bi-service:test && npm run external-video-service:test",
+    "test": "npm run build && node --test dist/tests/maintenance-contract-freeze.test.js dist/tests/development-worker.test.js dist/tests/development-worker-m3.test.js tests/demo-enforcement-gate.test.mjs tests/demo-admin-ai-poc.test.mjs tests/demo-policy-evaluator.test.mjs tests/demo-policy-generation-fence.test.mjs tests/demo-policy-lifecycle.test.mjs tests/demo-approval-workbench.test.mjs tests/demo-paperless-ngx-zoo-adapter.test.mjs tests/demo-local-egress-policy.test.mjs tests/canonical-json-runtime-parity.test.mjs tests/openclaw-agent-runtime-lock.test.mjs tests/openclaw-agent-runtime.test.mjs tests/openclaw-gateway-identity-network.test.mjs tests/openclaw-gateway-state.test.mjs tests/openclaw-m1.4-gateway-e2e.test.mjs tests/openclaw-mind-store.test.mjs tests/builder-agent-runtime.test.mjs tests/builder-reuse-conformance.test.mjs tests/adaptability-benchmark-m0.test.mjs tests/model-access-broker-runtime.test.mjs tests/managed-skill-lifecycle-runtime.test.mjs tests/supply-chain-verifier.test.mjs tests/daily-poc.test.mjs tests/company-data-pack.test.mjs tests/company-data-graph.test.mjs tests/mapping-registry.test.mjs dist/tests/builder-authority.test.js dist/tests/resource-plane-profiles.test.js dist/tests/builder-discovery.test.js dist/tests/builder-capability-resolution.test.js dist/tests/builder-integration-plan.test.js dist/tests/builder-quality-evidence.test.js dist/tests/builder-contribution-bundle.test.js dist/tests/verification-fabric.test.js dist/tests/extension-assurance-profile.test.js dist/tests/agent-work-event.test.js dist/tests/verification-fabric-v2.test.js dist/tests/update-doctor.test.js dist/tests/update-doctor-core.test.js dist/tests/update-doctor-compose-adapter.test.js dist/tests/hmi-core.test.js dist/tests/hmi-harness-adapter.test.js dist/tests/hmi-disclosure-safety.test.js dist/tests/hmi-discover-payload.test.js dist/tests/hmi-contribute-preflight.test.js dist/tests/hmi-post-explain-consistency.test.js dist/tests/hmi-post-contribute-consistency.test.js dist/tests/azure-identity-profile.test.js dist/tests/power-platform-read-connector.test.js dist/tests/capability-catalogue.test.js dist/tests/effective-rights.test.js dist/tests/injection-trust-boundary.test.js dist/tests/model-access-broker.test.js dist/tests/skill-admission.test.js dist/tests/skill-bundle.test.js dist/tests/protected-audit-timeline.test.js dist/tests/operation-event-quality.test.js dist/tests/integration-profile.test.js dist/tests/demo-fixture-manifest.test.js dist/tests/poc-showcase.test.js dist/tests/poc-showcase-e2e.test.js dist/tests/poc-guided-demo-bootstrap.test.js dist/tests/poc-setup-compatibility-planner.test.js dist/tests/poc-early-admin-ai-setup.test.js",
     "learning-routing:test": "npm run build --silent && node --test dist/tests/learning-routing.test.js dist/tests/learning-routing-outcome.test.js dist/tests/learning-routing-threats.test.js dist/tests/learning-routing-baseline.test.js dist/tests/learning-routing-recommender.test.js",
     "learning-routing:baseline": "npm run build --silent && node scripts/learning-routing-baseline.mjs",
     "integration-profile:test": "npm run build --silent && node --test dist/tests/integration-profile.test.js",
     "issue-candidate:test": "npm run build --silent && node --test dist/tests/issue-candidate.test.js",
     "issue-candidate:evidence": "node scripts/render-issue-candidate-evidence.mjs",
     "voice:test": "npm run build --silent && node --test dist/tests/voice-local-ptt.test.js",
-    "bi-execution-spine:test": "npm run build --silent && node --test dist/tests/bi-execution-spine.test.js",
     "external-bi-service:test": "npm run build --silent && node --test dist/tests/external-bi-service.test.js",
     "external-video-service:test": "npm run build --silent && node --test dist/tests/external-video-service.test.js",
-    "bi-discovery-s1:test": "node --test tests/bi-discovery-s1.test.mjs",
-    "bi-discovery-s2:test": "node --test tests/bi-discovery-s2-core.test.mjs tests/bi-discovery-s2-mariadb-dolibarr.test.mjs tests/bi-discovery-s2.test.mjs",
-    "db-analyzer:test": "node --test tests/db-analyzer-query-pack.test.mjs",
-    "db-analyzer:safety:verify": "node scripts/verify-db-analyzer-safety.mjs",
-    "db-analyzer:drift:verify": "node scripts/verify-db-analyzer-drift.mjs",
-    "db-analyzer:outputs:verify": "node scripts/verify-db-analyzer-outputs.mjs",
-    "db-analyzer:provenance:verify": "node scripts/verify-db-analyzer-provenance.mjs",
-    "db-analyzer:profiling-provenance:verify": "node scripts/verify-db-analyzer-profiling-provenance.mjs",
-    "db-analyzer:candidates:verify": "node scripts/verify-db-analyzer-candidates.mjs",
-    "db-analyzer:profiling-coverage:verify": "node scripts/verify-db-analyzer-profiling-coverage.mjs",
-    "db-analyzer:profiling-review:verify": "node scripts/verify-db-analyzer-profiling-review.mjs",
-    "db-analyzer:knowledge:verify": "node scripts/verify-db-analyzer-knowledge.mjs",
-    "db-analyzer:superset-result:verify": "node scripts/verify-db-analyzer-superset-result.mjs",
-    "db-analyzer:stored-logic-outputs:verify": "node scripts/verify-db-analyzer-stored-logic-outputs.mjs",
     "crm-read:test": "npm run build --silent && node --test dist/tests/crm-read-connector.test.js",
     "erp-read:test": "npm run build --silent && node --test dist/tests/erp-read-connector.test.js",
-    "bi-semantic:test": "npm run build --silent && node --test dist/tests/bi-semantic-reconciliation.test.js",
-    "bi-dashboard:test": "npm run build --silent && node --test dist/tests/bi-dashboard.test.js && node scripts/render-bi-dashboard-evidence.mjs --check",
-    "bi-dashboard:evidence": "npm run build --silent && node scripts/render-bi-dashboard-evidence.mjs",
-    "bi-e2e:test": "npm run build --silent && node --test tests/bi-e2e-gate.test.mjs && node scripts/render-bi-e2e-evidence.mjs --check",
-    "bi-e2e:evidence": "npm run build --silent && node scripts/render-bi-e2e-evidence.mjs",
     "knowledge-envelope:test": "npm run build --silent && node --test dist/tests/knowledge-envelope.test.js",
     "knowledge-quality:test": "npm run build --silent && node --test dist/tests/knowledge-quality.test.js && node --test tests/knowledge-quality-api.test.mjs",
     "knowledge-quality:schema-parity": "npm run build --silent && node --test --test-name-pattern='JSON Schema and runtime' dist/tests/knowledge-quality.test.js",
@@ -98,15 +75,11 @@
   },
   "dependencies": {
     "ajv": "8.20.0",
-    "ajv-formats": "3.0.1",
-    "mssql": "12.7.0"
+    "ajv-formats": "3.0.1"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
     "typescript": "5.9.3",
     "vitepress": "1.6.4"
-  },
-  "optionalDependencies": {
-    "node-sql-parser": "5.4.0"
   }
 }

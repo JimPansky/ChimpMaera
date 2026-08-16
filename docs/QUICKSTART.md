@@ -84,8 +84,9 @@ preview path for permitted, denied and escalation outcomes.
 ## Optional external BI service
 
 BI is no longer embedded in the CM demo stack. To use the standalone BI
-subsystem, run Superset_BI_Agent from its own release checkout, then point CM at
-its loopback URLs with `BI_AGENT_BASE_URL` and `SUPERSET_BASE_URL`. See
+subsystem, run Superset_BI_Agent v0.8.0 from its own release checkout, then
+point CM only at its SBA loopback URL with `BI_AGENT_BASE_URL`. Direct Superset
+URLs are rejected. See
 [External BI service contract](EXTERNAL-BI-SERVICE.md).
 
 ## Stop and remove owned state

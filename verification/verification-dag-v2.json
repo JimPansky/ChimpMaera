@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 6,
+  "graphVersion": 7,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -77,210 +77,6 @@
         "Uncertain effects cannot be resubmitted and retain immutable recovery identities."
       ],
       "riskClass": "CRITICAL",
-      "globalInvalidation": false
-    },
-    {
-      "id": "bi-e2e-evidence-gate-v1",
-      "dependsOn": [
-        "bi-dashboard-readback-v1"
-      ],
-      "inputs": [
-        {
-          "path": "scripts/bi-e2e-gate.mjs",
-          "role": "VALIDATOR",
-          "sha256": "935305d869c8e4e6ba30e961328e2eda4a4c1b78fc31f68275828894c6a8dfdb"
-        },
-        {
-          "path": "scripts/render-bi-e2e-evidence.mjs",
-          "role": "VALIDATOR",
-          "sha256": "0c7e9c77166f1873021351dadf2c63f427cdeeca1c79c71fcb3409012565177a"
-        },
-        {
-          "path": "tests/bi-e2e-gate.test.mjs",
-          "role": "VALIDATOR",
-          "sha256": "1404c07b7c0ceab9cb799c2b23f0cd1a4e39cfcb1d976cd122ac5430669efe5b"
-        },
-        {
-          "path": "docs/BI-E2E-EVIDENCE-GATE.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "b4f1449dafe1b957e3509f2ac74146d6684198805d36be11d123893ad75104fe"
-        },
-        {
-          "path": "docs/development/bi-006-e2e-evidence-gate-pdca.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "15b9a3edcd93e597589b53b2ecb5bbfbaf76692492d220ff051ce3696eaf74f7"
-        },
-        {
-          "path": "verification/bi-006-e2e-evidence-index-v1.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "2655ebc4ad753537910b81838bacdf7ff905013eed9ee929a1bc9e3bced9ff95"
-        }
-      ],
-      "ownedTests": [
-        "npm run bi-e2e:test"
-      ],
-      "invariants": [
-        "Exact CRM and ERP fixture readbacks, reconciliation KPIs, and dashboard values agree at the declared zero tolerance.",
-        "All named denial, unavailable, interruption, reset, identity, and evidence-tamper probes fail closed without upgraded claims.",
-        "Reset removes only marker-verified derived BI state while source fixtures remain byte-identical and reruns remain deterministic."
-      ],
-      "riskClass": "HIGH",
-      "globalInvalidation": false
-    },
-    {
-      "id": "bi-dashboard-readback-v1",
-      "dependsOn": [
-        "bi-semantic-reconciliation-v1"
-      ],
-      "inputs": [
-        {
-          "path": "packages/contracts/src/bi-dashboard.ts",
-          "role": "CONTRACT",
-          "sha256": "56ff6d5d08f58025e8e9b305397c7dc5b9c560aeff3d27d480def3ce4d165e00"
-        },
-        {
-          "path": "schemas/contracts/bi-dashboard-v1.schema.json",
-          "role": "SCHEMA",
-          "sha256": "8379a30dcf43f0d74de0d77a86b1db69d5487ea5e21a9992ebf72c67e7a5e55c"
-        },
-        {
-          "path": "tests/fixtures/bi-dashboard/dashboard-set-v1.json",
-          "role": "FIXTURE",
-          "sha256": "593143a972d9cfa1b7f9a5c78dcf43957be8ae66367641f1864f33568d9dbdd8"
-        },
-        {
-          "path": "tests/fixtures/bi-dashboard/request-v1.json",
-          "role": "FIXTURE",
-          "sha256": "ddeca5fb3c3af72fd949ae198477659cb4d4efd4883c3e80257148d7c83cb93d"
-        },
-        {
-          "path": "tests/fixtures/bi-dashboard/negative-probes-v1.json",
-          "role": "FIXTURE",
-          "sha256": "3266e585b58057a414aa76405d4cbefa15c705ac82c55ce48a740145750f507d"
-        },
-        {
-          "path": "tests/bi-dashboard.test.ts",
-          "role": "VALIDATOR",
-          "sha256": "b044631cd004de497aa335578589079bcd80e89cbb1538731be21e7f12722aa1"
-        },
-        {
-          "path": "scripts/render-bi-dashboard-evidence.mjs",
-          "role": "VALIDATOR",
-          "sha256": "e63e7db417b272d0967733f3c8a05203058e996fe69e86035cd236cd2c5e56dd"
-        },
-        {
-          "path": "docs/BI-DASHBOARD-READBACK-GUIDE.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "ebeacede0d8f1af2f5e72a3724e867fea6d640e7bb1bd8ac7f21486c41e89b01"
-        },
-        {
-          "path": "docs/development/bi-005-dashboard-readback-pdca.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "37bbdbc840cb31b67efa0c2a6cbe6746a6c7d9b6b8a9c0dc1ee650ff271d478a"
-        },
-        {
-          "path": "verification/bi-005-dashboard-evidence-v1.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "932d6c3837087e523f540f69c951373ee5d9e8210dec52ce37fe75fcd6c4dd1e"
-        },
-        {
-          "path": "verification/bi-005-dashboard-readbacks/normal.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "40455b437905fe6cdd97cfe3f99e3222fcc6593c57047152c2d7b7ec0d228813"
-        },
-        {
-          "path": "verification/bi-005-dashboard-readbacks/empty.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "5c96ace3f679149cd195f8732d6ed75487d24a891acc5b61f48defb35559896f"
-        },
-        {
-          "path": "verification/bi-005-dashboard-readbacks/stale.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "15c5695527e002fb8022965931e90847b33f4b0dc04a8cb837adfaa992f309aa"
-        },
-        {
-          "path": "verification/bi-005-dashboard-readbacks/conflict.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "ce5c522b9920b471962bd075b2d3b214798b0de8ddf36266b650a6338aa94d77"
-        },
-        {
-          "path": "verification/bi-005-dashboard-readbacks/denied.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "5dc933ea91e6bf89f4be60c3106ca5eefc3034438a8d7e5b5eb60ee18024438f"
-        },
-        {
-          "path": "verification/bi-005-dashboard-readbacks/error.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "393af7b629ac8e9fc09f8cf598c96026c8e269d16bc0d126c49a6ead3cd32b6c"
-        }
-      ],
-      "ownedTests": [
-        "npm run bi-dashboard:test"
-      ],
-      "invariants": [
-        "Dashboard KPI values and formulas are read back from the accepted BI-004 report/model and are never recomputed or substituted.",
-        "Tenant, model, lineage, filters, role-hidden identifiers, freshness, accessibility, and report integrity fail closed before KPI or drill-row display.",
-        "Canonical-ID drill-through sanitizes source lineage and no dashboard, CRM, ERP, catalogue, policy, or effect mutation is possible."
-      ],
-      "riskClass": "HIGH",
-      "globalInvalidation": false
-    },
-    {
-      "id": "bi-semantic-reconciliation-v1",
-      "dependsOn": [
-        "vf-contract-v1"
-      ],
-      "inputs": [
-        {
-          "path": "packages/contracts/src/bi-semantic-reconciliation.ts",
-          "role": "CONTRACT",
-          "sha256": "cc6810bef0968202d60bac1abf2be1eb5ba08e7462e776cac476d142bde6d98b"
-        },
-        {
-          "path": "schemas/contracts/bi-semantic-model-v1.schema.json",
-          "role": "SCHEMA",
-          "sha256": "6c102d2abd547db5bdff0d34cb003d3dca4ffd78749887b78d6bb24a6f7ed4c7"
-        },
-        {
-          "path": "tests/fixtures/bi-semantic/model-v1.json",
-          "role": "FIXTURE",
-          "sha256": "98853c3f693ebc5d76f99f92483be431637f77483bc799a503268646d1dfe291"
-        },
-        {
-          "path": "tests/fixtures/bi-semantic/positive-reconciliation-v1.json",
-          "role": "FIXTURE",
-          "sha256": "ddfbd0883cdd97af948b7fc2151396f40771541059e48f9163d79aea821b211c"
-        },
-        {
-          "path": "tests/bi-semantic-reconciliation.test.ts",
-          "role": "VALIDATOR",
-          "sha256": "f1e5765690aa45653a131d38032d6b8f558cda90dba4c54981112d4f935c1ad4"
-        },
-        {
-          "path": "docs/BI-SEMANTIC-RECONCILIATION-GUIDE.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "bf62527c4f045530a17033c3d2104ff886ee653a59f29d11ac9eabd1438f5c47"
-        },
-        {
-          "path": "docs/development/bi-004-semantic-reconciliation-pdca.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "33682320e75002232f886bd027cfc57b4bd60c1e2642cb0b77e75cca13f3588a"
-        },
-        {
-          "path": "verification/bi-004-semantic-reconciliation-evidence-v1.json",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "c89df29df8b9809614336aa5ce439464f583bb6564c86d09728fc65eae040a82"
-        }
-      ],
-      "ownedTests": [
-        "npm run bi-semantic:test"
-      ],
-      "invariants": [
-        "Only declared source-ID pairs can match; probabilistic merge and source write-back remain denied.",
-        "Unknown versions and lineage loss fail closed; stale and unresolved records remain explicit.",
-        "Only exact MATCHED rows contribute to digest-bound KPI recomputation."
-      ],
-      "riskClass": "HIGH",
       "globalInvalidation": false
     },
     {
@@ -405,7 +201,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "ed025c648aaf16892edcc0dc2ca703b16e0a3f333d4f683b1824e8fcd5e3c4f1"
+          "sha256": "a22f6903850ec3baea7d1a98751c8700fb8c9527d6d9af6681171275055578ed"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -425,54 +221,6 @@
       "globalInvalidation": false
     },
     {
-      "id": "bi-execution-spine-v1",
-      "dependsOn": [
-        "vf-contract-v1"
-      ],
-      "inputs": [
-        {
-          "path": "packages/contracts/src/bi-execution-spine.ts",
-          "role": "CONTRACT",
-          "sha256": "151a6cdd416b9cc7d9b942fab86f69dceacea8d27a3c79302c9cff81dbdd5ef8"
-        },
-        {
-          "path": "schemas/contracts/bi-execution-spine-v1.schema.json",
-          "role": "SCHEMA",
-          "sha256": "dc44f49f095f14cc67a68525a5039875b6953c4b914da6e9c6ca0d203e87ae12"
-        },
-        {
-          "path": "tests/fixtures/bi-execution-spine/positive-bundle-v1.json",
-          "role": "FIXTURE",
-          "sha256": "b59a10d21de439eccf88dbc3475065e638a5491441c82e7d242b89c1b7fde749"
-        },
-        {
-          "path": "tests/fixtures/bi-execution-spine/negative-matrix-v1.json",
-          "role": "FIXTURE",
-          "sha256": "8f3cad64346d0596556410bdb78aa50cb33ab60e5e970a20d9b885dae61cb38d"
-        },
-        {
-          "path": "tests/bi-execution-spine.test.ts",
-          "role": "VALIDATOR",
-          "sha256": "81cf8596e5d5daea75c4cc863545338989d4c084b27f1e56a707ddb146f6face"
-        },
-        {
-          "path": "docs/BI-EXECUTION-SPINE-CONTRACT.md",
-          "role": "DERIVED_EVIDENCE",
-          "sha256": "740d4f38f022d9bb32a9c039021928ae1977d50aab90afed165b208752f59409"
-        }
-      ],
-      "ownedTests": [
-        "npm run bi-execution-spine:test"
-      ],
-      "invariants": [
-        "The spine remains a public-synthetic contract and simulated receipt fixture with no query, provider, credential, dashboard or production-data authority.",
-        "Question semantics and internally computable artifact and envelope digests fail closed under drift.",
-        "Opaque source, operation-quality, formula and result digests are declarations and do not prove their absent referenced bytes or answer correctness."
-      ],
-      "riskClass": "HIGH",
-      "globalInvalidation": false
-    },
-    {
       "id": "learning-routing-foundation",
       "dependsOn": [
         "vf-contract-v1",
@@ -482,7 +230,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "d00eaca4579994a2047f60119d28ff8f2ca95baa6b7ff82b03059910654a4fa2"
+          "sha256": "4e851dac2d875e997bdd0d3248d124514e9695e2bd16f5e64339493f611b6e00"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -612,12 +360,55 @@
       "globalInvalidation": false
     },
     {
+      "id": "external-bi-service-v2",
+      "dependsOn": [
+        "vf-contract-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/external-bi-service.ts",
+          "role": "CONTRACT",
+          "sha256": "cca0c82b42faccb0767bd40e11dbc24157b21e2988bebbe978409044976d275b"
+        },
+        {
+          "path": "tests/external-bi-service.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "80c4622037e097a23d75a7be93e1c25b1df2817f7115252e455cfbbd842dc214"
+        },
+        {
+          "path": "tests/fixtures/external-bi-service-v2-clean-room.json",
+          "role": "FIXTURE",
+          "sha256": "0e6a265a67626009e0a94a6e61504a3e19132081fd555540d3ce7ebf696c8bc6"
+        },
+        {
+          "path": "scripts/verify-external-bi-service-v2-clean-room.mjs",
+          "role": "VALIDATOR",
+          "sha256": "76b6bf71b5d2d53447387bc2eb1969f4c5954f944a1fdc9795bfb14f757d9dd7"
+        },
+        {
+          "path": "docs/EXTERNAL-BI-SERVICE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "05843e4925654cb8d4eaf2b58aead216719b8e924bd68a51753663c409e93373"
+        }
+      ],
+      "ownedTests": [
+        "npm run external-bi-service:test"
+      ],
+      "invariants": [
+        "CM remains optional and default-off and addresses only the exact SBA base URL.",
+        "Product v0.8.0, external contract 2.0.0, required capabilities, accepted graph incumbent and canonical digests fail closed under drift.",
+        "CM forwards only status, discovery, analyze, plan, preview and readback; direct Superset routes, credentials, raw rows, SQL and mutation intents are denied."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "repository-integrity",
       "dependsOn": [
         "vf-contract-v1",
         "vf-shadow-v2",
         "integration-profile-v1",
-        "bi-execution-spine-v1",
+        "external-bi-service-v2",
         "learning-routing-foundation"
       ],
       "inputs": [
@@ -629,7 +420,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "e32d9d1b7045be23ca674ef92b4c595f6bcbc23566c4b0e7e54fdc6efd8eea75"
+          "sha256": "e38c2c2211c188ced2f05e328f10c6f92b13334beff3722f89d5898f4f937be1"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -982,12 +773,12 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "b3f5e1b2a517d6102852558d734b3f3badba1b889e8cd9c1f52358fcb724bf04"
+          "sha256": "5a2847ea9337423ca74ad730f33c0fc9fc0bfc4442b8e04be4b50058b1f756b6"
         },
         {
           "path": "package-lock.json",
           "role": "TOOLCHAIN",
-          "sha256": "dbdf4c0047f37844e7df6625ac2e7436343390ae0f9cdba65c359413ef470774"
+          "sha256": "0f6a224183d3d2eb68eebc0c61483c60cb785a93e67259cab264dc54aa2790cf"
         },
         {
           "path": "tsconfig.json",

@@ -111,18 +111,12 @@ Status labels used here:
   classifies pseudonymous, consented, digest-bound synthetic records and their
   finite retention/deletion lifecycle. It adds no collector, telemetry,
   training feed, dashboard, ingestion path or runtime authority.
-- **Released bytes / locally validated candidate / inactive:** the
-  [governed BI execution spine candidate](BI-EXECUTION-SPINE-CONTRACT.md)
-  includes a closed public-synthetic contract and simulated-receipt validation.
-  Byte inclusion does not promote BI visualization or runtime activation, prove
-  formula/result bytes, run a query engine or dashboard, contact a provider, or
-  grant authority.
-- **Released contract / optional external subsystem:** [External BI service](EXTERNAL-BI-SERVICE.md)
-  documents how CM points at a separately deployed
-  `JimPansky/Superset_BI_Agent` Docker service. CM does not vendor, start or own
-  that BI runtime.
-- **Planned:** generic live connectors, production reversible-write onboarding,
-  executable BI packs/runtimes and broader resource-plane profiles.
+- **Released contract / optional external subsystem:** [External BI service v2](EXTERNAL-BI-SERVICE.md)
+  documents CM's fail-closed, default-off client for separately released SBA
+  v0.8.0 / contract 2.0.0. SBA alone owns BI logic and runtime; CM has no direct
+  Superset/database route, credential, SQL, raw-row or mutation surface.
+- **Planned:** generic live connectors, production reversible-write onboarding
+  and broader resource-plane profiles.
 
 ## Limitations and status
 

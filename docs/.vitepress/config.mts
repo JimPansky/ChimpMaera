@@ -15,7 +15,7 @@ const curatedSitemapPaths = new Set([
   "",
   "alternatives",
   "AGENT-WORK-EVENT-CONTRACT",
-  "BI-EXECUTION-SPINE-CONTRACT",
+  "EXTERNAL-BI-SERVICE",
   "capabilities",
   "examples",
   "EXTENSION-ASSURANCE-PROFILES",
