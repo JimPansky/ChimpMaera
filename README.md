@@ -8,26 +8,29 @@
 
 # ChimpMaera
 
-**An open, knowledge-driven operating system for governed, adaptable AI
-ecosystems.**
-
 **Governed by default. Adaptable by design. Improved through evidence.**
 
-The current runnable release is an open-source local synthetic proof of concept;
-the broader direction is not a claim of current product maturity or universal
-live compatibility. It demonstrates a control plane for governed, verifiable
-AI-agent actions across business systems. An agent may propose work; policy,
-approval, credentials, execution, authoritative readback and receipts remain
-outside the model. Stable capability and knowledge contracts make the same
-intent reusable without treating a new provider as new authority.
+The current regular release provides an open-source proof-of-concept control
+plane for governed, verifiable AI-agent actions across business systems, with a
+runnable local synthetic demo. An agent may propose work; policy, approval,
+credentials, execution, authoritative readback and receipts remain outside the
+model.
+
+**Product direction:** An open, knowledge-driven operating system for governed,
+adaptable AI ecosystems. This broader direction is not a claim of current
+product maturity or universal live compatibility.
+
+**Status:** [current regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
+· proof of concept · Linux x86_64 · [Apache-2.0](LICENSE)
 
 [**Run the POC**](#quickstart) ·
+[**Documentation**](https://jimpansky.github.io/ChimpMaera/) ·
 [**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
 [**Watch the overview**](https://youtu.be/NZbSaHdbW1s) ·
 [**How it works**](#how-it-works)
 
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
-[Documentation hub](docs/README.md)
+[Repository documentation](docs/README.md)
 
 ## How it works
 
@@ -79,9 +82,10 @@ authority boundaries fit.
 
 **Solve → Validate → Package as Knowledge → Share → Reuse → Improve**
 
-Every integration can teach the system how to adapt the next one—without
-silently expanding authority. [Governed Knowledge Harvest](docs/KNOWLEDGE-HARVEST.md)
-defines the detailed lineage, maturity and promotion model.
+**Design direction:** Every integration can teach the system how to adapt the
+next one—without silently expanding authority. [Governed Knowledge
+Harvest](docs/KNOWLEDGE-HARVEST.md) defines the detailed lineage, maturity and
+promotion model.
 
 ## Proof today
 
@@ -108,8 +112,22 @@ each combination still needs its own applicability boundary and evidence.
 
 ## Quickstart
 
-On a supported Linux host with Docker and Compose, run from the repository
-root:
+For the release-bound path, download the current Latest archive and its
+published checksum sidecar, then verify before extracting:
+
+```sh
+release=v0.2.0-poc.20260814.1
+archive=cm-product-increment-rc-20260814-video-separation.tar.gz
+base=https://github.com/JimPansky/ChimpMaera/releases/download/$release
+curl -fLO "$base/$archive"
+curl -fLO "$base/$archive.sha256"
+sha256sum -c "$archive.sha256"
+tar -xzf "$archive"
+cd cm-product-increment-rc-20260814-video-separation
+```
+
+On a supported Linux host with Docker and Compose, run from that directory or
+from the root of a contributor checkout:
 
 ```sh
 ./demo/install.sh
@@ -158,6 +176,9 @@ and anonymous readback.
 
 - [Contribute](CONTRIBUTING.md), [get support](SUPPORT.md), or report a
   vulnerability through the [private security route](SECURITY.md).
+- Report reproducible defects through [Issues](https://github.com/JimPansky/ChimpMaera/issues)
+  and use [Discussions](https://github.com/JimPansky/ChimpMaera/discussions)
+  for public project conversation; neither route creates a support SLA.
 - Watch the verified public overviews: [Why ChimpMaera?](https://youtu.be/Dq_XLEzh5I8),
   [How does it work?](https://youtu.be/w4fWgalD_WQ), and
   [Security by Default](https://youtu.be/SEPbE-EVoNs).

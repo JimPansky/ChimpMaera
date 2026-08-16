@@ -15,10 +15,13 @@ Only the declared local-synthetic paths are currently evidenced.
 
 Status labels used here:
 
-- **Released** — bytes are in the current regular release; evidence may still
-  be limited to local synthetic fixtures.
+- **Released bytes** — bytes are in the current regular release; inclusion does
+  not activate or promote a capability, binding, runtime or product claim.
 - **Locally validated** — reproducible local evidence exists, but it does not
   establish live-system or production fitness.
+- **Candidate / inactive** — included or locally validated material is not an
+  active route or promoted product capability without separate authorization
+  and its required evidence.
 - **Planned** — design or roadmap only; not executable product evidence.
 - **External evidence required** — a claim needs a real provider, tenant,
   environment or independent operation that this repository cannot prove.
@@ -69,12 +72,12 @@ Status labels used here:
 
 ## Extend
 
-- **Locally validated candidate / not merged or released:** the
+- **Released bytes / locally validated candidate / inactive:** the
   [finite inactive capability/action catalogue](CAPABILITY-ACTION-CATALOGUE.md)
   binds strict synthetic action contracts to exact versions and digests and
   exercises fail-closed Gateway/broker admission. Presence, installation,
-  discovery, listing, local validation, merge, and release do not activate an
-  entry; activation is a separate exact maintainer authorization.
+  discovery, listing, local validation, byte inclusion and release do not
+  activate an entry; activation is a separate exact maintainer authorization.
 - **Released / locally validated:** [Builder operator guide](BUILDER-AGENT-OPERATOR-GUIDE.md)
   and [Builder defaults](BUILDER-CONFIGURATION-DEFAULTS.md) cover typed,
   target-neutral contracts and two synthetic systems. No live-system builder
@@ -88,12 +91,12 @@ Status labels used here:
   prepares canonical, digest-bound local-synthetic bytes; it performs no
   submission, publication, external write, credential use or runtime
   activation. A production UI is absent.
-- **Locally validated / not in the current regular release:** [Skill Bundle
-  canonical contracts](SKILL-BUNDLE-CONTRACTS.md) define strict manifest, lock,
-  exact-file verification and compatibility identities for generation,
-  analysis, installation and rollback consumers. They do not install, activate,
-  publish, auto-update, grant capabilities or prove live registry/runtime
-  safety.
+- **Released bytes / locally validated / inactive:** [Skill Bundle canonical
+  contracts](SKILL-BUNDLE-CONTRACTS.md) define strict manifest, lock, exact-file
+  verification and compatibility identities for generation, analysis,
+  installation and rollback consumers. Their inclusion does not install,
+  activate, promote, publish, auto-update, grant capabilities or prove live
+  registry/runtime safety.
 - **Released contract / external evidence required:** the Entra profile and all
   five Power Platform read operations use exactly `cm.discovery.read`.
   `cm.operator.read` remains reserved for a future separate administrative-read
@@ -108,11 +111,12 @@ Status labels used here:
   classifies pseudonymous, consented, digest-bound synthetic records and their
   finite retention/deletion lifecycle. It adds no collector, telemetry,
   training feed, dashboard, ingestion path or runtime authority.
-- **Locally validated / not in the current regular release:** the
+- **Released bytes / locally validated candidate / inactive:** the
   [governed BI execution spine candidate](BI-EXECUTION-SPINE-CONTRACT.md)
-  validates a closed public-synthetic contract and simulated receipts. It does
-  not independently prove formula/result bytes, run a query engine or dashboard,
-  contact a provider, or grant authority.
+  includes a closed public-synthetic contract and simulated-receipt validation.
+  Byte inclusion does not promote BI visualization or runtime activation, prove
+  formula/result bytes, run a query engine or dashboard, contact a provider, or
+  grant authority.
 - **Released contract / optional external subsystem:** [External BI service](EXTERNAL-BI-SERVICE.md)
   documents how CM points at a separately deployed
   `JimPansky/Superset_BI_Agent` Docker service. CM does not vendor, start or own

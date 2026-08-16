@@ -71,8 +71,10 @@ test("README presents governed adaptability and evidence-driven improvement with
   const words = readme.replace(/<[^>]+>/g, " ").trim().split(/\s+/);
   const h2s = readme.match(/^## /gm) ?? [];
 
-  assert.match(readme, /An open, knowledge-driven operating system for governed, adaptable AI\s+ecosystems\./);
+  assert.match(readme, /An open, knowledge-driven operating system for governed,\s+adaptable AI ecosystems\./);
   assert.match(readme, /Governed by default\. Adaptable by design\. Improved through evidence\./);
+  assert.match(readme, /\*\*Status:\*\* \[current regular release\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\/latest\)/);
+  assert.match(readme, /proof of concept · Linux x86_64 · \[Apache-2\.0\]\(LICENSE\)/);
   assert.ok(readme.indexOf("## How it works") < readme.indexOf("## Adaptive Knowledge Engineering"));
   assert.ok(readme.indexOf("## Adaptive Knowledge Engineering") < readme.indexOf("## Proof today"));
   assert.ok(readme.indexOf("## Proof today") < readme.indexOf("## Quickstart"));
@@ -81,11 +83,11 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(readme, /Adapt once\. Validate it\. Reuse it everywhere it fits\./);
   assert.match(readme, /Solve → Validate → Package as Knowledge → Share → Reuse → Improve/);
   assert.match(readme, /Share what you know\. Expand what everyone can build\./);
-  assert.match(readme, /Every integration can teach the system how to\s+adapt the next one—without\s+silently expanding authority/);
+  assert.match(readme, /Every integration can teach the system how to\s+adapt the\s+next one—without\s+silently expanding authority/);
   assert.match(readme, /open-ended,\s+user-need-driven option space/);
   assert.match(readme, /unverified knowledge may\s+exist without becoming an authoritative default/);
   assert.doesNotMatch(readme, /\b(?:infinite|one-click|minutes?|hours?|production-ready)\b/i);
-  assert.ok(words.length >= 600 && words.length <= 900, `README_WORD_COUNT:${words.length}`);
+  assert.ok(words.length >= 600 && words.length <= 1000, `README_WORD_COUNT:${words.length}`);
   assert.ok(h2s.length <= 8, `README_H2_COUNT:${h2s.length}`);
 
   assert.match(diagram, /role="img" aria-labelledby="caged-title caged-desc"/);
@@ -105,7 +107,7 @@ test("release governance negative probes fail closed", async (t) => {
   const probes = [
     ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)", "[Version-bound release](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.1.0)")],
     ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages own included capabilities", "Today's Daily snapshot owns included capabilities")],
-    ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "direction is not a claim of current product maturity", "direction is current product maturity")],
+    ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "broader direction is not a claim of current", "broader direction is current")],
     ["root Security static Latest claim", "ROOT_SECURITY_VERSION_BINDING_DENIED", (root) => append(root, "SECURITY.md", "The latest tagged release is v9.9.9.")],
     ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/tag/v9.9.9")],
     ["root Support product-version binding", "ROOT_SUPPORT_VERSION_BINDING_DENIED", (root) => replace(root, "SUPPORT.md", "ChimpMaera is provided", "ChimpMaera v9.9 is provided")],
@@ -129,6 +131,7 @@ test("release governance negative probes fail closed", async (t) => {
     ["component byte not in public manifest", "COMPONENT_PATH_UNMANIFESTED:CM-REL-004:packages/contracts/src/verification-fabric.ts", (root) => replace(root, "release/public-files.manifest", "packages/contracts/src/verification-fabric.ts\tpackages/contracts/src/verification-fabric.ts\t0644\n", "")],
     ["asset hash removed", "ASSET_INVENTORY_INVALID", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.currentRelease.assets[0].sha256 = "unknown"; writeFileSync(p, JSON.stringify(j)); }],
     ["publication metadata removed", "CURRENT_PUBLICATION_METADATA_INVALID", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); delete j.currentRelease.releaseId; writeFileSync(p, JSON.stringify(j)); }],
+    ["functional increment title drift", "FUNCTIONAL_INCREMENT_TITLE_MISSING", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.currentRelease.increment = "MSSQL Scope Compatibility"; writeFileSync(p, JSON.stringify(j)); }],
     ["private path leak", "LEAK_PRIVATE_HOME_PATH:README.md", (root) => append(root, "README.md", ["Current files: ", "home", "alice", "private", ""].join("/"))],
     ["calendar generator title", "GENERATOR_CALENDAR_RELEASE_TITLE_DENIED", (root) => replace(root, "scripts/daily-poc.mjs", "const releaseTitle = incrementCandidateTitle(manifest);", "const releaseTitle = `ChimpMaera POC Daily — ${manifest.date}`;")]
   ];

@@ -2,8 +2,8 @@ cff-version: "1.2.0"
 message: "If you use ChimpMaera, please cite the software using these metadata."
 type: software
 title: "ChimpMaera"
-version: "0.2.0-poc.20260809.1"
-date-released: "2026-08-09"
+version: "0.2.0-poc.20260814.1"
+date-released: "2026-08-14"
 authors:
   - name: "Jim Pansky"
 abstract: >-
