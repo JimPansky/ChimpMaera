@@ -197,6 +197,7 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /CM-REL-016/.test(capabilityRow("External Video Service boundary")), "CAPABILITY_MAPPING_INVALID:CM-REL-016");
   issue(issues, /CM-REL-017/.test(capabilityRow("ASF-INTAKE-2 signal release intake")), "CAPABILITY_MAPPING_INVALID:CM-REL-017");
   issue(issues, /CM-REL-018/.test(capabilityRow("INT-PROFILE-001 integration profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-018");
+  issue(issues, /CM-REL-022/.test(capabilityRow("External Superset_BI_Agent service boundary v2")), "CAPABILITY_MAPPING_INVALID:CM-REL-022");
 
   const docsHub = read(root, "docs/README.md");
   issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub) && /Caged Agent → Gateway → Capability\s+Constellation/.test(docsHub), "DOCS_HUB_PRODUCT_ARCHITECTURE_MISSING");
@@ -225,7 +226,7 @@ export function validateRepository(root = process.cwd()) {
   const publicManifest = read(root, "release/public-files.manifest");
   const publicPaths = new Set(publicManifest.trim().split("\n").map((line) => line.split("\t")[0]));
   issue(issues, Array.isArray(governance.claimEvidence) && governance.claimEvidence.length > 0, "CLAIM_EVIDENCE_MAPPING_MISSING");
-  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "AWI-03 Universal Knowledge Envelope", "External Video Service", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles", "VOICE-M0 Local PTT"]);
+  const expectedComponents = new Set(["Verification Fabric", "Update/Doctor", "HMI/Harness Multitool", "Azure/Entra Identity Contract", "Power Platform Read Connector", "Resource-Plane Profiles M0", "ADD to REPLACE Adaptability Benchmark M0", "Extension Assurance Profiles", "Minimized Agent-Work Event Contract", "AWI-03 Universal Knowledge Envelope", "External Video Service", "External SBA-v2 BI Client", "ASF-INTAKE-2 Signal Release Intake", "INT-PROFILE-001 Integration Profiles", "VOICE-M0 Local PTT"]);
   const observedComponents = new Set();
   for (const mapping of governance.claimEvidence ?? []) {
     issue(issues, /^CM-REL-\d{3}$/.test(mapping.claimId ?? ""), `CLAIM_ID_INVALID:${mapping.claimId ?? "missing"}`);

@@ -415,7 +415,7 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "468913e32cd80ef50b08f80e52803cad791ace57fb3dfcf00043118900d04c73"
+          "sha256": "285153a1dbbfc09f515cf4ac47c3c7ceaa7dc837faafbc2793665e865635d0e9"
         },
         {
           "path": "scripts/build-public-release.sh",
@@ -425,7 +425,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "ee480692a3998dc1b4143d642848b2f086fede55cd91396771123b5827b633bc"
+          "sha256": "8717946a092604cc811c31e211a6880537d965d1d3e1436a7bf5752bc0a71374"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
