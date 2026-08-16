@@ -23,14 +23,14 @@ The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
 ```sh
-release=v0.2.0-poc.20260814.1
-archive=cm-product-increment-rc-20260814-video-separation.tar.gz
+release=v0.2.0-poc.20260816.1
+archive=cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz
 base=https://github.com/JimPansky/ChimpMaera/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260814-video-separation
+cd cm-product-increment-rc-20260816-bi-ownership-v2
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from

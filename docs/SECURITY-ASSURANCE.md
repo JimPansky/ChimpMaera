@@ -7,8 +7,8 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260814.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260814.1),
-the **External Video Service** increment. `v0.1.0` is historical. Release
+[`v0.2.0-poc.20260816.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260816.1),
+the **BI Ownership Migration v2** increment. `v0.1.0` is historical. Release
 state is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not
 inferred from a local branch, a tag alone, a date or an editorial update.
 Documentation on `main` may postdate the released asset bytes and does not
@@ -18,11 +18,13 @@ The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment is scoped to separating the video reference implementation
-as a SHA-256-pinned external artifact. It does not claim video publication,
-upload or renderer activation, production video behavior, universal media
-studio capability, or removal of human editorial review. The detailed claims
-below remain bound to their own dated evidence snapshots.
+The Latest increment is scoped to removing CM's active legacy BI domain logic
+and retaining only a thin, default-off, fail-closed SBA-v2 client plus generic
+orchestration, approval, authority and UI contracts. SBA v0.8.0 is the sole BI
+domain owner. It does not claim deployment, runtime activation, production-data
+fitness, external database access, mutation, publish/apply authority or Casuvia
+access. The detailed claims below remain bound to their own dated evidence
+snapshots.
 
 Table counts are dated observations from their linked 2026-08-01 synthetic
 evidence records, not a volatile claim about the current repository-wide test
