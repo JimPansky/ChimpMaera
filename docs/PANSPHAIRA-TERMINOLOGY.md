@@ -85,3 +85,20 @@ Any future entry must be separately approved, versioned, consumer-complete,
 reversible, and linked to its migration and verification evidence. Adding
 PANSPHAIRA or Sphere display vocabulary to a current surface is not such an
 exception.
+
+### PAN-08 reviewed verdicts (2026-08-17)
+
+The mandatory review found no proposed stable-ID exception to approve. These
+verdicts are the exact handoff for PAN-07 assertions and PAN-09 integration:
+
+| Verdict | Reviewed class | Evidence | Decision |
+| --- | --- | --- | --- |
+| `PAN-08-V1` | PAN-05 demo display branding | The PAN-05 diff contains 42 `ChimpMaera` to `PANSPHAIRA` word substitutions under `demo/**`. Its 445-entry unique machine-token inventory is identical before and after the change (SHA-256 `11b530a796db284b30de99ccb1fe90b9ae82815b9f193ea068e9e3421221fac5`). | **CHANGE NOW** display text; no stable-ID exception. |
+| `PAN-08-V2` | PAN-05 operational, contract, security, and fixture identities | Definition/consumer comparison retains the existing service, image, volume, state-path, label, plugin, tool, environment-variable, `chimpmaera.*`, `cm.*`, `CM_*`, schema/version, policy, denial, claim, receipt, and fixture identities. | **KEEP**; no migration approved. |
+| `PAN-08-V3` | PR-220 governed video identities | `tools/video-production-reference/**`, `docs/EXTERNAL-VIDEO-SERVICE.md`, and `docs/capabilities.md` are byte-identical between protected baseline `729fd69d414989e6ce20da0212f36131a3c2d581` and reviewed integration head `698e11eb51d9bae4d5d19080842521f91dc61dd1`. The 45-entry unique technical-token inventory is identical (SHA-256 `403c8ef84efb7c1f90cce10c0a74880dd64098d125f2aa66c7e0680f249a65f5`), including `cm.video/v1`, `chimpmaera.video/*`, the package-index MIME type, component IDs, `cm-video` paths, and `CM_VIDEO_*` variables. | **KEEP**; the technical video subsystem is unchanged. |
+| `PAN-08-V4` | New technical-prefix collision check | Scoped scans of PAN-05 demo and PR-220 video surfaces find zero lowercase `pansphaira` or `PSAI`/`psai` technical tokens. | **KEEP** the empty exception register; do not introduce a PANSPHAIRA or PSAI namespace. |
+
+The inventories above are sorted unique matches for established
+`chimpmaera`/`cm`/`CM` machine-token forms; the video inventory additionally
+includes its `application/vnd.chimpmaera...+json` form. They are review evidence,
+not a new schema, protocol, generated artifact, or runtime contract.
