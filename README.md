@@ -117,11 +117,6 @@ each combination still needs its own applicability boundary and evidence.
 For the release-bound path, download the current Latest archive and its
 published checksum sidecar, then verify before extracting:
 
-This release binds the forward current tree to the PANSPHAIRA name, repository
-and Pages location and to bounded Sphere terminology and visualization. Stable
-CM/chimpmaera machine identities and historical releases are unchanged; this
-is not a protocol, schema, API or runtime migration or a production claim.
-
 ```sh
 release=v0.2.0-poc.20260817.1
 archive=cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz
@@ -188,6 +183,7 @@ and anonymous readback.
 - Report reproducible defects through [Issues](https://github.com/JimPansky/PANSPHAIRA/issues)
   and use [Discussions](https://github.com/JimPansky/PANSPHAIRA/discussions)
   for public project conversation; neither route creates a support SLA.
+
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). External media artifacts keep
 their own license boundary; Apache-2.0 grants no trademark rights.
