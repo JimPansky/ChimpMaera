@@ -1,0 +1,528 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/contribution-intake-ledger-v1.schema.json",
+  "title": "Contribution Intake Ledger v1",
+  "description": "Closed structural schema for the bounded, in-memory CCP-M1 contribution-intake ledger, delivery, trust context, explicitly non-authoritative submitted-identity evidence and receipt. Runtime verification additionally enforces exact JavaScript descriptors, ordinary dense arrays, alias/cycle denial, digest bindings and authoritative semantic replay from genesis. Unkeyed SHA-256 proves internal consistency only, not authenticated provenance, rollback resistance, trusted time or production authority; a wholly replaced and coherently rehashed history requires separately trusted external evidence.",
+  "$ref": "#/$defs/ledger",
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nullableDigest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/digest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ledgerId": {
+      "type": "string",
+      "pattern": "^ledger:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "tenantId": {
+      "type": "string",
+      "pattern": "^tenant:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "repositoryId": {
+      "type": "string",
+      "pattern": "^repository:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "contributionId": {
+      "type": "string",
+      "pattern": "^contribution:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "deliveryId": {
+      "type": "string",
+      "pattern": "^delivery:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "actorId": {
+      "type": "string",
+      "pattern": "^actor:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "authorityEvidenceId": {
+      "type": "string",
+      "pattern": "^authority-evidence:[a-z0-9][a-z0-9._-]{2,95}$"
+    },
+    "safeUnsignedInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "safePositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "scope": {
+      "enum": [
+        "READ",
+        "TRIAGE",
+        "WRITE",
+        "ADMIN"
+      ]
+    },
+    "entryDisposition": {
+      "enum": [
+        "APPENDED",
+        "SEMANTIC_DUPLICATE",
+        "STALE",
+        "REJECTED"
+      ]
+    },
+    "receiptDisposition": {
+      "enum": [
+        "APPENDED",
+        "SEMANTIC_DUPLICATE",
+        "TRANSPORT_DUPLICATE",
+        "STALE",
+        "REJECTED"
+      ]
+    },
+    "submittedIdentityBinding": {
+      "enum": [
+        "CONTEXT_MATCH",
+        "SCOPE_MISMATCH",
+        "AUTHORITY_WIDENING",
+        "AUTHORITY_CHANGE"
+      ]
+    },
+    "reasonCode": {
+      "enum": [
+        "NEW_CONTRIBUTION",
+        "PR_HEAD_SUPERSESSION",
+        "PR_HEAD_FORCE_PUSH",
+        "UNKNOWN_ANCESTOR",
+        "TRANSPORT_REDELIVERY",
+        "DELIVERY_ID_REUSE_TAMPER",
+        "HEAD_ALREADY_CURRENT",
+        "SUPERSEDED_HEAD_REPLAY",
+        "INVALIDATED_HEAD_REPLAY",
+        "TRUST_CONTEXT_MISMATCH",
+        "AUTHORITY_WIDENING",
+        "AUTHORITY_CHANGE",
+        "STALE_HEAD_TIMESTAMP"
+      ]
+    },
+    "reasonCodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 13,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/reasonCode"
+      }
+    },
+    "trustContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "cm.contribution-intake-trust-context/v1"
+        },
+        "ledgerId": {
+          "$ref": "#/$defs/ledgerId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/tenantId"
+        },
+        "repositoryId": {
+          "$ref": "#/$defs/repositoryId"
+        },
+        "contributionId": {
+          "$ref": "#/$defs/contributionId"
+        },
+        "actorId": {
+          "$ref": "#/$defs/actorId"
+        },
+        "authorityEvidenceId": {
+          "$ref": "#/$defs/authorityEvidenceId"
+        },
+        "authorityScope": {
+          "$ref": "#/$defs/scope"
+        },
+        "contextDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "ledgerId",
+        "tenantId",
+        "repositoryId",
+        "contributionId",
+        "actorId",
+        "authorityEvidenceId",
+        "authorityScope",
+        "contextDigest"
+      ]
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "cm.contribution-delivery/v1"
+        },
+        "ledgerId": {
+          "$ref": "#/$defs/ledgerId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/tenantId"
+        },
+        "repositoryId": {
+          "$ref": "#/$defs/repositoryId"
+        },
+        "contributionId": {
+          "$ref": "#/$defs/contributionId"
+        },
+        "deliveryId": {
+          "$ref": "#/$defs/deliveryId"
+        },
+        "headDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "ancestorDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "actorId": {
+          "$ref": "#/$defs/actorId"
+        },
+        "authorityEvidenceId": {
+          "$ref": "#/$defs/authorityEvidenceId"
+        },
+        "authorityScope": {
+          "$ref": "#/$defs/scope"
+        },
+        "payloadDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "receivedAtMs": {
+          "$ref": "#/$defs/safeUnsignedInteger"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "ledgerId",
+        "tenantId",
+        "repositoryId",
+        "contributionId",
+        "deliveryId",
+        "headDigest",
+        "ancestorDigest",
+        "actorId",
+        "authorityEvidenceId",
+        "authorityScope",
+        "payloadDigest",
+        "receivedAtMs"
+      ]
+    },
+    "submittedIdentityEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Originally submitted identity tuple retained only for deterministic replay. authoritative is permanently false: this evidence never becomes ledger identity or establishes authority.",
+      "properties": {
+        "schemaVersion": {
+          "const": "cm.contribution-submitted-identity-evidence/v1"
+        },
+        "authoritative": {
+          "const": false
+        },
+        "ledgerId": {
+          "$ref": "#/$defs/ledgerId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/tenantId"
+        },
+        "repositoryId": {
+          "$ref": "#/$defs/repositoryId"
+        },
+        "contributionId": {
+          "$ref": "#/$defs/contributionId"
+        },
+        "actorId": {
+          "$ref": "#/$defs/actorId"
+        },
+        "authorityEvidenceId": {
+          "$ref": "#/$defs/authorityEvidenceId"
+        },
+        "authorityScope": {
+          "$ref": "#/$defs/scope"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "authoritative",
+        "ledgerId",
+        "tenantId",
+        "repositoryId",
+        "contributionId",
+        "actorId",
+        "authorityEvidenceId",
+        "authorityScope"
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sequence": {
+          "$ref": "#/$defs/safePositiveInteger"
+        },
+        "schemaVersion": {
+          "const": "cm.contribution-intake-ledger/v1"
+        },
+        "contextDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "submittedIdentityEvidence": {
+          "$ref": "#/$defs/submittedIdentityEvidence"
+        },
+        "submittedIdentityEvidenceDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "submittedIdentityBinding": {
+          "$ref": "#/$defs/submittedIdentityBinding"
+        },
+        "disposition": {
+          "$ref": "#/$defs/entryDisposition"
+        },
+        "reasonCodes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "quarantined": {
+          "type": "boolean"
+        },
+        "ledgerId": {
+          "$ref": "#/$defs/ledgerId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/tenantId"
+        },
+        "repositoryId": {
+          "$ref": "#/$defs/repositoryId"
+        },
+        "contributionId": {
+          "$ref": "#/$defs/contributionId"
+        },
+        "deliveryId": {
+          "$ref": "#/$defs/deliveryId"
+        },
+        "headDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "ancestorDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "actorId": {
+          "$ref": "#/$defs/actorId"
+        },
+        "authorityEvidenceId": {
+          "$ref": "#/$defs/authorityEvidenceId"
+        },
+        "authorityScope": {
+          "$ref": "#/$defs/scope"
+        },
+        "payloadDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "receivedAtMs": {
+          "$ref": "#/$defs/safeUnsignedInteger"
+        },
+        "deliveryDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "replacedHeadDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "previousEntryDigest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "entryDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "sequence",
+        "schemaVersion",
+        "contextDigest",
+        "submittedIdentityEvidence",
+        "submittedIdentityEvidenceDigest",
+        "submittedIdentityBinding",
+        "disposition",
+        "reasonCodes",
+        "quarantined",
+        "ledgerId",
+        "tenantId",
+        "repositoryId",
+        "contributionId",
+        "deliveryId",
+        "headDigest",
+        "ancestorDigest",
+        "actorId",
+        "authorityEvidenceId",
+        "authorityScope",
+        "payloadDigest",
+        "receivedAtMs",
+        "deliveryDigest",
+        "replacedHeadDigest",
+        "previousEntryDigest",
+        "entryDigest"
+      ]
+    },
+    "ledger": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "cm.contribution-intake-ledger/v1"
+        },
+        "ledgerId": {
+          "$ref": "#/$defs/ledgerId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/tenantId"
+        },
+        "repositoryId": {
+          "$ref": "#/$defs/repositoryId"
+        },
+        "contributionId": {
+          "$ref": "#/$defs/contributionId"
+        },
+        "actorId": {
+          "$ref": "#/$defs/actorId"
+        },
+        "authorityEvidenceId": {
+          "$ref": "#/$defs/authorityEvidenceId"
+        },
+        "authorityScope": {
+          "$ref": "#/$defs/scope"
+        },
+        "contextDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          }
+        },
+        "nextSequence": {
+          "$ref": "#/$defs/safePositiveInteger"
+        },
+        "quarantineCount": {
+          "$ref": "#/$defs/safeUnsignedInteger"
+        },
+        "ledgerDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "ledgerId",
+        "tenantId",
+        "repositoryId",
+        "contributionId",
+        "actorId",
+        "authorityEvidenceId",
+        "authorityScope",
+        "contextDigest",
+        "entries",
+        "nextSequence",
+        "quarantineCount",
+        "ledgerDigest"
+      ]
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "cm.contribution-intake-receipt/v1"
+        },
+        "contextDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "submittedIdentityEvidence": {
+          "$ref": "#/$defs/submittedIdentityEvidence"
+        },
+        "submittedIdentityEvidenceDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "submittedIdentityBinding": {
+          "$ref": "#/$defs/submittedIdentityBinding"
+        },
+        "ledgerId": {
+          "$ref": "#/$defs/ledgerId"
+        },
+        "tenantId": {
+          "$ref": "#/$defs/tenantId"
+        },
+        "repositoryId": {
+          "$ref": "#/$defs/repositoryId"
+        },
+        "contributionId": {
+          "$ref": "#/$defs/contributionId"
+        },
+        "deliveryId": {
+          "$ref": "#/$defs/deliveryId"
+        },
+        "headDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "actorId": {
+          "$ref": "#/$defs/actorId"
+        },
+        "authorityEvidenceId": {
+          "$ref": "#/$defs/authorityEvidenceId"
+        },
+        "authorityScope": {
+          "$ref": "#/$defs/scope"
+        },
+        "sequence": {
+          "$ref": "#/$defs/safePositiveInteger"
+        },
+        "disposition": {
+          "$ref": "#/$defs/receiptDisposition"
+        },
+        "reasonCodes": {
+          "$ref": "#/$defs/reasonCodes"
+        },
+        "quarantined": {
+          "type": "boolean"
+        },
+        "deliveryDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "receiptDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "contextDigest",
+        "submittedIdentityEvidence",
+        "submittedIdentityEvidenceDigest",
+        "submittedIdentityBinding",
+        "ledgerId",
+        "tenantId",
+        "repositoryId",
+        "contributionId",
+        "deliveryId",
+        "headDigest",
+        "actorId",
+        "authorityEvidenceId",
+        "authorityScope",
+        "sequence",
+        "disposition",
+        "reasonCodes",
+        "quarantined",
+        "deliveryDigest",
+        "receiptDigest"
+      ]
+    }
+  }
+}
