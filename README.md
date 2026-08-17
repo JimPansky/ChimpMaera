@@ -1,12 +1,12 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/chimpmaera-negative.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/brand/chimpmaera-master.svg">
-    <img src="assets/brand/chimpmaera-master.svg" width="260" alt="ChimpMaera hybrid chimp-cyborg logo">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/pansphaira-icon-negative.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/pansphaira-icon-positive.svg">
+    <img src="assets/brand/pansphaira-icon-positive.svg" width="260" alt="PANSPHAIRA geometric icon of seven connected circles">
   </picture>
 </p>
 
-# ChimpMaera
+# PANSPHAIRA
 
 **Governed by default. Adaptable by design. Improved through evidence.**
 
@@ -26,7 +26,6 @@ product maturity or universal live compatibility.
 [**Run the POC**](#quickstart) ·
 [**Documentation**](https://jimpansky.github.io/ChimpMaera/) ·
 [**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
-[**Watch the overview**](https://youtu.be/NZbSaHdbW1s) ·
 [**How it works**](#how-it-works)
 
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
@@ -182,13 +181,6 @@ and anonymous readback.
 - Report reproducible defects through [Issues](https://github.com/JimPansky/ChimpMaera/issues)
   and use [Discussions](https://github.com/JimPansky/ChimpMaera/discussions)
   for public project conversation; neither route creates a support SLA.
-- Watch the verified public overviews: [Why ChimpMaera?](https://youtu.be/Dq_XLEzh5I8),
-  [How does it work?](https://youtu.be/w4fWgalD_WQ), and
-  [Security by Default](https://youtu.be/SEPbE-EVoNs).
-
-Videos illustrate the approach; release evidence remains in the repository
-and release pages.
-
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). External media artifacts keep
 their own license boundary; Apache-2.0 grants no trademark rights.
@@ -199,7 +191,7 @@ the Developer Certificate of Origin are defined in
 Voluntary creator support:
 
 <p>
-  <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support ChimpMaera on Ko-fi" width="180" height="33"></a>
+  <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support PANSPHAIRA on Ko-fi" width="180" height="33"></a>
   &nbsp;
-  <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support ChimpMaera on Buy Me a Coffee" width="180" height="33"></a>
+  <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support PANSPHAIRA on Buy Me a Coffee" width="180" height="33"></a>
 </p>
