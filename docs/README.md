@@ -150,4 +150,4 @@ Visibility maintenance is documented in the
 security-boundary and broken-primary-action failures are release blockers;
 broad layout and discoverability findings remain review warnings unless they
 create one of those failures. Follow regular increments through the
-[Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom).
+[Releases Atom feed](https://github.com/JimPansky/PANSPHAIRA/releases.atom).

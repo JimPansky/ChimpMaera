@@ -55,6 +55,6 @@ an architecture. The curated [Now / Next / Later view](./roadmap.md) links to
 the live issue tracker without treating planned work as shipped scope.
 
 For non-sensitive help, use
-[GitHub Q&A](https://github.com/JimPansky/ChimpMaera/discussions/categories/q-a).
+[GitHub Q&A](https://github.com/JimPansky/PANSPHAIRA/discussions/categories/q-a).
 For changes, start with the
-[contribution guide](https://github.com/JimPansky/ChimpMaera/blob/main/CONTRIBUTING.md).
+[contribution guide](https://github.com/JimPansky/PANSPHAIRA/blob/main/CONTRIBUTING.md).

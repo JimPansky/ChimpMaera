@@ -158,7 +158,7 @@ function makeProjection(change?: (source: MaterializedSourceProjection) => Mater
     projectId: order.project.id,
     repository: order.project.repository,
     sourceKind: "PUBLIC_GITHUB" as const,
-    sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git" as const,
+    sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git" as const,
     issueIid: order.issue.iid,
     issueSnapshotDigest: order.issue.snapshotDigest,
     baseRef: order.base.ref,
@@ -211,9 +211,9 @@ const m1bIssueDigest = (): string => chimpMaeraIssueSnapshotDigestV1({
 test("DEV-WORKER-M1A example uses PANSPHAIRA display branding while preserving repository identity", () => {
   const example = JSON.parse(readFileSync("demo/dev-worker/m1a-bootstrap.example.json", "utf8"));
   assert.equal(example.broker.headers["X-Title"], "PANSPHAIRA CM Dev Worker M1A");
-  assert.equal(example.broker.headers["HTTP-Referer"], "https://github.com/JimPansky/ChimpMaera");
-  assert.equal(example.source.repository, "JimPansky/ChimpMaera");
-  assert.equal(example.source.sourceOrigin, "https://github.com/JimPansky/ChimpMaera.git");
+  assert.equal(example.broker.headers["HTTP-Referer"], "https://github.com/JimPansky/PANSPHAIRA");
+  assert.equal(example.source.repository, "JimPansky/PANSPHAIRA");
+  assert.equal(example.source.sourceOrigin, "https://github.com/JimPansky/PANSPHAIRA.git");
 });
 
 const m1bPatchCandidate = (baseCommit: string, before: string, after: string): PatchCandidateV1 => ({
@@ -605,7 +605,7 @@ test("DEV-WORKER-M1B-3 ChimpMaera-only trusted pilot accepts one bounded PUBLIC_
   const after = `${before.trimEnd()}\n\nM1B isolation pilot: live candidates remain documentation-only proposals until the trusted controller independently validates their receipt.\n`;
   const provider = await withFakeProvider((_request, response, body) => {
     assert.doesNotMatch(body, /deepinfra-fixture-token/);
-    assert.match(body, /JimPansky\\\/ChimpMaera|JimPansky\/ChimpMaera/);
+    assert.match(body, /JimPansky\\\/PANSPHAIRA|JimPansky\/PANSPHAIRA/);
     assert.doesNotMatch(body, /PrivateDenied|repositorySearch|github_pat_/i);
     response.setHeader("content-type", "application/json");
     response.end(JSON.stringify(completion(m1bPatchCandidate(baseCommit, before, after), { prompt_tokens: 250, completion_tokens: 90, total_tokens: 340 })));
@@ -693,7 +693,7 @@ test("DEV-WORKER-PILOT-01 admits one new file from a separately bound minimal re
     projectId: trustedOrder.project.id,
     repository: trustedOrder.project.repository,
     sourceKind: "PUBLIC_GITHUB" as const,
-    sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git" as const,
+    sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git" as const,
     issueIid: 121,
     issueSnapshotDigest: sha256(issueSnapshot),
     baseRef: trustedOrder.base.ref,

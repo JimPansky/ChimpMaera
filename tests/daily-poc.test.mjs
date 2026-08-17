@@ -77,7 +77,7 @@ function fixture() {
   writeFileSync(join(source, "package.json"), "{\"name\":\"chimpmaera-fixture\",\"private\":true,\"description\":\"current\"}\n", "utf8");
   writeFileSync(
     join(source, "README.md"),
-    `# PANSPHAIRA\n\nBase.\n\n## Releases\n\n- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)\n- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)\n- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)\n\nRelease pages document included capabilities and evidence boundaries. Recent governed increments also identify related issues/PRs and publish downloadable assets with SHA-256 checksum information.\n\n## Videos\n\nCurrent overview.\n`,
+    `# PANSPHAIRA\n\nBase.\n\n## Releases\n\n- [Latest regular release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)\n- [All releases and history](https://github.com/JimPansky/PANSPHAIRA/releases)\n- [Releases Atom feed](https://github.com/JimPansky/PANSPHAIRA/releases.atom)\n\nRelease pages document included capabilities and evidence boundaries. Recent governed increments also identify related issues/PRs and publish downloadable assets with SHA-256 checksum information.\n\n## Videos\n\nCurrent overview.\n`,
     "utf8",
   );
   git(source, "add", "README.md", "package.json");
@@ -222,7 +222,7 @@ function mutate(fx, kind) {
     case "MISSING_LATEST_RELEASE_FIELD":
       writeFileSync(
         join(fx.source, "README.md"),
-        readFileSync(join(fx.source, "README.md"), "utf8").replace("https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/missing"),
+        readFileSync(join(fx.source, "README.md"), "utf8").replace("https://github.com/JimPansky/PANSPHAIRA/releases/latest", "https://github.com/JimPansky/PANSPHAIRA/releases/missing"),
         "utf8",
       );
       break;

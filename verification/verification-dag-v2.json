@@ -456,7 +456,7 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "00b6aaf6f87285ac39fb5a757dbdc0d83cbe0528f9a78d9c141dc09fa5f76b2b"
+          "sha256": "aab537d12367908a5d89bb4f6ed9e18a403245b2daff0b3cdde836dc92c8c96e"
         },
         {
           "path": "scripts/build-public-release.sh",
@@ -466,7 +466,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "1ba7483b726ff9fc8953cc10e136b05fae5bec3270c5c83f171e930d136fc76e"
+          "sha256": "f62b68e19da17796780d5fd4176f71f99338223c0462d181a16f8332057823c4"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "d4001259df3b6118bd348a84ce49e339da09a7be26f5f314d104e8891c2741c1"
+          "sha256": "0d4f446a7042b2f733bc0331f5bc69bd872df316edeae5dd84edffae97b441c1"
         },
         {
           "path": "package-lock.json",
@@ -856,7 +856,7 @@
         {
           "path": "tests/external-video-service.test.ts",
           "role": "VALIDATOR",
-          "sha256": "d03508be8ddc9f3eb5dd828b0429b1ed4a68dcf342888b765d55fed16140e116"
+          "sha256": "b2bc150b8f57121c3c1e5e24107f5c3ebe65b814674f16fc0daeaff02324232e"
         },
         {
           "path": "docs/EXTERNAL-VIDEO-SERVICE.md",

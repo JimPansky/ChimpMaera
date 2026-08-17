@@ -3,8 +3,8 @@
 ## Supported scope
 
 Published releases are bounded local, synthetic proofs of concept. Use the
-[latest published release](https://github.com/JimPansky/ChimpMaera/releases/latest)
-or [all releases](https://github.com/JimPansky/ChimpMaera/releases) to identify
+[latest published release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)
+or [all releases](https://github.com/JimPansky/PANSPHAIRA/releases) to identify
 the current published bytes and their release-specific evidence. Production
 operation, hostile tenancy, external identity infrastructure, high
 availability and independent immutable audit are unsupported.

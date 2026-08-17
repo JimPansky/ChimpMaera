@@ -18,10 +18,10 @@ import {
 
 export const SYNTHETIC_NOW = "2026-08-04T08:00:00.000Z";
 export const SYNTHETIC_PROJECT = Object.freeze({
-  id: "github-repository:JimPansky/ChimpMaera",
-  repository: "JimPansky/ChimpMaera",
+  id: "github-repository:JimPansky/PANSPHAIRA",
+  repository: "JimPansky/PANSPHAIRA",
   sourceKind: "PUBLIC_GITHUB",
-  sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git",
+  sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git",
   issueIid: 117,
   baseRef: "main",
   baseCommit: "1171171171171171171171171171171171171171",
@@ -42,8 +42,8 @@ export const SERVER_BUDGET: DevBudgetV1 = Object.freeze({
   maxPatchBytes: 2048,
 });
 
-export const CHIMPMAERA_PUBLIC_REPOSITORY = "JimPansky/ChimpMaera" as const;
-export const CHIMPMAERA_PUBLIC_PROJECT_ID = "github-repository:JimPansky/ChimpMaera" as const;
+export const CHIMPMAERA_PUBLIC_REPOSITORY = "JimPansky/PANSPHAIRA" as const;
+export const CHIMPMAERA_PUBLIC_PROJECT_ID = "github-repository:JimPansky/PANSPHAIRA" as const;
 export const CHIMPMAERA_M1B_ALLOWED_PATHS = ["docs/public/robots.txt"] as const;
 export const CHIMPMAERA_M1B_DENIED_PATHS = [
   ".github/**",
@@ -140,7 +140,7 @@ export interface MaterializedSourceProjection {
   readonly projectId: string;
   readonly repository: string;
   readonly sourceKind: "PUBLIC_GITHUB";
-  readonly sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git";
+  readonly sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git";
   readonly issueIid: number;
   readonly baseRef: string;
   readonly baseCommit: string;
@@ -393,7 +393,7 @@ export function materializeM1bChimpMaeraProjection(options: M1bProjectionOptions
       projectId: CHIMPMAERA_PUBLIC_PROJECT_ID,
       repository: CHIMPMAERA_PUBLIC_REPOSITORY,
       sourceKind: "PUBLIC_GITHUB" as const,
-      sourceOrigin: "https://github.com/JimPansky/ChimpMaera.git" as const,
+      sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git" as const,
       issueIid: 117,
       issueSnapshotDigest: options.issueSnapshotDigest,
       baseRef: "main",

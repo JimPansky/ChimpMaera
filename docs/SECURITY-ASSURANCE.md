@@ -7,7 +7,7 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260816.1`](https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260816.1),
+[`v0.2.0-poc.20260816.1`](https://github.com/JimPansky/PANSPHAIRA/releases/tag/v0.2.0-poc.20260816.1),
 the **BI Ownership Migration v2** increment. `v0.1.0` is historical. Release
 state is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not
 inferred from a local branch, a tag alone, a date or an editorial update.
@@ -91,13 +91,13 @@ that ceiling.
 
 ### HISTORICAL ROADMAP PROVENANCE — NOT CURRENT ISSUE STATE
 
-The 2026-08-01 assurance review recorded issue [#3](https://github.com/JimPansky/ChimpMaera/issues/3)
-as open/in progress and epic [#2](https://github.com/JimPansky/ChimpMaera/issues/2)
-plus children [#4](https://github.com/JimPansky/ChimpMaera/issues/4),
-[#5](https://github.com/JimPansky/ChimpMaera/issues/5),
-[#6](https://github.com/JimPansky/ChimpMaera/issues/6),
-[#7](https://github.com/JimPansky/ChimpMaera/issues/7) and
-[#8](https://github.com/JimPansky/ChimpMaera/issues/8) as open/blocked. That is
+The 2026-08-01 assurance review recorded issue [#3](https://github.com/JimPansky/PANSPHAIRA/issues/3)
+as open/in progress and epic [#2](https://github.com/JimPansky/PANSPHAIRA/issues/2)
+plus children [#4](https://github.com/JimPansky/PANSPHAIRA/issues/4),
+[#5](https://github.com/JimPansky/PANSPHAIRA/issues/5),
+[#6](https://github.com/JimPansky/PANSPHAIRA/issues/6),
+[#7](https://github.com/JimPansky/PANSPHAIRA/issues/7) and
+[#8](https://github.com/JimPansky/PANSPHAIRA/issues/8) as open/blocked. That is
 a dated provenance snapshot, not a live status claim; current state must be
 read from GitHub. Issues remain roadmap links, not evidence by themselves.
 

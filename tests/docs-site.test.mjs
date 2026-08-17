@@ -4,7 +4,7 @@ import { join } from "node:path";
 import test from "node:test";
 
 const output = join(process.cwd(), "dist", "docs-site");
-const baseUrl = "https://jimpansky.github.io/ChimpMaera/";
+const baseUrl = "https://jimpansky.github.io/PANSPHAIRA/";
 const curatedPages = [
   ["index.html", baseUrl],
   ["alternatives.html", `${baseUrl}alternatives`],
@@ -42,7 +42,7 @@ test("curated pages have unique canonical, description, OpenGraph, and SoftwareS
     const source = html(path);
     assert.equal(attribute(source, /<link rel="canonical" href="([^"]+)"/), canonical);
     assert.equal(attribute(source, /<meta property="og:url" content="([^"]+)"/), canonical);
-    assert.match(source, /<meta property="og:image" content="https:\/\/opengraph\.githubassets\.com\/1\/JimPansky\/ChimpMaera"/);
+    assert.match(source, /<meta property="og:image" content="https:\/\/opengraph\.githubassets\.com\/1\/JimPansky\/PANSPHAIRA"/);
     assert.match(source, /<meta name="twitter:card" content="summary_large_image"/);
 
     const title = attribute(source, /<meta property="og:title" content="([^"]+)"/);
@@ -58,7 +58,7 @@ test("curated pages have unique canonical, description, OpenGraph, and SoftwareS
     const metadata = JSON.parse(jsonLd);
     assert.equal(metadata["@type"], "SoftwareSourceCode");
     assert.equal(metadata.name, "PANSPHAIRA");
-    assert.equal(metadata.codeRepository, "https://github.com/JimPansky/ChimpMaera");
+    assert.equal(metadata.codeRepository, "https://github.com/JimPansky/PANSPHAIRA");
     assert.equal(metadata.url, canonical);
     assert.equal(metadata.license, "https://www.apache.org/licenses/LICENSE-2.0");
     assert.match(metadata.version, /^0\.2\.0-poc\./);
@@ -76,7 +76,7 @@ test("sitemap and robots expose only the curated public surface", () => {
   const robots = readFileSync(join(output, "robots.txt"), "utf8");
   assert.match(robots, /^User-agent: \*$/m);
   assert.match(robots, /^Allow: \/$/m);
-  assert.match(robots, /^Sitemap: https:\/\/jimpansky\.github\.io\/ChimpMaera\/sitemap\.xml$/m);
+  assert.match(robots, /^Sitemap: https:\/\/jimpansky\.github\.io\/PANSPHAIRA\/sitemap\.xml$/m);
 });
 
 test("development evidence is excluded from the generated site", () => {
@@ -101,17 +101,17 @@ test("intent content stays evidence-linked, honest, and reachable from the home 
 
   const home = html("index.html");
   for (const route of [
-    "/ChimpMaera/QUICKSTART",
-    "/ChimpMaera/SECURE-DEFAULT-PROOF",
-    "/ChimpMaera/KNOWN-LIMITATIONS",
-    "/ChimpMaera/use-cases/crm-erp-approval-readback",
-    "/ChimpMaera/alternatives",
-    "/ChimpMaera/roadmap",
+    "/PANSPHAIRA/QUICKSTART",
+    "/PANSPHAIRA/SECURE-DEFAULT-PROOF",
+    "/PANSPHAIRA/KNOWN-LIMITATIONS",
+    "/PANSPHAIRA/use-cases/crm-erp-approval-readback",
+    "/PANSPHAIRA/alternatives",
+    "/PANSPHAIRA/roadmap",
   ]) {
     assert.match(home, new RegExp(`href="${route}"`));
   }
-  assert.match(home, /github\.com\/JimPansky\/ChimpMaera\/discussions\/categories\/q-a/);
-  assert.match(home, /github\.com\/JimPansky\/ChimpMaera\/blob\/main\/CONTRIBUTING\.md/);
+  assert.match(home, /github\.com\/JimPansky\/PANSPHAIRA\/discussions\/categories\/q-a/);
+  assert.match(home, /github\.com\/JimPansky\/PANSPHAIRA\/blob\/main\/CONTRIBUTING\.md/);
 
   const crmErp = html("use-cases/crm-erp-approval-readback.html");
   assert.match(crmErp, /CM-SEC-007/);
@@ -129,7 +129,7 @@ test("intent content stays evidence-linked, honest, and reachable from the home 
   assert.match(roadmap, /not a second backlog/);
   assert.match(roadmap, /not evidence that a capability is released/);
   for (const issue of [3, 9, 32, 36, 41, 43, 45]) {
-    assert.match(roadmap, new RegExp(`github\\.com/JimPansky/ChimpMaera/issues/${issue}`));
+    assert.match(roadmap, new RegExp(`github\\.com/JimPansky/PANSPHAIRA/issues/${issue}`));
   }
 
   for (const [path] of curatedPages) {
