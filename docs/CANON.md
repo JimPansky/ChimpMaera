@@ -1,4 +1,4 @@
-# The ChimpMaera Canon
+# The PANSPHAIRA Canon
 
 General governed learning and template promotion follows [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md). It preserves typed provenance, evidence, applicability boundaries, invalidation, supersession and rollback instead of treating raw conversations as portable knowledge.
 
@@ -12,14 +12,14 @@ individual product surfaces retain their own evidence and maturity boundaries
 repository product and technical documentation. Localized material belongs to
 separate localization workflows and does not control this document.
 
-The Canon defines ChimpMaera's durable laws. Deployment recipes, product
+The Canon defines PANSPHAIRA's durable laws. Deployment recipes, product
 profiles, adapters, maturity procedures, and operator choices belong in the
-[Zoo Field Guide](ZOO-FIELD-GUIDE.md). A particular Docker, VM, MicroVM, WASM,
+[Operating Field Guide](OPERATING-FIELD-GUIDE.md). A particular Docker, VM, MicroVM, WASM,
 remote-worker, or OS-sandbox implementation is not a Canon law.
 
 The ability to plan or use a tool does not grant permission to act. Models may
 be wrong, inputs and outputs may be hostile, credentials may be overpowered,
-and outcomes may be ambiguous. ChimpMaera therefore treats an Agent as
+and outcomes may be ambiguous. PANSPHAIRA therefore treats an Agent as
 untrusted workload code and mediates meaningful crossings between it and
 models, tools, networks, durable state, secrets, reads, and effects.
 
@@ -48,6 +48,15 @@ knowingly misrepresented or materially concealed.
 - **Agent / Untrusted Runtime:** Model-assisted or deterministic planning and
   tool-calling workload. It is not an authority, Policy, credential, or effect
   boundary.
+- **Agent Sphere / Gateway Sphere:** Architecture and visualization vocabulary
+  for, respectively, the Agent/untrusted-runtime side of a governed boundary
+  and the mediated-capability side. These labels do not define a protocol,
+  schema, API, service, or runtime abstraction.
+- **Connection / Crossing:** A Connection is a permitted information or action
+  link. A Crossing is governed traversal across a boundary. Existing mediation,
+  isolation, Policy, Approval, Authority, Readback, Receipt, and Evidence
+  requirements determine what is permitted; Sphere vocabulary changes none of
+  them.
 - **Capability:** A technically executable function. **Authority:** Permission
   to use that capability under bound conditions.
 - **Owner:** The person or accountable organisation that selects the root of
@@ -61,7 +70,7 @@ knowingly misrepresented or materially concealed.
   ambient host access and is not `FULL_CONTROL_LAB` or `RAMPAGE`.
 - **Dangerous lab / escape Profile:** `FULL_CONTROL_LAB`, `RAMPAGE`, and the
   canonical `RAMPAGE_FULL_CONTROL_LAB` alias name an explicitly risk-accepted
-  profile that may bypass ChimpMaera action and Approval gates up to the host
+  profile that may bypass PANSPHAIRA action and Approval gates up to the host
   process's OS/host ceiling. It is outside `SAFE_GUIDED` and outside Canon
   security claims for every bypassed layer.
 - **Meaningful Boundary Crossing:** Any transfer from the Untrusted Runtime to
@@ -135,7 +144,7 @@ not activate a Profile.
 An implementation may separately offer `FULL_CONTROL_LAB` / `RAMPAGE` as a
 deliberate dangerous lab or escape Profile. That choice preserves Owner agency
 but is not the broadest governed Profile: its exact contract may bypass
-ChimpMaera action and Approval gates and inherits the host process's OS/host
+PANSPHAIRA action and Approval gates and inherits the host process's OS/host
 ceiling. Selection requires exact risk acceptance, a disposable or otherwise
 explicitly bounded environment, visible reset/rollback and recovery duties,
 and an automatic claim downgrade for every bypassed layer. Restart, revoke or
@@ -227,10 +236,10 @@ self-expansion is prohibited; conflicting assignment fails closed.
 
 ### CM-CAN-15 — Admission Does Not Grant Runtime Authority
 
-Admission to a catalogue or Zoo requires neither completeness nor proof of
-maturity. Provenance, signatures, reviews, ratings, and popularity may inform
-trust, but do not activate runtime rights. Discovery, admission, installation,
-Profile request, activation, and effect are separate transitions.
+Admission to a catalogue or operating profile requires neither completeness
+nor proof of maturity. Provenance, signatures, reviews, ratings, and popularity
+may inform trust, but do not activate runtime rights. Discovery, admission,
+installation, Profile request, activation, and effect are separate transitions.
 
 Knowledge and template promotion, selection, reuse, installation, or
 supersession likewise never grant Authority, activate a capability, or widen a

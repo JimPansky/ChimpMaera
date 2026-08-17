@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1100" role="img" aria-labelledby="caged-title caged-desc">
-  <title id="caged-title">Caged Agent to Gateway Zoom-through to Capability Constellation</title>
-  <desc id="caged-desc">A contained, untrusted AI agent sends typed proposals through a narrow API to a control portal. The portal binds context, resolves a capability, decides policy and approval at use time, brokers the exact allowed effect, and verifies provider readback. Stable capability contracts connect to locally evidenced CRM, ERP, and document or API adapters, while a dashed new-provider route shows prepared direction. A provenance-bound knowledge and evidence loop improves later adaptations without adding implicit authority.</desc>
+  <title id="caged-title">PANSPHAIRA Agent Sphere to Gateway Sphere architecture</title>
+  <desc id="caged-desc">An Agent Sphere contains an untrusted AI agent. Typed proposals follow a governed connection and cross the runtime isolation boundary into the Gateway Sphere. The Gateway binds context, resolves a capability, decides policy and approval at use time, brokers the exact allowed effect, and verifies provider readback. Stable capability contracts connect to locally evidenced CRM, ERP, and document or API adapters, while a dashed new-provider route shows prepared direction. A provenance-bound knowledge and evidence loop improves later adaptations without adding implicit authority. Sphere is visualization vocabulary, not a protocol, schema, API, or runtime abstraction.</desc>
   <style>
     text { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     .title { fill: #f8fafc; font-size: 36px; font-weight: 760; }
@@ -27,7 +27,7 @@
   </defs>
 
   <rect width="1800" height="1100" fill="#07111f"/>
-  <text x="78" y="72" class="title">Caged Agent → Gateway Zoom-through → Capability Constellation</text>
+  <text x="78" y="72" class="title">Agent Sphere → Governed Crossing → Gateway Sphere</text>
   <text x="78" y="106" class="subtitle">The model can propose. The control plane decides. Adaptation expands providers without silently expanding authority.</text>
 
   <!-- Connectors are behind nodes. Solid routes are locally evidenced; dashed routes are prepared direction. -->
@@ -42,11 +42,11 @@
 
   <!-- Left containment -->
   <rect x="70" y="164" width="430" height="654" rx="34" class="zone"/>
-  <text x="96" y="202" class="head">CONTAINMENT PLANE</text>
-  <text x="96" y="228" class="small">The agent cannot route around the boundary.</text>
+  <text x="96" y="202" class="head">AGENT SPHERE</text>
+  <text x="96" y="228" class="small">Runtime Isolation Boundary: no route around it.</text>
   <circle cx="285" cy="475" r="154" class="agent"/>
   <circle cx="285" cy="475" r="119" fill="none" stroke="#71345d" stroke-width="2" stroke-dasharray="8 7"/>
-  <text x="285" y="421" text-anchor="middle" class="head">CAGED AGENT</text>
+  <text x="285" y="421" text-anchor="middle" class="head">UNTRUSTED AGENT</text>
   <text x="285" y="455" text-anchor="middle" class="small">untrusted planning</text>
   <text x="285" y="480" text-anchor="middle" class="small">typed proposals only</text>
   <line x1="212" y1="508" x2="358" y2="508" stroke="#71345d"/>
@@ -60,13 +60,13 @@
 
   <!-- Proposal aperture -->
   <rect x="505" y="430" width="156" height="100" rx="48" fill="#0c273e" stroke="#38bdf8" stroke-width="2"/>
-  <text x="583" y="469" text-anchor="middle" class="label">NARROW</text>
-  <text x="583" y="493" text-anchor="middle" class="label">PROPOSAL API</text>
-  <text x="583" y="515" text-anchor="middle" class="micro">schema-bound</text>
+  <text x="583" y="469" text-anchor="middle" class="label">GOVERNED</text>
+  <text x="583" y="493" text-anchor="middle" class="label">CROSSING</text>
+  <text x="583" y="515" text-anchor="middle" class="micro">typed proposal</text>
 
   <!-- Gateway portal -->
   <rect x="662" y="164" width="330" height="654" rx="34" class="gateway"/>
-  <text x="687" y="202" class="head">CONTROL PORTAL</text>
+  <text x="687" y="202" class="head">GATEWAY SPHERE</text>
   <text x="687" y="228" class="small">Every rule dimension is re-evaluated.</text>
   <rect x="704" y="278" width="246" height="66" rx="16" class="box"/><text x="827" y="307" text-anchor="middle" class="label">1 · Bind context</text><text x="827" y="329" text-anchor="middle" class="micro">identity · tenant · purpose</text>
   <rect x="704" y="362" width="246" height="66" rx="16" class="box"/><text x="827" y="391" text-anchor="middle" class="label">2 · Resolve capability</text><text x="827" y="413" text-anchor="middle" class="micro">closed action + operands</text>
@@ -77,9 +77,9 @@
   <text x="827" y="745" text-anchor="middle" class="label">Allowed atom</text>
   <text x="827" y="767" text-anchor="middle" class="micro">exact action, exact scope, exact route</text>
 
-  <!-- Right constellation -->
+  <!-- Capability and provider connections -->
   <rect x="1064" y="164" width="666" height="654" rx="34" class="zone"/>
-  <text x="1090" y="202" class="head">CAPABILITY CONSTELLATION</text>
+  <text x="1090" y="202" class="head">CAPABILITY CONNECTIONS</text>
   <text x="1090" y="228" class="small">Providers can change. The capability contract remains the consumer-facing center.</text>
   <circle cx="1235" cy="480" r="118" fill="#123450" stroke="#38bdf8" stroke-width="2.5"/>
   <text x="1235" y="449" text-anchor="middle" class="head">CAPABILITY</text>

@@ -34,11 +34,13 @@ product maturity or universal live compatibility.
 
 ## How it works
 
-- **Governed by default.** The caged Agent is an untrusted proposer. A narrow,
-  typed proposal enters the Gateway, where identity, tenant, purpose, rights,
-  policy and approval are evaluated at use time. A broker performs only the
-  allowed atom; validation, provider readback, receipts and declared recovery
-  or rollback close the loop.
+- **Governed by default.** The Agent Sphere contains an untrusted proposer. A
+  narrow, typed proposal follows a governed Connection and crosses the Runtime
+  Isolation Boundary into the Gateway Sphere, where identity, tenant, purpose,
+  rights, policy and approval are evaluated at use time. A broker performs only
+  the allowed atom; validation, provider readback, receipts and declared
+  recovery or rollback close the loop. Sphere is terminology and visualization
+  only, not a protocol, schema, API or runtime abstraction.
 - **Adaptable by design.** Stable capability and knowledge contracts separate a
   user's need from provider-specific APIs. Reusable templates supply safe
   defaults; typed adapters bind concrete fields and routes. Rights profiles,
@@ -51,16 +53,17 @@ product maturity or universal live compatibility.
   authoritative default merely because it was observed or shared.
 
 <p align="center">
-  <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="Combined ChimpMaera architecture: a contained AI agent sends typed proposals through a mediating Gateway to stable capability contracts and provider adapters; solid routes show locally evidenced reference paths, dashed routes show prepared add or replace direction, and a provenance-bound knowledge and evidence loop improves later adaptations without adding authority.">
+  <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="PANSPHAIRA architecture: an Agent Sphere sends typed proposals across a governed boundary to a mediating Gateway Sphere and stable capability contracts with provider adapters; solid routes show locally evidenced reference paths, dashed routes show prepared add or replace direction, and a provenance-bound knowledge and evidence loop improves later adaptations without adding authority.">
 </p>
 
-Text fallback: **Agent proposal → Gateway context/capability/policy/approval
-checks → brokered effect → provider readback and receipt.** Stable contracts,
-templates and typed adapters connect capabilities to providers. The governed
-knowledge loop is **knowledge and feedback → typed records → provenance and
-evidence → contracts/templates/adapters → application → tests/readback →
-outcome → improved revision**. Ingestion, confidence/verification, default
-selection and execution authority are separate; unverified knowledge may
+Text fallback: **Agent Sphere proposal → governed Connection and Crossing →
+Gateway Sphere context/capability/policy/approval checks → brokered effect →
+provider readback and receipt.** Stable contracts, templates and typed adapters
+connect capabilities to providers. The governed knowledge loop is **knowledge
+and feedback → typed records → provenance and evidence →
+contracts/templates/adapters → application → tests/readback → outcome →
+improved revision**. Ingestion, confidence/verification, default selection and
+execution authority are separate; unverified knowledge may
 exist without becoming an authoritative default.
 
 Solid paths are locally evidenced `SAFE_GUIDED` reference or local-synthetic
@@ -68,7 +71,7 @@ capability paths. Dashed paths are prepared add/replace product direction.
 Containment plus mediated execution is the security boundary. The diagram is
 not proof of generic filesystem/process/Docker mediation or universal provider
 addition. See the
-[combined technical architecture](docs/ARCHITECTURE.md#combined-architecture-containment-mediation-and-adaptation).
+[combined technical architecture](docs/ARCHITECTURE.md#combined-architecture-agent-sphere-gateway-sphere-and-governed-crossings).
 
 ## Adaptive Knowledge Engineering
 

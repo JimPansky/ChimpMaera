@@ -38,8 +38,11 @@ does not establish production fitness, live-provider compatibility, universal
 security, or permission to use customer data. **Knowledge-driven Operating
 System** is the current product category; broad live-system realization remains
 a [planned direction](./capabilities.md), not current shipped maturity. Its
-current architecture is **Caged Agent → Gateway → Capability Constellation**,
-with only the declared local-synthetic paths evidenced.
+current architecture is **Agent Sphere → governed Connections and Crossings →
+Gateway Sphere**, with only the declared local-synthetic paths evidenced.
+Sphere is terminology and visualization only; the existing isolation,
+mediation, Policy, Approval, Broker, Readback, Receipt and Evidence semantics
+remain unchanged.
 
 Start with the [governed agent-action use case](./use-cases/governed-agent-actions.md),
 follow the specific [CRM-to-ERP approval and readback path](./use-cases/crm-erp-approval-readback.md),

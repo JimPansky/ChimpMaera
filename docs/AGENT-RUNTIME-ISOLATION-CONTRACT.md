@@ -4,15 +4,20 @@ Status: local architecture revision candidate
 
 Date: 2026-08-01
 
-Normative parent: [The ChimpMaera Canon](CANON.md), especially CM-CAN-18
+Normative parent: [The PANSPHAIRA Canon](CANON.md), especially CM-CAN-18
 through CM-CAN-28
 
 ## 1. Product abstraction
 
 The product boundary is the **Agent Runtime Isolation Boundary**, also called
 the **Untrusted Runtime Contract**. It contains Agent-local compute and exposes
-only declared crossings to trusted ChimpMaera Gateway/Broker planes. It is
+only declared crossings to trusted PANSPHAIRA Gateway/Broker planes. It is
 independent of Agent brand, model provider, protocol, and isolation mechanism.
+
+In the current architecture vocabulary, the contained Agent/untrusted-runtime
+side is the **Agent Sphere** and the mediated-capability side is the **Gateway
+Sphere**. These are visualization labels for this existing boundary and its
+trusted planes, not a new protocol, schema, API, service, or runtime layer.
 
 The Agent may transform already admitted data and propose typed intent. It is
 never the Policy decision point, approval authority, credential custodian,
@@ -154,7 +159,7 @@ choice remains inside the Untrusted Runtime Contract.
 
 `FULL_CONTROL_LAB`, `RAMPAGE`, and `RAMPAGE_FULL_CONTROL_LAB` instead name a
 deliberate dangerous lab/escape Profile in the released local setup contract.
-It may bypass ChimpMaera action and Approval gates and can exercise only what
+It may bypass PANSPHAIRA action and Approval gates and can exercise only what
 the host process's OS/host ceiling permits. It therefore does not inherit this
 contract's complete-mediation, isolation, stop or security claims for bypassed
 layers. Selection requires exact Owner risk acceptance, an isolated disposable

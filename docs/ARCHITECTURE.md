@@ -5,7 +5,7 @@ The cross-cutting knowledge lineage and promotion model is specified in
 first explicit negative-evidence-to-governed-template example.
 
 This architecture preserves the initial `v0.1.0` subset identified in
-[The ChimpMaera Canon](CANON.md) and describes the current released local PoC,
+[The PANSPHAIRA Canon](CANON.md) and describes the current released local PoC,
 including the Approval Workbench and later local-synthetic security surfaces.
 The Canon's
 mechanism-independent product abstraction is the Agent Runtime Isolation
@@ -14,19 +14,19 @@ Boundary / Untrusted Runtime Contract, detailed for engineering use in the
 [Known Limitations](KNOWN-LIMITATIONS.md) identifies boundaries that remain
 outside this local snapshot.
 
-The current ChimpMaera release includes a local reference stack with three
+The current PANSPHAIRA release includes a local reference stack with three
 user-facing loopback
 services:
 
-- ChimpMaera coordinates the guided demo, enforces the local action boundary
+- PANSPHAIRA coordinates the guided demo, enforces the local action boundary
   and records a digest-bound receipt.
 - EspoCRM holds the synthetic customer and opportunity view.
 - Dolibarr receives one approved synthetic order and supplies the authoritative
   provider readback.
 
 The shipped demo uses Docker Compose as one Reference Adapter. MariaDB services
-remain on internal Docker networks. ChimpMaera communicates with the provider
-application networks but does not mount the Docker socket. The ChimpMaera
+remain on internal Docker networks. PANSPHAIRA communicates with the provider
+application networks but does not mount the Docker socket. The PANSPHAIRA
 container is non-root, read-only, capability-dropped and configured with
 `no-new-privileges`. This validates only the exact local adapter configuration;
 Docker is not a product-wide requirement or a per-Agent architecture.
@@ -43,7 +43,7 @@ video Docker, job assets, render outputs, upload routes, model weights, GPU
 activation or public side effects.
 
 The `SAFE_GUIDED` effect path follows the Canon's separation: the seed path forms typed
-requests without provider credentials; the ChimpMaera runtime gate performs
+requests without provider credentials; the PANSPHAIRA runtime gate performs
 use-time enforcement; the provider is read back before a bound success receipt
 is recorded. The shipped local demo is not a general Agent Runtime Isolation
 Adapter and does not claim complete mediation for arbitrary model, skill,
@@ -152,21 +152,31 @@ read-only and has only an internal path to the manager. This is not arbitrary
 skill-code safety, a production registry/trust root/store or universal agent
 format compatibility.
 
-## Combined architecture: containment, mediation and adaptation
+## Combined architecture: Agent Sphere, Gateway Sphere and governed crossings
+
+Sphere terms label the existing topology; they do not create a protocol,
+schema, API, service or runtime abstraction. The **Agent Sphere** is the
+Agent/untrusted-runtime side of the governed boundary. The **Gateway Sphere**
+is the mediated-capability side. A **Connection** is a permitted information or
+action link. A **Crossing** is governed traversal across a boundary. The
+Runtime Isolation Boundary, Gateway, Broker, Policy, Approval, Capability,
+Authority, Readback, Receipt and Evidence retain their existing meanings.
 
 The [combined architecture diagram](../assets/diagrams/caged-agent-gateway-constellation.svg)
-joins three previously separate views. First, containment treats the Agent as
-an untrusted proposer with no raw credentials, direct effect route or
-self-approval. Second, mediated execution narrows proposals through a typed API
-and re-evaluates context, capability, rights, Policy and Approval at use time
-before a broker may perform an exact effect. Third, stable capability contracts
-fan out through typed adapters so provider implementation can vary without
-changing the consumer-facing need or inheriting authority.
+joins three previously separate views. First, the Agent Sphere contains an
+untrusted proposer with no raw credentials, direct effect route or
+self-approval. Second, governed Connections and Crossings reach the Gateway
+Sphere, where the existing typed proposal API narrows proposals and the
+Gateway re-evaluates context, capability, rights, Policy and Approval at use
+time before a broker may perform an exact effect. Third, stable capability
+contracts fan out through typed adapters so provider implementation can vary
+without changing the consumer-facing need or inheriting authority.
 
 Solid diagram routes denote the released `SAFE_GUIDED` reference path or
 selected local-synthetic capability paths. Dashed routes denote prepared
 add/replace direction; the solid evidence return informs a later proposal.
-The security boundary is containment plus mediated execution. The current
+The security boundary remains the Runtime Isolation Boundary plus mediated
+execution; Sphere is visualization vocabulary only. The current
 release does not prove complete mediation of generic filesystem, process,
 Docker, model, skill, memory or read crossings, and a prepared provider node
 does not prove universal provider onboarding.
