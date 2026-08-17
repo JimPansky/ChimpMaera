@@ -19,6 +19,7 @@ test("POC-SHOWCASE validates the local release aha manifest", () => {
     "DEMONSTRABLE_POC_POWER_EXTENSIBILITY_UNDERSTANDABILITY",
   );
   assert.equal(validated.productDefinition.localBoundedStartupCommand, "npm run poc:showcase:check");
+  assert.match(validated.productDefinition.completionHistoryStatement, /not total PANSPHAIRA product completeness\.$/);
   assert.ok(validated.modules.length >= 3);
   assert.ok(validated.modules.some(({ capabilityArea }) => capabilityArea === "CODE_FORGE_AUTHORITY"));
   assert.ok(validated.modules.some(({ capabilityArea }) => capabilityArea === "DOCUMENT_PROCESSING"));

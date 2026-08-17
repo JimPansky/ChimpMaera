@@ -42,7 +42,7 @@ test("public release builder binds its exact file count to the manifest", () => 
   const binding = builder.match(/^if count != (\d+):$/m);
   assert.ok(binding, "PUBLIC_MANIFEST_EXACT_COUNT_BINDING_MISSING");
   assert.equal(Number(binding[1]), count);
-  assert.equal(count, 550);
+  assert.equal(count, 553);
   assert.doesNotMatch(builder, /if count\s*(?:>|>=|<|<=)\s*\d+/);
 });
 
@@ -68,11 +68,22 @@ test("README presents governed adaptability and evidence-driven improvement with
   const readme = readFileSync(join(ROOT, "README.md"), "utf8");
   const diagram = readFileSync(join(ROOT, "assets", "diagrams", "caged-agent-gateway-constellation.svg"), "utf8");
   const manifest = readFileSync(join(ROOT, "release", "public-files.manifest"), "utf8");
+  const positiveIcon = readFileSync(join(ROOT, "assets", "brand", "pansphaira-icon-positive.svg"), "utf8");
+  const negativeIcon = readFileSync(join(ROOT, "assets", "brand", "pansphaira-icon-negative.svg"), "utf8");
+  const capabilityDiagram = readFileSync(join(ROOT, "assets", "diagrams", "capability-provider-bindings.svg"), "utf8");
+  const koFi = readFileSync(join(ROOT, "assets", "support", "ko-fi.svg"), "utf8");
+  const buyMeACoffee = readFileSync(join(ROOT, "assets", "support", "buy-me-a-coffee.svg"), "utf8");
   const words = readme.replace(/<[^>]+>/g, " ").trim().split(/\s+/);
   const h2s = readme.match(/^## /gm) ?? [];
 
   assert.match(readme, /An open, knowledge-driven operating system for governed,\s+adaptable AI ecosystems\./);
   assert.match(readme, /Governed by default\. Adaptable by design\. Improved through evidence\./);
+  assert.match(readme, /^# PANSPHAIRA$/m);
+  assert.match(readme, /srcset="assets\/brand\/pansphaira-icon-negative\.svg"/);
+  assert.match(readme, /srcset="assets\/brand\/pansphaira-icon-positive\.svg"/);
+  assert.match(readme, /alt="PANSPHAIRA geometric icon of seven connected circles"/);
+  assert.doesNotMatch(readme, /assets\/brand\/chimpmaera-(?:master|negative)\.(?:png|svg)/);
+  assert.doesNotMatch(readme, /(?:youtu\.be\/|youtube\.com\/)/);
   assert.match(readme, /\*\*Status:\*\* \[current regular release\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\/latest\)/);
   assert.match(readme, /proof of concept · Linux x86_64 · \[Apache-2\.0\]\(LICENSE\)/);
   assert.ok(readme.indexOf("## How it works") < readme.indexOf("## Adaptive Knowledge Engineering"));
@@ -93,6 +104,11 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(diagram, /role="img" aria-labelledby="caged-title caged-desc"/);
   assert.match(diagram, /<title id="caged-title">/);
   assert.match(diagram, /<desc id="caged-desc">/);
+  assert.match(diagram, /PANSPHAIRA Agent Sphere to Gateway Sphere architecture/);
+  assert.match(diagram, /Sphere is visualization vocabulary, not a protocol, schema, API, or runtime abstraction/);
+  assert.match(diagram, /AGENT SPHERE/);
+  assert.match(diagram, /GATEWAY SPHERE/);
+  assert.match(diagram, /GOVERNED[\s\S]{0,80}CROSSING/);
   assert.ok(diagram.indexOf("<!-- Connectors are behind nodes.") < diagram.indexOf("<!-- Left containment -->"));
   assert.equal((diagram.match(/marker-end=/g) ?? []).length, 8);
   assert.match(diagram, /ADAPTIVE KNOWLEDGE ENGINEERING/);
@@ -100,7 +116,27 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(diagram, /Dashed routes = prepared add\/replace direction/);
   assert.match(diagram, /Security boundary = containment \+ mediated execution/);
   assert.doesNotMatch(diagram, /<(?:image|script|linearGradient|radialGradient)\b|(?:href|src)="https?:\/\//i);
+  assert.match(positiveIcon, /role="img" aria-labelledby="pansphaira-icon-positive-title pansphaira-icon-positive-desc"/);
+  assert.match(positiveIcon, /Black geometric icon composed of seven connected circles/);
+  assert.match(negativeIcon, /role="img" aria-labelledby="pansphaira-icon-negative-title pansphaira-icon-negative-desc"/);
+  assert.match(negativeIcon, /White geometric icon composed of seven connected circles/);
+  assert.match(capabilityDiagram, /<title id="title">PANSPHAIRA capability contracts and provider bindings<\/title>/);
+  assert.match(koFi, /<title id="title">Support PANSPHAIRA on Ko-fi<\/title>/);
+  assert.match(buyMeACoffee, /<title id="title">Support PANSPHAIRA on Buy Me a Coffee<\/title>/);
   assert.match(manifest, /^assets\/diagrams\/caged-agent-gateway-constellation\.svg\tassets\/diagrams\/caged-agent-gateway-constellation\.svg\t0644$/m);
+  for (const path of [
+    "assets/brand/README.md",
+    "assets/brand/pansphaira-icon-negative.png",
+    "assets/brand/pansphaira-icon-negative.svg",
+    "assets/brand/pansphaira-icon-positive.png",
+    "assets/brand/pansphaira-icon-positive.svg",
+    "docs/OPERATING-FIELD-GUIDE.md",
+    "docs/PANSPHAIRA-TERMINOLOGY.md",
+  ]) {
+    assert.match(manifest, new RegExp(`^${path.replaceAll(".", "\\.")}\\t${path.replaceAll(".", "\\.")}\\t0644$`, "m"));
+  }
+  assert.doesNotMatch(manifest, /^assets\/brand\/chimpmaera-(?:master|negative)\.(?:png|svg)\t/m);
+  assert.doesNotMatch(manifest, /^docs\/ZOO-FIELD-GUIDE\.md\t/m);
 });
 
 test("release governance negative probes fail closed", async (t) => {
@@ -110,7 +146,7 @@ test("release governance negative probes fail closed", async (t) => {
     ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "broader direction is not a claim of current", "broader direction is current")],
     ["root Security static Latest claim", "ROOT_SECURITY_VERSION_BINDING_DENIED", (root) => append(root, "SECURITY.md", "The latest tagged release is v9.9.9.")],
     ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JimPansky/ChimpMaera/releases/latest", "https://github.com/JimPansky/ChimpMaera/releases/tag/v9.9.9")],
-    ["root Support product-version binding", "ROOT_SUPPORT_VERSION_BINDING_DENIED", (root) => replace(root, "SUPPORT.md", "ChimpMaera is provided", "ChimpMaera v9.9 is provided")],
+    ["root Support product-version binding", "ROOT_SUPPORT_VERSION_BINDING_DENIED", (root) => replace(root, "SUPPORT.md", "PANSPHAIRA is provided", "PANSPHAIRA v9.9 is provided")],
     ["stale Security claim", "SECURITY_STALE_RELEASE_CLAIM_DENIED", (root) => replace(root, "docs/SECURITY-ASSURANCE.md", "## Claim maturity", "v0.1.0 remains the only tagged and published release.\n\n## Claim maturity")],
     ["System Advisor stale pre-release status", "RELEASED_LOCAL_SYNTHETIC_STATUS_MISSING:System Advisor", (root) => replace(root, "docs/SYSTEM-ADVISOR-GUIDE.md", "Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**", "Status: **LOCALLY VALIDATED, NOT RELEASED**")],
     ["Builder defaults stale pre-release status", "RELEASED_LOCAL_SYNTHETIC_STATUS_MISSING:Builder defaults", (root) => replace(root, "docs/BUILDER-CONFIGURATION-DEFAULTS.md", "Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**", "Status: **LOCALLY VALIDATED, NOT RELEASED**")],
@@ -133,7 +169,7 @@ test("release governance negative probes fail closed", async (t) => {
     ["publication metadata removed", "CURRENT_PUBLICATION_METADATA_INVALID", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); delete j.currentRelease.releaseId; writeFileSync(p, JSON.stringify(j)); }],
     ["functional increment title drift", "FUNCTIONAL_INCREMENT_TITLE_MISSING", (root) => { const p = join(root, "release/governance.json"); const j = JSON.parse(readFileSync(p)); j.currentRelease.increment = "MSSQL Scope Compatibility"; writeFileSync(p, JSON.stringify(j)); }],
     ["private path leak", "LEAK_PRIVATE_HOME_PATH:README.md", (root) => append(root, "README.md", ["Current files: ", "home", "alice", "private", ""].join("/"))],
-    ["calendar generator title", "GENERATOR_CALENDAR_RELEASE_TITLE_DENIED", (root) => replace(root, "scripts/daily-poc.mjs", "const releaseTitle = incrementCandidateTitle(manifest);", "const releaseTitle = `ChimpMaera POC Daily — ${manifest.date}`;")]
+    ["calendar generator title", "GENERATOR_CALENDAR_RELEASE_TITLE_DENIED", (root) => replace(root, "scripts/daily-poc.mjs", "const releaseTitle = incrementCandidateTitle(manifest);", "const releaseTitle = `PANSPHAIRA POC Daily — ${manifest.date}`;")]
   ];
   for (const [name, expected, mutate] of probes) {
     await t.test(name, () => {

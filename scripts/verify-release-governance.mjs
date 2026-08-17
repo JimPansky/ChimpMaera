@@ -132,7 +132,7 @@ export function validateRepository(root = process.cwd()) {
 
   const consistencyPaths = [
     "docs/CANON.md",
-    "docs/ZOO-FIELD-GUIDE.md",
+    "docs/OPERATING-FIELD-GUIDE.md",
     "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md",
     "docs/SECURITY-ASSURANCE.md",
     "docs/BUILDER-AGENT-OPERATOR-GUIDE.md",
@@ -143,13 +143,13 @@ export function validateRepository(root = process.cwd()) {
     issue(
       issues,
       /FULL_CONTROL_LAB/.test(text)
-        && /bypass(?:es|ed)?\s+ChimpMaera action(?:\s+and\s+|\/)Approval gates/i.test(text)
+        && /bypass(?:es|ed)?\s+PANSPHAIRA action(?:\s+and\s+|\/)Approval gates/i.test(text)
         && /OS\/host\s+ceiling/i.test(text)
         && /SAFE_GUIDED/.test(text),
       `FULL_CONTROL_LAB_BOUNDARY_MISSING:${path}`,
     );
   }
-  for (const path of ["docs/CANON.md", "docs/ZOO-FIELD-GUIDE.md", "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md", "docs/SECURITY-ASSURANCE.md"]) {
+  for (const path of ["docs/CANON.md", "docs/OPERATING-FIELD-GUIDE.md", "docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md", "docs/SECURITY-ASSURANCE.md"]) {
     issue(issues, /broadest governed\s+(?:Owner\s+)?Profile/i.test(consistencyDocs.get(path)), `GOVERNED_FULL_PROFILE_DISTINCTION_MISSING:${path}`);
   }
 
@@ -171,10 +171,10 @@ export function validateRepository(root = process.cwd()) {
     "Supersession is append-only, traceable, and reversible",
   ]) issue(issues, canon.includes(invariant), `CANON_KNOWLEDGE_INVARIANT_MISSING:${invariant}`);
 
-  const zoo = consistencyDocs.get("docs/ZOO-FIELD-GUIDE.md");
-  issue(issues, /Capability Contract → Governed Template → typed Adapter → Provider Binding/.test(zoo), "ADAPTATION_LIFECYCLE_MISSING");
-  issue(issues, /Verification Fabric v2 remains \*\*Shadow\*\*/.test(zoo), "VERIFICATION_SHADOW_BOUNDARY_MISSING");
-  issue(issues, /all five closed operations[\s\S]{0,160}`cm\.operator\.read` is\s+reserved for a future separate administrative-read Profile/i.test(zoo), "AZURE_POWER_SCOPE_BOUNDARY_MISSING");
+  const operatingGuide = consistencyDocs.get("docs/OPERATING-FIELD-GUIDE.md");
+  issue(issues, /Capability Contract → Governed Template → typed Adapter → Provider Binding/.test(operatingGuide), "ADAPTATION_LIFECYCLE_MISSING");
+  issue(issues, /Verification Fabric v2 remains \*\*Shadow\*\*/.test(operatingGuide), "VERIFICATION_SHADOW_BOUNDARY_MISSING");
+  issue(issues, /all five closed operations[\s\S]{0,160}`cm\.operator\.read` is\s+reserved for a future separate administrative-read Profile/i.test(operatingGuide), "AZURE_POWER_SCOPE_BOUNDARY_MISSING");
 
   const systemAdvisor = read(root, "docs/SYSTEM-ADVISOR-GUIDE.md");
   const builderDefaults = consistencyDocs.get("docs/BUILDER-CONFIGURATION-DEFAULTS.md");
@@ -201,7 +201,9 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /CM-REL-022/.test(capabilityRow("External Superset_BI_Agent service boundary v2")), "CAPABILITY_MAPPING_INVALID:CM-REL-022");
 
   const docsHub = read(root, "docs/README.md");
-  issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub) && /Caged Agent → Gateway → Capability\s+Constellation/.test(docsHub), "DOCS_HUB_PRODUCT_ARCHITECTURE_MISSING");
+  issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub)
+    && /Agent Sphere → governed Connections and\s+Crossings → Gateway Sphere/.test(docsHub)
+    && /Sphere is terminology and\s+visualization only, not a protocol, schema, API or runtime abstraction/.test(docsHub), "DOCS_HUB_PRODUCT_ARCHITECTURE_MISSING");
   issue(issues, /contribution preflight[\s\S]{0,260}no\s+submission, publication, external write/i.test(docsHub), "HMI_PREFLIGHT_HUB_BOUNDARY_MISSING");
 
   const connectionGuide = read(root, "docs/CONNECT-YOUR-FIRST-SYSTEM.md");
