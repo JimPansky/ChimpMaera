@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 8,
+  "graphVersion": 9,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "c77d81c31e28c9740699edf72b5ebe129682b3e131b10467a24cbc42bf65d8cf"
+          "sha256": "f3daac4b3161f81dd7a0b5cabf6c3ba6d47c882809587b4be82f6f55fa9507cb"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -242,7 +242,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "a22f6903850ec3baea7d1a98751c8700fb8c9527d6d9af6681171275055578ed"
+          "sha256": "aee8467acd1c67c7edf338752690677b46b6c34896ca4a2a4f78119495613e98"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -456,17 +456,17 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "285153a1dbbfc09f515cf4ac47c3c7ceaa7dc837faafbc2793665e865635d0e9"
+          "sha256": "5184cc958ff731f8c9d2340c40510bad14fd9e49a9b15dcd83a72d2995e2de51"
         },
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "7da4bd64c2b29d4f74b074e71e1863ef2b18260bc5aba50764b2cb98367d8492"
+          "sha256": "6396392e9ac13197eae866bf22615e43f79d61f445377e3455e70bdfa763ae48"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "8717946a092604cc811c31e211a6880537d965d1d3e1436a7bf5752bc0a71374"
+          "sha256": "1bd3f2050ab57df69c518e33ea894ca43ea9010183396d2985dcf39530f78f6b"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "d0712ad30b0e4b2ed42536ca54638ae837230b5d6ad4ccae77940240a93638dc"
+          "sha256": "d4001259df3b6118bd348a84ce49e339da09a7be26f5f314d104e8891c2741c1"
         },
         {
           "path": "package-lock.json",
@@ -861,11 +861,207 @@
         {
           "path": "docs/EXTERNAL-VIDEO-SERVICE.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "f549703621ad6b8554d9712dd7f8d304a7883b8652f8ab5c6c57c714abab6957"
+          "sha256": "c421a6cd4dcf327963a924eb0274db10e4554a0002905fde21ed98ed0752877a"
+        },
+        {
+          "path": "tools/video-production-reference/EXTENSION-GUIDE.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "65a15a5853714a50d410e431d6e71900fe590a09dc3099ae347fffe8b63e577a"
+        },
+        {
+          "path": "tools/video-production-reference/NOTICE",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "0c75ff07b3732d5f810725bb58def85c0c595191a541d9405a9ed681acbd22c3"
+        },
+        {
+          "path": "tools/video-production-reference/README.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "bb3a0592e9a9a5e9ce0e645e38bbcd55dab90c47adf97a5f9e9186ecaebaf89c"
+        },
+        {
+          "path": "tools/video-production-reference/SHA256SUMS",
+          "role": "CONTRACT",
+          "sha256": "fb2d544b64722025ed4dc38d6c2062705b50f66aa8ca4c68c92eba94f602bf85"
+        },
+        {
+          "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
+          "role": "FIXTURE",
+          "sha256": "49c0ab6c7fe8e28725b57036f9ae921ffca088aa53417a4ff3e45d54c1931c76"
+        },
+        {
+          "path": "tools/video-production-reference/assets/synthetic/frame-s02.png",
+          "role": "FIXTURE",
+          "sha256": "59ac2035972203d2e4d9704617109aa3205c7e25cc00a39b6de596df461acdc8"
+        },
+        {
+          "path": "tools/video-production-reference/assets/synthetic/frame-s03.png",
+          "role": "FIXTURE",
+          "sha256": "fc48018519057b6e430a16e188429d91ce08ac82ccde63a2f3e2f1b9e609c9d3"
+        },
+        {
+          "path": "tools/video-production-reference/assets/synthetic/frame-s04.png",
+          "role": "FIXTURE",
+          "sha256": "f71d6e9a89d4515e51818d8ff279766406b89bad1001ffa1380accc362039295"
+        },
+        {
+          "path": "tools/video-production-reference/assets/synthetic/track-alpha.wav",
+          "role": "FIXTURE",
+          "sha256": "0588d14d07b7a8bed0dcecece9cf523c482e4b221949ea39200e3c3ff2be1e30"
+        },
+        {
+          "path": "tools/video-production-reference/assets/synthetic/track-beta.wav",
+          "role": "FIXTURE",
+          "sha256": "bdb66026805e779a68241d05406ddf58b8704ecf3f655971068154f71ead71a7"
+        },
+        {
+          "path": "tools/video-production-reference/bin/cm-video.mjs",
+          "role": "SECURITY",
+          "sha256": "55e73c09ba21fb7b427e8bb93ba55ee19d948c1c6023a75f02b1027837c77808"
+        },
+        {
+          "path": "tools/video-production-reference/components/audio.pcm-v1.json",
+          "role": "CONTRACT",
+          "sha256": "96d53a184e76bc5115c6eeefbdc7a4761a1a5bb11721eb4cffc751d291ee16f5"
+        },
+        {
+          "path": "tools/video-production-reference/components/qa.cpu-v1.json",
+          "role": "CONTRACT",
+          "sha256": "ae25fdea55d2d5babf14640170741933e05d5ce8170d302e19318fe368f9700c"
+        },
+        {
+          "path": "tools/video-production-reference/components/renderer.cpu-v1.json",
+          "role": "CONTRACT",
+          "sha256": "e57c7459aff7aedef3eaa8b1e9522f15f7df6f15a057873a44c10ead73835f1d"
+        },
+        {
+          "path": "tools/video-production-reference/jobs/job-alpha.synthetic-v1.json",
+          "role": "FIXTURE",
+          "sha256": "3453f8e5f5de0bd40b755fc0638ba3fcb61cd279ddc3496801646dbea0b01d1f"
+        },
+        {
+          "path": "tools/video-production-reference/jobs/job-beta.synthetic-v1.json",
+          "role": "FIXTURE",
+          "sha256": "0bcd37730b5f85a3a65b5d04a549968e7af7d4df35a7db1e20b9b6bf2282ad9b"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/component-descriptor.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "a7f106a6c230222d3b57b874ad56e4f0efdaacdff0bb0a6cc94d82301f1fce15"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/ownership-marker.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "dda47896afcb53b8f8cd6bb6a36edb05124e512d7c49da38891ccf8dd2a19262"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/package-index.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "9e44798c85bd453fd66c8aad3f39dccce9c375a0be95911ad87846b26ae3e0bb"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/qa-receipt.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "b033836a618a9d7d49889bce7fe6681cab59f7aa5e13bc818ba904e1a2c8d588"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/render-manifest.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "0d4e72eb78d761115fc23ac02ee7595424ef6c41bc0c3ebabd785948adffddec"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/success-marker.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "fe609315b36923cd101ffc53cd7a618697aa43aaf0a22c848b3ea965877390ea"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/timeline.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "0fe7c3da742937e2f8cdb8300bd8ab30a979df32ee2a433a57d1dea5c10392b7"
+        },
+        {
+          "path": "tools/video-production-reference/schemas/video-job.schema.v1.json",
+          "role": "SCHEMA",
+          "sha256": "7385c93d30682628aca9eebda360a359e2c8d269052beb526d9d4bb1b8dda7c8"
+        },
+        {
+          "path": "tools/video-production-reference/scripts/generate-synthetic-assets.mjs",
+          "role": "VALIDATOR",
+          "sha256": "c73524369b9350605a5a9a7c84b6a8bd89b33cab375c08a8f8f05eab6bace149"
+        },
+        {
+          "path": "tools/video-production-reference/scripts/verify-closure.mjs",
+          "role": "VALIDATOR",
+          "sha256": "44c186ff86b0bb9d67feb6851a6fb97daf091233d6c04afa6ab0eaddbe6b37f0"
+        },
+        {
+          "path": "tools/video-production-reference/src/audio-pcm.mjs",
+          "role": "SOURCE",
+          "sha256": "b2672da02ede1fac79c23d107c7bc4295b62ef11fccfae2a0f3e2c71b22af8d9"
+        },
+        {
+          "path": "tools/video-production-reference/src/controller.mjs",
+          "role": "SECURITY",
+          "sha256": "b3e31260014de4c07220fc1117d6ef800e9fc68dffba9c0b5798dc2b4da7d0da"
+        },
+        {
+          "path": "tools/video-production-reference/src/job-validator.mjs",
+          "role": "SECURITY",
+          "sha256": "a1abaca9ff5e319e082de36dd7d42c02889d223aec8c5132139599d34a7d6977"
+        },
+        {
+          "path": "tools/video-production-reference/src/media-io.mjs",
+          "role": "SECURITY",
+          "sha256": "557b6ca395927eee2b712e526d3d19a88633aa18d3070abe88326a3843ad5b9c"
+        },
+        {
+          "path": "tools/video-production-reference/src/package-assembly.mjs",
+          "role": "SECURITY",
+          "sha256": "dc3bf18be5004052d0c4abe40778df6227ee8c20f02408ecac10039cb2873a30"
+        },
+        {
+          "path": "tools/video-production-reference/src/qa-cpu.mjs",
+          "role": "SOURCE",
+          "sha256": "3e1d8e5c0cf76faa184f3afc2199bb89857d89dce886eb2f63989bdec93f98fd"
+        },
+        {
+          "path": "tools/video-production-reference/src/render-cpu.mjs",
+          "role": "SOURCE",
+          "sha256": "80d157f4fed19d9cbb99a47a18e27b4a7aebd32952665b6080f01d9940b51941"
+        },
+        {
+          "path": "tools/video-production-reference/src/safe-io.mjs",
+          "role": "SECURITY",
+          "sha256": "6816424962448924ad00e7cdbc3bbb4e6fb19bdb5ce8727d3fb9692fb7bfa6c9"
+        },
+        {
+          "path": "tools/video-production-reference/src/select-component.mjs",
+          "role": "SECURITY",
+          "sha256": "4ae9bbd03fb2966262ada3b8162e435366b3c99d1dc93e2226eb07e38dbd84e0"
+        },
+        {
+          "path": "tools/video-production-reference/src/strict-json.mjs",
+          "role": "SECURITY",
+          "sha256": "54f9a01d34131ece91fca433122b0dd72afa7ab7fe92a3483d5b460857bd222e"
+        },
+        {
+          "path": "tools/video-production-reference/src/verify-closure.mjs",
+          "role": "VALIDATOR",
+          "sha256": "d4b6a9466794306b59f1465aa668464074c1ecefb5fb0b62e9423c14c7bef6ba"
+        },
+        {
+          "path": "tools/video-production-reference/tests/closure.test.mjs",
+          "role": "VALIDATOR",
+          "sha256": "2452223d6db0162e5f80fd68fb9dbfd73b0bdcd8fdfc60944e78c2f81b543b04"
+        },
+        {
+          "path": "tools/video-production-reference/tests/slice.test.mjs",
+          "role": "SECURITY",
+          "sha256": "f159ca595e7884b10277dd694e5625f5787ebdbb1ae1a32898de6403e0323655"
         }
       ],
       "ownedTests": [
-        "npm run external-video-service:test"
+        "npm run external-video-service:test",
+        "npm run video:test"
       ],
       "invariants": [
         "Audience assumptions retain observed, sourced, hypothesis and editorial-decision types with provenance, scope, confidence and non-stale review dates.",

@@ -1,0 +1,15 @@
+{
+  "backend": "cpu-ffmpeg-free",
+  "capabilities": [
+    "synthetic.complete-artifact-readback",
+    "synthetic.png-wav-bounded-parse"
+  ],
+  "defaultFor": "linux-cpu-reference",
+  "id": "qa.cpu.v1",
+  "implementation": "src/qa-cpu.mjs",
+  "implementationSha256": "3e1d8e5c0cf76faa184f3afc2199bb89857d89dce886eb2f63989bdec93f98fd",
+  "prohibitedFallback": true,
+  "role": "qa",
+  "schemaVersion": "chimpmaera.video/component-descriptor/v1",
+  "version": "1.0.0"
+}

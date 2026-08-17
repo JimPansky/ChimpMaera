@@ -1,0 +1,39 @@
+{
+  "$defs": {
+    "sha": { "pattern": "^[a-f0-9]{64}$", "type": "string" }
+  },
+  "$id": "chimpmaera.video/synthetic-timeline/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "audio": {
+      "additionalProperties": false,
+      "properties": {
+        "file": { "const": "audio.pcm.wav" },
+        "id": { "type": "string" },
+        "measuredWav": { "additionalProperties": false, "properties": { "bitsPerSample": { "const": 16 }, "channels": { "const": 1 }, "dataBytes": { "type": "integer" }, "sampleCount": { "type": "integer" }, "sampleRate": { "const": 48000 } }, "required": ["bitsPerSample", "channels", "dataBytes", "sampleCount", "sampleRate"], "type": "object" },
+        "sha256": { "$ref": "#/$defs/sha" }
+      },
+      "required": ["file", "id", "measuredWav", "sha256"],
+      "type": "object"
+    },
+    "frames": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "endFrame": { "type": "integer" }, "file": { "pattern": "^frames/S[0-9]{2}\\.png$", "type": "string" }, "id": { "type": "string" },
+          "measuredPng": { "additionalProperties": false, "properties": { "bitDepth": { "const": 8 }, "colorType": { "const": 2 }, "height": { "const": 720 }, "width": { "const": 1280 } }, "required": ["bitDepth", "colorType", "height", "width"], "type": "object" },
+          "sceneId": { "pattern": "^S[0-9]{2}$", "type": "string" }, "sha256": { "$ref": "#/$defs/sha" }, "startFrame": { "type": "integer" }
+        },
+        "required": ["endFrame", "file", "id", "measuredPng", "sceneId", "sha256", "startFrame"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "job": { "additionalProperties": false, "properties": { "immutableOutputVersion": { "type": "string" }, "jobDigest": { "$ref": "#/$defs/sha" }, "name": { "type": "string" } }, "required": ["immutableOutputVersion", "jobDigest", "name"], "type": "object" },
+    "schemaVersion": { "const": "chimpmaera.video/synthetic-timeline/v1" },
+    "target": { "additionalProperties": false, "properties": { "declaredTargetPixelFormat": { "const": "yuv420p" }, "durationFrames": { "type": "integer" }, "durationSeconds": { "type": "number" }, "fps": { "const": 30 }, "height": { "const": 720 }, "width": { "const": 1280 } }, "required": ["declaredTargetPixelFormat", "durationFrames", "durationSeconds", "fps", "height", "width"], "type": "object" }
+  },
+  "required": ["audio", "frames", "job", "schemaVersion", "target"],
+  "type": "object"
+}

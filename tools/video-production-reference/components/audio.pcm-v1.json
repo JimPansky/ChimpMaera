@@ -1,0 +1,14 @@
+{
+  "backend": "cpu-ffmpeg-free",
+  "capabilities": [
+    "synthetic.pcm16-mono-48000-passthrough"
+  ],
+  "defaultFor": "linux-cpu-reference",
+  "id": "audio.pcm.v1",
+  "implementation": "src/audio-pcm.mjs",
+  "implementationSha256": "b2672da02ede1fac79c23d107c7bc4295b62ef11fccfae2a0f3e2c71b22af8d9",
+  "prohibitedFallback": true,
+  "role": "audio",
+  "schemaVersion": "chimpmaera.video/component-descriptor/v1",
+  "version": "1.0.0"
+}

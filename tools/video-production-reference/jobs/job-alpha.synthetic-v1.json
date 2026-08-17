@@ -1,0 +1,66 @@
+{
+  "apiVersion": "cm.video/v1",
+  "kind": "VideoJob",
+  "metadata": {
+    "immutableOutputVersion": "synthetic-alpha-v1",
+    "name": "job-alpha"
+  },
+  "spec": {
+    "assets": {
+      "audio": {
+        "channels": 1,
+        "id": "audio-alpha",
+        "path": "track-alpha.wav",
+        "sampleRate": 48000,
+        "sha256": "0588d14d07b7a8bed0dcecece9cf523c482e4b221949ea39200e3c3ff2be1e30",
+        "status": "accepted"
+      },
+      "shots": [
+        {
+          "endFrame": 30,
+          "id": "shot-a",
+          "path": "frame-s01.png",
+          "sceneId": "S01",
+          "sha256": "49c0ab6c7fe8e28725b57036f9ae921ffca088aa53417a4ff3e45d54c1931c76",
+          "startFrame": 0,
+          "status": "accepted"
+        },
+        {
+          "endFrame": 60,
+          "id": "shot-b",
+          "path": "frame-s02.png",
+          "sceneId": "S02",
+          "sha256": "59ac2035972203d2e4d9704617109aa3205c7e25cc00a39b6de596df461acdc8",
+          "startFrame": 30,
+          "status": "accepted"
+        }
+      ]
+    },
+    "audio": {
+      "backend": "cpu-ffmpeg-free",
+      "expectedVersion": "^1.0.0"
+    },
+    "mode": "full-render",
+    "qa": {
+      "backend": "cpu-ffmpeg-free",
+      "expectedVersion": "^1.0.0"
+    },
+    "render": {
+      "backend": "cpu-ffmpeg-free",
+      "expectedVersion": "^1.0.0",
+      "overwrite": false,
+      "publicActions": "forbidden"
+    },
+    "roots": {
+      "assets": "assets/synthetic"
+    },
+    "video": {
+      "declaredTargetPixelFormat": "yuv420p",
+      "durationFrames": 60,
+      "durationSeconds": 2,
+      "fps": 30,
+      "height": 720,
+      "width": 1280
+    }
+  }
+}

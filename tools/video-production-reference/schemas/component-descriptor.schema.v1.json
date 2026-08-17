@@ -1,0 +1,70 @@
+{
+  "$id": "chimpmaera.video/component-descriptor/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "backend": { "const": "cpu-ffmpeg-free" },
+        "capabilities": { "const": ["synthetic.pcm16-mono-48000-passthrough"] },
+        "defaultFor": { "const": "linux-cpu-reference" },
+        "id": { "const": "audio.pcm.v1" },
+        "implementation": { "const": "src/audio-pcm.mjs" },
+        "implementationSha256": { "const": "b2672da02ede1fac79c23d107c7bc4295b62ef11fccfae2a0f3e2c71b22af8d9" },
+        "prohibitedFallback": { "const": true },
+        "role": { "const": "audio" },
+        "schemaVersion": { "const": "chimpmaera.video/component-descriptor/v1" },
+        "version": { "const": "1.0.0" }
+      },
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "backend": { "const": "cpu-ffmpeg-free" },
+        "capabilities": { "const": ["synthetic.complete-artifact-readback", "synthetic.png-wav-bounded-parse"] },
+        "defaultFor": { "const": "linux-cpu-reference" },
+        "id": { "const": "qa.cpu.v1" },
+        "implementation": { "const": "src/qa-cpu.mjs" },
+        "implementationSha256": { "const": "3e1d8e5c0cf76faa184f3afc2199bb89857d89dce886eb2f63989bdec93f98fd" },
+        "prohibitedFallback": { "const": true },
+        "role": { "const": "qa" },
+        "schemaVersion": { "const": "chimpmaera.video/component-descriptor/v1" },
+        "version": { "const": "1.0.0" }
+      },
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "backend": { "const": "cpu-ffmpeg-free" },
+        "capabilities": { "const": ["synthetic.canonical-package-index", "synthetic.png-frame-assembly"] },
+        "defaultFor": { "const": "linux-cpu-reference" },
+        "id": { "const": "renderer.cpu.v1" },
+        "implementation": { "const": "src/render-cpu.mjs" },
+        "implementationSha256": { "const": "80d157f4fed19d9cbb99a47a18e27b4a7aebd32952665b6080f01d9940b51941" },
+        "prohibitedFallback": { "const": true },
+        "role": { "const": "renderer" },
+        "schemaVersion": { "const": "chimpmaera.video/component-descriptor/v1" },
+        "version": { "const": "1.0.0" }
+      },
+      "type": "object"
+    }
+  ],
+  "properties": {
+    "backend": { "type": "string" },
+    "capabilities": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+    "defaultFor": { "type": "string" },
+    "id": { "type": "string" },
+    "implementation": { "type": "string" },
+    "implementationSha256": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "prohibitedFallback": { "type": "boolean" },
+    "role": { "type": "string" },
+    "schemaVersion": { "type": "string" },
+    "version": { "type": "string" }
+  },
+  "required": ["backend", "capabilities", "defaultFor", "id", "implementation", "implementationSha256", "prohibitedFallback", "role", "schemaVersion", "version"],
+  "title": "Closed static synthetic component descriptor registry",
+  "type": "object"
+}

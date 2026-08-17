@@ -1,0 +1,15 @@
+{
+  "backend": "cpu-ffmpeg-free",
+  "capabilities": [
+    "synthetic.canonical-package-index",
+    "synthetic.png-frame-assembly"
+  ],
+  "defaultFor": "linux-cpu-reference",
+  "id": "renderer.cpu.v1",
+  "implementation": "src/render-cpu.mjs",
+  "implementationSha256": "80d157f4fed19d9cbb99a47a18e27b4a7aebd32952665b6080f01d9940b51941",
+  "prohibitedFallback": true,
+  "role": "renderer",
+  "schemaVersion": "chimpmaera.video/component-descriptor/v1",
+  "version": "1.0.0"
+}

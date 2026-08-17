@@ -1,0 +1,11 @@
+ChimpMaera synthetic CPU video package reference
+
+The PNG and WAV fixtures in assets/synthetic are generated entirely from fixed
+constants by scripts/generate-synthetic-assets.mjs and are intended for
+redistributable conformance testing.
+
+The .cmvideo output is canonical synthetic package-index JSON. It is not a
+playable video or media container. This reference provides no production
+renderer, codec, Docker/container hardening, GPU, TTS, model, network,
+publication, deployment, production-media, external-artifact-equivalence, or
+NVENC-byte-identity claim.
