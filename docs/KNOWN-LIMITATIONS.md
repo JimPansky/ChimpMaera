@@ -7,9 +7,14 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The PANSPHAIRA Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260816.1` and its scoped evidence; a later documentation
+`v0.2.0-poc.20260817.1` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 
+- The Naming and Sphere Cutover covers only the forward current-tree
+  PANSPHAIRA name, repository and Pages location and bounded Sphere terminology
+  and visualization. Stable CM/chimpmaera machine identities and all historical
+  releases remain unchanged. It is not a protocol, schema, API or runtime
+  migration and adds no production claim.
 - This is a local synthetic proof of concept, not a production deployment or
   security certification.
 - The supported demo host is Linux x86_64 with Docker Engine and Docker Compose

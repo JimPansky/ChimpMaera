@@ -2,32 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JimPansky/PANSPHAIRA",
   "currentRelease": {
-    "releaseId": 371418455,
-    "tag": "v0.2.0-poc.20260816.1",
-    "title": "ChimpMaera v0.2.0-poc.20260816.1 - BI Ownership Migration v2",
-    "increment": "BI Ownership Migration v2",
-    "targetCommitish": "73c0133c3eea20475b155bc10ed25178138bf526",
-    "tagObjectSha": "73c0133c3eea20475b155bc10ed25178138bf526",
-    "publishedAt": "2026-08-16T19:52:58Z",
-    "url": "https://github.com/JimPansky/PANSPHAIRA/releases/tag/v0.2.0-poc.20260816.1",
+    "releaseId": 371888031,
+    "tag": "v0.2.0-poc.20260817.1",
+    "title": "PANSPHAIRA v0.2.0-poc.20260817.1 - Naming and Sphere Cutover",
+    "increment": "Naming and Sphere Cutover",
+    "targetCommitish": "67585186e34ac26489dc3e35b0e7713bb41b6a28",
+    "tagObjectSha": "67585186e34ac26489dc3e35b0e7713bb41b6a28",
+    "publishedAt": "2026-08-17T19:02:19Z",
+    "url": "https://github.com/JimPansky/PANSPHAIRA/releases/tag/v0.2.0-poc.20260817.1",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz",
-        "size": 1081488,
-        "sha256": "f2bab81c5893140208c0a634b90f9fb56bab11a5116f7a47d0fb30e5570c53f8"
+        "name": "cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz",
+        "size": 1317937,
+        "sha256": "ed6ba63d342b2258b2df39246be77e6ee725e6b8bdef4d3721c58d0813eb9d69"
       },
       {
-        "name": "cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz.sha256",
-        "size": 122,
-        "sha256": "42168bb15bfc6067890ded9bd2a47c6d376465ffeb4e48b2b9df2f81ea89fa92"
+        "name": "cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz.sha256",
+        "size": 125,
+        "sha256": "303fd996fbc3f7ed5b7cb42a4715baa8c3b2a048041459cacb8f1ca137a7b071"
       }
     ],
     "assetManifest": {
-      "name": "cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz.sha256",
-      "declares": "cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz"
+      "name": "cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz.sha256",
+      "declares": "cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz"
     }
   },
   "policy": {
@@ -81,9 +81,9 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260816.1 is the current regular Latest release.",
+      "claim": "v0.2.0-poc.20260817.1 is the current regular Latest release for the forward current-tree PANSPHAIRA naming, repository and Pages cutover and the bounded Sphere terminology and visual model.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status."]
+      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "Stable CM/chimpmaera machine identities and all historical releases remain unchanged.", "No protocol, schema, API or runtime migration or production claim is made."]
     },
     {
       "claimId": "CM-REL-002",
