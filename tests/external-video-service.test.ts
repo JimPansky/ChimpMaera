@@ -15,7 +15,7 @@ const artifact = "portable-video-reference-archive";
 const artifactSha256 = createHash("sha256").update(Buffer.from(artifact)).digest("hex");
 
 const goodEnv = {
-  CM_VIDEO_REFERENCE_ARTIFACT_URL: "https://github.com/JimPansky/ChimpMaera/releases/download/v0.2.0-poc.20260814.1/chimpmaera-video-reference-2026.08.02-v2.tar.gz",
+  CM_VIDEO_REFERENCE_ARTIFACT_URL: "https://github.com/JimPansky/PANSPHAIRA/releases/download/v0.2.0-poc.20260814.1/chimpmaera-video-reference-2026.08.02-v2.tar.gz",
   CM_VIDEO_REFERENCE_ARTIFACT_SHA256: artifactSha256,
   CM_VIDEO_REFERENCE_VERSION: EXTERNAL_VIDEO_SERVICE_MIN_PRODUCT_VERSION_V1,
   CM_VIDEO_REFERENCE_CONTRACT_VERSION: EXTERNAL_VIDEO_SERVICE_MIN_CONTRACT_VERSION_V1,

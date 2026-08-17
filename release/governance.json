@@ -1,6 +1,6 @@
 {
   "schemaVersion": "chimpmaera.release-governance/v1",
-  "repository": "JimPansky/ChimpMaera",
+  "repository": "JimPansky/PANSPHAIRA",
   "currentRelease": {
     "releaseId": 371418455,
     "tag": "v0.2.0-poc.20260816.1",
@@ -9,7 +9,7 @@
     "targetCommitish": "73c0133c3eea20475b155bc10ed25178138bf526",
     "tagObjectSha": "73c0133c3eea20475b155bc10ed25178138bf526",
     "publishedAt": "2026-08-16T19:52:58Z",
-    "url": "https://github.com/JimPansky/ChimpMaera/releases/tag/v0.2.0-poc.20260816.1",
+    "url": "https://github.com/JimPansky/PANSPHAIRA/releases/tag/v0.2.0-poc.20260816.1",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,

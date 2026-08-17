@@ -341,9 +341,9 @@ function semanticIssues(manifest, sourceRepo, facts) {
     if (heading !== "PANSPHAIRA") issues.push("README_CURRENT_IDENTITY_MUST_BE_TIMELESS");
     const activeReleaseSection = readme.split(/^## /m).find((value) => value.startsWith("Releases")) ?? "";
     const stableReleaseLinks = [
-      "](https://github.com/JimPansky/ChimpMaera/releases/latest)",
-      "](https://github.com/JimPansky/ChimpMaera/releases)",
-      "](https://github.com/JimPansky/ChimpMaera/releases.atom)",
+      "](https://github.com/JimPansky/PANSPHAIRA/releases/latest)",
+      "](https://github.com/JimPansky/PANSPHAIRA/releases)",
+      "](https://github.com/JimPansky/PANSPHAIRA/releases.atom)",
     ];
     if (!stableReleaseLinks.every((link) => activeReleaseSection.includes(link)) || /\breleases\/tag\//i.test(activeReleaseSection)) {
       issues.push("README_PUBLIC_RELEASE_STATUS_MISSING_OR_INVALID");

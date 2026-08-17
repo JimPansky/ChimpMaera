@@ -2,14 +2,14 @@ import { readFileSync } from "node:fs";
 import { posix } from "node:path";
 import { defineConfig, type HeadConfig } from "vitepress";
 
-const repositoryUrl = "https://github.com/JimPansky/ChimpMaera";
-const siteUrl = "https://jimpansky.github.io/ChimpMaera/";
+const repositoryUrl = "https://github.com/JimPansky/PANSPHAIRA";
+const siteUrl = "https://jimpansky.github.io/PANSPHAIRA/";
 // PAN-10 handoff: keep repositoryUrl, siteUrl, socialImage, base, the sitemap
 // URL matcher, and every canonical/codeRepository/nav/edit/social consumer on
 // the current repository and Pages identity until the external rename gate.
 const siteDescription =
   "Open-source local proof of concept for governed, verifiable AI-agent actions across business systems.";
-const socialImage = "https://opengraph.githubassets.com/1/JimPansky/ChimpMaera";
+const socialImage = "https://opengraph.githubassets.com/1/JimPansky/PANSPHAIRA";
 const releaseMetadata = JSON.parse(
   readFileSync(new URL("../../release/governance.json", import.meta.url), "utf8"),
 ) as { currentRelease: { tag: string } };
@@ -44,7 +44,7 @@ export default defineConfig({
   lang: "en-US",
   title: "PANSPHAIRA",
   description: siteDescription,
-  base: "/ChimpMaera/",
+  base: "/PANSPHAIRA/",
   outDir: "../dist/docs-site",
   cleanUrls: true,
   lastUpdated: true,
@@ -78,7 +78,7 @@ export default defineConfig({
   sitemap: {
     hostname: siteUrl,
     transformItems: (items) => items.filter((item) => {
-      const path = item.url.replace(/^https:\/\/jimpansky\.github\.io\/ChimpMaera\//, "").replace(/\/$/, "");
+      const path = item.url.replace(/^https:\/\/jimpansky\.github\.io\/PANSPHAIRA\//, "").replace(/\/$/, "");
       return curatedSitemapPaths.has(path);
     }),
   },

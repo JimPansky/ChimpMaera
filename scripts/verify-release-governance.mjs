@@ -67,9 +67,9 @@ export function validateRepository(root = process.cwd()) {
   issue(
     issues,
     [
-      "](https://github.com/JimPansky/ChimpMaera/releases/latest)",
-      "](https://github.com/JimPansky/ChimpMaera/releases)",
-      "](https://github.com/JimPansky/ChimpMaera/releases.atom)",
+      "](https://github.com/JimPansky/PANSPHAIRA/releases/latest)",
+      "](https://github.com/JimPansky/PANSPHAIRA/releases)",
+      "](https://github.com/JimPansky/PANSPHAIRA/releases.atom)",
     ].every((link) => releaseSection.includes(link)),
     "README_STABLE_RELEASE_NAVIGATION_MISSING",
   );
@@ -95,8 +95,8 @@ export function validateRepository(root = process.cwd()) {
   const rootSecurity = files.get("SECURITY.md") ?? "";
   issue(
     issues,
-    /\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\/latest\)/.test(rootSecurity)
-      && /\]\(https:\/\/github\.com\/JimPansky\/ChimpMaera\/releases\)/.test(rootSecurity),
+    /\]\(https:\/\/github\.com\/JimPansky\/PANSPHAIRA\/releases\/latest\)/.test(rootSecurity)
+      && /\]\(https:\/\/github\.com\/JimPansky\/PANSPHAIRA\/releases\)/.test(rootSecurity),
     "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING",
   );
   issue(issues, !ROOT_DOC_VERSION_BINDING.test(rootSecurity), "ROOT_SECURITY_VERSION_BINDING_DENIED");

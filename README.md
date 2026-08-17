@@ -20,12 +20,12 @@ model.
 adaptable AI ecosystems. This broader direction is not a claim of current
 product maturity or universal live compatibility.
 
-**Status:** [current regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
+**Status:** [current regular release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)
 · proof of concept · Linux x86_64 · [Apache-2.0](LICENSE)
 
 [**Run the POC**](#quickstart) ·
-[**Documentation**](https://jimpansky.github.io/ChimpMaera/) ·
-[**Latest release**](https://github.com/JimPansky/ChimpMaera/releases/latest) ·
+[**Documentation**](https://jimpansky.github.io/PANSPHAIRA/) ·
+[**Latest release**](https://github.com/JimPansky/PANSPHAIRA/releases/latest) ·
 [**How it works**](#how-it-works)
 
 [Security and limitations](docs/SECURITY-ASSURANCE.md) ·
@@ -120,7 +120,7 @@ published checksum sidecar, then verify before extracting:
 ```sh
 release=v0.2.0-poc.20260816.1
 archive=cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz
-base=https://github.com/JimPansky/ChimpMaera/releases/download/$release
+base=https://github.com/JimPansky/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
@@ -165,9 +165,9 @@ authority.
 
 ## Releases
 
-- [Latest regular release](https://github.com/JimPansky/ChimpMaera/releases/latest)
-- [All releases and history](https://github.com/JimPansky/ChimpMaera/releases)
-- [Releases Atom feed](https://github.com/JimPansky/ChimpMaera/releases.atom)
+- [Latest regular release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)
+- [All releases and history](https://github.com/JimPansky/PANSPHAIRA/releases)
+- [Releases Atom feed](https://github.com/JimPansky/PANSPHAIRA/releases.atom)
 
 Release pages own included capabilities, increment details, evidence boundaries,
 related issues/PRs, tests, assets and SHA-256 information;
@@ -180,8 +180,8 @@ and anonymous readback.
 
 - [Contribute](CONTRIBUTING.md), [get support](SUPPORT.md), or report a
   vulnerability through the [private security route](SECURITY.md).
-- Report reproducible defects through [Issues](https://github.com/JimPansky/ChimpMaera/issues)
-  and use [Discussions](https://github.com/JimPansky/ChimpMaera/discussions)
+- Report reproducible defects through [Issues](https://github.com/JimPansky/PANSPHAIRA/issues)
+  and use [Discussions](https://github.com/JimPansky/PANSPHAIRA/discussions)
   for public project conversation; neither route creates a support SLA.
 Code is Apache-2.0 under [LICENSE](LICENSE), [NOTICE](NOTICE) and
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). External media artifacts keep

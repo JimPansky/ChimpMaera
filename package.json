@@ -12,13 +12,13 @@
     "auditability",
     "business-systems"
   ],
-  "homepage": "https://github.com/JimPansky/ChimpMaera#readme",
+  "homepage": "https://github.com/JimPansky/PANSPHAIRA#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JimPansky/ChimpMaera.git"
+    "url": "git+https://github.com/JimPansky/PANSPHAIRA.git"
   },
   "bugs": {
-    "url": "https://github.com/JimPansky/ChimpMaera/issues"
+    "url": "https://github.com/JimPansky/PANSPHAIRA/issues"
   },
   "license": "Apache-2.0",
   "type": "module",
