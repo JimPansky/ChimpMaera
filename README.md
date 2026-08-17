@@ -153,6 +153,8 @@ Remove only installer-owned resources:
   evidence, trusted computing base and non-claims.
 - [Known Limitations](docs/KNOWN-LIMITATIONS.md): production, identity,
   provider, isolation and external-evidence gaps.
+- [Terminology and identity guardrails](docs/PANSPHAIRA-TERMINOLOGY.md):
+  PANSPHAIRA/Sphere vocabulary and the default-KEEP stable-ID register.
 - [Canon](docs/CANON.md) and [Architecture](docs/ARCHITECTURE.md): durable laws,
   trust boundaries and adapters.
 

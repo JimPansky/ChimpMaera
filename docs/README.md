@@ -48,6 +48,8 @@ Status labels used here:
   evidence.
 - [Architecture](ARCHITECTURE.md): current local reference design and trust
   boundaries.
+- [PANSPHAIRA terminology and identity guardrails](PANSPHAIRA-TERMINOLOGY.md):
+  display/Sphere vocabulary, historical boundaries, and stable-ID decisions.
 - [Operating Field Guide](OPERATING-FIELD-GUIDE.md): profiles, adapters and evidence
   procedures.
 - [Agent runtime isolation contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md):
