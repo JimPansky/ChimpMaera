@@ -1,7 +1,7 @@
 447e305e7821cb18126c0238966ab0acb3daafce9346da411a59037ae3eb16dd  ./.github/FUNDING.yml
 1549fc7c7a7998b34a842d9b10e8f5e7a4d87fcf5c0bf19dc86734ccd7ba5c8e  ./.github/ISSUE_TEMPLATE/bug-report.yml
-6280695beeca55974545ba5cf5aa036c0a3e1fc47b03d02a30d287bd0a0aef8c  ./.github/ISSUE_TEMPLATE/config.yml
-752a590fa1cef6378bcd7dbba199ef630be08455d26a529105ddb5caccb682a0  ./.github/ISSUE_TEMPLATE/feature-request.yml
+056a67ad64925ba3ab519e3f70ec57e3909efb0758002caaca409989d018f8e3  ./.github/ISSUE_TEMPLATE/config.yml
+1b015d2ea94a16d74ef3a79d3456f92ddf1ab83d59547a3c6b189994f0af4b7f  ./.github/ISSUE_TEMPLATE/feature-request.yml
 deec68918022452012f00abeb2d6b5578a3763a02320139ce074bf124b61c608  ./.github/PULL_REQUEST_TEMPLATE.md
 1e65bb9ebb3c5ced4b871a0523d830a6de724743c27872a7538b8f13c448d92e  ./.github/workflows/ci.yml
 3cb93d13f4a3ed8f4666fbd68d033aa5446d473ddd35a39b12fad8e57e29b00a  ./.github/workflows/daily-poc-candidate.yml
@@ -156,7 +156,7 @@ aea678c5dd3f16dbd94f51ba961dbb5cdd90cdd041b5d9c173a210016d16fc76  ./demo/runtime
 9b7e133473dde1d060812d1689c4e21aea864a59fbfca3826018f52dda9769d6  ./demo/runtime/approval-workbench.mjs
 48bdfb5154e5a1deb066de20c7edcd671211622950011b9d2bf22e17bfe69973  ./demo/runtime/authoritative-approval-snapshot.mjs
 4a7cab94bcb1b8a29fb89e84f5d4d4d36495454c2846f0dc576158bc8936fe86  ./demo/runtime/enforcement-gate.mjs
-f3fd7d50dd48e5af372af4d5727e707ae287d86ff88d7a586412b0ba02930032  ./demo/runtime/paperless-ngx-zoo-adapter.mjs
+a29e0c76eedd9498505f28fec65ef9d02a0ac71f5ac0742dbe6243c3cce715ba  ./demo/runtime/paperless-ngx-zoo-adapter.mjs
 47bf4724a85c6f208d29faefebfbc4650949b2392f5672ef0c5df4b92718ff63  ./demo/runtime/policy-evaluator.mjs
 a509d9db5668cfe5e3bcd32b6a0f8140f248ccbc403dc465cc12751b70329d51  ./demo/runtime/policy-generation-fence.mjs
 1f2434c8260ddec816138648a4a5115f8e5adf716130e89f6ca4b00b2e41489a  ./demo/runtime/server.mjs
@@ -336,7 +336,7 @@ c5b7d230b24b548c7ed3bfbe51ada53ef1fbcbcf7018fae10e29177a9567b78f  ./packages/con
 36c8b8c157ce5590b516f1680f8922eef9cf736c34a42649c0b0d4a764c1f1ff  ./packages/contracts/src/hmi-explain-payload.ts
 c837c4e01a67cee0a2d4dcca916c4d1f84f36f07ef62c81142c914fd7969723c  ./packages/contracts/src/hmi-harness-adapter.ts
 cf8175c0f54d1d65d9a0d0db4af3297bf9cab11b07c67b693ff0b43e5e17c106  ./packages/contracts/src/index.ts
-1ec0139bc5f3c978c9a14e89eda139b81a178a6c196d615a4343f10c8eeb7e50  ./packages/contracts/src/injection-trust-boundary.ts
+0fa21ccbc2308bc3dc492a28dd5ba320f0e0755eee872d123fcd620bd207810a  ./packages/contracts/src/injection-trust-boundary.ts
 eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10  ./packages/contracts/src/integration-profile.ts
 3b3afd3616d3f3a29170e3764bb6cc398147051fae5bc33e45057627796c532a  ./packages/contracts/src/issue-candidate.ts
 ac1e17b86a4bf96700e9ad0c17628879323be563e06524158455c5970b81d67c  ./packages/contracts/src/knowledge-envelope.ts
@@ -483,7 +483,7 @@ f3daac4b3161f81dd7a0b5cabf6c3ba6d47c882809587b4be82f6f55fa9507cb  ./tests/contri
 7008d94365118fe01861190c6f461eb10b67461810bf889d13f79cf9b2fe8b74  ./tests/demo-enforcement-gate.test.mjs
 85011403921880eca4fd6da531d29f7dbc355578fc1efc7e57edc2f755124107  ./tests/demo-fixture-manifest.test.ts
 a2cecb00593c2e3d4cfc770b880dc1f3287a6c8de37573dce9748ea9536509ea  ./tests/demo-local-egress-policy.test.mjs
-48c811be0092214e4a6bab4ebfa7bd474b7f10da0e8848aa07e5a7f1b4b12aaf  ./tests/demo-paperless-ngx-zoo-adapter.test.mjs
+2bcbcee23fd1a16e0a875c7696b086f42671a47c973b013931e3ae9342917766  ./tests/demo-paperless-ngx-zoo-adapter.test.mjs
 ba12408a713468d0cf116c19cd29506f6fe9eb48107859102790fd975753f271  ./tests/demo-policy-evaluator.test.mjs
 2bd9cfa5c6365e433ad403d67fe0cdfcf7c72f8a796c9764d18a34997225885a  ./tests/demo-policy-generation-fence.test.mjs
 6e8012075dc47f8354e4d18e98b7e14090abcdc335615849c320d6c710fdff01  ./tests/demo-policy-lifecycle.test.mjs
@@ -554,7 +554,7 @@ c131d1a841ac32ffd1fad35b4261008cf9ab3fca9141b574517f12923fbcb332  ./tests/hmi-di
 08f3ad41a6158b339f5565177406b3dbf9fc5ea6f99d1a18d7f884e41ebbcc6d  ./tests/hmi-harness-adapter.test.ts
 871cbcb425ca5392e11a9d18bdb733b499bb1085a21a55abc856c3d7e5667011  ./tests/hmi-post-contribute-consistency.test.ts
 16b83837da00d17db7663505ad08c65d76b584e9c4f433a2425ce845d5022e66  ./tests/hmi-post-explain-consistency.test.ts
-30ef44533c4ca5ff44dbd76c964ef409b4763a07fcc4cd54417d1a8c4f42289a  ./tests/injection-trust-boundary.test.ts
+5b0ffe52d67941610f67f10296d0649d9486a81cc4e17742b3f9f8f96129e753  ./tests/injection-trust-boundary.test.ts
 957f638c0dcf241dcbcc18f7e419d0ee401c50fdb08cb40b8e941ff08b069050  ./tests/integration-profile.test.ts
 a6d92272e7784e7e35d745b52ac38588e9be2d03744386f8055064ade3fb85b7  ./tests/issue-candidate.test.ts
 716c0acf55a71c7cb2c878803ed3f385f821b142297ed580e9b7db26e16a9bb4  ./tests/knowledge-envelope.test.ts

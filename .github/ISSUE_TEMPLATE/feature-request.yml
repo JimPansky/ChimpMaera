@@ -33,7 +33,7 @@ body:
     id: alternatives
     attributes:
       label: Alternatives considered
-      description: What simpler options or existing Zoo components did you consider?
+      description: What simpler options or existing PANSPHAIRA components did you consider?
 
   - type: checkboxes
     id: checks
