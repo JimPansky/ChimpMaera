@@ -198,7 +198,7 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /CM-REL-023/.test(capabilityRow("Synthetic CPU video package reference")), "CAPABILITY_MAPPING_INVALID:CM-REL-023");
   issue(issues, /CM-REL-017/.test(capabilityRow("ASF-INTAKE-2 signal release intake")), "CAPABILITY_MAPPING_INVALID:CM-REL-017");
   issue(issues, /CM-REL-018/.test(capabilityRow("INT-PROFILE-001 integration profiles")), "CAPABILITY_MAPPING_INVALID:CM-REL-018");
-  issue(issues, /CM-REL-022/.test(capabilityRow("External Superset_BI_Agent service boundary v2")), "CAPABILITY_MAPPING_INVALID:CM-REL-022");
+  issue(issues, /CM-REL-022/.test(capabilityRow("External KaleidoSphere service boundary v2")), "CAPABILITY_MAPPING_INVALID:CM-REL-022");
 
   const docsHub = read(root, "docs/README.md");
   issue(issues, /current product category is an open,\s+knowledge-driven operating system/i.test(docsHub)
