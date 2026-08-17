@@ -5,7 +5,7 @@
   "revision": 1,
   "productDefinition": {
     "goal": "DYNAMIC_EXTENSIBLE_AGENT_OS_POC",
-    "completionHistoryStatement": "13/14 records historical plan completion for the previous local/private-alpha path; it is not total ChimpMaera product completeness.",
+    "completionHistoryStatement": "13/14 records historical plan completion for the previous local/private-alpha path; it is not total PANSPHAIRA product completeness.",
     "primaryMetric": "DEMONSTRABLE_POC_POWER_EXTENSIBILITY_UNDERSTANDABILITY",
     "localBoundedStartupCommand": "npm run poc:showcase:check",
     "claimBoundary": "LOCAL_SYNTHETIC_POC_NO_PRODUCTION_CLAIM"
