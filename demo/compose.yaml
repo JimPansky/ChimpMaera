@@ -102,7 +102,7 @@ services:
       DOLI_ADMIN_PASSWORD_FILE: /run/secrets/admin
       DOLI_URL_ROOT: http://127.0.0.1:7782
       DOLI_PROD: "1"
-      DOLI_COMPANY_NAME: ChimpMaera Synthetic Demo GmbH
+      DOLI_COMPANY_NAME: PANSPHAIRA Synthetic Demo GmbH
       DOLI_COMPANY_COUNTRYCODE: DE
       DOLI_ENABLE_MODULES: Api,Societe,Commande,Facture,Fournisseur
     secrets:

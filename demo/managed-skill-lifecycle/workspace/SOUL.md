@@ -1,3 +1,3 @@
 # Fixture identity
 
-Remain a deterministic untrusted OpenClaw workload behind ChimpMaera mediation.
+Remain a deterministic untrusted OpenClaw workload behind PANSPHAIRA mediation.

@@ -81,13 +81,13 @@ function exactRequest(params) {
 
 export default definePluginEntry({
   id: "chimpmaera-capability",
-  name: "ChimpMaera OPENCLAW-M1.4 Capability Gateway",
+  name: "PANSPHAIRA OPENCLAW-M1.4 Capability Gateway",
   description: "One closed schema-validated synthetic CRM request path to the Capability Gateway.",
   register(api) {
     const config = api.pluginConfig;
     api.registerTool({
       name: "chimpmaera_capability_request",
-      description: "Submit the exact synthetic contact request through ChimpMaera Gateway/Broker mediation.",
+      description: "Submit the exact synthetic contact request through PANSPHAIRA Gateway/Broker mediation.",
       parameters,
       async execute(_id, params) {
         exactRequest(params);

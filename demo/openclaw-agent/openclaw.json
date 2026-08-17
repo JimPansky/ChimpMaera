@@ -24,7 +24,7 @@
         "models": [
           {
             "id": "cm-agent-v1",
-            "name": "ChimpMaera deterministic OPENCLAW-M1.4 fixture",
+            "name": "PANSPHAIRA deterministic OPENCLAW-M1.4 fixture",
             "reasoning": false,
             "input": ["text"],
             "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },

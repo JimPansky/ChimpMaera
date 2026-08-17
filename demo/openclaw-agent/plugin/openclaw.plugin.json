@@ -1,6 +1,6 @@
 {
   "id": "chimpmaera-capability",
-  "name": "ChimpMaera OPENCLAW-M1.4 Capability Gateway",
+  "name": "PANSPHAIRA OPENCLAW-M1.4 Capability Gateway",
   "description": "Exposes one schema-validated synthetic CRM action through the isolated OpenClaw fixture.",
   "version": "1.0.0",
   "activation": { "onStartup": true },

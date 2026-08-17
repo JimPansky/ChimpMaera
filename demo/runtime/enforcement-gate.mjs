@@ -82,7 +82,7 @@ function validateAdminAiAction(action, authorityKind) {
     actor: "agent:admin-ai-poc",
     payload: {
       body: {
-        description: "ChimpMaera Admin AI deterministic PoC contact",
+        description: "PANSPHAIRA Admin AI deterministic PoC contact",
         emailAddress: "admin-ai-poc@example.invalid",
         firstName: "Avery",
         lastName: "Admin AI PoC",
