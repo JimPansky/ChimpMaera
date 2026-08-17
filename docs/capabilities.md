@@ -1,6 +1,6 @@
 ---
 title: Capability, maturity, and evidence
-description: Check ChimpMaera capabilities against released scope, local validation, external evidence requirements, and explicit limitations.
+description: Check PANSPHAIRA capabilities against released scope, local validation, external evidence requirements, and explicit limitations.
 ---
 
 # Capability, maturity, and evidence

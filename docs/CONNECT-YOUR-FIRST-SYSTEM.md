@@ -107,7 +107,7 @@ Profile and is invalid on the released connector.
 - **CUSTOM** content remains untrusted until provenance, compatibility and
   owner review are complete; importing content never activates authority.
 - **FULL_CONTROL_LAB** is only for an isolated disposable lab with explicit
-  owner risk acceptance. It may bypass ChimpMaera action and Approval gates up
+  owner risk acceptance. It may bypass PANSPHAIRA action and Approval gates up
   to the host process's OS/host ceiling, so bypassed layers are outside
   `SAFE_GUIDED`/Canon security claims. It is not a production shortcut and must
   bind reset/rollback/recovery and reset to `SAFE_GUIDED` on restart, revoke or

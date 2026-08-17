@@ -1,7 +1,7 @@
-# Contributing to ChimpMaera
+# Contributing to PANSPHAIRA
 
 Focused code, tests, documentation, fixtures, and design proposals are welcome
-when they preserve ChimpMaera's authority, safety, evidence, license, media,
+when they preserve PANSPHAIRA's authority, safety, evidence, license, media,
 and trademark boundaries.
 
 ## Fast path

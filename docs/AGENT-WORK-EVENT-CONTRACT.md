@@ -1,6 +1,6 @@
 ---
 title: Minimized agent-work event contract
-description: Verify ChimpMaera's consented, digest-bound and deletion-aware synthetic agent-work record without enabling collection or telemetry.
+description: Verify PANSPHAIRA's consented, digest-bound and deletion-aware synthetic agent-work record without enabling collection or telemetry.
 ---
 
 # Minimized agent-work event contract
