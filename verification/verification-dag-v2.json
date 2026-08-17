@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 7,
+  "graphVersion": 8,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -75,6 +75,47 @@
         "Duplicate search and exact owner approval precede one idempotent injected submit and exact readback.",
         "Private, security and sensitive-shaped content emits zero public bytes and routes fail closed.",
         "Uncertain effects cannot be resubmitted and retain immutable recovery identities."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
+      "id": "ccp-m1-contribution-intake-ledger-v1",
+      "dependsOn": [],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/contribution-intake-ledger.ts",
+          "role": "CONTRACT",
+          "sha256": "11b9476d04e89153046596c3fec2f1a12a4e77808be852ddf943ddf8d3528774"
+        },
+        {
+          "path": "packages/contracts/src/canonical-json.ts",
+          "role": "SECURITY",
+          "sha256": "666513ba9a89c0eae0daa0e0159a262eb4e0aa105971a151a19bac1a9b6c4826"
+        },
+        {
+          "path": "schemas/contracts/contribution-intake-ledger-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "11a04666e84394ab2b29308b7e3d4a2770354421a51fcf5f691b7709fe1cd6cc"
+        },
+        {
+          "path": "tests/contribution-intake-ledger.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "c77d81c31e28c9740699edf72b5ebe129682b3e131b10467a24cbc42bf65d8cf"
+        },
+        {
+          "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "2f0cdc8ef5e739df8f60d0afa7da151aa674d05a2523f19ff01e8fab1343358c"
+        }
+      ],
+      "ownedTests": [
+        "npm run contribution-intake:test"
+      ],
+      "invariants": [
+        "Only an explicit prevalidated context can create, verify, classify, ingest or query a contribution ledger.",
+        "Verification reconstructs non-authoritative submitted identity evidence and replays every binding, disposition, reason, quarantine, replacement, delivery digest, delivery-id, timestamp and head transition from genesis while every authoritative ledger, entry and receipt identity remains canonically bound to context.",
+        "The pure in-memory contract has no transport, persistence, runner, queue, CI-slot, merge or production effect capability."
       ],
       "riskClass": "CRITICAL",
       "globalInvalidation": false
@@ -230,7 +271,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "ec332b2e011e3f2a8f2c00a7635539e9355392ff156510283dfde52306f7488d"
+          "sha256": "cf8175c0f54d1d65d9a0d0db4af3297bf9cab11b07c67b693ff0b43e5e17c106"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -420,7 +461,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "6203ccbebb7d8be8b87497f8b1bbe45e44579f058e2ae8443fd4c06429d0a232"
+          "sha256": "7da4bd64c2b29d4f74b074e71e1863ef2b18260bc5aba50764b2cb98367d8492"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -773,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "2ee5cbc016417b6d1639fa1a8158bd8a08313bc842fb9f639bfbf95673c0fba9"
+          "sha256": "d0712ad30b0e4b2ed42536ca54638ae837230b5d6ad4ccae77940240a93638dc"
         },
         {
           "path": "package-lock.json",

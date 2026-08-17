@@ -225,6 +225,7 @@ packages/contracts/src/builder-quality-evidence.ts	packages/contracts/src/builde
 packages/contracts/src/canonical-json.js	packages/contracts/src/canonical-json.js	0644
 packages/contracts/src/canonical-json.ts	packages/contracts/src/canonical-json.ts	0644
 packages/contracts/src/capability-catalogue.ts	packages/contracts/src/capability-catalogue.ts	0644
+packages/contracts/src/contribution-intake-ledger.ts	packages/contracts/src/contribution-intake-ledger.ts	0644
 packages/contracts/src/crm-read-connector.ts	packages/contracts/src/crm-read-connector.ts	0644
 packages/contracts/src/development-worker.ts	packages/contracts/src/development-worker.ts	0644
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
@@ -289,6 +290,7 @@ schemas/contracts/builder-integration-plan-v1.schema.json	schemas/contracts/buil
 schemas/contracts/builder-quality-evidence-v1.schema.json	schemas/contracts/builder-quality-evidence-v1.schema.json	0644
 schemas/contracts/capability-catalogue-v1.schema.json	schemas/contracts/capability-catalogue-v1.schema.json	0644
 schemas/contracts/chimpmaera-analytics-v1.schema.json	schemas/contracts/chimpmaera-analytics-v1.schema.json	0644
+schemas/contracts/contribution-intake-ledger-v1.schema.json	schemas/contracts/contribution-intake-ledger-v1.schema.json	0644
 schemas/contracts/crm-read-connector-v1.schema.json	schemas/contracts/crm-read-connector-v1.schema.json	0644
 schemas/contracts/doctor-report-v1.schema.json	schemas/contracts/doctor-report-v1.schema.json	0644
 schemas/contracts/erp-read-connector-v1.schema.json	schemas/contracts/erp-read-connector-v1.schema.json	0644
@@ -378,6 +380,7 @@ tests/canonical-json-runtime-parity.test.mjs	tests/canonical-json-runtime-parity
 tests/capability-catalogue.test.ts	tests/capability-catalogue.test.ts	0644
 tests/company-data-graph.test.mjs	tests/company-data-graph.test.mjs	0644
 tests/company-data-pack.test.mjs	tests/company-data-pack.test.mjs	0644
+tests/contribution-intake-ledger.test.ts	tests/contribution-intake-ledger.test.ts	0644
 tests/crm-read-connector.test.ts	tests/crm-read-connector.test.ts	0644
 tests/demo-admin-ai-poc.test.mjs	tests/demo-admin-ai-poc.test.mjs	0644
 tests/demo-approval-workbench.test.mjs	tests/demo-approval-workbench.test.mjs	0644
