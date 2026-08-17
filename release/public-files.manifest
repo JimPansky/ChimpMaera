@@ -1,9 +1,11 @@
-# ChimpMaera functional product-increment public-file manifest
+# PANSPHAIRA functional product-increment public-file manifest
 # Format: source<TAB>destination<TAB>mode
 .gitignore	.gitignore	0644
-assets/brand/chimpmaera-master.svg	assets/brand/chimpmaera-master.svg	0644
-assets/brand/chimpmaera-negative.png	assets/brand/chimpmaera-negative.png	0644
-assets/brand/chimpmaera-negative.svg	assets/brand/chimpmaera-negative.svg	0644
+assets/brand/README.md	assets/brand/README.md	0644
+assets/brand/pansphaira-icon-negative.png	assets/brand/pansphaira-icon-negative.png	0644
+assets/brand/pansphaira-icon-negative.svg	assets/brand/pansphaira-icon-negative.svg	0644
+assets/brand/pansphaira-icon-positive.png	assets/brand/pansphaira-icon-positive.png	0644
+assets/brand/pansphaira-icon-positive.svg	assets/brand/pansphaira-icon-positive.svg	0644
 assets/diagrams/caged-agent-gateway-constellation.svg	assets/diagrams/caged-agent-gateway-constellation.svg	0644
 assets/diagrams/capability-provider-bindings.svg	assets/diagrams/capability-provider-bindings.svg	0644
 assets/diagrams/safe-guided-flow.svg	assets/diagrams/safe-guided-flow.svg	0644
@@ -179,7 +181,9 @@ docs/KNOWLEDGE-QUALITY-SERVICE.md	docs/KNOWLEDGE-QUALITY-SERVICE.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
 docs/LEARNING-ROUTING-CONTRACTS.md	docs/LEARNING-ROUTING-CONTRACTS.md	0644
 docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	0644
+docs/OPERATING-FIELD-GUIDE.md	docs/OPERATING-FIELD-GUIDE.md	0644
 docs/OPERATION-EVENT-QUALITY-CONTRACT.md	docs/OPERATION-EVENT-QUALITY-CONTRACT.md	0644
+docs/PANSPHAIRA-TERMINOLOGY.md	docs/PANSPHAIRA-TERMINOLOGY.md	0644
 docs/public/robots.txt	docs/public/robots.txt	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/README.md	docs/README.md	0644
@@ -197,7 +201,6 @@ docs/use-cases/governed-agent-actions.md	docs/use-cases/governed-agent-actions.m
 docs/VERIFICATION-FABRIC-SHADOW.md	docs/VERIFICATION-FABRIC-SHADOW.md	0644
 docs/VISIBILITY-CHANNEL-MATRIX.md	docs/VISIBILITY-CHANNEL-MATRIX.md	0644
 docs/VOICE-LOCAL-PTT.md	docs/VOICE-LOCAL-PTT.md	0644
-docs/ZOO-FIELD-GUIDE.md	docs/ZOO-FIELD-GUIDE.md	0644
 examples/builder-agent/contribution-bundle-v1.json	examples/builder-agent/contribution-bundle-v1.json	0644
 examples/builder-agent/contribution-input-v1.json	examples/builder-agent/contribution-input-v1.json	0644
 examples/company-data/erp-crm-canonical-company-data-pack.example.json	examples/company-data/erp-crm-canonical-company-data-pack.example.json	0644

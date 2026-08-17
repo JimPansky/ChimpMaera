@@ -48,6 +48,7 @@
     "docs/RESOURCE-PLANE-PROFILES.md",
     "docs/EXTENSION-ASSURANCE-PROFILES.md",
     "docs/AGENT-WORK-EVENT-CONTRACT.md",
+    "docs/PANSPHAIRA-TERMINOLOGY.md",
     "docs/INTEGRATION-PROFILES.md",
     "benchmarks/adaptability-m0/README.md",
     "docs/index.md",
@@ -142,7 +143,7 @@
     {
       "claimId": "CM-REL-004",
       "component": "Verification Fabric",
-      "claim": "ChimpMaera ships digest-bound Verification Fabric contracts plus a Shadow-only Evidence-DAG impact planner that explains selected verification nodes while keeping the complete suite authoritative.",
+      "claim": "PANSPHAIRA ships digest-bound Verification Fabric contracts plus a Shadow-only Evidence-DAG impact planner that explains selected verification nodes while keeping the complete suite authoritative.",
       "userValue": "Maintainers get an auditable verification vocabulary and deterministic impact plan; uncertainty falls back to full validation instead of silently omitting checks.",
       "includedBytes": [
         "packages/contracts/src/verification-fabric.ts",
@@ -205,7 +206,7 @@
     {
       "claimId": "CM-REL-005",
       "component": "Update/Doctor",
-      "claim": "ChimpMaera ships immutable six-axis update, migration and Doctor contracts plus read-only diagnostics that make compatibility and maintenance previews inspectable without granting execution authority.",
+      "claim": "PANSPHAIRA ships immutable six-axis update, migration and Doctor contracts plus read-only diagnostics that make compatibility and maintenance previews inspectable without granting execution authority.",
       "userValue": "Operators can verify exact Core, Pack, Adapter, Policy, Schema and Generation identities, compatibility, plans, reports and receipts before any state-changing maintenance is considered.",
       "includedBytes": [
         "packages/contracts/src/update-doctor.ts",
@@ -271,7 +272,7 @@
     {
       "claimId": "CM-REL-006",
       "component": "HMI/Harness Multitool",
-      "claim": "ChimpMaera ships an authority-free HMI/Harness multitool for bounded generation, disclosure-safe discover/explain payloads and digest-bound contribution preparation that cannot publish or write externally.",
+      "claim": "PANSPHAIRA ships an authority-free HMI/Harness multitool for bounded generation, disclosure-safe discover/explain payloads and digest-bound contribution preparation that cannot publish or write externally.",
       "userValue": "Users can inspect supported operations, explanations and a canonical contribution preflight without the interface silently acquiring submission, publication or execution rights.",
       "includedBytes": [
         "packages/contracts/src/hmi-core.ts",
@@ -353,7 +354,7 @@
     {
       "claimId": "CM-REL-007",
       "component": "Azure/Entra Identity Contract",
-      "claim": "ChimpMaera ships a closed Microsoft Entra delegated identity profile that describes single-tenant Authorization Code plus PKCE authentication without granting product authority.",
+      "claim": "PANSPHAIRA ships a closed Microsoft Entra delegated identity profile that describes single-tenant Authorization Code plus PKCE authentication without granting product authority.",
       "userValue": "Integrators get an auditable identity boundary with fixed issuer, audience, tenant and delegated-scope expectations before any live tenant setup.",
       "includedBytes": [
         "packages/contracts/src/azure-identity-profile.ts",
@@ -392,7 +393,7 @@
     {
       "claimId": "CM-REL-008",
       "component": "Power Platform Read Connector",
-      "claim": "ChimpMaera ships a closed authority-free Power Platform read connector contract with five bounded operations, required readback and receipt binding.",
+      "claim": "PANSPHAIRA ships a closed authority-free Power Platform read connector contract with five bounded operations, required readback and receipt binding.",
       "userValue": "Integrators can evaluate a precise read-only connector surface without generic invocation, write targets or false-success shortcuts.",
       "includedBytes": [
         "packages/contracts/src/power-platform-read-connector.ts",
@@ -431,7 +432,7 @@
     {
       "claimId": "CM-REL-012",
       "component": "Resource-Plane Profiles M0",
-      "claim": "ChimpMaera ships an authority-free compiler for exactly seven closed resource planes with SAFE_GUIDED, CUSTOM and explicit dangerous FULL_CONTROL planning views plus a digest-bound Effective-Rights-Diff.",
+      "claim": "PANSPHAIRA ships an authority-free compiler for exactly seven closed resource planes with SAFE_GUIDED, CUSTOM and explicit dangerous FULL_CONTROL planning views plus a digest-bound Effective-Rights-Diff.",
       "userValue": "Operators can compare a requested resource profile against the SAFE_GUIDED baseline before any runtime activation, while host, assignment and current-constraint ceilings remain explicit and binding.",
       "includedBytes": [
         "packages/contracts/src/resource-plane-profiles.ts",
@@ -484,7 +485,7 @@
     {
       "claimId": "CM-REL-013",
       "component": "ADD to REPLACE Adaptability Benchmark M0",
-      "claim": "ChimpMaera ships a reproducible local-synthetic benchmark for ADD and Provider A to Provider B replacement through an unchanged target-neutral Builder core and consumer, with rollback and zero-residue evidence.",
+      "claim": "PANSPHAIRA ships a reproducible local-synthetic benchmark for ADD and Provider A to Provider B replacement through an unchanged target-neutral Builder core and consumer, with rollback and zero-residue evidence.",
       "userValue": "Operators can inspect exact measured adaptation mechanics, reuse, readback and cleanup evidence without treating process timings as provider or engineering-speed proof.",
       "includedBytes": [
         "benchmarks/adaptability-m0/README.md",
@@ -536,7 +537,7 @@
     {
       "claimId": "CM-REL-014",
       "component": "Extension Assurance Profiles",
-      "claim": "ChimpMaera ships a closed local-synthetic assurance profile for exact extension and connector digests with eight universal hard-fail gates, finite evidence expiry, retest triggers, false-result tracking and private security routing.",
+      "claim": "PANSPHAIRA ships a closed local-synthetic assurance profile for exact extension and connector digests with eight universal hard-fail gates, finite evidence expiry, retest triggers, false-result tracking and private security routing.",
       "userValue": "Maintainers can compare bounded assurance evidence with deterministic fail-closed results without turning a profile into a scan, trust badge, acceptance decision or authority grant.",
       "includedBytes": [
         "packages/contracts/src/extension-assurance-profile.ts",
@@ -589,7 +590,7 @@
     {
       "claimId": "CM-REL-015",
       "component": "Minimized Agent-Work Event Contract",
-      "claim": "ChimpMaera ships a closed authority-free agent-work record contract with classified pseudonymous fields, digest-bound sources, explicit consent purposes, finite retention, deletion requests and payload-free deleted tombstones.",
+      "claim": "PANSPHAIRA ships a closed authority-free agent-work record contract with classified pseudonymous fields, digest-bound sources, explicit consent purposes, finite retention, deletion requests and payload-free deleted tombstones.",
       "userValue": "Maintainers can validate minimized synthetic work-event lifecycle and public-readback decisions without enabling collection, telemetry, training or ingestion.",
       "includedBytes": [
         "packages/contracts/src/agent-work-event.ts",
@@ -644,7 +645,7 @@
     {
       "claimId": "CM-REL-016",
       "component": "External Video Service",
-      "claim": "ChimpMaera ships a fail-closed external video artifact boundary with expected cm.video/v1 version, SHA-256 artifact pinning and disabled-by-default configuration.",
+      "claim": "PANSPHAIRA ships a fail-closed external video artifact boundary with expected cm.video/v1 version, SHA-256 artifact pinning and disabled-by-default configuration.",
       "userValue": "Maintainers can keep video Docker and media assets outside the CM source tree while preserving auditable artifact readback, rollback and release evidence.",
       "includedBytes": [
         "packages/contracts/src/external-video-service.ts",
@@ -696,7 +697,7 @@
     {
       "claimId": "CM-REL-023",
       "component": "Synthetic CPU Video Package Reference",
-      "claim": "ChimpMaera ships a bounded Linux-local synthetic CPU contract/conformance and canonical package-index assembly reference over fixed PNG and PCM fixtures.",
+      "claim": "PANSPHAIRA ships a bounded Linux-local synthetic CPU contract/conformance and canonical package-index assembly reference over fixed PNG and PCM fixtures.",
       "userValue": "Contributors can validate strict cm.video/v1 jobs, exact hash-closed renderer/audio/QA descriptors backed only by a static trusted function registry, inode/marker-bound package ownership and complete independent readback without a codec, container or network dependency.",
       "includedBytes": [
         "tools/video-production-reference/EXTENSION-GUIDE.md",
@@ -780,7 +781,7 @@
     {
       "claimId": "CM-REL-017",
       "component": "ASF-INTAKE-2 Signal Release Intake",
-      "claim": "ChimpMaera ships a pure closed signal-to-release intake contract that yields a pre-candidate only when all nine gates pass and otherwise returns stable ordered rejection reasons.",
+      "claim": "PANSPHAIRA ships a pure closed signal-to-release intake contract that yields a pre-candidate only when all nine gates pass and otherwise returns stable ordered rejection reasons.",
       "userValue": "Maintainers can make a deterministic local pre-candidate decision without the intake contract monitoring sources, posting content, merging code or creating a release.",
       "includedBytes": [
         "packages/contracts/src/signal-release-intake.ts",
@@ -832,7 +833,7 @@
     {
       "claimId": "CM-REL-018",
       "component": "INT-PROFILE-001 Integration Profiles",
-      "claim": "ChimpMaera ships a closed local-synthetic integration-profile description contract for five bounded variants with digest-stable evaluation, exact existing-contract references, lifecycle fallback and typed override denial.",
+      "claim": "PANSPHAIRA ships a closed local-synthetic integration-profile description contract for five bounded variants with digest-stable evaluation, exact existing-contract references, lifecycle fallback and typed override denial.",
       "userValue": "Integrators can evaluate narrow Power Apps, Power BI, mailbox-style, local-knowledge and issue-candidate reference profiles without granting authority or activating a connector route.",
       "includedBytes": [
         "packages/contracts/src/integration-profile.ts",
@@ -887,7 +888,7 @@
     {
       "claimId": "CM-REL-019",
       "component": "VOICE-M0 Local PTT",
-      "claim": "ChimpMaera ships a removable default-off local push-to-talk contract with bounded whisper.cpp and llama.cpp/Qwen3-TTS adapters, exact schemas, ephemeral media handling and authority-free governed-input proposals.",
+      "claim": "PANSPHAIRA ships a removable default-off local push-to-talk contract with bounded whisper.cpp and llama.cpp/Qwen3-TTS adapters, exact schemas, ephemeral media handling and authority-free governed-input proposals.",
       "userValue": "Operators can add locally controlled German or English voice input/output without giving transcripts approval, tool, effect or Gateway-bypass authority.",
       "includedBytes": [
         "packages/contracts/src/voice-local-ptt.ts",
@@ -935,7 +936,7 @@
     {
       "claimId": "CM-REL-021",
       "component": "AWI-03 Universal Knowledge Envelope",
-      "claim": "ChimpMaera ships a strict local-synthetic attributable knowledge envelope with governed taxonomy generations, conflict-preserving deterministic selection and authority-free read-only explanation.",
+      "claim": "PANSPHAIRA ships a strict local-synthetic attributable knowledge envelope with governed taxonomy generations, conflict-preserving deterministic selection and authority-free read-only explanation.",
       "userValue": "Maintainers can retain unresolved domain-neutral knowledge and exact citations while curated selection fails closed and bounded exploratory results remain visibly unresolved.",
       "includedBytes": [
         "packages/contracts/src/knowledge-envelope.ts",
@@ -987,7 +988,7 @@
   {
     "claimId": "CM-REL-022",
     "component": "External SBA-v2 BI Client",
-    "claim": "ChimpMaera ships only a thin, default-off and fail-closed SBA-v2 client for BI while SBA v0.8.0 remains the sole owner of BI discovery, database adapters, analysis, KPI/graph logic, previews and Superset execution.",
+    "claim": "PANSPHAIRA ships only a thin, default-off and fail-closed SBA-v2 client for BI while SBA v0.8.0 remains the sole owner of BI discovery, database adapters, analysis, KPI/graph logic, previews and Superset execution.",
     "userValue": "Maintainers can request six closed read-only BI intents through a version-, capability-, attestation- and digest-bound boundary without giving CM BI credentials, SQL, raw rows or mutation authority.",
     "includedBytes": [
       "packages/contracts/src/external-bi-service.ts",
@@ -1038,7 +1039,7 @@
   },
   {
     "claimId": "CM-REL-011",
-      "claim": "ChimpMaera ships a directly runnable, closed and digest-bound repository proof for the local synthetic SAFE_GUIDED secure-default path.",
+      "claim": "PANSPHAIRA ships a directly runnable, closed and digest-bound repository proof for the local synthetic SAFE_GUIDED secure-default path.",
       "evidencePaths": [
         "docs/SECURE-DEFAULT-PROOF.md",
         "security/secure-default-proof-v1.json",
