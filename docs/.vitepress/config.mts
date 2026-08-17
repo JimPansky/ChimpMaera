@@ -4,6 +4,9 @@ import { defineConfig, type HeadConfig } from "vitepress";
 
 const repositoryUrl = "https://github.com/JimPansky/ChimpMaera";
 const siteUrl = "https://jimpansky.github.io/ChimpMaera/";
+// PAN-10 handoff: keep repositoryUrl, siteUrl, socialImage, base, the sitemap
+// URL matcher, and every canonical/codeRepository/nav/edit/social consumer on
+// the current repository and Pages identity until the external rename gate.
 const siteDescription =
   "Open-source local proof of concept for governed, verifiable AI-agent actions across business systems.";
 const socialImage = "https://opengraph.githubassets.com/1/JimPansky/ChimpMaera";
@@ -39,7 +42,7 @@ function publicPath(relativePath: string): string {
 
 export default defineConfig({
   lang: "en-US",
-  title: "ChimpMaera",
+  title: "PANSPHAIRA",
   description: siteDescription,
   base: "/ChimpMaera/",
   outDir: "../dist/docs-site",
@@ -82,12 +85,12 @@ export default defineConfig({
   transformHead({ pageData }): HeadConfig[] {
     const route = publicPath(pageData.relativePath);
     const canonicalUrl = new URL(route, siteUrl).href;
-    const title = pageData.title ? `${pageData.title} | ChimpMaera` : "ChimpMaera";
+    const title = pageData.title ? `${pageData.title} | PANSPHAIRA` : "PANSPHAIRA";
     const description = pageData.description || siteDescription;
     const softwareSourceCode = {
       "@context": "https://schema.org",
       "@type": "SoftwareSourceCode",
-      name: "ChimpMaera",
+      name: "PANSPHAIRA",
       description: siteDescription,
       codeRepository: repositoryUrl,
       url: canonicalUrl,
@@ -100,7 +103,7 @@ export default defineConfig({
     return [
       ["link", { rel: "canonical", href: canonicalUrl }],
       ["meta", { property: "og:type", content: "website" }],
-      ["meta", { property: "og:site_name", content: "ChimpMaera" }],
+      ["meta", { property: "og:site_name", content: "PANSPHAIRA" }],
       ["meta", { property: "og:title", content: title }],
       ["meta", { property: "og:description", content: description }],
       ["meta", { property: "og:url", content: canonicalUrl }],
