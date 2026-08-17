@@ -22,15 +22,20 @@ only loopback service bindings.
 The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
+Its claim is the forward current-tree PANSPHAIRA naming, repository and Pages
+cutover plus bounded Sphere terminology and visualization. Stable
+CM/chimpmaera machine identities and historical releases remain unchanged; no
+protocol, schema, API or runtime migration or production status is claimed.
+
 ```sh
-release=v0.2.0-poc.20260816.1
-archive=cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz
+release=v0.2.0-poc.20260817.1
+archive=cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz
 base=https://github.com/JimPansky/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260816-bi-ownership-v2
+cd cm-product-increment-rc-20260817-pansphaira-cutover
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from

@@ -2,8 +2,8 @@ cff-version: "1.2.0"
 message: "If you use PANSPHAIRA, please cite the software using these metadata."
 type: software
 title: "PANSPHAIRA"
-version: "0.2.0-poc.20260816.1"
-date-released: "2026-08-16"
+version: "0.2.0-poc.20260817.1"
+date-released: "2026-08-17"
 authors:
   - name: "Jim Pansky"
 abstract: >-

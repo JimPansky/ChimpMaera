@@ -117,19 +117,24 @@ each combination still needs its own applicability boundary and evidence.
 For the release-bound path, download the current Latest archive and its
 published checksum sidecar, then verify before extracting:
 
+This release binds the forward current tree to the PANSPHAIRA name, repository
+and Pages location and to bounded Sphere terminology and visualization. Stable
+CM/chimpmaera machine identities and historical releases are unchanged; this
+is not a protocol, schema, API or runtime migration or a production claim.
+
 ```sh
-release=v0.2.0-poc.20260816.1
-archive=cm-product-increment-rc-20260816-bi-ownership-v2.tar.gz
+release=v0.2.0-poc.20260817.1
+archive=cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz
 base=https://github.com/JimPansky/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260816-bi-ownership-v2
+cd cm-product-increment-rc-20260817-pansphaira-cutover
 ```
 
-On a supported Linux host with Docker and Compose, run from that directory or
-from the root of a contributor checkout:
+On a supported Linux host with Docker and Compose, run there or from a
+contributor checkout root:
 
 ```sh
 ./demo/install.sh
