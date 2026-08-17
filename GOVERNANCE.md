@@ -1,6 +1,6 @@
-# ChimpMaera Governance
+# PANSPHAIRA Governance
 
-ChimpMaera is maintained as an open-source, provider-neutral local agent
+PANSPHAIRA is maintained as an open-source, provider-neutral local agent
 control-plane project.
 
 ## Roles

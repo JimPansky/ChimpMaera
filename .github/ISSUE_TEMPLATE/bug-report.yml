@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem in ChimpMaera.
+description: Report a reproducible problem in PANSPHAIRA.
 title: "[Bug]: "
 labels:
   - bug
@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve ChimpMaera. Do not include credentials,
+        Thank you for helping improve PANSPHAIRA. Do not include credentials,
         personal data, private prompts or non-public infrastructure details.
 
   - type: textarea
@@ -34,9 +34,9 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Include ChimpMaera version or commit, OS, Docker version and authority profile where relevant.
+      description: Include PANSPHAIRA version or commit, OS, Docker version and authority profile where relevant.
       placeholder: |
-        ChimpMaera commit:
+        PANSPHAIRA commit:
         OS:
         Docker:
         Authority profile:

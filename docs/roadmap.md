@@ -1,9 +1,9 @@
 ---
-title: ChimpMaera now, next, and later
-description: Follow a small evidence-linked view of ChimpMaera's released proof, ready work, and planned directions without duplicating the issue backlog.
+title: PANSPHAIRA now, next, and later
+description: Follow a small evidence-linked view of PANSPHAIRA's released proof, ready work, and planned directions without duplicating the issue backlog.
 ---
 
-# ChimpMaera now, next, and later
+# PANSPHAIRA now, next, and later
 
 This is a curated navigation layer, not a second backlog. GitHub issue state
 and labels remain authoritative, and a linked issue is not evidence that a

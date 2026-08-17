@@ -1,12 +1,12 @@
 ---
 title: External BI service contract v2
-description: Connect ChimpMaera to the independently released SBA v0.8.0 through a fail-closed, default-off client.
+description: Connect PANSPHAIRA to the independently released SBA v0.8.0 through a fail-closed, default-off client.
 ---
 
 # External BI service contract v2
 
 `Superset_BI_Agent` (SBA) is the sole owner of BI discovery, database adapters,
-analysis, semantic/KPI/graph logic, previews and Superset execution. ChimpMaera
+analysis, semantic/KPI/graph logic, previews and Superset execution. PANSPHAIRA
 (CM) retains only a thin generic client plus its existing generic orchestration,
 approval and UI boundaries. CM does not vendor or start SBA, own its containers
 or volumes, receive database or Superset credentials, forward SQL/raw rows, or

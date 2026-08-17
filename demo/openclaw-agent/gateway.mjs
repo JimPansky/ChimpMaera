@@ -283,7 +283,7 @@ function toolCallResponse(messages) {
     finishReason: "stop",
     message: {
       role: "assistant",
-      content: `ChimpMaera Gateway mediation passed. receiptDigest=${digestText}`,
+      content: `PANSPHAIRA Gateway mediation passed. receiptDigest=${digestText}`,
     },
   };
 }

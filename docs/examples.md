@@ -1,6 +1,6 @@
 ---
 title: Reproducible local examples
-description: Reproduce ChimpMaera's deterministic SAFE_GUIDED checks and fictional CRM-to-ERP demo with explicit prerequisites, results, cleanup, and evidence limits.
+description: Reproduce PANSPHAIRA's deterministic SAFE_GUIDED checks and fictional CRM-to-ERP demo with explicit prerequisites, results, cleanup, and evidence limits.
 ---
 
 # Reproducible local examples

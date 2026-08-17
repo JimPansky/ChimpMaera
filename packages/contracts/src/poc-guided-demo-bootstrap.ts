@@ -587,7 +587,7 @@ export function expectedPocGuidedDemoTemplatesV1(): readonly PocGuidedDemoTempla
 
 function builtinProvenance(templateId: string): PocGuidedDemoTemplateV1["provenance"] {
   return {
-    label: `ChimpMaera curated default: ${templateId}`,
+    label: `PANSPHAIRA curated default: ${templateId}`,
     source: "BUILTIN",
     trustTier: "BUILTIN_VERIFIED",
     manifestDigest: "sha256:placeholder",
@@ -1010,7 +1010,7 @@ export function renderPocGuidedDemoReadyMessageV1(
 ): string {
   verifyPocGuidedDemoSetupReceiptV1(receipt, plan);
   const lines = [
-    "ChimpMaera guided demo playground is ready.",
+    "PANSPHAIRA guided demo playground is ready.",
     `Template: ${plan.template.displayName} (${plan.template.templateId})`,
     `Admin-AI provider: deterministic template-guided provider, no live generative LLM`,
     `Plan digest: ${plan.planDigest}`,

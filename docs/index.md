@@ -1,10 +1,10 @@
 ---
 layout: home
 title: Governed, verifiable AI-agent actions
-description: Explore ChimpMaera's released local synthetic proof, evidence boundaries, and reproducible CRM-to-ERP example.
+description: Explore PANSPHAIRA's released local synthetic proof, evidence boundaries, and reproducible CRM-to-ERP example.
 
 hero:
-  name: ChimpMaera
+  name: PANSPHAIRA
   text: Governed, verifiable agent actions
   tagline: An open-source local proof of concept for business-system actions with explicit authority, approval, execution, readback, and receipts.
   actions:
@@ -32,14 +32,17 @@ features:
 
 ## Current evidence boundary
 
-ChimpMaera currently provides a **released, locally validated proof of concept**.
+PANSPHAIRA currently provides a **released, locally validated proof of concept**.
 Its evidence comes from deterministic tests and fictional local fixtures. It
 does not establish production fitness, live-provider compatibility, universal
 security, or permission to use customer data. **Knowledge-driven Operating
 System** is the current product category; broad live-system realization remains
 a [planned direction](./capabilities.md), not current shipped maturity. Its
-current architecture is **Caged Agent → Gateway → Capability Constellation**,
-with only the declared local-synthetic paths evidenced.
+current architecture is **Agent Sphere → governed Connections and Crossings →
+Gateway Sphere**, with only the declared local-synthetic paths evidenced.
+Sphere is terminology and visualization only; the existing isolation,
+mediation, Policy, Approval, Broker, Readback, Receipt and Evidence semantics
+remain unchanged.
 
 Start with the [governed agent-action use case](./use-cases/governed-agent-actions.md),
 follow the specific [CRM-to-ERP approval and readback path](./use-cases/crm-erp-approval-readback.md),
@@ -47,7 +50,7 @@ then verify each capability against the [evidence matrix](./capabilities.md).
 
 ## Choose, ask, or contribute
 
-Read [when ChimpMaera is not the right tool](./alternatives.md) before choosing
+Read [when PANSPHAIRA is not the right tool](./alternatives.md) before choosing
 an architecture. The curated [Now / Next / Later view](./roadmap.md) links to
 the live issue tracker without treating planned work as shipped scope.
 

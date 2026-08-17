@@ -1,13 +1,13 @@
-# The Zoo Field Guide
+# Operating Field Guide
 
-## Applying the ChimpMaera Canon in Practice
+## Applying the PANSPHAIRA Canon in Practice
 
-The [ChimpMaera Canon](CANON.md) defines durable laws. This Field Guide holds
+The [PANSPHAIRA Canon](CANON.md) defines durable laws. This Field Guide holds
 changeable operator practice: Profiles, deployment adapters, recipes,
 compatibility decisions, evidence procedures, and maturity language. It is a
 growth path, not certification or an entry exam.
 
-An unfinished tool can still enter the Zoo. The foundation is honesty: known
+An unfinished tool can still enter the operating catalogue. The foundation is honesty: known
 capabilities, boundaries, Evidence, gaps, Trusted Computing Base (TCB), and
 operating limits must not be misrepresented, and authority must not expand
 silently.
@@ -71,7 +71,7 @@ Unknown or conflicting state denies.
 `FULL_CONTROL_LAB`, `RAMPAGE`, and `RAMPAGE_FULL_CONTROL_LAB` are aliases for a
 separate dangerous lab/escape Profile, not another name for the broadest
 governed Profile. The released local contract deliberately permits that lab
-Profile to bypass ChimpMaera action and Approval gates up to the host process's
+Profile to bypass PANSPHAIRA action and Approval gates up to the host process's
 OS/host ceiling. Use it only after exact Owner risk acceptance in a disposable
 or explicitly bounded environment. Record which layers are bypassed, downgrade
 their mediation/security claims, preserve reset/rollback and recovery steps,

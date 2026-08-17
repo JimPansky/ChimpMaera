@@ -79,7 +79,7 @@ espo_company="$(espo_ensure Account name "$company_name" "$espo_company_payload"
      WHERE name = \"MAIN_INFO_SOCIETE_NOM\" AND entity = 1;
     INSERT INTO llx_const(name, value, type, visible, note, entity)
       SELECT \"MAIN_INFO_SOCIETE_NOM\", \"Panskys Zoo Enterprises\", \"chaine\", 0,
-             \"ChimpMaera v0.1 deterministic demo company\", 1
+             \"PANSPHAIRA v0.1 deterministic demo company\", 1
        WHERE NOT EXISTS (
          SELECT 1 FROM llx_const
           WHERE name = \"MAIN_INFO_SOCIETE_NOM\" AND entity = 1
@@ -106,7 +106,7 @@ while IFS= read -r role; do
     mariadb -uroot -p\"\$(cat /run/secrets/root)\" dolidb -e \"
       INSERT INTO llx_usergroup(nom, entity, datec, note)
         SELECT '$doli_group', 1, UTC_TIMESTAMP(),
-               'ChimpMaera v0.1 role $role_id'
+               'PANSPHAIRA v0.1 role $role_id'
          WHERE NOT EXISTS (
            SELECT 1 FROM llx_usergroup
             WHERE nom = '$doli_group' AND entity = 1

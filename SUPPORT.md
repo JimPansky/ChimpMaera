@@ -1,6 +1,6 @@
-# ChimpMaera Support
+# PANSPHAIRA Support
 
-ChimpMaera is provided without warranty, service-level objective or
+PANSPHAIRA is provided without warranty, service-level objective or
 production-support commitment.
 
 When the distribution's repository offers issues or discussions, use them for

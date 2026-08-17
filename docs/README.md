@@ -1,17 +1,19 @@
-# ChimpMaera documentation
+# PANSPHAIRA documentation
 
 Use this hub to find the right public document without treating roadmap text
-as shipped evidence. ChimpMaera's current product category is an open,
+as shipped evidence. PANSPHAIRA's current product category is an open,
 knowledge-driven operating system for governed, adaptable AI ecosystems. Its
 current shipped maturity is a released, open-source local PoC for governed and
 verifiable AI-agent actions across business systems; broad live-system and
 production realization remains planned and unproven.
 
-The current architecture is **Caged Agent → Gateway → Capability
-Constellation**. The Agent is an untrusted proposer; the Gateway mediates typed
-context, capability, Policy and Approval; stable capability contracts,
-Governed Templates, typed Adapters and Provider Bindings form the constellation.
-Only the declared local-synthetic paths are currently evidenced.
+The current architecture is **Agent Sphere → governed Connections and
+Crossings → Gateway Sphere**. The Agent is an untrusted proposer; the existing
+Runtime Isolation Boundary and Gateway mediate typed context, capability,
+Policy and Approval; stable capability contracts, Governed Templates, typed
+Adapters and Provider Bindings connect to providers. Sphere is terminology and
+visualization only, not a protocol, schema, API or runtime abstraction. Only
+the declared local-synthetic paths are currently evidenced.
 
 Status labels used here:
 
@@ -46,7 +48,9 @@ Status labels used here:
   evidence.
 - [Architecture](ARCHITECTURE.md): current local reference design and trust
   boundaries.
-- [Zoo Field Guide](ZOO-FIELD-GUIDE.md): profiles, adapters and evidence
+- [PANSPHAIRA terminology and identity guardrails](PANSPHAIRA-TERMINOLOGY.md):
+  display/Sphere vocabulary, historical boundaries, and stable-ID decisions.
+- [Operating Field Guide](OPERATING-FIELD-GUIDE.md): profiles, adapters and evidence
   procedures.
 - [Agent runtime isolation contract](AGENT-RUNTIME-ISOLATION-CONTRACT.md):
   engineering contract for untrusted runtime crossings.

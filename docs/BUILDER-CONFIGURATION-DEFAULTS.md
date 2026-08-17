@@ -9,7 +9,7 @@ configuration guidance.
 | --- | --- | --- | --- |
 | Authority profile | `SAFE_GUIDED` | Governed `CUSTOM`; dangerous `RAMPAGE_FULL_CONTROL_LAB` (`RAMPAGE` and `FULL_CONTROL_LAB` aliases) | Governed rights remain Host/System ceiling ∩ Owner profile ∩ assignments ∩ current constraints. The lab profile is separately risk-accepted and never exceeds the OS/host ceiling. |
 | Read-only route | `AUTO_EXECUTE` in `SAFE_GUIDED` | Owner may narrow or deny | Exact admitted capability, tenant and use-time checks still apply. |
-| Effectful route | `OWNER_APPROVAL` in `SAFE_GUIDED` | `CUSTOM` may select governed `AUTO_EXECUTE`; the lab profile may bypass ChimpMaera action/Approval gates | The lab bypass is outside SAFE_GUIDED/Canon security claims for bypassed layers; malformed or integrity-invalid Builder input still denies. |
+| Effectful route | `OWNER_APPROVAL` in `SAFE_GUIDED` | `CUSTOM` may select governed `AUTO_EXECUTE`; the lab profile may bypass PANSPHAIRA action/Approval gates | The lab bypass is outside SAFE_GUIDED/Canon security claims for bypassed layers; malformed or integrity-invalid Builder input still denies. |
 | Unknown intent | `UNRESOLVED_INTENT`, inactive, non-executable | None until a compatible capability is admitted | Intent never creates authority or effect. |
 | Scaffold | Generic `ADAPTER` or `SKILL` data contract | Owner selects kind | No target-specific privileged Builder core. |
 | Data classification | `SYNTHETIC` | None in M1 evidence/contribution paths | Live/customer data is outside this contract. |

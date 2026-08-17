@@ -96,7 +96,7 @@ function validReceipt(body, expected) {
 
 export default definePluginEntry({
   id: "chimpmaera-builder",
-  name: "ChimpMaera BLD-001 Builder Gateway",
+  name: "PANSPHAIRA BLD-001 Builder Gateway",
   description: "Two closed typed requests through the isolated synthetic Builder Gateway/Broker.",
   register(api) {
     const config = api.pluginConfig;

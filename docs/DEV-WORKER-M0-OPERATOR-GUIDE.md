@@ -5,9 +5,10 @@
 M0 freezes `chimpmaera.dev/development-worker-profile/v1`,
 `chimpmaera.dev/work-order/v1`, and `chimpmaera.dev/work-receipt/v1` and
 provides one default-off, synthetic-only execution path. It admits exactly a
-fictional issue IID 117 snapshot bound to the public ChimpMaera identity, applies
-one bounded documentation change, runs one allowlisted in-process test, emits
-a deterministic receipt, and destroys its temporary workspace.
+fictional issue IID 117 snapshot bound to the current public repository
+identity, applies one bounded documentation change, runs one allowlisted
+in-process test, emits a deterministic receipt, and destroys its temporary
+workspace.
 
 Build and run it from the repository root:
 
@@ -94,18 +95,18 @@ not worker inputs, active routes, benchmark winners, or production defaults:
 All four mappings remain default-off. The worker sees only an admitted alias;
 the trusted controller owns the provider ID, route, credential, policy digest,
 and budget. `cm.dev.primary` remains deliberately unassigned until a later
-controlled ChimpMaera benchmark uses identical tasks and hidden gates to prove
+controlled PANSPHAIRA benchmark uses identical tasks and hidden gates to prove
 the quality, cost, and latency choice. No Kimi, GLM, or Pro call is M1B
 evidence. A pilot against any superseded preview ID is also not evidence for
 the `DeepSeek-V4-Flash-0731` candidate.
 
 Self-development remains without self-authority: the worker may propose
-changes to ChimpMaera as a reviewable patch/test/receipt bundle, but it cannot
+changes to PANSPHAIRA as a reviewable patch/test/receipt bundle, but it cannot
 activate its own controller changes, widen protected paths, write CI or GitHub
 workflow files, publish a branch, create or update a review, merge, tag,
 release, deploy, or change provider policy.
 
-## M1B ChimpMaera-only isolation
+## M1B single-repository isolation
 
 M1B keeps the live path default-off and narrows the first public pilot to a
 trusted-controller materialized projection from `JimPansky/ChimpMaera` only.
@@ -243,7 +244,7 @@ merge, tag, release, deployment, or runtime activation operation.
 OpenCode is replaceable defense in depth, not a security boundary. The pinned
 template [`demo/dev-worker/opencode-adapter-v1.json`](../demo/dev-worker/opencode-adapter-v1.json)
 denies by default and explicitly denies web fetch/search, skills, subagents,
-MCP configuration, plugins, and external directories. ChimpMaera's controller,
+MCP configuration, plugins, and external directories. PANSPHAIRA's controller,
 filesystem projection, isolation, and external broker remain authoritative even
 if a harness permission is missing or bypassed.
 

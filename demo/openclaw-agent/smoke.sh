@@ -108,7 +108,7 @@ done
 
 cm_aas035_compose_cmd exec -T openclaw-agent node openclaw.mjs agent \
   --agent main --session-key aas035-e2e \
-  --message 'Create the one authorized synthetic OPENCLAW-M1.4 contact through ChimpMaera and report its receipt digest.' \
+  --message 'Create the one authorized synthetic OPENCLAW-M1.4 contact through PANSPHAIRA and report its receipt digest.' \
   --thinking off --timeout 90 --json > "$run_dir/agent-e2e.json"
 jq -e '
   (.payloads // .result.payloads // []) as $p

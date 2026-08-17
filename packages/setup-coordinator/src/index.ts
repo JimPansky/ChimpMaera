@@ -507,7 +507,7 @@ const DASHBOARD_HTML = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ChimpMaera Setup</title>
+  <title>PANSPHAIRA Setup</title>
   <style>
     :root{color-scheme:dark;font:14px system-ui;background:#101418;color:#e8eef2}
     body{max-width:980px;margin:auto;padding:20px}
@@ -518,7 +518,7 @@ const DASHBOARD_HTML = `<!doctype html>
   </style>
 </head>
 <body>
-  <header><h1>ChimpMaera local setup</h1><p id="summary">Stage A starting…</p><progress id="progress" max="100"></progress></header>
+  <header><h1>PANSPHAIRA local setup</h1><p id="summary">Stage A starting…</p><progress id="progress" max="100"></progress></header>
   <main class="grid">
     <section class="card"><h2>Template & plan</h2><pre id="plan"></pre></section>
     <section class="card"><h2>Stages</h2><pre id="stages"></pre></section>
@@ -539,7 +539,7 @@ const DASHBOARD_HTML = `<!doctype html>
   <section class="card"><h2>Bounded actions</h2><button id="run">Run synthetic setup</button><button id="resume">Resume</button><button id="promote">Promote after gates</button><button id="cleanup">Cleanup owned state</button><pre id="action"></pre></section>
   <script>
     const byId=(id)=>document.getElementById(id);
-    function controlToken(){let token=sessionStorage.getItem('cmControlToken');if(!token){token=prompt('Paste the local ChimpMaera control token from .chimpmaera-demo/secrets/chimp-api-token')||'';if(token)sessionStorage.setItem('cmControlToken',token)}return token}
+    function controlToken(){let token=sessionStorage.getItem('cmControlToken');if(!token){token=prompt('Paste the local PANSPHAIRA control token from .chimpmaera-demo/secrets/chimp-api-token')||'';if(token)sessionStorage.setItem('cmControlToken',token)}return token}
     async function api(path,body){const headers={'content-type':'application/json'};if(body){headers.authorization='Bearer '+controlToken();headers['x-cm-csrf']='chimpmaera-local-v1'}const response=await fetch(path,{method:body?'POST':'GET',headers,body:body?JSON.stringify(body):undefined});const value=await response.json();if(!response.ok)throw new Error(value.error);return value}
     async function refresh(){const [s,x]=await Promise.all([api('/api/status'),api('/api/effective-rights')]);byId('summary').textContent=s.currentAction;byId('progress').value=s.progress.percent;byId('plan').textContent=JSON.stringify({template:s.template,plan:s.plan,provider:s.provider},null,2);byId('stages').textContent=s.stages.map(x=>x.status+' '+x.label).join('\\n');byId('resources').textContent=JSON.stringify(s.resources,null,2);byId('health').textContent=JSON.stringify({health:s.health,authority:s.authority},null,2);byId('decisions').textContent=JSON.stringify({warnings:s.warnings,decisions:s.decisions},null,2);byId('receipts').textContent=JSON.stringify({receipts:s.receipts,resume:s.resume,cleanup:s.cleanup},null,2);byId('permission-xray').textContent=JSON.stringify(x,null,2)}
     async function act(path,body){try{const value=await api(path,body??{});byId('action').textContent=JSON.stringify(value,null,2);await refresh()}catch(error){byId('action').textContent=String(error)}}

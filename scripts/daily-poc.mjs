@@ -316,7 +316,7 @@ function semanticIssues(manifest, sourceRepo, facts) {
       }
     }
   }
-  if (manifest.video.title !== `ChimpMaera POC Daily — ${manifest.date}`) {
+  if (manifest.video.title !== `PANSPHAIRA POC Daily — ${manifest.date}`) {
     issues.push("CURRENT_DAILY_TITLE_MISMATCH");
   }
   if (manifest.source.base === manifest.source.head && facts.changedFiles.length !== 0) {
@@ -338,7 +338,7 @@ function semanticIssues(manifest, sourceRepo, facts) {
   try {
     const readme = readFileSync(resolveRepoPath(sourceRepo, "README.md"), "utf8");
     const heading = readme.match(/^# (.+)$/m)?.[1] ?? null;
-    if (heading !== "ChimpMaera") issues.push("README_CURRENT_IDENTITY_MUST_BE_TIMELESS");
+    if (heading !== "PANSPHAIRA") issues.push("README_CURRENT_IDENTITY_MUST_BE_TIMELESS");
     const activeReleaseSection = readme.split(/^## /m).find((value) => value.startsWith("Releases")) ?? "";
     const stableReleaseLinks = [
       "](https://github.com/JimPansky/ChimpMaera/releases/latest)",
@@ -454,7 +454,7 @@ function markdownList(items, render) {
 
 function incrementCandidateTitle(manifest) {
   const functionalName = manifest.highlights[0]?.title ?? "Functional product change";
-  return `ChimpMaera — ${functionalName} (Increment Candidate)`;
+  return `PANSPHAIRA — ${functionalName} (Increment Candidate)`;
 }
 
 function buildCoreArtifacts(manifest, manifestDigest, facts, previous, videoStatus) {
@@ -576,7 +576,7 @@ function buildCoreArtifacts(manifest, manifestDigest, facts, previous, videoStat
     spdxVersion: "SPDX-2.3",
     dataLicense: "CC0-1.0",
     SPDXID: "SPDXRef-DOCUMENT",
-    name: `ChimpMaera-${manifest.targetVersion}-daily-poc-inputs`,
+    name: `PANSPHAIRA-${manifest.targetVersion}-daily-poc-inputs`,
     documentNamespace: `https://chimpmaera.local/spdx/${manifest.targetVersion}`,
     creationInfo: {
       created: `${manifest.date}T00:00:00Z`,
@@ -585,7 +585,7 @@ function buildCoreArtifacts(manifest, manifestDigest, facts, previous, videoStat
     },
     packages: [{
       SPDXID: "SPDXRef-Package-ChimpMaera",
-      name: "ChimpMaera",
+      name: "PANSPHAIRA",
       versionInfo: manifest.targetVersion,
       downloadLocation: "NOASSERTION",
       filesAnalyzed: false,

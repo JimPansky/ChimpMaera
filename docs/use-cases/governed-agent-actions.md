@@ -1,12 +1,12 @@
 ---
 title: Governed AI-agent actions across business systems
-description: See how ChimpMaera's local synthetic CRM-to-ERP path separates proposals, authority, approval, effects, readback, and receipts.
+description: See how PANSPHAIRA's local synthetic CRM-to-ERP path separates proposals, authority, approval, effects, readback, and receipts.
 ---
 
 # Governed AI-agent actions across business systems
 
 An AI Agent can propose a useful business-system change without receiving
-ambient authority to perform it. ChimpMaera's released local reference path
+ambient authority to perform it. PANSPHAIRA's released local reference path
 demonstrates that separation with fictional CRM and ERP records.
 
 ## The bounded path
@@ -34,7 +34,7 @@ useful before live-system or tenant work begins.
 Use a conventional workflow engine when the work is fully predetermined and
 does not need Agent proposals. Use a policy engine when policy evaluation is
 the only missing component. Use an Agent framework when experimentation is the
-priority and no effect authority is present. ChimpMaera does not claim to
+priority and no effect authority is present. PANSPHAIRA does not claim to
 replace those systems or outperform them.
 
 ## What this does not prove

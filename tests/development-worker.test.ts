@@ -208,6 +208,14 @@ const m1bIssueDigest = (): string => chimpMaeraIssueSnapshotDigestV1({
   updatedAt: "2026-08-04T11:31:26.000Z",
 });
 
+test("DEV-WORKER-M1A example uses PANSPHAIRA display branding while preserving repository identity", () => {
+  const example = JSON.parse(readFileSync("demo/dev-worker/m1a-bootstrap.example.json", "utf8"));
+  assert.equal(example.broker.headers["X-Title"], "PANSPHAIRA CM Dev Worker M1A");
+  assert.equal(example.broker.headers["HTTP-Referer"], "https://github.com/JimPansky/ChimpMaera");
+  assert.equal(example.source.repository, "JimPansky/ChimpMaera");
+  assert.equal(example.source.sourceOrigin, "https://github.com/JimPansky/ChimpMaera.git");
+});
+
 const m1bPatchCandidate = (baseCommit: string, before: string, after: string): PatchCandidateV1 => ({
   schemaVersion: "chimpmaera.dev/patch-candidate/v1",
   baseCommit,

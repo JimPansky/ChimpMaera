@@ -5,7 +5,7 @@ description: Inspect the immutable, authority-free contracts shared by later mai
 
 # Update, migration, and Doctor contract freeze
 
-ChimpMaera provides a closed, local-synthetic contract surface for inspecting
+PANSPHAIRA provides a closed, local-synthetic contract surface for inspecting
 maintenance inputs before any state-changing workflow is considered. The
 contract freeze is additive to the released check-only Update/Doctor v1
 surface; it does not change those earlier bytes.

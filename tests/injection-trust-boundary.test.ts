@@ -113,7 +113,7 @@ test("AAS-009-2 trusted finite catalogue reconstructs exact digest-bound candida
       method: "POST",
       path: "/Contact",
       body: {
-        description: "ChimpMaera trust-boundary synthetic contact",
+        description: "PANSPHAIRA trust-boundary synthetic contact",
         emailAddress: "trust-boundary@example.invalid",
         firstName: "Avery",
         lastName: "Boundary",

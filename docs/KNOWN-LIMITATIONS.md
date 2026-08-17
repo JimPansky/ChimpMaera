@@ -1,12 +1,12 @@
 ---
 title: Known limitations
-description: Review the explicit production, security, identity, integration, runtime, and evidence limits of ChimpMaera's current local synthetic release.
+description: Review the explicit production, security, identity, integration, runtime, and evidence limits of PANSPHAIRA's current local synthetic release.
 ---
 
 # Known limitations
 
 These limits are part of the claim discipline required by
-[The ChimpMaera Canon](CANON.md). They apply to the current regular release
+[The PANSPHAIRA Canon](CANON.md). They apply to the current regular release
 `v0.2.0-poc.20260816.1` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 

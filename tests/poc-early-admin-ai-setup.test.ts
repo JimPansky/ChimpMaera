@@ -389,6 +389,9 @@ test("EARLY-ADMIN-DASHBOARD loopback status, dialog and repair E2E reject foreig
     /default-src 'self'/,
   );
   const page = await pageResponse.text();
+  assert.match(page, /<title>PANSPHAIRA Setup<\/title>/);
+  assert.match(page, /<h1>PANSPHAIRA local setup<\/h1>/);
+  assert.match(page, /Paste the local PANSPHAIRA control token from \.chimpmaera-demo\/secrets\/chimp-api-token/);
   assert.match(page, /Admin-AI Approval Workbench/);
   assert.match(page, /Permission X-ray/);
   assert.match(page, /ALLOW is not executable authority/);
@@ -531,6 +534,9 @@ test("EARLY-ADMIN-AUTHORITY profiles require owner activation and full-control r
   assert.equal(initial.authority.profile.profileId, "SAFE_GUIDED");
   assert.match(fullControlLabRiskWarningV1(), /not recommended for real operation/i);
   assert.match(fullControlLabRiskWarningV1(), /real root.*audit data/i);
+  assert.match(fullControlLabRiskWarningV1(), /PANSPHAIRA host process/);
+  assert.match(fullControlLabRiskWarningV1(), /PANSPHAIRA does not create OS rights/);
+  assert.match(fullControlLabRiskWarningV1(), /remove PANSPHAIRA/);
   assert.throws(
     () => activatePocAdminAuthorityProfileV1(initial, {
       requestedProfileId: "FULL_CONTROL_LAB",

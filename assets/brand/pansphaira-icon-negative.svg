@@ -1,0 +1,21 @@
+<svg role="img" aria-labelledby="pansphaira-icon-negative-title pansphaira-icon-negative-desc" xmlns="http://www.w3.org/2000/svg" width="1254" height="1254" viewBox="0 0 1254 1254">
+  <title id="pansphaira-icon-negative-title">PANSPHAIRA icon, negative</title>
+  <desc id="pansphaira-icon-negative-desc">White geometric icon composed of seven connected circles.</desc>
+  <g fill="none" stroke="#ffffff" stroke-width="17.5">
+    <g stroke-linecap="round">
+      <line x1="278.873" y1="517.392" x2="349.293" y2="652.881"/>
+      <line x1="215.021" y1="856.736" x2="330.476" y2="754.438"/>
+      <line x1="442.598" y1="693.425" x2="554.190" y2="662.344"/>
+      <line x1="568.370" y1="321.053" x2="619.388" y2="554.014"/>
+      <line x1="715.858" y1="600.179" x2="840.836" y2="537.865"/>
+      <line x1="616.509" y1="723.304" x2="582.871" y2="855.253"/>
+    </g>
+    <circle cx="215" cy="394.5" r="138.5"/>
+    <circle cx="555" cy="260" r="62.5"/>
+    <circle cx="997" cy="460" r="174.5"/>
+    <circle cx="638" cy="639" r="87"/>
+    <circle cx="379.5" cy="711" r="65.5"/>
+    <circle cx="164.5" cy="901.5" r="67.5"/>
+    <circle cx="541" cy="1019.5" r="169.5"/>
+  </g>
+</svg>

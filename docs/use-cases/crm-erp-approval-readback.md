@@ -1,12 +1,12 @@
 ---
 title: CRM-to-ERP approval, execution, and readback
-description: Follow ChimpMaera's released local synthetic order path from a CRM proposal through bound approval to ERP readback and a receipt.
+description: Follow PANSPHAIRA's released local synthetic order path from a CRM proposal through bound approval to ERP readback and a receipt.
 ---
 
 # CRM-to-ERP approval, execution, and readback
 
 A request to create an ERP order from CRM context crosses both an authority
-boundary and a system boundary. ChimpMaera's released demo makes those
+boundary and a system boundary. PANSPHAIRA's released demo makes those
 crossings visible with fictional EspoCRM and Dolibarr records on loopback.
 
 ## The released local flow
