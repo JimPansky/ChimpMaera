@@ -1,0 +1,23 @@
+{
+  "$defs": { "sha": { "pattern": "^[a-f0-9]{64}$", "type": "string" } },
+  "$id": "chimpmaera.video/synthetic-success/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactSetSha256": { "$ref": "#/$defs/sha" },
+    "artifacts": {
+      "items": {
+        "additionalProperties": false,
+        "properties": { "bytes": { "minimum": 1, "type": "integer" }, "path": { "type": "string" }, "sha256": { "$ref": "#/$defs/sha" } },
+        "required": ["bytes", "path", "sha256"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "jobDigest": { "$ref": "#/$defs/sha" },
+    "schemaVersion": { "const": "chimpmaera.video/synthetic-success/v1" },
+    "status": { "const": "SUCCESS" }
+  },
+  "required": ["artifactSetSha256", "artifacts", "jobDigest", "schemaVersion", "status"],
+  "type": "object"
+}

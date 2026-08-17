@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": { "bytes": { "minimum": 1, "type": "integer" }, "path": { "type": "string" }, "sha256": { "$ref": "#/$defs/sha" } },
+      "required": ["bytes", "path", "sha256"],
+      "type": "object"
+    },
+    "measuredPng": {
+      "additionalProperties": false,
+      "properties": { "bitDepth": { "const": 8 }, "colorType": { "const": 2 }, "height": { "const": 720 }, "width": { "const": 1280 } },
+      "required": ["bitDepth", "colorType", "height", "width"],
+      "type": "object"
+    },
+    "measuredWav": {
+      "additionalProperties": false,
+      "properties": { "bitsPerSample": { "const": 16 }, "channels": { "const": 1 }, "dataBytes": { "type": "integer" }, "sampleCount": { "type": "integer" }, "sampleRate": { "const": 48000 } },
+      "required": ["bitsPerSample", "channels", "dataBytes", "sampleCount", "sampleRate"],
+      "type": "object"
+    },
+    "sha": { "pattern": "^[a-f0-9]{64}$", "type": "string" },
+    "target": {
+      "additionalProperties": false,
+      "properties": { "declaredTargetPixelFormat": { "const": "yuv420p" }, "durationFrames": { "type": "integer" }, "durationSeconds": { "type": "number" }, "fps": { "const": 30 }, "height": { "const": 720 }, "width": { "const": 1280 } },
+      "required": ["declaredTargetPixelFormat", "durationFrames", "durationSeconds", "fps", "height", "width"],
+      "type": "object"
+    }
+  },
+  "$id": "chimpmaera.video/synthetic-package-index/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "declaredTarget": { "$ref": "#/$defs/target" },
+    "job": {
+      "additionalProperties": false,
+      "properties": { "immutableOutputVersion": { "type": "string" }, "jobDigest": { "$ref": "#/$defs/sha" }, "name": { "type": "string" } },
+      "required": ["immutableOutputVersion", "jobDigest", "name"],
+      "type": "object"
+    },
+    "measuredSources": {
+      "additionalProperties": false,
+      "properties": {
+        "audio": {
+          "additionalProperties": false,
+          "properties": { "bitsPerSample": { "const": 16 }, "channels": { "const": 1 }, "dataBytes": { "type": "integer" }, "sampleCount": { "type": "integer" }, "sampleRate": { "const": 48000 }, "sha256": { "$ref": "#/$defs/sha" } },
+          "required": ["bitsPerSample", "channels", "dataBytes", "sampleCount", "sampleRate", "sha256"],
+          "type": "object"
+        },
+        "frames": {
+          "items": {
+            "additionalProperties": false,
+            "properties": { "bitDepth": { "const": 8 }, "colorType": { "const": 2 }, "height": { "const": 720 }, "sceneId": { "type": "string" }, "sha256": { "$ref": "#/$defs/sha" }, "width": { "const": 1280 } },
+            "required": ["bitDepth", "colorType", "height", "sceneId", "sha256", "width"],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["audio", "frames"],
+      "type": "object"
+    },
+    "mediaType": { "const": "application/vnd.chimpmaera.synthetic-package-index+json" },
+    "payloadArtifacts": { "items": { "$ref": "#/$defs/artifact" }, "type": "array" },
+    "playableVideo": { "const": false },
+    "schemaVersion": { "const": "chimpmaera.video/synthetic-package-index/v1" },
+    "timeline": {
+      "additionalProperties": false,
+      "properties": { "file": { "const": "timeline.json" }, "sha256": { "$ref": "#/$defs/sha" } },
+      "required": ["file", "sha256"],
+      "type": "object"
+    }
+  },
+  "required": ["declaredTarget", "job", "measuredSources", "mediaType", "payloadArtifacts", "playableVideo", "schemaVersion", "timeline"],
+  "type": "object"
+}

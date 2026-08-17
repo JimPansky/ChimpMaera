@@ -2,10 +2,13 @@
 
 Status: **released contract / optional external artifact**.
 
-ChimpMaera no longer embeds the video Docker reference implementation in the
-main repository. The video renderer is consumed as a separate, portable,
-SHA-256-pinned artifact. CM keeps only the contract needed to verify that the
-operator intentionally selected the expected artifact version and digest.
+ChimpMaera does not embed the production/Docker video reference implementation
+in the main repository. The production renderer is consumed as a separate,
+portable, SHA-256-pinned artifact. CM keeps the contract needed to verify that
+the operator intentionally selected the expected artifact version and digest.
+The distinct local `tools/video-production-reference/` tree is only a bounded
+synthetic CPU contract/conformance and package-assembly reference; it does not
+replace or claim equivalence with this external production/Docker artifact.
 
 ## Contract
 
@@ -33,6 +36,12 @@ CM does not own or start video Docker, does not mount video job/assets/output,
 does not forward credentials, does not expose render or upload endpoints, and
 does not claim video publication. Rendering remains an explicit external
 operator workflow after artifact verification.
+
+The local synthetic reference emits a canonical JSON `.cmvideo` package index,
+not playable or encoded video. It provides no production renderer, Docker or
+container hardening, codec, GPU, TTS, model, provider, network, upload,
+publication, worker, deployment, production-media, external-artifact
+equivalence, or NVENC-byte-identity claim.
 
 The separated artifact for this increment is:
 

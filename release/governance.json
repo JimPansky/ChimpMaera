@@ -669,7 +669,7 @@
         "tests/external-video-service.test.ts"
       ],
       "nonClaims": [
-        "No embedded renderer, Docker ownership, template selection, rendering, assembly, upload, publication, watcher or worker activation, production video behavior, universal media-studio capability or removal of human editorial review is proven."
+        "No embedded production/Docker renderer, Docker ownership, template selection, production rendering or assembly, upload, publication, watcher or worker activation, production video behavior, universal media-studio capability or removal of human editorial review is proven."
       ],
       "traceability": {
         "issues": [
@@ -691,6 +691,90 @@
         "assetChecksumBinding": "currentRelease.assets[].sha256",
         "externalArtifact": "chimpmaera-video-reference-2026.08.02-v2.tar.gz",
         "externalArtifactSha256": "6aed9a5ded7341ea636c3de9f2bb99115501211024a7d51cb077edb1a33a6919"
+      }
+    },
+    {
+      "claimId": "CM-REL-023",
+      "component": "Synthetic CPU Video Package Reference",
+      "claim": "ChimpMaera ships a bounded Linux-local synthetic CPU contract/conformance and canonical package-index assembly reference over fixed PNG and PCM fixtures.",
+      "userValue": "Contributors can validate strict cm.video/v1 jobs, exact hash-closed renderer/audio/QA descriptors backed only by a static trusted function registry, inode/marker-bound package ownership and complete independent readback without a codec, container or network dependency.",
+      "includedBytes": [
+        "tools/video-production-reference/EXTENSION-GUIDE.md",
+        "tools/video-production-reference/NOTICE",
+        "tools/video-production-reference/README.md",
+        "tools/video-production-reference/SHA256SUMS",
+        "tools/video-production-reference/assets/synthetic/frame-s01.png",
+        "tools/video-production-reference/assets/synthetic/frame-s02.png",
+        "tools/video-production-reference/assets/synthetic/frame-s03.png",
+        "tools/video-production-reference/assets/synthetic/frame-s04.png",
+        "tools/video-production-reference/assets/synthetic/track-alpha.wav",
+        "tools/video-production-reference/assets/synthetic/track-beta.wav",
+        "tools/video-production-reference/bin/cm-video.mjs",
+        "tools/video-production-reference/components/audio.pcm-v1.json",
+        "tools/video-production-reference/components/qa.cpu-v1.json",
+        "tools/video-production-reference/components/renderer.cpu-v1.json",
+        "tools/video-production-reference/jobs/job-alpha.synthetic-v1.json",
+        "tools/video-production-reference/jobs/job-beta.synthetic-v1.json",
+        "tools/video-production-reference/schemas/component-descriptor.schema.v1.json",
+        "tools/video-production-reference/schemas/ownership-marker.schema.v1.json",
+        "tools/video-production-reference/schemas/package-index.schema.v1.json",
+        "tools/video-production-reference/schemas/qa-receipt.schema.v1.json",
+        "tools/video-production-reference/schemas/render-manifest.schema.v1.json",
+        "tools/video-production-reference/schemas/success-marker.schema.v1.json",
+        "tools/video-production-reference/schemas/timeline.schema.v1.json",
+        "tools/video-production-reference/schemas/video-job.schema.v1.json",
+        "tools/video-production-reference/scripts/generate-synthetic-assets.mjs",
+        "tools/video-production-reference/scripts/verify-closure.mjs",
+        "tools/video-production-reference/src/audio-pcm.mjs",
+        "tools/video-production-reference/src/controller.mjs",
+        "tools/video-production-reference/src/job-validator.mjs",
+        "tools/video-production-reference/src/media-io.mjs",
+        "tools/video-production-reference/src/package-assembly.mjs",
+        "tools/video-production-reference/src/qa-cpu.mjs",
+        "tools/video-production-reference/src/render-cpu.mjs",
+        "tools/video-production-reference/src/safe-io.mjs",
+        "tools/video-production-reference/src/select-component.mjs",
+        "tools/video-production-reference/src/strict-json.mjs",
+        "tools/video-production-reference/src/verify-closure.mjs",
+        "tools/video-production-reference/tests/closure.test.mjs",
+        "tools/video-production-reference/tests/slice.test.mjs"
+      ],
+      "functionalProof": {
+        "testPaths": [
+          "tools/video-production-reference/tests/slice.test.mjs",
+          "tools/video-production-reference/tests/closure.test.mjs"
+        ],
+        "result": "PASS 116 focused tests: two frozen jobs, static three-role registry, deterministic complete package goldens, strict direct/file parity, closed schemas, QA receipt, exact documentation/internal closure and independent DAG ownership oracle."
+      },
+      "safetyProof": {
+        "testPaths": [
+          "tools/video-production-reference/tests/slice.test.mjs",
+          "tools/video-production-reference/tests/closure.test.mjs"
+        ],
+        "result": "PASS: digest-consistent executable replacement is denied before execution; exact JSON key limits, global evidence IDs, Ajv/runtime descriptor negatives, same-user pathname replacement/cleanup, QA late extras, regeneration symlink/swap/failure, documentation omission/path and missing DAG-owner probes fail closed."
+      },
+      "evidencePaths": [
+        "tools/video-production-reference/README.md",
+        "tools/video-production-reference/EXTENSION-GUIDE.md",
+        "tools/video-production-reference/SHA256SUMS",
+        "tools/video-production-reference/tests/slice.test.mjs",
+        "tools/video-production-reference/tests/closure.test.mjs"
+      ],
+      "nonClaims": [
+        "No playable or encoded video, codec, production renderer, production media, Docker/container hardening, GPU, TTS, model, provider, network, upload, publication, watcher, worker, deployment, external-artifact equivalence, NVENC byte identity, portability beyond the tested Linux-local boundary or completion of Issue #18 is proven."
+      ],
+      "traceability": {
+        "issues": [
+          18
+        ],
+        "pullRequests": [],
+        "sourceCommits": [],
+        "pdcaPaths": [
+          "tools/video-production-reference/README.md"
+        ],
+        "publicManifest": "release/public-files.manifest",
+        "releaseCommitBinding": "currentRelease.tagObjectSha",
+        "assetChecksumBinding": "currentRelease.assets[].sha256"
       }
     },
     {

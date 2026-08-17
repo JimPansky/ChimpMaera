@@ -1,0 +1,97 @@
+{
+  "$defs": {
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "descriptor": { "$ref": "component-descriptor.schema.v1.json" },
+        "descriptorFile": { "pattern": "^components/[a-z0-9.-]+\\.json$", "type": "string" },
+        "descriptorSha256": { "$ref": "#/$defs/sha" },
+        "implementationSha256": { "$ref": "#/$defs/sha" }
+      },
+      "required": ["descriptor", "descriptorFile", "descriptorSha256", "implementationSha256"],
+      "type": "object"
+    },
+    "sha": { "pattern": "^[a-f0-9]{64}$", "type": "string" }
+  },
+  "$id": "chimpmaera.video/synthetic-render-manifest/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "components": {
+      "additionalProperties": false,
+      "properties": { "audio": { "$ref": "#/$defs/binding" }, "qa": { "$ref": "#/$defs/binding" }, "renderer": { "$ref": "#/$defs/binding" } },
+      "required": ["audio", "qa", "renderer"],
+      "type": "object"
+    },
+    "copiedOutputs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": { "file": { "type": "string" }, "sha256": { "$ref": "#/$defs/sha" }, "sourceId": { "type": "string" } },
+        "required": ["file", "sha256", "sourceId"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "expectedQaFile": { "const": "qa-receipt.json" },
+    "expectedRenderFiles": { "items": { "type": "string" }, "type": "array", "uniqueItems": true },
+    "frameSchedule": {
+      "items": {
+        "additionalProperties": false,
+        "properties": { "endFrame": { "type": "integer" }, "id": { "type": "string" }, "sceneId": { "type": "string" }, "startFrame": { "type": "integer" } },
+        "required": ["endFrame", "id", "sceneId", "startFrame"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "frozenJob": { "$ref": "video-job.schema.v1.json" },
+    "jobDigest": { "$ref": "#/$defs/sha" },
+    "packageIndex": {
+      "additionalProperties": false,
+      "properties": { "file": { "const": "render.cmvideo" }, "playableVideo": { "const": false }, "sha256": { "$ref": "#/$defs/sha" } },
+      "required": ["file", "playableVideo", "sha256"],
+      "type": "object"
+    },
+    "schemaVersion": { "const": "chimpmaera.video/synthetic-render-manifest/v1" },
+    "semanticCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": { "const": "synthetic-package-assembly" },
+        "outputPolicy": { "const": "exclusive-immutable-namespace" },
+        "selectionContract": { "const": "chimpmaera.video/selection/v1" }
+      },
+      "required": ["operation", "outputPolicy", "selectionContract"],
+      "type": "object"
+    },
+    "sourceAssets": {
+      "additionalProperties": false,
+      "properties": {
+        "audio": {
+          "additionalProperties": false,
+          "properties": { "id": { "type": "string" }, "path": { "type": "string" }, "sha256": { "$ref": "#/$defs/sha" } },
+          "required": ["id", "path", "sha256"],
+          "type": "object"
+        },
+        "frames": {
+          "items": {
+            "additionalProperties": false,
+            "properties": { "id": { "type": "string" }, "path": { "type": "string" }, "sceneId": { "type": "string" }, "sha256": { "$ref": "#/$defs/sha" } },
+            "required": ["id", "path", "sceneId", "sha256"],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["audio", "frames"],
+      "type": "object"
+    },
+    "status": { "const": "RENDERED" },
+    "timeline": {
+      "additionalProperties": false,
+      "properties": { "file": { "const": "timeline.json" }, "sha256": { "$ref": "#/$defs/sha" } },
+      "required": ["file", "sha256"],
+      "type": "object"
+    }
+  },
+  "required": ["components", "copiedOutputs", "expectedQaFile", "expectedRenderFiles", "frameSchedule", "frozenJob", "jobDigest", "packageIndex", "schemaVersion", "semanticCommand", "sourceAssets", "status", "timeline"],
+  "type": "object"
+}

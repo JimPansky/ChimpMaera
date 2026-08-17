@@ -1,0 +1,29 @@
+{
+  "$defs": {
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "descriptor": { "$ref": "component-descriptor.schema.v1.json" },
+        "descriptorFile": { "const": "components/qa.cpu-v1.json" },
+        "descriptorSha256": { "$ref": "#/$defs/sha" },
+        "implementationSha256": { "$ref": "#/$defs/sha" }
+      },
+      "required": ["descriptor", "descriptorFile", "descriptorSha256", "implementationSha256"],
+      "type": "object"
+    },
+    "sha": { "pattern": "^[a-f0-9]{64}$", "type": "string" }
+  },
+  "$id": "chimpmaera.video/synthetic-qa-receipt/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactSetSha256": { "$ref": "#/$defs/sha" },
+    "checks": { "items": { "enum": ["closed-schemas", "complete-artifact-set", "component-bindings", "frame-schedule", "png-full-decode", "wav-pcm-full-decode"] }, "type": "array", "uniqueItems": true },
+    "jobDigest": { "$ref": "#/$defs/sha" },
+    "outcome": { "const": "PASS" },
+    "qaComponent": { "$ref": "#/$defs/binding" },
+    "schemaVersion": { "const": "chimpmaera.video/synthetic-qa-receipt/v1" }
+  },
+  "required": ["artifactSetSha256", "checks", "jobDigest", "outcome", "qaComponent", "schemaVersion"],
+  "type": "object"
+}

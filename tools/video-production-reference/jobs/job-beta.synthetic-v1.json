@@ -1,0 +1,75 @@
+{
+  "apiVersion": "cm.video/v1",
+  "kind": "VideoJob",
+  "metadata": {
+    "immutableOutputVersion": "synthetic-beta-v1",
+    "name": "job-beta"
+  },
+  "spec": {
+    "assets": {
+      "audio": {
+        "channels": 1,
+        "id": "audio-beta",
+        "path": "track-beta.wav",
+        "sampleRate": 48000,
+        "sha256": "bdb66026805e779a68241d05406ddf58b8704ecf3f655971068154f71ead71a7",
+        "status": "accepted"
+      },
+      "shots": [
+        {
+          "endFrame": 30,
+          "id": "shot-a",
+          "path": "frame-s03.png",
+          "sceneId": "S01",
+          "sha256": "fc48018519057b6e430a16e188429d91ce08ac82ccde63a2f3e2f1b9e609c9d3",
+          "startFrame": 0,
+          "status": "accepted"
+        },
+        {
+          "endFrame": 75,
+          "id": "shot-b",
+          "path": "frame-s04.png",
+          "sceneId": "S02",
+          "sha256": "f71d6e9a89d4515e51818d8ff279766406b89bad1001ffa1380accc362039295",
+          "startFrame": 30,
+          "status": "accepted"
+        },
+        {
+          "endFrame": 90,
+          "id": "shot-c",
+          "path": "frame-s01.png",
+          "sceneId": "S03",
+          "sha256": "49c0ab6c7fe8e28725b57036f9ae921ffca088aa53417a4ff3e45d54c1931c76",
+          "startFrame": 75,
+          "status": "accepted"
+        }
+      ]
+    },
+    "audio": {
+      "backend": "cpu-ffmpeg-free",
+      "expectedVersion": "^1.0.0"
+    },
+    "mode": "full-render",
+    "qa": {
+      "backend": "cpu-ffmpeg-free",
+      "expectedVersion": "^1.0.0"
+    },
+    "render": {
+      "backend": "cpu-ffmpeg-free",
+      "expectedVersion": "^1.0.0",
+      "overwrite": false,
+      "publicActions": "forbidden"
+    },
+    "roots": {
+      "assets": "assets/synthetic"
+    },
+    "video": {
+      "declaredTargetPixelFormat": "yuv420p",
+      "durationFrames": 90,
+      "durationSeconds": 3,
+      "fps": 30,
+      "height": 720,
+      "width": 1280
+    }
+  }
+}
