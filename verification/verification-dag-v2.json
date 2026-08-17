@@ -429,7 +429,7 @@
         {
           "path": "docs/EXTERNAL-BI-SERVICE.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "4713791fbededff1066828fa3c9b7e0f473965d7c1feda2a0796c9b76ffa999c"
+          "sha256": "de29d4dd64755e639813995d3a66bac21daf1882ca88ec457ce4637fee641141"
         }
       ],
       "ownedTests": [
@@ -466,7 +466,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "f62b68e19da17796780d5fd4176f71f99338223c0462d181a16f8332057823c4"
+          "sha256": "9766549e8b1ae3a9e84d938387c10ce727465b67a804b3e72be86a7ea8015261"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",

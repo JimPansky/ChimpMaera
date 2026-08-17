@@ -14,8 +14,8 @@ service boundary. Validate the CM-side adapter with:
 npm run external-bi-service:test
 ```
 
-The standalone runtime is released and operated from
-`JimPansky/Superset_BI_Agent`; CM does not carry its Dockerfiles, Compose files,
+The standalone KaleidoSphere runtime is released and operated from
+`JimPansky/KaleidoSphere`; CM does not carry its Dockerfiles, Compose files,
 volumes or secrets.
 
 It compares the versioned artifact lock with Dockerfile and Compose image

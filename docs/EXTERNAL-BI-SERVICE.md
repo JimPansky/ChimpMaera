@@ -1,16 +1,20 @@
 ---
 title: External BI service contract v2
-description: Connect PANSPHAIRA to the independently released SBA v0.8.0 through a fail-closed, default-off client.
+description: Connect PANSPHAIRA to independently released KaleidoSphere through the stable, fail-closed SBA v2 compatibility boundary.
 ---
 
 # External BI service contract v2
 
-`Superset_BI_Agent` (SBA) is the sole owner of BI discovery, database adapters,
-analysis, semantic/KPI/graph logic, previews and Superset execution. PANSPHAIRA
-(CM) retains only a thin generic client plus its existing generic orchestration,
-approval and UI boundaries. CM does not vendor or start SBA, own its containers
-or volumes, receive database or Superset credentials, forward SQL/raw rows, or
-apply/publish a BI result.
+KaleidoSphere is the sole owner of BI discovery, database adapters, analysis,
+semantic/KPI/graph logic, previews and Superset execution. PANSPHAIRA (CM)
+retains only a thin generic client plus its existing generic orchestration,
+approval and UI boundaries. CM does not vendor or start KaleidoSphere, own its
+containers or volumes, receive database or Superset credentials, forward
+SQL/raw rows, or apply/publish a BI result.
+
+`SBA` remains the compatibility abbreviation for this boundary. Stable
+`superset-bi-agent.*` schema and product IDs, `BI_AGENT_*` environment
+variables, `/v2` routes and the `bi-agent` runtime component name are unchanged.
 
 The supported pair is SBA product `v0.8.0` and external contract `2.0.0`. CM
 first verifies `GET /v2/capabilities`, including the canonical SHA-256 digest,
@@ -56,7 +60,8 @@ direct Superset access, credentials, raw rows, SQL forwarding and mutation.
 Rollback before merge is the exact pre-migration CM base. After a protected
 merge, use a protected successor PR; do not rewrite main, retag or replace
 assets. Disabling BI only requires removing the CM BI environment variables;
-SBA lifecycle remains independently controlled by its own release checkout.
+KaleidoSphere lifecycle remains independently controlled by its own release
+checkout.
 
 Non-claims: no deployment, runtime activation, production/customer access,
 credential onboarding, database write-back, Superset administration, Casuvia
