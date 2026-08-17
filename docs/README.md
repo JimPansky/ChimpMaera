@@ -1,7 +1,7 @@
-# ChimpMaera documentation
+# PANSPHAIRA documentation
 
 Use this hub to find the right public document without treating roadmap text
-as shipped evidence. ChimpMaera's current product category is an open,
+as shipped evidence. PANSPHAIRA's current product category is an open,
 knowledge-driven operating system for governed, adaptable AI ecosystems. Its
 current shipped maturity is a released, open-source local PoC for governed and
 verifiable AI-agent actions across business systems; broad live-system and

@@ -1,7 +1,7 @@
 cff-version: "1.2.0"
-message: "If you use ChimpMaera, please cite the software using these metadata."
+message: "If you use PANSPHAIRA, please cite the software using these metadata."
 type: software
-title: "ChimpMaera"
+title: "PANSPHAIRA"
 version: "0.2.0-poc.20260816.1"
 date-released: "2026-08-16"
 authors:
