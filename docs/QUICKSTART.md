@@ -6,7 +6,7 @@ description: Install, verify, run, and ownership-scope cleanup for PANSPHAIRA's 
 # Quickstart
 
 Before running the demo, read [The PANSPHAIRA Canon](CANON.md),
-[The Zoo Field Guide](ZOO-FIELD-GUIDE.md),
+[The Operating Field Guide](OPERATING-FIELD-GUIDE.md),
 [Architecture](ARCHITECTURE.md) and [Known Limitations](KNOWN-LIMITATIONS.md).
 
 ## Requirements
