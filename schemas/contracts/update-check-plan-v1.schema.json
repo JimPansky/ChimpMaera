@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/update-check-plan-v1.schema.json",
+  "title": "ChimpMaera independently verified update check/plan contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "planId", "mode", "executionAuthorized", "candidate", "compatibility", "lkg", "safeMode", "selfAttestation", "selfPromotion", "authorityWidened", "issuedAtMs", "planDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.update/check-plan/v1" },
+    "planId": { "$ref": "#/$defs/planId" },
+    "mode": { "const": "CHECK_ONLY" },
+    "executionAuthorized": { "const": false },
+    "candidate": { "$ref": "#/$defs/candidate" },
+    "compatibility": { "$ref": "#/$defs/compatibility" },
+    "lkg": { "$ref": "#/$defs/lkg" },
+    "safeMode": { "$ref": "#/$defs/planSafeMode" },
+    "selfAttestation": { "const": false },
+    "selfPromotion": { "const": false },
+    "authorityWidened": { "const": false },
+    "issuedAtMs": { "$ref": "#/$defs/timestamp" },
+    "planDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "timestamp": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "planId": { "type": "string", "pattern": "^update:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "candidateId": { "type": "string", "pattern": "^candidate:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "lkgId": { "type": "string", "pattern": "^(?:lkg|maintenance):[a-z0-9][a-z0-9._-]{2,95}$" },
+    "decisionId": { "type": "string", "pattern": "^compatibility:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "attestorId": { "type": "string", "pattern": "^attestor:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "promoterId": { "type": "string", "pattern": "^promoter:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "resolverId": { "type": "string", "pattern": "^resolver:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentId", "version", "digest"],
+      "properties": {
+        "componentId": { "type": "string" },
+        "version": { "$ref": "#/$defs/version" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "coreComponent": {
+      "allOf": [
+        { "$ref": "#/$defs/component" },
+        { "type": "object", "properties": { "componentId": { "type": "string", "pattern": "^core:[a-z0-9][a-z0-9._-]{2,95}$" } } }
+      ]
+    },
+    "packComponent": {
+      "allOf": [
+        { "$ref": "#/$defs/component" },
+        { "type": "object", "properties": { "componentId": { "type": "string", "pattern": "^pack:[a-z0-9][a-z0-9._-]{2,95}$" } } }
+      ]
+    },
+    "adapterComponent": {
+      "allOf": [
+        { "$ref": "#/$defs/component" },
+        { "type": "object", "properties": { "componentId": { "type": "string", "pattern": "^adapter:[a-z0-9][a-z0-9._-]{2,95}$" } } }
+      ]
+    },
+    "policyComponent": {
+      "allOf": [
+        { "$ref": "#/$defs/component" },
+        { "type": "object", "properties": { "componentId": { "type": "string", "pattern": "^policy:[a-z0-9][a-z0-9._-]{2,95}$" } } }
+      ]
+    },
+    "schemaComponent": {
+      "allOf": [
+        { "$ref": "#/$defs/component" },
+        { "type": "object", "properties": { "componentId": { "type": "string", "pattern": "^schema:[a-z0-9][a-z0-9._-]{2,95}$" } } }
+      ]
+    },
+    "generationComponent": {
+      "allOf": [
+        { "$ref": "#/$defs/component" },
+        { "type": "object", "properties": { "componentId": { "type": "string", "pattern": "^generation:[a-z0-9][a-z0-9._-]{2,95}$" } } }
+      ]
+    },
+    "coreAxis": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/coreComponent" } },
+    "packAxis": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/packComponent" } },
+    "adapterAxis": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/adapterComponent" } },
+    "policyAxis": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/policyComponent" } },
+    "schemaAxis": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/schemaComponent" } },
+    "generationAxis": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/generationComponent" } },
+    "tuple": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["core", "packs", "adapters", "policies", "schemas", "generations"],
+      "properties": {
+        "core": { "$ref": "#/$defs/coreAxis" },
+        "packs": { "$ref": "#/$defs/packAxis" },
+        "adapters": { "$ref": "#/$defs/adapterAxis" },
+        "policies": { "$ref": "#/$defs/policyAxis" },
+        "schemas": { "$ref": "#/$defs/schemaAxis" },
+        "generations": { "$ref": "#/$defs/generationAxis" }
+      }
+    },
+    "completeTuple": {
+      "allOf": [
+        { "$ref": "#/$defs/tuple" },
+        {
+          "type": "object",
+          "properties": {
+            "core": { "type": "array", "minItems": 1 },
+            "packs": { "type": "array", "minItems": 1 },
+            "adapters": { "type": "array", "minItems": 1 },
+            "policies": { "type": "array", "minItems": 1 },
+            "schemas": { "type": "array", "minItems": 1 },
+            "generations": { "type": "array", "minItems": 1 }
+          }
+        }
+      ]
+    },
+    "lkg": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "lkgId", "releaseId", "state", "revoked", "stale", "tuple", "authorityProfileDigest", "observedAtMs", "tupleDigest", "lkgDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/lkg/v1" },
+        "lkgId": { "$ref": "#/$defs/lkgId" },
+        "releaseId": { "$ref": "#/$defs/version" },
+        "state": { "enum": ["COMPLETE", "INCOMPLETE"] },
+        "revoked": { "type": "boolean" },
+        "stale": { "type": "boolean" },
+        "tuple": { "$ref": "#/$defs/tuple" },
+        "authorityProfileDigest": { "$ref": "#/$defs/digest" },
+        "observedAtMs": { "$ref": "#/$defs/timestamp" },
+        "tupleDigest": { "$ref": "#/$defs/digest" },
+        "lkgDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "candidateId", "releaseId", "synthetic", "immutable", "source", "targetTuple", "targetTupleDigest", "authorityProfileDigest", "attestedBy", "promotedBy", "digest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/candidate/v1" },
+        "candidateId": { "$ref": "#/$defs/candidateId" },
+        "releaseId": { "$ref": "#/$defs/version" },
+        "synthetic": { "const": true },
+        "immutable": { "const": true },
+        "source": { "const": "SYNTHETIC_ISOLATED" },
+        "targetTuple": { "$ref": "#/$defs/completeTuple" },
+        "targetTupleDigest": { "$ref": "#/$defs/digest" },
+        "authorityProfileDigest": { "$ref": "#/$defs/digest" },
+        "attestedBy": { "$ref": "#/$defs/attestorId" },
+        "promotedBy": { "$ref": "#/$defs/promoterId" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "decisionId", "subjectCandidateDigest", "subjectLkgDigest", "verdict", "authorityDelta", "resolvedBy", "decisionDigest"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/compatibility-decision/v1" },
+        "decisionId": { "$ref": "#/$defs/decisionId" },
+        "subjectCandidateDigest": { "$ref": "#/$defs/digest" },
+        "subjectLkgDigest": { "$ref": "#/$defs/digest" },
+        "verdict": { "const": "COMPATIBLE" },
+        "authorityDelta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["added", "removed"],
+          "properties": {
+            "added": { "type": "array", "maxItems": 0 },
+            "removed": { "type": "array", "maxItems": 0 }
+          }
+        },
+        "resolvedBy": { "$ref": "#/$defs/resolverId" },
+        "decisionDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "planSafeMode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "active", "readOnly", "reasonCodes"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/safe-mode/v1" },
+        "active": { "type": "boolean" },
+        "readOnly": { "const": true },
+        "reasonCodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "const": "LKG_INCOMPLETE" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "active": { "const": false } }, "required": ["active"] },
+          "then": { "type": "object", "properties": { "reasonCodes": { "type": "array", "maxItems": 0 } } },
+          "else": { "type": "object", "properties": { "reasonCodes": { "type": "array", "minItems": 1, "maxItems": 1 } } }
+        }
+      ]
+    }
+  }
+}

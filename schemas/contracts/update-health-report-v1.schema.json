@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.org/schemas/update-health-report-v1.schema.json",
+  "title": "ChimpMaera read-only Doctor health/readiness report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportId", "profile", "readOnly", "lockedTupleDigest", "tupleStatus", "checks", "safeMode", "generatedAtMs", "reportDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.update/health-report/v1" },
+    "reportId": { "$ref": "#/$defs/reportId" },
+    "profile": { "enum": ["HEALTH", "READINESS"] },
+    "readOnly": { "const": true },
+    "lockedTupleDigest": { "$ref": "#/$defs/digest" },
+    "tupleStatus": { "enum": ["COMPLETE", "INCOMPLETE"] },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "safeMode": { "$ref": "#/$defs/safeMode" },
+    "generatedAtMs": { "$ref": "#/$defs/timestamp" },
+    "reportDigest": { "$ref": "#/$defs/digest" }
+  },
+  "allOf": [
+    {
+      "if": { "type": "object", "properties": { "profile": { "const": "HEALTH" } }, "required": ["profile"] },
+      "then": {
+        "type": "object",
+        "properties": {
+          "checks": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "prefixItems": [
+              { "type": "object", "properties": { "checkId": { "const": "check:tuple-lock" } }, "required": ["checkId"] }
+            ],
+            "contains": { "type": "object", "properties": { "checkId": { "const": "check:tuple-lock" } }, "required": ["checkId"] },
+            "minContains": 1,
+            "maxContains": 1
+          }
+        }
+      },
+      "else": {
+        "type": "object",
+        "properties": {
+          "checks": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              { "type": "object", "properties": { "checkId": { "const": "check:tuple-lock" } }, "required": ["checkId"] },
+              { "type": "object", "properties": { "checkId": { "const": "check:safe-mode" } }, "required": ["checkId"] }
+            ],
+            "allOf": [
+              {
+                "contains": { "type": "object", "properties": { "checkId": { "const": "check:tuple-lock" } }, "required": ["checkId"] },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": { "type": "object", "properties": { "checkId": { "const": "check:safe-mode" } }, "required": ["checkId"] },
+                "minContains": 1,
+                "maxContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "timestamp": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "reportId": { "type": "string", "pattern": "^update:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkId", "status", "reasonCode"],
+      "properties": {
+        "checkId": { "enum": ["check:tuple-lock", "check:safe-mode"] },
+        "status": { "enum": ["PASS", "FAIL", "NOT_OBSERVED"] },
+        "reasonCode": { "enum": ["OBSERVATION_MATCHED", "OBSERVATION_MISMATCH", "OBSERVATION_UNAVAILABLE"] }
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": { "const": "PASS" },
+            "reasonCode": { "const": "OBSERVATION_MATCHED" }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": { "const": "FAIL" },
+            "reasonCode": { "const": "OBSERVATION_MISMATCH" }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": { "const": "NOT_OBSERVED" },
+            "reasonCode": { "const": "OBSERVATION_UNAVAILABLE" }
+          }
+        }
+      ]
+    },
+    "safeMode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "active", "readOnly", "reasonCodes"],
+      "properties": {
+        "schemaVersion": { "const": "chimpmaera.update/safe-mode/v1" },
+        "active": { "type": "boolean" },
+        "readOnly": { "const": true },
+        "reasonCodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["LKG_INCOMPLETE", "HEALTH_CHECK_FAILED", "HEALTH_CHECK_UNOBSERVED"] },
+          "enum": [
+            [],
+            ["LKG_INCOMPLETE"],
+            ["HEALTH_CHECK_FAILED"],
+            ["HEALTH_CHECK_UNOBSERVED"],
+            ["LKG_INCOMPLETE", "HEALTH_CHECK_FAILED"],
+            ["LKG_INCOMPLETE", "HEALTH_CHECK_UNOBSERVED"],
+            ["HEALTH_CHECK_FAILED", "HEALTH_CHECK_UNOBSERVED"],
+            ["LKG_INCOMPLETE", "HEALTH_CHECK_FAILED", "HEALTH_CHECK_UNOBSERVED"]
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "active": { "const": false } }, "required": ["active"] },
+          "then": { "type": "object", "properties": { "reasonCodes": { "type": "array", "maxItems": 0 } } },
+          "else": { "type": "object", "properties": { "reasonCodes": { "type": "array", "minItems": 1 } } }
+        }
+      ]
+    }
+  }
+}

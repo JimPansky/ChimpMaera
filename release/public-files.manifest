@@ -265,6 +265,7 @@ packages/contracts/src/resource-plane-profiles.ts	packages/contracts/src/resourc
 packages/contracts/src/signal-release-intake.ts	packages/contracts/src/signal-release-intake.ts	0644
 packages/contracts/src/skill-admission.ts	packages/contracts/src/skill-admission.ts	0644
 packages/contracts/src/skill-bundle.ts	packages/contracts/src/skill-bundle.ts	0644
+packages/contracts/src/update-check-plan.ts	packages/contracts/src/update-check-plan.ts	0644
 packages/contracts/src/update-doctor.ts	packages/contracts/src/update-doctor.ts	0644
 packages/contracts/src/verification-fabric-v2.ts	packages/contracts/src/verification-fabric-v2.ts	0644
 packages/contracts/src/verification-fabric.ts	packages/contracts/src/verification-fabric.ts	0644
@@ -317,6 +318,8 @@ schemas/contracts/routing-decision-v1.schema.json	schemas/contracts/routing-deci
 schemas/contracts/routing-outcome-v1.schema.json	schemas/contracts/routing-outcome-v1.schema.json	0644
 schemas/contracts/skill-bundle-lock-v1.schema.json	schemas/contracts/skill-bundle-lock-v1.schema.json	0644
 schemas/contracts/skill-bundle-manifest-v1.schema.json	schemas/contracts/skill-bundle-manifest-v1.schema.json	0644
+schemas/contracts/update-check-plan-v1.schema.json	schemas/contracts/update-check-plan-v1.schema.json	0644
+schemas/contracts/update-health-report-v1.schema.json	schemas/contracts/update-health-report-v1.schema.json	0644
 schemas/contracts/update-lock-profile-v1.schema.json	schemas/contracts/update-lock-profile-v1.schema.json	0644
 schemas/contracts/update-operation-contract-v1.schema.json	schemas/contracts/update-operation-contract-v1.schema.json	0644
 schemas/contracts/verification-attestation-v2.schema.json	schemas/contracts/verification-attestation-v2.schema.json	0644
@@ -489,6 +492,7 @@ tests/signal-release-intake.test.ts	tests/signal-release-intake.test.ts	0644
 tests/skill-admission.test.ts	tests/skill-admission.test.ts	0644
 tests/skill-bundle.test.ts	tests/skill-bundle.test.ts	0644
 tests/supply-chain-verifier.test.mjs	tests/supply-chain-verifier.test.mjs	0644
+tests/update-check-plan.test.ts	tests/update-check-plan.test.ts	0644
 tests/update-doctor-compose-adapter.test.ts	tests/update-doctor-compose-adapter.test.ts	0644
 tests/update-doctor-core.test.ts	tests/update-doctor-core.test.ts	0644
 tests/update-doctor.test.ts	tests/update-doctor.test.ts	0644
