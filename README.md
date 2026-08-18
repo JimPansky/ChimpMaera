@@ -118,14 +118,14 @@ For the release-bound path, download the current Latest archive and its
 published checksum sidecar, then verify before extracting:
 
 ```sh
-release=v0.2.0-poc.20260817.1
-archive=cm-product-increment-rc-20260817-pansphaira-cutover.tar.gz
+release=v0.2.0-poc.20260818.2
+archive=cm-product-increment-rc-20260818-usage-insights-v2.tar.gz
 base=https://github.com/JimPansky/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260817-pansphaira-cutover
+cd cm-product-increment-rc-20260818-usage-insights-v2
 ```
 
 On a supported Linux host with Docker and Compose, run there or from a
