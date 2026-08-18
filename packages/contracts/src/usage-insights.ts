@@ -4,9 +4,10 @@ import { isProxy } from "node:util/types";
 import { canonicalJson } from "./canonical-json.js";
 
 /**
- * AWI-INSIGHTS-1 is a developer-facing, default-off, in-memory contract and
- * reference primitive. It is not a collector, telemetry transport, consent UI,
- * durable store, dashboard, deployment, or complete delivery of Issue #57.
+ * AWI-INSIGHTS-1 core is the developer-facing, default-off, in-memory contract.
+ * It deliberately remains free of I/O. The completion reference in
+ * packages/usage-insights composes this primitive with the local consent,
+ * persistence, lifecycle, loopback-sharing, and reporting boundaries.
  */
 
 export const USAGE_INSIGHTS_EVENT_INPUT_SCHEMA_V1 = "chimpmaera.usage-insights/event-input/v1" as const;
