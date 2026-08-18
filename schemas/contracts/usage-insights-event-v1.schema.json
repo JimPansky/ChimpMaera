@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chimpmaera.dev/schemas/contracts/usage-insights-event-v1.schema.json",
+  "title": "PANSPHAIRA runtime-generated usage-insights event record v1",
+  "$comment": "JSON Schema covers JSON-visible shape. The runtime additionally rejects accessors, symbols, non-enumerables, dangerous keys, aliases, cycles, sparse arrays, proxies and exotic prototypes before reading values.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "eventId",
+    "installationId",
+    "productId",
+    "capabilityId",
+    "productVersion",
+    "lifecycleOutcome",
+    "occurredAtMs",
+    "eventDigest"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.usage-insights/event-record/v1" },
+    "eventId": { "type": "string", "pattern": "^event:v1:[a-f0-9]{64}$", "maxLength": 73 },
+    "installationId": { "$ref": "#/$defs/pseudonym" },
+    "productId": { "enum": ["chimpmaera.poc"] },
+    "capabilityId": { "enum": ["capability.gateway", "capability.builder", "capability.hmi", "capability.agent-work-event", "capability.knowledge-envelope", "capability.verification-fabric"] },
+    "productVersion": { "const": "0.2.0-poc.20260810.5" },
+    "lifecycleOutcome": { "enum": ["INSTALL_STARTED", "INSTALL_SUCCEEDED", "INSTALL_FAILED", "UPGRADE_STARTED", "UPGRADE_SUCCEEDED", "UPGRADE_FAILED", "RUNNING", "STOPPED", "UNINSTALLED"] },
+    "occurredAtMs": { "$ref": "#/$defs/timestamp" },
+    "eventDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$", "maxLength": 64 },
+    "pseudonym": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "maxLength": 71 },
+    "timestamp": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
+  }
+}

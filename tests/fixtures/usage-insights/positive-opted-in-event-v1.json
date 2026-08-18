@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "chimpmaera.usage-insights/event-record/v1",
+  "eventId": "event:v1:8a31e03e694da86c8bc82b61b166d937b3647f0e393229a9ce6a186b27bf75f4",
+  "installationId": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "productId": "chimpmaera.poc",
+  "capabilityId": "capability.gateway",
+  "productVersion": "0.2.0-poc.20260810.5",
+  "lifecycleOutcome": "INSTALL_SUCCEEDED",
+  "occurredAtMs": 1000,
+  "eventDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+}

@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "f3daac4b3161f81dd7a0b5cabf6c3ba6d47c882809587b4be82f6f55fa9507cb"
+          "sha256": "dba9c35c8cc62b6c656b40b315ed57ed1bd1f4825bdff7b5591374e58f6ee4a3"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -271,7 +271,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "cf8175c0f54d1d65d9a0d0db4af3297bf9cab11b07c67b693ff0b43e5e17c106"
+          "sha256": "5011f435b8f5b7a145bbfe74b52336208e5a03544ecc2edb6430850ae340b996"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -461,7 +461,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "e020084c89c216ba1d3b52a026bfcc5a8409ca876a15f4811e833ff20b5c9c17"
+          "sha256": "ba9b84f553fcb278c2ed0e51fbcafbdc9e54abab13ab21edcb0c906e1bc6bbc2"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "0d4f446a7042b2f733bc0331f5bc69bd872df316edeae5dd84edffae97b441c1"
+          "sha256": "5ec0df5a7055fb27d59bd496c2ce73ca009a37b1e1a97c84e54b07457b5ed6b1"
         },
         {
           "path": "package-lock.json",
@@ -1069,6 +1069,64 @@
         "Audience adaptation preserves one claim/evidence core while exact-revision human editorial, audience-fit and visual review remains required."
       ],
       "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
+      "id": "awi-insights-1-usage-insights-v1",
+      "dependsOn": [],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/usage-insights.ts",
+          "role": "SECURITY",
+          "sha256": "9c8f9fbd876ab6145339f6801f9e293302a8eb4e8270d005485198b77ec289f8"
+        },
+        {
+          "path": "packages/contracts/src/canonical-json.ts",
+          "role": "CONTRACT",
+          "sha256": "666513ba9a89c0eae0daa0e0159a262eb4e0aa105971a151a19bac1a9b6c4826"
+        },
+        {
+          "path": "schemas/contracts/usage-insights-event-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "8aed09bf25f66c7a3eab5bdb809d05424a265c9423be39571b5c1e891fd8feda"
+        },
+        {
+          "path": "tests/fixtures/usage-insights/positive-opted-in-event-v1.json",
+          "role": "FIXTURE",
+          "sha256": "b503619e2ef4bf17dcbc1c77319f116c28e25f2e2b9675e24fa1096fdf6bd669"
+        },
+        {
+          "path": "tests/fixtures/usage-insights/negative-matrix-v1.json",
+          "role": "FIXTURE",
+          "sha256": "1cb46bc313604476ddae2e825dbe8dbe2ccd330b0c46d365a543e3f8748adceb"
+        },
+        {
+          "path": "tests/usage-insights.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "d466feecb0904313188ce231aec71e0c954459bb0c973fef7eea9df426fbd06f"
+        },
+        {
+          "path": "docs/USAGE-INSIGHTS-CONTRACT.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "e4774c2130036b9ae0c6ad82bd824e346942f4070645b3f97f2bcfb2d4841f86"
+        },
+        {
+          "path": "docs/development/awi-insights-001-issue-57-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "41b9f6815996cc88104f7c9e7ca228e2f645981f78587a4d581c275d3e17200f"
+        }
+      ],
+      "ownedTests": [
+        "node --test dist/tests/usage-insights.test.js"
+      ],
+      "invariants": [
+        "Runtime submissions are identifier-free and descriptor-safe; opaque event and installation identifiers are minted only from production CSPRNG entropy.",
+        "Rotation erases old-epoch events before exposing the new pseudonym, while restore rejects impossible state and time relationships.",
+        "Any small cell suppresses every publishable exact total and cell; exact counts remain local-owner preview data only.",
+        "Canonical JSON bytes are explicit inputs, while the existing openclaw-m1-4 owner remains unchanged; shared-input changes fail closed to the full comparator.",
+        "This default-off in-memory reference only Refs #57 and makes no whole-Issue, persistence, transport, deletion-SLA, authorization, deployment, or production claim."
+      ],
+      "riskClass": "CRITICAL",
       "globalInvalidation": false
     }
   ]

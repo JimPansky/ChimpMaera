@@ -54,3 +54,4 @@ export * from "./external-bi-service.js";
 export * from "./external-video-service.js";
 export * from "./integration-profile.js";
 export * from "./voice-local-ptt.js";
+export * from "./usage-insights.js";

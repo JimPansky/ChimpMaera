@@ -20,6 +20,7 @@ const curatedPages = [
   ["roadmap.html", `${baseUrl}roadmap`],
   ["SECURE-DEFAULT-PROOF.html", `${baseUrl}SECURE-DEFAULT-PROOF`],
   ["UPDATE-MIGRATION-DOCTOR-CONTRACTS.html", `${baseUrl}UPDATE-MIGRATION-DOCTOR-CONTRACTS`],
+  ["USAGE-INSIGHTS-CONTRACT.html", `${baseUrl}USAGE-INSIGHTS-CONTRACT`],
   ["use-cases/crm-erp-approval-readback.html", `${baseUrl}use-cases/crm-erp-approval-readback`],
   ["use-cases/governed-agent-actions.html", `${baseUrl}use-cases/governed-agent-actions`],
 ];
