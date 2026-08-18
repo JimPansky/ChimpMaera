@@ -196,6 +196,7 @@ docs/SKILL-BUNDLE-CONTRACTS.md	docs/SKILL-BUNDLE-CONTRACTS.md	0644
 docs/SUPPLY-CHAIN.md	docs/SUPPLY-CHAIN.md	0644
 docs/SYSTEM-ADVISOR-GUIDE.md	docs/SYSTEM-ADVISOR-GUIDE.md	0644
 docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	docs/UPDATE-MIGRATION-DOCTOR-CONTRACTS.md	0644
+docs/USAGE-INSIGHTS-CONTRACT.md	docs/USAGE-INSIGHTS-CONTRACT.md	0644
 docs/use-cases/crm-erp-approval-readback.md	docs/use-cases/crm-erp-approval-readback.md	0644
 docs/use-cases/governed-agent-actions.md	docs/use-cases/governed-agent-actions.md	0644
 docs/VERIFICATION-FABRIC-SHADOW.md	docs/VERIFICATION-FABRIC-SHADOW.md	0644
@@ -271,6 +272,7 @@ packages/contracts/src/skill-admission.ts	packages/contracts/src/skill-admission
 packages/contracts/src/skill-bundle.ts	packages/contracts/src/skill-bundle.ts	0644
 packages/contracts/src/update-check-plan.ts	packages/contracts/src/update-check-plan.ts	0644
 packages/contracts/src/update-doctor.ts	packages/contracts/src/update-doctor.ts	0644
+packages/contracts/src/usage-insights.ts	packages/contracts/src/usage-insights.ts	0644
 packages/contracts/src/verification-fabric-v2.ts	packages/contracts/src/verification-fabric-v2.ts	0644
 packages/contracts/src/verification-fabric.ts	packages/contracts/src/verification-fabric.ts	0644
 packages/contracts/src/voice-local-ptt.ts	packages/contracts/src/voice-local-ptt.ts	0644
@@ -327,6 +329,7 @@ schemas/contracts/update-check-plan-v1.schema.json	schemas/contracts/update-chec
 schemas/contracts/update-health-report-v1.schema.json	schemas/contracts/update-health-report-v1.schema.json	0644
 schemas/contracts/update-lock-profile-v1.schema.json	schemas/contracts/update-lock-profile-v1.schema.json	0644
 schemas/contracts/update-operation-contract-v1.schema.json	schemas/contracts/update-operation-contract-v1.schema.json	0644
+schemas/contracts/usage-insights-event-v1.schema.json	schemas/contracts/usage-insights-event-v1.schema.json	0644
 schemas/contracts/verification-attestation-v2.schema.json	schemas/contracts/verification-attestation-v2.schema.json	0644
 schemas/contracts/verification-evidence-dag-v2.schema.json	schemas/contracts/verification-evidence-dag-v2.schema.json	0644
 schemas/contracts/verification-fabric-bundle-v1.schema.json	schemas/contracts/verification-fabric-bundle-v1.schema.json	0644
@@ -449,6 +452,8 @@ tests/fixtures/update-doctor/maintenance-contract-freeze-negative-matrix-v1-v2.j
 tests/fixtures/update-doctor/negative-matrix-v1-v2.json	tests/fixtures/update-doctor/negative-matrix-v1-v2.json	0644
 tests/fixtures/update-doctor/positive-contract-bundle-v1.json	tests/fixtures/update-doctor/positive-contract-bundle-v1.json	0644
 tests/fixtures/update-doctor/positive-maintenance-contract-freeze-v1.json	tests/fixtures/update-doctor/positive-maintenance-contract-freeze-v1.json	0644
+tests/fixtures/usage-insights/negative-matrix-v1.json	tests/fixtures/usage-insights/negative-matrix-v1.json	0644
+tests/fixtures/usage-insights/positive-opted-in-event-v1.json	tests/fixtures/usage-insights/positive-opted-in-event-v1.json	0644
 tests/fixtures/verification-fabric/negative-matrix-v1.json	tests/fixtures/verification-fabric/negative-matrix-v1.json	0644
 tests/fixtures/verification-fabric/positive-bundle-v1.json	tests/fixtures/verification-fabric/positive-bundle-v1.json	0644
 tests/helpers/openclaw-m1-4-harness.mjs	tests/helpers/openclaw-m1-4-harness.mjs	0644
@@ -502,6 +507,7 @@ tests/update-check-plan.test.ts	tests/update-check-plan.test.ts	0644
 tests/update-doctor-compose-adapter.test.ts	tests/update-doctor-compose-adapter.test.ts	0644
 tests/update-doctor-core.test.ts	tests/update-doctor-core.test.ts	0644
 tests/update-doctor.test.ts	tests/update-doctor.test.ts	0644
+tests/usage-insights.test.ts	tests/usage-insights.test.ts	0644
 tests/verification-fabric-v2.test.ts	tests/verification-fabric-v2.test.ts	0644
 tests/verification-fabric.test.ts	tests/verification-fabric.test.ts	0644
 tests/voice-local-ptt.test.ts	tests/voice-local-ptt.test.ts	0644
