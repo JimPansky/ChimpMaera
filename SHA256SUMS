@@ -376,7 +376,7 @@ b2717b420cff3db392bc280f0b716f17f82cc82954c25015fde81b386b426b6c  ./packages/dev
 a6fda6f01ecd195a315f660d00054ddb714477de35dccf98f57c4c86e69ab6f5  ./packages/setup-coordinator/src/index.ts
 cffdb4aef6035e65b23e9b8d52ef3a9e266bb9850ef1f5695f266c85631b239e  ./packages/usage-insights/src/cli.ts
 78efe1a9b4d821d28547ce0c38bc8d04a603ce5a6821f840edf6a74ab6aba073  ./packages/usage-insights/src/index.ts
-99215a7fb159404fd2642470482fc7a092cdbfc94d2751461483493c48811a5f  ./release/governance.json
+17d745276f811ba1d542533528b0cedce36be2b6ef094572077f62ac242d5286  ./release/governance.json
 0b0257a43d551c15f79f4aa441da9238efb811847f862a9f7ff53d3c7e2c8641  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
@@ -654,4 +654,4 @@ b81903d977822ca156e09d48ddf824dcb17de2552d76cf566aaa9ac5f2bfc58f  ./verification
 93f42b3e9e78b32cc1e1193e3f7a7ef59ca7ccd2e4116bd184d22d504987d46a  ./verification/bi-003-erp-read-connector-evidence-v1.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
 e2fa73eb5312982af288d29df015b0dc3e010f3fdba6405ce3b464b4ccece660  ./verification/lkc-qual-01-m0-evidence-v1.json
-cec6f61c577fa29b7ed57c07762d71aaac27d11ac3522b93a67df54f6a0e33ed  ./verification/verification-dag-v2.json
+9f6038346f2f5fd95f8fe558d334bd2d8d75f81da3d8632143cf39cf86b9f1e1  ./verification/verification-dag-v2.json

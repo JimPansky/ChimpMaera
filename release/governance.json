@@ -4,7 +4,7 @@
   "currentRelease": {
     "releaseId": 372539893,
     "tag": "v0.2.0-poc.20260818.2",
-    "title": "PANSPHAIRA v0.2.0-poc.20260818.2 - Privacy-bounded Usage Insights",
+    "title": "PANSPHAIRA v0.2.0-poc.20260818.2 - Privacy-Bounded Usage Insights",
     "increment": "Privacy-bounded Usage Insights",
     "targetCommitish": "a661d01e58aae7b52b7bb67632a63c27baa5cff6",
     "tagObjectSha": "a661d01e58aae7b52b7bb67632a63c27baa5cff6",
