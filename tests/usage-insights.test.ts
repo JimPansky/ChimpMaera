@@ -612,28 +612,28 @@ test("AWI-INSIGHTS-1 unkeyed digests detect drift but do not claim authenticity 
   assert.match(docs, /provenance/i);
 });
 
-test("AWI-INSIGHTS-1 documentation keeps the whole-Issue and production nonclaims explicit", () => {
+test("AWI-INSIGHTS-1 documentation maps the completion surface and production nonclaims explicitly", () => {
   const docs = readFileSync("docs/USAGE-INSIGHTS-CONTRACT.md", "utf8");
   for (const required of [
-    /Refs #57/,
-    /Issue #57 remains open/,
-    /consent UX/,
-    /consent profiles/,
-    /durable consent/,
-    /durable events/,
-    /stable ID across restart/,
-    /persistence/,
-    /automatic\/background deletion/,
-    /shared-data deletion/,
-    /collector/,
-    /transport/,
-    /ambient telemetry/,
-    /dashboard/,
-    /authorization of local-owner/,
-    /deployment/,
-    /production readiness/,
-    /representative installation cohorts/,
-    /completion of Issue #57/,
+    /completion reference for Issue\s+#57/,
+    /Default is OFF/,
+    /basic/,
+    /capability/,
+    /diagnostics/,
+    /preview/,
+    /export/,
+    /revoke/,
+    /delete --shared/,
+    /erase-before-expose/,
+    /IP-literal loopback/,
+    /small-cell/i,
+    /install-to-first-success/,
+    /retention/,
+    /version fragmentation/,
+    /PARTIAL_NON_REPRESENTATIVE_COHORT/,
+    /does not activate telemetry/i,
+    /not a production collector/i,
+    /does not claim real users/i,
   ]) {
     assert.match(docs, required);
   }

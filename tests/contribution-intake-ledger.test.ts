@@ -766,7 +766,7 @@ test("CCP-M1-INT-026 Verification DAG ownership expansion advances its graph ver
     graphVersion: number;
     nodes: Array<{ id: string }>;
   };
-  assert.equal(dag.graphVersion, 9);
+  assert.equal(dag.graphVersion, 10);
   assert.equal(dag.nodes.length, 15);
   assert.equal(dag.nodes.filter(({ id }) => id === "awi-insights-1-usage-insights-v1").length, 1);
   assert.equal(dag.nodes.filter(({ id }) => id === "ccp-m1-contribution-intake-ledger-v1").length, 1);

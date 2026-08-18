@@ -23,7 +23,7 @@
     "productId": { "enum": ["chimpmaera.poc"] },
     "capabilityId": { "enum": ["capability.gateway", "capability.builder", "capability.hmi", "capability.agent-work-event", "capability.knowledge-envelope", "capability.verification-fabric"] },
     "productVersion": { "const": "0.2.0-poc.20260810.5" },
-    "lifecycleOutcome": { "enum": ["INSTALL_STARTED", "INSTALL_SUCCEEDED", "INSTALL_FAILED", "UPGRADE_STARTED", "UPGRADE_SUCCEEDED", "UPGRADE_FAILED", "RUNNING", "STOPPED", "UNINSTALLED"] },
+    "lifecycleOutcome": { "enum": ["INSTALL_STARTED", "INSTALL_SUCCEEDED", "INSTALL_FAILED", "UPGRADE_STARTED", "UPGRADE_SUCCEEDED", "UPGRADE_FAILED", "FIRST_SUCCESS", "RUNNING", "STOPPED", "ERROR", "DENIED", "ROLLBACK_SUCCEEDED", "ROLLBACK_FAILED", "UNINSTALLED"] },
     "occurredAtMs": { "$ref": "#/$defs/timestamp" },
     "eventDigest": { "$ref": "#/$defs/digest" }
   },
