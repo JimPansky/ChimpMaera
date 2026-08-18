@@ -673,6 +673,169 @@ function median(values: readonly number[]): number | null {
   return Math.floor(((sorted[middle - 1] ?? 0) + (sorted[middle] ?? 0)) / 2);
 }
 
+function isCount(value: unknown): value is number {
+  return Number.isSafeInteger(value) && (value as number) >= 0;
+}
+
+function validateMetricCells(
+  value: unknown,
+  installationsSeen: number,
+): UsageInsightsMetricCellV1[] {
+  if (!Array.isArray(value) || value.length > USAGE_INSIGHTS_CAPABILITY_IDS_V1.length) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+  const capabilities = new Set<string>();
+  const cells = value.map((cellValue) => {
+    const cell = recordOf(cellValue);
+    if (cell === null || !exactKeys(cell, ["capabilityId", "eventCount", "distinctInstallations"])
+      || !(USAGE_INSIGHTS_CAPABILITY_IDS_V1 as readonly unknown[]).includes(cell.capabilityId)
+      || !isCount(cell.eventCount) || !isCount(cell.distinctInstallations)
+      || cell.eventCount < cell.distinctInstallations
+      || cell.distinctInstallations < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD
+      || cell.distinctInstallations > installationsSeen
+      || capabilities.has(cell.capabilityId as string)) {
+      throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+    }
+    capabilities.add(cell.capabilityId as string);
+    return {
+      capabilityId: cell.capabilityId as string,
+      eventCount: cell.eventCount,
+      distinctInstallations: cell.distinctInstallations,
+    };
+  });
+  if (cells.some((cell, index) => index > 0
+    && (cells[index - 1]?.capabilityId ?? "").localeCompare(cell.capabilityId) >= 0)) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+  return cells;
+}
+
+export function validateUsageInsightsReportV1(value: unknown): UsageInsightsReportV1 {
+  let prepared: unknown;
+  try { prepared = safeClone(value); }
+  catch { throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT"); }
+  const report = recordOf(prepared);
+  if (report === null || !exactKeys(report, [
+    "schemaVersion", "cohortLabel", "coverageLabel", "coverageNonclaims", "smallCellPolicy",
+    "minCellSize", "publicationState", "installationsSeen", "suppressionReason", "metrics",
+    "generatedAtMs", "reportDigest",
+  ])
+    || report.schemaVersion !== USAGE_INSIGHTS_REPORT_SCHEMA_V1
+    || report.cohortLabel !== "EXPLICIT_OPT_IN_ONLY"
+    || report.coverageLabel !== "PARTIAL_NON_REPRESENTATIVE_COHORT"
+    || !Array.isArray(report.coverageNonclaims)
+    || canonicalJson(report.coverageNonclaims) !== canonicalJson([
+      "DOES_NOT_REPRESENT_ALL_INSTALLATIONS", "NO_PRODUCTION_OR_ADOPTION_CLAIM",
+    ])
+    || report.smallCellPolicy !== "ALL_OR_NOTHING_DISTINCT_INSTALLATIONS_THRESHOLD_5"
+    || report.minCellSize !== USAGE_INSIGHTS_SMALL_CELL_THRESHOLD
+    || !isTimestamp(report.generatedAtMs)
+    || typeof report.reportDigest !== "string" || !DIGEST_PATTERN.test(report.reportDigest)
+    || digestExcluding(report, "reportDigest") !== report.reportDigest) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+
+  if (report.publicationState === "EMPTY") {
+    if (report.installationsSeen !== 0 || report.suppressionReason !== null || report.metrics !== null) {
+      throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+    }
+    return report as unknown as UsageInsightsReportV1;
+  }
+  if (report.publicationState === "SUPPRESSED") {
+    if (report.installationsSeen !== null
+      || report.suppressionReason !== "ONE_OR_MORE_COHORTS_BELOW_THRESHOLD"
+      || report.metrics !== null) {
+      throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+    }
+    return report as unknown as UsageInsightsReportV1;
+  }
+  if (report.publicationState !== "PUBLISHED" || !isCount(report.installationsSeen)
+    || report.installationsSeen < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD || report.suppressionReason !== null) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+  const installationsSeen = report.installationsSeen;
+  const metrics = recordOf(report.metrics);
+  if (metrics === null || !exactKeys(metrics, [
+    "installToFirstSuccess", "retention", "errors", "denials", "rollbacks", "versionFragmentation",
+  ])) throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+
+  const firstSuccess = recordOf(metrics.installToFirstSuccess);
+  if (firstSuccess === null || !exactKeys(firstSuccess, [
+    "eligibleInstallations", "successfulInstallations", "medianDurationMs",
+  ])
+    || !isCount(firstSuccess.eligibleInstallations) || !isCount(firstSuccess.successfulInstallations)
+    || firstSuccess.eligibleInstallations > installationsSeen
+    || firstSuccess.successfulInstallations > firstSuccess.eligibleInstallations
+    || (firstSuccess.eligibleInstallations > 0
+      && firstSuccess.eligibleInstallations < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD)
+    || (firstSuccess.successfulInstallations > 0
+      && firstSuccess.successfulInstallations < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD)
+    || (firstSuccess.eligibleInstallations - firstSuccess.successfulInstallations > 0
+      && firstSuccess.eligibleInstallations - firstSuccess.successfulInstallations
+        < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD)
+    || (firstSuccess.successfulInstallations === 0) !== (firstSuccess.medianDurationMs === null)
+    || (firstSuccess.medianDurationMs !== null && !isCount(firstSuccess.medianDurationMs))) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+
+  const retention = recordOf(metrics.retention);
+  if (retention === null || !exactKeys(retention, [
+    "eligibleInstallations", "retainedInstallations", "minimumReturnIntervalMs",
+  ])
+    || !isCount(retention.eligibleInstallations) || !isCount(retention.retainedInstallations)
+    || retention.minimumReturnIntervalMs !== USAGE_INSIGHTS_RETENTION_INTERVAL_MS
+    || retention.eligibleInstallations > installationsSeen
+    || retention.retainedInstallations > retention.eligibleInstallations
+    || (retention.eligibleInstallations > 0
+      && retention.eligibleInstallations < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD)
+    || (retention.retainedInstallations > 0
+      && retention.retainedInstallations < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD)
+    || (retention.eligibleInstallations - retention.retainedInstallations > 0
+      && retention.eligibleInstallations - retention.retainedInstallations
+        < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD)) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+
+  const errors = validateMetricCells(metrics.errors, installationsSeen);
+  const denials = validateMetricCells(metrics.denials, installationsSeen);
+  const rollbacks = validateMetricCells(metrics.rollbacks, installationsSeen);
+  const fragmentation = recordOf(metrics.versionFragmentation);
+  if (fragmentation === null || !exactKeys(fragmentation, ["distinctVersions", "versions"])
+    || !isCount(fragmentation.distinctVersions) || !Array.isArray(fragmentation.versions)
+    || fragmentation.distinctVersions !== fragmentation.versions.length
+    || fragmentation.versions.length > 1) {
+    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+  }
+  const versions = fragmentation.versions.map((versionValue) => {
+    const version = recordOf(versionValue);
+    if (version === null || !exactKeys(version, ["productVersion", "eventCount", "distinctInstallations"])
+      || version.productVersion !== USAGE_INSIGHTS_PRODUCT_VERSION_V1
+      || !isCount(version.eventCount) || !isCount(version.distinctInstallations)
+      || version.eventCount < version.distinctInstallations
+      || version.distinctInstallations < USAGE_INSIGHTS_SMALL_CELL_THRESHOLD
+      || version.distinctInstallations > installationsSeen) {
+      throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
+    }
+    return {
+      productVersion: version.productVersion,
+      eventCount: version.eventCount,
+      distinctInstallations: version.distinctInstallations,
+    };
+  });
+  const validated = {
+    ...report,
+    metrics: {
+      installToFirstSuccess: firstSuccess,
+      retention,
+      errors,
+      denials,
+      rollbacks,
+      versionFragmentation: { distinctVersions: fragmentation.distinctVersions, versions },
+    },
+  };
+  return validated as unknown as UsageInsightsReportV1;
+}
+
 export function buildUsageInsightsReportV1(envelopes: unknown, generatedAtMs: number): UsageInsightsReportV1 {
   if (!isTimestamp(generatedAtMs)) throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT_INPUT");
   let prepared: unknown;
@@ -819,13 +982,7 @@ export function buildUsageInsightsReportV1(envelopes: unknown, generatedAtMs: nu
 }
 
 export function renderUsageInsightsDashboardV1(reportValue: unknown): string {
-  const prepared = recordOf(safeClone(reportValue));
-  if (prepared === null || prepared.schemaVersion !== USAGE_INSIGHTS_REPORT_SCHEMA_V1
-    || typeof prepared.reportDigest !== "string" || !DIGEST_PATTERN.test(prepared.reportDigest)
-    || digestExcluding(prepared, "reportDigest") !== prepared.reportDigest) {
-    throw new TypeError("INVALID_USAGE_INSIGHTS_REPORT");
-  }
-  const report = prepared as unknown as UsageInsightsReportV1;
+  const report = validateUsageInsightsReportV1(reportValue);
   const lines = [
     "PANSPHAIRA Usage Insights — local reference dashboard",
     `Cohort: ${report.cohortLabel}`,

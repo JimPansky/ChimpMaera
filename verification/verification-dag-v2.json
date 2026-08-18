@@ -1078,12 +1078,12 @@
         {
           "path": "packages/contracts/src/usage-insights.ts",
           "role": "SECURITY",
-          "sha256": "6577d444ef63ffd1b9cb2bdd18b2190a1792a055552d318eead3a2e1e64bf31a"
+          "sha256": "12d11e9c1db2acd9e6de4a87629e9b607ab4879b69e4ae32e6014623c784af2d"
         },
         {
           "path": "packages/usage-insights/src/index.ts",
           "role": "SECURITY",
-          "sha256": "bbd92e45250ef2ec12c3253b5ffcc42c76afcda2a309c5d32952cc2fc1124c46"
+          "sha256": "78efe1a9b4d821d28547ce0c38bc8d04a603ce5a6821f840edf6a74ab6aba073"
         },
         {
           "path": "packages/usage-insights/src/cli.ts",
@@ -1123,7 +1123,7 @@
         {
           "path": "tests/usage-insights-completion.test.ts",
           "role": "VALIDATOR",
-          "sha256": "f252596541637d208d1978dc7429342f75829f9f9f251bef6e572e05673a211d"
+          "sha256": "f62470a7a45e56b533b431057804cf6e35eba9fef918d15a6069a61894fa1ecd"
         },
         {
           "path": "docs/USAGE-INSIGHTS-CONTRACT.md",

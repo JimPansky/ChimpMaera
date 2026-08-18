@@ -19,6 +19,7 @@ import {
   buildUsageInsightsReportV1,
   renderUsageInsightsDashboardV1,
   validateUsageInsightsLoopbackEndpointV1,
+  validateUsageInsightsReportV1,
   validateUsageInsightsShareEnvelopeV1,
   type UsageInsightsShareEnvelopeV1,
 } from "../packages/usage-insights/src/index.js";
@@ -443,6 +444,26 @@ test("AWI-INSIGHTS-1 five isolated synthetic installations publish all six repor
       "Install-to-first-success", "Retention", "Errors", "Denials", "Rollbacks", "Version fragmentation",
       "PARTIAL_NON_REPRESENTATIVE_COHORT", "DOES_NOT_REPRESENT_ALL_INSTALLATIONS",
     ]) assert.match(dashboard, new RegExp(label));
+
+    const dishonestCoverage = structuredClone(report) as unknown as Record<string, unknown>;
+    dishonestCoverage.coverageLabel = "REPRESENTATIVE_OF_ALL_INSTALLATIONS";
+    const unsignedCoverage = Object.fromEntries(
+      Object.entries(dishonestCoverage).filter(([key]) => key !== "reportDigest"),
+    );
+    dishonestCoverage.reportDigest = createHash("sha256")
+      .update(canonicalJson(unsignedCoverage), "utf8").digest("hex");
+    assert.throws(() => validateUsageInsightsReportV1(dishonestCoverage), /INVALID_USAGE_INSIGHTS_REPORT/);
+    assert.throws(() => renderUsageInsightsDashboardV1(dishonestCoverage), /INVALID_USAGE_INSIGHTS_REPORT/);
+
+    const leakingCell = structuredClone(report) as unknown as Record<string, unknown>;
+    const leakingMetrics = leakingCell.metrics as Record<string, unknown>;
+    const leakingErrors = leakingMetrics.errors as Array<Record<string, unknown>>;
+    leakingErrors[0]!.distinctInstallations = 1;
+    const unsignedCell = Object.fromEntries(
+      Object.entries(leakingCell).filter(([key]) => key !== "reportDigest"),
+    );
+    leakingCell.reportDigest = createHash("sha256").update(canonicalJson(unsignedCell), "utf8").digest("hex");
+    assert.throws(() => validateUsageInsightsReportV1(leakingCell), /INVALID_USAGE_INSIGHTS_REPORT/);
   } finally {
     await closeReceiver(receiver);
   }
