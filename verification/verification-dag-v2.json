@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 9,
+  "graphVersion": 10,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "dba9c35c8cc62b6c656b40b315ed57ed1bd1f4825bdff7b5591374e58f6ee4a3"
+          "sha256": "f87e3963df535a21f47b60168beebb904aac77ac52f548edd306f2dea27215bf"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -461,7 +461,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "ba9b84f553fcb278c2ed0e51fbcafbdc9e54abab13ab21edcb0c906e1bc6bbc2"
+          "sha256": "c4507b3f9450fc0a26d7475afef0e946ff830688c4c6ecbf8e36a41a96473483"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "5ec0df5a7055fb27d59bd496c2ce73ca009a37b1e1a97c84e54b07457b5ed6b1"
+          "sha256": "e12f6ffaeb4e35bd7f7a3fabf2f02b2958eedb132a701f5d64e3b1c344b146ff"
         },
         {
           "path": "package-lock.json",
@@ -881,7 +881,7 @@
         {
           "path": "tools/video-production-reference/SHA256SUMS",
           "role": "CONTRACT",
-          "sha256": "fb2d544b64722025ed4dc38d6c2062705b50f66aa8ca4c68c92eba94f602bf85"
+          "sha256": "11a85aa969a70f61c8f9d66b72fb5e8a0b65b83896e4817d67ce3ab5805fced7"
         },
         {
           "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
@@ -1056,7 +1056,7 @@
         {
           "path": "tools/video-production-reference/tests/slice.test.mjs",
           "role": "SECURITY",
-          "sha256": "f159ca595e7884b10277dd694e5625f5787ebdbb1ae1a32898de6403e0323655"
+          "sha256": "43d67761493ed7d33e37f1607f0d285e5cc13bc29c6b3ad6a6940a08f1ada34d"
         }
       ],
       "ownedTests": [
@@ -1078,7 +1078,17 @@
         {
           "path": "packages/contracts/src/usage-insights.ts",
           "role": "SECURITY",
-          "sha256": "9c8f9fbd876ab6145339f6801f9e293302a8eb4e8270d005485198b77ec289f8"
+          "sha256": "6577d444ef63ffd1b9cb2bdd18b2190a1792a055552d318eead3a2e1e64bf31a"
+        },
+        {
+          "path": "packages/usage-insights/src/index.ts",
+          "role": "SECURITY",
+          "sha256": "bbd92e45250ef2ec12c3253b5ffcc42c76afcda2a309c5d32952cc2fc1124c46"
+        },
+        {
+          "path": "packages/usage-insights/src/cli.ts",
+          "role": "SOURCE",
+          "sha256": "cffdb4aef6035e65b23e9b8d52ef3a9e266bb9850ef1f5695f266c85631b239e"
         },
         {
           "path": "packages/contracts/src/canonical-json.ts",
@@ -1088,7 +1098,12 @@
         {
           "path": "schemas/contracts/usage-insights-event-v1.schema.json",
           "role": "SCHEMA",
-          "sha256": "8aed09bf25f66c7a3eab5bdb809d05424a265c9423be39571b5c1e891fd8feda"
+          "sha256": "e3c736a1229d6a01bb8589cd232844be788d817fd84ebf26fd419f2b7a090ae5"
+        },
+        {
+          "path": "schemas/contracts/usage-insights-share-envelope-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "a3960f0c87d7fca38db5bac8b924864730537654d5e7ba9568762c483cbe22fc"
         },
         {
           "path": "tests/fixtures/usage-insights/positive-opted-in-event-v1.json",
@@ -1103,28 +1118,34 @@
         {
           "path": "tests/usage-insights.test.ts",
           "role": "VALIDATOR",
-          "sha256": "d466feecb0904313188ce231aec71e0c954459bb0c973fef7eea9df426fbd06f"
+          "sha256": "71ac64fea3400ccca591984cf1eca6cc4f38105a7c944d4fd5ca242979fafb29"
+        },
+        {
+          "path": "tests/usage-insights-completion.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "f252596541637d208d1978dc7429342f75829f9f9f251bef6e572e05673a211d"
         },
         {
           "path": "docs/USAGE-INSIGHTS-CONTRACT.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "e4774c2130036b9ae0c6ad82bd824e346942f4070645b3f97f2bcfb2d4841f86"
+          "sha256": "249868fa0fe7516c90c4a3e35cf9b56adfe622767d9703afd85ffed58f079b61"
         },
         {
           "path": "docs/development/awi-insights-001-issue-57-pdca.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "41b9f6815996cc88104f7c9e7ca228e2f645981f78587a4d581c275d3e17200f"
+          "sha256": "e7d2f0b57388071f88169fcd72150266a224aaf86887fce3e21876cf5e18efc9"
         }
       ],
       "ownedTests": [
-        "node --test dist/tests/usage-insights.test.js"
+        "npm run usage-insights:test"
       ],
       "invariants": [
-        "Runtime submissions are identifier-free and descriptor-safe; opaque event and installation identifiers are minted only from production CSPRNG entropy.",
-        "Rotation erases old-epoch events before exposing the new pseudonym, while restore rejects impossible state and time relationships.",
-        "Any small cell suppresses every publishable exact total and cell; exact counts remain local-owner preview data only.",
-        "Canonical JSON bytes are explicit inputs, while the existing openclaw-m1-4 owner remains unchanged; shared-input changes fail closed to the full comparator.",
-        "This default-off in-memory reference only Refs #57 and makes no whole-Issue, persistence, transport, deletion-SLA, authorization, deployment, or production claim."
+        "Fresh installations are network-off; local recording requires an explicit closed consent profile and sharing additionally requires an exact IP-literal loopback endpoint.",
+        "Outbound envelopes and events are descriptor-safe exact-key schemas with no free text, paths, domains, secrets, customer/user/tenant identifiers or caller-minted event/install identities.",
+        "Separate stores mint independent pseudonyms; replay reuses one atomically persisted batch; successful sharing erases the old epoch before exposing a fresh pseudonym.",
+        "Managed local/shared data supports preview, export, immediate revocation and fail-closed batch deletion; diagnostics consent is time-limited.",
+        "Reports cover install-to-first-success, retention, errors, denials, rollbacks and version fragmentation while fixed cohort/coverage nonclaims and all-or-nothing threshold-five suppression prevent small-cell disclosure.",
+        "The completion reference proves only offline and explicitly opted-in synthetic loopback operation; no production activation, real-user evidence, representative adoption or privacy certification is claimed."
       ],
       "riskClass": "CRITICAL",
       "globalInvalidation": false

@@ -281,6 +281,8 @@ packages/dev-worker/src/controller.ts	packages/dev-worker/src/controller.ts	0644
 packages/dev-worker/src/m3-governance.ts	packages/dev-worker/src/m3-governance.ts	0644
 packages/dev-worker/src/publication-broker.ts	packages/dev-worker/src/publication-broker.ts	0644
 packages/setup-coordinator/src/index.ts	packages/setup-coordinator/src/index.ts	0644
+packages/usage-insights/src/cli.ts	packages/usage-insights/src/cli.ts	0755
+packages/usage-insights/src/index.ts	packages/usage-insights/src/index.ts	0644
 README.md	README.md	0644
 release/governance.json	release/governance.json	0644
 release/public-files.manifest	release/public-files.manifest	0644
@@ -330,6 +332,7 @@ schemas/contracts/update-health-report-v1.schema.json	schemas/contracts/update-h
 schemas/contracts/update-lock-profile-v1.schema.json	schemas/contracts/update-lock-profile-v1.schema.json	0644
 schemas/contracts/update-operation-contract-v1.schema.json	schemas/contracts/update-operation-contract-v1.schema.json	0644
 schemas/contracts/usage-insights-event-v1.schema.json	schemas/contracts/usage-insights-event-v1.schema.json	0644
+schemas/contracts/usage-insights-share-envelope-v1.schema.json	schemas/contracts/usage-insights-share-envelope-v1.schema.json	0644
 schemas/contracts/verification-attestation-v2.schema.json	schemas/contracts/verification-attestation-v2.schema.json	0644
 schemas/contracts/verification-evidence-dag-v2.schema.json	schemas/contracts/verification-evidence-dag-v2.schema.json	0644
 schemas/contracts/verification-fabric-bundle-v1.schema.json	schemas/contracts/verification-fabric-bundle-v1.schema.json	0644
@@ -507,6 +510,7 @@ tests/update-check-plan.test.ts	tests/update-check-plan.test.ts	0644
 tests/update-doctor-compose-adapter.test.ts	tests/update-doctor-compose-adapter.test.ts	0644
 tests/update-doctor-core.test.ts	tests/update-doctor-core.test.ts	0644
 tests/update-doctor.test.ts	tests/update-doctor.test.ts	0644
+tests/usage-insights-completion.test.ts	tests/usage-insights-completion.test.ts	0644
 tests/usage-insights.test.ts	tests/usage-insights.test.ts	0644
 tests/verification-fabric-v2.test.ts	tests/verification-fabric-v2.test.ts	0644
 tests/verification-fabric.test.ts	tests/verification-fabric.test.ts	0644

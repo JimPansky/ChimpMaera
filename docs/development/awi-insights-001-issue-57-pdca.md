@@ -1,77 +1,74 @@
-# AWI-INSIGHTS-1 Issue #57 bounded repair PDCA
+# AWI-INSIGHTS-1 Issue #57 completion PDCA
 
-Status: uncommitted issue-bound repair candidate under repository and host gate
-review. This document records a developer reference slice that **Refs #57**. It
-does not close or complete Issue #57 and is not released, deployed, or
-production-activated.
+Status: current-main completion candidate. Publication, CI, protected merge,
+Issue closure, and release state remain separate delivery gates until their
+exact public readbacks succeed.
 
 ## Plan
 
-Reconcile the historical 17-path source onto the current PANSPHAIRA
-protected-main successor while preserving the later #18, repository-cutover,
-test, contract, release, and Verification DAG semantics. Keep the bounded
-17-path scope and make no dependency, lockfile, workflow, container,
-deployment, credential, version-identity, or external-service change.
+Complete the six Issue #57 acceptance criteria without enabling production
+telemetry or using real user data. Reuse the merged descriptor-safe event and
+pseudonym contract, and add only the missing coherent local reference runtime:
+transparent default-off consent, bounded persistence and lifecycle controls,
+strict opt-in loopback transport, report/dashboard families, and offline plus
+synthetic E2E evidence.
 
-Repair goals:
+Success requires current evidence for:
 
-- reject hostile JavaScript property structures before value access;
-- accept only identifier-free, closed-vocabulary runtime submissions;
-- mint opaque event and installation identifiers with secret CSPRNG entropy;
-- erase the prior epoch before exposing a rotated pseudonym;
-- validate snapshot state and time relationships independently of redigesting;
-- separate exact local preview from side-channel-safe public aggregation; and
-- describe seven-day erasure as lazy-on-access, not scheduled or automatic.
+1. fully functional offline default;
+2. local preview/export/revoke/delete including managed shared-batch deletion;
+3. no free text or disallowed identifiers at the actual outbound boundary;
+4. rotating isolated pseudonyms with erase-before-expose and replay safety;
+5. coverage/cohort labels plus all-or-nothing small-cell suppression; and
+6. offline and explicit opt-in synthetic installation E2Es.
 
 ## Do
 
-The repaired runtime inspects own keys and data descriptors recursively and
-rejects accessors, symbols, non-enumerables, dangerous keys, aliases, cycles,
-proxies, sparse arrays, exotic prototypes, and oversized structures without
-invoking getters, proxy traps, coercion hooks, or iterators.
+The completion package adds a dependency-free TypeScript API and CLI. Local
+state is canonical, digest-bound, 0600, atomically replaced, symlink/permission
+checked, and capped at 4 MiB. Consent is split from sharing: a closed profile
+enables local recording; an additional explicit action enables one exact
+IP-literal loopback receiver. Diagnostics consent is mandatory-TTL and expires
+fail closed.
 
-Runtime event inputs carry no identity. Event IDs and installation pseudonyms
-are minted internally; exported APIs reject caller installation IDs, caller
-rotation entropy, and deterministic random-source options. Rotation uses fresh
-secret entropy and performs erase-before-expose.
+Outbound envelopes and events are descriptor-safe, exact-key, closed-schema,
+digest-verified, and bounded. A pending batch is stored before transport so an
+ambiguous acknowledgement retries identical bytes. Successful sharing erases
+the old epoch before the next pseudonym is exposed. Independent deletion
+tokens retain batch-level erasure without sending a tenant identifier or a
+cross-epoch token list.
 
-Snapshot capture adds the timestamp needed to validate creation, opt-in,
-rotation, event, revocation, expiry, deletion, capture, and restore ordering.
-Inner digests, bindings, versions, duplicates, outer structure, and outer digest
-remain independently checked. Digests are unkeyed consistency evidence, not
-authenticity or provenance.
-
-Public aggregation uses all-or-nothing suppression whenever any cell has fewer
-than five distinct opaque installation IDs. Exact local counts remain only in
-the local preview. Suppressed output exposes neither exact totals, cell count,
-nor suppression multiplicity.
+The local report implements install-to-first-success, bounded return retention,
+errors, denials, rollbacks, and exact-version fragmentation. Any observed cell
+under five distinct installations suppresses the whole report. Coverage and
+cohort nonclaims are present in machine and rendered dashboard output.
 
 ## Check
 
-Semantic source, schema, fixtures, tests, and documentation freeze before DAG
-hashes and root checksums are refreshed. Required evidence includes build,
-lint, focused adversarial regressions, full tests, docs, release governance,
-supply-chain checks, Verification Fabric plan/shadow as applicable, two stable
-integrity refreshes, and two isolated identical public archives with verified
-internal checksums.
+Focused evidence must pass the positive and negative completion matrix against
+an actual IP-loopback receiver, including replay after a lost acknowledgement,
+shared deletion, tenant/store isolation, hostile inputs, TTL, default-off, and
+SSRF policy. Repository evidence then requires build, lint, pretest/full tests,
+docs, root checksums, release governance, supply chain, Verification Fabric
+plan/shadow, stable integrity refresh, and reproducible public archives.
 
-Historical candidate gate totals and hashes are not acceptance evidence after
-integration. Host policy failures must be reported as blocked rather than
-relabelled as passes.
+All six criteria remain `0/6` until focused execution evidence passes. Local
+completion remains distinct from protected delivery. Protected merge remains
+distinct from Issue closure and release.
 
-## Act and nonclaims
+## Act, risk, fallback, and nonclaims
 
-Promotion is limited to a default-off developer contract/reference primitive.
-Consent UX/profiles, durable consent/events/stable IDs, persistence,
-background/shared-data deletion, transport, collector, ambient telemetry,
-dashboard, authorization for local-owner export, deployment, production
-readiness, representative cohorts, and whole-Issue delivery remain explicitly
-out of scope. The seven-day path is lazy-on-access and makes no deletion-SLA
-claim.
+Conservative transport assumption: this product slice permits only exact
+loopback IP literals. A general Internet endpoint would add production/SSRF
+surface without improving the required local/synthetic evidence, so it is
+rejected. Fallback before publication is removal of only the fresh completion
+package and additive integration entries. After publication, corrections are
+additive; after merge, rollback uses a protected successor/revert.
 
-Fallback is to withhold the executable reference if the repaired boundary or
-verification closure fails. Rollback is removal or later bounded reversion of
-only this issue slice; no durable migration or deployed state exists here.
+The slice makes no claim about real usage, representative cohorts, production
+deployment, an Internet collector, background telemetry, receiver identity,
+automatic remote deletion, deletion of owner-created export copies, ambient
+correlation resistance, or privacy certification.
 
-Claim boundary:
-`USAGE_INSIGHTS_DEFAULT_OFF_IN_MEMORY_REFERENCE_NO_UX_NO_PERSISTENCE_NO_BACKGROUND_DELETION_NO_TRANSPORT_NO_PRODUCTION`.
+Completion claim boundary:
+`DEFAULT_OFF_LOCAL_ONLY_UNLESS_EXPLICIT_LOOPBACK_OPT_IN_SYNTHETIC_REFERENCE_NO_PRODUCTION`.

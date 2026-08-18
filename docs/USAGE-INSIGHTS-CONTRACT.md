@@ -1,127 +1,169 @@
 ---
-title: Default-off in-memory usage-insights reference
-description: Review PANSPHAIRA's developer-facing, descriptor-safe usage-insights contract primitive without enabling collection, persistence, transport, or background work.
+title: Default-off local usage insights
+description: Run PANSPHAIRA's consent-based local Usage Insights reference offline, or explicitly share minimal closed-schema signals with a loopback synthetic receiver.
 ---
 
-# Default-off in-memory usage-insights reference
+# Default-off local usage insights
 
-AWI-INSIGHTS-1 is a bounded developer-facing contract and in-memory reference
-primitive. It is one incomplete slice that **Refs #57**; Issue #57 remains open.
-It does not deliver the issue's user-facing telemetry or insights feature.
+AWI-INSIGHTS-1 is PANSPHAIRA's repository-local completion reference for Issue
+#57. It combines the hardened in-memory event contract with a bounded local
+store, transparent CLI consent, lifecycle controls, an explicitly enabled
+loopback transport, and a small-cell-safe report. The reference uses only local
+or synthetic data. It does not activate telemetry in a PANSPHAIRA runtime.
 
-Importing or constructing the module does not collect anything. A new runtime
-is `DISABLED`, has no installation pseudonym, stores no events, and denies
-recording and export until an in-process caller invokes `optIn()`.
+Constructing the service or running `consent show`, `status`, `preview`,
+`export`, or `report` does not create a state file or make a network request.
+A fresh installation is `DISABLED`; network mode is always `OFF` until two
+separate decisions have occurred:
 
-## Closed input and descriptor-safe boundary
+**Default is OFF.** No import, constructor, read-only command, or local report
+implicitly grants consent or enables transport.
 
-`record()` accepts an identifier-free input with exactly six fields: the fixed
-input schema, fixed product and exact product version, one closed capability,
-one closed lifecycle outcome, and a bounded integer occurrence time. It rejects
-caller event IDs, installation IDs, digests, free text, and unknown fields.
-Each identity epoch is capped at 4,096 stored records; further inputs fail
-closed with `CAPACITY_DENIED` until rotation or deletion clears the epoch.
+1. the local owner grants one closed consent profile; and
+2. the local owner explicitly enables one IP-literal loopback endpoint.
 
-Before values are used, the unknown-input boundary recursively inspects
-`Reflect.ownKeys` and every own property descriptor. It rejects accessors,
-symbols, non-enumerables, dangerous keys, aliases, cycles, proxies, sparse
-arrays, exotic prototypes, excessive depth or size, and unexpected fields.
-Getters, proxy traps, coercion hooks, and caller iterators are not invoked.
+## Transparent consent profiles
 
-Only the runtime mints `event:v1:<64 lowercase hex>` event IDs and
-`sha256:<64 lowercase hex>` installation pseudonyms from `node:crypto`
-randomness. Caller text cannot become either identity or a public label. Stored
-records carry a canonical SHA-256 digest; the JSON Schema covers the
-JSON-visible stored-record shape while runtime checks cover JavaScript property
-semantics that JSON Schema cannot express.
+The CLI reports the retained and prohibited data classes before consent. The
+closed profiles are:
 
-## Local preview versus publishable aggregation
+- `basic`: install, upgrade, and uninstall adoption outcomes;
+- `capability`: basic signals plus first success and bounded running/stopped
+  capability outcomes; and
+- `diagnostics`: capability signals plus closed `ERROR`, `DENIED`, and rollback
+  outcomes. Diagnostics requires an explicit TTL no longer than 24 hours.
 
-`preview()` is an exact process-local owner view. It reports exact local counts
-and closed-vocabulary distinctions, but it implements no authorization decision
-about who is an owner or who may export that view.
-
-`aggregateUsageInsightsV1()` is the separate publishable projection. It
-deduplicates exact opaque event IDs, rejects conflicting duplicates, and groups
-only fully verified records. A cell is publishable only with five distinct
-opaque installation IDs. If **any** cell is below that threshold, the complete
-public projection is `SUPPRESSED`: exact event and installation totals are
-`null`, cells are empty, and one fixed suppression reason is emitted. Thus it
-does not reveal suppressed-label multiplicity, cell count, or a count-equivalent
-side channel. An empty verified input is explicitly `EMPTY`.
-
-The threshold does not authenticate installations. Aggregate labels say
-`UNAUTHENTICATED_OPTED_IN_REFERENCE` and
-`PARTIAL_OPT_IN_NON_REPRESENTATIVE`; forged pseudonyms remain possible because
-this slice has no enrollment authority or collector.
-
-## Rotation and current-epoch state
-
-Opt-in and every rotation use fresh secret cryptographic randomness. Production
-APIs reject caller-chosen installation IDs, rotation entropy, and deterministic
-random-source options. On rotation the old epoch's events are erased before the
-new pseudonym is assigned or returned. Export and snapshot contain only the
-current pseudonym and current-epoch records.
-
-This supports only a bounded **computational unlinkability** claim: given a
-correctly operating CSPRNG whose output remains secret, and the assumed
-preimage/collision resistance of SHA-256, the new pseudonym does not expose a
-designed old/new link. It is not mathematical anonymity, and process, timing,
-host, transport, or other ambient observations outside this module could still
-link activity.
-
-## Restore integrity and its limit
-
-A snapshot records creation, opt-in, last rotation, revocation, deletion, event,
-and capture times. Restore rejects time travel, impossible state/flag
-combinations, events outside the current epoch, restore before capture,
-cross-installation or version records, duplicates, invalid inner digests,
-unexpected structures, and an invalid outer digest. Expired revoked state is
-erased when restore accesses it.
-
-The event and state digests are **unkeyed**. They can detect inconsistent or
-accidental drift, but they are not an authenticity control and provide no
-origin authorization or provenance against coherent re-authoring by someone
-who can recompute all digests.
-
-## Revocation and deletion
-
-`revoke()` denies new recording immediately. It records a seven-day expiry for
-the process-local state. There is no timer or scheduler: expiry is
-**lazy-on-access**, and erasure happens only when a later runtime operation
-observes that the expiry is due. This is not automatic or background deletion
-and is not a wall-clock deletion SLA.
-
-`deleteState()` immediately clears this runtime object's in-memory events and
-pseudonym. Neither path can erase copies, snapshots, exports, or shared data
-held elsewhere.
-
-## Explicit nonclaims
-
-This reference primitive provides none of the following:
-
-- consent UX, user-visible controls, consent profiles, or profile management;
-- durable consent, durable events, persistence, or a stable ID across restart;
-- automatic/background deletion, a deletion SLA, or shared-data deletion;
-- collector, transport, network submission, or ambient telemetry;
-- dashboard, reporting product, or representative installation cohorts;
-- authorization of local-owner preview or export;
-- deployment, external-service integration, production readiness, or production
-  security/capacity evidence; or
-- complete telemetry/insights delivery or completion of Issue #57.
-
-## Local verification
+Diagnostics expiry is evaluated on local access and fails closed: recording and
+sharing stop, the endpoint is removed, and the underlying runtime is revoked.
+There is no timer, daemon, background worker, or silent renewal.
 
 ```bash
 npm run build
-node --test dist/tests/usage-insights.test.js
+node dist/packages/usage-insights/src/cli.js consent show --store ./usage-insights-state.json
+node dist/packages/usage-insights/src/cli.js consent grant \
+  --profile capability --store ./usage-insights-state.json
+node dist/packages/usage-insights/src/cli.js record \
+  --capability capability.gateway --outcome INSTALL_STARTED \
+  --store ./usage-insights-state.json
+node dist/packages/usage-insights/src/cli.js preview --store ./usage-insights-state.json
 ```
 
-The focused regressions cover descriptor non-invocation, proxies, symbols,
-non-enumerables, cycles, aliases, exotic and sparse structures, covert IDs,
-suppression side channels, deterministic-seam misuse, rotation erasure,
-redigested impossible snapshots, restore timing, immediate revocation, lazy
-expiry, explicit deletion, and absence of a network surface.
+## Bounded local lifecycle
 
-Claim boundary:
-`USAGE_INSIGHTS_DEFAULT_OFF_IN_MEMORY_REFERENCE_NO_UX_NO_PERSISTENCE_NO_BACKGROUND_DELETION_NO_TRANSPORT_NO_PRODUCTION`.
+The local state is one canonical JSON file, atomically replaced with mode
+`0600`. The reference rejects symlinks, non-regular files, group/other access,
+invalid digests, impossible runtime timelines, unsafe parent traversal, and
+files larger than 4 MiB. The state contains only consent policy, the current
+runtime epoch, at most one retry-stable pending batch, and at most 128 managed
+share receipts.
+
+Event, envelope, report, export, and state digests are **unkeyed** consistency
+checks. They detect drift but are not an authenticity control and do not prove
+origin authorization or provenance against coherent re-authoring by an actor
+who can recompute the digests.
+
+- `preview` shows exact local closed-vocabulary distinctions and sharing counts.
+- `export` returns a defensive local-owner bundle without the configured
+  endpoint. Copies created by the owner are outside subsequent managed erasure.
+- `revoke` immediately denies recording and sharing, removes the active
+  endpoint, and retains deletion receipts so previously shared synthetic data
+  can still be erased deliberately.
+- `delete` removes local state only when no managed shared batch remains.
+- `delete --shared` first deletes every managed batch from its original
+  loopback receiver using an independent opaque deletion token, then removes
+  local state. Any receiver failure preserves the local receipts fail closed.
+
+## Closed outbound boundary
+
+Application callers submit only `capabilityId` and `lifecycleOutcome`; the
+service supplies the fixed product ID, exact product version, input schema, and
+policy timestamp. The in-memory contract rejects unknown keys, free text,
+caller IDs, accessors, symbols, non-enumerables, dangerous keys, aliases,
+cycles, proxies, sparse arrays, exotic prototypes, oversized structures, and
+coercion hooks before reading values.
+
+Outbound envelopes have exactly seven fields: fixed schema, closed profile,
+one opaque deletion token, share timestamp, verified events, fixed claim
+boundary, and canonical digest. Events have a closed schema containing only
+runtime-minted opaque event/install pseudonyms, stable product/capability IDs,
+the exact version, a closed lifecycle outcome, a policy timestamp, and a
+digest. Prompts, chats, payloads, paths, file names, domains, customer data,
+secrets, tenant IDs, user IDs, and other free-form identifiers have no outbound
+field.
+
+## Rotation, isolation, and replay
+
+Each local store mints its installation pseudonym from secret CSPRNG entropy.
+Separate synthetic tenant/installation stores do not share an identifier or
+key. A successful share erases the old epoch before a fresh pseudonym becomes
+observable. Rotation never carries old events into the new epoch.
+
+Before transport, the exact envelope and deletion token are atomically stored
+as the single pending batch. A lost acknowledgement therefore retries the same
+bytes rather than minting a second correlatable batch. The synthetic receiver
+is idempotent by deletion token. A deletion request contains one token only;
+the client never sends tenant identity or a list linking rotated pseudonyms.
+
+This is a computational unlinkability boundary under a correctly operating
+CSPRNG and the stated hash assumptions. Timing, host, receiver, or other
+ambient observations outside the reference can still correlate activity.
+
+## Explicit loopback transport policy
+
+Sharing supports only an exact `http://127.0.0.1:PORT/v1/usage-insights` or
+`http://[::1]:PORT/v1/usage-insights` endpoint with an explicit non-privileged
+port. HTTPS, DNS names, credentials, redirects, queries, fragments, alternate
+paths, metadata addresses, ambiguous numeric hosts, and non-loopback addresses
+are denied. The client follows no redirects, uses no environment proxy, and
+caps/time-bounds receiver responses.
+
+This narrow policy is intentional completion evidence for offline and opt-in
+synthetic installations. It is not a production collector configuration.
+
+## Local report and dashboard reference
+
+`buildUsageInsightsReportV1()` produces these six metric families from verified
+opt-in envelopes:
+
+1. install-to-first-success;
+2. bounded return/retention;
+3. errors;
+4. denials;
+5. rollbacks; and
+6. exact-version fragmentation.
+
+Every report says `EXPLICIT_OPT_IN_ONLY` and
+`PARTIAL_NON_REPRESENTATIVE_COHORT`, and carries the fixed nonclaims
+`DOES_NOT_REPRESENT_ALL_INSTALLATIONS` and
+`NO_PRODUCTION_OR_ADOPTION_CLAIM`. If the overall cohort, an eligible metric
+cohort, a capability cell, or a version cell has fewer than five distinct
+installation pseudonyms, the entire report is `SUPPRESSED`: installation count
+and all metrics are `null`, with one fixed reason. This prevents cell labels,
+multiplicity, or totals becoming a small-cell side channel.
+
+`renderUsageInsightsDashboardV1()` renders only a validated report and retains
+the cohort, coverage, and nonclaim labels. The CLI `report` command works
+offline; a single-installation local report is correctly suppressed.
+
+## Verification and nonclaims
+
+```bash
+npm run usage-insights:test
+```
+
+The focused matrix covers fresh network-off operation, all consent profiles,
+TTL expiry, preview/export/revoke/delete, atomic reload and tamper rejection,
+permissions/symlink/capacity controls, hostile descriptors and prohibited
+fields, SSRF/endpoint denial, retry/replay, erase-before-expose rotation,
+cross-store isolation, managed shared-data deletion, four-install suppression,
+five-install publication, all six metric families, deterministic reports, and
+real IP-loopback synthetic receiver E2E.
+
+The evidence does not claim real users, representative adoption, an Internet
+collector, production deployment, background telemetry, automatic remote
+deletion, deletion of owner-created export copies, receiver authenticity,
+privacy certification, or protection against ambient host/transport
+correlation.
+
+Completion claim boundary:
+`DEFAULT_OFF_LOCAL_ONLY_UNLESS_EXPLICIT_LOOPBACK_OPT_IN_SYNTHETIC_REFERENCE_NO_PRODUCTION`.

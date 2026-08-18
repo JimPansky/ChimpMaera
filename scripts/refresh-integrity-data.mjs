@@ -114,7 +114,7 @@ proof.verifier.sha256 = digest(proof.verifier.path);
 writeJson(proofPath, proof);
 writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEvidence(proof));
 
-dag.graphVersion = 9;
+dag.graphVersion = 10;
 const intakeNode = dag.nodes.find(({ id }) => id === "intake-001-issue-candidate-v1");
 if (intakeNode === undefined) throw new Error("INTAKE_001_DAG_NODE_MISSING");
 const intakeInputs = [
@@ -219,6 +219,36 @@ const m14Inputs = [
   ["security/openclaw-m1.4-evidence-v1.json", "DERIVED_EVIDENCE"],
 ];
 m14Node.inputs = m14Inputs.map(([inputPath, role]) => ({ path: inputPath, role, sha256: digest(inputPath) }));
+const usageInsightsNode = dag.nodes.find(({ id }) => id === "awi-insights-1-usage-insights-v1");
+if (usageInsightsNode === undefined) throw new Error("AWI_INSIGHTS_1_DAG_NODE_MISSING");
+const usageInsightsInputs = [
+  ["packages/contracts/src/usage-insights.ts", "SECURITY"],
+  ["packages/usage-insights/src/index.ts", "SECURITY"],
+  ["packages/usage-insights/src/cli.ts", "SOURCE"],
+  ["packages/contracts/src/canonical-json.ts", "CONTRACT"],
+  ["schemas/contracts/usage-insights-event-v1.schema.json", "SCHEMA"],
+  ["schemas/contracts/usage-insights-share-envelope-v1.schema.json", "SCHEMA"],
+  ["tests/fixtures/usage-insights/positive-opted-in-event-v1.json", "FIXTURE"],
+  ["tests/fixtures/usage-insights/negative-matrix-v1.json", "FIXTURE"],
+  ["tests/usage-insights.test.ts", "VALIDATOR"],
+  ["tests/usage-insights-completion.test.ts", "VALIDATOR"],
+  ["docs/USAGE-INSIGHTS-CONTRACT.md", "DERIVED_EVIDENCE"],
+  ["docs/development/awi-insights-001-issue-57-pdca.md", "DERIVED_EVIDENCE"],
+];
+usageInsightsNode.inputs = usageInsightsInputs.map(([inputPath, role]) => ({
+  path: inputPath,
+  role,
+  sha256: digest(inputPath),
+}));
+usageInsightsNode.ownedTests = ["npm run usage-insights:test"];
+usageInsightsNode.invariants = [
+  "Fresh installations are network-off; local recording requires an explicit closed consent profile and sharing additionally requires an exact IP-literal loopback endpoint.",
+  "Outbound envelopes and events are descriptor-safe exact-key schemas with no free text, paths, domains, secrets, customer/user/tenant identifiers or caller-minted event/install identities.",
+  "Separate stores mint independent pseudonyms; replay reuses one atomically persisted batch; successful sharing erases the old epoch before exposing a fresh pseudonym.",
+  "Managed local/shared data supports preview, export, immediate revocation and fail-closed batch deletion; diagnostics consent is time-limited.",
+  "Reports cover install-to-first-success, retention, errors, denials, rollbacks and version fragmentation while fixed cohort/coverage nonclaims and all-or-nothing threshold-five suppression prevent small-cell disclosure.",
+  "The completion reference proves only offline and explicitly opted-in synthetic loopback operation; no production activation, real-user evidence, representative adoption or privacy certification is claimed.",
+];
 for (const node of dag.nodes) {
   node.inputs = node.inputs.map((input) => ({ ...input, sha256: digest(input.path) }));
 }
