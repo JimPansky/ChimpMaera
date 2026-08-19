@@ -7,21 +7,22 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260819.1`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.1),
-the **Public Product Spelling** increment. It delivers the current PanSphaira
-display name while retaining the existing technical identities and the
-local/synthetic Usage Insights boundaries. `v0.1.0` is historical. Release state
-is governed by [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred
-from a local branch, a tag alone, a date or an editorial update. Documentation
-on `main` may postdate the released asset bytes and does not silently change
-their claims.
+[`v0.2.0-poc.20260819.2`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.2),
+the **Canonical Owner and Worker Link Cutover** increment. It delivers the
+current repository, Pages and Development Worker trust routes while retaining
+the stable slug, technical identities, authorship, funding handles and
+historical evidence. `v0.1.0` is historical. Release state is governed by
+[anonymous public readback](RELEASE-GOVERNANCE.md), not inferred from a local
+branch, a tag alone, a date or an editorial update. Documentation on `main` may
+postdate the released asset bytes and does not silently change their claims.
 
 The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment changes current human-facing display spelling, not runtime
-authority or technical identity. Its included Usage Insights reference remains
+The Latest increment changes current external routes and the exact Development
+Worker repository allowlist, not worker authority, runtime capability or stable
+technical identity. Its included Usage Insights reference remains
 local/synthetic and default-network-off. Optional sharing requires explicit
 consent and an exact IP-literal loopback endpoint. No production collector or
 activation, real-user evidence, representative adoption, privacy certification,
