@@ -11,14 +11,15 @@ A public release is named for the functional, evidence-backed increment it
 delivers. A date or editorial cadence may appear as provenance, but labels such
 as “Daily”, “today's release” or “previous Daily” must not be the identity of an
 active public release. The current regular release is
-`v0.2.0-poc.20260818.2`, **PANSPHAIRA v0.2.0-poc.20260818.2 -
-Privacy-bounded Usage Insights**. Its narrow claim covers a local/synthetic,
-default-network-off reference runtime with explicit consent, managed local
-data lifecycle, closed outbound schemas, rotating pseudonyms and small-cell
-suppression. Optional sharing is restricted to explicit IP-literal loopback.
-No production activation, real-user evidence, representative adoption,
-privacy certification, legal basis or production fitness is claimed. `v0.1.0`
-is historical only.
+`v0.2.0-poc.20260819.1`, **PanSphaira v0.2.0-poc.20260819.1 - Public
+Product Spelling**. Its increment claim is the current human-facing PanSphaira
+display spelling across public surfaces while repository slugs, stable
+filenames, machine identifiers, APIs, protocols, schemas, packages, services,
+runtime identifiers and historical evidence remain unchanged. The included
+Usage Insights reference remains local/synthetic and default-network-off; no
+production activation, real-user evidence, representative adoption, privacy
+certification, legal basis or production fitness is claimed. `v0.1.0` is
+historical only.
 
 Editorial Daily content is independent. It may describe progress, decisions,
 learnings or a preview. It does not gate a release and must not claim that a

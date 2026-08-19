@@ -22,20 +22,21 @@ only loopback service bindings.
 The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
-Its claim is the local/synthetic, default-network-off Usage Insights reference
-with explicit consent and managed lifecycle controls. Optional sharing is
-restricted to IP-literal loopback; no production collector, real-user evidence,
-privacy certification or production fitness is claimed.
+Its increment claim is the current human-facing PanSphaira display spelling.
+The included local/synthetic, default-network-off Usage Insights reference
+retains its explicit-consent and managed-lifecycle boundaries. Optional sharing
+is restricted to IP-literal loopback; no production collector, real-user
+evidence, privacy certification or production fitness is claimed.
 
 ```sh
-release=v0.2.0-poc.20260818.2
-archive=cm-product-increment-rc-20260818-usage-insights-v2.tar.gz
+release=v0.2.0-poc.20260819.1
+archive=cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz
 base=https://github.com/JimPansky/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260818-usage-insights-v2
+cd cm-product-increment-rc-20260819-pansphaira-public-spelling
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from

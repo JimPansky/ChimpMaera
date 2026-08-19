@@ -2,32 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JoFe2/PANSPHAIRA",
   "currentRelease": {
-    "releaseId": 372539893,
-    "tag": "v0.2.0-poc.20260818.2",
-    "title": "PANSPHAIRA v0.2.0-poc.20260818.2 - Privacy-Bounded Usage Insights",
-    "increment": "Privacy-bounded Usage Insights",
-    "targetCommitish": "a661d01e58aae7b52b7bb67632a63c27baa5cff6",
-    "tagObjectSha": "a661d01e58aae7b52b7bb67632a63c27baa5cff6",
-    "publishedAt": "2026-08-18T17:52:33Z",
-    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260818.2",
+    "releaseId": 373207615,
+    "tag": "v0.2.0-poc.20260819.1",
+    "title": "PanSphaira v0.2.0-poc.20260819.1 - Public Product Spelling",
+    "increment": "Public Product Spelling",
+    "targetCommitish": "7d24b163cfcc2730d6d16c3161fd7836c818e7fc",
+    "tagObjectSha": "7d24b163cfcc2730d6d16c3161fd7836c818e7fc",
+    "publishedAt": "2026-08-19T16:47:56Z",
+    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.1",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "cm-product-increment-rc-20260818-usage-insights-v2.tar.gz",
-        "size": 1357582,
-        "sha256": "d18c5b841b273607d2ab509ebcf4d240dd36be3417c16e4675ee4da05407fe3b"
+        "name": "cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz",
+        "size": 1367481,
+        "sha256": "5e3d69a38ff40136636d6ec19399e7e06671e1a287af0ce5eaa6f7dc7a761d79"
       },
       {
-        "name": "cm-product-increment-rc-20260818-usage-insights-v2.tar.gz.sha256",
-        "size": 124,
-        "sha256": "7f04f6679934189792f7e4c539f2c6095557dc4f034e123e7f8156cce68130b5"
+        "name": "cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz.sha256",
+        "size": 133,
+        "sha256": "9c8c71af74a9b80d507ddce66af210ed3ace3212c665e98f97f1710cfcbb642e"
       }
     ],
     "assetManifest": {
-      "name": "cm-product-increment-rc-20260818-usage-insights-v2.tar.gz.sha256",
-      "declares": "cm-product-increment-rc-20260818-usage-insights-v2.tar.gz"
+      "name": "cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz.sha256",
+      "declares": "cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz"
     }
   },
   "policy": {
@@ -81,7 +81,7 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260818.2 is the current regular Latest release for the local/synthetic, default-network-off Privacy-bounded Usage Insights reference.",
+      "claim": "v0.2.0-poc.20260819.1 is the current regular Latest release for the PanSphaira public product spelling increment; its included Usage Insights reference remains local/synthetic and default-network-off.",
       "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
       "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "No production activation, real-user evidence, representative adoption, privacy certification, legal basis or production fitness is claimed."]
     },
