@@ -11,17 +11,17 @@ A public release is named for the functional, evidence-backed increment it
 delivers. A date or editorial cadence may appear as provenance, but labels such
 as “Daily”, “today's release” or “previous Daily” must not be the identity of an
 active public release. The current regular release is
-`v0.2.0-poc.20260819.4`, **PanSphaira v0.2.0-poc.20260819.4 - README
-Accessibility Presentation Gate**. Its increment preserves a concise,
-descriptive architecture image alternative and moves extended context into a
-compact disclosure. The release gate rejects unencapsulated technical
-fallback/placeholder labels and unusable image alt text across declared active
-public documentation without rewriting historical archives. This is not
-exhaustive assistive-technology testing, accessibility certification or
-universal Markdown linting. The included Usage Insights reference remains
-local/synthetic and default-network-off; no production activation, real-user
-evidence, representative adoption, privacy certification, legal basis or
-production fitness is claimed. `v0.1.0` is historical only.
+`v0.2.0-poc.20260819.5`, **PanSphaira v0.2.0-poc.20260819.5 - Evidence-Only
+Plugin Knowledge Harvest**. Its increment deterministically transforms exact-
+pinned source snapshots and bounded ETL-02 findings into the existing
+authority-free Knowledge Envelope. Attribution, licence/permitted use,
+conflicts, negative evidence, unknowns and source-change invalidation remain
+explicit. It executes, installs, admits and activates no plugin and does not
+claim ecosystem completeness, endorsement, compatibility, security, licence
+clearance or production ingestion. The included Usage Insights reference
+remains local/synthetic and default-network-off; no production activation,
+real-user evidence, representative adoption, privacy certification, legal basis
+or production fitness is claimed. `v0.1.0` is historical only.
 
 Editorial Daily content is independent. It may describe progress, decisions,
 learnings or a preview. It does not gate a release and must not claim that a

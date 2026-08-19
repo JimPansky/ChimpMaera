@@ -7,11 +7,11 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260819.4`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.4),
-the **README Accessibility Presentation Gate** increment. It preserves useful
-architecture alternatives while failing closed on visible technical
-fallback/placeholder labels and unusable image alt text in declared active
-public documentation.
+[`v0.2.0-poc.20260819.5`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.5),
+the **Evidence-Only Plugin Knowledge Harvest** increment. It converts exact-
+pinned source snapshots and bounded static findings into authority-free,
+attributed Knowledge Envelopes while retaining conflicts, unknowns and source-
+change invalidation.
 `v0.1.0` is historical. Release state is governed by
 [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred from a local
 branch, a tag alone, a date or an editorial update. Documentation on `main` may
@@ -21,14 +21,15 @@ The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment changes public documentation and its release gate only. It
-does not establish exhaustive assistive-technology compatibility, accessibility
-certification or universal Markdown linting, and it changes no runtime
-authority, effect or security boundary. Its included Usage Insights reference
-remains local/synthetic and default-network-off. Optional sharing requires
-explicit consent and an exact IP-literal loopback endpoint. No production
-collector or activation, real-user evidence, representative adoption, privacy
-certification, legal basis or production fitness follows from this increment.
+The Latest increment executes, installs, admits and activates no plugin, skill,
+MCP server or foreign harness. It establishes no security boundary and does not
+claim ecosystem completeness, endorsement, compatibility, malware freedom,
+licence clearance or production ingestion. Its included Usage Insights
+reference remains local/synthetic and default-network-off. Optional sharing
+requires explicit consent and an exact IP-literal loopback endpoint. No
+production collector or activation, real-user evidence, representative
+adoption, privacy certification, legal basis or production fitness follows from
+this increment.
 The detailed claims below remain bound to their own dated evidence snapshots.
 
 Table counts are dated observations from their linked 2026-08-01 synthetic
