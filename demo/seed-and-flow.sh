@@ -241,7 +241,7 @@ else
       jq -cn \
         --arg name "$name" \
         --arg emailAddress "$email" \
-        --arg description "PANSPHAIRA synthetic demo fixture $fixture_id" \
+        --arg description "PanSphaira synthetic demo fixture $fixture_id" \
         '{name:$name,emailAddress:$emailAddress,type:"Customer",description:$description}'
     )"
     record="$(espo_ensure Account name "$name" "$payload")"
@@ -268,7 +268,7 @@ else
         --arg lastName "$last_name" \
         --arg emailAddress "$email" \
         --arg accountId "$account_id" \
-        --arg description "PANSPHAIRA synthetic demo fixture $fixture_id" \
+        --arg description "PanSphaira synthetic demo fixture $fixture_id" \
         '{firstName:$firstName,lastName:$lastName,emailAddress:$emailAddress,
           accountId:$accountId,description:$description}'
     )"
@@ -304,7 +304,7 @@ else
         --arg stage "$(jq -r '.stage' <<<"$opportunity")" \
         --arg closeDate "$(jq -r '.closeDate' <<<"$opportunity")" \
         --arg currency "$(jq -r '.currency' <<<"$opportunity")" \
-        --arg description "PANSPHAIRA synthetic $classification fixture $fixture_id" \
+        --arg description "PanSphaira synthetic $classification fixture $fixture_id" \
         --argjson amount "$(jq '.amount' <<<"$opportunity")" \
         '{name:$name,accountId:$accountId,stage:$stage,closeDate:$closeDate,
           amount:$amount,amountCurrency:$currency,description:$description}'
@@ -346,7 +346,7 @@ else
             --arg code_client "$customer_code" \
             --arg email "$email" \
             '{name:$name,client:1,code_client:$code_client,email:$email,
-              note_public:"PANSPHAIRA synthetic demo customer"}'
+              note_public:"PanSphaira synthetic demo customer"}'
         )"
       )"
       customer_id="$(
@@ -390,7 +390,7 @@ else
             --arg ref_client "$customer_reference" \
             --arg classification "$classification" \
             '{socid:$socid,date:$date,ref_client:$ref_client,
-              note_public:("PANSPHAIRA synthetic " + $classification
+              note_public:("PanSphaira synthetic " + $classification
                 + " from CRM opportunity " + $ref_client)}'
         )"
       )"

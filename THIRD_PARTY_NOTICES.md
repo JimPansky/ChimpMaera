@@ -1,6 +1,6 @@
 # Third-party notices
 
-PANSPHAIRA project-authored work is licensed under Apache License 2.0. The
+PanSphaira project-authored work is licensed under Apache License 2.0. The
 pinned JavaScript development/runtime dependency set in `package-lock.json`
 includes these direct dependencies and selected transitive components:
 

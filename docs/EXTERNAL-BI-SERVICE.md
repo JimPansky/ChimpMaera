@@ -1,12 +1,12 @@
 ---
 title: External BI service contract v2
-description: Connect PANSPHAIRA to independently released KaleidoSphere through the stable, fail-closed SBA v2 compatibility boundary.
+description: Connect PanSphaira to independently released KaleidoSphere through the stable, fail-closed SBA v2 compatibility boundary.
 ---
 
 # External BI service contract v2
 
 KaleidoSphere is the sole owner of BI discovery, database adapters, analysis,
-semantic/KPI/graph logic, previews and Superset execution. PANSPHAIRA (CM)
+semantic/KPI/graph logic, previews and Superset execution. PanSphaira (CM)
 retains only a thin generic client plus its existing generic orchestration,
 approval and UI boundaries. CM does not vendor or start KaleidoSphere, own its
 containers or volumes, receive database or Superset credentials, forward

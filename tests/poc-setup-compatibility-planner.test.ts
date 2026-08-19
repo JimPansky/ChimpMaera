@@ -50,10 +50,10 @@ function reseal(
 }
 
 test("SETUP-PLANNER-DEFAULT Enter path reaches all six synthetic use cases with shared components", () => {
-  assert.equal(catalog.provenance.label, "PANSPHAIRA curated local PoC catalog");
+  assert.equal(catalog.provenance.label, "PanSphaira curated local PoC catalog");
   assert.equal(
     catalog.components.find(({ componentId }) => componentId === "core.safe-control-plane")?.provenance.label,
-    "PANSPHAIRA local PoC",
+    "PanSphaira local PoC",
   );
   const safeDefault = defaultPocSetupCompatibilityRequestV1(catalog);
   const analysis = analyzePocSetupCompatibilityV1(catalog, safeDefault);

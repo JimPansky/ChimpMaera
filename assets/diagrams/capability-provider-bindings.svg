@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="1040" viewBox="0 0 720 1040" role="img" aria-labelledby="title desc">
-  <title id="title">PANSPHAIRA capability contracts and provider bindings</title>
+  <title id="title">PanSphaira capability contracts and provider bindings</title>
   <desc id="desc">Consumers bind to stable capability contracts. Solid paths connect released local-synthetic CRM and ERP adapters; dashed paths show a prepared alternative provider adapter. Every binding remains within explicit rights, validation, readback, receipt and recovery controls.</desc>
   <style>
     .background { fill: #f8fafc; }

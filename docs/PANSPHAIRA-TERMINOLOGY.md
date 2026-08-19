@@ -1,13 +1,14 @@
-# PANSPHAIRA terminology and identity guardrails
+# PanSphaira terminology and identity guardrails
 
-This document is the current naming contract for the PANSPHAIRA cutover. It
+This document is the current naming contract for the PanSphaira public product
+spelling. It
 defines display and architecture vocabulary; it does not change the product's
 security model, runtime behavior, wire contracts, schemas, or stable technical
 identities.
 
 ## Terminology contract
 
-- **PANSPHAIRA** is the official product name in current human-facing
+- **PanSphaira** is the official product name in current human-facing
   material.
 - **pansphaira** is a technical slug only when a genuinely new branded slug is
   needed. Its availability does not authorize migration of an existing
@@ -83,7 +84,7 @@ existing or ambiguous machine identifier is **KEEP**.
 
 Any future entry must be separately approved, versioned, consumer-complete,
 reversible, and linked to its migration and verification evidence. Adding
-PANSPHAIRA or Sphere display vocabulary to a current surface is not such an
+PanSphaira or Sphere display vocabulary to a current surface is not such an
 exception.
 
 ### PAN-08 reviewed verdicts (2026-08-17)

@@ -4,7 +4,7 @@ export const PAPERLESS_ZOO_READ_RECEIPT_SCHEMA =
   "chimpmaera.demo/paperless-zoo-read-receipt/v1";
 export const PAPERLESS_ZOO_ADAPTER_ID = "paperless-ngx-zoo-readonly";
 export const PAPERLESS_ZOO_ADAPTER_VERSION = "1.0.0";
-export const PAPERLESS_ZOO_TITLE_PREFIX = "PANSPHAIRA Zoo - ";
+export const PAPERLESS_ZOO_TITLE_PREFIX = "PanSphaira Zoo - ";
 
 const FIXED_BASE_URL = "http://paperless:8000/api";
 const MAX_RESPONSE_BYTES = 256 * 1024;

@@ -1,4 +1,4 @@
-# PANSPHAIRA Community Code of Conduct
+# PanSphaira Community Code of Conduct
 
 Contributors, reviewers and maintainers must collaborate respectfully, focus
 criticism on the work and make participation free from harassment,

@@ -194,7 +194,7 @@
         {
           "path": "docs/INTEGRATION-PROFILES.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "8db9e5c9abfa2a222f2c775a6b9531bd8923e86a9fa735e67887705a87ddb763"
+          "sha256": "2f0b8ee7a76365facc88c6d88667cb8653fc672d0399819027193af83cbe541a"
         }
       ],
       "ownedTests": [
@@ -429,7 +429,7 @@
         {
           "path": "docs/EXTERNAL-BI-SERVICE.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "de29d4dd64755e639813995d3a66bac21daf1882ca88ec457ce4637fee641141"
+          "sha256": "e3c8149ba3da5f381de1062a6418bc9e26add4bc65b0c7e65daf83e3c5336984"
         }
       ],
       "ownedTests": [
@@ -461,12 +461,12 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "c4507b3f9450fc0a26d7475afef0e946ff830688c4c6ecbf8e36a41a96473483"
+          "sha256": "0d60aa525a714ac96dfdac9c71519ba4e76274f2e4cfa3078704626f3d2fb166"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "9766549e8b1ae3a9e84d938387c10ce727465b67a804b3e72be86a7ea8015261"
+          "sha256": "a5adf4ddace32bb04a69924eb7a07a6dc68fb5ea07900cfc8707fb2984657dfd"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -494,7 +494,7 @@
         {
           "path": "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json",
           "role": "CONTRACT",
-          "sha256": "fccf3ef5edfa5cd78cd0219cf369129c9626312530799238c37535547a1de37e"
+          "sha256": "d303bfa7662cd0d50d717d03a4cfdfaec856e0a1a140c910e7ce077535d32377"
         },
         {
           "path": "scripts/verify-openclaw-agent-runtime-lock.mjs",
@@ -519,7 +519,7 @@
         {
           "path": "demo/openclaw-agent/gateway.mjs",
           "role": "SOURCE",
-          "sha256": "72556009ac5a89a920bb7b7ea65038a148850fefe374e76e981f421d46cea83e"
+          "sha256": "4222f6ff902b5904a3fb2d49af8333ee24de0cae05a6933ec79adcc8388a2ddb"
         },
         {
           "path": "demo/openclaw-agent/gateway-state.mjs",
@@ -539,12 +539,12 @@
         {
           "path": "demo/openclaw-agent/openclaw.json",
           "role": "CONTRACT",
-          "sha256": "75a35874df838381cc58e10deaca9cafc578a9655ee6abaa00a380685d270060"
+          "sha256": "181ea0b4546baec63897283876fb448cf5d18dae1a5a6387104ff83a203548d2"
         },
         {
           "path": "demo/openclaw-agent/plugin/index.mjs",
           "role": "SOURCE",
-          "sha256": "3ea28256b383307534a766da65b9137c5e3c87c92314baaae998b579109abfe2"
+          "sha256": "f1f677df0cf92503e93fa730abb5bf4eabd6de3a98f72ee8ff5828e791431c74"
         },
         {
           "path": "demo/openclaw-agent/plugin/response-v1.mjs",
@@ -554,7 +554,7 @@
         {
           "path": "demo/openclaw-agent/plugin/openclaw.plugin.json",
           "role": "CONTRACT",
-          "sha256": "9d0ead9eff97e59b26ad9033e22b094f09568a42dbf209c757932e1e953c3d30"
+          "sha256": "71058ca090937f1fb01d5ed2ca5fae6526d031c3d8c1502dac1b0d08c6e0e2a3"
         },
         {
           "path": "demo/openclaw-agent/plugin/package.json",
@@ -768,7 +768,7 @@
         {
           "path": "security/secure-default-proof-v1.json",
           "role": "CONTRACT",
-          "sha256": "1c160c5e8a7ca79fe093ffa23eafcdce220b324e2cb324c6bab66714ef327acb"
+          "sha256": "1c210c88d277387fe06030d04c0a94d31fe175e60791de9c72c8e39f16d223cd"
         },
         {
           "path": "schemas/security/secure-default-proof-v1.schema.json",
@@ -778,7 +778,7 @@
         {
           "path": "security/secure-default-proof-evidence-v1.json",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "fccec2228c3ba7dc77f244bdf74c970edfed93f6c3a41095963722dee89bc09a"
+          "sha256": "6cc66997ad5fb1daaae5390a9aa98ca962640fc7c05271c3f221875e5a09eb90"
         },
         {
           "path": "scripts/verify-secure-default-proof.mjs",
@@ -793,7 +793,7 @@
         {
           "path": "docs/SECURE-DEFAULT-PROOF.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "a8b8ab744533e383ca065c9c1ac792e6d25771f2f819dd4620ce6592cc0bd540"
+          "sha256": "aa774bd8e7bd641990f57c62bf952e47dd1c1359cad9f444ccd0daf57f3c0f11"
         }
       ],
       "ownedTests": [
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "e12f6ffaeb4e35bd7f7a3fabf2f02b2958eedb132a701f5d64e3b1c344b146ff"
+          "sha256": "a7ddb861c13f3fc4520b2d801c969a9d5c660b3a0baeed65d9918cd4170ed892"
         },
         {
           "path": "package-lock.json",
@@ -861,7 +861,7 @@
         {
           "path": "docs/EXTERNAL-VIDEO-SERVICE.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "6c3f7efe62826c1de279dc89fd48e779049365c216e4995b05091cbe66292664"
+          "sha256": "008aa6b5cda4316d05d9185587f2e14e1877b84761b31eebdb3c1e6c6fcaff68"
         },
         {
           "path": "tools/video-production-reference/EXTENSION-GUIDE.md",
@@ -1083,7 +1083,7 @@
         {
           "path": "packages/usage-insights/src/index.ts",
           "role": "SECURITY",
-          "sha256": "78efe1a9b4d821d28547ce0c38bc8d04a603ce5a6821f840edf6a74ab6aba073"
+          "sha256": "820a91361c34ca37962bd037552c7ac02f392936460f5fbd4d57c77ef145bdc5"
         },
         {
           "path": "packages/usage-insights/src/cli.ts",
@@ -1128,7 +1128,7 @@
         {
           "path": "docs/USAGE-INSIGHTS-CONTRACT.md",
           "role": "DERIVED_EVIDENCE",
-          "sha256": "249868fa0fe7516c90c4a3e35cf9b56adfe622767d9703afd85ffed58f079b61"
+          "sha256": "3e962720a1ee751b7ade35d38939e7c617359a2c840069b704c1a676fec71e58"
         },
         {
           "path": "docs/development/awi-insights-001-issue-57-pdca.md",

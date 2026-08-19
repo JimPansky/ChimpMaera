@@ -1,4 +1,4 @@
-# PANSPHAIRA functional product-increment public-file manifest
+# PanSphaira functional product-increment public-file manifest
 # Format: source<TAB>destination<TAB>mode
 .gitignore	.gitignore	0644
 assets/brand/README.md	assets/brand/README.md	0644
@@ -184,6 +184,7 @@ docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	docs/OPENCLAW-BOUNDED-STATE-OPERAT
 docs/OPERATING-FIELD-GUIDE.md	docs/OPERATING-FIELD-GUIDE.md	0644
 docs/OPERATION-EVENT-QUALITY-CONTRACT.md	docs/OPERATION-EVENT-QUALITY-CONTRACT.md	0644
 docs/PANSPHAIRA-TERMINOLOGY.md	docs/PANSPHAIRA-TERMINOLOGY.md	0644
+docs/PUBLIC-PRODUCT-SPELLING-AUDIT.md	docs/PUBLIC-PRODUCT-SPELLING-AUDIT.md	0644
 docs/public/robots.txt	docs/public/robots.txt	0644
 docs/QUICKSTART.md	docs/QUICKSTART.md	0644
 docs/README.md	docs/README.md	0644
@@ -499,6 +500,7 @@ tests/poc-showcase-e2e.test.ts	tests/poc-showcase-e2e.test.ts	0644
 tests/poc-showcase.test.ts	tests/poc-showcase.test.ts	0644
 tests/power-platform-read-connector.test.ts	tests/power-platform-read-connector.test.ts	0644
 tests/protected-audit-timeline.test.ts	tests/protected-audit-timeline.test.ts	0644
+tests/public-product-spelling.test.mjs	tests/public-product-spelling.test.mjs	0644
 tests/release-governance.test.mjs	tests/release-governance.test.mjs	0644
 tests/resource-plane-profiles.test.ts	tests/resource-plane-profiles.test.ts	0644
 tests/secure-default-proof.test.mjs	tests/secure-default-proof.test.mjs	0644

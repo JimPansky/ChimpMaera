@@ -441,7 +441,7 @@ function reconstructAction(
         method: "POST",
         path: "/Contact",
         body: {
-          description: "PANSPHAIRA trust-boundary synthetic contact",
+          description: "PanSphaira trust-boundary synthetic contact",
           emailAddress: candidate.arguments.emailAddress as string,
           firstName: candidate.arguments.firstName as string,
           lastName: candidate.arguments.lastName as string,

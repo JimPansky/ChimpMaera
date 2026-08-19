@@ -24,7 +24,7 @@ async function post(config, path, body) {
 
 export default definePluginEntry({
   id: "chimpmaera-skill-lifecycle",
-  name: "PANSPHAIRA AAS-037 Managed Skill Lifecycle",
+  name: "PanSphaira AAS-037 Managed Skill Lifecycle",
   description: "Request admission, then separately activate and read one digest-bound skill.",
   register(api) {
     const config = api.pluginConfig;

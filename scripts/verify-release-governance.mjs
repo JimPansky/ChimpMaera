@@ -143,7 +143,7 @@ export function validateRepository(root = process.cwd()) {
     issue(
       issues,
       /FULL_CONTROL_LAB/.test(text)
-        && /bypass(?:es|ed)?\s+PANSPHAIRA action(?:\s+and\s+|\/)Approval gates/i.test(text)
+        && /bypass(?:es|ed)?\s+PanSphaira action(?:\s+and\s+|\/)Approval gates/i.test(text)
         && /OS\/host\s+ceiling/i.test(text)
         && /SAFE_GUIDED/.test(text),
       `FULL_CONTROL_LAB_BOUNDARY_MISSING:${path}`,

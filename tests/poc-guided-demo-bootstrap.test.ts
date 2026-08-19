@@ -63,7 +63,7 @@ test("POC-GUIDED-E2E all curated defaults plan, install, rerun, health and clean
     const receipt = buildPocGuidedDemoSetupReceiptV1(plan);
     const cleanup = buildPocGuidedDemoCleanupReceiptV1(plan, receipt);
     assert.equal(plan.template.trustTier, "BUILTIN_VERIFIED");
-    assert.equal(plan.template.provenanceLabel, `PANSPHAIRA curated default: ${template.templateId}`);
+    assert.equal(plan.template.provenanceLabel, `PanSphaira curated default: ${template.templateId}`);
     assert.equal(plan.template.informedConfirmationRequired, false);
     assert.equal(plan.performanceContract.noUniversalInteractionTimeGate, true);
     assert.equal(plan.performanceContract.noFixedQuestionMaximum, true);
@@ -78,7 +78,7 @@ test("POC-GUIDED-E2E all curated defaults plan, install, rerun, health and clean
     assert.equal(receipt.performance.downloadBytes, 0);
     assert.equal(receipt.performance.cache, "WARM_NO_REDOWNLOAD");
     assert.equal(receipt.performance.universalReleaseGateApplied, false);
-    assert.match(renderPocGuidedDemoReadyMessageV1(plan, receipt), /^PANSPHAIRA guided demo playground is ready\./);
+    assert.match(renderPocGuidedDemoReadyMessageV1(plan, receipt), /^PanSphaira guided demo playground is ready\./);
     assert.equal(cleanup.removedOnlyOwnedState, true);
   }
 });

@@ -38,4 +38,4 @@ if [ "${1:-}" = --purge ]; then
   find "$state/secrets" -type f -exec shred -u {} + 2>/dev/null || true
   rm -rf -- "$state"
 fi
-printf 'Owned PANSPHAIRA demo resources removed%s.\n' "$([ "${1:-}" = --purge ] && printf ' including state' || true)"
+printf 'Owned PanSphaira demo resources removed%s.\n' "$([ "${1:-}" = --purge ] && printf ' including state' || true)"

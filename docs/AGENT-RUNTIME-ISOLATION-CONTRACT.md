@@ -4,14 +4,14 @@ Status: local architecture revision candidate
 
 Date: 2026-08-01
 
-Normative parent: [The PANSPHAIRA Canon](CANON.md), especially CM-CAN-18
+Normative parent: [The PanSphaira Canon](CANON.md), especially CM-CAN-18
 through CM-CAN-28
 
 ## 1. Product abstraction
 
 The product boundary is the **Agent Runtime Isolation Boundary**, also called
 the **Untrusted Runtime Contract**. It contains Agent-local compute and exposes
-only declared crossings to trusted PANSPHAIRA Gateway/Broker planes. It is
+only declared crossings to trusted PanSphaira Gateway/Broker planes. It is
 independent of Agent brand, model provider, protocol, and isolation mechanism.
 
 In the current architecture vocabulary, the contained Agent/untrusted-runtime
@@ -159,7 +159,7 @@ choice remains inside the Untrusted Runtime Contract.
 
 `FULL_CONTROL_LAB`, `RAMPAGE`, and `RAMPAGE_FULL_CONTROL_LAB` instead name a
 deliberate dangerous lab/escape Profile in the released local setup contract.
-It may bypass PANSPHAIRA action and Approval gates and can exercise only what
+It may bypass PanSphaira action and Approval gates and can exercise only what
 the host process's OS/host ceiling permits. It therefore does not inherit this
 contract's complete-mediation, isolation, stop or security claims for bypassed
 layers. Selection requires exact Owner risk acceptance, an isolated disposable

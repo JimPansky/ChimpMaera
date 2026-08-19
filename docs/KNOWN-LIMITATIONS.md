@@ -1,12 +1,12 @@
 ---
 title: Known limitations
-description: Review the explicit production, security, identity, integration, runtime, and evidence limits of PANSPHAIRA's current local synthetic release.
+description: Review the explicit production, security, identity, integration, runtime, and evidence limits of PanSphaira's current local synthetic release.
 ---
 
 # Known limitations
 
 These limits are part of the claim discipline required by
-[The PANSPHAIRA Canon](CANON.md). They apply to the current regular release
+[The PanSphaira Canon](CANON.md). They apply to the current regular release
 `v0.2.0-poc.20260818.2` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 

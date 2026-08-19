@@ -5,11 +5,11 @@
   "catalogVersion": "1.0.0",
   "provenance": {
     "source": "BUILTIN",
-    "label": "PANSPHAIRA curated local PoC catalog",
+    "label": "PanSphaira curated local PoC catalog",
     "trustTier": "CURATED_VERIFIED",
     "rights": "Apache-2.0",
     "manifestPath": "examples/poc-setup-planner/catalog-v1.json",
-    "digest": "sha256:b623d1fde5306115fdb892e1fe22c443b13d6284647cb92afee5d284f32c488d"
+    "digest": "sha256:a8b4ce0057b1d11ed3b7ca512337f664c6a16ce7d5e655367ba089d3dba4ef3c"
   },
   "capabilityIds": [
     "capability.audit.digest",
@@ -61,7 +61,7 @@
       "networkAccess": [],
       "effects": ["write_owned_playground_state"],
       "provenance": {
-        "label": "PANSPHAIRA local PoC",
+        "label": "PanSphaira local PoC",
         "trustTier": "CURATED_VERIFIED",
         "rights": "Apache-2.0"
       }

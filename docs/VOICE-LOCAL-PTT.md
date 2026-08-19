@@ -2,7 +2,7 @@
 
 Status: **default-off optional local adapter; deterministic synthetic proof only**.
 
-`VOICE_LOCAL_PTT` adds push-to-talk transcription and speech rendering without changing PANSPHAIRA's governed action path. Omitting it, removing its export, or leaving `enabled` unequal to `true` leaves CM fully functional and loads no audio dependency. Voice output is never an Approval, credential, capability, tool call, effect, or authorization. A transcript becomes only an `authority: NONE`, `UNTRUSTED_VOICE_TRANSCRIPT` proposal at `CM_GOVERNED_INPUT`; the existing Gateway/broker still decides what may proceed.
+`VOICE_LOCAL_PTT` adds push-to-talk transcription and speech rendering without changing PanSphaira's governed action path. Omitting it, removing its export, or leaving `enabled` unequal to `true` leaves CM fully functional and loads no audio dependency. Voice output is never an Approval, credential, capability, tool call, effect, or authorization. A transcript becomes only an `authority: NONE`, `UNTRUSTED_VOICE_TRANSCRIPT` proposal at `CM_GOVERNED_INPUT`; the existing Gateway/broker still decides what may proceed.
 
 ## Setup and substitution
 

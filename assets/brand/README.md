@@ -1,6 +1,6 @@
-# PANSPHAIRA brand assets
+# PanSphaira brand assets
 
-These four files are the current PANSPHAIRA product icon variants:
+These four files are the current PanSphaira product icon variants:
 
 - `pansphaira-icon-positive.svg` and `pansphaira-icon-positive.png` for light backgrounds
 - `pansphaira-icon-negative.svg` and `pansphaira-icon-negative.png` for dark backgrounds

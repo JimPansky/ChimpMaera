@@ -1,6 +1,6 @@
 # Governed Knowledge Harvest
 
-PANSPHAIRA makes knowledge portable by declaring facts, authority, transformations, evidence and applicability boundaries—not by copying raw chat logs.
+PanSphaira makes knowledge portable by declaring facts, authority, transformations, evidence and applicability boundaries—not by copying raw chat logs.
 
 The reusable lineage is `input → transformation → decision → output → test/evidence → outcome`.
 

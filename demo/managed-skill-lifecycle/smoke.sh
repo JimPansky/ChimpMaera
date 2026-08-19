@@ -50,7 +50,7 @@ jq -e '.installed and (.active | not) and (.materialized | not) and (.grantedCap
 
 cm_aas037_compose_cmd exec -T openclaw-agent node openclaw.mjs agent \
   --agent main --session-key aas037-e2e \
-  --message 'Request, install, separately activate and use the exact Zoo Greeter skill through PANSPHAIRA. Return both receipts.' \
+  --message 'Request, install, separately activate and use the exact Zoo Greeter skill through PanSphaira. Return both receipts.' \
   --thinking off --timeout 90 --json > "$run_dir/agent-e2e.json"
 jq -e '[.. | strings | select(test("skillGreeting=Hello from the Zoo installReceipt=[a-f0-9]{64} activationReceipt=[a-f0-9]{64} authority=NONE"))] | length > 0' "$run_dir/agent-e2e.json" >/dev/null
 

@@ -1,4 +1,4 @@
-# The PANSPHAIRA Canon
+# The PanSphaira Canon
 
 General governed learning and template promotion follows [Governed Knowledge Harvest](KNOWLEDGE-HARVEST.md). It preserves typed provenance, evidence, applicability boundaries, invalidation, supersession and rollback instead of treating raw conversations as portable knowledge.
 
@@ -12,14 +12,14 @@ individual product surfaces retain their own evidence and maturity boundaries
 repository product and technical documentation. Localized material belongs to
 separate localization workflows and does not control this document.
 
-The Canon defines PANSPHAIRA's durable laws. Deployment recipes, product
+The Canon defines PanSphaira's durable laws. Deployment recipes, product
 profiles, adapters, maturity procedures, and operator choices belong in the
 [Operating Field Guide](OPERATING-FIELD-GUIDE.md). A particular Docker, VM, MicroVM, WASM,
 remote-worker, or OS-sandbox implementation is not a Canon law.
 
 The ability to plan or use a tool does not grant permission to act. Models may
 be wrong, inputs and outputs may be hostile, credentials may be overpowered,
-and outcomes may be ambiguous. PANSPHAIRA therefore treats an Agent as
+and outcomes may be ambiguous. PanSphaira therefore treats an Agent as
 untrusted workload code and mediates meaningful crossings between it and
 models, tools, networks, durable state, secrets, reads, and effects.
 
@@ -70,7 +70,7 @@ knowingly misrepresented or materially concealed.
   ambient host access and is not `FULL_CONTROL_LAB` or `RAMPAGE`.
 - **Dangerous lab / escape Profile:** `FULL_CONTROL_LAB`, `RAMPAGE`, and the
   canonical `RAMPAGE_FULL_CONTROL_LAB` alias name an explicitly risk-accepted
-  profile that may bypass PANSPHAIRA action and Approval gates up to the host
+  profile that may bypass PanSphaira action and Approval gates up to the host
   process's OS/host ceiling. It is outside `SAFE_GUIDED` and outside Canon
   security claims for every bypassed layer.
 - **Meaningful Boundary Crossing:** Any transfer from the Untrusted Runtime to
@@ -144,7 +144,7 @@ not activate a Profile.
 An implementation may separately offer `FULL_CONTROL_LAB` / `RAMPAGE` as a
 deliberate dangerous lab or escape Profile. That choice preserves Owner agency
 but is not the broadest governed Profile: its exact contract may bypass
-PANSPHAIRA action and Approval gates and inherits the host process's OS/host
+PanSphaira action and Approval gates and inherits the host process's OS/host
 ceiling. Selection requires exact risk acceptance, a disposable or otherwise
 explicitly bounded environment, visible reset/rollback and recovery duties,
 and an automatic claim downgrade for every bypassed layer. Restart, revoke or

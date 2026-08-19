@@ -1,15 +1,15 @@
 ---
 title: Default-off local usage insights
-description: Run PANSPHAIRA's consent-based local Usage Insights reference offline, or explicitly share minimal closed-schema signals with a loopback synthetic receiver.
+description: Run PanSphaira's consent-based local Usage Insights reference offline, or explicitly share minimal closed-schema signals with a loopback synthetic receiver.
 ---
 
 # Default-off local usage insights
 
-AWI-INSIGHTS-1 is PANSPHAIRA's repository-local completion reference for Issue
+AWI-INSIGHTS-1 is PanSphaira's repository-local completion reference for Issue
 #57. It combines the hardened in-memory event contract with a bounded local
 store, transparent CLI consent, lifecycle controls, an explicitly enabled
 loopback transport, and a small-cell-safe report. The reference uses only local
-or synthetic data. It does not activate telemetry in a PANSPHAIRA runtime.
+or synthetic data. It does not activate telemetry in a PanSphaira runtime.
 
 Constructing the service or running `consent show`, `status`, `preview`,
 `export`, or `report` does not create a state file or make a network request.

@@ -44,7 +44,7 @@
     {
       "path": "docs/SECURE-DEFAULT-PROOF.md",
       "role": "EVIDENCE",
-      "sha256": "a8b8ab744533e383ca065c9c1ac792e6d25771f2f819dd4620ce6592cc0bd540"
+      "sha256": "aa774bd8e7bd641990f57c62bf952e47dd1c1359cad9f444ccd0daf57f3c0f11"
     },
     {
       "path": "demo/manifests/authority/SAFE_GUIDED-v1.json",
@@ -59,7 +59,7 @@
     {
       "path": "demo/runtime/admin-ai-poc.mjs",
       "role": "IMPLEMENTATION",
-      "sha256": "aea678c5dd3f16dbd94f51ba961dbb5cdd90cdd041b5d9c173a210016d16fc76"
+      "sha256": "a20a80657717216974989224a608ac2153df933ce4105c2d01fe706523011ce4"
     },
     {
       "path": "demo/runtime/approval-workbench.mjs",
@@ -69,12 +69,12 @@
     {
       "path": "demo/runtime/enforcement-gate.mjs",
       "role": "IMPLEMENTATION",
-      "sha256": "4a7cab94bcb1b8a29fb89e84f5d4d4d36495454c2846f0dc576158bc8936fe86"
+      "sha256": "14a2f4f8b47ce045321576f0b485da8e5370910f14949d1b548359066ef1bad5"
     },
     {
       "path": "demo/seed-and-flow.sh",
       "role": "IMPLEMENTATION",
-      "sha256": "b91751dc3d7d16d84943cccb1a0747fa443423416b3e30cd4680df086a2372a7"
+      "sha256": "3a93b1d3c84e09cae8a5ae2f8b66432ac20503df7746f84b1dba0671a7c54d44"
     },
     {
       "path": "demo/openclaw-agent/compose.yaml",
@@ -119,7 +119,7 @@
     {
       "path": "tests/demo-admin-ai-poc.test.mjs",
       "role": "TEST",
-      "sha256": "8e3f5937b0b1a3198a935138b96c5c403239cd9779e6c0bb37a1b5280024fbc1"
+      "sha256": "9c66323902b85d2c3eed9776da1e659a30acaa4058ab9096f35367def2f20059"
     },
     {
       "path": "tests/demo-approval-workbench.test.mjs",
@@ -139,7 +139,7 @@
     {
       "path": "tests/poc-early-admin-ai-setup.test.ts",
       "role": "TEST",
-      "sha256": "d609e4f8db00beae1b7cf260adfe91b553b6683a06aa40380f5f878ab86ab0f6"
+      "sha256": "5651518a8d3931369e02b50f26364518128b6c2973d4771473f7dee109a55cac"
     },
     {
       "path": "demo/openclaw-agent/gateway-state.mjs",
@@ -174,7 +174,7 @@
     {
       "path": "demo/manifests/supply-chain/openclaw-agent-runtime-lock-v1.json",
       "role": "IMPLEMENTATION",
-      "sha256": "fccf3ef5edfa5cd78cd0219cf369129c9626312530799238c37535547a1de37e"
+      "sha256": "d303bfa7662cd0d50d717d03a4cfdfaec856e0a1a140c910e7ce077535d32377"
     },
     {
       "path": "scripts/verify-openclaw-agent-runtime-lock.mjs",
@@ -194,7 +194,7 @@
     {
       "path": "demo/openclaw-agent/gateway.mjs",
       "role": "IMPLEMENTATION",
-      "sha256": "72556009ac5a89a920bb7b7ea65038a148850fefe374e76e981f421d46cea83e"
+      "sha256": "4222f6ff902b5904a3fb2d49af8333ee24de0cae05a6933ec79adcc8388a2ddb"
     },
     {
       "path": "demo/openclaw-agent/gateway.Dockerfile",
@@ -209,17 +209,17 @@
     {
       "path": "demo/openclaw-agent/openclaw.json",
       "role": "IMPLEMENTATION",
-      "sha256": "75a35874df838381cc58e10deaca9cafc578a9655ee6abaa00a380685d270060"
+      "sha256": "181ea0b4546baec63897283876fb448cf5d18dae1a5a6387104ff83a203548d2"
     },
     {
       "path": "demo/openclaw-agent/plugin/index.mjs",
       "role": "IMPLEMENTATION",
-      "sha256": "3ea28256b383307534a766da65b9137c5e3c87c92314baaae998b579109abfe2"
+      "sha256": "f1f677df0cf92503e93fa730abb5bf4eabd6de3a98f72ee8ff5828e791431c74"
     },
     {
       "path": "demo/openclaw-agent/plugin/openclaw.plugin.json",
       "role": "IMPLEMENTATION",
-      "sha256": "9d0ead9eff97e59b26ad9033e22b094f09568a42dbf209c757932e1e953c3d30"
+      "sha256": "71058ca090937f1fb01d5ed2ca5fae6526d031c3d8c1502dac1b0d08c6e0e2a3"
     },
     {
       "path": "demo/openclaw-agent/plugin/package.json",

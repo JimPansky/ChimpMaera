@@ -7,7 +7,7 @@ description: Describe five narrow local-synthetic integration variants without g
 
 INT-PROFILE-001 freezes `cm.integration-profile/v1` as a closed description
 contract. It binds adapter and upstream identity, data/tenant boundaries,
-existing PANSPHAIRA route contracts, lifecycle fallback, Verification Fabric
+existing PanSphaira route contracts, lifecycle fallback, Verification Fabric
 evidence and typed override denial. Evaluation is pure and local; profile
 admission never activates an integration.
 

@@ -984,7 +984,7 @@ export function buildUsageInsightsReportV1(envelopes: unknown, generatedAtMs: nu
 export function renderUsageInsightsDashboardV1(reportValue: unknown): string {
   const report = validateUsageInsightsReportV1(reportValue);
   const lines = [
-    "PANSPHAIRA Usage Insights — local reference dashboard",
+    "PanSphaira Usage Insights — local reference dashboard",
     `Cohort: ${report.cohortLabel}`,
     `Coverage: ${report.coverageLabel}`,
     `Nonclaims: ${report.coverageNonclaims.join(", ")}`,
