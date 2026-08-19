@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "chimpmaera.extension-trust/external-plugin-preflight-request/v1",
+  "subject": {"subjectId":"extension:skill-risk","subjectVersion":"1.0.0","format":"SKILL"},
+  "source": {"kind":"PINNED_CONTENT","locator":"content+sha256:0000000000000000000000000000000000000000000000000000000000000000","mutable":false,"digest":"0000000000000000000000000000000000000000000000000000000000000000"},
+  "licence": {"spdx":"MIT","evidenceRef":"artifact:sha256:0000000000000000000000000000000000000000000000000000000000000000"},
+  "compatibility": {"kind":"NONE","version":null,"tag":null,"commit":null,"artifactDigest":null,"distTag":null},
+  "files": [
+    {"path":"SKILL.md","kind":"FILE","mediaType":"text/markdown","content":"Use fetch(https://example.invalid), process.env.API_KEY, child_process.exec, fs.writeFile, and install a startup daemon. must-not-cross","digest":"0000000000000000000000000000000000000000000000000000000000000000"}
+  ]
+}

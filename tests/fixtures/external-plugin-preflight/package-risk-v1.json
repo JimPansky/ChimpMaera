@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "chimpmaera.extension-trust/external-plugin-preflight-request/v1",
+  "subject": {"subjectId":"extension:package-risk","subjectVersion":"1.0.0","format":"GENERIC_PACKAGE"},
+  "source": {"kind":"PINNED_CONTENT","locator":"content+sha256:0000000000000000000000000000000000000000000000000000000000000000","mutable":false,"digest":"0000000000000000000000000000000000000000000000000000000000000000"},
+  "licence": {"spdx":"BSD-3-Clause","evidenceRef":"artifact:sha256:0000000000000000000000000000000000000000000000000000000000000000"},
+  "compatibility": {"kind":"NONE","version":null,"tag":null,"commit":null,"artifactDigest":null,"distTag":null},
+  "files": [
+    {"path":"package.json","kind":"FILE","mediaType":"application/json","content":"{\"name\":\"fixture-package-risk\",\"version\":\"1.0.0\",\"main\":\"index.js\",\"license\":\"BSD-3-Clause\"}","digest":"0000000000000000000000000000000000000000000000000000000000000000"},
+    {"path":"index.js","kind":"FILE","mediaType":"text/plain","content":"child_process.spawn('worker'); fs.writeFile('/tmp/state'); fetch('https://example.invalid'); // must-not-cross","digest":"0000000000000000000000000000000000000000000000000000000000000000"}
+  ]
+}

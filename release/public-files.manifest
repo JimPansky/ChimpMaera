@@ -170,6 +170,7 @@ docs/DISCOVERABILITY-BASELINE.md	docs/DISCOVERABILITY-BASELINE.md	0644
 docs/ERP-READ-CONNECTOR-GUIDE.md	docs/ERP-READ-CONNECTOR-GUIDE.md	0644
 docs/examples.md	docs/examples.md	0644
 docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
+docs/EXTERNAL-PLUGIN-PREFLIGHT.md	docs/EXTERNAL-PLUGIN-PREFLIGHT.md	0644
 docs/EXTERNAL-BI-SERVICE.md	docs/EXTERNAL-BI-SERVICE.md	0644
 docs/EXTERNAL-VIDEO-SERVICE.md	docs/EXTERNAL-VIDEO-SERVICE.md	0644
 docs/index.md	docs/index.md	0644
@@ -236,6 +237,7 @@ packages/contracts/src/development-worker.ts	packages/contracts/src/development-
 packages/contracts/src/effective-rights.ts	packages/contracts/src/effective-rights.ts	0644
 packages/contracts/src/erp-read-connector.ts	packages/contracts/src/erp-read-connector.ts	0644
 packages/contracts/src/extension-assurance-profile.ts	packages/contracts/src/extension-assurance-profile.ts	0644
+packages/contracts/src/external-plugin-preflight.ts	packages/contracts/src/external-plugin-preflight.ts	0644
 packages/contracts/src/external-bi-service.ts	packages/contracts/src/external-bi-service.ts	0644
 packages/contracts/src/external-video-service.ts	packages/contracts/src/external-video-service.ts	0644
 packages/contracts/src/hmi-contribute-preflight.ts	packages/contracts/src/hmi-contribute-preflight.ts	0644
@@ -303,6 +305,7 @@ schemas/contracts/crm-read-connector-v1.schema.json	schemas/contracts/crm-read-c
 schemas/contracts/doctor-report-v1.schema.json	schemas/contracts/doctor-report-v1.schema.json	0644
 schemas/contracts/erp-read-connector-v1.schema.json	schemas/contracts/erp-read-connector-v1.schema.json	0644
 schemas/contracts/extension-assurance-profile-v1.schema.json	schemas/contracts/extension-assurance-profile-v1.schema.json	0644
+schemas/contracts/external-plugin-preflight-v1.schema.json	schemas/contracts/external-plugin-preflight-v1.schema.json	0644
 schemas/contracts/hmi-contribute-preflight-v1.schema.json	schemas/contracts/hmi-contribute-preflight-v1.schema.json	0644
 schemas/contracts/hmi-discover-payload-v1.schema.json	schemas/contracts/hmi-discover-payload-v1.schema.json	0644
 schemas/contracts/hmi-explain-payload-v1.schema.json	schemas/contracts/hmi-explain-payload-v1.schema.json	0644
@@ -407,6 +410,7 @@ tests/docs-site.test.mjs	tests/docs-site.test.mjs	0644
 tests/effective-rights.test.ts	tests/effective-rights.test.ts	0644
 tests/erp-read-connector.test.ts	tests/erp-read-connector.test.ts	0644
 tests/extension-assurance-profile.test.ts	tests/extension-assurance-profile.test.ts	0644
+tests/external-plugin-preflight.test.ts	tests/external-plugin-preflight.test.ts	0644
 tests/external-bi-service.test.ts	tests/external-bi-service.test.ts	0644
 tests/external-video-service.test.ts	tests/external-video-service.test.ts	0644
 tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json	0644
@@ -425,6 +429,10 @@ tests/fixtures/erp-read/contract-v1.json	tests/fixtures/erp-read/contract-v1.jso
 tests/fixtures/erp-read/supported-export-v1.json	tests/fixtures/erp-read/supported-export-v1.json	0644
 tests/fixtures/extension-assurance/negative-matrix-v1.json	tests/fixtures/extension-assurance/negative-matrix-v1.json	0644
 tests/fixtures/extension-assurance/positive-profile-v1.json	tests/fixtures/extension-assurance/positive-profile-v1.json	0644
+tests/fixtures/external-plugin-preflight/dsh-benign-v1.json	tests/fixtures/external-plugin-preflight/dsh-benign-v1.json	0644
+tests/fixtures/external-plugin-preflight/mcp-risk-v1.json	tests/fixtures/external-plugin-preflight/mcp-risk-v1.json	0644
+tests/fixtures/external-plugin-preflight/package-risk-v1.json	tests/fixtures/external-plugin-preflight/package-risk-v1.json	0644
+tests/fixtures/external-plugin-preflight/skill-risk-v1.json	tests/fixtures/external-plugin-preflight/skill-risk-v1.json	0644
 tests/fixtures/external-bi-service-v2-clean-room.json	tests/fixtures/external-bi-service-v2-clean-room.json	0644
 tests/fixtures/hmi/adapter-golden-v1.json	tests/fixtures/hmi/adapter-golden-v1.json	0644
 tests/fixtures/hmi/negative-matrix-v1.json	tests/fixtures/hmi/negative-matrix-v1.json	0644

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 10,
+  "graphVersion": 11,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "f87e3963df535a21f47b60168beebb904aac77ac52f548edd306f2dea27215bf"
+          "sha256": "46c6291eb5089ba4789fdf8f0f6eb8c38f727e2d7f9c4c898a0174e9d591011d"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -242,7 +242,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "aee8467acd1c67c7edf338752690677b46b6c34896ca4a2a4f78119495613e98"
+          "sha256": "819c8cc2a58c503b95169700ffdfb7af2d75854b3b9254058fa5df435d232d55"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -271,7 +271,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "5011f435b8f5b7a145bbfe74b52336208e5a03544ecc2edb6430850ae340b996"
+          "sha256": "4757b28594ceddb9aa61cb477720496ce8a0d2ca2e68b4f1e66788a61e4db9e6"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -461,7 +461,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "0d60aa525a714ac96dfdac9c71519ba4e76274f2e4cfa3078704626f3d2fb166"
+          "sha256": "5ca05d976439086d89dfac8aedc6079600b4dde83c100fadd3f360bf57e5407b"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "e15ed491b81029bb684e41b8653e24ccc0cd3595c1902bdc272352f84a11dc87"
+          "sha256": "2ce9810c37dc900d04b42831f175601b0b455aa40e7790eebcd911cbc1256db7"
         },
         {
           "path": "package-lock.json",
@@ -881,7 +881,7 @@
         {
           "path": "tools/video-production-reference/SHA256SUMS",
           "role": "CONTRACT",
-          "sha256": "11a85aa969a70f61c8f9d66b72fb5e8a0b65b83896e4817d67ce3ab5805fced7"
+          "sha256": "8f09ab8975bb2dce9aaf434149f9b6db03396caf58a4966df02809a91602af84"
         },
         {
           "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
@@ -1056,7 +1056,7 @@
         {
           "path": "tools/video-production-reference/tests/slice.test.mjs",
           "role": "SECURITY",
-          "sha256": "43d67761493ed7d33e37f1607f0d285e5cc13bc29c6b3ad6a6940a08f1ada34d"
+          "sha256": "d1b67ffa8f2c0fdd0d4da8268012b4e3581eca91c8acb50c3a1d392e5e2c694d"
         }
       ],
       "ownedTests": [
@@ -1146,6 +1146,64 @@
         "Managed local/shared data supports preview, export, immediate revocation and fail-closed batch deletion; diagnostics consent is time-limited.",
         "Reports cover install-to-first-success, retention, errors, denials, rollbacks and version fragmentation while fixed cohort/coverage nonclaims and all-or-nothing threshold-five suppression prevent small-cell disclosure.",
         "The completion reference proves only offline and explicitly opted-in synthetic loopback operation; no production activation, real-user evidence, representative adoption or privacy certification is claimed."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
+      "id": "etl-02-external-plugin-preflight-v1",
+      "dependsOn": [
+        "vf-contract-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/external-plugin-preflight.ts",
+          "role": "SECURITY",
+          "sha256": "fe637bed21ee249f3fccfd8e1141b8326d6f084a290ee6ad00ac52a8884303ca"
+        },
+        {
+          "path": "schemas/contracts/external-plugin-preflight-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "0af36cda6cdd788754b1b72e65013b9590619dbe77ac48b2bcd82dec69549a87"
+        },
+        {
+          "path": "tests/external-plugin-preflight.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "177a4f06add8a2b2e067aa30f11c153d67fd9d1c281b6574ff1cc30416384502"
+        },
+        {
+          "path": "tests/fixtures/external-plugin-preflight/dsh-benign-v1.json",
+          "role": "FIXTURE",
+          "sha256": "ed81b7605c58504539c3efff1c9efd08acbeae81614911083812371865dc3a1d"
+        },
+        {
+          "path": "tests/fixtures/external-plugin-preflight/mcp-risk-v1.json",
+          "role": "FIXTURE",
+          "sha256": "fe6e0892fb30fc35bca4493ea8c7ef8305691d7701a5111f3604cca5f5a1e0c5"
+        },
+        {
+          "path": "tests/fixtures/external-plugin-preflight/package-risk-v1.json",
+          "role": "FIXTURE",
+          "sha256": "98d2d8124d671ba042b87d71dba90c5f5f540f6732298d709fbb950a2d7d1dde"
+        },
+        {
+          "path": "tests/fixtures/external-plugin-preflight/skill-risk-v1.json",
+          "role": "FIXTURE",
+          "sha256": "62e18585ecdc9cca0957a5b83908581fe212aa1fa3ab3006a7aea59ff00e6f9f"
+        },
+        {
+          "path": "docs/EXTERNAL-PLUGIN-PREFLIGHT.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "f9bf95fca23d503b5c030fad3d4775dc0d539ae3f3bd7b35bd075edffd6b3a89"
+        }
+      ],
+      "ownedTests": [
+        "npm run external-plugin-preflight:test"
+      ],
+      "invariants": [
+        "Preflight consumes caller-supplied immutable bytes without filesystem, network, process or foreign-harness execution authority.",
+        "Unknown versions, mutable dependencies, path ambiguity, digest mismatch and execution-bearing package metadata fail closed with fixed reason codes.",
+        "A static-clear result is evidence only and never grants profile conformance, admission, installation, activation or execution authority."
       ],
       "riskClass": "CRITICAL",
       "globalInvalidation": false
