@@ -33,6 +33,38 @@ function scanUnsafe(text, path) {
   return patterns.filter(([, regex]) => regex.test(text)).map(([name]) => `LEAK_${name}:${path}`);
 }
 
+function usableImageAlt(value) {
+  const normalized = value
+    .replace(/&(?:nbsp|#160);/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return normalized.length >= 5
+    && /[\p{L}\p{N}]/u.test(normalized)
+    && !/^(?:alt(?: text)?|diagram|graphic|icon|image|img|logo|none|null|n\/?a|photo|picture|placeholder|screenshot|tbd|todo)[.!]?$/i.test(normalized);
+}
+
+function publicDocumentationPresentationIssues(text, path) {
+  if (!/\.(?:html?|markdown|md)$/i.test(path)) return [];
+  const issues = [];
+  const visible = text
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<details(?:\s[^>]*)?>[\s\S]*?<\/details\s*>/gi, "");
+  if (/^\s*(?:[-*>]\s*)?(?:\*\*|__)?(?:text\s+fallback|fallback\s+text|placeholder(?:\s+text)?)(?:\*\*|__)?\s*:/im.test(visible)) {
+    issues.push(`PUBLIC_DOC_UNENCAPSULATED_FALLBACK_LABEL:${path}`);
+  }
+
+  for (const match of text.matchAll(/<img\b[^>]*>/gi)) {
+    const alt = match[0].match(/\balt\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/i);
+    if (!alt || !usableImageAlt(alt[1] ?? alt[2] ?? alt[3] ?? "")) {
+      issues.push(`PUBLIC_DOC_IMAGE_ALT_UNUSABLE:${path}`);
+    }
+  }
+  for (const match of text.matchAll(/!\[([^\]\n]*)\](?:\([^\n)]*\)|\[[^\]\n]*\])/g)) {
+    if (!usableImageAlt(match[1])) issues.push(`PUBLIC_DOC_IMAGE_ALT_UNUSABLE:${path}`);
+  }
+  return [...new Set(issues)];
+}
+
 export function validateRepository(root = process.cwd()) {
   const issues = [];
   let governance;
@@ -59,6 +91,12 @@ export function validateRepository(root = process.cwd()) {
   const files = new Map();
   for (const path of governance.activePublicFiles ?? []) {
     try { files.set(path, read(root, path)); } catch { issues.push(`ACTIVE_PUBLIC_FILE_MISSING:${path}`); }
+  }
+  const historicalArchivePrefixes = governance.historicalArchivePrefixes ?? [];
+  for (const [path, text] of files) {
+    if (!historicalArchivePrefixes.some((prefix) => path.startsWith(prefix))) {
+      issues.push(...publicDocumentationPresentationIssues(text, path));
+    }
   }
   const readme = files.get("README.md") ?? "";
   const releaseSection = section(readme, "Releases");
@@ -222,7 +260,7 @@ export function validateRepository(root = process.cwd()) {
   issue(issues, /functional product increment/i.test(contributing) && /anonymous public\s+readback/i.test(contributing), "CONTRIBUTING_RELEASE_RULE_MISSING");
   issue(issues, /editorial Daily/i.test(contributing) && /does not gate/i.test(contributing), "EDITORIAL_RELEASE_SEPARATION_MISSING");
   const releaseDocs = files.get("docs/RELEASE-GOVERNANCE.md") ?? "";
-  for (const heading of ["Product increments, not calendar identity", "Release-state policy", "Required publication evidence", "Claim/evidence boundary", "Active videos and historical evidence"]) {
+  for (const heading of ["Product increments, not calendar identity", "Release-state policy", "Required publication evidence", "Public README and documentation presentation", "Claim/evidence boundary", "Active videos and historical evidence"]) {
     issue(issues, releaseDocs.includes(`## ${heading}`), `GOVERNANCE_SECTION_MISSING:${heading}`);
   }
 

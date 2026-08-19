@@ -466,7 +466,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "92b370c40d1a922c7ba09ca0edfb949b483f9dae97e04e13cbe594ca0c753d1f"
+          "sha256": "2f21c7304622450ba6819ac3fec1a0bf41b65244c4086cb42e1507b8a305c1ad"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
