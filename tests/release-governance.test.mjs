@@ -82,6 +82,9 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(readme, /srcset="assets\/brand\/pansphaira-icon-negative\.svg"/);
   assert.match(readme, /srcset="assets\/brand\/pansphaira-icon-positive\.svg"/);
   assert.match(readme, /alt="PanSphaira geometric icon of seven connected circles"/);
+  assert.match(readme, /alt="PanSphaira governed Agent Sphere and Gateway Sphere architecture"/);
+  assert.match(readme, /<details>\s*<summary>Accessible architecture description<\/summary>/);
+  assert.doesNotMatch(readme, /^\s*Text fallback:/im);
   assert.doesNotMatch(readme, /assets\/brand\/chimpmaera-(?:master|negative)\.(?:png|svg)/);
   assert.doesNotMatch(readme, /(?:youtu\.be\/|youtube\.com\/)/);
   assert.match(readme, /\*\*Status:\*\* \[current regular release\]\(https:\/\/github\.com\/JoFe2\/PANSPHAIRA\/releases\/latest\)/);
@@ -139,8 +142,30 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.doesNotMatch(manifest, /^docs\/ZOO-FIELD-GUIDE\.md\t/m);
 });
 
+test("public documentation presentation gate accepts encapsulated or linked accessibility text", () => {
+  const root = fixture();
+  append(root, "README.md", [
+    "<details>",
+    "<summary>Accessible fixture description</summary>",
+    "",
+    "Text fallback: A governed proposal crosses a mediated boundary.",
+    "",
+    "</details>",
+    "",
+    "Extended accessibility context is available in [the architecture documentation](docs/ARCHITECTURE.md).",
+  ].join("\n"));
+  assert.deepEqual(
+    validateRepository(root).filter((value) => value.startsWith("PUBLIC_DOC_")),
+    [],
+  );
+});
+
 test("release governance negative probes fail closed", async (t) => {
   const probes = [
+    ["visible README text fallback", "PUBLIC_DOC_UNENCAPSULATED_FALLBACK_LABEL:README.md", (root) => append(root, "README.md", "Text fallback: technical architecture copy")],
+    ["visible public-doc placeholder", "PUBLIC_DOC_UNENCAPSULATED_FALLBACK_LABEL:docs/index.md", (root) => append(root, "docs/index.md", "Placeholder: replace this architecture explanation")],
+    ["empty HTML image alt", "PUBLIC_DOC_IMAGE_ALT_UNUSABLE:README.md", (root) => replace(root, "README.md", "alt=\"PanSphaira governed Agent Sphere and Gateway Sphere architecture\"", "alt=\"\"")],
+    ["empty Markdown image alt", "PUBLIC_DOC_IMAGE_ALT_UNUSABLE:README.md", (root) => append(root, "README.md", "![](assets/diagrams/caged-agent-gateway-constellation.svg)")],
     ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JoFe2/PANSPHAIRA/releases/latest)", "[Version-bound release](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.1.0)")],
     ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages own included capabilities", "Today's Daily snapshot owns included capabilities")],
     ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "broader direction is not a claim of current", "broader direction is current")],

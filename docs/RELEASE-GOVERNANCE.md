@@ -64,6 +64,24 @@ state, public docs, release metadata and every asset byte. Editing title/body
 does not authorize changing a tag, target or asset. Any mismatch blocks the
 public claim and requires correction or rollback.
 
+## Public README and documentation presentation
+
+Every pull request and release candidate must inspect the root README on both
+mobile and desktop rendering, not only as Markdown source. Accessibility is
+part of the release surface: meaningful images require non-empty, descriptive
+alt text, while an extended text alternative may live in a compact
+`<details>` disclosure or in clearly linked architecture documentation.
+
+The release-governance verifier applies this rule to the paths declared in
+`activePublicFiles`. Unencapsulated technical labels such as `Text fallback:`
+or placeholder labels fail closed because they turn implementation scaffolding
+into primary public copy. Empty or generic Markdown/HTML image alt text also
+fails closed. Declared historical archive prefixes remain immutable evidence
+and are not retroactively rewritten by this presentation gate. The check does
+not claim exhaustive assistive-technology certification; it preserves useful
+alternatives while keeping the active README and documentation
+orientation-focused.
+
 ## Claim/evidence boundary
 
 The canonical mappings live in `release/governance.json`. Every claim needs a
