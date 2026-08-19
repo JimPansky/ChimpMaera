@@ -7,10 +7,11 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260819.3`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.3),
-the **Execution-Free External Plugin Preflight** increment. It delivers a
-deterministic static evidence boundary for content-addressed DSH bundle/profile,
-skill, MCP-server and generic-package inputs without executing subject code.
+[`v0.2.0-poc.20260819.4`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.4),
+the **README Accessibility Presentation Gate** increment. It preserves useful
+architecture alternatives while failing closed on visible technical
+fallback/placeholder labels and unusable image alt text in declared active
+public documentation.
 `v0.1.0` is historical. Release state is governed by
 [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred from a local
 branch, a tag alone, a date or an editorial update. Documentation on `main` may
@@ -20,10 +21,10 @@ The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment adds static evidence only. Dynamic, adversarial, egress,
-process, residue and rollback gates remain `NOT_RUN`; a `STATIC_CLEAR` result
-does not grant compatibility, admission, installation, activation,
-certification, trust or production safety. Its included Usage Insights reference
+The Latest increment changes public documentation and its release gate only. It
+does not establish exhaustive assistive-technology compatibility, accessibility
+certification or universal Markdown linting, and it changes no runtime
+authority, effect or security boundary. Its included Usage Insights reference
 remains local/synthetic and default-network-off. Optional sharing requires
 explicit consent and an exact IP-literal loopback endpoint. No production
 collector or activation, real-user evidence, representative adoption, privacy

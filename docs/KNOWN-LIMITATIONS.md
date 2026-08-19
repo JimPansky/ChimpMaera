@@ -7,13 +7,13 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The PanSphaira Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260819.3` and its scoped evidence; a later documentation
+`v0.2.0-poc.20260819.4` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 
-- The current increment performs static analysis over caller-supplied bytes
-  only. It does not execute, contain, install or activate a subject; verify a
-  publisher/signature; establish malware freedom, compatibility, CVE/SBOM or
-  licence clearance; or turn `NOT_RUN` dynamic gates into evidence.
+- The current increment validates a bounded active-public-document presentation
+  policy. It does not establish exhaustive screen-reader or assistive-technology
+  compatibility, accessibility certification, universal Markdown linting, or
+  historical-archive conformance.
 - The current increment changes human-facing display spelling only. Repository
   slugs, stable filenames, schemas, APIs, protocols, packages, services and
   runtime identifiers retain their existing technical identities.
