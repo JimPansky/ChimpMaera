@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "chimpmaera.knowledge/plugin-harvest-request/v1",
+  "taxonomy": {
+    "schemaVersion": "chimpmaera.knowledge/taxonomy/v1",
+    "taxonomyId": "cm-taxonomy:universal",
+    "generation": 2,
+    "priorGeneration": 1,
+    "kinds": ["CLAIM", "OBSERVATION", "PROCEDURE", "DEFINITION", "RELATIONSHIP", "UNRESOLVED", "HORTICULTURE_NOTE"],
+    "migrations": [],
+    "compatibility": "STRICT_ADDITIVE_OR_EXPLICIT_RENAME",
+    "taxonomyDigest": "b517aedc9b41c2c56b903f4a8bbcb092cb48254602f54900515db1417945405c"
+  },
+  "scope": { "namespace": "plugin-ecosystem:synthetic-fixture", "audience": "PUBLIC_SYNTHETIC" },
+  "source": {
+    "sourceId": "source:etl02-synthetic-report",
+    "kind": "ETL02_PREFLIGHT",
+    "locator": "content+sha256:0c657c4a37f65b9eed43510cdbc2c1d57a0802eada28655effde9efeb22e110c",
+    "snapshotDigest": "0c657c4a37f65b9eed43510cdbc2c1d57a0802eada28655effde9efeb22e110c",
+    "citation": "Synthetic ETL-02 static preflight report fixture",
+    "selector": "reasonCodes[INSTALL_HOOK_DENIED]",
+    "observedAtMs": 1787151600000,
+    "reviewedAtMs": 1787155200000,
+    "expiresAtMs": 1789747200000,
+    "licence": "CC0-1.0",
+    "permittedUses": ["EXPLORATORY_READ", "KNOWLEDGE_GENERATION_CANDIDATE"]
+  },
+  "records": [
+    {
+      "envelopeId": "knowledge:synthetic-install-hook-finding",
+      "kind": "OBSERVATION",
+      "evidencePolarity": "NEGATIVE",
+      "statement": "The pinned synthetic ETL-02 report contains the fixed reason code INSTALL_HOOK_DENIED.",
+      "epistemicStatus": "VERIFIED",
+      "trust": "HIGH",
+      "sensitivity": "PUBLIC",
+      "conflictsWith": [],
+      "derivedFrom": []
+    }
+  ]
+}

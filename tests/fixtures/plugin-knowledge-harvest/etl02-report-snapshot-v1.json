@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "chimpmaera.extension-trust/external-plugin-preflight-report/v1",
+  "requestDigest": "fb569bee192cf39b407d51b76850fdd2c42eac19917c802f7e3f996e113ee2f2",
+  "subjectDigest": "6b35eb88b9f7c2518629f42ff5b3c57f2e287056f0c49cbdb9047980195087f9",
+  "format": "GENERIC_PACKAGE",
+  "verdict": "DENY",
+  "reasonCodes": ["INSTALL_HOOK_DENIED"],
+  "evidenceRefs": [
+    "artifact:sha256:6b35eb88b9f7c2518629f42ff5b3c57f2e287056f0c49cbdb9047980195087f9",
+    "artifact:sha256:fb569bee192cf39b407d51b76850fdd2c42eac19917c802f7e3f996e113ee2f2"
+  ],
+  "dynamicGates": [
+    { "gateId": "DYNAMIC_EXECUTION", "outcome": "NOT_RUN", "reason": "EXECUTION_PROHIBITED_IN_STATIC_PREFLIGHT" },
+    { "gateId": "ADVERSARIAL_CONTAINMENT", "outcome": "NOT_RUN", "reason": "EXECUTION_PROHIBITED_IN_STATIC_PREFLIGHT" },
+    { "gateId": "NETWORK_EGRESS_OBSERVATION", "outcome": "NOT_RUN", "reason": "EXECUTION_PROHIBITED_IN_STATIC_PREFLIGHT" },
+    { "gateId": "PROCESS_EFFECT_OBSERVATION", "outcome": "NOT_RUN", "reason": "EXECUTION_PROHIBITED_IN_STATIC_PREFLIGHT" },
+    { "gateId": "FILESYSTEM_RESIDUE_OBSERVATION", "outcome": "NOT_RUN", "reason": "EXECUTION_PROHIBITED_IN_STATIC_PREFLIGHT" },
+    { "gateId": "UNLOAD_ROLLBACK_OBSERVATION", "outcome": "NOT_RUN", "reason": "EXECUTION_PROHIBITED_IN_STATIC_PREFLIGHT" }
+  ],
+  "etlEligibility": "STATIC_ONLY_NOT_PROFILE_CONFORMANT",
+  "claimBoundary": "STATIC_EXECUTION_FREE_EVIDENCE_ONLY_NO_PROFILE_CONFORMANCE_NO_ADMISSION_NO_INSTALL_NO_ACTIVATION"
+}

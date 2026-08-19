@@ -37,7 +37,7 @@ export interface KnowledgeEnvelopeV1 {
   readonly statement: string;
   readonly attribution: readonly {
     readonly sourceId: string; readonly citation: string; readonly sourceDigest: string;
-    readonly observedAtMs: number; readonly licence: "CC0-1.0" | "CC-BY-4.0" | "APACHE-2.0" | "OWNER_AUTHORIZED";
+    readonly observedAtMs: number; readonly licence: "CC0-1.0" | "CC-BY-4.0" | "APACHE-2.0" | "MIT" | "OWNER_AUTHORIZED";
   }[];
   readonly epistemicStatus: EpistemicStatusV1;
   readonly trust: "LOW" | "MEDIUM" | "HIGH";
@@ -138,7 +138,7 @@ export function validateKnowledgeEnvelopeV1(value: unknown, taxonomy: KnowledgeT
     || !digest(value.envelopeDigest)) return ["SCHEMA_DENIED"];
   if (value.taxonomy.taxonomyId !== taxonomy.taxonomyId || value.taxonomy.generation !== taxonomy.generation || value.taxonomy.taxonomyDigest !== taxonomy.taxonomyDigest) return ["TAXONOMY_MISMATCH_DENIED"];
   if (!taxonomy.kinds.includes(value.kind as string)) return ["KIND_UNSUPPORTED"];
-  if (!Array.isArray(value.attribution) || value.attribution.length < 1 || value.attribution.length > 16 || !value.attribution.every((source) => exact(source, ["sourceId", "citation", "sourceDigest", "observedAtMs", "licence"]) && id(source.sourceId) && text(source.citation, 512) && digest(source.sourceDigest) && timestamp(source.observedAtMs) && ["CC0-1.0", "CC-BY-4.0", "APACHE-2.0", "OWNER_AUTHORIZED"].includes(source.licence as string))) return ["MISSING_EVIDENCE_DENIED"];
+  if (!Array.isArray(value.attribution) || value.attribution.length < 1 || value.attribution.length > 16 || !value.attribution.every((source) => exact(source, ["sourceId", "citation", "sourceDigest", "observedAtMs", "licence"]) && id(source.sourceId) && text(source.citation, 512) && digest(source.sourceDigest) && timestamp(source.observedAtMs) && ["CC0-1.0", "CC-BY-4.0", "APACHE-2.0", "MIT", "OWNER_AUTHORIZED"].includes(source.licence as string))) return ["MISSING_EVIDENCE_DENIED"];
   if (value.conflictsWith.includes(value.envelopeId as string) || value.derivedFrom.includes(value.envelopeId as string)) return ["CIRCULAR_DERIVATION_DENIED"];
   if (value.generationCandidate === "ACCEPTED" && !value.permittedUses.includes("KNOWLEDGE_GENERATION_CANDIDATE")) return ["USE_DENIED"];
   if (knowledgeEnvelopeDigestV1(value) !== value.envelopeDigest) return ["DIGEST_TAMPERED_DENIED"];

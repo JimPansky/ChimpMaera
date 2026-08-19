@@ -1,0 +1,10 @@
+{
+  "sourceRepository": "deepseek-ai/deepseek-harness",
+  "commit": "141eb6fef83422698aef7a981029e843e8161534",
+  "tag": "dsh-v0.1.0-rc.8",
+  "licence": "MIT",
+  "licencePath": "LICENSE",
+  "path": "packages/mcp/mcp-client/README.md",
+  "selector": "L111-L117",
+  "exactExtract": "Tools are the only bridged MCP capability \u2014 Resources and Prompts have no harness consumer and are deferred."
+}

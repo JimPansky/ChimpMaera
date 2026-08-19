@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "cm.fixture/plugin-metadata-snapshot/v1",
+  "pluginId": "plugin:synthetic-community-example",
+  "licence": "CC0-1.0",
+  "claims": [
+    {
+      "selector": "claims[0]",
+      "text": "Community popularity establishes that this synthetic plugin is secure.",
+      "status": "UNVERIFIED_COMMUNITY_CLAIM"
+    },
+    {
+      "selector": "claims[1]",
+      "text": "This snapshot contains no official review, endorsement, compatibility, or security evidence.",
+      "status": "NEGATIVE_EVIDENCE"
+    }
+  ],
+  "procedures": [
+    {
+      "selector": "procedures[0]",
+      "text": "Review exact immutable source and install hooks before separately authorized runtime evaluation.",
+      "status": "SYNTHETIC_PROCEDURE"
+    }
+  ]
+}

@@ -184,6 +184,7 @@ docs/LEARNING-ROUTING-CONTRACTS.md	docs/LEARNING-ROUTING-CONTRACTS.md	0644
 docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	0644
 docs/OPERATING-FIELD-GUIDE.md	docs/OPERATING-FIELD-GUIDE.md	0644
 docs/OPERATION-EVENT-QUALITY-CONTRACT.md	docs/OPERATION-EVENT-QUALITY-CONTRACT.md	0644
+docs/PLUGIN-KNOWLEDGE-HARVEST.md	docs/PLUGIN-KNOWLEDGE-HARVEST.md	0644
 docs/PANSPHAIRA-TERMINOLOGY.md	docs/PANSPHAIRA-TERMINOLOGY.md	0644
 docs/PUBLIC-PRODUCT-SPELLING-AUDIT.md	docs/PUBLIC-PRODUCT-SPELLING-AUDIT.md	0644
 docs/public/robots.txt	docs/public/robots.txt	0644
@@ -251,6 +252,7 @@ packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/inject
 packages/contracts/src/integration-profile.ts	packages/contracts/src/integration-profile.ts	0644
 packages/contracts/src/issue-candidate.ts	packages/contracts/src/issue-candidate.ts	0644
 packages/contracts/src/knowledge-envelope.ts	packages/contracts/src/knowledge-envelope.ts	0644
+packages/contracts/src/plugin-knowledge-harvest.ts	packages/contracts/src/plugin-knowledge-harvest.ts	0644
 packages/contracts/src/knowledge-quality.ts	packages/contracts/src/knowledge-quality.ts	0644
 packages/contracts/src/learning-routing-baseline.ts	packages/contracts/src/learning-routing-baseline.ts	0644
 packages/contracts/src/learning-routing-outcome.ts	packages/contracts/src/learning-routing-outcome.ts	0644
@@ -447,6 +449,12 @@ tests/fixtures/issue-candidate/quarantine-v1.json	tests/fixtures/issue-candidate
 tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json	tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json	0644
 tests/fixtures/knowledge-envelope/apple-claims-v1.json	tests/fixtures/knowledge-envelope/apple-claims-v1.json	0644
 tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	0644
+tests/fixtures/plugin-knowledge-harvest/etl02-negative-v1.json	tests/fixtures/plugin-knowledge-harvest/etl02-negative-v1.json	0644
+tests/fixtures/plugin-knowledge-harvest/etl02-report-snapshot-v1.json	tests/fixtures/plugin-knowledge-harvest/etl02-report-snapshot-v1.json	0644
+tests/fixtures/plugin-knowledge-harvest/official-primary-snapshot-v1.json	tests/fixtures/plugin-knowledge-harvest/official-primary-snapshot-v1.json	0644
+tests/fixtures/plugin-knowledge-harvest/official-primary-v1.json	tests/fixtures/plugin-knowledge-harvest/official-primary-v1.json	0644
+tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-snapshot-v1.json	tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-snapshot-v1.json	0644
+tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-v1.json	tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-v1.json	0644
 tests/fixtures/knowledge-quality/purchasing-v1.json	tests/fixtures/knowledge-quality/purchasing-v1.json	0644
 tests/fixtures/learning-routing/baseline-golden-v1.json	tests/fixtures/learning-routing/baseline-golden-v1.json	0644
 tests/fixtures/learning-routing/historical-episodes-august-v1.json	tests/fixtures/learning-routing/historical-episodes-august-v1.json	0644
@@ -481,6 +489,7 @@ tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	06
 tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
 tests/issue-candidate.test.ts	tests/issue-candidate.test.ts	0644
 tests/knowledge-envelope.test.ts	tests/knowledge-envelope.test.ts	0644
+tests/plugin-knowledge-harvest.test.ts	tests/plugin-knowledge-harvest.test.ts	0644
 tests/knowledge-quality-api.test.mjs	tests/knowledge-quality-api.test.mjs	0644
 tests/knowledge-quality.test.ts	tests/knowledge-quality.test.ts	0644
 tests/learning-routing-baseline.test.ts	tests/learning-routing-baseline.test.ts	0644
