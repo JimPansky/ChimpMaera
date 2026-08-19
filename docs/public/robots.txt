@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jimpansky.github.io/PANSPHAIRA/sitemap.xml
+Sitemap: https://jofe2.github.io/PANSPHAIRA/sitemap.xml

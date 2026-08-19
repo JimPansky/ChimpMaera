@@ -58,8 +58,8 @@ test("Verification Fabric release truth delegates volatile Shadow progress to it
 test("root security and support documents remain version-agnostic", () => {
   const security = readFileSync(join(ROOT, "SECURITY.md"), "utf8");
   const support = readFileSync(join(ROOT, "SUPPORT.md"), "utf8");
-  assert.match(security, /\]\(https:\/\/github\.com\/JimPansky\/PANSPHAIRA\/releases\/latest\)/);
-  assert.match(security, /\]\(https:\/\/github\.com\/JimPansky\/PANSPHAIRA\/releases\)/);
+  assert.match(security, /\]\(https:\/\/github\.com\/JoFe2\/PANSPHAIRA\/releases\/latest\)/);
+  assert.match(security, /\]\(https:\/\/github\.com\/JoFe2\/PANSPHAIRA\/releases\)/);
   assert.doesNotMatch(`${security}\n${support}`, /\b(?:v(?:ersion)?\s*)?\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z.-]+)?\b/i);
   assert.match(support, /without warranty, service-level objective or\s+production-support commitment/i);
 });
@@ -84,7 +84,7 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(readme, /alt="PanSphaira geometric icon of seven connected circles"/);
   assert.doesNotMatch(readme, /assets\/brand\/chimpmaera-(?:master|negative)\.(?:png|svg)/);
   assert.doesNotMatch(readme, /(?:youtu\.be\/|youtube\.com\/)/);
-  assert.match(readme, /\*\*Status:\*\* \[current regular release\]\(https:\/\/github\.com\/JimPansky\/PANSPHAIRA\/releases\/latest\)/);
+  assert.match(readme, /\*\*Status:\*\* \[current regular release\]\(https:\/\/github\.com\/JoFe2\/PANSPHAIRA\/releases\/latest\)/);
   assert.match(readme, /proof of concept · Linux x86_64 · \[Apache-2\.0\]\(LICENSE\)/);
   assert.ok(readme.indexOf("## How it works") < readme.indexOf("## Adaptive Knowledge Engineering"));
   assert.ok(readme.indexOf("## Adaptive Knowledge Engineering") < readme.indexOf("## Proof today"));
@@ -141,11 +141,11 @@ test("README presents governed adaptability and evidence-driven improvement with
 
 test("release governance negative probes fail closed", async (t) => {
   const probes = [
-    ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)", "[Version-bound release](https://github.com/JimPansky/PANSPHAIRA/releases/tag/v0.1.0)")],
+    ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JoFe2/PANSPHAIRA/releases/latest)", "[Version-bound release](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.1.0)")],
     ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages own included capabilities", "Today's Daily snapshot owns included capabilities")],
     ["Knowledge OS promoted as current maturity", "README_POC_POSITIONING_MISSING", (root) => replace(root, "README.md", "broader direction is not a claim of current", "broader direction is current")],
     ["root Security static Latest claim", "ROOT_SECURITY_VERSION_BINDING_DENIED", (root) => append(root, "SECURITY.md", "The latest tagged release is v9.9.9.")],
-    ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JimPansky/PANSPHAIRA/releases/latest", "https://github.com/JimPansky/PANSPHAIRA/releases/tag/v9.9.9")],
+    ["root Security version-bound release link", "ROOT_SECURITY_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "SECURITY.md", "https://github.com/JoFe2/PANSPHAIRA/releases/latest", "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v9.9.9")],
     ["root Support product-version binding", "ROOT_SUPPORT_VERSION_BINDING_DENIED", (root) => replace(root, "SUPPORT.md", "PanSphaira is provided", "PanSphaira v9.9 is provided")],
     ["stale Security claim", "SECURITY_STALE_RELEASE_CLAIM_DENIED", (root) => replace(root, "docs/SECURITY-ASSURANCE.md", "## Claim maturity", "v0.1.0 remains the only tagged and published release.\n\n## Claim maturity")],
     ["System Advisor stale pre-release status", "RELEASED_LOCAL_SYNTHETIC_STATUS_MISSING:System Advisor", (root) => replace(root, "docs/SYSTEM-ADVISOR-GUIDE.md", "Status: **RELEASED, LOCAL-SYNTHETIC CONTRACT SURFACE**", "Status: **LOCALLY VALIDATED, NOT RELEASED**")],

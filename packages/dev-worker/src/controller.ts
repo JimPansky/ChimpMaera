@@ -18,10 +18,10 @@ import {
 
 export const SYNTHETIC_NOW = "2026-08-04T08:00:00.000Z";
 export const SYNTHETIC_PROJECT = Object.freeze({
-  id: "github-repository:JimPansky/PANSPHAIRA",
-  repository: "JimPansky/PANSPHAIRA",
+  id: "github-repository:JoFe2/PANSPHAIRA",
+  repository: "JoFe2/PANSPHAIRA",
   sourceKind: "PUBLIC_GITHUB",
-  sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git",
+  sourceOrigin: "https://github.com/JoFe2/PANSPHAIRA.git",
   issueIid: 117,
   baseRef: "main",
   baseCommit: "1171171171171171171171171171171171171171",
@@ -42,8 +42,8 @@ export const SERVER_BUDGET: DevBudgetV1 = Object.freeze({
   maxPatchBytes: 2048,
 });
 
-export const CHIMPMAERA_PUBLIC_REPOSITORY = "JimPansky/PANSPHAIRA" as const;
-export const CHIMPMAERA_PUBLIC_PROJECT_ID = "github-repository:JimPansky/PANSPHAIRA" as const;
+export const CHIMPMAERA_PUBLIC_REPOSITORY = "JoFe2/PANSPHAIRA" as const;
+export const CHIMPMAERA_PUBLIC_PROJECT_ID = "github-repository:JoFe2/PANSPHAIRA" as const;
 export const CHIMPMAERA_M1B_ALLOWED_PATHS = ["docs/public/robots.txt"] as const;
 export const CHIMPMAERA_M1B_DENIED_PATHS = [
   ".github/**",
@@ -140,7 +140,7 @@ export interface MaterializedSourceProjection {
   readonly projectId: string;
   readonly repository: string;
   readonly sourceKind: "PUBLIC_GITHUB";
-  readonly sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git";
+  readonly sourceOrigin: "https://github.com/JoFe2/PANSPHAIRA.git";
   readonly issueIid: number;
   readonly baseRef: string;
   readonly baseCommit: string;
@@ -393,7 +393,7 @@ export function materializeM1bChimpMaeraProjection(options: M1bProjectionOptions
       projectId: CHIMPMAERA_PUBLIC_PROJECT_ID,
       repository: CHIMPMAERA_PUBLIC_REPOSITORY,
       sourceKind: "PUBLIC_GITHUB" as const,
-      sourceOrigin: "https://github.com/JimPansky/PANSPHAIRA.git" as const,
+      sourceOrigin: "https://github.com/JoFe2/PANSPHAIRA.git" as const,
       issueIid: 117,
       issueSnapshotDigest: options.issueSnapshotDigest,
       baseRef: "main",
@@ -965,6 +965,7 @@ export async function runM1bTrustedPilot(options: M1bTrustedPilotOptions): Promi
 
 export async function runM1bIsolationProbes(options: M1bProjectionOptions): Promise<readonly M1bIsolationProbeResult[]> {
   const order = chimpMaeraM1bWorkOrder(options);
+  const formerOwnerRepository = `${["Jim", "Pansky"].join("")}/PANSPHAIRA`;
   const m1bBroker: TrustedModelBrokerConfig = {
     enabled: true,
     alias: "cm.dev.fast",
@@ -1002,6 +1003,7 @@ export async function runM1bIsolationProbes(options: M1bProjectionOptions): Prom
     }
   };
   await probe("explicit-denied-private-identity", (base) => ({ ...base, source: { ...base.source, projectId: "gitlab-project:private-denied", manifestDigest: materializedManifestDigest({ ...base.source, projectId: "gitlab-project:private-denied" }) } }));
+  await probe("former-owner-current-repository", (base) => ({ ...base, source: { ...base.source, repository: formerOwnerRepository, manifestDigest: materializedManifestDigest({ ...base.source, repository: formerOwnerRepository }) } }));
   await probe("explicit-denied-private-url", (base) => ({ ...base, source: { ...base.source, repository: "JimPansky/PrivateDenied", manifestDigest: materializedManifestDigest({ ...base.source, repository: "JimPansky/PrivateDenied" }) } }));
   await probe("arbitrary-other-repo", (base) => ({ ...base, source: { ...base.source, repository: "JimPansky/OtherRepo", manifestDigest: materializedManifestDigest({ ...base.source, repository: "JimPansky/OtherRepo" }) } }));
   await probe("repository-list-search", (base) => ({ ...base, workerOverrides: { repositorySearch: "list all projects" } }));

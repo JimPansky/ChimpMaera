@@ -59,8 +59,8 @@ authoritative checkout or projection root must remain unchanged.
 
 ## M1B public-source boundary
 
-The trusted controller admits exactly `JimPansky/PANSPHAIRA` from the public
-GitHub origin `https://github.com/JimPansky/PANSPHAIRA.git`. It binds one
+The trusted controller admits exactly `JoFe2/PANSPHAIRA` from the public
+GitHub origin `https://github.com/JoFe2/PANSPHAIRA.git`. It binds one
 immutable base commit, one issue-snapshot digest, the projection manifest, and
 the path policy before a provider can be invoked. Anonymous public read is the
 preferred materialization route. GitHub authentication, when separately
@@ -109,7 +109,7 @@ release, deploy, or change provider policy.
 ## M1B single-repository isolation
 
 M1B keeps the live path default-off and narrows the first public pilot to a
-trusted-controller materialized projection from `JimPansky/PANSPHAIRA` only.
+trusted-controller materialized projection from `JoFe2/PANSPHAIRA` only.
 The controller binds the public repository identity, Issue #117 snapshot
 digest, base commit, projection manifest digest, `PUBLIC_OSS` data class,
 server-side `cm.dev.fast` alias, DeepInfra model ID, budget, lease, allowed

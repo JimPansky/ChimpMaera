@@ -10,8 +10,8 @@ abstract: >-
   Open-source local proof of concept for governed, verifiable AI-agent actions
   across business systems, with policy, approval, brokered execution,
   authoritative readback and receipts.
-repository-code: "https://github.com/JimPansky/PANSPHAIRA"
-url: "https://github.com/JimPansky/PANSPHAIRA"
+repository-code: "https://github.com/JoFe2/PANSPHAIRA"
+url: "https://github.com/JoFe2/PANSPHAIRA"
 keywords:
   - ai-agents
   - agent-governance
