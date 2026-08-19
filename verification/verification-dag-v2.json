@@ -466,7 +466,7 @@
         {
           "path": "scripts/verify-release-governance.mjs",
           "role": "SECURITY",
-          "sha256": "a5adf4ddace32bb04a69924eb7a07a6dc68fb5ea07900cfc8707fb2984657dfd"
+          "sha256": "92b370c40d1a922c7ba09ca0edfb949b483f9dae97e04e13cbe594ca0c753d1f"
         },
         {
           "path": "scripts/verify-supply-chain.mjs",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "a7ddb861c13f3fc4520b2d801c969a9d5c660b3a0baeed65d9918cd4170ed892"
+          "sha256": "e15ed491b81029bb684e41b8653e24ccc0cd3595c1902bdc272352f84a11dc87"
         },
         {
           "path": "package-lock.json",

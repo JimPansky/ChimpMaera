@@ -93,13 +93,13 @@ that ceiling.
 
 ### HISTORICAL ROADMAP PROVENANCE — NOT CURRENT ISSUE STATE
 
-The 2026-08-01 assurance review recorded issue [#3](https://github.com/JimPansky/PANSPHAIRA/issues/3)
-as open/in progress and epic [#2](https://github.com/JimPansky/PANSPHAIRA/issues/2)
-plus children [#4](https://github.com/JimPansky/PANSPHAIRA/issues/4),
-[#5](https://github.com/JimPansky/PANSPHAIRA/issues/5),
-[#6](https://github.com/JimPansky/PANSPHAIRA/issues/6),
-[#7](https://github.com/JimPansky/PANSPHAIRA/issues/7) and
-[#8](https://github.com/JimPansky/PANSPHAIRA/issues/8) as open/blocked. That is
+The 2026-08-01 assurance review recorded issue [#3](https://github.com/JoFe2/PANSPHAIRA/issues/3)
+as open/in progress and epic [#2](https://github.com/JoFe2/PANSPHAIRA/issues/2)
+plus children [#4](https://github.com/JoFe2/PANSPHAIRA/issues/4),
+[#5](https://github.com/JoFe2/PANSPHAIRA/issues/5),
+[#6](https://github.com/JoFe2/PANSPHAIRA/issues/6),
+[#7](https://github.com/JoFe2/PANSPHAIRA/issues/7) and
+[#8](https://github.com/JoFe2/PANSPHAIRA/issues/8) as open/blocked. That is
 a dated provenance snapshot, not a live status claim; current state must be
 read from GitHub. Issues remain roadmap links, not evidence by themselves.
 

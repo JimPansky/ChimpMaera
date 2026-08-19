@@ -31,7 +31,7 @@ evidence, privacy certification or production fitness is claimed.
 ```sh
 release=v0.2.0-poc.20260819.1
 archive=cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz
-base=https://github.com/JimPansky/PANSPHAIRA/releases/download/$release
+base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
@@ -40,7 +40,7 @@ cd cm-product-increment-rc-20260819-pansphaira-public-spelling
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from
-unverified prose. Check [Latest](https://github.com/JimPansky/PANSPHAIRA/releases/latest)
+unverified prose. Check [Latest](https://github.com/JoFe2/PANSPHAIRA/releases/latest)
 before using these release-bound names.
 
 ### Contributor checkout
@@ -49,8 +49,8 @@ For development against public `main`, keep that source identity distinct from
 released evidence:
 
 ```sh
-git clone https://github.com/JimPansky/PANSPHAIRA.git
-cd ChimpMaera
+git clone https://github.com/JoFe2/PANSPHAIRA.git
+cd PANSPHAIRA
 git switch main
 ```
 

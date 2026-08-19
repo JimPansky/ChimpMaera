@@ -10,7 +10,7 @@
     "baseUrl": "https://openrouter.ai/api/v1",
     "model": "replace-with-server-owned-model-id",
     "headers": {
-      "HTTP-Referer": "https://github.com/JimPansky/PANSPHAIRA",
+      "HTTP-Referer": "https://github.com/JoFe2/PANSPHAIRA",
       "X-Title": "PanSphaira CM Dev Worker M1A"
     },
     "budget": {
@@ -28,10 +28,10 @@
     "root": "/path/to/trusted/materialized/projection",
     "manifestDigest": "replace-with-trusted-controller-manifest-digest",
     "issueSnapshotDigest": "replace-with-trusted-controller-issue-snapshot-digest",
-    "projectId": "github-repository:JimPansky/PANSPHAIRA",
-    "repository": "JimPansky/PANSPHAIRA",
+    "projectId": "github-repository:JoFe2/PANSPHAIRA",
+    "repository": "JoFe2/PANSPHAIRA",
     "sourceKind": "PUBLIC_GITHUB",
-    "sourceOrigin": "https://github.com/JimPansky/PANSPHAIRA.git",
+    "sourceOrigin": "https://github.com/JoFe2/PANSPHAIRA.git",
     "issueIid": 117,
     "baseRef": "main",
     "baseCommit": "1171171171171171171171171171171171171171",

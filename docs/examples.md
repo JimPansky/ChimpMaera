@@ -5,7 +5,7 @@ description: Reproduce PanSphaira's deterministic SAFE_GUIDED checks and fiction
 
 # Reproducible local examples
 
-Use a tagged [regular Latest release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)
+Use a tagged [regular Latest release](https://github.com/JoFe2/PANSPHAIRA/releases/latest)
 or record the exact commit before running an example. All bundled business
 records are fictional. Do not substitute personal or customer data.
 

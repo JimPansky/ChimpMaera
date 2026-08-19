@@ -15,7 +15,7 @@ npm run external-bi-service:test
 ```
 
 The standalone KaleidoSphere runtime is released and operated from
-`JimPansky/KaleidoSphere`; CM does not carry its Dockerfiles, Compose files,
+`JoFe2/KaleidoSphere`; CM does not carry its Dockerfiles, Compose files,
 volumes or secrets.
 
 It compares the versioned artifact lock with Dockerfile and Compose image
