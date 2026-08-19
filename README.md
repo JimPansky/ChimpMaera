@@ -118,14 +118,14 @@ For the release-bound path, download the current Latest archive and its
 published checksum sidecar, then verify before extracting:
 
 ```sh
-release=v0.2.0-poc.20260819.1
-archive=cm-product-increment-rc-20260819-pansphaira-public-spelling.tar.gz
+release=v0.2.0-poc.20260819.2
+archive=cm-product-increment-rc-20260819-owner-pages-worker-link-cutover.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260819-pansphaira-public-spelling
+cd cm-product-increment-rc-20260819-owner-pages-worker-link-cutover
 ```
 
 On a supported Linux host with Docker and Compose, run there or from a
