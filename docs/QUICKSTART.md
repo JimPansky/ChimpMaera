@@ -22,25 +22,25 @@ only loopback service bindings.
 The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
-Its increment claim is a public-document presentation gate that preserves a
-descriptive architecture image alternative while keeping extended technical
-copy in a compact disclosure or linked documentation. This is not exhaustive
-assistive-technology testing, accessibility certification or universal
-Markdown linting. The included local/synthetic, default-network-off Usage
+Its increment claim is an execution-free deterministic plugin-knowledge harvest
+over exact-pinned source snapshots and bounded static findings. Attribution,
+licence/permitted use, conflicts, negative evidence, unknowns and source-change
+invalidation remain explicit, and emitted authority arrays are empty. It does
+not execute, install, admit, activate or endorse plugins, and it does not claim
+ecosystem completeness, compatibility, security, licence clearance or
+production ingestion. The included local/synthetic, default-network-off Usage
 Insights reference retains its explicit-consent and managed-lifecycle
-boundaries. Optional sharing is restricted to IP-literal loopback; no
-production collector, real-user evidence, privacy certification or production
-fitness is claimed.
+boundaries.
 
 ```sh
-release=v0.2.0-poc.20260819.4
-archive=cm-product-increment-rc-20260819-readme-accessibility-presentation-gate.tar.gz
+release=v0.2.0-poc.20260819.5
+archive=cm-product-increment-rc-20260819-plugin-knowledge-harvest.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260819-readme-accessibility-presentation-gate
+cd cm-product-increment-rc-20260819-plugin-knowledge-harvest
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from
