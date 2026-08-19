@@ -114,7 +114,39 @@ proof.verifier.sha256 = digest(proof.verifier.path);
 writeJson(proofPath, proof);
 writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEvidence(proof));
 
-dag.graphVersion = 10;
+dag.graphVersion = 11;
+const externalPluginInputs = [
+  ["packages/contracts/src/external-plugin-preflight.ts", "SECURITY"],
+  ["schemas/contracts/external-plugin-preflight-v1.schema.json", "SCHEMA"],
+  ["tests/external-plugin-preflight.test.ts", "VALIDATOR"],
+  ["tests/fixtures/external-plugin-preflight/dsh-benign-v1.json", "FIXTURE"],
+  ["tests/fixtures/external-plugin-preflight/mcp-risk-v1.json", "FIXTURE"],
+  ["tests/fixtures/external-plugin-preflight/package-risk-v1.json", "FIXTURE"],
+  ["tests/fixtures/external-plugin-preflight/skill-risk-v1.json", "FIXTURE"],
+  ["docs/EXTERNAL-PLUGIN-PREFLIGHT.md", "DERIVED_EVIDENCE"],
+];
+let externalPluginNode = dag.nodes.find(({ id }) => id === "etl-02-external-plugin-preflight-v1");
+if (externalPluginNode === undefined) {
+  externalPluginNode = {
+    id: "etl-02-external-plugin-preflight-v1",
+    dependsOn: ["vf-contract-v1"],
+    inputs: [],
+    ownedTests: ["npm run external-plugin-preflight:test"],
+    invariants: [
+      "Preflight consumes caller-supplied immutable bytes without filesystem, network, process or foreign-harness execution authority.",
+      "Unknown versions, mutable dependencies, path ambiguity, digest mismatch and execution-bearing package metadata fail closed with fixed reason codes.",
+      "A static-clear result is evidence only and never grants profile conformance, admission, installation, activation or execution authority.",
+    ],
+    riskClass: "CRITICAL",
+    globalInvalidation: false,
+  };
+  dag.nodes.push(externalPluginNode);
+}
+externalPluginNode.inputs = externalPluginInputs.map(([inputPath, role]) => ({
+  path: inputPath,
+  role,
+  sha256: digest(inputPath),
+}));
 const intakeNode = dag.nodes.find(({ id }) => id === "intake-001-issue-candidate-v1");
 if (intakeNode === undefined) throw new Error("INTAKE_001_DAG_NODE_MISSING");
 const intakeInputs = [

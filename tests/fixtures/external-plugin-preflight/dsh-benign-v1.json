@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "chimpmaera.extension-trust/external-plugin-preflight-request/v1",
+  "subject": {"subjectId":"extension:dsh-benign","subjectVersion":"1.0.0","format":"DSH_BUNDLE_PROFILE"},
+  "source": {"kind":"PINNED_CONTENT","locator":"content+sha256:0000000000000000000000000000000000000000000000000000000000000000","mutable":false,"digest":"0000000000000000000000000000000000000000000000000000000000000000"},
+  "licence": {"spdx":"Apache-2.0","evidenceRef":"artifact:sha256:0000000000000000000000000000000000000000000000000000000000000000"},
+  "compatibility": {"kind":"DEEPSEEK_HARNESS","version":"0.1.0-rc.8","tag":"dsh-v0.1.0-rc.8","commit":"141eb6fef83422698aef7a981029e843e8161534","artifactDigest":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","distTag":"next"},
+  "files": [
+    {"path":"package.json","kind":"FILE","mediaType":"application/json","content":"{\"name\":\"fixture-dsh-bundle\",\"version\":\"1.0.0\",\"packageManager\":\"npm@11.16.0\",\"dsh\":{\"bundle\":{\"patch\":\"./cordis.patch.yml\"}},\"license\":\"Apache-2.0\"}","digest":"0000000000000000000000000000000000000000000000000000000000000000"},
+    {"path":"package-lock.json","kind":"FILE","mediaType":"application/json","content":"{\"lockfileVersion\":3}","digest":"0000000000000000000000000000000000000000000000000000000000000000"},
+    {"path":"cordis.patch.yml","kind":"FILE","mediaType":"text/yaml","content":"plugins:\n  - id: fixture.read-only\n    module: fixture-read-only\n    config:\n      mode: read-only\n","digest":"0000000000000000000000000000000000000000000000000000000000000000"}
+  ]
+}

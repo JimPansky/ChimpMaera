@@ -183,6 +183,7 @@ c4d99554a7285c40f4464735a71e3a1807dde74c31a93a69d1be6891171cb659  ./docs/DAILY-P
 b143228ed307d3b7dcf44618de8eaf5aa455077c3855195c402582be546d3c04  ./docs/ERP-READ-CONNECTOR-GUIDE.md
 4ae8afac84d763dd74a6b9cfc8805082f26fe07aea5a176cfb1accc07b25be33  ./docs/EXTENSION-ASSURANCE-PROFILES.md
 e3c8149ba3da5f381de1062a6418bc9e26add4bc65b0c7e65daf83e3c5336984  ./docs/EXTERNAL-BI-SERVICE.md
+f9bf95fca23d503b5c030fad3d4775dc0d539ae3f3bd7b35bd075edffd6b3a89  ./docs/EXTERNAL-PLUGIN-PREFLIGHT.md
 008aa6b5cda4316d05d9185587f2e14e1877b84761b31eebdb3c1e6c6fcaff68  ./docs/EXTERNAL-VIDEO-SERVICE.md
 2f0b8ee7a76365facc88c6d88667cb8653fc672d0399819027193af83cbe541a  ./docs/INTEGRATION-PROFILES.md
 437ea30db2ea06e6c1eedae3608f56ff99cddd162fef129bd311f5d856c1a081  ./docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md
@@ -310,7 +311,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 ea8d5f564acdae86b6ce054c7fc5dcb0dead50e85c74982d0644a9493879217b  ./examples/poc-release/showcase-v1.json
 01f41d094b67c04b73c86e0677f176b8aa75f5103a967ab9d6bacf5ac6be0fa5  ./examples/poc-setup-planner/catalog-v1.json
 0f6a224183d3d2eb68eebc0c61483c60cb785a93e67259cab264dc54aa2790cf  ./package-lock.json
-e15ed491b81029bb684e41b8653e24ccc0cd3595c1902bdc272352f84a11dc87  ./package.json
+2ce9810c37dc900d04b42831f175601b0b455aa40e7790eebcd911cbc1256db7  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 d2310f860109f87b799ba4eb4b067255d4237c4bbb71c1780145d14908a608bd  ./packages/contracts/src/azure-identity-profile.ts
@@ -330,6 +331,7 @@ b0ae29b9bda430c16ff6091d09f411f87b55334e79f2482386f471f7da42cf11  ./packages/con
 b76f12d77f9b5b0bf5dade6aaac5afa7356e8049c856d0906a92103c6d204ed4  ./packages/contracts/src/erp-read-connector.ts
 272e33e9ee1ec0ca4fce26ca9593712746ee358d039b700938ee8ef68772f828  ./packages/contracts/src/extension-assurance-profile.ts
 cca0c82b42faccb0767bd40e11dbc24157b21e2988bebbe978409044976d275b  ./packages/contracts/src/external-bi-service.ts
+fe637bed21ee249f3fccfd8e1141b8326d6f084a290ee6ad00ac52a8884303ca  ./packages/contracts/src/external-plugin-preflight.ts
 abf4ca5ddafdfafebffc5727f9ee8f8db075343446bbdba02851de3b4aa30cdf  ./packages/contracts/src/external-video-service.ts
 ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/contracts/src/hmi-contribute-preflight.ts
 0d9c6b054ea648a50217e6cc55ef8ed8bb0b444076a8a5ff081b0fb408f0ec45  ./packages/contracts/src/hmi-core.ts
@@ -337,7 +339,7 @@ ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/con
 c5b7d230b24b548c7ed3bfbe51ada53ef1fbcbcf7018fae10e29177a9567b78f  ./packages/contracts/src/hmi-discover-payload.ts
 36c8b8c157ce5590b516f1680f8922eef9cf736c34a42649c0b0d4a764c1f1ff  ./packages/contracts/src/hmi-explain-payload.ts
 c837c4e01a67cee0a2d4dcca916c4d1f84f36f07ef62c81142c914fd7969723c  ./packages/contracts/src/hmi-harness-adapter.ts
-5011f435b8f5b7a145bbfe74b52336208e5a03544ecc2edb6430850ae340b996  ./packages/contracts/src/index.ts
+4757b28594ceddb9aa61cb477720496ce8a0d2ca2e68b4f1e66788a61e4db9e6  ./packages/contracts/src/index.ts
 ac0fb1c4489b4e3bede06d0472667f69fe61b74e7a65998e0efc98d37b969b1b  ./packages/contracts/src/injection-trust-boundary.ts
 eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10  ./packages/contracts/src/integration-profile.ts
 3b3afd3616d3f3a29170e3764bb6cc398147051fae5bc33e45057627796c532a  ./packages/contracts/src/issue-candidate.ts
@@ -378,7 +380,7 @@ dbffdad68f2d02dc88f144c20ef81fb6a7b6d9b412a88e11981b4d038b47a5f0  ./packages/set
 cffdb4aef6035e65b23e9b8d52ef3a9e266bb9850ef1f5695f266c85631b239e  ./packages/usage-insights/src/cli.ts
 820a91361c34ca37962bd037552c7ac02f392936460f5fbd4d57c77ef145bdc5  ./packages/usage-insights/src/index.ts
 00941fe605acbcabc7b93d0fd0232f81b8635cc305db2a0309b567c6310aa1a1  ./release/governance.json
-971c9d04a0fbcf1651c206a64213ba894b8b02e36a9dd4a3c6b7f330f376decf  ./release/public-files.manifest
+313d86ac3f7b29b35d1cacab5e4072ec70430d7f4cd6f213a95b04caf08098a7  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 ff383ccc0829599d11542109ac3b4f1380719e8c85ce49eabd7938a98ad4e942  ./schemas/contracts/azure-identity-profile-v1.schema.json
@@ -395,6 +397,7 @@ caea2307c8b985b4a4c450bd1bf5de64aea0a678a226597030a2bfbb9a1ff25e  ./schemas/cont
 e21faa449a9bf7de51bb3bdd55fb33825aeee05c1fa58d4733075f947b172e51  ./schemas/contracts/doctor-report-v1.schema.json
 8092d310682d352ae6db13f3171269fc2dc5a4f67a85ed63e9258f6c66c00cae  ./schemas/contracts/erp-read-connector-v1.schema.json
 d4dbcc5b9d7e9497bac3ccf5849d1b3820cb2b20f7e4d6c236374c7b4e223431  ./schemas/contracts/extension-assurance-profile-v1.schema.json
+0af36cda6cdd788754b1b72e65013b9590619dbe77ac48b2bcd82dec69549a87  ./schemas/contracts/external-plugin-preflight-v1.schema.json
 6757bb197499d6107906aa0cf77fcf915fd7f354d37a79940c9fe5b67d9f6d59  ./schemas/contracts/hmi-contribute-preflight-v1.schema.json
 ca46feec3b71ff70631c793c3c08d3d768fc43b6646542d8254171ae9a45124d  ./schemas/contracts/hmi-discover-payload-v1.schema.json
 50b8329277a96146956430a54dd559280914f1ba1ab0eaf09d1d7e1f90e0ce77  ./schemas/contracts/hmi-explain-payload-v1.schema.json
@@ -445,10 +448,10 @@ f84ab8f9434925d8464dc7f2da4d16693bf603f08907ff01cc1d2430d9af4522  ./schemas/runt
 e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8  ./schemas/security/secure-default-proof-v1.schema.json
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
-0d60aa525a714ac96dfdac9c71519ba4e76274f2e4cfa3078704626f3d2fb166  ./scripts/build-public-release.sh
+5ca05d976439086d89dfac8aedc6079600b4dde83c100fadd3f360bf57e5407b  ./scripts/build-public-release.sh
 9dfa75c197150b38331eda7293c754275ba58b53121c9665a9267f1260786016  ./scripts/daily-poc.mjs
 abab50a97cf7113e2cad4125992fb3178a67877f573e974b128f2494ef1883b8  ./scripts/learning-routing-baseline.mjs
-b51187cb09c1d00e6d77df90dbb198c877e135ca3e325814ac7ebac2bd6d0b5f  ./scripts/refresh-integrity-data.mjs
+a9fc58dba2a38c55245e536a049a28487cc1b973ec1f62ba4649550d2715e867  ./scripts/refresh-integrity-data.mjs
 f6cd25472abcfe5ab3e44f180b24b5c7b1373547b4463562bd271db04466e807  ./scripts/render-issue-candidate-evidence.mjs
 9c762d9450c03f106232aaeb5133c59b0635c977bcdb3c9523eb6f2111c24d5c  ./scripts/run-openclaw-m1.5-probes.mjs
 0def996c0ff2ea244a792af765af5247dede3084babb02c956dd582dbb453218  ./scripts/verification-plan.mjs
@@ -482,7 +485,7 @@ d7460b81e2855d881f6f1a2836ce0a16eb3235497289d097cb122c2e15cf988c  ./tests/builde
 3fb6871824cc52620fd580e386a98bcc12dcf5a8f395ebdb08e8fa115f1ca5cc  ./tests/capability-catalogue.test.ts
 3b326ea362a317096ce28573c824473ffeec8b65c760950636d0b038dfbb9cf8  ./tests/company-data-graph.test.mjs
 b1c6f1a3f8abc0605e49c9307c69ac255b337af1ec84b3bacd05a5612e972a46  ./tests/company-data-pack.test.mjs
-f87e3963df535a21f47b60168beebb904aac77ac52f548edd306f2dea27215bf  ./tests/contribution-intake-ledger.test.ts
+46c6291eb5089ba4789fdf8f0f6eb8c38f727e2d7f9c4c898a0174e9d591011d  ./tests/contribution-intake-ledger.test.ts
 5b437b3f7feac8d367eeae342c701b33a0e90bc5d4bb7e4f30f5b559f77a0b36  ./tests/crm-read-connector.test.ts
 516194226603e1b484d3a6bb9201ea9245499750f0e39c84646be75c32649e09  ./tests/daily-poc.test.mjs
 9c66323902b85d2c3eed9776da1e659a30acaa4058ab9096f35367def2f20059  ./tests/demo-admin-ai-poc.test.mjs
@@ -501,6 +504,7 @@ e2504dc1d9467727cbabcc8ef4c546eee46ccc0a611564fbd502229a8e37fb74  ./tests/docs-s
 6dc00ffa1982e4833d0b7cd837ed77974a50c1c82a5ea662e76f43d5089dbe16  ./tests/erp-read-connector.test.ts
 60542e9225a2c5cea00057783b71835d8896be3adae43ff9064b890ad37cbc64  ./tests/extension-assurance-profile.test.ts
 80c4622037e097a23d75a7be93e1c25b1df2817f7115252e455cfbbd842dc214  ./tests/external-bi-service.test.ts
+177a4f06add8a2b2e067aa30f11c153d67fd9d1c281b6574ff1cc30416384502  ./tests/external-plugin-preflight.test.ts
 b2bc150b8f57121c3c1e5e24107f5c3ebe65b814674f16fc0daeaff02324232e  ./tests/external-video-service.test.ts
 08ccaf4b418a36248652d50639128f6cbecc800ee45992487555aeca874e9cb7  ./tests/fixtures/agent-work-intelligence/lifecycle-matrix-v1.json
 81f98b7a9d8acee0c67697d147629bb1ec6881a2d9ecf108cf928bad25123a87  ./tests/fixtures/agent-work-intelligence/negative-matrix-v1.json
@@ -520,6 +524,10 @@ c7e372d7eb0d701f7cde55147bdeadf73d0c8e7202b2f3be49e83e78172db429  ./tests/fixtur
 91dc4541e7e3ba00585eee31ef58af5d68f360bffbf13b19ca76e7de97093002  ./tests/fixtures/extension-assurance/negative-matrix-v1.json
 969bc85fac76e7aaa215e0c8a933aaa00ad00028e8e15bacec5ce0493645563a  ./tests/fixtures/extension-assurance/positive-profile-v1.json
 0e6a265a67626009e0a94a6e61504a3e19132081fd555540d3ce7ebf696c8bc6  ./tests/fixtures/external-bi-service-v2-clean-room.json
+ed81b7605c58504539c3efff1c9efd08acbeae81614911083812371865dc3a1d  ./tests/fixtures/external-plugin-preflight/dsh-benign-v1.json
+fe6e0892fb30fc35bca4493ea8c7ef8305691d7701a5111f3604cca5f5a1e0c5  ./tests/fixtures/external-plugin-preflight/mcp-risk-v1.json
+98d2d8124d671ba042b87d71dba90c5f5f540f6732298d709fbb950a2d7d1dde  ./tests/fixtures/external-plugin-preflight/package-risk-v1.json
+62e18585ecdc9cca0957a5b83908581fe212aa1fa3ab3006a7aea59ff00e6f9f  ./tests/fixtures/external-plugin-preflight/skill-risk-v1.json
 6f5f9b1d8a7dcaccf7ef83ec1d67c78f813aa6b477cfbbb69044c7081a4c8631  ./tests/fixtures/hmi/adapter-golden-v1.json
 b95c61a62dbad78dacaea088b35b1cf1689f7f5922bc58a2f9ebc0aee986edd0  ./tests/fixtures/hmi/negative-matrix-v1.json
 6aba932a59ff20979ad33f10613b3c0b5fe234bb9b87004c57321ac742efb456  ./tests/fixtures/hmi/positive-contribute-preflight-v1.json
@@ -595,7 +603,7 @@ e1e4304dde40a18146d905885a7d7dc9646a8d22a7702a758ad0da50d1ee00e0  ./tests/poc-sh
 4bbdb6acb54291a49e12347f72a9b4b85241e28d639df56fc78c69f050103cc1  ./tests/power-platform-read-connector.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
 c0525446e530ff39599ded8e413bb093cb77de7f910e727755f88d3c768af9a2  ./tests/public-product-spelling.test.mjs
-56432aa2486e1ed2540729a2c4e3d0ad36e63d983dac00a7be151142c0c6e8b7  ./tests/release-governance.test.mjs
+9f19987aa4cfe840de3639743177ae3547da5bd5b8898fac3fba6fea06895259  ./tests/release-governance.test.mjs
 af0f2117460bf2fc8478d9a45c58b17ad1bc6c839a9a0654a325078354fb4990  ./tests/resource-plane-profiles.test.ts
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 74d7c28fbe12bfeab992ed4c108a29ea49fdd1b07d5e8552bed550c3b2002783  ./tests/signal-release-intake.test.ts
@@ -608,13 +616,13 @@ df2f665f8181167ca3f34627a2b22094b9bb8d999769829cc8c1faccb8b9fe8f  ./tests/update
 911255ea325e6dbc02bad39566be2714693d7f3a9a6d3d82b0ca1563491e009d  ./tests/update-doctor.test.ts
 f62470a7a45e56b533b431057804cf6e35eba9fef918d15a6069a61894fa1ecd  ./tests/usage-insights-completion.test.ts
 71ac64fea3400ccca591984cf1eca6cc4f38105a7c944d4fd5ca242979fafb29  ./tests/usage-insights.test.ts
-aee8467acd1c67c7edf338752690677b46b6c34896ca4a2a4f78119495613e98  ./tests/verification-fabric-v2.test.ts
+819c8cc2a58c503b95169700ffdfb7af2d75854b3b9254058fa5df435d232d55  ./tests/verification-fabric-v2.test.ts
 a9a6cac87fc78bd63dcbd4936edabe0d0b3f7695523294911829461676969212  ./tests/verification-fabric.test.ts
 aa2e5a4808796fa516c89b198222236df26cb68d210ff2336101da1aa3e253f4  ./tests/voice-local-ptt.test.ts
 65a15a5853714a50d410e431d6e71900fe590a09dc3099ae347fffe8b63e577a  ./tools/video-production-reference/EXTENSION-GUIDE.md
 0c75ff07b3732d5f810725bb58def85c0c595191a541d9405a9ed681acbd22c3  ./tools/video-production-reference/NOTICE
 bb3a0592e9a9a5e9ce0e645e38bbcd55dab90c47adf97a5f9e9186ecaebaf89c  ./tools/video-production-reference/README.md
-11a85aa969a70f61c8f9d66b72fb5e8a0b65b83896e4817d67ce3ab5805fced7  ./tools/video-production-reference/SHA256SUMS
+8f09ab8975bb2dce9aaf434149f9b6db03396caf58a4966df02809a91602af84  ./tools/video-production-reference/SHA256SUMS
 49c0ab6c7fe8e28725b57036f9ae921ffca088aa53417a4ff3e45d54c1931c76  ./tools/video-production-reference/assets/synthetic/frame-s01.png
 59ac2035972203d2e4d9704617109aa3205c7e25cc00a39b6de596df461acdc8  ./tools/video-production-reference/assets/synthetic/frame-s02.png
 fc48018519057b6e430a16e188429d91ce08ac82ccde63a2f3e2f1b9e609c9d3  ./tools/video-production-reference/assets/synthetic/frame-s03.png
@@ -649,11 +657,11 @@ dc3bf18be5004052d0c4abe40778df6227ee8c20f02408ecac10039cb2873a30  ./tools/video-
 54f9a01d34131ece91fca433122b0dd72afa7ab7fe92a3483d5b460857bd222e  ./tools/video-production-reference/src/strict-json.mjs
 d4b6a9466794306b59f1465aa668464074c1ecefb5fb0b62e9423c14c7bef6ba  ./tools/video-production-reference/src/verify-closure.mjs
 2452223d6db0162e5f80fd68fb9dbfd73b0bdcd8fdfc60944e78c2f81b543b04  ./tools/video-production-reference/tests/closure.test.mjs
-43d67761493ed7d33e37f1607f0d285e5cc13bc29c6b3ad6a6940a08f1ada34d  ./tools/video-production-reference/tests/slice.test.mjs
+d1b67ffa8f2c0fdd0d4da8268012b4e3581eca91c8acb50c3a1d392e5e2c694d  ./tools/video-production-reference/tests/slice.test.mjs
 f86763bdd1a23123a244541d87254c46a512fb5941ac15859ec0923add825838  ./tsconfig.json
 b81903d977822ca156e09d48ddf824dcb17de2552d76cf566aaa9ac5f2bfc58f  ./verification/awi-03-knowledge-envelope-evidence-v1.json
 40b6a9bbe263b9cd67ef034dec0eb87c350aa1587904e385a2acb1072b3e0bc3  ./verification/bi-002-crm-read-connector-evidence-v1.json
 93f42b3e9e78b32cc1e1193e3f7a7ef59ca7ccd2e4116bd184d22d504987d46a  ./verification/bi-003-erp-read-connector-evidence-v1.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
 e2fa73eb5312982af288d29df015b0dc3e010f3fdba6405ce3b464b4ccece660  ./verification/lkc-qual-01-m0-evidence-v1.json
-46dcbef09a146b6e18ce91514c0b5b1c6def043d4a596a543df1e109b0054e5d  ./verification/verification-dag-v2.json
+1fd04454e402b99e3c74e89f40288c145dd4c63dcecb67250508798d5366de54  ./verification/verification-dag-v2.json
