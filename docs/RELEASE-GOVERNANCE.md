@@ -11,14 +11,16 @@ A public release is named for the functional, evidence-backed increment it
 delivers. A date or editorial cadence may appear as provenance, but labels such
 as “Daily”, “today's release” or “previous Daily” must not be the identity of an
 active public release. The current regular release is
-`v0.2.0-poc.20260819.2`, **PanSphaira v0.2.0-poc.20260819.2 - Canonical
-Owner and Worker Link Cutover**. Its increment claim is the canonical current
-repository, Pages and Development Worker trust route. The stable repository
-slug, technical identities, worker authority, authorship, funding handles and
-historical evidence remain unchanged. The included Usage Insights reference
-remains local/synthetic and default-network-off; no production activation,
-real-user evidence, representative adoption, privacy certification, legal basis
-or production fitness is claimed. `v0.1.0` is historical only.
+`v0.2.0-poc.20260819.3`, **PanSphaira v0.2.0-poc.20260819.3 -
+Execution-Free External Plugin Preflight**. Its increment claim is a
+deterministic static preflight over caller-supplied content-addressed DSH
+bundle/profile, skill, MCP-server and generic-package evidence. It executes no
+subject code and leaves every dynamic gate `NOT_RUN`; static evidence grants no
+compatibility, admission, installation, activation, certification or trust
+badge. The included Usage Insights reference remains local/synthetic and
+default-network-off; no production activation, real-user evidence,
+representative adoption, privacy certification, legal basis or production
+fitness is claimed. `v0.1.0` is historical only.
 
 Editorial Daily content is independent. It may describe progress, decisions,
 learnings or a preview. It does not gate a release and must not claim that a
