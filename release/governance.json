@@ -2,32 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JoFe2/PANSPHAIRA",
   "currentRelease": {
-    "releaseId": 373258959,
-    "tag": "v0.2.0-poc.20260819.3",
-    "title": "PanSphaira v0.2.0-poc.20260819.3 - Execution-Free External Plugin Preflight",
-    "increment": "Execution-Free External Plugin Preflight",
-    "targetCommitish": "868fd96aa1d515205e8a250798d640a31c53faba",
-    "tagObjectSha": "868fd96aa1d515205e8a250798d640a31c53faba",
-    "publishedAt": "2026-08-19T18:18:15Z",
-    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.3",
+    "releaseId": 373281667,
+    "tag": "v0.2.0-poc.20260819.4",
+    "title": "PanSphaira v0.2.0-poc.20260819.4 - README Accessibility Presentation Gate",
+    "increment": "README Accessibility Presentation Gate",
+    "targetCommitish": "16ea9ac7ec664a5ed21f48c9aaa38a9afb696931",
+    "tagObjectSha": "16ea9ac7ec664a5ed21f48c9aaa38a9afb696931",
+    "publishedAt": "2026-08-19T18:59:38Z",
+    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.4",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "cm-product-increment-rc-20260819-external-plugin-preflight.tar.gz",
-        "size": 1378710,
-        "sha256": "eee055dc42499d28849e247e598216e0c56ac16f5728954e0ceab72f15416838"
+        "name": "cm-product-increment-rc-20260819-readme-accessibility-presentation-gate.tar.gz",
+        "size": 1389950,
+        "sha256": "41fd8b9548258d9e5a454d7e01c774aedd905f7c3a1a1edd51a5c6ba1392a89a"
       },
       {
-        "name": "cm-product-increment-rc-20260819-external-plugin-preflight.tar.gz.sha256",
-        "size": 132,
-        "sha256": "a839e945f00245ac1ef58f9867f0ed0f4b16cd29d302f3a9af860fd9f8eeb6fc"
+        "name": "cm-product-increment-rc-20260819-readme-accessibility-presentation-gate.tar.gz.sha256",
+        "size": 145,
+        "sha256": "a870b323b1aed491cc39c9e769d515bbcb01a7bf127fd8c2adbc39658c197ca5"
       }
     ],
     "assetManifest": {
-      "name": "cm-product-increment-rc-20260819-external-plugin-preflight.tar.gz.sha256",
-      "declares": "cm-product-increment-rc-20260819-external-plugin-preflight.tar.gz"
+      "name": "cm-product-increment-rc-20260819-readme-accessibility-presentation-gate.tar.gz.sha256",
+      "declares": "cm-product-increment-rc-20260819-readme-accessibility-presentation-gate.tar.gz"
     }
   },
   "policy": {
@@ -82,9 +82,9 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260819.3 is the current regular Latest release for the execution-free external-plugin static preflight; its included Usage Insights reference remains local/synthetic and default-network-off.",
-      "evidencePaths": ["README.md", "docs/EXTERNAL-PLUGIN-PREFLIGHT.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "Static evidence does not claim compatibility, admission, installation, activation, certification, trust, malware freedom or production safety.", "No production activation, real-user evidence, representative adoption, privacy certification, legal basis or production fitness is claimed."]
+      "claim": "v0.2.0-poc.20260819.4 is the current regular Latest release for the README accessibility presentation gate; its included Usage Insights reference remains local/synthetic and default-network-off.",
+      "evidencePaths": ["README.md", "docs/RELEASE-GOVERNANCE.md", "scripts/verify-release-governance.mjs", "tests/release-governance.test.mjs", "release/governance.json"],
+      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "This is not exhaustive assistive-technology testing, accessibility certification or universal Markdown linting.", "No runtime authority, effect, security boundary, production activation, real-user evidence, representative adoption, privacy certification, legal basis or production fitness is claimed."]
     },
     {
       "claimId": "CM-REL-002",
