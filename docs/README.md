@@ -1,7 +1,7 @@
-# PANSPHAIRA documentation
+# PanSphaira documentation
 
 Use this hub to find the right public document without treating roadmap text
-as shipped evidence. PANSPHAIRA's current product category is an open,
+as shipped evidence. PanSphaira's current product category is an open,
 knowledge-driven operating system for governed, adaptable AI ecosystems. Its
 current shipped maturity is a released, open-source local PoC for governed and
 verifiable AI-agent actions across business systems; broad live-system and
@@ -48,7 +48,7 @@ Status labels used here:
   evidence.
 - [Architecture](ARCHITECTURE.md): current local reference design and trust
   boundaries.
-- [PANSPHAIRA terminology and identity guardrails](PANSPHAIRA-TERMINOLOGY.md):
+- [PanSphaira terminology and identity guardrails](PANSPHAIRA-TERMINOLOGY.md):
   display/Sphere vocabulary, historical boundaries, and stable-ID decisions.
 - [Operating Field Guide](OPERATING-FIELD-GUIDE.md): profiles, adapters and evidence
   procedures.

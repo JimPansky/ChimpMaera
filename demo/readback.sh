@@ -142,7 +142,7 @@ jq -e \
    and (.template.templateId == "quick-tour")' \
   <<<"$chimp_status" >/dev/null
 [ "$chimp_image" = "$CM_CHIMP_IMAGE" ] ||
-  { printf >&2 'PANSPHAIRA image digest readback mismatch.\n'; exit 1; }
+  { printf >&2 'PanSphaira image digest readback mismatch.\n'; exit 1; }
 jq -n \
   --arg mode "$CM_DEMO_MODE" --arg profile "$CM_AUTHORITY_PROFILE" \
   --arg seed "$CM_DEMO_SEED" --arg dms "$CM_DMS" --arg selection "$CM_SELECTION_SHA256" \

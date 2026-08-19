@@ -1,6 +1,6 @@
 ---
 title: SAFE_GUIDED secure-default proof
-description: Verify PANSPHAIRA's closed local SAFE_GUIDED claim manifest, deterministic positive checks, and fail-closed negative probes.
+description: Verify PanSphaira's closed local SAFE_GUIDED claim manifest, deterministic positive checks, and fail-closed negative probes.
 ---
 
 # SAFE_GUIDED secure-default proof

@@ -8,7 +8,7 @@ import {
 
 const token = "p".repeat(48);
 
-assert.equal(PAPERLESS_ZOO_TITLE_PREFIX, "PANSPHAIRA Zoo - ");
+assert.equal(PAPERLESS_ZOO_TITLE_PREFIX, "PanSphaira Zoo - ");
 
 function document(id, title = `${PAPERLESS_ZOO_TITLE_PREFIX}Feeding Log ${id}`) {
   return {

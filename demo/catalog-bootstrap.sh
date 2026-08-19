@@ -10,7 +10,7 @@ output="${1:-$state/public/catalog-bootstrap.json}"
 [ -f "$config" ] || { printf >&2 'Catalog bootstrap requires an installed demo.\n'; exit 1; }
 [ -s "$manifest" ] || { printf >&2 'Catalog bundle is missing.\n'; exit 1; }
 [ -s "$state/secrets/chimp-api-token" ] ||
-  { printf >&2 'PANSPHAIRA API token is missing.\n'; exit 1; }
+  { printf >&2 'PanSphaira API token is missing.\n'; exit 1; }
 
 set -a
 # shellcheck disable=SC1090

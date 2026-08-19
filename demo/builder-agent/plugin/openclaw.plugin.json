@@ -1,6 +1,6 @@
 {
   "id": "chimpmaera-builder",
-  "name": "PANSPHAIRA BLD-001 Builder Gateway",
+  "name": "PanSphaira BLD-001 Builder Gateway",
   "description": "Exposes two admitted synthetic Builder operations to the isolated OpenClaw fixture.",
   "version": "1.0.0",
   "activation": { "onStartup": true },

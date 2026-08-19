@@ -1,6 +1,6 @@
-# PANSPHAIRA Support
+# PanSphaira Support
 
-PANSPHAIRA is provided without warranty, service-level objective or
+PanSphaira is provided without warranty, service-level objective or
 production-support commitment.
 
 When the distribution's repository offers issues or discussions, use them for

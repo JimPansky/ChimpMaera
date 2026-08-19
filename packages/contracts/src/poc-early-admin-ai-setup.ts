@@ -213,12 +213,12 @@ const STAGE_A_ACTIONS = [
 
 const FULL_CONTROL_WARNING =
   "FULL_CONTROL_LAB is not recommended for real operation. After activation "
-  + "the Admin-AI may use every right already granted to the PANSPHAIRA host "
+  + "the Admin-AI may use every right already granted to the PanSphaira host "
   + "process, including shell, files, processes/services, packages, network, "
-  + "modules, configuration and repair, without further PANSPHAIRA capability, "
-  + "action or approval gates. PANSPHAIRA does not create OS rights: root needs "
+  + "modules, configuration and repair, without further PanSphaira capability, "
+  + "action or approval gates. PanSphaira does not create OS rights: root needs "
   + "a separate visible owner elevation. With real root the Admin-AI can also "
-  + "damage or remove PANSPHAIRA, its audit data and emergency controls; audit, "
+  + "damage or remove PanSphaira, its audit data and emergency controls; audit, "
   + "status, receipts and emergency stop are transparency/recovery features, "
   + "not a security boundary.";
 

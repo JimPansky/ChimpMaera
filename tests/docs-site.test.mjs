@@ -48,8 +48,8 @@ test("curated pages have unique canonical, description, OpenGraph, and SoftwareS
 
     const title = attribute(source, /<meta property="og:title" content="([^"]+)"/);
     const description = attribute(source, /<meta property="og:description" content="([^"]+)"/);
-    assert.equal(attribute(source, /<meta property="og:site_name" content="([^"]+)"/), "PANSPHAIRA");
-    assert.match(title, /\| PANSPHAIRA$/);
+    assert.equal(attribute(source, /<meta property="og:site_name" content="([^"]+)"/), "PanSphaira");
+    assert.match(title, /\| PanSphaira$/);
     assert.ok(!titles.has(title), `duplicate title: ${title}`);
     assert.ok(!descriptions.has(description), `duplicate description: ${description}`);
     titles.add(title);
@@ -58,7 +58,7 @@ test("curated pages have unique canonical, description, OpenGraph, and SoftwareS
     const jsonLd = attribute(source, /<script type="application\/ld\+json">([^<]+)<\/script>/);
     const metadata = JSON.parse(jsonLd);
     assert.equal(metadata["@type"], "SoftwareSourceCode");
-    assert.equal(metadata.name, "PANSPHAIRA");
+    assert.equal(metadata.name, "PanSphaira");
     assert.equal(metadata.codeRepository, "https://github.com/JimPansky/PANSPHAIRA");
     assert.equal(metadata.url, canonical);
     assert.equal(metadata.license, "https://www.apache.org/licenses/LICENSE-2.0");

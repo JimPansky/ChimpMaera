@@ -1,7 +1,7 @@
-# Contributing to PANSPHAIRA
+# Contributing to PanSphaira
 
 Focused code, tests, documentation, fixtures, and design proposals are welcome
-when they preserve PANSPHAIRA's authority, safety, evidence, license, media,
+when they preserve PanSphaira's authority, safety, evidence, license, media,
 and trademark boundaries.
 
 ## Fast path

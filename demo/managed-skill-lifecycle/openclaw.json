@@ -18,7 +18,7 @@
         "api": "openai-completions",
         "timeoutSeconds": 20,
         "models": [{
-          "id": "cm-agent-v1", "name": "PANSPHAIRA deterministic AAS-037 fixture",
+          "id": "cm-agent-v1", "name": "PanSphaira deterministic AAS-037 fixture",
           "reasoning": false, "input": ["text"],
           "cost": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0},
           "contextWindow": 16384, "maxTokens": 1024,

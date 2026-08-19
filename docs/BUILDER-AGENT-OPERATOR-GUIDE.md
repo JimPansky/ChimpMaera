@@ -14,7 +14,7 @@ connect a live system, production evidence or publication authority.
    its declared governed routes. The canonical `RAMPAGE_FULL_CONTROL_LAB`
    profile (`RAMPAGE` and `FULL_CONTROL_LAB` aliases) is a different, dangerous
    lab/escape choice: after exact Owner risk acceptance it may bypass
-   PANSPHAIRA action and Approval gates, but never the host process's OS/host
+   PanSphaira action and Approval gates, but never the host process's OS/host
    ceiling. Use only in a disposable or explicitly bounded lab, downgrade
    claims for bypassed layers, and bind reset/rollback/recovery before use.
 3. Supply a synthetic Machine Manifest, operation-scoped System Advisor Guide

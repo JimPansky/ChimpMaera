@@ -11,7 +11,7 @@
     "model": "replace-with-server-owned-model-id",
     "headers": {
       "HTTP-Referer": "https://github.com/JimPansky/PANSPHAIRA",
-      "X-Title": "PANSPHAIRA CM Dev Worker M1A"
+      "X-Title": "PanSphaira CM Dev Worker M1A"
     },
     "budget": {
       "maxInputTokens": 256,

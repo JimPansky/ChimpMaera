@@ -2,11 +2,11 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/brand/pansphaira-icon-negative.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/brand/pansphaira-icon-positive.svg">
-    <img src="assets/brand/pansphaira-icon-positive.svg" width="260" alt="PANSPHAIRA geometric icon of seven connected circles">
+    <img src="assets/brand/pansphaira-icon-positive.svg" width="260" alt="PanSphaira geometric icon of seven connected circles">
   </picture>
 </p>
 
-# PANSPHAIRA
+# PanSphaira
 
 **Governed by default. Adaptable by design. Improved through evidence.**
 
@@ -52,7 +52,7 @@ product maturity or universal live compatibility.
   authoritative default merely because it was observed or shared.
 
 <p align="center">
-  <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="PANSPHAIRA architecture: an Agent Sphere sends typed proposals across a governed boundary to a mediating Gateway Sphere and stable capability contracts with provider adapters; solid routes show locally evidenced reference paths, dashed routes show prepared add or replace direction, and a provenance-bound knowledge and evidence loop improves later adaptations without adding authority.">
+  <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="PanSphaira architecture: an Agent Sphere sends typed proposals across a governed boundary to a mediating Gateway Sphere and stable capability contracts with provider adapters; solid routes show locally evidenced reference paths, dashed routes show prepared add or replace direction, and a provenance-bound knowledge and evidence loop improves later adaptations without adding authority.">
 </p>
 
 Text fallback: **Agent Sphere proposal → governed Connection and Crossing →
@@ -154,7 +154,7 @@ Remove only installer-owned resources:
 - [Known Limitations](docs/KNOWN-LIMITATIONS.md): production, identity,
   provider, isolation and external-evidence gaps.
 - [Terminology and identity guardrails](docs/PANSPHAIRA-TERMINOLOGY.md):
-  PANSPHAIRA/Sphere vocabulary and the default-KEEP stable-ID register.
+  PanSphaira/Sphere vocabulary and the default-KEEP stable-ID register.
 - [Canon](docs/CANON.md) and [Architecture](docs/ARCHITECTURE.md): durable laws,
   trust boundaries and adapters.
 
@@ -194,7 +194,7 @@ the Developer Certificate of Origin are defined in
 Voluntary creator support:
 
 <p>
-  <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support PANSPHAIRA on Ko-fi" width="180" height="33"></a>
+  <a href="https://ko-fi.com/chimpmaera"><img src="assets/support/ko-fi.png" alt="Support PanSphaira on Ko-fi" width="180" height="33"></a>
   &nbsp;
-  <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support PANSPHAIRA on Buy Me a Coffee" width="180" height="33"></a>
+  <a href="https://buymeacoffee.com/jimpansky"><img src="assets/support/buy-me-a-coffee.png" alt="Support PanSphaira on Buy Me a Coffee" width="180" height="33"></a>
 </p>

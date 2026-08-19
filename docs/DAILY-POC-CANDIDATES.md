@@ -22,7 +22,7 @@ video reference artifact described in the
   release.
 - Underscores and other non-SemVer spellings fail schema validation.
 - GitHub release title, if a later authorized stage uses the candidate:
-  `PANSPHAIRA POC Daily — YYYY-MM-DD`.
+  `PanSphaira POC Daily — YYYY-MM-DD`.
 - Stable releases and Daily POC candidates have separate lifecycles.
 
 Every prior snapshot embedded in `history` carries a self-digest. Daily history
@@ -32,7 +32,7 @@ duplicate date/sequence pairs and a previous source head that does not equal
 the new base. This is deterministic integrity evidence, not a signature: a
 later publication stage must bind any cryptographic attestation.
 
-The frozen source README must use the timeless `# PANSPHAIRA` product heading
+The frozen source README must use the timeless `# PanSphaira` product heading
 and separate `Current public release`, `Daily candidate` and `Provenance
 predecessor` status lines. The Daily line must contain the exact target version
 and `not published`; the predecessor identity is forbidden in that line.

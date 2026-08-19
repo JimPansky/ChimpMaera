@@ -43,7 +43,7 @@ function publicPath(relativePath: string): string {
 
 export default defineConfig({
   lang: "en-US",
-  title: "PANSPHAIRA",
+  title: "PanSphaira",
   description: siteDescription,
   base: "/PANSPHAIRA/",
   outDir: "../dist/docs-site",
@@ -86,12 +86,12 @@ export default defineConfig({
   transformHead({ pageData }): HeadConfig[] {
     const route = publicPath(pageData.relativePath);
     const canonicalUrl = new URL(route, siteUrl).href;
-    const title = pageData.title ? `${pageData.title} | PANSPHAIRA` : "PANSPHAIRA";
+    const title = pageData.title ? `${pageData.title} | PanSphaira` : "PanSphaira";
     const description = pageData.description || siteDescription;
     const softwareSourceCode = {
       "@context": "https://schema.org",
       "@type": "SoftwareSourceCode",
-      name: "PANSPHAIRA",
+      name: "PanSphaira",
       description: siteDescription,
       codeRepository: repositoryUrl,
       url: canonicalUrl,
@@ -104,7 +104,7 @@ export default defineConfig({
     return [
       ["link", { rel: "canonical", href: canonicalUrl }],
       ["meta", { property: "og:type", content: "website" }],
-      ["meta", { property: "og:site_name", content: "PANSPHAIRA" }],
+      ["meta", { property: "og:site_name", content: "PanSphaira" }],
       ["meta", { property: "og:title", content: title }],
       ["meta", { property: "og:description", content: description }],
       ["meta", { property: "og:url", content: canonicalUrl }],

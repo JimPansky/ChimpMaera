@@ -9,7 +9,7 @@ settings, registers a service, submits a directory entry or posts externally.
 - **Topics:** `ai-agents`, `agent-governance`, `ai-governance`,
   `policy-enforcement`, `human-in-the-loop`, `auditability`, `docker`, `crm`,
   `erp`, `openclaw`
-- **Homepage:** leave unset until PANSPHAIRA owns a stable canonical project or
+- **Homepage:** leave unset until PanSphaira owns a stable canonical project or
   documentation URL. Do not point it at an unverified or temporary site.
 
 Apply these only through a separately authorized GitHub-settings change and

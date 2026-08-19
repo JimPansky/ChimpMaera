@@ -1,7 +1,7 @@
 # Release governance
 
 This document is the canonical, fail-closed publication contract for
-PANSPHAIRA. The machine-readable companion is
+PanSphaira. The machine-readable companion is
 [`release/governance.json`](../release/governance.json), enforced by
 `npm run release-governance:verify` in every pull request.
 

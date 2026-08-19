@@ -1,6 +1,6 @@
 # Security Assurance
 
-This is the canonical assurance record for PANSPHAIRA's scoped security
+This is the canonical assurance record for PanSphaira's scoped security
 claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 [README](../README.md) intentionally keeps only the short operational summary.
 
@@ -62,7 +62,7 @@ do not inherit them.
 The broadest governed Owner Profile is distinct from those lab aliases and
 continues to require mediation, isolation, use-time checks and Evidence.
 `FULL_CONTROL_LAB` / `RAMPAGE` is a deliberate dangerous escape profile: after
-exact risk acceptance it may bypass PANSPHAIRA action and Approval gates up to
+exact risk acceptance it may bypass PanSphaira action and Approval gates up to
 the host process's OS/host ceiling. Claims for bypassed layers are downgraded,
 and the published local lifecycle must reset to `SAFE_GUIDED` on restart,
 revoke or cleanup with explicit rollback/recovery steps. Audit and emergency
@@ -76,9 +76,9 @@ that ceiling.
 | `CM-SEC-001` | Every **defined meaningful crossing in the declared governed paths** is mediated by typed trusted code; the Agent is not the enforcement point. | [Canon](CANON.md) CM-CAN-01/03/08/09/10; [architecture](ARCHITECTURE.md); `npm test` | **154/154 PASS** | Local synthetic paths represented by this repository. This does not prove that unknown bypasses, a compromised host or a future integration cannot escape the model. `FULL_CONTROL_LAB` intentionally exits the governed-profile claim. |
 | `CM-SEC-002` | Capability/catalogue entries are finite, typed, digest-bound and inactive by default; admission or inspection grants no authority. | [catalogue tests](../tests/capability-catalogue.test.ts); `npm run build && node --test dist/tests/capability-catalogue.test.js` | **4/4 PASS**; AAS-012 evidence records full-suite **95/95 PASS** | Two synthetic actions. No live adapter provenance, activation service, Gateway or production tenant claim. |
 | `CM-SEC-003` | Untrusted provider, tool, document and memory content cannot select call targets, credentials, approval or authority; hostile content changes evidence digests only. | [trust-boundary tests](../tests/injection-trust-boundary.test.ts); `npm run build && node --test dist/tests/injection-trust-boundary.test.js` | **4/4 PASS** across four hostile synthetic origins | Closed local contract, not proof that prompt injection is eliminated in a live model, tokenizer, retrieval stack or gateway. |
-| `CM-SEC-004` | The Owner can select visible, context-bound authority profiles, including the separate dangerous `FULL_CONTROL_LAB` / `RAMPAGE` lab profile; that lab selection requires exact risk acceptance and resets to `SAFE_GUIDED` on restart, revoke or cleanup. | [authority-profile tests](../tests/poc-early-admin-ai-setup.test.ts); [RAMPAGE manifest](../demo/manifests/authority/RAMPAGE-v1.json); `npm run build && node --test dist/tests/poc-early-admin-ai-setup.test.js` | **13/13 PASS**, including the two profile lifecycle tests | Local setup contract. The lab profile inherits the host process's OS ceiling, bypasses PANSPHAIRA action/approval gates and can destroy local controls if separately given root. It is outside SAFE_GUIDED and Canon claims for bypassed layers. Audit and emergency stop are transparency/recovery features, not protection from that actor. |
+| `CM-SEC-004` | The Owner can select visible, context-bound authority profiles, including the separate dangerous `FULL_CONTROL_LAB` / `RAMPAGE` lab profile; that lab selection requires exact risk acceptance and resets to `SAFE_GUIDED` on restart, revoke or cleanup. | [authority-profile tests](../tests/poc-early-admin-ai-setup.test.ts); [RAMPAGE manifest](../demo/manifests/authority/RAMPAGE-v1.json); `npm run build && node --test dist/tests/poc-early-admin-ai-setup.test.js` | **13/13 PASS**, including the two profile lifecycle tests | Local setup contract. The lab profile inherits the host process's OS ceiling, bypasses PanSphaira action/approval gates and can destroy local controls if separately given root. It is outside SAFE_GUIDED and Canon claims for bypassed layers. Audit and emergency stop are transparency/recovery features, not protection from that actor. |
 | `CM-SEC-008` | Verified audit explanations are built only from signed, ordered, digest-linked facts and an exact head/count checkpoint; tampered, missing, reordered or forked facts do not render verified success. | [audit tests](../tests/protected-audit-timeline.test.ts); `npm run build && node --test dist/tests/protected-audit-timeline.test.js` | **4/4 PASS**; AAS-023 full suite **132/132 PASS** | Synthetic Ed25519/local checkpoint. Not hostile-host tamper-proof storage, an independent witness, trusted time, production key custody or retention compliance. |
-| `CM-SEC-009` | The stock demo publishes only loopback ports, keeps databases on internal networks, mounts no Docker socket, and runs PANSPHAIRA non-root with a read-only root, dropped capabilities and no-new-privileges. | [Compose contract](../demo/compose.yaml); [supply-chain verifier tests](../tests/supply-chain-verifier.test.mjs); `npm run supply-chain:verify` | **6/6 PASS** declaration/runtime-posture checks | Repository and local Compose posture only. It does not resist a compromised host kernel or Docker daemon and does not establish production network isolation. |
+| `CM-SEC-009` | The stock demo publishes only loopback ports, keeps databases on internal networks, mounts no Docker socket, and runs PanSphaira non-root with a read-only root, dropped capabilities and no-new-privileges. | [Compose contract](../demo/compose.yaml); [supply-chain verifier tests](../tests/supply-chain-verifier.test.mjs); `npm run supply-chain:verify` | **6/6 PASS** declaration/runtime-posture checks | Repository and local Compose posture only. It does not resist a compromised host kernel or Docker daemon and does not establish production network isolation. |
 
 ### LOCALLY VALIDATED — SYNTHETIC EVIDENCE
 
@@ -105,7 +105,7 @@ read from GitHub. Issues remain roadmap links, not evidence by themselves.
 - `CM-NC-001`: no unhackability, absolute safety, security completeness or
   absence of unknown side channels.
 - `CM-NC-002`: no thought, hidden-reasoning or chain-of-thought transparency.
-  PANSPHAIRA evidences observable inputs, decisions, actions, readback and
+  PanSphaira evidences observable inputs, decisions, actions, readback and
   receipts—not private model thoughts.
 - `CM-NC-003`: no universal-agent, universal-model or live-provider
   validation; Hermes and Claude Code runtime paths remain unproven here.

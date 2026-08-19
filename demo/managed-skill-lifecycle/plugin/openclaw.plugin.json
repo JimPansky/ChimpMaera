@@ -1,6 +1,6 @@
 {
   "id": "chimpmaera-skill-lifecycle",
-  "name": "PANSPHAIRA AAS-037 Managed Skill Lifecycle",
+  "name": "PanSphaira AAS-037 Managed Skill Lifecycle",
   "description": "Closed request and separate activate/use path for one isolated skill fixture.",
   "version": "1.0.0",
   "activation": {"onStartup": true},

@@ -1,6 +1,6 @@
 ---
 title: Operation event and quality evidence contract
-description: Freeze PANSPHAIRA's synthetic CM-OBS operation/event/quality evidence semantics without enabling collection or runtime authority.
+description: Freeze PanSphaira's synthetic CM-OBS operation/event/quality evidence semantics without enabling collection or runtime authority.
 ---
 
 # Operation event and quality evidence contract

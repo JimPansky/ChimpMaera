@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1100" role="img" aria-labelledby="caged-title caged-desc">
-  <title id="caged-title">PANSPHAIRA Agent Sphere to Gateway Sphere architecture</title>
+  <title id="caged-title">PanSphaira Agent Sphere to Gateway Sphere architecture</title>
   <desc id="caged-desc">An Agent Sphere contains an untrusted AI agent. Typed proposals follow a governed connection and cross the runtime isolation boundary into the Gateway Sphere. The Gateway binds context, resolves a capability, decides policy and approval at use time, brokers the exact allowed effect, and verifies provider readback. Stable capability contracts connect to locally evidenced CRM, ERP, and document or API adapters, while a dashed new-provider route shows prepared direction. A provenance-bound knowledge and evidence loop improves later adaptations without adding implicit authority. Sphere is visualization vocabulary, not a protocol, schema, API, or runtime abstraction.</desc>
   <style>
     text { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }

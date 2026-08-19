@@ -1,7 +1,7 @@
-# PANSPHAIRA local demo installer
+# PanSphaira local demo installer
 
 The demo is the bounded implementation example for
-[The PANSPHAIRA Canon](../docs/CANON.md). Use
+[The PanSphaira Canon](../docs/CANON.md). Use
 [Architecture](../docs/ARCHITECTURE.md) and
 [Known Limitations](../docs/KNOWN-LIMITATIONS.md) to distinguish shipped local
 behavior from non-claims.
@@ -47,7 +47,7 @@ authority. The optional `RAMPAGE` profile is a test-lab mode and requires the
 explicit `CM_RAMPAGE_CONFIRM=I_UNDERSTAND_LOCAL_DEMO_ONLY` opt-in. It does not
 grant host privileges.
 
-Success prints `READY_VERIFIED` and loopback URLs for PANSPHAIRA, EspoCRM and
+Success prints `READY_VERIFIED` and loopback URLs for PanSphaira, EspoCRM and
 Dolibarr. An unchanged rerun is idempotent. The Admin-AI PoC uses a
 deterministic local policy, not a live LLM or production delegation service.
 The dashboard permission X-ray is GET-only and informational: it displays the

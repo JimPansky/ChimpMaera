@@ -208,9 +208,9 @@ const m1bIssueDigest = (): string => chimpMaeraIssueSnapshotDigestV1({
   updatedAt: "2026-08-04T11:31:26.000Z",
 });
 
-test("DEV-WORKER-M1A example uses PANSPHAIRA display branding while preserving repository identity", () => {
+test("DEV-WORKER-M1A example uses PanSphaira display branding while preserving repository identity", () => {
   const example = JSON.parse(readFileSync("demo/dev-worker/m1a-bootstrap.example.json", "utf8"));
-  assert.equal(example.broker.headers["X-Title"], "PANSPHAIRA CM Dev Worker M1A");
+  assert.equal(example.broker.headers["X-Title"], "PanSphaira CM Dev Worker M1A");
   assert.equal(example.broker.headers["HTTP-Referer"], "https://github.com/JimPansky/PANSPHAIRA");
   assert.equal(example.source.repository, "JimPansky/PANSPHAIRA");
   assert.equal(example.source.sourceOrigin, "https://github.com/JimPansky/PANSPHAIRA.git");

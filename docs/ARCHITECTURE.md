@@ -5,7 +5,7 @@ The cross-cutting knowledge lineage and promotion model is specified in
 first explicit negative-evidence-to-governed-template example.
 
 This architecture preserves the initial `v0.1.0` subset identified in
-[The PANSPHAIRA Canon](CANON.md) and describes the current released local PoC,
+[The PanSphaira Canon](CANON.md) and describes the current released local PoC,
 including the Approval Workbench and later local-synthetic security surfaces.
 The Canon's
 mechanism-independent product abstraction is the Agent Runtime Isolation
@@ -14,19 +14,19 @@ Boundary / Untrusted Runtime Contract, detailed for engineering use in the
 [Known Limitations](KNOWN-LIMITATIONS.md) identifies boundaries that remain
 outside this local snapshot.
 
-The current PANSPHAIRA release includes a local reference stack with three
+The current PanSphaira release includes a local reference stack with three
 user-facing loopback
 services:
 
-- PANSPHAIRA coordinates the guided demo, enforces the local action boundary
+- PanSphaira coordinates the guided demo, enforces the local action boundary
   and records a digest-bound receipt.
 - EspoCRM holds the synthetic customer and opportunity view.
 - Dolibarr receives one approved synthetic order and supplies the authoritative
   provider readback.
 
 The shipped demo uses Docker Compose as one Reference Adapter. MariaDB services
-remain on internal Docker networks. PANSPHAIRA communicates with the provider
-application networks but does not mount the Docker socket. The PANSPHAIRA
+remain on internal Docker networks. PanSphaira communicates with the provider
+application networks but does not mount the Docker socket. The PanSphaira
 container is non-root, read-only, capability-dropped and configured with
 `no-new-privileges`. This validates only the exact local adapter configuration;
 Docker is not a product-wide requirement or a per-Agent architecture.
@@ -43,7 +43,7 @@ video Docker, job assets, render outputs, upload routes, model weights, GPU
 activation or public side effects.
 
 The `SAFE_GUIDED` effect path follows the Canon's separation: the seed path forms typed
-requests without provider credentials; the PANSPHAIRA runtime gate performs
+requests without provider credentials; the PanSphaira runtime gate performs
 use-time enforcement; the provider is read back before a bound success receipt
 is recorded. The shipped local demo is not a general Agent Runtime Isolation
 Adapter and does not claim complete mediation for arbitrary model, skill,

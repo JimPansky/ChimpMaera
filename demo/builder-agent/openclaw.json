@@ -24,7 +24,7 @@
         "models": [
           {
             "id": "cm-builder-v1",
-            "name": "PANSPHAIRA deterministic BLD-001 Builder fixture",
+            "name": "PanSphaira deterministic BLD-001 Builder fixture",
             "reasoning": false,
             "input": ["text"],
             "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },

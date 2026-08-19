@@ -1,8 +1,8 @@
 # Operating Field Guide
 
-## Applying the PANSPHAIRA Canon in Practice
+## Applying the PanSphaira Canon in Practice
 
-The [PANSPHAIRA Canon](CANON.md) defines durable laws. This Field Guide holds
+The [PanSphaira Canon](CANON.md) defines durable laws. This Field Guide holds
 changeable operator practice: Profiles, deployment adapters, recipes,
 compatibility decisions, evidence procedures, and maturity language. It is a
 growth path, not certification or an entry exam.
@@ -71,7 +71,7 @@ Unknown or conflicting state denies.
 `FULL_CONTROL_LAB`, `RAMPAGE`, and `RAMPAGE_FULL_CONTROL_LAB` are aliases for a
 separate dangerous lab/escape Profile, not another name for the broadest
 governed Profile. The released local contract deliberately permits that lab
-Profile to bypass PANSPHAIRA action and Approval gates up to the host process's
+Profile to bypass PanSphaira action and Approval gates up to the host process's
 OS/host ceiling. Use it only after exact Owner risk acceptance in a disposable
 or explicitly bounded environment. Record which layers are bypassed, downgrade
 their mediation/security claims, preserve reset/rollback and recovery steps,

@@ -83,7 +83,7 @@ case "$mode" in complete|minimal) ;; *) fail "mode must be complete or minimal" 
 case "$profile" in
   SAFE_GUIDED) ;;
   RAMPAGE)
-    printf >&2 '\nDANGER: RAMPAGE removes PANSPHAIRA approval gates inside this isolated demo only.\n'
+    printf >&2 '\nDANGER: RAMPAGE removes PanSphaira approval gates inside this isolated demo only.\n'
     printf >&2 'It does not grant host privileges and services remain loopback-only.\n'
     [ "${CM_RAMPAGE_CONFIRM:-}" = I_UNDERSTAND_LOCAL_DEMO_ONLY ] ||
       fail "set CM_RAMPAGE_CONFIRM=I_UNDERSTAND_LOCAL_DEMO_ONLY to opt in"
@@ -280,9 +280,9 @@ journal_event acceptance_evaluated completed "READY_VERIFIED_SINGLE_RUN"
 journal_finish READY_VERIFIED "$readback_digest"
 duration_ms="$(( $(journal_mono_ms) - CM_RUN_STARTED_MONO_MS ))"
 
-printf '\nPANSPHAIRA demo is READY_VERIFIED for this selected run in %dms.\n' "$duration_ms"
+printf '\nPanSphaira demo is READY_VERIFIED for this selected run in %dms.\n' "$duration_ms"
 printf 'This verifies only the selected local demo run; publication remains a separate owner-controlled action.\n'
-printf '  PANSPHAIRA: http://127.0.0.1:7780\n'
+printf '  PanSphaira: http://127.0.0.1:7780\n'
 printf '  Control token for guided actions: .chimpmaera-demo/secrets/chimp-api-token\n'
 printf '  EspoCRM:    http://127.0.0.1:7781 (admin; password in .chimpmaera-demo/secrets/espo-admin)\n'
 printf '  Dolibarr:   http://127.0.0.1:7782 (admin; password in .chimpmaera-demo/secrets/doli-admin)\n'

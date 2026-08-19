@@ -1,11 +1,11 @@
 ---
 title: Quickstart
-description: Install, verify, run, and ownership-scope cleanup for PANSPHAIRA's fictional local CRM-to-ERP proof of concept.
+description: Install, verify, run, and ownership-scope cleanup for PanSphaira's fictional local CRM-to-ERP proof of concept.
 ---
 
 # Quickstart
 
-Before running the demo, read [The PANSPHAIRA Canon](CANON.md),
+Before running the demo, read [The PanSphaira Canon](CANON.md),
 [The Operating Field Guide](OPERATING-FIELD-GUIDE.md),
 [Architecture](ARCHITECTURE.md) and [Known Limitations](KNOWN-LIMITATIONS.md).
 
@@ -77,7 +77,7 @@ npm run external-video-service:test
 ./demo/install.sh
 ```
 
-The installer creates random local demo credentials, builds the PANSPHAIRA
+The installer creates random local demo credentials, builds the PanSphaira
 runtime image, starts the pinned CRM/ERP stack, loads fictional fixtures and
 performs semantic readback. Initial installation can download the pinned
 container images.

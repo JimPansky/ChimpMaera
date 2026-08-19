@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem in PANSPHAIRA.
+description: Report a reproducible problem in PanSphaira.
 title: "[Bug]: "
 labels:
   - bug
@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping improve PANSPHAIRA. Do not include credentials,
+        Thank you for helping improve PanSphaira. Do not include credentials,
         personal data, private prompts or non-public infrastructure details.
 
   - type: textarea
@@ -34,9 +34,9 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Include PANSPHAIRA version or commit, OS, Docker version and authority profile where relevant.
+      description: Include PanSphaira version or commit, OS, Docker version and authority profile where relevant.
       placeholder: |
-        PANSPHAIRA commit:
+        PanSphaira commit:
         OS:
         Docker:
         Authority profile:

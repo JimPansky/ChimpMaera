@@ -2,7 +2,7 @@
 
 Status: **released contract / optional external artifact**.
 
-PANSPHAIRA does not embed the production/Docker video reference implementation
+PanSphaira does not embed the production/Docker video reference implementation
 in the main repository. The production renderer is consumed as a separate,
 portable, SHA-256-pinned artifact. CM keeps the contract needed to verify that
 the operator intentionally selected the expected artifact version and digest.

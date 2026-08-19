@@ -52,10 +52,10 @@ function fixture() {
   const root = mkdtempSync(join(tmpdir(), "cm-daily-poc-test-"));
   const source = join(root, "source");
   const manifest = JSON.parse(readFileSync(EXAMPLE, "utf8"));
-  manifest.video.title = `PANSPHAIRA POC Daily — ${manifest.date}`;
+  manifest.video.title = `PanSphaira POC Daily — ${manifest.date}`;
   mkdirSync(join(source, "tools", "video-production-reference", "schemas"), { recursive: true });
   mkdirSync(join(source, "tools", "video-production-reference", "tests"), { recursive: true });
-  writeFileSync(join(source, "README.md"), "# PANSPHAIRA\n\nBase.\n", "utf8");
+  writeFileSync(join(source, "README.md"), "# PanSphaira\n\nBase.\n", "utf8");
   writeFileSync(join(source, "SHA256SUMS"), "fixture checksum evidence\n", "utf8");
   writeFileSync(join(source, "package.json"), "{\"name\":\"chimpmaera-fixture\",\"private\":true}\n", "utf8");
   writeFileSync(join(source, "tools", "video-production-reference", "README.md"), "# Video\n\nPublic actions forbidden.\n", "utf8");
@@ -77,7 +77,7 @@ function fixture() {
   writeFileSync(join(source, "package.json"), "{\"name\":\"chimpmaera-fixture\",\"private\":true,\"description\":\"current\"}\n", "utf8");
   writeFileSync(
     join(source, "README.md"),
-    `# PANSPHAIRA\n\nBase.\n\n## Releases\n\n- [Latest regular release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)\n- [All releases and history](https://github.com/JimPansky/PANSPHAIRA/releases)\n- [Releases Atom feed](https://github.com/JimPansky/PANSPHAIRA/releases.atom)\n\nRelease pages document included capabilities and evidence boundaries. Recent governed increments also identify related issues/PRs and publish downloadable assets with SHA-256 checksum information.\n\n## Videos\n\nCurrent overview.\n`,
+    `# PanSphaira\n\nBase.\n\n## Releases\n\n- [Latest regular release](https://github.com/JimPansky/PANSPHAIRA/releases/latest)\n- [All releases and history](https://github.com/JimPansky/PANSPHAIRA/releases)\n- [Releases Atom feed](https://github.com/JimPansky/PANSPHAIRA/releases.atom)\n\nRelease pages document included capabilities and evidence boundaries. Recent governed increments also identify related issues/PRs and publish downloadable assets with SHA-256 checksum information.\n\n## Videos\n\nCurrent overview.\n`,
     "utf8",
   );
   git(source, "add", "README.md", "package.json");
@@ -208,7 +208,7 @@ function mutate(fx, kind) {
     case "VERSIONED_README_IDENTITY":
       writeFileSync(
         join(fx.source, "README.md"),
-        readFileSync(join(fx.source, "README.md"), "utf8").replace("# PANSPHAIRA\n", "# PANSPHAIRA v0.1\n"),
+        readFileSync(join(fx.source, "README.md"), "utf8").replace("# PanSphaira\n", "# PanSphaira v0.1\n"),
         "utf8",
       );
       break;
@@ -338,7 +338,7 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
   const state = JSON.parse(readFileSync(join(output, ".daily-poc-state.json"), "utf8"));
   const texts = new Map(state.completedFiles.map((name) => [name, readFileSync(join(output, name), "utf8")]));
   const combined = [...texts.values()].join("\n");
-  for (const stale of ["8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0", "PANSPHAIRA POC Daily — 2026-08-01"]) {
+  for (const stale of ["8mB7O81Y2xA", "8lj5nd-LJa4", "mxN9biyelZ0", "PanSphaira POC Daily — 2026-08-01"]) {
     assert.equal(combined.includes(stale), false, stale);
   }
   for (const text of texts.values()) {
@@ -354,12 +354,12 @@ test("current example rejects stale video IDs and mixed daily identity", () => {
   const videoAdapter = JSON.parse(texts.get("video-adapter.json"));
   assert.equal(videoAdapter.invocationPolicy.publicationAvailable, false);
   assert.equal(videoAdapter.publicActions, "forbidden");
-  assert.equal(JSON.parse(texts.get("candidate-report.json")).releaseTitle, "PANSPHAIRA — Governed canonical company data before any target action (Increment Candidate)");
+  assert.equal(JSON.parse(texts.get("candidate-report.json")).releaseTitle, "PanSphaira — Governed canonical company data before any target action (Increment Candidate)");
   const sbom = JSON.parse(texts.get("sbom.spdx.json"));
-  assert.equal(sbom.name, "PANSPHAIRA-v0.2.0-poc.20260802.3-daily-poc-inputs");
+  assert.equal(sbom.name, "PanSphaira-v0.2.0-poc.20260802.3-daily-poc-inputs");
   assert.equal(sbom.documentNamespace, "https://chimpmaera.local/spdx/v0.2.0-poc.20260802.3");
   assert.equal(sbom.packages[0].SPDXID, "SPDXRef-Package-ChimpMaera");
-  assert.equal(sbom.packages[0].name, "PANSPHAIRA");
+  assert.equal(sbom.packages[0].name, "PanSphaira");
   assert.equal(JSON.parse(texts.get("snapshot.json")).version, "v0.2.0-poc.20260802.3");
   assert.equal(JSON.parse(texts.get("run-report.json")).candidateVersion, "v0.2.0-poc.20260802.3");
 });

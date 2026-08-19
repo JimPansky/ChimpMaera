@@ -1,6 +1,6 @@
-# PANSPHAIRA Governance
+# PanSphaira Governance
 
-PANSPHAIRA is maintained as an open-source, provider-neutral local agent
+PanSphaira is maintained as an open-source, provider-neutral local agent
 control-plane project.
 
 ## Roles
