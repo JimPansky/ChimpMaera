@@ -456,7 +456,7 @@
         {
           "path": "release/governance.json",
           "role": "CONTRACT",
-          "sha256": "17d745276f811ba1d542533528b0cedce36be2b6ef094572077f62ac242d5286"
+          "sha256": "ca77cbf38717be1f11a30c90058a37d22595329423ef1f2404e5d683e0784b58"
         },
         {
           "path": "scripts/build-public-release.sh",
