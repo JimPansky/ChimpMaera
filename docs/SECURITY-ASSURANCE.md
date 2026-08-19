@@ -7,11 +7,11 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260819.2`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.2),
-the **Canonical Owner and Worker Link Cutover** increment. It delivers the
-current repository, Pages and Development Worker trust routes while retaining
-the stable slug, technical identities, authorship, funding handles and
-historical evidence. `v0.1.0` is historical. Release state is governed by
+[`v0.2.0-poc.20260819.3`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.3),
+the **Execution-Free External Plugin Preflight** increment. It delivers a
+deterministic static evidence boundary for content-addressed DSH bundle/profile,
+skill, MCP-server and generic-package inputs without executing subject code.
+`v0.1.0` is historical. Release state is governed by
 [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred from a local
 branch, a tag alone, a date or an editorial update. Documentation on `main` may
 postdate the released asset bytes and does not silently change their claims.
@@ -20,14 +20,15 @@ The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment changes current external routes and the exact Development
-Worker repository allowlist, not worker authority, runtime capability or stable
-technical identity. Its included Usage Insights reference remains
-local/synthetic and default-network-off. Optional sharing requires explicit
-consent and an exact IP-literal loopback endpoint. No production collector or
-activation, real-user evidence, representative adoption, privacy certification,
-legal basis or production fitness follows from this increment. The detailed
-claims below remain bound to their own dated evidence snapshots.
+The Latest increment adds static evidence only. Dynamic, adversarial, egress,
+process, residue and rollback gates remain `NOT_RUN`; a `STATIC_CLEAR` result
+does not grant compatibility, admission, installation, activation,
+certification, trust or production safety. Its included Usage Insights reference
+remains local/synthetic and default-network-off. Optional sharing requires
+explicit consent and an exact IP-literal loopback endpoint. No production
+collector or activation, real-user evidence, representative adoption, privacy
+certification, legal basis or production fitness follows from this increment.
+The detailed claims below remain bound to their own dated evidence snapshots.
 
 Table counts are dated observations from their linked 2026-08-01 synthetic
 evidence records, not a volatile claim about the current repository-wide test
