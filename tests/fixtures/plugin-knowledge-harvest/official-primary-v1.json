@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "chimpmaera.knowledge/plugin-harvest-request/v1",
+  "taxonomy": {
+    "schemaVersion": "chimpmaera.knowledge/taxonomy/v1",
+    "taxonomyId": "cm-taxonomy:universal",
+    "generation": 2,
+    "priorGeneration": 1,
+    "kinds": ["CLAIM", "OBSERVATION", "PROCEDURE", "DEFINITION", "RELATIONSHIP", "UNRESOLVED", "HORTICULTURE_NOTE"],
+    "migrations": [],
+    "compatibility": "STRICT_ADDITIVE_OR_EXPLICIT_RENAME",
+    "taxonomyDigest": "b517aedc9b41c2c56b903f4a8bbcb092cb48254602f54900515db1417945405c"
+  },
+  "scope": { "namespace": "plugin-ecosystem:deepseek-harness", "audience": "PUBLIC_SYNTHETIC" },
+  "source": {
+    "sourceId": "source:dsh-rc8-official-docs",
+    "kind": "OFFICIAL_PRIMARY_SOURCE",
+    "locator": "content+sha256:b147b089199a4829068cf532e2b61476dfd3649a6a635b1bf8430fb6399cda6d",
+    "snapshotDigest": "b147b089199a4829068cf532e2b61476dfd3649a6a635b1bf8430fb6399cda6d",
+    "citation": "deepseek-ai/deepseek-harness@141eb6fef83422698aef7a981029e843e8161534",
+    "selector": "packages/mcp/mcp-client/README.md#L111-L117",
+    "observedAtMs": 1787151600000,
+    "reviewedAtMs": 1787155200000,
+    "expiresAtMs": 1789747200000,
+    "licence": "MIT",
+    "permittedUses": ["KNOWLEDGE_GENERATION_CANDIDATE", "EXPLORATORY_READ", "CURATED_READ"]
+  },
+  "records": [
+    {
+      "envelopeId": "knowledge:dsh-mcp-tools-only",
+      "kind": "OBSERVATION",
+      "evidencePolarity": "NEGATIVE",
+      "statement": "At the pinned rc.8 source snapshot, the official MCP bridge documents tools as supported while resources and prompts are deferred.",
+      "epistemicStatus": "VERIFIED",
+      "trust": "HIGH",
+      "sensitivity": "PUBLIC",
+      "conflictsWith": [],
+      "derivedFrom": []
+    }
+  ]
+}

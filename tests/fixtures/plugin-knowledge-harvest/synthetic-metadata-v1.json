@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "chimpmaera.knowledge/plugin-harvest-request/v1",
+  "taxonomy": {
+    "schemaVersion": "chimpmaera.knowledge/taxonomy/v1",
+    "taxonomyId": "cm-taxonomy:universal",
+    "generation": 2,
+    "priorGeneration": 1,
+    "kinds": ["CLAIM", "OBSERVATION", "PROCEDURE", "DEFINITION", "RELATIONSHIP", "UNRESOLVED", "HORTICULTURE_NOTE"],
+    "migrations": [],
+    "compatibility": "STRICT_ADDITIVE_OR_EXPLICIT_RENAME",
+    "taxonomyDigest": "b517aedc9b41c2c56b903f4a8bbcb092cb48254602f54900515db1417945405c"
+  },
+  "scope": { "namespace": "plugin-ecosystem:synthetic-metadata", "audience": "PUBLIC_SYNTHETIC" },
+  "source": {
+    "sourceId": "source:synthetic-plugin-metadata",
+    "kind": "PINNED_PLUGIN_METADATA",
+    "locator": "content+sha256:88aa716a2d4ab12ff0d6791a7fc6942e883ae7754d00b28074fce2e228207a12",
+    "snapshotDigest": "88aa716a2d4ab12ff0d6791a7fc6942e883ae7754d00b28074fce2e228207a12",
+    "citation": "CC0 synthetic immutable plugin metadata fixture",
+    "selector": "claims[*],procedures[0]",
+    "observedAtMs": 1787151600000,
+    "reviewedAtMs": 1787155200000,
+    "expiresAtMs": 1789747200000,
+    "licence": "CC0-1.0",
+    "permittedUses": ["EXPLORATORY_READ", "KNOWLEDGE_GENERATION_CANDIDATE", "CURATED_READ"]
+  },
+  "records": [
+    {
+      "envelopeId": "knowledge:synthetic-community-security-claim",
+      "kind": "CLAIM",
+      "evidencePolarity": "UNKNOWN",
+      "statement": "Community popularity establishes that this synthetic plugin is secure.",
+      "epistemicStatus": "UNRESOLVED",
+      "trust": "LOW",
+      "sensitivity": "PUBLIC",
+      "conflictsWith": ["knowledge:synthetic-community-signal-limit"],
+      "derivedFrom": []
+    },
+    {
+      "envelopeId": "knowledge:synthetic-community-signal-limit",
+      "kind": "UNRESOLVED",
+      "evidencePolarity": "NEGATIVE",
+      "statement": "This snapshot contains no official review, endorsement, compatibility, or security evidence.",
+      "epistemicStatus": "UNRESOLVED",
+      "trust": "LOW",
+      "sensitivity": "PUBLIC",
+      "conflictsWith": ["knowledge:synthetic-community-security-claim"],
+      "derivedFrom": []
+    },
+    {
+      "envelopeId": "knowledge:synthetic-install-review-procedure",
+      "kind": "PROCEDURE",
+      "evidencePolarity": "POSITIVE",
+      "statement": "Review exact immutable source and install hooks before separately authorized runtime evaluation.",
+      "epistemicStatus": "SUPPORTED",
+      "trust": "MEDIUM",
+      "sensitivity": "PUBLIC",
+      "conflictsWith": [],
+      "derivedFrom": []
+    }
+  ]
+}

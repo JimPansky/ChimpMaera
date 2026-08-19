@@ -114,7 +114,7 @@ proof.verifier.sha256 = digest(proof.verifier.path);
 writeJson(proofPath, proof);
 writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEvidence(proof));
 
-dag.graphVersion = 11;
+dag.graphVersion = 12;
 const externalPluginInputs = [
   ["packages/contracts/src/external-plugin-preflight.ts", "SECURITY"],
   ["schemas/contracts/external-plugin-preflight-v1.schema.json", "SCHEMA"],
@@ -143,6 +143,40 @@ if (externalPluginNode === undefined) {
   dag.nodes.push(externalPluginNode);
 }
 externalPluginNode.inputs = externalPluginInputs.map(([inputPath, role]) => ({
+  path: inputPath,
+  role,
+  sha256: digest(inputPath),
+}));
+const pluginKnowledgeInputs = [
+  ["packages/contracts/src/plugin-knowledge-harvest.ts", "SECURITY"],
+  ["tests/plugin-knowledge-harvest.test.ts", "VALIDATOR"],
+  ["tests/fixtures/plugin-knowledge-harvest/official-primary-v1.json", "FIXTURE"],
+  ["tests/fixtures/plugin-knowledge-harvest/official-primary-snapshot-v1.json", "FIXTURE"],
+  ["tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-v1.json", "FIXTURE"],
+  ["tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-snapshot-v1.json", "FIXTURE"],
+  ["tests/fixtures/plugin-knowledge-harvest/etl02-negative-v1.json", "FIXTURE"],
+  ["tests/fixtures/plugin-knowledge-harvest/etl02-report-snapshot-v1.json", "FIXTURE"],
+  ["docs/PLUGIN-KNOWLEDGE-HARVEST.md", "DERIVED_EVIDENCE"],
+  ["docs/development/awi-plugin-01-issue-239-pdca.md", "DERIVED_EVIDENCE"],
+];
+let pluginKnowledgeNode = dag.nodes.find(({ id }) => id === "awi-plugin-01-knowledge-harvest-v1");
+if (pluginKnowledgeNode === undefined) {
+  pluginKnowledgeNode = {
+    id: "awi-plugin-01-knowledge-harvest-v1",
+    dependsOn: ["awi-03-knowledge-envelope", "etl-02-external-plugin-preflight-v1"],
+    inputs: [],
+    ownedTests: ["npm run plugin-knowledge-harvest:test"],
+    invariants: [
+      "Every record remains bound to exact checked-in snapshot bytes, citation, selector, licence, review time and expiry.",
+      "Unknown, disputed, conflicting and source-invalidated records never become curated or generation candidates.",
+      "Harvest output grants no credential, policy, capability, tool, write, execution, installation or runtime authority.",
+    ],
+    riskClass: "CRITICAL",
+    globalInvalidation: false,
+  };
+  dag.nodes.push(pluginKnowledgeNode);
+}
+pluginKnowledgeNode.inputs = pluginKnowledgeInputs.map(([inputPath, role]) => ({
   path: inputPath,
   role,
   sha256: digest(inputPath),

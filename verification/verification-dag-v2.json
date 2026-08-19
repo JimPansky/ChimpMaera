@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 11,
+  "graphVersion": 12,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "46c6291eb5089ba4789fdf8f0f6eb8c38f727e2d7f9c4c898a0174e9d591011d"
+          "sha256": "12f3db0ec0337622ebef3d73cb43f013a59bc61f7374f0fb9a3530afeb721395"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -242,7 +242,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "819c8cc2a58c503b95169700ffdfb7af2d75854b3b9254058fa5df435d232d55"
+          "sha256": "65f96dca06666d804215f61fb61ffc791139449cd4aec330b0260a77d27e41b7"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -271,7 +271,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "4757b28594ceddb9aa61cb477720496ce8a0d2ca2e68b4f1e66788a61e4db9e6"
+          "sha256": "687d93cb5c6311126a75007aa038a61c2d38802999380aa0732131a1fd9c2256"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -461,7 +461,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "5ca05d976439086d89dfac8aedc6079600b4dde83c100fadd3f360bf57e5407b"
+          "sha256": "1e3bc26d646931e5ee86602f2146160e0efb6a9c5fae844695094c8a052ff632"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -704,12 +704,12 @@
         {
           "path": "packages/contracts/src/knowledge-envelope.ts",
           "role": "CONTRACT",
-          "sha256": "ac1e17b86a4bf96700e9ad0c17628879323be563e06524158455c5970b81d67c"
+          "sha256": "e2ddaf15fae3636911a68247888883de5d80937e8cce98d9f42f80f7760db1aa"
         },
         {
           "path": "schemas/contracts/knowledge-envelope-v1.schema.json",
           "role": "SCHEMA",
-          "sha256": "f2178937bbadc787c9ac9abb92080d5f880f866f5321f658930d762efeac2365"
+          "sha256": "914a02fa0016ec9b47be075fb3d53126955d4255956932b7a49c33589867cb31"
         },
         {
           "path": "schemas/contracts/knowledge-taxonomy-v1.schema.json",
@@ -814,7 +814,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "2ce9810c37dc900d04b42831f175601b0b455aa40e7790eebcd911cbc1256db7"
+          "sha256": "a1305241005c0fee466060959bcae3db2e26def0d58976b5559a5bb4e5595128"
         },
         {
           "path": "package-lock.json",
@@ -881,7 +881,7 @@
         {
           "path": "tools/video-production-reference/SHA256SUMS",
           "role": "CONTRACT",
-          "sha256": "8f09ab8975bb2dce9aaf434149f9b6db03396caf58a4966df02809a91602af84"
+          "sha256": "368f0cee9f4c81fb8fc878182525ff1977afee016ade131411dff1fabd4f6f11"
         },
         {
           "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
@@ -1056,7 +1056,7 @@
         {
           "path": "tools/video-production-reference/tests/slice.test.mjs",
           "role": "SECURITY",
-          "sha256": "d1b67ffa8f2c0fdd0d4da8268012b4e3581eca91c8acb50c3a1d392e5e2c694d"
+          "sha256": "66fd3f63e0d8e6f3831d321b92e9db6bc2f08dd032c70c67a2550955c000bcca"
         }
       ],
       "ownedTests": [
@@ -1204,6 +1204,75 @@
         "Preflight consumes caller-supplied immutable bytes without filesystem, network, process or foreign-harness execution authority.",
         "Unknown versions, mutable dependencies, path ambiguity, digest mismatch and execution-bearing package metadata fail closed with fixed reason codes.",
         "A static-clear result is evidence only and never grants profile conformance, admission, installation, activation or execution authority."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
+      "id": "awi-plugin-01-knowledge-harvest-v1",
+      "dependsOn": [
+        "awi-03-knowledge-envelope",
+        "etl-02-external-plugin-preflight-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/plugin-knowledge-harvest.ts",
+          "role": "SECURITY",
+          "sha256": "8c8c92dfeb358cee9025dd3fa35d498f84e86897e99727074f6479f474960f73"
+        },
+        {
+          "path": "tests/plugin-knowledge-harvest.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "1c9790aaaed92a9e9b04fea467b095cca7dee07e68cb6abc2332b93eb1a563d4"
+        },
+        {
+          "path": "tests/fixtures/plugin-knowledge-harvest/official-primary-v1.json",
+          "role": "FIXTURE",
+          "sha256": "ef9bca453c1d672d46b8911a63e4d48e4e60f1b3b34b66a5409d94719c378305"
+        },
+        {
+          "path": "tests/fixtures/plugin-knowledge-harvest/official-primary-snapshot-v1.json",
+          "role": "FIXTURE",
+          "sha256": "b147b089199a4829068cf532e2b61476dfd3649a6a635b1bf8430fb6399cda6d"
+        },
+        {
+          "path": "tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-v1.json",
+          "role": "FIXTURE",
+          "sha256": "b3249194908ad74f28db5d93af0b0865dcb54912abddf051b7d2ef255ed3525e"
+        },
+        {
+          "path": "tests/fixtures/plugin-knowledge-harvest/synthetic-metadata-snapshot-v1.json",
+          "role": "FIXTURE",
+          "sha256": "88aa716a2d4ab12ff0d6791a7fc6942e883ae7754d00b28074fce2e228207a12"
+        },
+        {
+          "path": "tests/fixtures/plugin-knowledge-harvest/etl02-negative-v1.json",
+          "role": "FIXTURE",
+          "sha256": "a750d0bac2b5355070933b27f2e542070c91f01298593044daee3fd7fe02af83"
+        },
+        {
+          "path": "tests/fixtures/plugin-knowledge-harvest/etl02-report-snapshot-v1.json",
+          "role": "FIXTURE",
+          "sha256": "0c657c4a37f65b9eed43510cdbc2c1d57a0802eada28655effde9efeb22e110c"
+        },
+        {
+          "path": "docs/PLUGIN-KNOWLEDGE-HARVEST.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "4bd07a8300c087d4dc757bdaa93467d79b36f7ce4fafa12fd188fc831f3d88e0"
+        },
+        {
+          "path": "docs/development/awi-plugin-01-issue-239-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "72c3c9bfd469db74a9285feab5c8e7f7cc4f8cee8b5c5fd463d7f491e829f67a"
+        }
+      ],
+      "ownedTests": [
+        "npm run plugin-knowledge-harvest:test"
+      ],
+      "invariants": [
+        "Every record remains bound to exact checked-in snapshot bytes, citation, selector, licence, review time and expiry.",
+        "Unknown, disputed, conflicting and source-invalidated records never become curated or generation candidates.",
+        "Harvest output grants no credential, policy, capability, tool, write, execution, installation or runtime authority."
       ],
       "riskClass": "CRITICAL",
       "globalInvalidation": false

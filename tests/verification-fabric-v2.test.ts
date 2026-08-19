@@ -62,8 +62,8 @@ test("canonical Evidence DAG input digests match the current repository bytes", 
 test("AWI-03 knowledge changes select the bounded critical owner and hard gates", () => {
   const result = plan(["packages/contracts/src/knowledge-envelope.ts"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["awi-03-knowledge-envelope"]);
-  assert.deepEqual(result.selectedTests, ["npm run knowledge-envelope:test"]);
+  assert.deepEqual(result.selectedNodes, ["awi-03-knowledge-envelope", "awi-plugin-01-knowledge-harvest-v1"]);
+  assert.deepEqual(result.selectedTests, ["npm run knowledge-envelope:test", "npm run plugin-knowledge-harvest:test"]);
   assert.deepEqual(result.hardGates, [...graph().hardGates].sort((a, b) => a.localeCompare(b, "en")));
 });
 
@@ -82,7 +82,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["etl-02-external-plugin-preflight-v1", "external-bi-service-v2", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["awi-plugin-01-knowledge-harvest-v1", "etl-02-external-plugin-preflight-v1", "external-bi-service-v2", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 
