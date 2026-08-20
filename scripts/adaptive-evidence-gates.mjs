@@ -30,7 +30,7 @@ function deny(message) {
   process.exitCode = 2;
 }
 
-if (process.argv[2] === "--registry") {
+if (process.argv[2] === "--registry" && process.argv.length === 3) {
   process.stdout.write(`${JSON.stringify(ADAPTIVE_CHECK_IDS_V1)}\n`);
 } else {
   const input = process.argv[2];

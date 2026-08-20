@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import Ajv2020 from "ajv/dist/2020.js";
@@ -171,6 +172,17 @@ test("unsafe paths and unregistered commands deny before execution", () => {
   const command = structuredClone(spec()) as unknown as { gates: Record<string, unknown>[] };
   command.gates[0]!.checkId = "node -e process.exit(0); touch owned";
   assert.equal(reason(verify(command)), "UNSAFE_EVALUATOR_INPUT");
+});
+
+test("CLI registry rejects surplus arguments", () => {
+  const result = spawnSync(process.execPath, ["scripts/adaptive-evidence-gates.mjs", "--registry", "extra"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+    shell: false,
+  });
+  assert.equal(result.status, 2);
+  assert.equal(result.stdout, "");
+  assert.equal(result.stderr, "UNSAFE_EVALUATOR_INPUT\n");
 });
 
 test("delegated evidence requires a fresh matching receipt and parent rerun", () => {

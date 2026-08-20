@@ -1397,7 +1397,7 @@
         {
           "path": "scripts/adaptive-evidence-gates.mjs",
           "role": "SECURITY",
-          "sha256": "6c5ce69a8bd9ec93b2b23eb9d32cac47e4ba51ed4bfacbda48cc8a72a135ef53"
+          "sha256": "8346027ba325c587f3853e946e96f8b2b6e21afc58b55a095eb89ba0db961ec7"
         },
         {
           "path": "scripts/adaptive-delivery-status.mjs",
@@ -1407,7 +1407,7 @@
         {
           "path": "tests/adaptive-evidence-gates.test.ts",
           "role": "VALIDATOR",
-          "sha256": "45deaf165d3c0413f635b1582c9471a30d8645b278bec5d41e1c1ed494c9243f"
+          "sha256": "a8686da8c4c114430c0420f433ede5b62f4aac65f173e831ff05d8908f2242b5"
         },
         {
           "path": "docs/ADAPTIVE-EVIDENCE-GATES.md",
