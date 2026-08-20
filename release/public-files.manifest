@@ -173,6 +173,7 @@ docs/EXTENSION-ASSURANCE-PROFILES.md	docs/EXTENSION-ASSURANCE-PROFILES.md	0644
 docs/EXTERNAL-PLUGIN-PREFLIGHT.md	docs/EXTERNAL-PLUGIN-PREFLIGHT.md	0644
 docs/EXTERNAL-BI-SERVICE.md	docs/EXTERNAL-BI-SERVICE.md	0644
 docs/EXTERNAL-VIDEO-SERVICE.md	docs/EXTERNAL-VIDEO-SERVICE.md	0644
+docs/HMI-CONFORMANT-ENTRYPOINTS.md	docs/HMI-CONFORMANT-ENTRYPOINTS.md	0644
 docs/index.md	docs/index.md	0644
 docs/INTEGRATION-PROFILES.md	docs/INTEGRATION-PROFILES.md	0644
 docs/CAPABILITY-CELL-ERP-ORDER.md	docs/CAPABILITY-CELL-ERP-ORDER.md	0644
@@ -263,6 +264,10 @@ packages/contracts/src/learning-routing-outcome.ts	packages/contracts/src/learni
 packages/contracts/src/learning-routing-recommender.ts	packages/contracts/src/learning-routing-recommender.ts	0644
 packages/contracts/src/learning-routing-threats.ts	packages/contracts/src/learning-routing-threats.ts	0644
 packages/contracts/src/learning-routing.ts	packages/contracts/src/learning-routing.ts	0644
+packages/hmi-adapters/src/codex.ts	packages/hmi-adapters/src/codex.ts	0644
+packages/hmi-adapters/src/index.ts	packages/hmi-adapters/src/index.ts	0644
+packages/hmi-adapters/src/openclaw.ts	packages/hmi-adapters/src/openclaw.ts	0644
+packages/hmi-adapters/src/shared.ts	packages/hmi-adapters/src/shared.ts	0644
 packages/contracts/src/maintenance-contract-freeze.ts	packages/contracts/src/maintenance-contract-freeze.ts	0644
 packages/contracts/src/model-access-broker.ts	packages/contracts/src/model-access-broker.ts	0644
 packages/contracts/src/operation-event-quality.ts	packages/contracts/src/operation-event-quality.ts	0644
@@ -493,6 +498,7 @@ tests/hmi-disclosure-safety.test.ts	tests/hmi-disclosure-safety.test.ts	0644
 tests/hmi-discover-payload.test.ts	tests/hmi-discover-payload.test.ts	0644
 tests/hmi-explain-payload.test.ts	tests/hmi-explain-payload.test.ts	0644
 tests/hmi-harness-adapter.test.ts	tests/hmi-harness-adapter.test.ts	0644
+tests/hmi-conformant-entrypoints.test.ts	tests/hmi-conformant-entrypoints.test.ts	0644
 tests/hmi-post-contribute-consistency.test.ts	tests/hmi-post-contribute-consistency.test.ts	0644
 tests/hmi-post-explain-consistency.test.ts	tests/hmi-post-explain-consistency.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644

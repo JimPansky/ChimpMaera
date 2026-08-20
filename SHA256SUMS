@@ -186,6 +186,7 @@ b143228ed307d3b7dcf44618de8eaf5aa455077c3855195c402582be546d3c04  ./docs/ERP-REA
 e3c8149ba3da5f381de1062a6418bc9e26add4bc65b0c7e65daf83e3c5336984  ./docs/EXTERNAL-BI-SERVICE.md
 f9bf95fca23d503b5c030fad3d4775dc0d539ae3f3bd7b35bd075edffd6b3a89  ./docs/EXTERNAL-PLUGIN-PREFLIGHT.md
 008aa6b5cda4316d05d9185587f2e14e1877b84761b31eebdb3c1e6c6fcaff68  ./docs/EXTERNAL-VIDEO-SERVICE.md
+65b5111ffe231224e1574106776c8092eb91a94efeb6640169b8c86c89e63419  ./docs/HMI-CONFORMANT-ENTRYPOINTS.md
 2f0b8ee7a76365facc88c6d88667cb8653fc672d0399819027193af83cbe541a  ./docs/INTEGRATION-PROFILES.md
 437ea30db2ea06e6c1eedae3608f56ff99cddd162fef129bd311f5d856c1a081  ./docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md
 e7080bf688f1fc4322c735d5f169c83b37ffe6e4368da58e0b2aa90301bc46b1  ./docs/KNOWLEDGE-ENVELOPE.md
@@ -315,7 +316,7 @@ c06991184e1892993c1792f692927aff168061d40c60c3ba02eb6d43800d2202  ./examples/dai
 ea8d5f564acdae86b6ce054c7fc5dcb0dead50e85c74982d0644a9493879217b  ./examples/poc-release/showcase-v1.json
 01f41d094b67c04b73c86e0677f176b8aa75f5103a967ab9d6bacf5ac6be0fa5  ./examples/poc-setup-planner/catalog-v1.json
 0f6a224183d3d2eb68eebc0c61483c60cb785a93e67259cab264dc54aa2790cf  ./package-lock.json
-117d6f0c00ff608b8ffc23a1e6e9d68779fb31ce3ef4cc4d50770b3e6598af4d  ./package.json
+88fb8be59fb0d8c469c32ff2a445aac69b76cc89106467c30ce9a684955295b3  ./package.json
 b709ff62879c57afb24e88eac2d58c4b6b27cdfdca4e61aaacd6788c60cb6b6e  ./packages/contracts/src/agent-work-event.ts
 56e0a7fc4baf678c55b48e9b0f2e26b3cac6d66343b9b91be6a4fb0aa21319e5  ./packages/contracts/src/analytics-projection.ts
 d2310f860109f87b799ba4eb4b067255d4237c4bbb71c1780145d14908a608bd  ./packages/contracts/src/azure-identity-profile.ts
@@ -343,7 +344,7 @@ ba2f89720fc9a6e0d7b4d9f3287d6510126a1011a4100fd6dce795a541ab2a8f  ./packages/con
 95b6eed9287f31b5762944cb7a8743599a3732783d6a59e51c512384fac21227  ./packages/contracts/src/hmi-disclosure-safety.ts
 c5b7d230b24b548c7ed3bfbe51ada53ef1fbcbcf7018fae10e29177a9567b78f  ./packages/contracts/src/hmi-discover-payload.ts
 36c8b8c157ce5590b516f1680f8922eef9cf736c34a42649c0b0d4a764c1f1ff  ./packages/contracts/src/hmi-explain-payload.ts
-c837c4e01a67cee0a2d4dcca916c4d1f84f36f07ef62c81142c914fd7969723c  ./packages/contracts/src/hmi-harness-adapter.ts
+447e03953e315efb569ff9ee7f8f4963caca7ffa3000595363a3efc21df8dc0e  ./packages/contracts/src/hmi-harness-adapter.ts
 666357c0d3c27796b135c95f3848860f4bf14c2e96f427d7aa72a3e54736aa42  ./packages/contracts/src/index.ts
 ac0fb1c4489b4e3bede06d0472667f69fe61b74e7a65998e0efc98d37b969b1b  ./packages/contracts/src/injection-trust-boundary.ts
 eedcd74a342563771646413e82c5cae8dcb8505ef5bfcb79de4f17a8b9c02b10  ./packages/contracts/src/integration-profile.ts
@@ -383,11 +384,15 @@ e673fd892d39fec139af7b6706420dfd23aa8c4f2f5d202a4d9e817259e062d0  ./packages/con
 443bea4e94436b4d49cb45db8aa2cb5e6511848dc88b0fc78e9c743f1caaa125  ./packages/dev-worker/src/controller.ts
 b2717b420cff3db392bc280f0b716f17f82cc82954c25015fde81b386b426b6c  ./packages/dev-worker/src/m3-governance.ts
 133e3f953df25435f912d60c2ccc6df693a340c8b1450c06b025c86403fc1926  ./packages/dev-worker/src/publication-broker.ts
+f817b33632ab3e293f3d5da5127764b6e1855363ca7a6adc447617a868a14c74  ./packages/hmi-adapters/src/codex.ts
+cd429db84c5f4db0e4eff78547dabdbffeb3920cadcb15e144409d9eafb96b70  ./packages/hmi-adapters/src/index.ts
+aa70100d5a00594c660eebd700e9ef61abc8763a13da2abc2d47b56e358897c6  ./packages/hmi-adapters/src/openclaw.ts
+aaf2ff43fbbe308ff241d9b03f0d12e006e1e34d5bee21eebf21bd4271604032  ./packages/hmi-adapters/src/shared.ts
 dbffdad68f2d02dc88f144c20ef81fb6a7b6d9b412a88e11981b4d038b47a5f0  ./packages/setup-coordinator/src/index.ts
 cffdb4aef6035e65b23e9b8d52ef3a9e266bb9850ef1f5695f266c85631b239e  ./packages/usage-insights/src/cli.ts
 820a91361c34ca37962bd037552c7ac02f392936460f5fbd4d57c77ef145bdc5  ./packages/usage-insights/src/index.ts
 8ef201554430f515f3a9344c8dac5f55c4d0e348ee4e9d7f1736f8ba006edfba  ./release/governance.json
-688e97f508e911c56ebecf4179c69587f9166f3572b1108238a6cb277750dc5e  ./release/public-files.manifest
+0e0b8aa2f5a10a043a72a8c8b9dab59fd09f39d4b502e62c5ec19f5481183d85  ./release/public-files.manifest
 67fb3c2a0a37bf225e0f5c4f1d27ecfdd625a27d0b148e04e89398f82902ce9b  ./schemas/adaptability-benchmark-result-v1.schema.json
 e578bc137d4644221fdd466789979aee536d0f00ba20f3a9602c93efa3c487ec  ./schemas/contracts/agent-work-event-record-v1.schema.json
 ff383ccc0829599d11542109ac3b4f1380719e8c85ce49eabd7938a98ad4e942  ./schemas/contracts/azure-identity-profile-v1.schema.json
@@ -457,7 +462,7 @@ f84ab8f9434925d8464dc7f2da4d16693bf603f08907ff01cc1d2430d9af4522  ./schemas/runt
 e83a8152e66ebc161b0175622b9ecfc96f49737a5e167a91f430d82dd13b92d8  ./schemas/security/secure-default-proof-v1.schema.json
 8aec714bee414fd50ce4f1e8fd7c733d80e420b7c29385de3992f6f8ea9e2a0a  ./schemas/work-order-v1.schema.json
 94157ab122662d3325d1667a6c59791ba182ba925ab58fe579fbea9607225679  ./schemas/work-receipt-v1.schema.json
-8d1bd21865626fdab97caebea66258fd047c7245a251f35bb49d47d7eec70c99  ./scripts/build-public-release.sh
+b49e5b17cbfcc4591bcd0fdaee325e9c571229a32cd8a3e80df157fc87114eef  ./scripts/build-public-release.sh
 9dfa75c197150b38331eda7293c754275ba58b53121c9665a9267f1260786016  ./scripts/daily-poc.mjs
 abab50a97cf7113e2cad4125992fb3178a67877f573e974b128f2494ef1883b8  ./scripts/learning-routing-baseline.mjs
 ac48ba44b3c25878f6490108e94477f555749b391cb78c0b1d6c969c157ae5da  ./scripts/refresh-integrity-data.mjs
@@ -583,6 +588,7 @@ b503619e2ef4bf17dcbc1c77319f116c28e25f2e2b9675e24fa1096fdf6bd669  ./tests/fixtur
 81036747fea963b72624656b74166d2f9de5b15bfddb071fad717d307b888465  ./tests/fixtures/verification-fabric/negative-matrix-v1.json
 ddcbad4141a13898e105ea4fb7e973341d44749e4c77b22af2bd3171dd10ecef  ./tests/fixtures/verification-fabric/positive-bundle-v1.json
 db8f975679af390b49120ac9c928ba6f0e988988919b14402b474a4aee3e84ba  ./tests/helpers/openclaw-m1-4-harness.mjs
+188d58544ef325fa82ab6ee6b685e3ac79b4b09b7cc86a48fdd1f5cdc9034357  ./tests/hmi-conformant-entrypoints.test.ts
 5ffffaf800d5446e1083705ed431234f40dabc15cf1bd19941875526055d14c2  ./tests/hmi-contribute-preflight.test.ts
 4ccdcef454aa49e6639addc7ffc6793a6080398af259557038ffed85af725085  ./tests/hmi-core.test.ts
 830a3e1e4d353e97e93850bc3397e03773652bd252699f23138ddfd463de0f16  ./tests/hmi-disclosure-safety.test.ts
@@ -625,7 +631,7 @@ e1e4304dde40a18146d905885a7d7dc9646a8d22a7702a758ad0da50d1ee00e0  ./tests/poc-sh
 4bbdb6acb54291a49e12347f72a9b4b85241e28d639df56fc78c69f050103cc1  ./tests/power-platform-read-connector.test.ts
 dfe7338a6655c3a70f304f59c3a3e1e748ad62a8b78726eeb125db4e3f16332d  ./tests/protected-audit-timeline.test.ts
 c0525446e530ff39599ded8e413bb093cb77de7f910e727755f88d3c768af9a2  ./tests/public-product-spelling.test.mjs
-39f3bc14b677d4382389fe0f8e832f06272c78d8be49f14b339e7903697c00d2  ./tests/release-governance.test.mjs
+a697f4c5bd4085c4c87d71b5fee474ed901c6eb088d34c55808f4d9bda7db2c5  ./tests/release-governance.test.mjs
 af0f2117460bf2fc8478d9a45c58b17ad1bc6c839a9a0654a325078354fb4990  ./tests/resource-plane-profiles.test.ts
 599d23f5a6f3616e39100a802505bd39d395cc19a911d82b75f40a88141278f0  ./tests/secure-default-proof.test.mjs
 74d7c28fbe12bfeab992ed4c108a29ea49fdd1b07d5e8552bed550c3b2002783  ./tests/signal-release-intake.test.ts
@@ -686,4 +692,4 @@ b81903d977822ca156e09d48ddf824dcb17de2552d76cf566aaa9ac5f2bfc58f  ./verification
 93f42b3e9e78b32cc1e1193e3f7a7ef59ca7ccd2e4116bd184d22d504987d46a  ./verification/bi-003-erp-read-connector-evidence-v1.json
 d43b38be4695e0e5c70e3a8e0ebd2a55b527974d7d9721cc43d94ee248245432  ./verification/intake-001-evidence-v1.json
 e2fa73eb5312982af288d29df015b0dc3e010f3fdba6405ce3b464b4ccece660  ./verification/lkc-qual-01-m0-evidence-v1.json
-75885d429d2fdf1af48115c028f253fdfd34e4b9dd621166432498f54799c110  ./verification/verification-dag-v2.json
+b9e99a51affabc1e258b9430727a457316979065246367fe3a3d13f4ee0fc035  ./verification/verification-dag-v2.json

@@ -12,6 +12,9 @@ export const HMI_ADAPTER_CONTRACT_VERSION_V1 = "1.0.0" as const;
 
 export type HmiOperationV1 = "discover" | "explain" | "plan" | "handoff" | "validate" | "contribute";
 export type HmiSyntheticHarnessV1 = "SYNTHETIC_OPENCLAW" | "SYNTHETIC_CODEX";
+export type HmiConformantHarnessV1 = "OPENCLAW" | "CODEX";
+export type HmiHarnessV1 = HmiSyntheticHarnessV1 | HmiConformantHarnessV1;
+export type HmiHarnessAdapterVersionV1 = "synthetic-v1" | "openclaw-entrypoint-v1" | "codex-entrypoint-v1";
 
 export interface HmiAdapterPinV1 {
   readonly coreVersion: typeof HMI_CORE_VERSION_V1;
@@ -34,8 +37,8 @@ export interface HmiHarnessInvocationV1 {
   readonly selectedInput: unknown | null;
   readonly limits: HmiAdapterLimitsV1;
   readonly transport: {
-    readonly harnessId: HmiSyntheticHarnessV1;
-    readonly adapterVersion: "synthetic-v1";
+    readonly harnessId: HmiHarnessV1;
+    readonly adapterVersion: HmiHarnessAdapterVersionV1;
     readonly invocationCorrelation: string;
     readonly presentationMode: "JSON" | "MARKDOWN";
   };
@@ -108,6 +111,13 @@ function hasValidLimits(value: unknown, ceiling: HmiAdapterLimitsV1): value is H
     && isBoundedInteger(value.maxOutputBytes, ceiling.maxOutputBytes);
 }
 
+function isValidTransportTuple(harnessId: unknown, adapterVersion: unknown): boolean {
+  return (harnessId === "SYNTHETIC_OPENCLAW" && adapterVersion === "synthetic-v1")
+    || (harnessId === "SYNTHETIC_CODEX" && adapterVersion === "synthetic-v1")
+    || (harnessId === "OPENCLAW" && adapterVersion === "openclaw-entrypoint-v1")
+    || (harnessId === "CODEX" && adapterVersion === "codex-entrypoint-v1");
+}
+
 export function mapHmiHarnessInvocationV1(
   bundle: HmiGenerationBundleV1,
   pin: HmiAdapterPinV1,
@@ -137,8 +147,7 @@ export function mapHmiHarnessInvocationV1(
     || !value.selectors.every(isSelector)) return denied("HMI_ADAPTER_INPUT_DENIED");
   if (!hasValidLimits(value.limits, bundle.manifest.limits)) return denied("HMI_ADAPTER_LIMIT_DENIED");
   if (!exactKeys(value.transport, ["harnessId", "adapterVersion", "invocationCorrelation", "presentationMode"])
-    || !["SYNTHETIC_OPENCLAW", "SYNTHETIC_CODEX"].includes(value.transport.harnessId as string)
-    || value.transport.adapterVersion !== "synthetic-v1"
+    || !isValidTransportTuple(value.transport.harnessId, value.transport.adapterVersion)
     || typeof value.transport.invocationCorrelation !== "string"
     || !/^[a-z0-9][a-z0-9._-]{2,63}$/.test(value.transport.invocationCorrelation)
     || !["JSON", "MARKDOWN"].includes(value.transport.presentationMode as string)) {
@@ -148,7 +157,11 @@ export function mapHmiHarnessInvocationV1(
   let inputDigest: string | null = null;
   if (value.selectedInput !== null) {
     try {
-      inputDigest = normalizeHmiSemanticResultV1(value.selectedInput).responseDigest;
+      const normalized = normalizeHmiSemanticResultV1(value.selectedInput);
+      if (Buffer.byteLength(normalized.canonicalBytes, "utf8") > (value.limits.maxSourceBytes as number)) {
+        return denied("HMI_ADAPTER_LIMIT_DENIED");
+      }
+      inputDigest = normalized.responseDigest;
     } catch {
       return denied("HMI_ADAPTER_INPUT_DENIED");
     }
@@ -189,6 +202,9 @@ export function mapHmiHarnessResponseV1(mapping: HmiAdapterMappingV1, semanticRe
   if (mapping.outcome !== "MAPPED") return { outcome: "DENIED", reasonCodes: mapping.reasonCodes };
   try {
     const normalized = normalizeHmiSemanticResultV1(semanticResult);
+    if (Buffer.byteLength(normalized.canonicalBytes, "utf8") > mapping.request.limits.maxOutputBytes) {
+      return { outcome: "DENIED", reasonCodes: ["HMI_ADAPTER_LIMIT_DENIED"] };
+    }
     return {
       outcome: "MAPPED",
       canonicalResponseBytes: normalized.canonicalBytes,
