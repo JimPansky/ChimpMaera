@@ -20,6 +20,7 @@ const curatedSitemapPaths = new Set([
   "AGENT-WORK-EVENT-CONTRACT",
   "EXTERNAL-BI-SERVICE",
   "capabilities",
+  "CAPABILITY-CELL-ERP-ORDER",
   "examples",
   "EXTENSION-ASSURANCE-PROFILES",
   "INTEGRATION-PROFILES",
@@ -143,6 +144,7 @@ export default defineConfig({
         text: "Verify",
         items: [
           { text: "Capability evidence", link: "/capabilities" },
+          { text: "ERP order capability cell", link: "/CAPABILITY-CELL-ERP-ORDER" },
           { text: "Agent-work event contract", link: "/AGENT-WORK-EVENT-CONTRACT" },
           { text: "BI execution spine candidate", link: "/BI-EXECUTION-SPINE-CONTRACT" },
           { text: "Extension assurance profiles", link: "/EXTENSION-ASSURANCE-PROFILES" },

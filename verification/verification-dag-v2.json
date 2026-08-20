@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 12,
+  "graphVersion": 13,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "12f3db0ec0337622ebef3d73cb43f013a59bc61f7374f0fb9a3530afeb721395"
+          "sha256": "dc1d6f84dd6de8f45d856ab73fb762b0c5db90a4157fea68c503d9317febb654"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -209,6 +209,44 @@
       "globalInvalidation": false
     },
     {
+      "id": "cap-cell-erp-01",
+      "dependsOn": [
+        "integration-profile-v1"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/erp-order-capability-cell.ts",
+          "role": "CONTRACT",
+          "sha256": "a13750c0abeaae4fe9f2ce9580021d22f86eb9550f19ad7e104119a7603f2ea1"
+        },
+        {
+          "path": "schemas/contracts/erp-order-capability-cell-profile-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "60efae2adbfa365e0a07fffa6d199ace406e073684ec5d01dc1b57464ae97e5a"
+        },
+        {
+          "path": "tests/erp-order-capability-cell.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "5d1463db1bcb4cf16aa5fa8f76fd2437e9bd8f9041016b78c6a6ff87458567ef"
+        },
+        {
+          "path": "docs/CAPABILITY-CELL-ERP-ORDER.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "293e7c6d9612e28e7c3827f102ae8adab90673095b30e2fac3a138eb352a17c0"
+        }
+      ],
+      "ownedTests": [
+        "npm run erp-order-cell:test"
+      ],
+      "invariants": [
+        "Exactly two local-synthetic provider bindings preserve the exact erp.order.create v1 catalogue action and discrete-unit semantics.",
+        "The consumer and core remain unchanged across exact digest-bound profile switch and explicit effective-rights diff.",
+        "Semantic mismatch and replay fail closed; readback, receipt, rollback, double-run determinism and zero residue remain verified without external calls."
+      ],
+      "riskClass": "HIGH",
+      "globalInvalidation": false
+    },
+    {
       "id": "vf-shadow-v2",
       "dependsOn": [
         "vf-contract-v1"
@@ -242,7 +280,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "65f96dca06666d804215f61fb61ffc791139449cd4aec330b0260a77d27e41b7"
+          "sha256": "3273cc911bc032f2775e8f2761e557ec04bd8d6244fa950dd6e6e77913f414a4"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -271,7 +309,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "687d93cb5c6311126a75007aa038a61c2d38802999380aa0732131a1fd9c2256"
+          "sha256": "5e69f35a0d48b9ca34e2c863dbe63ec4c9fbd98052ccc73671041e4b04bc15c5"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -461,7 +499,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "1e3bc26d646931e5ee86602f2146160e0efb6a9c5fae844695094c8a052ff632"
+          "sha256": "e833ba3dab24f52e1906509bf7ad5dcebec5ccea5a5f5c2e12bed2c65869c9f1"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -814,7 +852,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "a1305241005c0fee466060959bcae3db2e26def0d58976b5559a5bb4e5595128"
+          "sha256": "0811f78b2b96f670f63dbe907ac21ec1bae0e4511b3557978a1f72c46691c790"
         },
         {
           "path": "package-lock.json",
@@ -881,7 +919,7 @@
         {
           "path": "tools/video-production-reference/SHA256SUMS",
           "role": "CONTRACT",
-          "sha256": "368f0cee9f4c81fb8fc878182525ff1977afee016ade131411dff1fabd4f6f11"
+          "sha256": "a58b1a353ad26f520b0d1c7e40ddb876f88b39cf9375c06bd226781ba8388315"
         },
         {
           "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
@@ -1056,7 +1094,7 @@
         {
           "path": "tools/video-production-reference/tests/slice.test.mjs",
           "role": "SECURITY",
-          "sha256": "66fd3f63e0d8e6f3831d321b92e9db6bc2f08dd032c70c67a2550955c000bcca"
+          "sha256": "9d335268c4c0c249b1fe3c02d3b00a5d6a4cc25a3d61a21d02d7b5e70ed58fcc"
         }
       ],
       "ownedTests": [

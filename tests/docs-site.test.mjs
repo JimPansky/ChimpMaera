@@ -9,6 +9,7 @@ const curatedPages = [
   ["index.html", baseUrl],
   ["alternatives.html", `${baseUrl}alternatives`],
   ["AGENT-WORK-EVENT-CONTRACT.html", `${baseUrl}AGENT-WORK-EVENT-CONTRACT`],
+  ["CAPABILITY-CELL-ERP-ORDER.html", `${baseUrl}CAPABILITY-CELL-ERP-ORDER`],
   ["EXTERNAL-BI-SERVICE.html", `${baseUrl}EXTERNAL-BI-SERVICE`],
   ["capabilities.html", `${baseUrl}capabilities`],
   ["examples.html", `${baseUrl}examples`],

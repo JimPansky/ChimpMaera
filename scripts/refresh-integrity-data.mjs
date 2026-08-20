@@ -114,7 +114,7 @@ proof.verifier.sha256 = digest(proof.verifier.path);
 writeJson(proofPath, proof);
 writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEvidence(proof));
 
-dag.graphVersion = 12;
+dag.graphVersion = 13;
 const externalPluginInputs = [
   ["packages/contracts/src/external-plugin-preflight.ts", "SECURITY"],
   ["schemas/contracts/external-plugin-preflight-v1.schema.json", "SCHEMA"],
@@ -329,7 +329,10 @@ const entries = new Map(readFileSync(sumsPath, "utf8").trimEnd().split("\n").map
 for (const line of readFileSync(path.join(root, "release/public-files.manifest"), "utf8").split("\n")) {
   if (line && !line.startsWith("#")) entries.set(line.split("\t")[0], null);
 }
-for (const relative of ["scripts/refresh-integrity-data.mjs"]) entries.set(relative, null);
+for (const relative of [
+  "scripts/refresh-integrity-data.mjs",
+  "docs/development/cap-cell-erp-01-pdca.md",
+]) entries.set(relative, null);
 for (const relative of [...entries.keys()]) {
   if (!existsSync(path.join(root, relative))) entries.delete(relative);
 }

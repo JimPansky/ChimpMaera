@@ -175,6 +175,7 @@ docs/EXTERNAL-BI-SERVICE.md	docs/EXTERNAL-BI-SERVICE.md	0644
 docs/EXTERNAL-VIDEO-SERVICE.md	docs/EXTERNAL-VIDEO-SERVICE.md	0644
 docs/index.md	docs/index.md	0644
 docs/INTEGRATION-PROFILES.md	docs/INTEGRATION-PROFILES.md	0644
+docs/CAPABILITY-CELL-ERP-ORDER.md	docs/CAPABILITY-CELL-ERP-ORDER.md	0644
 docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md	docs/ISSUE-CANDIDATE-OPERATOR-GUIDE.md	0644
 docs/KNOWLEDGE-ENVELOPE.md	docs/KNOWLEDGE-ENVELOPE.md	0644
 docs/KNOWLEDGE-HARVEST.md	docs/KNOWLEDGE-HARVEST.md	0644
@@ -250,6 +251,7 @@ packages/contracts/src/hmi-harness-adapter.ts	packages/contracts/src/hmi-harness
 packages/contracts/src/index.ts	packages/contracts/src/index.ts	0644
 packages/contracts/src/injection-trust-boundary.ts	packages/contracts/src/injection-trust-boundary.ts	0644
 packages/contracts/src/integration-profile.ts	packages/contracts/src/integration-profile.ts	0644
+packages/contracts/src/erp-order-capability-cell.ts	packages/contracts/src/erp-order-capability-cell.ts	0644
 packages/contracts/src/issue-candidate.ts	packages/contracts/src/issue-candidate.ts	0644
 packages/contracts/src/knowledge-envelope.ts	packages/contracts/src/knowledge-envelope.ts	0644
 packages/contracts/src/plugin-knowledge-harvest.ts	packages/contracts/src/plugin-knowledge-harvest.ts	0644
@@ -313,6 +315,7 @@ schemas/contracts/hmi-discover-payload-v1.schema.json	schemas/contracts/hmi-disc
 schemas/contracts/hmi-explain-payload-v1.schema.json	schemas/contracts/hmi-explain-payload-v1.schema.json	0644
 schemas/contracts/hmi-generation-bundle-v1.schema.json	schemas/contracts/hmi-generation-bundle-v1.schema.json	0644
 schemas/contracts/integration-profile-v1.schema.json	schemas/contracts/integration-profile-v1.schema.json	0644
+schemas/contracts/erp-order-capability-cell-profile-v1.schema.json	schemas/contracts/erp-order-capability-cell-profile-v1.schema.json	0644
 schemas/contracts/issue-candidate-v1.schema.json	schemas/contracts/issue-candidate-v1.schema.json	0644
 schemas/contracts/knowledge-contribution-envelope-v1.schema.json	schemas/contracts/knowledge-contribution-envelope-v1.schema.json	0644
 schemas/contracts/knowledge-envelope-v1.schema.json	schemas/contracts/knowledge-envelope-v1.schema.json	0644
@@ -487,6 +490,7 @@ tests/hmi-post-contribute-consistency.test.ts	tests/hmi-post-contribute-consiste
 tests/hmi-post-explain-consistency.test.ts	tests/hmi-post-explain-consistency.test.ts	0644
 tests/injection-trust-boundary.test.ts	tests/injection-trust-boundary.test.ts	0644
 tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
+tests/erp-order-capability-cell.test.ts	tests/erp-order-capability-cell.test.ts	0644
 tests/issue-candidate.test.ts	tests/issue-candidate.test.ts	0644
 tests/knowledge-envelope.test.ts	tests/knowledge-envelope.test.ts	0644
 tests/plugin-knowledge-harvest.test.ts	tests/plugin-knowledge-harvest.test.ts	0644
