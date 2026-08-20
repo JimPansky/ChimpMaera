@@ -7,16 +7,17 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The PanSphaira Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260820.2` and its scoped evidence; a later documentation
+`v0.2.0-poc.20260820.3` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 
-- The current increment proves one default-off, read-only UTF-8 Markdown/Text
-  knowledge corpus path with a closed manifest, content and line-chunk digests,
-  exact citations, licence/permitted-use metadata, deterministic lexical
-  receipts, conflict visibility and Accepted/LKG rollback. It does not claim
-  PDF/OCR, Kiwix/Wikipedia, corpus download, LLM or semantic knowledge quality,
-  global truth, production capacity, deployment, live data access, customer
-  data or production readiness.
+- The current increment proves two repository-native OpenClaw and Codex entry
+  points backed by one pinned verified HMI generation. Both remain
+  `DESCRIBED_INACTIVE`, expose only `discover`, `explain` and preparation-only
+  `contribute-preflight`, and preserve byte-identical canonical semantics for
+  equivalent requests. It does not claim installation, universal or live
+  harness compatibility, runtime activation, credential/tool/route grants,
+  external writes, `plan`, `validate`, `handoff`, hostile-host isolation,
+  production readiness, security certification or customer evidence.
 - The earlier public-spelling increment changed human-facing display spelling
   only. Repository slugs, stable filenames, schemas, APIs, protocols, packages,
   services and runtime identifiers retain their existing technical identities.

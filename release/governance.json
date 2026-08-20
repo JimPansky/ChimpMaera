@@ -2,32 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JoFe2/PANSPHAIRA",
   "currentRelease": {
-    "releaseId": 373507239,
-    "tag": "v0.2.0-poc.20260820.2",
-    "title": "PanSphaira v0.2.0-poc.20260820.2 - Read-only Local File Knowledge Corpus",
-    "increment": "Read-only Local File Knowledge Corpus",
-    "targetCommitish": "f14806aa1451f63456186ebe2268fa4a72723345",
-    "tagObjectSha": "f14806aa1451f63456186ebe2268fa4a72723345",
-    "publishedAt": "2026-08-20T05:30:15Z",
-    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260820.2",
+    "releaseId": 373968128,
+    "tag": "v0.2.0-poc.20260820.3",
+    "title": "PanSphaira v0.2.0-poc.20260820.3 - Inactive Conformant HMI Entry Points",
+    "increment": "Inactive Conformant HMI Entry Points",
+    "targetCommitish": "1507944767aab5ccf64e25843898d6a472301aaf",
+    "tagObjectSha": "1507944767aab5ccf64e25843898d6a472301aaf",
+    "publishedAt": "2026-08-20T19:10:09Z",
+    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260820.3",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "cm-product-increment-rc-20260820-lkc-files-01.tar.gz",
-        "size": 1399831,
-        "sha256": "0236a6667a72b86d602c6b1da729716d868bcdb77ca69ad3091d0cdceee88a47"
+        "name": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz",
+        "size": 1413020,
+        "sha256": "d1060db51a74215982ef3cda6966f2aa64cf247f2cbf9fe084e6f1d2fffdd358"
       },
       {
-        "name": "cm-product-increment-rc-20260820-lkc-files-01.tar.gz.sha256",
-        "size": 119,
-        "sha256": "660dc7b51a1e21736611a609ee3c5524dc313f2e62217d2ffd91b3f36fba72a1"
+        "name": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz.sha256",
+        "size": 133,
+        "sha256": "fde777539cd1623c7db7a55da287b4d5d878bcaf6396407eab231724b52b338e"
       }
     ],
     "assetManifest": {
-      "name": "cm-product-increment-rc-20260820-lkc-files-01.tar.gz.sha256",
-      "declares": "cm-product-increment-rc-20260820-lkc-files-01.tar.gz"
+      "name": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz.sha256",
+      "declares": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz"
     }
   },
   "policy": {
@@ -84,9 +84,9 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260820.2 is the current regular Latest release for the read-only local file knowledge corpus; its closed manifest, content and line-chunk digests, exact citations, licence/permitted-use metadata, deterministic lexical receipts, conflict visibility and Accepted/LKG rollback remain local/synthetic and default-off.",
-      "evidencePaths": ["README.md", "docs/CAPABILITY-CELL-ERP-ORDER.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "No PDF/OCR, Kiwix/Wikipedia, corpus download, LLM or semantic knowledge quality, global truth, production capacity, deployment, live data access, customer data or production readiness is claimed."]
+      "claim": "v0.2.0-poc.20260820.3 is the current regular Latest release for two inactive conformant OpenClaw and Codex HMI entry points backed by one pinned verified generation with byte-identical canonical semantics.",
+      "evidencePaths": ["README.md", "docs/HMI-CONFORMANT-ENTRYPOINTS.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
+      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "No installation, universal or live harness compatibility, runtime activation, authority grant, external write, production readiness, security certification or customer evidence is claimed."]
     },
     {
       "claimId": "CM-REL-002",
@@ -275,8 +275,8 @@
     {
       "claimId": "CM-REL-006",
       "component": "HMI/Harness Multitool",
-      "claim": "PANSPHAIRA ships an authority-free HMI/Harness multitool for bounded generation, disclosure-safe discover/explain payloads and digest-bound contribution preparation that cannot publish or write externally.",
-      "userValue": "Users can inspect supported operations, explanations and a canonical contribution preflight without the interface silently acquiring submission, publication or execution rights.",
+      "claim": "PANSPHAIRA ships two repository-native, inactive and authority-free OpenClaw/Codex HMI entry points for bounded generation, disclosure-safe discover/explain payloads and digest-bound contribution preparation that cannot publish or write externally.",
+      "userValue": "Users can import either harness entry point and receive byte-identical canonical semantics without the interface silently acquiring installation, submission, publication or execution rights.",
       "includedBytes": [
         "packages/contracts/src/hmi-core.ts",
         "packages/contracts/src/hmi-harness-adapter.ts",
@@ -284,6 +284,10 @@
         "packages/contracts/src/hmi-discover-payload.ts",
         "packages/contracts/src/hmi-explain-payload.ts",
         "packages/contracts/src/hmi-contribute-preflight.ts",
+        "packages/hmi-adapters/src/codex.ts",
+        "packages/hmi-adapters/src/index.ts",
+        "packages/hmi-adapters/src/openclaw.ts",
+        "packages/hmi-adapters/src/shared.ts",
         "schemas/contracts/hmi-generation-bundle-v1.schema.json",
         "schemas/contracts/hmi-discover-payload-v1.schema.json",
         "schemas/contracts/hmi-explain-payload-v1.schema.json",
@@ -293,7 +297,9 @@
         "tests/fixtures/hmi/positive-discover-payload-v1.json",
         "tests/fixtures/hmi/positive-explain-payload-v1.json",
         "tests/fixtures/hmi/positive-contribute-preflight-v1.json",
-        "tests/fixtures/hmi/negative-matrix-v1.json"
+        "tests/fixtures/hmi/negative-matrix-v1.json",
+        "tests/hmi-conformant-entrypoints.test.ts",
+        "docs/HMI-CONFORMANT-ENTRYPOINTS.md"
       ],
       "functionalProof": {
         "testPaths": [
@@ -304,9 +310,10 @@
           "tests/hmi-explain-payload.test.ts",
           "tests/hmi-contribute-preflight.test.ts",
           "tests/hmi-post-explain-consistency.test.ts",
-          "tests/hmi-post-contribute-consistency.test.ts"
+          "tests/hmi-post-contribute-consistency.test.ts",
+          "tests/hmi-conformant-entrypoints.test.ts"
         ],
-        "result": "PASS 42/42: focused HMI suites include 7/7 contribution-preflight and 4/4 post-contribution cross-contract probes."
+        "result": "PASS 47/47: the complete focused HMI suites include five conformant-entrypoint probes plus the existing generation, disclosure, discover, explain, contribution-preflight and post-consistency proofs."
       },
       "safetyProof": {
         "testPaths": [
@@ -314,40 +321,47 @@
           "tests/hmi-contribute-preflight.test.ts",
           "tests/hmi-post-explain-consistency.test.ts",
           "tests/hmi-post-contribute-consistency.test.ts",
-          "tests/fixtures/hmi/negative-matrix-v1.json"
+          "tests/fixtures/hmi/negative-matrix-v1.json",
+          "tests/hmi-conformant-entrypoints.test.ts"
         ],
-        "result": "PASS: stale bindings, invented provenance, selector/capability widening, authority fields and submission/publication effects deny deterministically."
+        "result": "PASS: unsupported operations, ambient fields, stale bindings, generation drift, invented provenance, selector/capability widening, byte-ceiling drift, authority fields and submission/publication effects deny deterministically."
       },
       "evidencePaths": [
         "docs/development/hmi-008-post-explain-consistency-audit-pdca.md",
         "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md",
         "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md",
         "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md",
-        "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+        "docs/development/2026-08-03-verification-hmi-release-handoff.md",
+        "docs/HMI-CONFORMANT-ENTRYPOINTS.md",
+        "docs/development/hmi-013-conformant-entrypoints-m0-pdca.md"
       ],
       "nonClaims": [
-        "Preparation/preflight over local deterministic synthetic data only; no issue submission, publication, external write, live harness, route, credential, planning, validation, handoff, runtime authority or production UI is proven."
+        "Preparation/preflight over local deterministic synthetic data only; no installation, universal or live harness compatibility, issue submission, publication, external write, route, credential, planning, validation, handoff, runtime authority, hostile-host isolation, production readiness or customer evidence is proven."
       ],
       "traceability": {
         "issues": [
-          42
+          42,
+          36
         ],
         "pullRequests": [
-          71
+          71,
+          251
         ],
         "sourceCommits": [
           "499f04c99fe4edbe896c778eeffab3d47204ab81",
           "f7a66ce7a449f122bfbacc986d4c9ac6f99bd35a",
           "dccd2cf1f6b1dc4b49b9fb93d3f1cb4bec947697",
           "b68019917fe2773f9b87e93525c47a2bd249f4c5",
-          "b30411555e451d2b3040a2c5d635f23cdcc293b5"
+          "b30411555e451d2b3040a2c5d635f23cdcc293b5",
+          "1507944767aab5ccf64e25843898d6a472301aaf"
         ],
         "pdcaPaths": [
           "docs/development/hmi-008-post-explain-consistency-audit-pdca.md",
           "docs/development/hmi-010-authority-free-contribute-preflight-pdca.md",
           "docs/development/hmi-011-post-contribute-consistency-audit-pdca.md",
           "docs/development/hmi-012-remaining-operation-frontier-assessment-pdca.md",
-          "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+          "docs/development/2026-08-03-verification-hmi-release-handoff.md",
+          "docs/development/hmi-013-conformant-entrypoints-m0-pdca.md"
         ],
         "publicManifest": "release/public-files.manifest",
         "releaseCommitBinding": "currentRelease.tagObjectSha",
