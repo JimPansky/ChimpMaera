@@ -22,23 +22,23 @@ only loopback service bindings.
 The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
-Its increment claim is a default-off, read-only UTF-8 Markdown/Text knowledge
-corpus path with a closed manifest, content and line-chunk digests, exact
-file/line citations, licence/permitted-use metadata, deterministic lexical
-receipts, conflict visibility and Accepted/LKG rollback. It does not claim
-PDF/OCR, Kiwix/Wikipedia, corpus download, LLM or semantic knowledge quality,
-global truth, production capacity, deployment, live data access, customer data
-or production readiness.
+Its increment claim is two repository-native OpenClaw and Codex entry points
+backed by one pinned verified HMI generation. Both remain
+`DESCRIBED_INACTIVE`, expose only `discover`, `explain` and preparation-only
+`contribute-preflight`, and produce byte-identical canonical semantics for
+equivalent requests. It does not claim installation, universal or live harness
+compatibility, runtime activation, authority, external writes, production
+readiness or customer evidence.
 
 ```sh
-release=v0.2.0-poc.20260820.2
-archive=cm-product-increment-rc-20260820-lkc-files-01.tar.gz
+release=v0.2.0-poc.20260820.3
+archive=cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260820-lkc-files-01
+cd cm-product-increment-rc-20260820-hmi-conformant-entrypoints
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from
