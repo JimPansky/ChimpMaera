@@ -766,12 +766,13 @@ test("CCP-M1-INT-026 Verification DAG ownership expansion advances its graph ver
     graphVersion: number;
     nodes: Array<{ id: string }>;
   };
-  assert.equal(dag.graphVersion, 12);
-  assert.equal(dag.nodes.length, 17);
+  assert.equal(dag.graphVersion, 13);
+  assert.equal(dag.nodes.length, 18);
   assert.equal(dag.nodes.filter(({ id }) => id === "etl-02-external-plugin-preflight-v1").length, 1);
   assert.equal(dag.nodes.filter(({ id }) => id === "awi-plugin-01-knowledge-harvest-v1").length, 1);
   assert.equal(dag.nodes.filter(({ id }) => id === "awi-insights-1-usage-insights-v1").length, 1);
   assert.equal(dag.nodes.filter(({ id }) => id === "ccp-m1-contribution-intake-ledger-v1").length, 1);
+  assert.equal(dag.nodes.filter(({ id }) => id === "cap-cell-erp-01").length, 1);
 });
 
 test("CCP-M1-INT-027 foreign submitted evidence defeats a fully rehashed rejection-to-head rewrite", () => {

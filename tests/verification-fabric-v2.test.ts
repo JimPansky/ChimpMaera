@@ -82,7 +82,7 @@ test("contract and cross-contract changes invalidate downstream dependants", () 
   ]) {
     const result = plan([changed]);
     assert.equal(result.mode, "IMPACTED_SHADOW");
-    assert.deepEqual(result.selectedNodes, ["awi-plugin-01-knowledge-harvest-v1", "etl-02-external-plugin-preflight-v1", "external-bi-service-v2", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
+    assert.deepEqual(result.selectedNodes, ["awi-plugin-01-knowledge-harvest-v1", "cap-cell-erp-01", "etl-02-external-plugin-preflight-v1", "external-bi-service-v2", "intake-001-issue-candidate-v1", "integration-profile-v1", "know-media-m1-audience-learning-v1", "learning-routing-foundation", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof", "vf-contract-v1", "vf-shadow-v2"]);
   }
 });
 
@@ -112,8 +112,15 @@ test("learning-routing changes select the complete foundation and downstream int
 test("integration profile changes select the bounded owner and downstream integrity gates", () => {
   const result = plan(["packages/contracts/src/integration-profile.ts"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["integration-profile-v1", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof"]);
+  assert.deepEqual(result.selectedNodes, ["cap-cell-erp-01", "integration-profile-v1", "openclaw-m1-4", "openclaw-m1-5", "repository-integrity", "secure-default-proof"]);
   assert.ok(result.selectedTests.includes("npm run integration-profile:test"));
+});
+
+test("ERP capability-cell changes select the bounded owner and exact focused suite", () => {
+  const result = plan(["packages/contracts/src/erp-order-capability-cell.ts"]);
+  assert.equal(result.mode, "IMPACTED_SHADOW");
+  assert.deepEqual(result.selectedNodes, ["cap-cell-erp-01"]);
+  assert.deepEqual(result.selectedTests, ["npm run erp-order-cell:test"]);
 });
 
 test("external BI v2 client changes select only the thin client and downstream integrity gates", () => {
