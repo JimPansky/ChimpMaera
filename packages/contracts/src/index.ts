@@ -39,6 +39,7 @@ export * from "./extension-assurance-profile.js";
 export * from "./external-plugin-preflight.js";
 export * from "./agent-work-event.js";
 export * from "./knowledge-envelope.js";
+export * from "./local-file-knowledge-corpus.js";
 export * from "./plugin-knowledge-harvest.js";
 export * from "./knowledge-quality.js";
 export * from "./analytics-projection.js";

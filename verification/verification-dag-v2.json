@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 13,
+  "graphVersion": 14,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "dc1d6f84dd6de8f45d856ab73fb762b0c5db90a4157fea68c503d9317febb654"
+          "sha256": "64c47b3679c256be25872fb4eaa0fbc4a47b3c2ba6dc5269bb7b4ce9c11f88d5"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -280,7 +280,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "3273cc911bc032f2775e8f2761e557ec04bd8d6244fa950dd6e6e77913f414a4"
+          "sha256": "edabce0972f2c09d6b9bd621815a2d619fcc2acf9458b41468eb889200f78c17"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -309,7 +309,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "5e69f35a0d48b9ca34e2c863dbe63ec4c9fbd98052ccc73671041e4b04bc15c5"
+          "sha256": "666357c0d3c27796b135c95f3848860f4bf14c2e96f427d7aa72a3e54736aa42"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -499,7 +499,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "e833ba3dab24f52e1906509bf7ad5dcebec5ccea5a5f5c2e12bed2c65869c9f1"
+          "sha256": "8d1bd21865626fdab97caebea66258fd047c7245a251f35bb49d47d7eec70c99"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -797,6 +797,64 @@
       "globalInvalidation": false
     },
     {
+      "id": "lkc-files-01-local-file-corpus",
+      "dependsOn": [
+        "awi-03-knowledge-envelope"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/local-file-knowledge-corpus.ts",
+          "role": "SECURITY",
+          "sha256": "3bdcae61a26c3468359fca0b8dcd0e64725dbd054257bb5445e5cb7298494c97"
+        },
+        {
+          "path": "schemas/contracts/local-file-corpus-profile-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "287ec272a403ebec4cdc29d36c83a52ccbca39f044864df0ef181a1d7e1b7fea"
+        },
+        {
+          "path": "tests/local-file-knowledge-corpus.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "2c3c66ae3d85082cc7b058f893ac3d72a2a19caaea18967927e1d0c448e9e8eb"
+        },
+        {
+          "path": "tests/fixtures/local-file-corpus/edition-1/operations.md",
+          "role": "FIXTURE",
+          "sha256": "f2ea5859e3b5be0753626376b8109d785dcb055dbf0c1636c97863f49254e2c6"
+        },
+        {
+          "path": "tests/fixtures/local-file-corpus/edition-1/policy.txt",
+          "role": "FIXTURE",
+          "sha256": "9d45a1d2f0359f3005571efb9f88054706be8ca40e036e7cb5266cb273253415"
+        },
+        {
+          "path": "tests/fixtures/local-file-corpus/edition-2/operations.md",
+          "role": "FIXTURE",
+          "sha256": "2443494eeb568b4721649f706ea1c926fd73e4cbf06c048e88a449d6cbc1f5b9"
+        },
+        {
+          "path": "tests/fixtures/local-file-corpus/edition-2/policy.txt",
+          "role": "FIXTURE",
+          "sha256": "0879bbaf9892dd4752993096e99f6ae9a72c0f6a75d77ff8321d1093e0665b5d"
+        },
+        {
+          "path": "docs/LOCAL-FILE-KNOWLEDGE-CORPUS.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "906f4c19a4744d20eaea70c28e3911c0bb1613ea447ffb8e0624bba99593c9a6"
+        }
+      ],
+      "ownedTests": [
+        "npm run local-file-corpus:test"
+      ],
+      "invariants": [
+        "Only an exact closed set of regular LF UTF-8 Markdown/Text files with pinned content digests is materialized.",
+        "Every lexical result preserves exact path/line citation, licence, permitted use, shared-source and conflict visibility.",
+        "Failed successor activation retains exact Accepted/LKG editions with zero staged residue and no write, network or execution authority."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
       "id": "secure-default-proof",
       "dependsOn": [
         "repository-integrity",
@@ -852,7 +910,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "0811f78b2b96f670f63dbe907ac21ec1bae0e4511b3557978a1f72c46691c790"
+          "sha256": "117d6f0c00ff608b8ffc23a1e6e9d68779fb31ce3ef4cc4d50770b3e6598af4d"
         },
         {
           "path": "package-lock.json",
@@ -919,7 +977,7 @@
         {
           "path": "tools/video-production-reference/SHA256SUMS",
           "role": "CONTRACT",
-          "sha256": "a58b1a353ad26f520b0d1c7e40ddb876f88b39cf9375c06bd226781ba8388315"
+          "sha256": "eb1961b0a74e868a37f3ff1020118fcba1ec9780d11b937bce70733edb10ce37"
         },
         {
           "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
@@ -1094,7 +1152,7 @@
         {
           "path": "tools/video-production-reference/tests/slice.test.mjs",
           "role": "SECURITY",
-          "sha256": "9d335268c4c0c249b1fe3c02d3b00a5d6a4cc25a3d61a21d02d7b5e70ed58fcc"
+          "sha256": "acf90837181abb8c2f627f7800f681f77e6225e628339bd3dbf297a943efc0ad"
         }
       ],
       "ownedTests": [

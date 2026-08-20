@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoFe2/PANSPHAIRA/schemas/contracts/local-file-corpus-profile-v1.schema.json",
+  "title": "Local file knowledge corpus profile v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "enabled", "corpusId", "editionId", "priorEditionId", "observedAtMs", "files", "conflicts"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.knowledge/local-file-corpus-profile/v1" },
+    "enabled": { "type": "boolean" },
+    "corpusId": { "$ref": "#/$defs/id" },
+    "editionId": { "$ref": "#/$defs/id" },
+    "priorEditionId": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/id" }] },
+    "observedAtMs": { "type": "integer", "minimum": 0 },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "expectedContentDigest", "licence", "permittedUses", "sharedSourceIds"],
+        "properties": {
+          "path": { "type": "string", "maxLength": 240, "pattern": "^(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]+\\.(?:md|txt)$" },
+          "expectedContentDigest": { "$ref": "#/$defs/digest" },
+          "licence": { "enum": ["CC0-1.0", "CC-BY-4.0", "APACHE-2.0", "MIT", "OWNER_AUTHORIZED"] },
+          "permittedUses": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "uniqueItems": true,
+            "items": { "enum": ["CURATED_READ", "EXPLORATORY_READ"] }
+          },
+          "sharedSourceIds": {
+            "type": "array",
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/id" }
+          }
+        }
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["left", "right", "kind"],
+        "properties": {
+          "left": { "$ref": "#/$defs/lineReference" },
+          "right": { "$ref": "#/$defs/lineReference" },
+          "kind": { "enum": ["CONTRADICTION", "SOURCE_DEPENDENCY"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,31}:[a-z0-9][a-z0-9._-]{2,95}$" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "lineReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "line"],
+      "properties": {
+        "path": { "type": "string", "maxLength": 240, "pattern": "^(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]+\\.(?:md|txt)$" },
+        "line": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

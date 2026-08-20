@@ -62,8 +62,8 @@ test("canonical Evidence DAG input digests match the current repository bytes", 
 test("AWI-03 knowledge changes select the bounded critical owner and hard gates", () => {
   const result = plan(["packages/contracts/src/knowledge-envelope.ts"]);
   assert.equal(result.mode, "IMPACTED_SHADOW");
-  assert.deepEqual(result.selectedNodes, ["awi-03-knowledge-envelope", "awi-plugin-01-knowledge-harvest-v1"]);
-  assert.deepEqual(result.selectedTests, ["npm run knowledge-envelope:test", "npm run plugin-knowledge-harvest:test"]);
+  assert.deepEqual(result.selectedNodes, ["awi-03-knowledge-envelope", "awi-plugin-01-knowledge-harvest-v1", "lkc-files-01-local-file-corpus"]);
+  assert.deepEqual(result.selectedTests, ["npm run knowledge-envelope:test", "npm run local-file-corpus:test", "npm run plugin-knowledge-harvest:test"]);
   assert.deepEqual(result.hardGates, [...graph().hardGates].sort((a, b) => a.localeCompare(b, "en")));
 });
 
