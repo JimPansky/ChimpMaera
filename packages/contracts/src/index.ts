@@ -24,6 +24,7 @@ export * from "./builder-quality-evidence.js";
 export * from "./builder-contribution-bundle.js";
 export * from "./verification-fabric.js";
 export * from "./verification-fabric-v2.js";
+export * from "./adaptive-evidence-gates.js";
 export * from "./update-doctor.js";
 export * from "./maintenance-contract-freeze.js";
 export * from "./update-check-plan.js";

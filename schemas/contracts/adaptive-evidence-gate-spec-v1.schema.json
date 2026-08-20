@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoFe2/PANSPHAIRA/schemas/contracts/adaptive-evidence-gate-spec-v1.schema.json",
+  "title": "PANSPHAIRA adaptive evidence gate specification v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sliceId", "rootGoal", "subjectDigest", "scope", "scopeDigest", "sliceType", "risks", "requestedProfiles", "releaseRequired", "productEvidenceRequired", "evidenceMaxAgeMs", "gates"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.verification/adaptive-gate-spec/v1" },
+    "sliceId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$" },
+    "rootGoal": { "type": "string", "minLength": 3, "maxLength": 512 },
+    "subjectDigest": { "$ref": "#/$defs/digest" },
+    "scope": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/path" } },
+    "scopeDigest": { "$ref": "#/$defs/digest" },
+    "sliceType": { "enum": ["docs-only", "code-runtime", "ui-presentation", "security-trust-boundary", "external-integration"] },
+    "risks": { "type": "array", "uniqueItems": true, "items": { "enum": ["security", "trust", "external"] } },
+    "requestedProfiles": { "type": "array", "uniqueItems": true, "items": { "enum": ["docs-minimal", "code-runtime", "ui-presentation", "security-trust-boundary", "external-integration", "release-required"] } },
+    "releaseRequired": { "type": "boolean" },
+    "productEvidenceRequired": { "type": "boolean" },
+    "evidenceMaxAgeMs": { "type": "integer", "minimum": 1 },
+    "gates": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "checkId", "expect", "dependsOn"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$" },
+          "checkId": { "enum": ["docs-build", "docs-spelling", "build", "lint", "focused-test", "ui-accessibility", "ui-interaction", "security-negative", "unsafe-input", "authority-secret", "remote-readback", "timeout-recovery", "idempotency", "delivery-readback"] },
+          "expect": {
+            "type": "object", "additionalProperties": false, "required": ["exitCode", "stdout"],
+            "properties": { "exitCode": { "type": "integer" }, "stdout": { "type": "string", "maxLength": 16384 } }
+          },
+          "dependsOn": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$" } },
+          "delegated": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "path": { "type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?/)(?!.*\\\\)(?!.*\\u0000).+$" }
+  }
+}

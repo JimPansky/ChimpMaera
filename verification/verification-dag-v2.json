@@ -1,7 +1,7 @@
 {
   "schemaVersion": "chimpmaera.verification/evidence-dag/v2",
   "graphId": "verification-fabric-shadow",
-  "graphVersion": 14,
+  "graphVersion": 15,
   "environment": {
     "node": "24.14.1",
     "os": "linux",
@@ -101,7 +101,7 @@
         {
           "path": "tests/contribution-intake-ledger.test.ts",
           "role": "VALIDATOR",
-          "sha256": "64c47b3679c256be25872fb4eaa0fbc4a47b3c2ba6dc5269bb7b4ce9c11f88d5"
+          "sha256": "e1237b3b6b57c792f13f25e214319b526ec7bdb8ce30ae93eb43211ba5e9f656"
         },
         {
           "path": "docs/development/ccp-m1-intake-ledger-slice-pdca.md",
@@ -280,7 +280,7 @@
         {
           "path": "tests/verification-fabric-v2.test.ts",
           "role": "VALIDATOR",
-          "sha256": "edabce0972f2c09d6b9bd621815a2d619fcc2acf9458b41468eb889200f78c17"
+          "sha256": "ac525300956733182c72a0dab7dc6ed2a78cb6ed5c3bd18402c77a3831abb143"
         },
         {
           "path": "docs/VERIFICATION-FABRIC-SHADOW.md",
@@ -309,7 +309,7 @@
         {
           "path": "packages/contracts/src/index.ts",
           "role": "CONTRACT",
-          "sha256": "666357c0d3c27796b135c95f3848860f4bf14c2e96f427d7aa72a3e54736aa42"
+          "sha256": "46f6ee9d920e1b393a5e0af50934f578705dc8316e0e6b82d27f9cd35a02413c"
         },
         {
           "path": "packages/contracts/src/signal-release-intake.ts",
@@ -499,7 +499,7 @@
         {
           "path": "scripts/build-public-release.sh",
           "role": "SECURITY",
-          "sha256": "b49e5b17cbfcc4591bcd0fdaee325e9c571229a32cd8a3e80df157fc87114eef"
+          "sha256": "dc86bce5f723d55e4616e43055b71e89dab3be9a6ef42b5c842f20d1c25156a8"
         },
         {
           "path": "scripts/verify-release-governance.mjs",
@@ -910,7 +910,7 @@
         {
           "path": "package.json",
           "role": "TOOLCHAIN",
-          "sha256": "88fb8be59fb0d8c469c32ff2a445aac69b76cc89106467c30ce9a684955295b3"
+          "sha256": "140b17f711b2368910265d2f470a4085e03e60c0cf255a4d21748127de6da325"
         },
         {
           "path": "package-lock.json",
@@ -977,7 +977,7 @@
         {
           "path": "tools/video-production-reference/SHA256SUMS",
           "role": "CONTRACT",
-          "sha256": "eb1961b0a74e868a37f3ff1020118fcba1ec9780d11b937bce70733edb10ce37"
+          "sha256": "4ec1ce646452fb516db6bc7fcbf5dc1aa4939e9223865fc81e0d1367fbecde52"
         },
         {
           "path": "tools/video-production-reference/assets/synthetic/frame-s01.png",
@@ -1152,7 +1152,7 @@
         {
           "path": "tools/video-production-reference/tests/slice.test.mjs",
           "role": "SECURITY",
-          "sha256": "acf90837181abb8c2f627f7800f681f77e6225e628339bd3dbf297a943efc0ad"
+          "sha256": "c0ad06d406c6f2dbb805809b6b703232955cdd5925a62eb2acfd166876b419c0"
         }
       ],
       "ownedTests": [
@@ -1369,6 +1369,65 @@
         "Every record remains bound to exact checked-in snapshot bytes, citation, selector, licence, review time and expiry.",
         "Unknown, disputed, conflicting and source-invalidated records never become curated or generation candidates.",
         "Harvest output grants no credential, policy, capability, tool, write, execution, installation or runtime authority."
+      ],
+      "riskClass": "CRITICAL",
+      "globalInvalidation": false
+    },
+    {
+      "id": "vf-m2-adaptive-evidence-gates-v1",
+      "dependsOn": [
+        "vf-shadow-v2"
+      ],
+      "inputs": [
+        {
+          "path": "packages/contracts/src/adaptive-evidence-gates.ts",
+          "role": "SECURITY",
+          "sha256": "f0a6d9bc79fda3aef15fe51b9ad35fab797d7544a8e1431553a567091cd3dc1b"
+        },
+        {
+          "path": "schemas/contracts/adaptive-evidence-gate-spec-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "0068ded0cba101cd568086149c2a40824733e3647b4d96f1b7a24c4f21dbe843"
+        },
+        {
+          "path": "schemas/contracts/adaptive-evidence-receipt-v1.schema.json",
+          "role": "SCHEMA",
+          "sha256": "2e37dd55a819008cf6dcf7d5e4241ca5668ee9a320ca9f82ebf2cf637507f559"
+        },
+        {
+          "path": "scripts/adaptive-evidence-gates.mjs",
+          "role": "SECURITY",
+          "sha256": "6c5ce69a8bd9ec93b2b23eb9d32cac47e4ba51ed4bfacbda48cc8a72a135ef53"
+        },
+        {
+          "path": "scripts/adaptive-delivery-status.mjs",
+          "role": "SECURITY",
+          "sha256": "73ac82f4adf709f712329c40580cc94a29213642f5b07877799837d202a01b51"
+        },
+        {
+          "path": "tests/adaptive-evidence-gates.test.ts",
+          "role": "VALIDATOR",
+          "sha256": "45deaf165d3c0413f635b1582c9471a30d8645b278bec5d41e1c1ed494c9243f"
+        },
+        {
+          "path": "docs/ADAPTIVE-EVIDENCE-GATES.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "0f814d89f5c5f0b46b3cc9e893fcfe02ea3f0df194082d7969ef028b5f9edee5"
+        },
+        {
+          "path": "docs/development/vf-m2-adaptive-evidence-gates-pdca.md",
+          "role": "DERIVED_EVIDENCE",
+          "sha256": "82a5dc1ed8654454ee1ef6ae7def82e56f8a9ace7d92dbe3e99bc7bb76baa22a"
+        }
+      ],
+      "ownedTests": [
+        "npm run adaptive-evidence:test"
+      ],
+      "invariants": [
+        "Adaptive profiles are additive and cannot remove scope, freshness, provenance, exact CHECK/EXPECT, parent reverification or delivery-root invariants.",
+        "Only registered argv commands execute with shell disabled; unknown profiles, risks, paths, arguments, dependencies, receipts and transitions fail closed.",
+        "Local, delivery and product-evidence states remain separate; nonterminal public prefixes, stale work and external waits never become success.",
+        "The feature remains Shadow-only and npm test remains authoritative until separately governed activation evidence exists."
       ],
       "riskClass": "CRITICAL",
       "globalInvalidation": false

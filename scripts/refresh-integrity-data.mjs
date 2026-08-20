@@ -114,7 +114,7 @@ proof.verifier.sha256 = digest(proof.verifier.path);
 writeJson(proofPath, proof);
 writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEvidence(proof));
 
-dag.graphVersion = 14;
+dag.graphVersion = 15;
 const externalPluginInputs = [
   ["packages/contracts/src/external-plugin-preflight.ts", "SECURITY"],
   ["schemas/contracts/external-plugin-preflight-v1.schema.json", "SCHEMA"],
@@ -315,6 +315,39 @@ usageInsightsNode.invariants = [
   "Reports cover install-to-first-success, retention, errors, denials, rollbacks and version fragmentation while fixed cohort/coverage nonclaims and all-or-nothing threshold-five suppression prevent small-cell disclosure.",
   "The completion reference proves only offline and explicitly opted-in synthetic loopback operation; no production activation, real-user evidence, representative adoption or privacy certification is claimed.",
 ];
+const adaptiveGateInputs = [
+  ["packages/contracts/src/adaptive-evidence-gates.ts", "SECURITY"],
+  ["schemas/contracts/adaptive-evidence-gate-spec-v1.schema.json", "SCHEMA"],
+  ["schemas/contracts/adaptive-evidence-receipt-v1.schema.json", "SCHEMA"],
+  ["scripts/adaptive-evidence-gates.mjs", "SECURITY"],
+  ["scripts/adaptive-delivery-status.mjs", "SECURITY"],
+  ["tests/adaptive-evidence-gates.test.ts", "VALIDATOR"],
+  ["docs/ADAPTIVE-EVIDENCE-GATES.md", "DERIVED_EVIDENCE"],
+  ["docs/development/vf-m2-adaptive-evidence-gates-pdca.md", "DERIVED_EVIDENCE"],
+];
+let adaptiveGateNode = dag.nodes.find(({ id }) => id === "vf-m2-adaptive-evidence-gates-v1");
+if (adaptiveGateNode === undefined) {
+  adaptiveGateNode = {
+    id: "vf-m2-adaptive-evidence-gates-v1",
+    dependsOn: ["vf-shadow-v2"],
+    inputs: [],
+    ownedTests: ["npm run adaptive-evidence:test"],
+    invariants: [
+      "Adaptive profiles are additive and cannot remove scope, freshness, provenance, exact CHECK/EXPECT, parent reverification or delivery-root invariants.",
+      "Only registered argv commands execute with shell disabled; unknown profiles, risks, paths, arguments, dependencies, receipts and transitions fail closed.",
+      "Local, delivery and product-evidence states remain separate; nonterminal public prefixes, stale work and external waits never become success.",
+      "The feature remains Shadow-only and npm test remains authoritative until separately governed activation evidence exists.",
+    ],
+    riskClass: "CRITICAL",
+    globalInvalidation: false,
+  };
+  dag.nodes.push(adaptiveGateNode);
+}
+adaptiveGateNode.inputs = adaptiveGateInputs.map(([inputPath, role]) => ({
+  path: inputPath,
+  role,
+  sha256: digest(inputPath),
+}));
 for (const node of dag.nodes) {
   node.inputs = node.inputs.map((input) => ({ ...input, sha256: digest(input.path) }));
 }
@@ -332,6 +365,7 @@ for (const line of readFileSync(path.join(root, "release/public-files.manifest")
 for (const relative of [
   "scripts/refresh-integrity-data.mjs",
   "docs/development/cap-cell-erp-01-pdca.md",
+  "docs/development/vf-m2-adaptive-evidence-gates-pdca.md",
 ]) entries.set(relative, null);
 for (const relative of [...entries.keys()]) {
   if (!existsSync(path.join(root, relative))) entries.delete(relative);
