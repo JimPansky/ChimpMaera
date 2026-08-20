@@ -22,22 +22,23 @@ only loopback service bindings.
 The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
-Its increment claim is a closed local-synthetic `erp.order.create` capability
-cell. One unchanged consumer/core switches between two exact-digest provider
-profiles, exposes the effective-rights diff, verifies readback receipts and
-compensating rollback, rejects replay and leaves zero provider residue. It does
-not claim live ERP/provider compatibility, credentials, tenant access,
-migration, arbitrary provider/accounting equivalence, production use or L4.
+Its increment claim is a default-off, read-only UTF-8 Markdown/Text knowledge
+corpus path with a closed manifest, content and line-chunk digests, exact
+file/line citations, licence/permitted-use metadata, deterministic lexical
+receipts, conflict visibility and Accepted/LKG rollback. It does not claim
+PDF/OCR, Kiwix/Wikipedia, corpus download, LLM or semantic knowledge quality,
+global truth, production capacity, deployment, live data access, customer data
+or production readiness.
 
 ```sh
-release=v0.2.0-poc.20260820.1
-archive=cm-product-increment-rc-20260820-capability-cell-erp.tar.gz
+release=v0.2.0-poc.20260820.2
+archive=cm-product-increment-rc-20260820-lkc-files-01.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260820-capability-cell-erp
+cd cm-product-increment-rc-20260820-lkc-files-01
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from

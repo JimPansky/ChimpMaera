@@ -11,17 +11,14 @@ A public release is named for the functional, evidence-backed increment it
 delivers. A date or editorial cadence may appear as provenance, but labels such
 as “Daily”, “today's release” or “previous Daily” must not be the identity of an
 active public release. The current regular release is
-`v0.2.0-poc.20260820.1`, **PanSphaira v0.2.0-poc.20260820.1 - Synthetic ERP
-Capability Cell**. Its increment binds one unchanged consumer/core to exactly
-two closed local-synthetic `erp.order.create` provider profiles. Exact-digest
-switching, effective-rights diff, readback receipts, compensating rollback,
-replay denial and zero provider residue are deterministic. It does not claim a
-live ERP/provider, credentials, tenant access, migration, arbitrary provider or
-accounting equivalence, crash/concurrency durability, production readiness or
-L4 extraction. The included Usage Insights reference remains local/synthetic
-and default-network-off; no production activation, real-user evidence,
-representative adoption, privacy certification, legal basis or production
-fitness is claimed. `v0.1.0` is historical only.
+`v0.2.0-poc.20260820.2`, **PanSphaira v0.2.0-poc.20260820.2 - Read-only
+Local File Knowledge Corpus**. Its increment adds a default-off, read-only
+UTF-8 Markdown/Text corpus path with a closed manifest, content and line-chunk
+digests, exact file/line citations, licence/permitted-use metadata,
+deterministic lexical receipts, conflict visibility and Accepted/LKG rollback.
+It does not claim PDF/OCR, Kiwix/Wikipedia, corpus download, LLM or semantic
+knowledge quality, global truth, production capacity, deployment, live data
+access, customer data or production readiness. `v0.1.0` is historical only.
 
 Editorial Daily content is independent. It may describe progress, decisions,
 learnings or a preview. It does not gate a release and must not claim that a

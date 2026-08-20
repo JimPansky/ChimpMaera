@@ -7,14 +7,16 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The PanSphaira Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260820.1` and its scoped evidence; a later documentation
+`v0.2.0-poc.20260820.2` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 
-- The current increment proves one closed local-synthetic `erp.order.create`
-  profile switch over two bounded providers. It does not call a live ERP, use
-  credentials or tenant/customer data, perform migration, establish arbitrary
-  provider/accounting equivalence, prove crash/concurrency durability, activate
-  production behavior or establish L4 extraction.
+- The current increment proves one default-off, read-only UTF-8 Markdown/Text
+  knowledge corpus path with a closed manifest, content and line-chunk digests,
+  exact citations, licence/permitted-use metadata, deterministic lexical
+  receipts, conflict visibility and Accepted/LKG rollback. It does not claim
+  PDF/OCR, Kiwix/Wikipedia, corpus download, LLM or semantic knowledge quality,
+  global truth, production capacity, deployment, live data access, customer
+  data or production readiness.
 - The earlier public-spelling increment changed human-facing display spelling
   only. Repository slugs, stable filenames, schemas, APIs, protocols, packages,
   services and runtime identifiers retain their existing technical identities.
