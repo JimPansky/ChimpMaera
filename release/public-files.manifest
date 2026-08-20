@@ -181,6 +181,7 @@ docs/KNOWLEDGE-ENVELOPE.md	docs/KNOWLEDGE-ENVELOPE.md	0644
 docs/KNOWLEDGE-HARVEST.md	docs/KNOWLEDGE-HARVEST.md	0644
 docs/KNOWLEDGE-QUALITY-SERVICE.md	docs/KNOWLEDGE-QUALITY-SERVICE.md	0644
 docs/KNOWN-LIMITATIONS.md	docs/KNOWN-LIMITATIONS.md	0644
+docs/LOCAL-FILE-KNOWLEDGE-CORPUS.md	docs/LOCAL-FILE-KNOWLEDGE-CORPUS.md	0644
 docs/LEARNING-ROUTING-CONTRACTS.md	docs/LEARNING-ROUTING-CONTRACTS.md	0644
 docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	docs/OPENCLAW-BOUNDED-STATE-OPERATOR-GUIDE.md	0644
 docs/OPERATING-FIELD-GUIDE.md	docs/OPERATING-FIELD-GUIDE.md	0644
@@ -254,6 +255,7 @@ packages/contracts/src/integration-profile.ts	packages/contracts/src/integration
 packages/contracts/src/erp-order-capability-cell.ts	packages/contracts/src/erp-order-capability-cell.ts	0644
 packages/contracts/src/issue-candidate.ts	packages/contracts/src/issue-candidate.ts	0644
 packages/contracts/src/knowledge-envelope.ts	packages/contracts/src/knowledge-envelope.ts	0644
+packages/contracts/src/local-file-knowledge-corpus.ts	packages/contracts/src/local-file-knowledge-corpus.ts	0644
 packages/contracts/src/plugin-knowledge-harvest.ts	packages/contracts/src/plugin-knowledge-harvest.ts	0644
 packages/contracts/src/knowledge-quality.ts	packages/contracts/src/knowledge-quality.ts	0644
 packages/contracts/src/learning-routing-baseline.ts	packages/contracts/src/learning-routing-baseline.ts	0644
@@ -320,6 +322,7 @@ schemas/contracts/issue-candidate-v1.schema.json	schemas/contracts/issue-candida
 schemas/contracts/knowledge-contribution-envelope-v1.schema.json	schemas/contracts/knowledge-contribution-envelope-v1.schema.json	0644
 schemas/contracts/knowledge-envelope-v1.schema.json	schemas/contracts/knowledge-envelope-v1.schema.json	0644
 schemas/contracts/knowledge-taxonomy-v1.schema.json	schemas/contracts/knowledge-taxonomy-v1.schema.json	0644
+schemas/contracts/local-file-corpus-profile-v1.schema.json	schemas/contracts/local-file-corpus-profile-v1.schema.json	0644
 schemas/contracts/maintenance-compatibility-profile-v1.schema.json	schemas/contracts/maintenance-compatibility-profile-v1.schema.json	0644
 schemas/contracts/maintenance-doctor-report-v1.schema.json	schemas/contracts/maintenance-doctor-report-v1.schema.json	0644
 schemas/contracts/maintenance-installation-lock-v1.schema.json	schemas/contracts/maintenance-installation-lock-v1.schema.json	0644
@@ -452,6 +455,10 @@ tests/fixtures/issue-candidate/quarantine-v1.json	tests/fixtures/issue-candidate
 tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json	tests/fixtures/knowledge-envelope/adversarial-matrix-v1.json	0644
 tests/fixtures/knowledge-envelope/apple-claims-v1.json	tests/fixtures/knowledge-envelope/apple-claims-v1.json	0644
 tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	tests/fixtures/knowledge-envelope/taxonomy-generations-v1.json	0644
+tests/fixtures/local-file-corpus/edition-1/operations.md	tests/fixtures/local-file-corpus/edition-1/operations.md	0644
+tests/fixtures/local-file-corpus/edition-1/policy.txt	tests/fixtures/local-file-corpus/edition-1/policy.txt	0644
+tests/fixtures/local-file-corpus/edition-2/operations.md	tests/fixtures/local-file-corpus/edition-2/operations.md	0644
+tests/fixtures/local-file-corpus/edition-2/policy.txt	tests/fixtures/local-file-corpus/edition-2/policy.txt	0644
 tests/fixtures/plugin-knowledge-harvest/etl02-negative-v1.json	tests/fixtures/plugin-knowledge-harvest/etl02-negative-v1.json	0644
 tests/fixtures/plugin-knowledge-harvest/etl02-report-snapshot-v1.json	tests/fixtures/plugin-knowledge-harvest/etl02-report-snapshot-v1.json	0644
 tests/fixtures/plugin-knowledge-harvest/official-primary-snapshot-v1.json	tests/fixtures/plugin-knowledge-harvest/official-primary-snapshot-v1.json	0644
@@ -493,6 +500,7 @@ tests/integration-profile.test.ts	tests/integration-profile.test.ts	0644
 tests/erp-order-capability-cell.test.ts	tests/erp-order-capability-cell.test.ts	0644
 tests/issue-candidate.test.ts	tests/issue-candidate.test.ts	0644
 tests/knowledge-envelope.test.ts	tests/knowledge-envelope.test.ts	0644
+tests/local-file-knowledge-corpus.test.ts	tests/local-file-knowledge-corpus.test.ts	0644
 tests/plugin-knowledge-harvest.test.ts	tests/plugin-knowledge-harvest.test.ts	0644
 tests/knowledge-quality-api.test.mjs	tests/knowledge-quality-api.test.mjs	0644
 tests/knowledge-quality.test.ts	tests/knowledge-quality.test.ts	0644

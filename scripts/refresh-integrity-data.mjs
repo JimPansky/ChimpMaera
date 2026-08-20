@@ -114,7 +114,7 @@ proof.verifier.sha256 = digest(proof.verifier.path);
 writeJson(proofPath, proof);
 writeJson("security/secure-default-proof-evidence-v1.json", buildSecureDefaultEvidence(proof));
 
-dag.graphVersion = 13;
+dag.graphVersion = 14;
 const externalPluginInputs = [
   ["packages/contracts/src/external-plugin-preflight.ts", "SECURITY"],
   ["schemas/contracts/external-plugin-preflight-v1.schema.json", "SCHEMA"],

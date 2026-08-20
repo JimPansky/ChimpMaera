@@ -25,6 +25,7 @@ const curatedSitemapPaths = new Set([
   "EXTENSION-ASSURANCE-PROFILES",
   "INTEGRATION-PROFILES",
   "KNOWN-LIMITATIONS",
+  "LOCAL-FILE-KNOWLEDGE-CORPUS",
   "QUICKSTART",
   "RESOURCE-PLANE-PROFILES",
   "UPDATE-MIGRATION-DOCTOR-CONTRACTS",
@@ -145,6 +146,7 @@ export default defineConfig({
         items: [
           { text: "Capability evidence", link: "/capabilities" },
           { text: "ERP order capability cell", link: "/CAPABILITY-CELL-ERP-ORDER" },
+          { text: "Local file knowledge corpus", link: "/LOCAL-FILE-KNOWLEDGE-CORPUS" },
           { text: "Agent-work event contract", link: "/AGENT-WORK-EVENT-CONTRACT" },
           { text: "BI execution spine candidate", link: "/BI-EXECUTION-SPINE-CONTRACT" },
           { text: "Extension assurance profiles", link: "/EXTENSION-ASSURANCE-PROFILES" },
