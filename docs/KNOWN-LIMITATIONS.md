@@ -7,17 +7,17 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The PanSphaira Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260819.5` and its scoped evidence; a later documentation
+`v0.2.0-poc.20260820.1` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 
-- The current increment transforms exact-pinned source snapshots and bounded
-  static findings into authority-free Knowledge Envelopes. It does not execute,
-  install, admit, activate or endorse plugins; establish ecosystem completeness,
-  compatibility, security, licence clearance or production-ingestion fitness;
-  or turn untrusted prose into instructions or truth.
-- The current increment changes human-facing display spelling only. Repository
-  slugs, stable filenames, schemas, APIs, protocols, packages, services and
-  runtime identifiers retain their existing technical identities.
+- The current increment proves one closed local-synthetic `erp.order.create`
+  profile switch over two bounded providers. It does not call a live ERP, use
+  credentials or tenant/customer data, perform migration, establish arbitrary
+  provider/accounting equivalence, prove crash/concurrency durability, activate
+  production behavior or establish L4 extraction.
+- The earlier public-spelling increment changed human-facing display spelling
+  only. Repository slugs, stable filenames, schemas, APIs, protocols, packages,
+  services and runtime identifiers retain their existing technical identities.
 - Usage Insights is a local/synthetic reference with network off by default.
   Optional sharing is restricted to explicitly configured IP-literal loopback;
   no production collector, real-user evidence, representative adoption,

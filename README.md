@@ -122,19 +122,19 @@ each combination still needs its own applicability boundary and evidence.
 For the release-bound path, download the current Latest archive and its
 published checksum sidecar, then verify before extracting:
 
-This release adds an execution-free plugin-knowledge harvest over exact-pinned
-source snapshots and bounded static findings. It preserves attribution,
-conflicts, unknowns and invalidation while emitting zero authority.
+This release adds a closed local-synthetic `erp.order.create` capability cell.
+One unchanged consumer/core switches exact-digest profiles between two bounded
+providers with rights diff, readback receipts, rollback and replay denial.
 
 ```sh
-release=v0.2.0-poc.20260819.5
-archive=cm-product-increment-rc-20260819-plugin-knowledge-harvest.tar.gz
+release=v0.2.0-poc.20260820.1
+archive=cm-product-increment-rc-20260820-capability-cell-erp.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260819-plugin-knowledge-harvest
+cd cm-product-increment-rc-20260820-capability-cell-erp
 ```
 
 On a supported Linux host with Docker and Compose, run there or from a

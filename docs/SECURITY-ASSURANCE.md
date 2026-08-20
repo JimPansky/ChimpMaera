@@ -7,11 +7,11 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260819.5`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260819.5),
-the **Evidence-Only Plugin Knowledge Harvest** increment. It converts exact-
-pinned source snapshots and bounded static findings into authority-free,
-attributed Knowledge Envelopes while retaining conflicts, unknowns and source-
-change invalidation.
+[`v0.2.0-poc.20260820.1`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260820.1),
+the **Synthetic ERP Capability Cell** increment. It binds one unchanged
+consumer/core to exactly two closed local-synthetic `erp.order.create` provider
+profiles with digest-bound switching, effective-rights diff, readback,
+compensating rollback and replay denial.
 `v0.1.0` is historical. Release state is governed by
 [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred from a local
 branch, a tag alone, a date or an editorial update. Documentation on `main` may
@@ -21,15 +21,14 @@ The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment executes, installs, admits and activates no plugin, skill,
-MCP server or foreign harness. It establishes no security boundary and does not
-claim ecosystem completeness, endorsement, compatibility, malware freedom,
-licence clearance or production ingestion. Its included Usage Insights
-reference remains local/synthetic and default-network-off. Optional sharing
-requires explicit consent and an exact IP-literal loopback endpoint. No
-production collector or activation, real-user evidence, representative
-adoption, privacy certification, legal basis or production fitness follows from
-this increment.
+The Latest increment performs no live ERP/provider call and uses no credential,
+tenant or customer data. It establishes no arbitrary provider or accounting
+equivalence, migration safety, crash/concurrency durability, production
+readiness or L4 extraction. Its included Usage Insights reference remains
+local/synthetic and default-network-off. Optional sharing requires explicit
+consent and an exact IP-literal loopback endpoint. No production collector or
+activation, real-user evidence, representative adoption, privacy certification,
+legal basis or production fitness follows from this increment.
 The detailed claims below remain bound to their own dated evidence snapshots.
 
 Table counts are dated observations from their linked 2026-08-01 synthetic
