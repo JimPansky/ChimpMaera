@@ -7,12 +7,12 @@ claims, maturity, evidence, trusted computing base (TCB) and non-claims. The
 ## Scope and evidence snapshot
 
 The current public regular release is
-[`v0.2.0-poc.20260820.3`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260820.3),
-the **Inactive Conformant HMI Entry Points** increment. It adds two
-repository-native OpenClaw and Codex entry points backed by one pinned verified
-HMI generation. Both remain `DESCRIBED_INACTIVE`, expose only `discover`,
-`explain` and preparation-only `contribute-preflight`, and preserve
-byte-identical canonical semantics for equivalent requests.
+[`v0.2.0-poc.20260821.1`](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260821.1),
+the **Adaptive Evidence Gates and Default-off Controller** increment. It adds
+closed executable evidence gates and a separate operator-invoked controller
+with atomic digest-bound state, bounded lease/deadman, disable marker, LKG
+snapshot and honest external-wait retry saturation. The controller remains
+default-off.
 `v0.1.0` is historical. Release state is governed by
 [anonymous public readback](RELEASE-GOVERNANCE.md), not inferred from a local
 branch, a tag alone, a date or an editorial update. Documentation on `main` may
@@ -22,10 +22,11 @@ The exact claims below remain bound to the stated local, synthetic paths,
 fixtures, commands and evidence. Checked-in local runtime-smoke records are not
 public-release, production, live-provider or independent evidence.
 
-The Latest increment performs no installation, runtime activation, authority
-grant, external write, `plan`, `validate` or `handoff`. It establishes no
-universal or live harness compatibility, hostile-host isolation, production
-readiness, security certification or customer-data fitness.
+The Latest increment performs no default activation, scheduling, external
+completion inference, authority grant, external write or adaptive test-depth
+reduction. It establishes no representative long-duration or multi-host
+evidence, hostile-host isolation, production readiness, security certification
+or customer-data fitness.
 The detailed claims below remain bound to their own dated evidence snapshots.
 
 Table counts are dated observations from their linked 2026-08-01 synthetic

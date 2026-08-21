@@ -2,32 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JoFe2/PANSPHAIRA",
   "currentRelease": {
-    "releaseId": 373968128,
-    "tag": "v0.2.0-poc.20260820.3",
-    "title": "PanSphaira v0.2.0-poc.20260820.3 - Inactive Conformant HMI Entry Points",
-    "increment": "Inactive Conformant HMI Entry Points",
-    "targetCommitish": "1507944767aab5ccf64e25843898d6a472301aaf",
-    "tagObjectSha": "1507944767aab5ccf64e25843898d6a472301aaf",
-    "publishedAt": "2026-08-20T19:10:09Z",
-    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260820.3",
+    "releaseId": 374181015,
+    "tag": "v0.2.0-poc.20260821.1",
+    "title": "PanSphaira v0.2.0-poc.20260821.1 - Adaptive Evidence Gates and Default-off Controller",
+    "increment": "Adaptive Evidence Gates and Default-off Controller",
+    "targetCommitish": "c86ba0bc54141343b22d9f8bdbf904765ae0b40e",
+    "tagObjectSha": "c86ba0bc54141343b22d9f8bdbf904765ae0b40e",
+    "publishedAt": "2026-08-21T05:07:53Z",
+    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260821.1",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz",
-        "size": 1413020,
-        "sha256": "d1060db51a74215982ef3cda6966f2aa64cf247f2cbf9fe084e6f1d2fffdd358"
+        "name": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz",
+        "size": 1433787,
+        "sha256": "5e6dc981dbb981b8ccd5603d88e7023db2179d382243816902db73e6f2439662"
       },
       {
-        "name": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz.sha256",
-        "size": 133,
-        "sha256": "fde777539cd1623c7db7a55da287b4d5d878bcaf6396407eab231724b52b338e"
+        "name": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz.sha256",
+        "size": 135,
+        "sha256": "691308f9a8123e548e9526b27af537ffb692978337c18f670f06b7d153a86776"
       }
     ],
     "assetManifest": {
-      "name": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz.sha256",
-      "declares": "cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz"
+      "name": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz.sha256",
+      "declares": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz"
     }
   },
   "policy": {
@@ -84,9 +84,9 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260820.3 is the current regular Latest release for two inactive conformant OpenClaw and Codex HMI entry points backed by one pinned verified generation with byte-identical canonical semantics.",
-      "evidencePaths": ["README.md", "docs/HMI-CONFORMANT-ENTRYPOINTS.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "No installation, universal or live harness compatibility, runtime activation, authority grant, external write, production readiness, security certification or customer evidence is claimed."]
+      "claim": "v0.2.0-poc.20260821.1 is the current regular Latest release for closed adaptive-evidence gates and a separate operator-invoked default-off controller with atomic digest-bound state, bounded lease/deadman and honest external-wait semantics.",
+      "evidencePaths": ["README.md", "docs/ADAPTIVE-EVIDENCE-GATES.md", "docs/ADAPTIVE-EVIDENCE-CONTROLLER.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
+      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "No default activation, scheduler, adaptive test-depth reduction, external completion truth, production readiness, security certification or customer evidence is claimed."]
     },
     {
       "claimId": "CM-REL-002",
@@ -146,8 +146,8 @@
     {
       "claimId": "CM-REL-004",
       "component": "Verification Fabric",
-      "claim": "PANSPHAIRA ships digest-bound Verification Fabric contracts plus a Shadow-only Evidence-DAG impact planner that explains selected verification nodes while keeping the complete suite authoritative.",
-      "userValue": "Maintainers get an auditable verification vocabulary and deterministic impact plan; uncertainty falls back to full validation instead of silently omitting checks.",
+      "claim": "PANSPHAIRA ships digest-bound Verification Fabric contracts, a Shadow Evidence-DAG planner, closed executable adaptive-evidence gates, and a separate operator-invoked default-off controller that preserves honest delivery state.",
+      "userValue": "Maintainers get auditable proportional verification and restart-safe local coordination; uncertainty still falls back to full validation and external waits never become false success.",
       "includedBytes": [
         "packages/contracts/src/verification-fabric.ts",
         "packages/contracts/src/verification-fabric-v2.ts",
@@ -158,48 +158,72 @@
         "tests/fixtures/verification-fabric/negative-matrix-v1.json",
         "verification/verification-dag-v2.json",
         "scripts/verification-plan.mjs",
-        "scripts/verification-shadow.mjs"
+        "scripts/verification-shadow.mjs",
+        "packages/contracts/src/adaptive-evidence-gates.ts",
+        "schemas/contracts/adaptive-evidence-gate-spec-v1.schema.json",
+        "schemas/contracts/adaptive-evidence-receipt-v1.schema.json",
+        "scripts/adaptive-evidence-gates.mjs",
+        "scripts/adaptive-delivery-status.mjs",
+        "scripts/adaptive-controller.mjs",
+        "tests/adaptive-evidence-gates.test.ts",
+        "tests/adaptive-controller.test.mjs",
+        "docs/ADAPTIVE-EVIDENCE-GATES.md",
+        "docs/ADAPTIVE-EVIDENCE-CONTROLLER.md"
       ],
       "functionalProof": {
         "testPaths": [
           "tests/verification-fabric.test.ts",
-          "tests/verification-fabric-v2.test.ts"
-        ],
-        "result": "PASS 16/16: v1 contract bundles and v2 Evidence-DAG plans verify; a real release-branch Shadow run executed the authoritative 304/304 comparator."
+        "tests/verification-fabric-v2.test.ts",
+        "tests/adaptive-evidence-gates.test.ts",
+        "tests/adaptive-controller.test.mjs"
+      ],
+      "result": "PASS: existing Verification Fabric proofs remain green; adaptive gates pass 25/25 and the default-off controller passes 9/9 including happy, negative, fault, restart, retry saturation and a bounded 20-run soak."
       },
       "safetyProof": {
         "testPaths": [
           "tests/verification-fabric.test.ts",
           "tests/verification-fabric-v2.test.ts",
-          "tests/fixtures/verification-fabric/negative-matrix-v1.json"
-        ],
-        "result": "PASS 13/13 v2 selector/mutation probes plus v1 negatives: central, unmapped, unsafe, ambiguous, invalid, cyclic, drifting and selector-failure inputs over-select or FULL_FALLBACK."
+        "tests/fixtures/verification-fabric/negative-matrix-v1.json",
+        "tests/adaptive-evidence-gates.test.ts",
+        "tests/adaptive-controller.test.mjs"
+      ],
+      "result": "PASS: central, unmapped, unsafe, ambiguous, invalid, cyclic, drifting, stale, forged, flaky, scope-shrunk, collision and partial-write inputs over-select, enter ATTENTION/WAITING_EXTERNAL or fail closed; none become false success."
       },
       "evidencePaths": [
         "docs/development/vf-001-verification-fabric-contracts-pdca.md",
         "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md",
-        "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+        "docs/development/2026-08-03-verification-hmi-release-handoff.md",
+        "docs/development/vf-m2-adaptive-evidence-gates-pdca.md",
+        "docs/ADAPTIVE-EVIDENCE-GATES.md",
+        "docs/ADAPTIVE-EVIDENCE-CONTROLLER.md"
       ],
       "nonClaims": [
-        "Shadow-only local deterministic proof; activation progress is tracked in issue #34 and the evidence gate remains unmet. No authoritative incremental skipping, result reuse, latency SLO, production readiness, security certification or external authority is proven."
+        "Local deterministic proof; volatile Shadow activation progress remains tracked in issue #34, the controller remains default-off and no scheduler is included. No authoritative adaptive test-depth reduction, default activation, external completion truth, representative long-duration or multi-host evidence, production readiness, security certification or external authority is proven."
       ],
       "traceability": {
         "issues": [
-          40,
-          69
+        40,
+        69,
+        253,
+        255
         ],
         "pullRequests": [
-          70,
-          71
+        70,
+        71,
+        254,
+        256
         ],
         "sourceCommits": [
           "7f35f0033dfc6429ea7f8d2f67af16aeabcc0736",
-          "b30411555e451d2b3040a2c5d635f23cdcc293b5"
+        "b30411555e451d2b3040a2c5d635f23cdcc293b5",
+        "77d948cad0a3d9abd6ac7584112569b2f878f1ce",
+        "c86ba0bc54141343b22d9f8bdbf904765ae0b40e"
         ],
         "pdcaPaths": [
           "docs/development/vf-001-verification-fabric-contracts-pdca.md",
           "docs/development/vf-002-verification-fabric-v2-shadow-pdca.md",
-          "docs/development/2026-08-03-verification-hmi-release-handoff.md"
+        "docs/development/2026-08-03-verification-hmi-release-handoff.md",
+        "docs/development/vf-m2-adaptive-evidence-gates-pdca.md"
         ],
         "publicManifest": "release/public-files.manifest",
         "releaseCommitBinding": "currentRelease.tagObjectSha",

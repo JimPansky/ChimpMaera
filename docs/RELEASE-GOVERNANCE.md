@@ -11,14 +11,14 @@ A public release is named for the functional, evidence-backed increment it
 delivers. A date or editorial cadence may appear as provenance, but labels such
 as “Daily”, “today's release” or “previous Daily” must not be the identity of an
 active public release. The current regular release is
-`v0.2.0-poc.20260820.3`, **PanSphaira v0.2.0-poc.20260820.3 - Inactive
-Conformant HMI Entry Points**. Its increment adds two repository-native
-OpenClaw and Codex entry points backed by one pinned verified HMI generation.
-Both remain `DESCRIBED_INACTIVE`, expose only `discover`, `explain` and
-preparation-only `contribute-preflight`, and preserve byte-identical canonical
-semantics for equivalent requests. It does not claim installation, universal
-or live harness compatibility, runtime activation, authority, external writes,
-production readiness or customer evidence. `v0.1.0` is historical only.
+`v0.2.0-poc.20260821.1`, **PanSphaira v0.2.0-poc.20260821.1 - Adaptive
+Evidence Gates and Default-off Controller**. Its increment adds closed,
+executable adaptive-evidence gates and a separate operator-invoked controller.
+The controller remains default-off, persists digest-bound state atomically,
+uses a bounded lease/deadman, and preserves `WAITING_EXTERNAL` honestly. It
+does not claim a scheduler, default activation, adaptive test-depth reduction,
+external completion truth, production readiness or customer evidence.
+`v0.1.0` is historical only.
 
 Editorial Daily content is independent. It may describe progress, decisions,
 learnings or a preview. It does not gate a release and must not claim that a

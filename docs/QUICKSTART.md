@@ -22,23 +22,22 @@ only loopback service bindings.
 The current Latest release has a release-bound archive and SHA-256 sidecar.
 Download both exact public assets and verify the sidecar before extraction:
 
-Its increment claim is two repository-native OpenClaw and Codex entry points
-backed by one pinned verified HMI generation. Both remain
-`DESCRIBED_INACTIVE`, expose only `discover`, `explain` and preparation-only
-`contribute-preflight`, and produce byte-identical canonical semantics for
-equivalent requests. It does not claim installation, universal or live harness
-compatibility, runtime activation, authority, external writes, production
-readiness or customer evidence.
+Its increment claim is closed adaptive-evidence gates plus a separate
+operator-invoked controller. The controller remains default-off, persists
+atomic digest-bound state, uses a bounded lease/deadman and preserves
+`WAITING_EXTERNAL` honestly. It does not claim a scheduler, default activation,
+adaptive test-depth reduction, external completion truth, production readiness
+or customer evidence.
 
 ```sh
-release=v0.2.0-poc.20260820.3
-archive=cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz
+release=v0.2.0-poc.20260821.1
+archive=cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260820-hmi-conformant-entrypoints
+cd cm-product-increment-rc-20260821-adaptive-evidence-controller
 ```
 
 The sidecar owns the expected digest; do not substitute a checksum copied from
