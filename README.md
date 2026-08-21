@@ -122,20 +122,19 @@ each combination still needs its own applicability boundary and evidence.
 For the release-bound path, download the current Latest archive and its
 published checksum sidecar, then verify before extracting:
 
-This release adds two repository-native OpenClaw and Codex entry points backed
-by the same pinned HMI generation. Both remain `DESCRIBED_INACTIVE`, expose
-only `discover`, `explain` and preparation-only `contribute-preflight`, and
-produce byte-identical canonical semantics for equivalent requests.
+This release adds closed adaptive-evidence gates and a separate operator-invoked
+controller. The controller remains default-off, persists atomic digest-bound
+state, uses a bounded lease/deadman and preserves `WAITING_EXTERNAL` honestly.
 
 ```sh
-release=v0.2.0-poc.20260820.3
-archive=cm-product-increment-rc-20260820-hmi-conformant-entrypoints.tar.gz
+release=v0.2.0-poc.20260821.1
+archive=cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz
 base=https://github.com/JoFe2/PANSPHAIRA/releases/download/$release
 curl -fLO "$base/$archive"
 curl -fLO "$base/$archive.sha256"
 sha256sum -c "$archive.sha256"
 tar -xzf "$archive"
-cd cm-product-increment-rc-20260820-hmi-conformant-entrypoints
+cd cm-product-increment-rc-20260821-adaptive-evidence-controller
 ```
 
 On a supported Linux host with Docker and Compose, run there or from a
