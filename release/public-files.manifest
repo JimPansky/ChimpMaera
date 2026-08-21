@@ -151,6 +151,7 @@ demo/seed-and-flow.sh	demo/seed-and-flow.sh	0755
 demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
 docs/.vitepress/config.mts	docs/.vitepress/config.mts	0644
+docs/ADAPTIVE-EVIDENCE-GATES.md	docs/ADAPTIVE-EVIDENCE-GATES.md	0644
 docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	0644
 docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
 docs/alternatives.md	docs/alternatives.md	0644
@@ -223,6 +224,7 @@ LICENSE	LICENSE	0644
 NOTICE	NOTICE	0644
 package-lock.json	package-lock.json	0644
 package.json	package.json	0644
+packages/contracts/src/adaptive-evidence-gates.ts	packages/contracts/src/adaptive-evidence-gates.ts	0644
 packages/contracts/src/agent-work-event.ts	packages/contracts/src/agent-work-event.ts	0644
 packages/contracts/src/analytics-projection.ts	packages/contracts/src/analytics-projection.ts	0644
 packages/contracts/src/azure-identity-profile.ts	packages/contracts/src/azure-identity-profile.ts	0644
@@ -301,6 +303,8 @@ README.md	README.md	0644
 release/governance.json	release/governance.json	0644
 release/public-files.manifest	release/public-files.manifest	0644
 schemas/adaptability-benchmark-result-v1.schema.json	schemas/adaptability-benchmark-result-v1.schema.json	0644
+schemas/contracts/adaptive-evidence-gate-spec-v1.schema.json	schemas/contracts/adaptive-evidence-gate-spec-v1.schema.json	0644
+schemas/contracts/adaptive-evidence-receipt-v1.schema.json	schemas/contracts/adaptive-evidence-receipt-v1.schema.json	0644
 schemas/contracts/agent-work-event-record-v1.schema.json	schemas/contracts/agent-work-event-record-v1.schema.json	0644
 schemas/contracts/azure-identity-profile-v1.schema.json	schemas/contracts/azure-identity-profile-v1.schema.json	0644
 schemas/contracts/builder-authority-v1.schema.json	schemas/contracts/builder-authority-v1.schema.json	0644
@@ -368,6 +372,8 @@ schemas/runtime/openclaw-state-contract-v1.schema.json	schemas/runtime/openclaw-
 schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-default-proof-v1.schema.json	0644
 schemas/work-order-v1.schema.json	schemas/work-order-v1.schema.json	0644
 schemas/work-receipt-v1.schema.json	schemas/work-receipt-v1.schema.json	0644
+scripts/adaptive-delivery-status.mjs	scripts/adaptive-delivery-status.mjs	0755
+scripts/adaptive-evidence-gates.mjs	scripts/adaptive-evidence-gates.mjs	0755
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 scripts/learning-routing-baseline.mjs	scripts/learning-routing-baseline.mjs	0644
 scripts/refresh-integrity-data.mjs	scripts/refresh-integrity-data.mjs	0644
@@ -391,6 +397,7 @@ security/secure-default-proof-evidence-v1.json	security/secure-default-proof-evi
 security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 SUPPORT.md	SUPPORT.md	0644
 tests/adaptability-benchmark-m0.test.mjs	tests/adaptability-benchmark-m0.test.mjs	0644
+tests/adaptive-evidence-gates.test.ts	tests/adaptive-evidence-gates.test.ts	0644
 tests/agent-work-event.test.ts	tests/agent-work-event.test.ts	0644
 tests/analytics-projection.test.ts	tests/analytics-projection.test.ts	0644
 tests/azure-identity-profile.test.ts	tests/azure-identity-profile.test.ts	0644

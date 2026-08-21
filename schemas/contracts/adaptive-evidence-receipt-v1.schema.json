@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoFe2/PANSPHAIRA/schemas/contracts/adaptive-evidence-receipt-v1.schema.json",
+  "title": "PANSPHAIRA adaptive evidence receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "gateId", "checkId", "subjectDigest", "specDigest", "expectationDigest", "verifierVersion", "resultDigest", "observedAtMs", "expiresAtMs", "receiptDigest"],
+  "properties": {
+    "schemaVersion": { "const": "chimpmaera.verification/adaptive-gate-receipt/v1" },
+    "gateId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$" },
+    "checkId": { "enum": ["docs-build", "docs-spelling", "build", "lint", "focused-test", "ui-accessibility", "ui-interaction", "security-negative", "unsafe-input", "authority-secret", "remote-readback", "timeout-recovery", "idempotency", "delivery-readback"] },
+    "subjectDigest": { "$ref": "#/$defs/digest" },
+    "specDigest": { "$ref": "#/$defs/digest" },
+    "expectationDigest": { "$ref": "#/$defs/digest" },
+    "verifierVersion": { "const": "pansphaira-adaptive-gates/1" },
+    "resultDigest": { "$ref": "#/$defs/digest" },
+    "observedAtMs": { "type": "integer", "minimum": 0 },
+    "expiresAtMs": { "type": "integer", "minimum": 0 },
+    "receiptDigest": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": { "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+}
