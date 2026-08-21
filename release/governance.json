@@ -2,32 +2,32 @@
   "schemaVersion": "chimpmaera.release-governance/v1",
   "repository": "JoFe2/PANSPHAIRA",
   "currentRelease": {
-    "releaseId": 374181015,
-    "tag": "v0.2.0-poc.20260821.1",
-    "title": "PanSphaira v0.2.0-poc.20260821.1 - Adaptive Evidence Gates and Default-off Controller",
-    "increment": "Adaptive Evidence Gates and Default-off Controller",
-    "targetCommitish": "c86ba0bc54141343b22d9f8bdbf904765ae0b40e",
-    "tagObjectSha": "c86ba0bc54141343b22d9f8bdbf904765ae0b40e",
-    "publishedAt": "2026-08-21T05:07:53Z",
-    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260821.1",
+    "releaseId": 374584660,
+    "tag": "v0.2.0-poc.20260821.2",
+    "title": "PanSphaira v0.2.0-poc.20260821.2 - Root HOW Control Architecture Visual",
+    "increment": "Root HOW Control Architecture Visual",
+    "targetCommitish": "e4626e3b63c855137be979c3f0dc773a85dca794",
+    "tagObjectSha": "e4626e3b63c855137be979c3f0dc773a85dca794",
+    "publishedAt": "2026-08-21T18:08:37Z",
+    "url": "https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.2.0-poc.20260821.2",
     "draft": false,
     "prerelease": false,
     "mustBeLatest": true,
     "assets": [
       {
-        "name": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz",
-        "size": 1433787,
-        "sha256": "5e6dc981dbb981b8ccd5603d88e7023db2179d382243816902db73e6f2439662"
+        "name": "cm-product-increment-rc-20260821-root-how-control-architecture.tar.gz",
+        "size": 1544921,
+        "sha256": "ddcbb92687c4614f93376ecff2312508c6e1885d22f04c70c0f844e522e288ee"
       },
       {
-        "name": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz.sha256",
-        "size": 135,
-        "sha256": "691308f9a8123e548e9526b27af537ffb692978337c18f670f06b7d153a86776"
+        "name": "cm-product-increment-rc-20260821-root-how-control-architecture.tar.gz.sha256",
+        "size": 136,
+        "sha256": "b8f7e7a885242f0df69a3bf808538bb3407d3b2fce52dbd78e5f26e9498cf1ce"
       }
     ],
     "assetManifest": {
-      "name": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz.sha256",
-      "declares": "cm-product-increment-rc-20260821-adaptive-evidence-controller.tar.gz"
+      "name": "cm-product-increment-rc-20260821-root-how-control-architecture.tar.gz.sha256",
+      "declares": "cm-product-increment-rc-20260821-root-how-control-architecture.tar.gz"
     }
   },
   "policy": {
@@ -84,9 +84,9 @@
   "claimEvidence": [
     {
       "claimId": "CM-REL-001",
-      "claim": "v0.2.0-poc.20260821.1 is the current regular Latest release for closed adaptive-evidence gates and a separate operator-invoked default-off controller with atomic digest-bound state, bounded lease/deadman and honest external-wait semantics.",
-      "evidencePaths": ["README.md", "docs/ADAPTIVE-EVIDENCE-GATES.md", "docs/ADAPTIVE-EVIDENCE-CONTROLLER.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
-      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "No default activation, scheduler, adaptive test-depth reduction, external completion truth, production readiness, security certification or customer evidence is claimed."]
+      "claim": "v0.2.0-poc.20260821.2 is the current regular Latest release for the root README HOW Control Architecture visual. The visual presents Agent proposes, Gateway governs, provider readback and receipt close the loop, and evidence revision grants no runtime authority by itself.",
+      "evidencePaths": ["README.md", "assets/diagrams/layers/02-control-architecture-v3.png", "docs/ARCHITECTURE.md", "docs/RELEASE-GOVERNANCE.md", "release/governance.json"],
+      "nonClaims": ["A tag or draft alone is not public release evidence.", "Calendar cadence does not determine release status.", "The visual does not claim production readiness, universal provider compatibility, security certification, default activation, external completion truth or customer evidence."]
     },
     {
       "claimId": "CM-REL-002",
