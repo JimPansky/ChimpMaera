@@ -33,49 +33,39 @@ product maturity or universal live compatibility.
 
 ## How it works
 
-- **Governed by default.** The Agent Sphere contains an untrusted proposer. A
-  narrow, typed proposal follows a governed Connection and crosses the Runtime
-  Isolation Boundary into the Gateway Sphere, where identity, tenant, purpose,
-  rights, policy and approval are evaluated at use time. A broker performs only
-  the allowed atom; validation, provider readback, receipts and declared
-  recovery or rollback close the loop. Sphere is terminology and visualization
-  only, not a protocol, schema, API or runtime abstraction.
-- **Adaptable by design.** Stable capability and knowledge contracts separate a
-  user's need from provider-specific APIs. Reusable templates supply safe
-  defaults; typed adapters bind concrete fields and routes. Rights profiles,
-  approval, validation and evidence remain explicit for every binding.
-  AI may assist discovery, mapping, template selection, adapter/configuration
-  proposals and test generation, but deterministic validators and provider
-  readback decide activation truth.
-- **Improved through evidence.** Governed knowledge carries provenance,
-  evidence, applicability and supersession instead of becoming an
-  authoritative default merely because it was observed or shared.
-
 <p align="center">
-  <img src="assets/diagrams/caged-agent-gateway-constellation.svg" width="900" alt="PanSphaira governed Agent Sphere and Gateway Sphere architecture">
+  <img src="assets/diagrams/layers/02-control-architecture-v3.png" width="900" alt="PanSphaira control architecture from Agent Sphere through governed crossing, Gateway, capability contract, adapter provider, readback receipt, and knowledge revision.">
 </p>
+
+<p align="center"><em>Control architecture view: the Agent proposes, a governed crossing and Gateway evaluate context, rights, policy and approval, then provider readback and receipt close the loop.</em></p>
+
+- **Agent proposes, not executes.** The Agent side emits typed proposals
+  without raw credentials, direct effect routes or self-approval.
+- **Gateway governs the crossing.** Trusted code evaluates context, rights,
+  policy and approval at use time before a bounded adapter/provider action.
+- **Readback closes success.** Provider readback and a bound receipt verify the
+  result; evidence can inform later knowledge revision without becoming
+  authority.
+
+Sphere is terminology and visualization only, not a protocol, schema, API or
+runtime abstraction.
+
+See the
+[combined technical architecture](docs/ARCHITECTURE.md#combined-architecture-agent-sphere-gateway-sphere-and-governed-crossings).
 
 <details>
 <summary>Accessible architecture description</summary>
 
-**Agent Sphere proposal → governed Connection and Crossing →
-Gateway Sphere context/capability/policy/approval checks → brokered effect →
-provider readback and receipt.** Stable contracts, templates and typed adapters
-connect capabilities to providers. The governed knowledge loop is **knowledge
-and feedback → typed records → provenance and evidence →
-contracts/templates/adapters → application → tests/readback → outcome →
-improved revision**. Ingestion, confidence/verification, default selection and
-execution authority are separate; unverified knowledge may
-exist without becoming an authoritative default.
+Agent Sphere typed proposal -> governed crossing -> Gateway context, rights,
+policy and approval checks -> capability contract -> adapter/provider bounded
+action -> authoritative readback and receipt -> evidence-bound knowledge
+revision. The Agent proposes; the Gateway governs; readback and receipt close
+the supported local-synthetic loop. Ingestion, confidence/verification,
+default selection and execution authority are separate: an evidence revision or
+unverified knowledge record may exist without becoming an authoritative
+default.
 
 </details>
-
-Solid paths are locally evidenced `SAFE_GUIDED` reference or local-synthetic
-capability paths. Dashed paths are prepared add/replace product direction.
-Containment plus mediated execution is the security boundary. The diagram is
-not proof of generic filesystem/process/Docker mediation or universal provider
-addition. See the
-[combined technical architecture](docs/ARCHITECTURE.md#combined-architecture-agent-sphere-gateway-sphere-and-governed-crossings).
 
 ## Adaptive Knowledge Engineering
 
