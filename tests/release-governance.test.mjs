@@ -42,7 +42,7 @@ test("public release builder binds its exact file count to the manifest", () => 
   const binding = builder.match(/^if count != (\d+):$/m);
   assert.ok(binding, "PUBLIC_MANIFEST_EXACT_COUNT_BINDING_MISSING");
   assert.equal(Number(binding[1]), count);
-  assert.equal(count, 610);
+  assert.equal(count, 611);
   assert.doesNotMatch(builder, /if count\s*(?:>|>=|<|<=)\s*\d+/);
 });
 
@@ -82,7 +82,10 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(readme, /srcset="assets\/brand\/pansphaira-icon-negative\.svg"/);
   assert.match(readme, /srcset="assets\/brand\/pansphaira-icon-positive\.svg"/);
   assert.match(readme, /alt="PanSphaira geometric icon of seven connected circles"/);
-  assert.match(readme, /alt="PanSphaira governed Agent Sphere and Gateway Sphere architecture"/);
+  assert.match(readme, /src="assets\/diagrams\/layers\/02-control-architecture-v3\.png"/);
+  assert.match(readme, /alt="PanSphaira control architecture from Agent Sphere through governed crossing, Gateway, capability contract, adapter provider, readback receipt, and knowledge revision\."/);
+  assert.doesNotMatch(readme, /assets\/diagrams\/layers\/01-product-canon-v3\.(?:png|svg)/);
+  assert.doesNotMatch(readme, /assets\/diagrams\/layers\/03-crm-agent-gateway-owner-erp-readback-v3\.(?:png|svg)/);
   assert.match(readme, /<details>\s*<summary>Accessible architecture description<\/summary>/);
   assert.doesNotMatch(readme, /^\s*Text fallback:/im);
   assert.doesNotMatch(readme, /assets\/brand\/chimpmaera-(?:master|negative)\.(?:png|svg)/);
@@ -99,7 +102,7 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(readme, /Share what you know\. Expand what everyone can build\./);
   assert.match(readme, /Every integration can teach the system how to\s+adapt the\s+next one—without\s+silently expanding authority/);
   assert.match(readme, /open-ended,\s+user-need-driven option space/);
-  assert.match(readme, /unverified knowledge may\s+exist without becoming an authoritative default/);
+  assert.match(readme, /unverified knowledge record may exist without becoming an authoritative\s+default/);
   assert.doesNotMatch(readme, /\b(?:infinite|one-click|minutes?|hours?|production-ready)\b/i);
   assert.ok(words.length >= 600 && words.length <= 1000, `README_WORD_COUNT:${words.length}`);
   assert.ok(h2s.length <= 8, `README_H2_COUNT:${h2s.length}`);
@@ -127,6 +130,7 @@ test("README presents governed adaptability and evidence-driven improvement with
   assert.match(koFi, /<title id="title">Support PanSphaira on Ko-fi<\/title>/);
   assert.match(buyMeACoffee, /<title id="title">Support PanSphaira on Buy Me a Coffee<\/title>/);
   assert.match(manifest, /^assets\/diagrams\/caged-agent-gateway-constellation\.svg\tassets\/diagrams\/caged-agent-gateway-constellation\.svg\t0644$/m);
+  assert.match(manifest, /^assets\/diagrams\/layers\/02-control-architecture-v3\.png\tassets\/diagrams\/layers\/02-control-architecture-v3\.png\t0644$/m);
   for (const path of [
     "assets/brand/README.md",
     "assets/brand/pansphaira-icon-negative.png",
@@ -164,7 +168,7 @@ test("release governance negative probes fail closed", async (t) => {
   const probes = [
     ["visible README text fallback", "PUBLIC_DOC_UNENCAPSULATED_FALLBACK_LABEL:README.md", (root) => append(root, "README.md", "Text fallback: technical architecture copy")],
     ["visible public-doc placeholder", "PUBLIC_DOC_UNENCAPSULATED_FALLBACK_LABEL:docs/index.md", (root) => append(root, "docs/index.md", "Placeholder: replace this architecture explanation")],
-    ["empty HTML image alt", "PUBLIC_DOC_IMAGE_ALT_UNUSABLE:README.md", (root) => replace(root, "README.md", "alt=\"PanSphaira governed Agent Sphere and Gateway Sphere architecture\"", "alt=\"\"")],
+    ["empty HTML image alt", "PUBLIC_DOC_IMAGE_ALT_UNUSABLE:README.md", (root) => replace(root, "README.md", "alt=\"PanSphaira control architecture from Agent Sphere through governed crossing, Gateway, capability contract, adapter provider, readback receipt, and knowledge revision.\"", "alt=\"\"")],
     ["empty Markdown image alt", "PUBLIC_DOC_IMAGE_ALT_UNUSABLE:README.md", (root) => append(root, "README.md", "![](assets/diagrams/caged-agent-gateway-constellation.svg)")],
     ["README version-bound release link", "README_STABLE_RELEASE_NAVIGATION_MISSING", (root) => replace(root, "README.md", "[Latest regular release](https://github.com/JoFe2/PANSPHAIRA/releases/latest)", "[Version-bound release](https://github.com/JoFe2/PANSPHAIRA/releases/tag/v0.1.0)")],
     ["README Daily identity", "README_ACTIVE_DAILY_IDENTITY_DENIED", (root) => replace(root, "README.md", "Release pages own included capabilities", "Today's Daily snapshot owns included capabilities")],
