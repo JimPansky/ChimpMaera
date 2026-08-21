@@ -7,17 +7,16 @@ description: Review the explicit production, security, identity, integration, ru
 
 These limits are part of the claim discipline required by
 [The PanSphaira Canon](CANON.md). They apply to the current regular release
-`v0.2.0-poc.20260821.1` and its scoped evidence; a later documentation
+`v0.2.0-poc.20260821.2` and its scoped evidence; a later documentation
 change does not broaden the released asset claims.
 
-- The current increment proves closed adaptive-evidence gates and a separate
-  operator-invoked controller with atomic digest-bound state, bounded
-  lease/deadman, disable marker, LKG snapshot and honest external-wait retry
-  saturation. The controller remains default-off because a bounded synthetic
-  local soak is not representative external scheduling, multi-host failure or
-  long-duration evidence. It does not claim adaptive test-depth reduction,
-  default activation, a scheduler/daemon, external completion truth,
-  production readiness, security certification or customer evidence.
+- The current increment adds the Control Architecture layer as the single root
+  README HOW visual. It explains Agent proposal, Gateway governance, bounded
+  provider action, authoritative readback and receipt, and evidence revision
+  without granting runtime authority. It does not claim universal provider
+  compatibility, adaptive test-depth reduction, default activation, a
+  scheduler/daemon, external completion truth, production readiness, security
+  certification or customer evidence.
 - The earlier public-spelling increment changed human-facing display spelling
   only. Repository slugs, stable filenames, schemas, APIs, protocols, packages,
   services and runtime identifiers retain their existing technical identities.
