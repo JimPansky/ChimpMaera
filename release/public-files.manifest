@@ -152,6 +152,7 @@ demo/tsconfig.runtime.json	demo/tsconfig.runtime.json	0644
 demo/uninstall.sh	demo/uninstall.sh	0755
 docs/.vitepress/config.mts	docs/.vitepress/config.mts	0644
 docs/ADAPTIVE-EVIDENCE-GATES.md	docs/ADAPTIVE-EVIDENCE-GATES.md	0644
+docs/ADAPTIVE-EVIDENCE-CONTROLLER.md	docs/ADAPTIVE-EVIDENCE-CONTROLLER.md	0644
 docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	docs/AGENT-RUNTIME-ISOLATION-CONTRACT.md	0644
 docs/AGENT-WORK-EVENT-CONTRACT.md	docs/AGENT-WORK-EVENT-CONTRACT.md	0644
 docs/alternatives.md	docs/alternatives.md	0644
@@ -373,6 +374,7 @@ schemas/security/secure-default-proof-v1.schema.json	schemas/security/secure-def
 schemas/work-order-v1.schema.json	schemas/work-order-v1.schema.json	0644
 schemas/work-receipt-v1.schema.json	schemas/work-receipt-v1.schema.json	0644
 scripts/adaptive-delivery-status.mjs	scripts/adaptive-delivery-status.mjs	0755
+scripts/adaptive-controller.mjs	scripts/adaptive-controller.mjs	0755
 scripts/adaptive-evidence-gates.mjs	scripts/adaptive-evidence-gates.mjs	0755
 scripts/build-public-release.sh	scripts/build-public-release.sh	0755
 scripts/learning-routing-baseline.mjs	scripts/learning-routing-baseline.mjs	0644
@@ -397,6 +399,7 @@ security/secure-default-proof-evidence-v1.json	security/secure-default-proof-evi
 security/secure-default-proof-v1.json	security/secure-default-proof-v1.json	0644
 SUPPORT.md	SUPPORT.md	0644
 tests/adaptability-benchmark-m0.test.mjs	tests/adaptability-benchmark-m0.test.mjs	0644
+tests/adaptive-controller.test.mjs	tests/adaptive-controller.test.mjs	0644
 tests/adaptive-evidence-gates.test.ts	tests/adaptive-evidence-gates.test.ts	0644
 tests/agent-work-event.test.ts	tests/agent-work-event.test.ts	0644
 tests/analytics-projection.test.ts	tests/analytics-projection.test.ts	0644
